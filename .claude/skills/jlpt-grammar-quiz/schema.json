@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "number",
+      "const": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "N3",
+        "N2"
+      ]
+    },
+    "grammarPoints": {
+      "minItems": 1,
+      "maxItems": 90,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-4]$",
+            "description": "\"<level>-w<week>-d<day>-g<number>\", lower case, e.g. \"n3-w5-d1-g2\". Must match level, week, day and number."
+          },
+          "week": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9,
+            "description": "Week in the 文法ノート (第5週 → 5)."
+          },
+          "day": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6,
+            "description": "Day within the week (3日目 → 3). Day 7 is 実戦問題 and has no patterns."
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4,
+            "description": "Position within the day, ① → 1 … ④ → 4."
+          },
+          "pattern": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The pattern exactly as the note heading writes it, e.g. \"〜ばかりか\"."
+          },
+          "meaning": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Short English meaning, e.g. \"not only … but also\"."
+          }
+        },
+        "required": [
+          "id",
+          "week",
+          "day",
+          "number",
+          "pattern",
+          "meaning"
+        ],
+        "additionalProperties": false,
+        "description": "A grammar point from the 文法ノート that this test covers."
+      }
+    },
+    "sections": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "fill-blank"
+            },
+            "questions": {
+              "minItems": 1,
+              "maxItems": 30,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^q[1-9][0-9]*$",
+                    "description": "Sequential across the whole test in section order: \"q1\", \"q2\", … with no gaps."
+                  },
+                  "grammarId": {
+                    "type": "string",
+                    "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-4]$",
+                    "description": "The id of the grammar point (from grammarPoints) this question tests."
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "pattern": "（　　）",
+                    "description": "One sentence containing the blank （　　） exactly once."
+                  },
+                  "choices": {
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": "Exactly 4 different options, shown to the learner as 1–4."
+                  },
+                  "answerIndex": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 3,
+                    "description": "0-based index of the correct option in choices."
+                  }
+                },
+                "required": [
+                  "id",
+                  "grammarId",
+                  "prompt",
+                  "choices",
+                  "answerIndex"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "type",
+            "questions"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "sentence-order"
+            },
+            "questions": {
+              "minItems": 1,
+              "maxItems": 30,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^q[1-9][0-9]*$",
+                    "description": "Sequential across the whole test in section order: \"q1\", \"q2\", … with no gaps."
+                  },
+                  "grammarId": {
+                    "type": "string",
+                    "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-4]$",
+                    "description": "The id of the grammar point (from grammarPoints) this question tests."
+                  },
+                  "before": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Sentence text before the 4 slots."
+                  },
+                  "after": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Sentence text after the 4 slots, usually ending in 。"
+                  },
+                  "pieces": {
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": "The 4 different pieces in scrambled order, shown as 1–4."
+                  },
+                  "correctOrder": {
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 3
+                    },
+                    "description": "0-based piece indices in the correct slot order; a permutation of 0,1,2,3."
+                  },
+                  "starSlot": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 4,
+                    "description": "1-based slot that holds ★. Only the piece in this slot is graded."
+                  }
+                },
+                "required": [
+                  "id",
+                  "grammarId",
+                  "before",
+                  "after",
+                  "pieces",
+                  "correctOrder",
+                  "starSlot"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "type",
+            "questions"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "passage"
+            },
+            "passages": {
+              "minItems": 1,
+              "maxItems": 6,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "passage": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A short passage with one [n] marker per blank, where n is the question number, e.g. [31]."
+                  },
+                  "questions": {
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^q[1-9][0-9]*$",
+                          "description": "Sequential across the whole test in section order: \"q1\", \"q2\", … with no gaps."
+                        },
+                        "blank": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991,
+                          "description": "Equals this question's number (q7 → 7) and its [7] marker in the passage."
+                        },
+                        "grammarId": {
+                          "type": "string",
+                          "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-4]$",
+                          "description": "The id of the grammar point (from grammarPoints) this question tests."
+                        },
+                        "choices": {
+                          "minItems": 4,
+                          "maxItems": 4,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": "Exactly 4 different options, shown to the learner as 1–4."
+                        },
+                        "answerIndex": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 3,
+                          "description": "0-based index of the correct option in choices."
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "blank",
+                        "grammarId",
+                        "choices",
+                        "answerIndex"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "passage",
+                  "questions"
+                ],
+                "additionalProperties": false
+              },
+              "description": "Each passage has its own text and 1–5 blanks. Standard: 3 passages × 5 blanks."
+            }
+          },
+          "required": [
+            "type",
+            "passages"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3,
+      "description": "Always these 3 sections, in this order: fill-blank, sentence-order, passage."
+    }
+  },
+  "required": [
+    "version",
+    "title",
+    "level",
+    "grammarPoints",
+    "sections"
+  ],
+  "additionalProperties": false,
+  "title": "文法ドリル mock test payload",
+  "description": "Body of POST /api/tests. Version 1 of the standard format.\nRules the server also enforces:\n1. grammarPoints ids are unique and match level/week/day/number.\n2. Every question's grammarId is listed in grammarPoints, and every grammar point is tested at least once.\n3. Question ids run \"q1\", \"q2\", … in section order with no gaps.\n4. A fill-blank prompt contains （　　） exactly once.\n5. The 4 choices (or pieces) of a question are all different.\n6. correctOrder is a permutation of 0,1,2,3.\n7. Each passage question's blank equals its question number, and its passage has exactly one [n] marker per question and no others.\nStandard size: 15 fill-blank, 15 sentence-order, 3 passages × 5 blanks (q1–q45).",
+  "$id": "https://bunpo-drill.local/schema/test-payload.v1.json"
+}
