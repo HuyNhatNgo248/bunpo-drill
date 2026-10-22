@@ -8,7 +8,7 @@ set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 app="$(cd "$here/../../.." && pwd)"
-url="${BUNPO_URL:-http://localhost:3000}"
+url="${BUNPO_URL:-http://localhost:3001}"
 url="${url%/}"
 token="${BUNPO_API_TOKEN:-$(sed -n 's/^BUNPO_API_TOKEN=//p' "$app/.env" 2>/dev/null | tail -n 1)}"
 auth=()

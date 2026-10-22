@@ -9,7 +9,7 @@ export default defineConfig({
   },
   // The jlpt-grammar-quiz skill posts to this port, so fail loudly instead of picking another.
   server: {
-    port: 3000,
+    port: 3001,
     strictPort: true,
   },
 });

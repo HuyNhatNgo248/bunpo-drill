@@ -3,14 +3,14 @@
 #
 #   bash .claude/skills/jlpt-grammar-quiz/post.sh <payload.json>
 #
-# BUNPO_URL sets the app address (default http://localhost:3000).
+# BUNPO_URL sets the app address (default http://localhost:3001).
 # BUNPO_API_TOKEN is the app's API token (default: the one in the app's .env).
 # Exit codes: 0 saved, 1 invalid payload, wrong token or server error, 2 app not running.
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 app="$(cd "$here/../../.." && pwd)"
-url="${BUNPO_URL:-http://localhost:3000}"
+url="${BUNPO_URL:-http://localhost:3001}"
 url="${url%/}"
 token="${BUNPO_API_TOKEN:-$(sed -n 's/^BUNPO_API_TOKEN=//p' "$app/.env" 2>/dev/null | tail -n 1)}"
 auth=()

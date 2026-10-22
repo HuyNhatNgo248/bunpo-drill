@@ -11,7 +11,7 @@ React Router 8 (framework mode, SSR) · TypeScript · Tailwind 4 · shadcn/ui ·
 ```sh
 pnpm install
 cp .env.example .env # then set APP_PASSWORD, SESSION_SECRET and BUNPO_API_TOKEN (Turso is optional)
-pnpm dev             # http://localhost:3000, sign in with APP_PASSWORD
+pnpm dev             # http://localhost:3001, sign in with APP_PASSWORD
 ```
 
 Then ask Claude for a test, for example `/jlpt-grammar-quiz 第5週 1〜3日目` or
