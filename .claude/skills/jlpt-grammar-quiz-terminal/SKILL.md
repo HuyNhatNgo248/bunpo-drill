@@ -21,19 +21,19 @@ Arguments: $ARGUMENTS
 
 - **Level**: N3 or N2. Default N3.
 - **Scope**: weeks, days or patterns. Read the notes and map patterns to ids exactly as
-  `../jlpt-grammar-quiz/SKILL.md` step 2 says. "Weak ones" = the unreviewed chips from
-  `bash .claude/skills/jlpt-grammar-quiz/tests.sh` (needs the app running). If no scope is
+  `/Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz/SKILL.md` step 2 says. "Weak ones" = the unreviewed chips from
+  `bash /Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz/tests.sh` from the repo root (needs the app running). If no scope is
   given, ask once. Don't guess.
-- **Count**: default is the real exam: N3 13 / 5 / 5 (問題1–3), N2 12 / 5 / 5 (問題7–9).
-  Use what the user asks for ("10 questions", "only 問題2", "no passage"). Split a total
-  in the same ratio as the real exam.
+- **Count**: default is double the real exam: N3 26 / 10 / 10 (問題1–3), N2 24 / 10 / 10
+  (問題7–9). Use what the user asks for ("10 questions", "only 問題2", "no passage"). Split
+  a total in the same ratio as the real exam.
 
 Read the lesson block of every point you test: its connection rules, ⚠ traps and Nuance
 table give you the distractors. Test only points that have a lesson block.
 
 ## 3. Write the whole set before asking anything
 
-Number questions straight through like the real paper (N3: 1–13, 14–18, 19–23). Keep the
+Number questions straight through like the real paper (N3 default: 1–26, 27–36, 37–46). Keep the
 answer key to yourself until each question has been answered.
 
 Follow `jlpt-format.md`, plus:
