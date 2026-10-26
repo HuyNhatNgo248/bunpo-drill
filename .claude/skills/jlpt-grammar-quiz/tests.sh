@@ -6,7 +6,7 @@
 # BUNPO_URL and BUNPO_API_TOKEN work as in post.sh.
 set -euo pipefail
 
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 app="$(cd "$here/../../.." && pwd)"
 url="${BUNPO_URL:-http://localhost:3001}"
 url="${url%/}"

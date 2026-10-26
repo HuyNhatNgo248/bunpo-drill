@@ -8,7 +8,7 @@
 # Exit codes: 0 saved, 1 invalid payload, wrong token or server error, 2 app not running.
 set -euo pipefail
 
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 app="$(cd "$here/../../.." && pwd)"
 url="${BUNPO_URL:-http://localhost:3001}"
 url="${url%/}"

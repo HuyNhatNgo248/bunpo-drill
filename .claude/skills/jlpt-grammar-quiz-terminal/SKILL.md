@@ -29,7 +29,14 @@ Arguments: $ARGUMENTS
   a total in the same ratio as the real exam.
 
 Read the lesson block of every point you test: its connection rules, ⚠ traps and Nuance
-table give you the distractors. Test only points that have a lesson block.
+table give you the distractors.
+
+Some studied points have no lesson block: the user has studied **all of N2 (第1–8週)** in
+the book, but the notes only have lessons for 第1–3週. For those, use the point's row in
+`文型リスト.md` (pattern, meaning, the book's example, PDF pages). If you need the
+connection rules to build distractors, render those pages of `N2 文法.pdf` with
+`swift ~/.claude/skills/jlpt-kanji-quiz-terminal/render.swift "<pdf>" <out-dir>/p <pages>`
+and read them. Don't write lesson blocks for them; that's the japanese-grammar skill's job.
 
 ## 3. Write the whole set before asking anything
 

@@ -18,7 +18,7 @@ Settle three things from the arguments and the conversation:
 
 - **Level**: N3 or N2. Default N3 (the N2 notes have no lessons written yet).
 - **Scope**: weeks, days or specific patterns. "Weak ones" means the unreviewed chips:
-  `bash .claude/skills/jlpt-grammar-quiz/tests.sh` (it sends the app's API token) and collect `review[]` entries with
+  `bash ~/.claude/skills/jlpt-grammar-quiz/tests.sh` (it sends the app's API token) and collect `review[]` entries with
   `"reviewed": false`. Their `grammarId` (`n3-w5-d1-g2`) gives week, day and number.
   If no scope is given, ask once ("Which week or days?"). Don't guess.
 - **Question count**, per section as fill-blank / sentence-order / passage blanks:
@@ -157,10 +157,10 @@ a prompt; a question's 4 options are all different; `correctOrder` is a permutat
 ## 6. Send it
 
 1. Write the JSON to a temp file (for example `$TMPDIR/bunpo-<timestamp>.json`).
-2. From the repo root, run `bash .claude/skills/jlpt-grammar-quiz/post.sh <file>`.
+2. Run `bash ~/.claude/skills/jlpt-grammar-quiz/post.sh <file>` (works from any directory).
    - `schema.json check failed` or `POST /api/tests failed (400)`: fix each listed path and run it again.
    - A `Note: … not the standard 15 / 15 / 15` line is only a reminder. Ignore it if the user asked for other counts.
-   - Exit 2 (app not running): ask the user to start it with `pnpm dev` in the repo (or start it yourself if they agree), then retry.
+   - Exit 2 (app not running): ask the user to start it with `pnpm dev` in `~/Downloads/bunpo-drill` (or start it yourself if they agree), then retry.
    - `refused the API token`: ask the user to set `BUNPO_API_TOKEN` in the repo's `.env` to the app's value. Don't read or print the token yourself.
 3. Reply with the test link and what it covers (weeks/days, question counts per section).
    **Don't reveal the answers in chat.** The user is about to take the test.
