@@ -34,9 +34,8 @@ table give you the distractors.
 Some studied points have no lesson block: the user has studied **all of N2 (第1–8週)** in
 the book, but the notes only have lessons for 第1–3週. For those, use the point's row in
 `文型リスト.md` (pattern, meaning, the book's example, PDF pages). If you need the
-connection rules to build distractors, render those pages of `N2 文法.pdf` with
-`swift ~/.claude/skills/jlpt-kanji-quiz-terminal/render.swift "<pdf>" <out-dir>/p <pages>`
-and read them. Don't write lesson blocks for them; that's the japanese-grammar skill's job.
+connection rules to build distractors, read those pages of `N2 文法.pdf` with the Read
+tool's `pages` parameter. Don't write lesson blocks for them; that's the japanese-grammar skill's job.
 
 ## 3. Write the whole set before asking anything
 
@@ -46,6 +45,9 @@ answer key to yourself until each question has been answered.
 Follow `jlpt-format.md`, plus:
 
 - Natural Japanese at the level, ordinary kanji, no furigana, no English.
+- Write every sentence and passage new. Never reuse the notes' or the book's 例文, not even
+  with a word or two swapped: new situation, new subject, new wording. The notes tell you
+  what to test (rules, traps), not the text.
 - Every grammar point in scope is tested at least once.
 - Read each question with all 4 choices. If two work, or none does, rewrite it.
 - 文の組み立て: check every plausible order; only one may be grammatical, and the ★ chunk

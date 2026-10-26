@@ -32,14 +32,8 @@ Notes live in `~/Documents/JLPT 🇯🇵/N2/N2 漢字 ノート/` as `第N章.md
 **If the chapter's notes file exists, read it and skip to step 4.**
 
 Otherwise build it from the book (`~/Documents/JLPT 🇯🇵/N2/N2 漢字マスター.pdf`, a scan
-with no text layer; PDF page = book page). Render the chapter's lesson pages and read them:
-
-```bash
-swift ~/.claude/skills/jlpt-kanji-quiz-terminal/render.swift \
-  "$HOME/Documents/JLPT 🇯🇵/N2/N2 漢字マスター.pdf" <out-dir>/p <pages, e.g. 20,21,22,23,24>
-```
-
-Write the images to the session scratchpad (or `$TMPDIR`), then Read each `<out-dir>/p-<n>.jpg`.
+with no text layer; PDF page = book page). Read the chapter's lesson pages with the Read
+tool's `pages` parameter (e.g. `pages: "20-24"`; needs poppler, `brew install poppler`).
 
 | 章 | Theme | Lesson pages | 章 | Theme | Lesson pages |
 |---|---|---|---|---|---|
@@ -81,6 +75,9 @@ Read `kanji-format.md` again for the trap patterns, then for each chapter:
 - **表記**: a natural sentence with one word from the notes written in hiragana in 【 】.
   4 spellings: the right one plus same-sound or same-shape swaps (2×2 grids for
   compounds, related-meaning kanji with the same okurigana for verbs and adjectives).
+- Write every sentence new. The word comes from the notes; the sentence around it never
+  copies the book's example phrases (not プレゼントを贈る for 贈る): new situation, new
+  collocation where the word allows one.
 - Use N2-level words; skip △ words unless the chapter runs short. Spread the questions
   over the chapter's lessons, and test each word only once per session.
 - Each wrong choice must be wrong for anyone who knows the word. Skip words with two

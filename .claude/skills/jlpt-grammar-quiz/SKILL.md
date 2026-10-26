@@ -73,6 +73,9 @@ lesson block (they've been studied), unless the user asks for points from 文型
 
 Write natural Japanese at the test's level, with ordinary kanji and no furigana or English inside Japanese fields.
 No two questions in a test may share a sentence or a passage.
+Write every sentence and passage new. Never reuse the notes' or the book's 例文, not even with a
+word or two swapped: new situation, new subject, new wording. The notes tell you what to test
+(rules, traps), not the text.
 
 **fill-blank (文法形式の判断)**
 - One sentence whose blank is exactly `（　　）` (full-width parentheses around two full-width spaces).

@@ -33,14 +33,8 @@ Notes live in `~/Documents/JLPT 🇯🇵/N2/N2 語彙 ノート/` as `第N週.md
 **If the week's notes file exists and has the days you need, read it and skip to step 4.**
 
 Otherwise build it from the book (`~/Documents/JLPT 🇯🇵/N2/N2 語彙.pdf`, a scan with no
-text layer). **PDF page = book page + 1.** Render the lesson pages and Read each image:
-
-```bash
-swift ~/.claude/skills/jlpt-kanji-quiz-terminal/render.swift \
-  "$HOME/Documents/JLPT 🇯🇵/N2/N2 語彙.pdf" <out-dir>/p <PDF pages, e.g. 13,14>
-```
-
-Write the images to the session scratchpad (or `$TMPDIR`).
+text layer). **PDF page = book page + 1.** Read the lesson pages with the Read tool's
+`pages` parameter (PDF pages, e.g. `pages: "13-14"`; needs poppler, `brew install poppler`).
 
 | 週 | Theme | Book p. | 週 | Theme | Book p. |
 |---|---|---|---|---|---|
@@ -87,7 +81,9 @@ Read `vocab-format.md` again for the trap patterns, then write the set:
 - **言い換え類義**: a sentence with the target in 【 】; 4 paraphrases that all fit the
   sentence, one with the same meaning.
 - **用法**: the target word, then 4 natural sentences; 3 put it where a near-synonym
-  belongs. Use the notes' ❗ and ダメ examples when there are any.
+  belongs. Build those from the notes' ❗ and ダメ points, in new sentences.
+- Write every sentence new. Words and collocations come from the notes; the sentences
+  never copy the book's examples, not even with a word or two swapped.
 - **語形成**: a word with （　　） for the prefix or suffix; 4 single kanji from one family.
 - Spread questions over the scope's days, test each word once per session, and make
   sure only one choice works. Spread answers over 1–4.
