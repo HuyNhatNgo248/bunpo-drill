@@ -1,23 +1,19 @@
-FROM node:24-alpine AS development-dependencies-env
-COPY . /app
+FROM node:22-alpine AS base
+RUN corepack enable
 WORKDIR /app
-RUN npm ci
+COPY package.json pnpm-lock.yaml /app/
 
-FROM node:24-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
-
-FROM node:24-alpine AS build-env
+FROM base AS build-env
+RUN pnpm install --frozen-lockfile
 COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-RUN npm run build
+RUN pnpm run build
 
-FROM node:24-alpine
-COPY ./package.json package-lock.json /app/
+FROM base AS production-dependencies-env
+RUN pnpm install --frozen-lockfile --prod
+
+FROM node:22-alpine
+WORKDIR /app
+COPY package.json server.ts /app/
 COPY --from=production-dependencies-env /app/node_modules /app/node_modules
 COPY --from=build-env /app/build /app/build
-COPY ./server.ts /app/
-WORKDIR /app
 CMD ["npm", "run", "start"]
