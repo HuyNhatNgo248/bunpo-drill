@@ -49,14 +49,14 @@ describe("account action", () => {
   describe("the name form", () => {
     it("renames the user", async () => {
       expect(await post(userId, { intent: "name", name: "  Huy N.  " })).toMatchObject({
-        data: { form: "name", saved: "名前を変更しました。" },
+        data: { form: "name", saved: "ユーザー名を変更しました。" },
       });
       expect(await getUser(userId)).toEqual({ id: userId, name: "Huy N." });
     });
 
     it("answers 400 for a name of the wrong length", async () => {
       expect(await post(userId, { intent: "name", name: "a".repeat(31) })).toMatchObject({
-        data: { form: "name", error: "名前は1〜30文字で入力してください。" },
+        data: { form: "name", error: "ユーザー名は1〜30文字で入力してください。" },
         init: { status: 400 },
       });
     });
@@ -65,7 +65,7 @@ describe("account action", () => {
       await createUser("Mai", PASSWORD);
 
       expect(await post(userId, { intent: "name", name: "Mai" })).toMatchObject({
-        data: { form: "name", error: "この名前はもう使われています。" },
+        data: { form: "name", error: "このユーザー名はもう使われています。" },
         init: { status: 409 },
       });
     });

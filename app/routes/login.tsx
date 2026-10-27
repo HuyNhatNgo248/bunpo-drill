@@ -31,14 +31,14 @@ export async function action({ request }: Route.ActionArgs) {
     const invalid = checkName(name) ?? checkNewPassword(password);
     if (invalid) return data({ error: invalid }, { status: 400 });
     const id = await createUser(name, password);
-    if (id === null) return data({ error: "この名前はもう使われています。" }, { status: 409 });
+    if (id === null) return data({ error: "このユーザー名はもう使われています。" }, { status: 409 });
     return signIn(request, id, redirectTo);
   }
 
   const id = await verifyUser(name, password);
   if (id === null) {
     await slowDown();
-    return data({ error: "名前かパスワードが違います。" }, { status: 401 });
+    return data({ error: "ユーザー名かパスワードが違います。" }, { status: 401 });
   }
   return signIn(request, id, redirectTo);
 }

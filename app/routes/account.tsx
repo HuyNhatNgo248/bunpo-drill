@@ -24,8 +24,8 @@ export async function action({ request }: Route.ActionArgs) {
     const name = String(form.get("name") ?? "").trim();
     const invalid = checkName(name);
     if (invalid) return data<AccountResult>({ form: "name", error: invalid }, { status: 400 });
-    if (!(await renameUser(id, name))) return data<AccountResult>({ form: "name", error: "この名前はもう使われています。" }, { status: 409 });
-    return data<AccountResult>({ form: "name", saved: "名前を変更しました。" });
+    if (!(await renameUser(id, name))) return data<AccountResult>({ form: "name", error: "このユーザー名はもう使われています。" }, { status: 409 });
+    return data<AccountResult>({ form: "name", saved: "ユーザー名を変更しました。" });
   }
   const next = String(form.get("next") ?? "");
   const invalid = checkNewPassword(next);

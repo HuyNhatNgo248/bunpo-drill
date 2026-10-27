@@ -31,12 +31,12 @@ regenerates the skill's `schema.json` from it, and `pnpm typecheck` fails if the
 ## Sign-in
 
 Accounts, in `app/lib/auth.server.ts` and `app/lib/users.server.ts`. Everyone signs up at
-`/login?mode=signup` with a name, a password and the sign-up code (`APP_PASSWORD`), so only people
+`/login?mode=signup` with a username, a password and the sign-up code (`APP_PASSWORD`), so only people
 you give the code to can get in. All users see the same tests.
 
 A root middleware checks every request: without the login cookie, pages redirect to `/login` and
 `/api` answers 401. Signing in sets a cookie signed with `SESSION_SECRET` for 30 days. `/account`
-changes your name or password and has ログアウト. Changing `SESSION_SECRET` signs everyone out.
+changes your username or password and has ログアウト. Changing `SESSION_SECRET` signs everyone out.
 
 The quiz skill has no cookie, so `/api` also accepts `Authorization: Bearer <BUNPO_API_TOKEN>`.
 `post.sh` and `tests.sh` read the token from `.env` (or `BUNPO_API_TOKEN` in the environment).

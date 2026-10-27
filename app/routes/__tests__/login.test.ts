@@ -78,7 +78,7 @@ describe("login action", () => {
       await createUser("Huy", PASSWORD);
 
       expect(await post({ intent: "login", name: "Huy", password: "wrong" })).toMatchObject({
-        data: { error: "名前かパスワードが違います。" },
+        data: { error: "ユーザー名かパスワードが違います。" },
         init: { status: 401 },
       });
       expect(waits).toEqual([1000]);
@@ -114,7 +114,7 @@ describe("login action", () => {
     it("answers 409 for a name that is taken", async () => {
       await createUser("Mai", PASSWORD);
 
-      expect(await signUp({})).toMatchObject({ data: { error: "この名前はもう使われています。" }, init: { status: 409 } });
+      expect(await signUp({})).toMatchObject({ data: { error: "このユーザー名はもう使われています。" }, init: { status: 409 } });
     });
   });
 

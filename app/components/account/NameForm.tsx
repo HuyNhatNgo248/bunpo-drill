@@ -12,7 +12,7 @@ export function NameForm({ name, result }: { name: string; result?: AccountResul
   return (
     <Card className="flex flex-col gap-4 p-5 md:p-6">
       <div className="flex flex-col gap-1">
-        <h2 className="text-base font-semibold">名前</h2>
+        <h2 className="text-base font-semibold">ユーザー名</h2>
         <p className="text-caption text-muted-foreground">ログインに使います。</p>
       </div>
       {/* key: after a save, the field shows the saved name. */}
@@ -20,7 +20,7 @@ export function NameForm({ name, result }: { name: string; result?: AccountResul
         <input type="hidden" name="intent" value="name" />
         <input
           name="name"
-          aria-label="名前"
+          aria-label="ユーザー名"
           required
           maxLength={30}
           autoComplete="username"

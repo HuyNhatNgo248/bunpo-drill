@@ -27,12 +27,12 @@ describe("Account", () => {
   it("shows the current name, ready to change", async () => {
     renderAccount();
 
-    expect(await screen.findByRole("textbox", { name: "名前" })).toHaveValue(NAME);
+    expect(await screen.findByRole("textbox", { name: "ユーザー名" })).toHaveValue(NAME);
   });
 
   it("sends a new name with the intent of the name form", async () => {
     const { page } = renderAccount();
-    const field = await screen.findByRole("textbox", { name: "名前" });
+    const field = await screen.findByRole("textbox", { name: "ユーザー名" });
 
     await userEvent.clear(field);
     await userEvent.type(field, "Mai");
@@ -55,12 +55,12 @@ describe("Account", () => {
 
   describe("the answer of a form", () => {
     it("shows an error under the form it is for only, and marks the field", async () => {
-      renderAccount({ form: "name", error: "この名前はもう使われています。" });
-      await screen.findByRole("heading", { name: "名前" });
+      renderAccount({ form: "name", error: "このユーザー名はもう使われています。" });
+      await screen.findByRole("heading", { name: "ユーザー名" });
 
-      expect(cardOf("名前").getByRole("alert")).toHaveTextContent("この名前はもう使われています。");
+      expect(cardOf("ユーザー名").getByRole("alert")).toHaveTextContent("このユーザー名はもう使われています。");
       expect(cardOf("パスワード").queryByRole("alert")).toBeNull();
-      expect(screen.getByRole("textbox", { name: "名前" })).toHaveAttribute("aria-invalid", "true");
+      expect(screen.getByRole("textbox", { name: "ユーザー名" })).toHaveAttribute("aria-invalid", "true");
     });
 
     it("shows a saved message under its form", async () => {
@@ -68,7 +68,7 @@ describe("Account", () => {
       await screen.findByRole("heading", { name: "パスワード" });
 
       expect(cardOf("パスワード").getByRole("status")).toHaveTextContent("パスワードを変更しました。");
-      expect(cardOf("名前").queryByRole("status")).toBeNull();
+      expect(cardOf("ユーザー名").queryByRole("status")).toBeNull();
     });
   });
 

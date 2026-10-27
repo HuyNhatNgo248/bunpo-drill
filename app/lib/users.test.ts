@@ -9,11 +9,11 @@ describe("checkName", () => {
   });
 
   it("rejects an empty name", () => {
-    expect(checkName("")).toBe("名前は1〜30文字で入力してください。");
+    expect(checkName("")).toBe("ユーザー名は1〜30文字で入力してください。");
   });
 
   it("rejects a name of more than 30 characters", () => {
-    expect(checkName("a".repeat(31))).toBe("名前は1〜30文字で入力してください。");
+    expect(checkName("a".repeat(31))).toBe("ユーザー名は1〜30文字で入力してください。");
   });
 });
 

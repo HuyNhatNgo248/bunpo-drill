@@ -14,7 +14,7 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
       <input type="hidden" name="redirectTo" value={redirectTo} />
       <input type="hidden" name="intent" value={signup ? "signup" : "login"} />
       <label className="flex flex-col gap-1.5">
-        <span className="text-caption font-medium">名前</span>
+        <span className="text-caption font-medium">ユーザー名</span>
         <input
           name="name"
           required

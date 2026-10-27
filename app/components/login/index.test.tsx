@@ -19,7 +19,7 @@ describe("Login", () => {
     );
 
     await userEvent.type(
-      await screen.findByRole("textbox", { name: "名前" }),
+      await screen.findByRole("textbox", { name: "ユーザー名" }),
       "Huy",
     );
     await userEvent.type(screen.getByLabelText("パスワード"), "correct horse");
@@ -66,7 +66,7 @@ describe("Login", () => {
         await screen.findByRole("heading", { name: "アカウント作成" }),
       ).toBeInTheDocument();
       await userEvent.type(
-        screen.getByRole("textbox", { name: "名前" }),
+        screen.getByRole("textbox", { name: "ユーザー名" }),
         "Mai",
       );
       await userEvent.type(
@@ -97,14 +97,14 @@ describe("Login", () => {
 
   describe("a failed try", () => {
     it("shows the error, and ties it to the fields", async () => {
-      renderLogin("/login", "名前かパスワードが違います。");
+      renderLogin("/login", "ユーザー名かパスワードが違います。");
 
       expect(await screen.findByRole("alert")).toHaveTextContent(
-        "名前かパスワードが違います。",
+        "ユーザー名かパスワードが違います。",
       );
       expect(
-        screen.getByRole("textbox", { name: "名前" }),
-      ).toHaveAccessibleDescription("名前かパスワードが違います。");
+        screen.getByRole("textbox", { name: "ユーザー名" }),
+      ).toHaveAccessibleDescription("ユーザー名かパスワードが違います。");
       expect(screen.getByLabelText("パスワード")).toHaveAttribute(
         "aria-invalid",
         "true",

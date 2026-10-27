@@ -18,7 +18,7 @@ export function Login({ error }: { error?: string }) {
           <div className="flex flex-col gap-1">
             <h1 className="text-xl font-bold tracking-tight">{signup ? "アカウント作成" : "ログイン"}</h1>
             <p className="text-caption text-muted-foreground">
-              {signup ? "名前とパスワードを決めて、招待コードを入力してください。" : "名前とパスワードを入力してください。"}
+              {signup ? "ユーザー名とパスワードを決めて、招待コードを入力してください。" : "ユーザー名とパスワードを入力してください。"}
             </p>
           </div>
           {/* key: switching modes starts with empty fields. */}
