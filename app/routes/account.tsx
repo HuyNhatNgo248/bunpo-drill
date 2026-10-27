@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { data, Form, useNavigation } from "react-router";
 import type { Route } from "./+types/account";
 import { AppHeader } from "~/components/app-header";
+import { PasswordField } from "~/components/password-field";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { requireUserId } from "~/lib/auth.server";
@@ -89,15 +90,16 @@ export default function Account({ loaderData, actionData }: Route.ComponentProps
           <h2 className="text-base font-semibold">パスワード</h2>
           <Form ref={passwordForm} method="post" className="flex flex-col gap-3">
             <input type="hidden" name="intent" value="password" />
-            <label className="flex flex-col gap-1.5">
-              <span className="text-[13px] font-medium">現在のパスワード</span>
-              <input type="password" name="current" required autoComplete="current-password" className={INPUT} />
-            </label>
-            <label className="flex flex-col gap-1.5">
-              <span className="text-[13px] font-medium">新しいパスワード</span>
-              <input type="password" name="next" required minLength={8} autoComplete="new-password" className={INPUT} />
-              <span className="text-xs text-muted-foreground">8文字以上</span>
-            </label>
+            <PasswordField label="現在のパスワード" name="current" required autoComplete="current-password" className={INPUT} />
+            <PasswordField
+              label="新しいパスワード"
+              hint="8文字以上"
+              name="next"
+              required
+              minLength={8}
+              autoComplete="new-password"
+              className={INPUT}
+            />
             <Status result={result("password")} />
             <Button type="submit" disabled={busy("password")} className="self-end">
               {busy("password") ? "変更中…" : "パスワードを変更"}

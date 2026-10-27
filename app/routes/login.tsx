@@ -1,6 +1,7 @@
 import { data, Form, Link, redirect, useNavigation, useSearchParams } from "react-router";
 import type { Route } from "./+types/login";
 import { AppHeader } from "~/components/app-header";
+import { PasswordField } from "~/components/password-field";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { checkSignupCode, isSignedIn, safeRedirect, signIn } from "~/lib/auth.server";
@@ -86,33 +87,27 @@ export default function Login({ actionData }: Route.ComponentProps) {
                 className={INPUT}
               />
             </label>
-            <label className="flex flex-col gap-1.5">
-              <span className="text-[13px] font-medium">パスワード</span>
-              <input
-                type="password"
-                name="password"
+            <PasswordField
+              label="パスワード"
+              hint={signup ? "8文字以上" : undefined}
+              name="password"
+              required
+              minLength={signup ? 8 : undefined}
+              autoComplete={signup ? "new-password" : "current-password"}
+              aria-invalid={invalid}
+              aria-describedby={error ? "login-error" : undefined}
+              className={INPUT}
+            />
+            {signup && (
+              <PasswordField
+                label="招待コード"
+                name="code"
                 required
-                minLength={signup ? 8 : undefined}
-                autoComplete={signup ? "new-password" : "current-password"}
+                autoComplete="off"
                 aria-invalid={invalid}
                 aria-describedby={error ? "login-error" : undefined}
                 className={INPUT}
               />
-              {signup && <span className="text-xs text-muted-foreground">8文字以上</span>}
-            </label>
-            {signup && (
-              <label className="flex flex-col gap-1.5">
-                <span className="text-[13px] font-medium">招待コード</span>
-                <input
-                  type="password"
-                  name="code"
-                  required
-                  autoComplete="off"
-                  aria-invalid={invalid}
-                  aria-describedby={error ? "login-error" : undefined}
-                  className={INPUT}
-                />
-              </label>
             )}
             {error && (
               <p id="login-error" role="alert" className="text-[13px] text-primary-soft-foreground">
