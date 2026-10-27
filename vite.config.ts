@@ -11,4 +11,9 @@ export default defineConfig({
   environments: {
     ssr: { build: { rollupOptions: { input: "./server/app.ts" } } },
   },
+  server: {
+    port: 3000,
+    strictPort: true,
+    allowedHosts: ["huyngo248-dev.org"],
+  },
 });
