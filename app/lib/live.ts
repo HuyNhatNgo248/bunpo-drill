@@ -1,21 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Answers } from "./views";
 
 /**
- * A WebSocket to the live view relay (server/app.ts) for one test; null until it's open.
- * It reconnects 2 s after a drop. Messages from the relay go to `onAnswers`.
+ * The answer sheet, kept the same on every page open on this test (live.server.ts relays it).
+ * The socket reconnects 2 s after a drop.
  */
-export function useLiveSocket(testId: string | null, onAnswers?: (answers: Answers) => void) {
+export function useLiveAnswers(testId: string) {
+  const [answers, setAnswers] = useState<Answers>({});
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  // The sheet last received, so it isn't sent straight back.
+  const received = useRef<Answers | null>(null);
+
   useEffect(() => {
-    if (!testId) return;
     let ws: WebSocket;
     let retry: ReturnType<typeof setTimeout>;
     let stopped = false;
     const connect = () => {
       ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/live/${testId}`);
       ws.onopen = () => setSocket(ws);
-      ws.onmessage = (event) => onAnswers?.(JSON.parse(event.data));
+      ws.onmessage = (event) => {
+        received.current = JSON.parse(event.data);
+        setAnswers(received.current!);
+      };
       ws.onclose = () => {
         setSocket(null);
         if (!stopped) retry = setTimeout(connect, 2000);
@@ -27,6 +33,16 @@ export function useLiveSocket(testId: string | null, onAnswers?: (answers: Answe
       clearTimeout(retry);
       ws.close();
     };
-  }, [testId, onAnswers]);
-  return socket;
+  }, [testId]);
+
+  // On (re)connect, only a sheet with answers is sent, so a page that just opened takes the others' instead of clearing them.
+  useEffect(() => {
+    if (socket && Object.keys(answers).length) socket.send(JSON.stringify(answers));
+  }, [socket]);
+
+  useEffect(() => {
+    if (answers !== received.current) socket?.send(JSON.stringify(answers));
+  }, [answers]);
+
+  return [answers, setAnswers] as const;
 }
