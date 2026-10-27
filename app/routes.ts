@@ -5,6 +5,7 @@ export default [
   route("login", "routes/login.tsx"),
   route("logout", "routes/logout.ts"),
   route("tests/:id", "routes/quiz.tsx"),
+  route("tests/:id/watch", "routes/watch.tsx"),
   route("tests/:id/results", "routes/results.tsx"),
   route("tests/:id/retake", "routes/retake.ts"),
   route("api/tests", "routes/api.tests.ts"),

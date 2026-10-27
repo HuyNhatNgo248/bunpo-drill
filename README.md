@@ -50,7 +50,17 @@ All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without 
 | `PATCH` | `/api/tests/:id` | `{ grammarId, reviewed }`: mark a review chip |
 | `DELETE` | `/api/tests/:id` | Delete one test |
 
-Pages: `/login`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/results`.
+Pages: `/login`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/watch` (live view), `/tests/:id/results`.
+
+## Live view
+
+Open `/tests/:id/watch` on another device (signed in) to follow a quiz while it's being taken:
+the answers, progress and passage blanks update as they're picked. It's read-only.
+
+The quiz page sends its answers over a WebSocket to `/live/:id`; `server/app.ts` passes them on
+to every watch page on that test and keeps the last ones in memory for a watch page that joins
+late. So the app needs one long-running Node server (`server.ts`, used by `pnpm dev` and
+`pnpm start`); serverless hosts like Vercel can't hold WebSockets.
 
 ## Storage
 

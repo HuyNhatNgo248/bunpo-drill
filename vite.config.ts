@@ -7,9 +7,8 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
-  // The jlpt-grammar-quiz skill posts to this port, so fail loudly instead of picking another.
-  server: {
-    port: 3001,
-    strictPort: true,
+  // The server build starts at server/app.ts, which server.ts runs (the port is set there).
+  environments: {
+    ssr: { build: { rollupOptions: { input: "./server/app.ts" } } },
   },
 });
