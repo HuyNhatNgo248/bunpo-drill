@@ -124,6 +124,13 @@ export async function addNote(testId: string, questionId: string, userId: number
   ]);
 }
 
+/** Changes a note's text, only when it's the user's own. */
+export async function editNote(testId: string, noteId: number, userId: number, text: string) {
+  await write([
+    { sql: "UPDATE notes SET text = ? WHERE id = ? AND test_id = ? AND user_id = ?", args: [text, noteId, testId, userId] },
+  ]);
+}
+
 /** Deletes a note, only when it's the user's own. */
 export async function deleteNote(testId: string, noteId: number, userId: number) {
   await write([{ sql: "DELETE FROM notes WHERE id = ? AND test_id = ? AND user_id = ?", args: [noteId, testId, userId] }]);

@@ -57,8 +57,9 @@ Pages: `/login`, `/account`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/
 
 ## Notes
 
-On the results page, every question has メモを追加 for tips, traps and ways to remember it. Each
-note shows who wrote it, and only they can delete it. Notes stay when the test is retaken, and
+On the results page, every question has メモを追加 for tips, traps and ways to remember it. Notes
+are Markdown (`react-markdown`, styled with the typography plugin; Enter starts a new line, raw HTML
+and images are left out). Each note shows who wrote it, and only they can edit or delete it. Notes stay when the test is retaken, and
 appear on other open pages right away (over the same WebSocket as the live answers).
 
 ## Live answers
