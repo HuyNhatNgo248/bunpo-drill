@@ -14,7 +14,7 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
       <input type="hidden" name="redirectTo" value={redirectTo} />
       <input type="hidden" name="intent" value={signup ? "signup" : "login"} />
       <label className="flex flex-col gap-1.5">
-        <span className="text-[13px] font-medium">名前</span>
+        <span className="text-caption font-medium">名前</span>
         <input
           name="name"
           required
@@ -49,7 +49,7 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
         />
       )}
       {error && (
-        <p id="login-error" role="alert" className="text-[13px] text-primary-soft-foreground">
+        <p id="login-error" role="alert" className="text-caption text-primary-soft-foreground">
           {error}
         </p>
       )}

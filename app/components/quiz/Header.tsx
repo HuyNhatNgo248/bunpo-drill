@@ -19,7 +19,7 @@ export function Header({
         back
         mobileTitle={title}
         mobileAside={
-          <span className="pr-2 text-[13px] text-subtle-foreground">
+          <span className="pr-2 text-caption text-subtle-foreground">
             {answered} / {total}
           </span>
         }

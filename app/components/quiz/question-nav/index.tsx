@@ -7,7 +7,7 @@ export function QuestionNav({ sections, answered, className }: QuestionListProps
   return (
     <nav
       aria-label="問題一覧"
-      className={cn("flex max-h-[calc(100dvh-7rem)] flex-col gap-4 overflow-y-auto rounded-xl border bg-card p-4", className)}
+      className={cn("flex max-h-sidebar flex-col gap-4 overflow-y-auto rounded-xl border bg-card p-4", className)}
     >
       <QuestionGrid sections={sections} answered={answered} onPick={jumpTo} />
     </nav>

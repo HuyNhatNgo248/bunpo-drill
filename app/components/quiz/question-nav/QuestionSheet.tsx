@@ -24,7 +24,7 @@ export function QuestionSheet({
         <button
           type="button"
           className={cn(
-            "flex h-11 w-full items-center gap-2 rounded-lg border bg-card px-3 text-left text-[13px] outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/40 md:h-10 md:w-auto md:text-sm",
+            "flex h-11 w-full items-center gap-2 rounded-lg border bg-card px-3 text-left text-caption outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/40 md:h-10 md:w-auto md:text-sm",
             className,
           )}
         >
@@ -36,7 +36,7 @@ export function QuestionSheet({
       </SheetTrigger>
       <SheetContent
         side="bottom"
-        className="max-h-[85dvh] gap-0 rounded-t-2xl"
+        className="max-h-sheet gap-0 rounded-t-2xl"
         // The sheet has closed and released the scroll lock: jump now instead of refocusing the button.
         onCloseAutoFocus={(event) => {
           if (target.current === null) return;

@@ -6,7 +6,7 @@ export function ProgressCard({ answered, total, percent }: { answered: number; t
   return (
     // h-18 at top-3 ends 84px down; the question list and passages stick at top-24 (96px), just below it.
     <Card className="sticky top-3 z-10 hidden h-18 flex-col justify-center gap-2.5 px-5 shadow-raised md:flex">
-      <span className="text-[13px] font-medium">
+      <span className="text-caption font-medium">
         回答済み {answered} / {total}
       </span>
       <Progress value={percent} minFill={1} aria-label="回答済み" className="h-2" />

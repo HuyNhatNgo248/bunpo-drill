@@ -21,7 +21,7 @@ export function ChoiceList({
     >
       {choices.map((choice, index) => (
         <RadioGroupCard key={index} value={String(index)}>
-          <span className="text-[13px] text-muted-foreground">{index + 1}</span>
+          <span className="text-caption text-muted-foreground">{index + 1}</span>
           <span lang="ja" className="font-jp text-base">
             {choice}
           </span>

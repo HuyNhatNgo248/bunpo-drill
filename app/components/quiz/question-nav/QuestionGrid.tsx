@@ -26,7 +26,7 @@ export function QuestionGrid({
             <ol
               className={cn(
                 "grid gap-1.5",
-                touch ? "grid-cols-[repeat(auto-fill,minmax(2.75rem,1fr))] gap-2" : "grid-cols-5",
+                touch ? "grid-cols-numbers gap-2" : "grid-cols-5",
               )}
             >
               {questions.map((question) => {

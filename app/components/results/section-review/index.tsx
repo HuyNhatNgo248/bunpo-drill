@@ -9,13 +9,13 @@ export function SectionReview({ section }: { section: ResultSection }) {
   return (
     <section className="flex flex-col gap-2.5 md:gap-3" aria-labelledby={`review-${section.no}`}>
       <div className="mt-1 flex items-baseline gap-2 md:gap-2.5">
-        <h3 id={`review-${section.no}`} lang="ja" className="font-jp text-[15px] font-bold md:text-base">
+        <h3 id={`review-${section.no}`} lang="ja" className="font-jp text-body-sm font-bold md:text-base">
           問題{section.no}
         </h3>
-        <span lang="ja" className="font-jp text-xs text-muted-foreground md:text-[13px]">
+        <span lang="ja" className="font-jp text-xs text-muted-foreground md:text-caption">
           {SECTION_TITLES[section.type]}
         </span>
-        <span className="ml-auto text-xs text-muted-foreground md:text-[13px]">
+        <span className="ml-auto text-xs text-muted-foreground md:text-caption">
           {section.correct} / {section.total}
         </span>
       </div>

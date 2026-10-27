@@ -38,7 +38,7 @@ export function GrammarChip({ testId, chip }: { testId: string; chip: ReviewChip
         <span lang="ja" className="font-jp text-base font-semibold">
           {chip.pattern}
         </span>
-        <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-[13px]">
+        <dl className="grid grid-cols-term gap-x-4 gap-y-1 text-caption">
           <dt className="text-muted-foreground">レベル</dt>
           <dd className="font-medium">{chip.level}</dd>
           <dt className="text-muted-foreground">週</dt>

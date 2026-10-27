@@ -4,13 +4,13 @@ import type { AccountResult } from "./types";
 export function Status({ result }: { result?: AccountResult }) {
   if (result?.error) {
     return (
-      <p role="alert" className="text-[13px] text-primary-soft-foreground">
+      <p role="alert" className="text-caption text-primary-soft-foreground">
         {result.error}
       </p>
     );
   }
   return result?.saved ? (
-    <p role="status" className="text-[13px] text-success">
+    <p role="status" className="text-caption text-success">
       {result.saved}
     </p>
   ) : null;

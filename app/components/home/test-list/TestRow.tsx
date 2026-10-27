@@ -40,10 +40,10 @@ export function TestRow({ test }: { test: TestSummary }) {
 
       <Link
         to={test.result ? `${quizHref}/results` : quizHref}
-        className="flex min-w-0 flex-1 flex-col gap-1 text-foreground no-underline md:flex-[999_1_380px] md:gap-2"
+        className="flex min-w-0 flex-1 flex-col gap-1 text-foreground no-underline md:flex-row-title md:gap-2"
       >
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="soft" className="text-[11px] md:text-xs">
+          <Badge variant="soft" className="text-2xs md:text-xs">
             {test.level}
           </Badge>
           <span className="text-base font-semibold">{test.title}</span>
@@ -53,7 +53,7 @@ export function TestRow({ test }: { test: TestSummary }) {
             </Badge>
           )}
         </div>
-        <div className="text-[13px] text-muted-foreground">
+        <div className="text-caption text-muted-foreground">
           {test.questionCount}問
           {weeks && <span lang="ja"> · {weeks}</span>}
         </div>
@@ -61,7 +61,7 @@ export function TestRow({ test }: { test: TestSummary }) {
 
       <DeleteTest test={test} className="-mt-2 -mr-2 md:hidden" />
 
-      <div className="grid w-full grid-cols-2 gap-2 md:flex md:w-auto md:flex-[1_1_auto] md:flex-wrap md:items-center md:justify-end">
+      <div className="grid w-full grid-cols-2 gap-2 md:flex md:w-auto md:flex-auto md:flex-wrap md:items-center md:justify-end">
         {test.result ? (
           <>
             {/* Retake clears the last result and review chips on the server, then opens the quiz. */}

@@ -5,11 +5,11 @@ import type { QuizView } from "~/lib/views";
 export function Title({ quiz }: { quiz: QuizView }) {
   return (
     <div className="hidden flex-col gap-2 md:flex">
-      <div className="flex flex-wrap items-center gap-2 text-[13px] text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-2 text-caption text-muted-foreground">
         <Badge>{quiz.level}</Badge>
         <span>{quiz.questionCount}問</span>
       </div>
-      <h1 className="text-[26px] font-bold tracking-tight">{quiz.title}</h1>
+      <h1 className="text-title font-bold tracking-tight">{quiz.title}</h1>
     </div>
   );
 }

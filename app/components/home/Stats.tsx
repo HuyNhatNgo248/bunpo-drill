@@ -6,7 +6,7 @@ export type HomeStats = { average: number | null; toReview: number; taken: numbe
 /** The average score, the grammar left to review, and how many of the `total` tests are taken. */
 export function Stats({ stats, total }: { stats: HomeStats; total: number }) {
   return (
-    <div className="grid grid-cols-3 gap-2 md:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] md:gap-3">
+    <div className="grid grid-cols-3 gap-2 md:grid-cols-stats md:gap-3">
       <StatCard label="平均正答率" value={stats.average === null ? "—" : `${stats.average}%`} />
       <StatCard label="要復習の文法" value={stats.toReview} />
       <StatCard
@@ -14,7 +14,7 @@ export function Stats({ stats, total }: { stats: HomeStats; total: number }) {
         value={
           <>
             {stats.taken}{" "}
-            <span className="text-[13px] font-normal text-muted-foreground md:text-sm">/ {total}</span>
+            <span className="text-caption font-normal text-muted-foreground md:text-sm">/ {total}</span>
           </>
         }
       />

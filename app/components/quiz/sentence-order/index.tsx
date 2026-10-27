@@ -72,7 +72,7 @@ export function SentenceOrder({
       onDragCancel={() => setDragging(null)}
     >
       <div className="flex flex-col gap-3 md:gap-4">
-        <div lang="ja" className="flex flex-wrap items-end gap-1.5 font-jp text-[17px] leading-[1.7] md:gap-2 md:text-xl">
+        <div lang="ja" className="flex flex-wrap items-end gap-1.5 font-jp text-prompt leading-sentence md:gap-2 md:text-xl">
           <span>{question.before}</span>
           {slots.map((piece, index) => (
             <SlotButton

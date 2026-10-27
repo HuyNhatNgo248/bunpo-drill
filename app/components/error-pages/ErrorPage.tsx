@@ -16,21 +16,21 @@ export function ErrorPage({ copy }: { copy: ErrorCopy }) {
       >
         <div
           aria-hidden="true"
-          className="flex size-20 items-center justify-center rounded-2xl bg-primary-soft text-[40px] font-bold text-primary md:size-24 md:text-5xl"
+          className="flex size-20 items-center justify-center rounded-2xl bg-primary-soft text-tile font-bold text-primary md:size-24 md:text-5xl"
         >
           {copy.kanji}
         </div>
 
         <div className="flex flex-col items-center gap-1.5">
-          <span className="text-[13px] font-semibold text-primary tabular-nums">エラー {copy.status}</span>
-          <h1 className="text-2xl font-bold tracking-tight md:text-[28px]">{copy.title}</h1>
+          <span className="text-caption font-semibold text-primary tabular-nums">エラー {copy.status}</span>
+          <h1 className="text-2xl font-bold tracking-tight md:text-title-lg">{copy.title}</h1>
         </div>
 
         {copy.description && (
-          <p className="max-w-105 text-[15px] leading-relaxed text-subtle-foreground">{copy.description}</p>
+          <p className="max-w-105 text-body-sm leading-relaxed text-subtle-foreground">{copy.description}</p>
         )}
 
-        <div className="flex w-full max-w-[320px] flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row">
+        <div className="flex w-full max-w-80 flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row">
           {copy.retry && (
             <Button onClick={() => window.location.reload()}>
               <RotateCw aria-hidden="true" />

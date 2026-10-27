@@ -13,7 +13,7 @@ export function Account({ name, result }: { name: string; result?: AccountResult
     <div className="min-h-screen">
       <AppHeader back mobileTitle="アカウント" />
       <main className="mx-auto flex max-w-130 flex-col gap-3.5 px-4 pt-4 pb-10 md:gap-5 md:px-6 md:pt-10 md:pb-16">
-        <h1 className="hidden text-[26px] font-bold tracking-tight md:block">アカウント</h1>
+        <h1 className="hidden text-title font-bold tracking-tight md:block">アカウント</h1>
         <NameForm name={name} result={resultOf("name")} />
         <PasswordForm result={resultOf("password")} />
         <Form method="post" action="/logout" className="self-start">

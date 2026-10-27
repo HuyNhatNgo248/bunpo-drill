@@ -3,7 +3,7 @@ import { buildPayload, GRAMMAR_ID } from "#mocks/factories/payload";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
 import { createTest, getTest } from "~/lib/tests.server";
-import { action } from "./api.tests.$id";
+import { action } from "../api.tests.$id";
 
 /** A well-formed id that no saved test has. */
 const UNKNOWN_ID = "20261027-000000";

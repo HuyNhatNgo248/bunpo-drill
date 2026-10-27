@@ -24,12 +24,12 @@ export function AppHeader({
         <div className="mx-auto flex max-w-260 flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-3.5">
           <Brand />
           {back && (
-            <Link to="/" className="text-[13px] text-subtle-foreground no-underline hover:text-foreground">
+            <Link to="/" className="text-caption text-subtle-foreground no-underline hover:text-foreground">
               ← テスト一覧
             </Link>
           )}
           {account && (
-            <Link to="/account" className="text-[13px] text-subtle-foreground no-underline hover:text-foreground">
+            <Link to="/account" className="text-caption text-subtle-foreground no-underline hover:text-foreground">
               アカウント
             </Link>
           )}

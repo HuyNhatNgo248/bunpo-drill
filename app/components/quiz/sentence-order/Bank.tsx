@@ -11,7 +11,7 @@ export function Bank({ questionId, children }: { questionId: string; children: R
       data-drop="bank"
       data-question={questionId}
       className={cn(
-        "flex min-h-11 flex-wrap gap-2 rounded-[10px] border border-dashed border-input bg-background p-2.5 md:p-3",
+        "flex min-h-11 flex-wrap gap-2 rounded-box border border-dashed border-input bg-background p-2.5 md:p-3",
         drop.isOver && "border-primary-border bg-primary-soft",
       )}
     >

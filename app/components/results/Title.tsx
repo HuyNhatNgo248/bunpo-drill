@@ -5,11 +5,11 @@ import type { ResultsView } from "~/lib/views";
 export function Title({ results }: { results: ResultsView }) {
   return (
     <div className="hidden flex-col gap-2 md:flex">
-      <div className="flex flex-wrap items-center gap-2 text-[13px] text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-2 text-caption text-muted-foreground">
         <Badge>{results.level}</Badge>
         <span>{results.title}</span>
       </div>
-      <h1 className="text-[26px] font-bold tracking-tight">結果</h1>
+      <h1 className="text-title font-bold tracking-tight">結果</h1>
     </div>
   );
 }

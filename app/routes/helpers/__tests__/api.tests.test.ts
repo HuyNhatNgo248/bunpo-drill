@@ -3,7 +3,7 @@ import { buildPayload } from "#mocks/factories/payload";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
 import { createTest, listTests } from "~/lib/tests.server";
-import { action, loader } from "./api.tests";
+import { action, loader } from "../api.tests";
 
 const URL = "https://bunpo.test/api/tests";
 

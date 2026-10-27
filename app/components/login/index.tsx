@@ -17,13 +17,13 @@ export function Login({ error }: { error?: string }) {
         <Card className="flex w-full max-w-95 flex-col gap-5 p-6 md:p-7">
           <div className="flex flex-col gap-1">
             <h1 className="text-xl font-bold tracking-tight">{signup ? "アカウント作成" : "ログイン"}</h1>
-            <p className="text-[13px] text-muted-foreground">
+            <p className="text-caption text-muted-foreground">
               {signup ? "名前とパスワードを決めて、招待コードを入力してください。" : "名前とパスワードを入力してください。"}
             </p>
           </div>
           {/* key: switching modes starts with empty fields. */}
           <LoginForm key={String(signup)} signup={signup} redirectTo={redirectTo} error={error} />
-          <p className="text-center text-[13px] text-muted-foreground">
+          <p className="text-center text-caption text-muted-foreground">
             {signup ? "アカウントをお持ちの方は " : "はじめての方は "}
             <Link to={`/login?${switchTo}`} className="font-medium text-primary underline-offset-4 hover:underline">
               {signup ? "ログイン" : "アカウントを作成"}

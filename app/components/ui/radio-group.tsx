@@ -25,7 +25,7 @@ function RadioGroupCard({
     <RadioGroupPrimitive.Item
       data-slot="radio-group-card"
       className={cn(
-        "group/radio m-px flex min-h-12 items-center gap-3 rounded-[10px] border bg-card px-3.5 text-left text-foreground outline-none md:min-h-13",
+        "group/radio m-px flex min-h-12 items-center gap-3 rounded-box border bg-card px-3.5 text-left text-foreground outline-none md:min-h-13",
         "hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/40",
         "data-[state=checked]:m-0 data-[state=checked]:border-2 data-[state=checked]:border-primary data-[state=checked]:bg-primary-soft",
         className
@@ -34,7 +34,7 @@ function RadioGroupCard({
     >
       <span
         aria-hidden="true"
-        className="size-4 flex-none rounded-full border-[1.5px] border-faint bg-card group-data-[state=checked]/radio:border-[5px] group-data-[state=checked]/radio:border-primary"
+        className="size-4 flex-none rounded-full border-line border-faint bg-card group-data-[state=checked]/radio:border-5 group-data-[state=checked]/radio:border-primary"
       />
       {children}
     </RadioGroupPrimitive.Item>

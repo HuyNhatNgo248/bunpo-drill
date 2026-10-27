@@ -11,18 +11,18 @@ export function QuestionReview({ question }: { question: ResultQuestion }) {
         !question.correct && "border-primary-border bg-primary-soft",
       )}
     >
-      <span className="flex size-6.5 items-center justify-center rounded-lg border bg-card text-xs font-semibold text-secondary-foreground md:size-7 md:text-[13px]">
+      <span className="flex size-6.5 items-center justify-center rounded-lg border bg-card text-xs font-semibold text-secondary-foreground md:size-7 md:text-caption">
         {question.num}
       </span>
 
       {question.prompt && (
-        <p lang="ja" className="font-jp text-[17px] leading-[1.7] md:text-lg">
+        <p lang="ja" className="font-jp text-prompt leading-sentence md:text-lg">
           {question.prompt.before}（{question.prompt.fill}）{question.prompt.after}
         </p>
       )}
 
       {question.sentence && (
-        <div lang="ja" className="flex flex-wrap items-center gap-1 font-jp text-base leading-[1.7] md:gap-1.5 md:text-lg">
+        <div lang="ja" className="flex flex-wrap items-center gap-1 font-jp text-base leading-sentence md:gap-1.5 md:text-lg">
           <span>{question.sentence.before}</span>
           {question.sentence.pieces.map((piece, i) => (
             <span
@@ -31,7 +31,7 @@ export function QuestionReview({ question }: { question: ResultQuestion }) {
                 "px-1.5 leading-7.5 md:px-2 md:leading-8",
                 piece.star
                   ? "rounded-md border border-success-border bg-success-soft font-semibold text-success"
-                  : "border-b-[1.5px] border-faint",
+                  : "border-b-line border-faint",
               )}
             >
               {piece.star ? `★ ${piece.text}` : piece.text}

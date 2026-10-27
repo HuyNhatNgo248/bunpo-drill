@@ -16,7 +16,7 @@ export function PasswordField({
   const [shown, setShown] = useState(false);
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-[13px] font-medium">
+      <label htmlFor={id} className="text-caption font-medium">
         {label}
       </label>
       <div className="relative flex">

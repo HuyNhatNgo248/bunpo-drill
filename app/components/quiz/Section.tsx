@@ -19,12 +19,12 @@ export function Section({
     <section className="mt-2 flex flex-col gap-3 md:mt-3" aria-labelledby={`section-${section.no}`}>
       <div lang="ja" className="flex flex-col gap-1 font-jp md:gap-1.5">
         <div className="flex items-baseline gap-2 md:gap-2.5">
-          <h2 id={`section-${section.no}`} className="text-base font-bold md:text-[17px]">
+          <h2 id={`section-${section.no}`} className="text-base font-bold md:text-prompt">
             問題{section.no}
           </h2>
-          <span className="text-xs text-muted-foreground md:text-[13px]">{SECTION_TITLES[section.type]}</span>
+          <span className="text-xs text-muted-foreground md:text-caption">{SECTION_TITLES[section.type]}</span>
         </div>
-        <p className="text-xs leading-[1.7] text-subtle-foreground md:text-[13px]">
+        <p className="text-xs leading-sentence text-subtle-foreground md:text-caption">
           {sectionInstruction(section.type, nums)}
         </p>
       </div>

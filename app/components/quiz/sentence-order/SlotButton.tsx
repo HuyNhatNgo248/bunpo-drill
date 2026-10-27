@@ -42,7 +42,7 @@ export function SlotButton({
       aria-disabled={undefined}
       aria-label={`${star ? "★の空欄" : `空欄${index + 1}`}${filled ? `：${text}（タップで外す）` : ""}`}
       className={cn(
-        "inline-flex h-10 min-w-16 touch-manipulation items-center justify-center gap-1 rounded-t-md border-b-2 px-2 font-jp text-[15px] outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:min-w-22 md:px-2.5 md:text-base",
+        "inline-flex h-10 min-w-16 touch-manipulation items-center justify-center gap-1 rounded-t-md border-b-2 px-2 font-jp text-body-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:min-w-22 md:px-2.5 md:text-base",
         filled
           ? "cursor-grab border-primary bg-primary-soft text-primary-soft-foreground"
           : "cursor-default border-faint bg-muted text-foreground",
@@ -50,7 +50,7 @@ export function SlotButton({
         drag.isDragging && "opacity-40",
       )}
     >
-      {star && <span className="text-xs text-primary md:text-[13px]">★</span>}
+      {star && <span className="text-xs text-primary md:text-caption">★</span>}
       <span>{text}</span>
     </button>
   );

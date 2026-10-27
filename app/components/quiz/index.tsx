@@ -26,7 +26,7 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
         <Title quiz={quiz} />
         <ProgressCard answered={answered} total={quiz.questionCount} percent={percent} />
 
-        <div className="flex flex-col gap-3.5 md:gap-5 lg:grid lg:grid-cols-[208px_minmax(0,1fr)] lg:items-start lg:gap-6">
+        <div className="flex flex-col gap-3.5 md:gap-5 lg:grid lg:grid-cols-quiz lg:items-start lg:gap-6">
           <QuestionNav sections={quiz.sections} answered={answeredIds} className="hidden lg:sticky lg:top-24 lg:flex" />
 
           <div className="flex min-w-0 flex-col gap-3.5 md:gap-5">

@@ -11,20 +11,20 @@ export function ScoreCard({ results }: { results: ResultsView }) {
 
   return (
     <Card className="flex flex-col gap-3.5 p-4 md:gap-1.5 md:p-6">
-      <div className="hidden text-[13px] text-muted-foreground md:block">得点</div>
+      <div className="hidden text-caption text-muted-foreground md:block">得点</div>
       <div className="flex items-baseline justify-between gap-3">
         <div className="flex items-baseline gap-2 md:gap-2.5">
-          <span className="text-4xl font-bold tracking-tighter md:text-[44px]">
+          <span className="text-4xl font-bold tracking-tighter md:text-score">
             {results.score} / {results.total}
           </span>
           <span className={cn("text-base font-semibold md:text-lg", passed ? "text-success" : "text-warning")}>
             {results.percent}%
           </span>
         </div>
-        <span className="text-[13px] text-muted-foreground md:hidden">不正解 {wrong}問</span>
+        <span className="text-caption text-muted-foreground md:hidden">不正解 {wrong}問</span>
       </div>
       <Progress value={results.percent} aria-label="得点" className="h-2" />
-      <div className="hidden text-[13px] text-muted-foreground md:block">
+      <div className="hidden text-caption text-muted-foreground md:block">
         不正解 {wrong}問 · 合格ライン {PASS_PERCENT}%
       </div>
     </Card>

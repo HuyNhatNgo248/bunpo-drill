@@ -3,22 +3,13 @@ import { buildPayload, GRAMMAR_ID } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
+import { thrownBy } from "#tests/helpers/thrown";
 import { createTest, getTest, saveSubmission, setReviewed } from "~/lib/tests.server";
-import { action, loader } from "./retake";
+import { action, loader } from "../retake";
 
 const UNKNOWN_ID = "20261027-000000";
 
 const retakeUrl = (id: string) => `https://bunpo.test/tests/${id}/retake`;
-
-/** Runs `run` and returns what it throws. Fails when it throws nothing. */
-async function thrownBy(run: () => Promise<unknown>): Promise<unknown> {
-  try {
-    await run();
-  } catch (thrown) {
-    return thrown;
-  }
-  throw new Error("expected the action to throw");
-}
 
 beforeEach(resetDatabase);
 

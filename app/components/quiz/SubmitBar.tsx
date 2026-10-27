@@ -34,7 +34,7 @@ export function SubmitBar({
   return (
     <div className="sticky bottom-0 z-10 -mx-4 mt-2 flex flex-col gap-2 border-t bg-card px-4 pt-3 pb-5 md:bottom-4 md:mx-0 md:mt-0 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-3 md:rounded-xl md:border md:px-4 md:py-3.5 md:shadow-float">
       {error && (
-        <span role="alert" className="w-full text-center text-[13px] text-primary-soft-foreground md:text-left md:text-sm">
+        <span role="alert" className="w-full text-center text-caption text-primary-soft-foreground md:text-left md:text-sm">
           {error}
         </span>
       )}
@@ -42,7 +42,7 @@ export function SubmitBar({
       <span role="status" className="hidden text-sm text-subtle-foreground lg:inline">
         {left > 0 ? `未回答 ${left}問` : "すべて回答済み"}
       </span>
-      <div className="grid grid-cols-[1fr_2fr] gap-2 md:flex">
+      <div className="grid grid-cols-actions gap-2 md:flex">
         <Button variant="outline" size="lg" onClick={onClear} className="text-secondary-foreground">
           <span className="md:hidden">クリア</span>
           <span className="hidden md:inline">回答をクリア</span>

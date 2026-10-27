@@ -4,7 +4,7 @@ import type { DragData } from "./types";
 
 /** The pill shape of a piece, in the bank and while it is dragged. */
 export const PILL =
-  "inline-flex min-h-11 touch-manipulation items-center gap-2 rounded-full border px-3.5 font-jp text-[15px] md:min-h-10";
+  "inline-flex min-h-11 touch-manipulation items-center gap-2 rounded-full border px-3.5 font-jp text-body-sm md:min-h-10";
 
 /** A piece in the bank: drag it to a slot, or tap it to fill the next empty slot. It greys out once placed. */
 export function BankPiece({

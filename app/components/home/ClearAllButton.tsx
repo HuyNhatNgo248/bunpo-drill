@@ -14,7 +14,7 @@ export function ClearAllButton({ count }: { count: number }) {
       confirmLabel="すべて削除"
       onConfirm={() => clearAll.submit(null, { method: "delete", action: "/api/tests" })}
     >
-      <Button variant="outline" className="px-3 text-[13px] text-secondary-foreground md:px-4 md:text-sm">
+      <Button variant="outline" className="px-3 text-caption text-secondary-foreground md:px-4 md:text-sm">
         <Trash2 aria-hidden="true" />
         <span className="md:hidden">すべて削除</span>
         <span className="hidden md:inline">模擬試験をすべて削除</span>
