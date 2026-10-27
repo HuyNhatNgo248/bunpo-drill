@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { checkName, checkNewPassword } from "./users";
+import { checkEmail, checkName, checkNewPassword, normalizeEmail } from "./users";
 
 describe("checkName", () => {
   it("accepts a name of 1 to 30 characters", () => {
@@ -26,5 +26,29 @@ describe("checkNewPassword", () => {
   it("rejects a password of fewer than 8 characters", () => {
     expect(checkNewPassword("1234567")).toBe("パスワードは8文字以上にしてください。");
     expect(checkNewPassword("")).toBe("パスワードは8文字以上にしてください。");
+  });
+});
+
+describe("normalizeEmail", () => {
+  it("drops the spaces around an email and writes it in lower case", () => {
+    expect(normalizeEmail("  Huy@Example.COM ")).toBe("huy@example.com");
+  });
+});
+
+describe("checkEmail", () => {
+  it("accepts an address with a name, an @ and a domain", () => {
+    expect(checkEmail("huy@example.com")).toBeNull();
+    expect(checkEmail("huy.ngo+bunpo@mail.example.jp")).toBeNull();
+  });
+
+  it("rejects an address without an @ or without a domain", () => {
+    expect(checkEmail("huy.example.com")).toBe("メールアドレスの形式が正しくありません。");
+    expect(checkEmail("huy@example")).toBe("メールアドレスの形式が正しくありません。");
+    expect(checkEmail("")).toBe("メールアドレスの形式が正しくありません。");
+  });
+
+  it("rejects an address with spaces, or longer than 254 characters", () => {
+    expect(checkEmail("huy ngo@example.com")).not.toBeNull();
+    expect(checkEmail(`${"a".repeat(250)}@example.com`)).not.toBeNull();
   });
 });

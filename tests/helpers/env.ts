@@ -9,3 +9,8 @@ export const SESSION_SECRET = "test-session-secret";
 export const SIGNUP_CODE = "test-signup-code";
 
 export const API_TOKEN = "test-api-token";
+
+/** The address that reset links start with. */
+export const APP_URL = "https://bunpo.test";
+
+export const MAIL_FROM = "文法ドリル <noreply@bunpo.test>";

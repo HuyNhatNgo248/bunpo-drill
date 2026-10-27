@@ -9,10 +9,10 @@ import type { AccountResult } from "./types";
 const NAME = "Huy";
 
 /** The account page, with the actions that its forms post to. */
-function renderAccount(result?: AccountResult) {
+function renderAccount(result?: AccountResult, email: string | null = null) {
   const page = recordingAction();
   const logout = recordingAction();
-  renderRoute(<Account name={NAME} result={result} />, {
+  renderRoute(<Account name={NAME} email={email} result={result} />, {
     url: "/account",
     action: page.action,
     routes: [{ path: "/logout", action: logout.action }],
@@ -36,7 +36,7 @@ describe("Account", () => {
 
     await userEvent.clear(field);
     await userEvent.type(field, "Mai");
-    await userEvent.click(screen.getByRole("button", { name: "保存" }));
+    await userEvent.click(cardOf("ユーザー名").getByRole("button", { name: "保存" }));
 
     await waitFor(() => expect(page).toEqual([{ method: "POST", path: "/account", body: { intent: "name", name: "Mai" } }]));
   });
@@ -51,6 +51,38 @@ describe("Account", () => {
     await waitFor(() =>
       expect(page[0]?.body).toEqual({ intent: "password", current: "old password", next: "new password" }),
     );
+  });
+
+  describe("the email form", () => {
+    it("shows the saved email", async () => {
+      renderAccount(undefined, "huy@example.com");
+
+      expect(await screen.findByRole("textbox", { name: "メールアドレス" })).toHaveValue("huy@example.com");
+    });
+
+    it("tells an account with no email why to add one", async () => {
+      renderAccount();
+      await screen.findByRole("heading", { name: "メールアドレス" });
+
+      expect(cardOf("メールアドレス").getByText("まだありません。登録すると、パスワードを忘れても再設定できます。")).toBeInTheDocument();
+    });
+
+    it("sends the email with the intent of the email form", async () => {
+      const { page } = renderAccount();
+
+      await userEvent.type(await screen.findByRole("textbox", { name: "メールアドレス" }), "huy@example.com");
+      await userEvent.click(cardOf("メールアドレス").getByRole("button", { name: "保存" }));
+
+      await waitFor(() => expect(page).toEqual([{ method: "POST", path: "/account", body: { intent: "email", email: "huy@example.com" } }]));
+    });
+
+    it("shows the answer under the email form", async () => {
+      renderAccount({ form: "email", error: "このメールアドレスはもう使われています。" });
+      await screen.findByRole("heading", { name: "メールアドレス" });
+
+      expect(cardOf("メールアドレス").getByRole("alert")).toHaveTextContent("このメールアドレスはもう使われています。");
+      expect(cardOf("ユーザー名").queryByRole("alert")).toBeNull();
+    });
   });
 
   describe("the answer of a form", () => {

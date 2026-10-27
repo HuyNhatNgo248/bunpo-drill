@@ -1,9 +1,9 @@
-import { existsSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 /** The tables that the app reads and writes. */
-const TABLES = ["reviewed", "tests", "users"];
+const TABLES = ["password_resets", "reviewed", "tests", "users"];
 
 /**
  * A fresh copy of db.server.ts. The module keeps one client for the life of the process,
@@ -47,6 +47,25 @@ describe("db", () => {
     const { rows } = await (await (await loadDb())()).execute("SELECT name FROM users WHERE name = 'kept'");
 
     expect(rows).toHaveLength(1);
+  });
+
+  it("adds the email column and its unique index to a users table from before emails", async () => {
+    const dir = path.join(process.env.DATA_DIR!, "old");
+    mkdirSync(dir);
+    vi.stubEnv("DATA_DIR", dir);
+    const { createClient } = await import("@libsql/client");
+    const old = createClient({ url: `file:${path.join(dir, "bunpo.db")}` });
+    await old.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE COLLATE NOCASE, password TEXT NOT NULL, created_at TEXT NOT NULL)");
+    await old.execute("INSERT INTO users (name, password, created_at) VALUES ('Huy', 'x', 'now')");
+    old.close();
+
+    const client = await (await loadDb())();
+
+    const { rows } = await client.execute("SELECT name, email FROM users");
+    expect(rows.map((row) => ({ ...row }))).toEqual([{ name: "Huy", email: null }]);
+    await client.execute("UPDATE users SET email = 'huy@example.com'");
+    await client.execute("INSERT INTO users (name, password, created_at) VALUES ('Mai', 'x', 'now')");
+    await expect(client.execute("UPDATE users SET email = 'huy@example.com' WHERE name = 'Mai'")).rejects.toThrow(/UNIQUE/);
   });
 
   describe("connecting", () => {

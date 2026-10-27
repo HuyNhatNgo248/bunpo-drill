@@ -1,0 +1,30 @@
+import { screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { renderRoute } from "#tests/helpers/render";
+import { AuthCard } from "./AuthCard";
+
+function renderCard() {
+  renderRoute(
+    <AuthCard title="ログイン" description="ユーザー名とパスワードを入力してください。">
+      <button type="button">ログイン</button>
+    </AuthCard>,
+    { url: "/login" },
+  );
+}
+
+describe("AuthCard", () => {
+  it("puts the form beside the notebook, with what the app is for under the drawing", async () => {
+    renderCard();
+
+    const card = (await screen.findByRole("heading", { name: "ログイン" })).closest("[data-slot=card]")!;
+    expect(card.querySelector("[data-hairline]")).not.toBeNull();
+    expect(card).toHaveTextContent("文法ノートから作る、JLPT形式の模擬試験。");
+    expect(card).toContainElement(screen.getByRole("button", { name: "ログイン" }));
+  });
+
+  it("captions the drawing with the six weeks while no tab is under the pointer", async () => {
+    renderCard();
+
+    expect(await screen.findByText("第1週〜第6週")).toHaveAttribute("aria-hidden", "true");
+  });
+});

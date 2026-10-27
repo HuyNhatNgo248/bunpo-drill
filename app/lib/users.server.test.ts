@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { resetDatabase } from "#tests/helpers/db";
 import { db } from "./db.server";
-import { changePassword, createUser, getUser, renameUser, verifyUser } from "./users.server";
+import { changePassword, createUser, findUserByEmail, getUser, renameUser, setEmail, verifyUser } from "./users.server";
 
 const PASSWORD = "correct horse battery";
 
@@ -18,7 +18,7 @@ describe("createUser", () => {
     const id = await createUser("Huy", PASSWORD);
 
     expect(id).toEqual(expect.any(Number));
-    expect(await getUser(id!)).toEqual({ id, name: "Huy" });
+    expect(await getUser(id!)).toEqual({ id, name: "Huy", email: null });
   });
 
   it("stores a salted hash, not the password", async () => {
@@ -29,6 +29,18 @@ describe("createUser", () => {
     expect(await storedPassword(first!)).not.toContain(PASSWORD);
     // A new salt for each user, so the same password gives a different hash.
     expect(await storedPassword(first!)).not.toBe(await storedPassword(second!));
+  });
+
+  it("saves the email that resets go to", async () => {
+    const id = await createUser("Huy", PASSWORD, "huy@example.com");
+
+    expect(await getUser(id!)).toEqual({ id, name: "Huy", email: "huy@example.com" });
+  });
+
+  it("returns null for an email that another user has", async () => {
+    await createUser("Huy", PASSWORD, "huy@example.com");
+
+    expect(await createUser("Mai", PASSWORD, "huy@example.com")).toBeNull();
   });
 
   it("returns null for a name that is taken, whatever its case", async () => {
@@ -74,7 +86,7 @@ describe("renameUser", () => {
     const id = await createUser("Huy", PASSWORD);
 
     expect(await renameUser(id!, "Huy N.")).toBe(true);
-    expect(await getUser(id!)).toEqual({ id, name: "Huy N." });
+    expect(await getUser(id!)).toEqual({ id, name: "Huy N.", email: null });
   });
 
   it("refuses a name that another user has, and keeps the old name", async () => {
@@ -82,7 +94,7 @@ describe("renameUser", () => {
     await createUser("Mai", PASSWORD);
 
     expect(await renameUser(id!, "mai")).toBe(false);
-    expect(await getUser(id!)).toEqual({ id, name: "Huy" });
+    expect(await getUser(id!)).toEqual({ id, name: "Huy", email: null });
   });
 
   it("returns false for an id that has no account", async () => {
@@ -108,5 +120,43 @@ describe("changePassword", () => {
 
   it("returns false for an id that has no account", async () => {
     expect(await changePassword(999, PASSWORD, "a new passphrase")).toBe(false);
+  });
+});
+
+describe("findUserByEmail", () => {
+  it("finds the user with the email", async () => {
+    const id = await createUser("Huy", PASSWORD, "huy@example.com");
+
+    expect(await findUserByEmail("huy@example.com")).toEqual({ id, name: "Huy", email: "huy@example.com" });
+  });
+
+  it("returns null for an email that no user has", async () => {
+    await createUser("Huy", PASSWORD);
+
+    expect(await findUserByEmail("huy@example.com")).toBeNull();
+  });
+});
+
+describe("setEmail", () => {
+  it("adds an email to an account that has none, and changes it later", async () => {
+    const id = await createUser("Huy", PASSWORD);
+
+    expect(await setEmail(id!, "huy@example.com")).toBe(true);
+    expect(await setEmail(id!, "huy@example.jp")).toBe(true);
+    expect((await getUser(id!))?.email).toBe("huy@example.jp");
+  });
+
+  it("keeps the email when the user saves it again unchanged", async () => {
+    const id = await createUser("Huy", PASSWORD, "huy@example.com");
+
+    expect(await setEmail(id!, "huy@example.com")).toBe(true);
+  });
+
+  it("refuses an email that another user has, and keeps the old one", async () => {
+    const id = await createUser("Huy", PASSWORD, "huy@example.com");
+    await createUser("Mai", PASSWORD, "mai@example.com");
+
+    expect(await setEmail(id!, "mai@example.com")).toBe(false);
+    expect((await getUser(id!))?.email).toBe("huy@example.com");
   });
 });

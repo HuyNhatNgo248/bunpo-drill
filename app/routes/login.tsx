@@ -2,8 +2,8 @@ import { data, redirect } from "react-router";
 import type { Route } from "./+types/login";
 import { Login } from "~/components/login";
 import { checkSignupCode, isSignedIn, safeRedirect, signIn } from "~/lib/auth.server";
-import { createUser, verifyUser } from "~/lib/users.server";
-import { checkName, checkNewPassword } from "~/lib/users";
+import { createUser, findUserByEmail, verifyUser } from "~/lib/users.server";
+import { checkEmail, checkName, checkNewPassword, normalizeEmail } from "~/lib/users";
 
 export function meta({ location }: Route.MetaArgs) {
   return [{ title: `${location.search.includes("mode=signup") ? "アカウント作成" : "ログイン"} · 文法ドリル` }];
@@ -28,9 +28,11 @@ export async function action({ request }: Route.ActionArgs) {
       await slowDown();
       return data({ error: "招待コードが違います。" }, { status: 401 });
     }
-    const invalid = checkName(name) ?? checkNewPassword(password);
+    const email = normalizeEmail(String(form.get("email") ?? ""));
+    const invalid = checkName(name) ?? checkEmail(email) ?? checkNewPassword(password);
     if (invalid) return data({ error: invalid }, { status: 400 });
-    const id = await createUser(name, password);
+    if (await findUserByEmail(email)) return data({ error: "このメールアドレスはもう使われています。" }, { status: 409 });
+    const id = await createUser(name, password, email);
     if (id === null) return data({ error: "このユーザー名はもう使われています。" }, { status: 409 });
     return signIn(request, id, redirectTo);
   }

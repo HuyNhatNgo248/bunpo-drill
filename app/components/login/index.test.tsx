@@ -58,7 +58,20 @@ describe("Login", () => {
     ).toHaveAttribute("href", "/login?mode=signup&redirectTo=%2Faccount");
   });
 
+  it("links to the page for a forgotten password", async () => {
+    renderLogin();
+
+    expect(await screen.findByRole("link", { name: "パスワードを忘れた場合" })).toHaveAttribute("href", "/forgot-password");
+  });
+
   describe("sign-up", () => {
+    it("asks for the email that a password reset goes to, and shows no forgot link", async () => {
+      renderLogin("/login?mode=signup");
+
+      expect(await screen.findByRole("textbox", { name: "メールアドレス" })).toBeRequired();
+      expect(screen.queryByRole("link", { name: "パスワードを忘れた場合" })).toBeNull();
+    });
+
     it("asks for the sign-up code too, and sends it with the sign-up intent", async () => {
       const requests = renderLogin("/login?mode=signup");
 
@@ -68,6 +81,10 @@ describe("Login", () => {
       await userEvent.type(
         screen.getByRole("textbox", { name: "ユーザー名" }),
         "Mai",
+      );
+      await userEvent.type(
+        screen.getByRole("textbox", { name: "メールアドレス" }),
+        "mai@example.com",
       );
       await userEvent.type(
         screen.getByLabelText("パスワード"),

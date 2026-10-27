@@ -28,13 +28,16 @@ function sessions() {
   return storage;
 }
 
+/** The pages a signed-out visitor can open: signing in, and getting back in after a forgotten password. */
+const PUBLIC_PAGES = new Set(["/login", "/forgot-password", "/reset-password"]);
+
 /**
  * Runs before every request (root middleware): no cookie means the login page, or a 401 for /api.
  * `url` is React Router's normalized URL: in-app navigations and form posts request "/login.data"
  * and the like, which it reports as "/login".
  */
 export async function requireSignIn(request: Request, url: URL) {
-  if (url.pathname === "/login" || (await isSignedIn(request))) return;
+  if (PUBLIC_PAGES.has(url.pathname) || (await isSignedIn(request))) return;
   if (url.pathname.startsWith("/api/")) {
     if (hasApiToken(request)) return;
     throw Response.json({ error: "Not signed in. Send BUNPO_API_TOKEN as a Bearer token." }, { status: 401 });

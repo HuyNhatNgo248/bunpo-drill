@@ -4,7 +4,7 @@ import path from "node:path";
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
 import { afterAll, afterEach, expect } from "vitest";
-import { API_TOKEN, SESSION_SECRET, SIGNUP_CODE } from "#tests/helpers/env";
+import { API_TOKEN, APP_URL, MAIL_FROM, SESSION_SECRET, SIGNUP_CODE } from "#tests/helpers/env";
 
 // Registered from `./matchers` rather than the `./vitest` entrypoint: that entrypoint imports
 // `expect` from vitest, but jest-dom declares no dependency on vitest, so pnpm cannot resolve it.
@@ -22,6 +22,8 @@ afterEach(() => {
  * So these values win over .env. An empty TURSO_DATABASE_URL makes db.server.ts open a SQLite file
  * in DATA_DIR, so no test reaches the Turso database that .env names.
  *
+ * An empty RESEND_API_KEY makes mail.server.ts print emails to the log, so no test sends a real email.
+ *
  * Each test file gets its own DATA_DIR. Test files that run at the same time do not share rows.
  */
 const dataDir = mkdtempSync(path.join(tmpdir(), "bunpo-test-"));
@@ -32,5 +34,8 @@ process.env.DATA_DIR = dataDir;
 process.env.SESSION_SECRET = SESSION_SECRET;
 process.env.APP_PASSWORD = SIGNUP_CODE;
 process.env.BUNPO_API_TOKEN = API_TOKEN;
+process.env.RESEND_API_KEY = "";
+process.env.MAIL_FROM = MAIL_FROM;
+process.env.APP_URL = APP_URL;
 
 afterAll(() => rmSync(dataDir, { recursive: true, force: true }));

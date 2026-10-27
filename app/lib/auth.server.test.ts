@@ -146,8 +146,10 @@ describe("requireSignIn", () => {
     await expect(check(await signedInRequest("/tests/20261027-abc123"))).resolves.toBeUndefined();
   });
 
-  it("lets anyone open the login page", async () => {
+  it("lets anyone open the login page, and the pages that reset a forgotten password", async () => {
     await expect(check(requestTo("/login"))).resolves.toBeUndefined();
+    await expect(check(requestTo("/forgot-password"))).resolves.toBeUndefined();
+    await expect(check(requestTo("/reset-password?token=x"))).resolves.toBeUndefined();
   });
 
   describe("an /api request with no cookie", () => {

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { z } from "zod";
 import {
   buildFillBlankQuestion,
   buildFillBlankSection,
@@ -11,7 +12,7 @@ import {
   buildSentenceOrderSection,
   GRAMMAR_ID,
 } from "#mocks/factories/payload";
-import { BLANK, parsePayload, splitPassage } from "./payload";
+import { BLANK, parsePayload, splitPassage, testPayloadSchema } from "./payload";
 
 /** A second grammar point on the same day, for the cases that need two. */
 const SECOND_POINT = buildGrammarPoint({
@@ -310,5 +311,17 @@ describe("splitPassage", () => {
     expect(splitPassage("毎日練習した。")).toEqual([
       { kind: "text", text: "毎日練習した。" },
     ]);
+  });
+});
+
+describe("the quiz skill's schema.json", () => {
+  it("matches the payload schema, so Claude and the app agree on the format", async () => {
+    // After a change to the schema, `pnpm schema` rewrites the file.
+    const schema = {
+      ...z.toJSONSchema(testPayloadSchema, { target: "draft-2020-12", unrepresentable: "any" }),
+      $id: "https://bunpo-drill.local/schema/test-payload.v1.json",
+    };
+
+    await expect(`${JSON.stringify(schema, null, 2)}\n`).toMatchFileSnapshot("../../.claude/skills/jlpt-grammar-quiz/schema.json");
   });
 });

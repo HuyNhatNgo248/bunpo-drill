@@ -162,4 +162,8 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+  /* The notebook drawing's plates are opaque in the ground colour; here that is the muted panel it sits on. */
+  [data-hairline] {
+    --hairline-plate: var(--muted);
+  }
 }

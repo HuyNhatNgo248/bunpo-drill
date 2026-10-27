@@ -27,7 +27,7 @@ describe("account loader", () => {
   it("gives the signed-in user", async () => {
     const request = await signedInRequest(userId, URL);
 
-    expect(await loader(routeArgs<Parameters<typeof loader>[0]>(request))).toEqual({ user: { id: userId, name: "Huy" } });
+    expect(await loader(routeArgs<Parameters<typeof loader>[0]>(request))).toEqual({ user: { id: userId, name: "Huy", email: null } });
   });
 
   it("throws a 401 for a request with no login cookie", async () => {
@@ -51,7 +51,7 @@ describe("account action", () => {
       expect(await post(userId, { intent: "name", name: "  Huy N.  " })).toMatchObject({
         data: { form: "name", saved: "ユーザー名を変更しました。" },
       });
-      expect(await getUser(userId)).toEqual({ id: userId, name: "Huy N." });
+      expect(await getUser(userId)).toEqual({ id: userId, name: "Huy N.", email: null });
     });
 
     it("answers 400 for a name of the wrong length", async () => {
@@ -66,6 +66,31 @@ describe("account action", () => {
 
       expect(await post(userId, { intent: "name", name: "Mai" })).toMatchObject({
         data: { form: "name", error: "このユーザー名はもう使われています。" },
+        init: { status: 409 },
+      });
+    });
+  });
+
+  describe("the email form", () => {
+    it("saves the email in lower case", async () => {
+      expect(await post(userId, { intent: "email", email: " Huy@Example.com " })).toMatchObject({
+        data: { form: "email", saved: "メールアドレスを保存しました。" },
+      });
+      expect((await getUser(userId))?.email).toBe("huy@example.com");
+    });
+
+    it("answers 400 for a value that is not an email", async () => {
+      expect(await post(userId, { intent: "email", email: "huy" })).toMatchObject({
+        data: { form: "email", error: "メールアドレスの形式が正しくありません。" },
+        init: { status: 400 },
+      });
+    });
+
+    it("answers 409 for an email that another account has", async () => {
+      await createUser("Mai", PASSWORD, "mai@example.com");
+
+      expect(await post(userId, { intent: "email", email: "mai@example.com" })).toMatchObject({
+        data: { form: "email", error: "このメールアドレスはもう使われています。" },
         init: { status: 409 },
       });
     });

@@ -26,17 +26,24 @@ Then ask Claude for a test, for example `/jlpt-grammar-quiz 第5週 1〜3日目`
 3. The server validates it again (shape plus cross-field rules) and saves it.
 
 The payload format is defined once, in `app/lib/payload.ts` (Zod). `pnpm schema`
-regenerates the skill's `schema.json` from it, and `pnpm typecheck` fails if they drift.
+regenerates the skill's `schema.json` from it, and `pnpm test` fails if they drift.
 
 ## Sign-in
 
 Accounts, in `app/lib/auth.server.ts` and `app/lib/users.server.ts`. Everyone signs up at
-`/login?mode=signup` with a username, a password and the sign-up code (`APP_PASSWORD`), so only people
-you give the code to can get in. All users see the same tests.
+`/login?mode=signup` with a username, an email, a password and the sign-up code (`APP_PASSWORD`), so
+only people you give the code to can get in. All users see the same tests.
 
 A root middleware checks every request: without the login cookie, pages redirect to `/login` and
 `/api` answers 401. Signing in sets a cookie signed with `SESSION_SECRET` for 30 days. `/account`
-changes your username or password and has ログアウト. Changing `SESSION_SECRET` signs everyone out.
+changes your username, email or password and has ログアウト. Changing `SESSION_SECRET` signs everyone out.
+
+Forgot password (`app/lib/password-reset.server.ts`): `/login` links to `/forgot-password`, which
+emails a link to `/reset-password` that works once, for an hour. The page answers the same whether
+or not an account has the email. Only a hash of each link's token is stored. Emails go out through
+[Resend](https://resend.com) (`RESEND_API_KEY`, `MAIL_FROM`) and the link starts with `APP_URL`; see
+`.env.example`. Without the key, `pnpm dev` prints each email to the server log. Accounts made before
+emails existed add theirs on `/account`.
 
 The quiz skill has no cookie, so `/api` also accepts `Authorization: Bearer <BUNPO_API_TOKEN>`.
 `post.sh` and `tests.sh` read the token from `.env` (or `BUNPO_API_TOKEN` in the environment).
@@ -69,10 +76,6 @@ JSON, plus `position`, the place you dragged it to in the list; new tests have n
 first, newest first). `reviewed` has a row per review chip marked reviewed. `users` has the accounts (passwords as
 salted scrypt hashes, in `app/lib/users.server.ts`). All queries are in
 `app/lib/tests.server.ts`.
-
-`pnpm db:import` copies tests from the old file storage (`data/tests/<id>.json` and
-`data/order.json`) into whichever database `.env` points at. Running it again skips tests that
-are already there; once they're in, the old files can be deleted.
 
 ## Theme
 

@@ -3,7 +3,10 @@ import { PasswordField } from "~/components/form/PasswordField";
 import { INPUT_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
 
-/** The name and password fields, and on sign-up the sign-up code. The error of the last try shows above the button. */
+/**
+ * The username and password fields; on sign-up also the email (where a password reset goes) and the sign-up code.
+ * The error of the last try shows above the button.
+ */
 export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redirectTo: string; error?: string }) {
   const pending = useNavigation().state !== "idle";
   const invalid = error ? true : undefined;
@@ -26,6 +29,25 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
           className={INPUT_CLASS}
         />
       </label>
+      {signup && (
+        // The hint stays outside the label, so a screen reader reads the field's name alone.
+        <div className="flex flex-col gap-1.5">
+          <label className="flex flex-col gap-1.5">
+            <span className="text-caption font-medium">メールアドレス</span>
+            <input
+              name="email"
+              type="email"
+              required
+              maxLength={254}
+              autoComplete="email"
+              aria-invalid={invalid}
+              aria-describedby={describedBy}
+              className={INPUT_CLASS}
+            />
+          </label>
+          <span className="text-xs text-muted-foreground">パスワードを忘れたときに、再設定のリンクを送ります。</span>
+        </div>
+      )}
       <PasswordField
         label="パスワード"
         hint={signup ? "8文字以上" : undefined}

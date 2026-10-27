@@ -5,7 +5,7 @@ import { routeArgs } from "#tests/helpers/route";
 import { cookieOf, signedInRequest } from "#tests/helpers/session";
 import { thrownBy } from "#tests/helpers/thrown";
 import { currentUserId } from "~/lib/auth.server";
-import { createUser, verifyUser } from "~/lib/users.server";
+import { createUser, findUserByEmail, verifyUser } from "~/lib/users.server";
 import { action, loader, meta } from "../login";
 
 const URL = "https://bunpo.test/login";
@@ -87,7 +87,7 @@ describe("login action", () => {
 
   describe("signing up", () => {
     const signUp = (fields: Record<string, string>) =>
-      post({ intent: "signup", name: "Mai", password: PASSWORD, code: SIGNUP_CODE, ...fields });
+      post({ intent: "signup", name: "Mai", email: "mai@example.com", password: PASSWORD, code: SIGNUP_CODE, ...fields });
 
     it("makes the account, signs it in, and goes on to the page", async () => {
       const response = (await signUp({ redirectTo: "/account" })) as Response;
@@ -109,6 +109,25 @@ describe("login action", () => {
         data: { error: "パスワードは8文字以上にしてください。" },
         init: { status: 400 },
       });
+    });
+
+    it("saves the email of the new account, in lower case", async () => {
+      await signUp({ email: " Mai@Example.com " });
+
+      expect(await findUserByEmail("mai@example.com")).toMatchObject({ name: "Mai" });
+    });
+
+    it("answers 400 for an email that is not an email", async () => {
+      expect(await signUp({ email: "mai" })).toMatchObject({
+        data: { error: "メールアドレスの形式が正しくありません。" },
+        init: { status: 400 },
+      });
+    });
+
+    it("answers 409 for an email that another account has", async () => {
+      await createUser("Huy", PASSWORD, "mai@example.com");
+
+      expect(await signUp({})).toMatchObject({ data: { error: "このメールアドレスはもう使われています。" }, init: { status: 409 } });
     });
 
     it("answers 409 for a name that is taken", async () => {

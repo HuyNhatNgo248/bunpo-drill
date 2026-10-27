@@ -2,11 +2,13 @@ import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { db } from "./db.server";
 
-/** Accounts: a name and a password, stored as a salted scrypt hash. */
+/** Accounts: a name, an email for password resets, and a password stored as a salted scrypt hash. */
+
+export type User = { id: number; name: string; email: string | null };
 
 const hash = promisify(scrypt) as (password: string, salt: Buffer, length: number) => Promise<Buffer>;
 
-async function hashPassword(password: string) {
+export async function hashPassword(password: string) {
   const salt = randomBytes(16);
   return `${salt.toString("hex")}:${(await hash(password, salt, 32)).toString("hex")}`;
 }
@@ -16,11 +18,20 @@ async function matches(password: string, stored: string) {
   return timingSafeEqual(await hash(password, Buffer.from(salt, "hex"), 32), Buffer.from(expected, "hex"));
 }
 
-/** Saves a new user and returns their id, or null when the name is taken. */
-export async function createUser(name: string, password: string): Promise<number | null> {
+const toUser = (row: Record<string, unknown>): User => ({
+  id: Number(row.id),
+  name: String(row.name),
+  email: row.email === null ? null : String(row.email),
+});
+
+/**
+ * Saves a new user and returns their id, or null when the name (or the email) is taken.
+ * The email must already be normalized (normalizeEmail).
+ */
+export async function createUser(name: string, password: string, email: string | null = null): Promise<number | null> {
   const { rows } = await (await db()).execute({
-    sql: "INSERT INTO users (name, password, created_at) VALUES (?, ?, ?) ON CONFLICT DO NOTHING RETURNING id",
-    args: [name, await hashPassword(password), new Date().toISOString()],
+    sql: "INSERT INTO users (name, password, email, created_at) VALUES (?, ?, ?, ?) ON CONFLICT DO NOTHING RETURNING id",
+    args: [name, await hashPassword(password), email, new Date().toISOString()],
   });
   return rows[0] ? Number(rows[0].id) : null;
 }
@@ -31,15 +42,27 @@ export async function verifyUser(name: string, password: string): Promise<number
   return rows[0] && (await matches(password, String(rows[0].password))) ? Number(rows[0].id) : null;
 }
 
-export async function getUser(id: number): Promise<{ id: number; name: string } | null> {
-  const { rows } = await (await db()).execute({ sql: "SELECT id, name FROM users WHERE id = ?", args: [id] });
-  return rows[0] ? { id: Number(rows[0].id), name: String(rows[0].name) } : null;
+export async function getUser(id: number): Promise<User | null> {
+  const { rows } = await (await db()).execute({ sql: "SELECT id, name, email FROM users WHERE id = ?", args: [id] });
+  return rows[0] ? toUser(rows[0]) : null;
+}
+
+/** The user with this normalized email, or null. */
+export async function findUserByEmail(email: string): Promise<User | null> {
+  const { rows } = await (await db()).execute({ sql: "SELECT id, name, email FROM users WHERE email = ?", args: [email] });
+  return rows[0] ? toUser(rows[0]) : null;
 }
 
 /** Renames a user. False when another user has the name. */
 export async function renameUser(id: number, name: string): Promise<boolean> {
   // OR IGNORE skips the row instead of failing when the name is taken.
   const result = await (await db()).execute({ sql: "UPDATE OR IGNORE users SET name = ? WHERE id = ?", args: [name, id] });
+  return result.rowsAffected > 0;
+}
+
+/** Sets the user's normalized email. False when another user has it. */
+export async function setEmail(id: number, email: string): Promise<boolean> {
+  const result = await (await db()).execute({ sql: "UPDATE OR IGNORE users SET email = ? WHERE id = ?", args: [email, id] });
   return result.rowsAffected > 0;
 }
 
