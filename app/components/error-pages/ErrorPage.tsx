@@ -1,6 +1,6 @@
 import { RotateCw } from "lucide-react";
 import { Link } from "react-router";
-import { AppHeader } from "~/components/app-header";
+import { AppHeader } from "~/components/layout/header";
 import { Button } from "~/components/ui/button";
 import type { ErrorCopy } from "~/lib/errors";
 
@@ -12,7 +12,7 @@ export function ErrorPage({ copy }: { copy: ErrorCopy }) {
       <AppHeader />
       <main
         lang="ja"
-        className="mx-auto flex max-w-[820px] flex-col items-center gap-5 px-4 pt-14 pb-16 text-center font-jp md:gap-6 md:px-6 md:pt-24"
+        className="mx-auto flex max-w-205 flex-col items-center gap-5 px-4 pt-14 pb-16 text-center font-jp md:gap-6 md:px-6 md:pt-24"
       >
         <div
           aria-hidden="true"
@@ -27,7 +27,7 @@ export function ErrorPage({ copy }: { copy: ErrorCopy }) {
         </div>
 
         {copy.description && (
-          <p className="max-w-[420px] text-[15px] leading-relaxed text-subtle-foreground">{copy.description}</p>
+          <p className="max-w-105 text-[15px] leading-relaxed text-subtle-foreground">{copy.description}</p>
         )}
 
         <div className="flex w-full max-w-[320px] flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row">

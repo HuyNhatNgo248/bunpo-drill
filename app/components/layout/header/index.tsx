@@ -1,16 +1,6 @@
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router";
-
-function Brand() {
-  return (
-    <Link to="/" className="flex items-center gap-2.5 text-foreground no-underline">
-      <span className="flex size-[30px] items-center justify-center rounded-lg bg-primary font-jp text-sm font-bold text-primary-foreground md:size-8 md:text-[15px]">
-        文
-      </span>
-      <span className="font-jp text-base font-semibold">文法ドリル</span>
-    </Link>
-  );
-}
+import { Brand } from "./Brand";
 
 /**
  * Desktop: brand on the left, "← テスト一覧" on the right when `back` is set,
@@ -31,7 +21,7 @@ export function AppHeader({
   return (
     <header className="border-b bg-card">
       <div className={mobileTitle ? "hidden md:block" : undefined}>
-        <div className="mx-auto flex max-w-[1040px] flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-3.5">
+        <div className="mx-auto flex max-w-260 flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-3.5">
           <Brand />
           {back && (
             <Link to="/" className="text-[13px] text-subtle-foreground no-underline hover:text-foreground">

@@ -12,6 +12,7 @@ React Router 8 (framework mode, SSR) · TypeScript · Tailwind 4 · shadcn/ui ·
 pnpm install
 cp .env.example .env # then set APP_PASSWORD, SESSION_SECRET and BUNPO_API_TOKEN (Turso is optional)
 pnpm dev             # http://localhost:3001, create an account with APP_PASSWORD as the code
+pnpm test            # tests next to the files in app/lib, app/routes/helpers and app/components; a temp SQLite file per test file, never Turso
 ```
 
 Then ask Claude for a test, for example `/jlpt-grammar-quiz 第5週 1〜3日目` or
@@ -45,7 +46,7 @@ The quiz skill has no cookie, so `/api` also accepts `Authorization: Bearer <BUN
 All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without either, 401.
 
 | Method | Path | Does |
-|---|---|---|
+| --- | --- | --- |
 | `POST` | `/api/tests` | Save a test. 201 → `{ id, url }`; 400 → `{ error, issues: [{ path, message }] }` |
 | `GET` | `/api/tests` | All tests with last score and grammar to review |
 | `PATCH` | `/api/tests` | `{ order: [id, …] }`: set the list order, top first (what dragging on `/` does) |

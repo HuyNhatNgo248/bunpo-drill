@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import type { Route } from "./+types/root";
-import { ErrorPage } from "~/components/error-page";
+import { ErrorPage } from "~/components/error-pages/ErrorPage";
 import { requireSignIn } from "~/lib/auth.server";
 import { describeError } from "~/lib/errors";
 import "./tailwind.css";

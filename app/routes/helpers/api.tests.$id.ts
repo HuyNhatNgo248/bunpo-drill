@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Route } from "./+types/api.test";
+import type { Route } from "./+types/api.tests.$id";
 import { deleteTest, setReviewed } from "~/lib/tests.server";
 
 const reviewedSchema = z.object({ grammarId: z.string().min(1), reviewed: z.boolean() });

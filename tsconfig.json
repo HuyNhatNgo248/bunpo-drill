@@ -13,7 +13,8 @@
     ],
     "types": [
       "node",
-      "vite/client"
+      "vite/client",
+      "@testing-library/jest-dom/vitest"
     ],
     "target": "ES2022",
     "module": "ES2022",
@@ -26,6 +27,12 @@
     "paths": {
       "~/*": [
         "./app/*"
+      ],
+      "#mocks/*": [
+        "./mocks/*"
+      ],
+      "#tests/*": [
+        "./tests/*"
       ]
     },
     "esModuleInterop": true,
