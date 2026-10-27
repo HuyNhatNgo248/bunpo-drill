@@ -4,29 +4,36 @@ import { Form, Link, redirect } from "react-router";
 import type { Route } from "./+types/results";
 import { AppHeader } from "~/components/app-header";
 import { GrammarChips } from "~/components/grammar-chips";
+import { QuestionNotes } from "~/components/question-notes";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
+import { requireUserId } from "~/lib/auth.server";
 import { testNotFound } from "~/lib/errors";
 import { toResultsView } from "~/lib/grading.server";
+import { useLiveNotes } from "~/lib/live";
 import { PASS_PERCENT, SECTION_TITLES } from "~/lib/sections";
-import { getTest } from "~/lib/tests.server";
-import type { ResultQuestion, ResultSection, ResultSegment } from "~/lib/views";
+import { getTest, listNotes } from "~/lib/tests.server";
+import type { Note, ResultQuestion, ResultSection, ResultSegment } from "~/lib/views";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return [{ title: loaderData ? `結果 · ${loaderData.results.title} · 文法ドリル` : "文法ドリル" }];
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const test = await getTest(params.id);
+export async function loader({ request, params }: Route.LoaderArgs) {
+  const [test, notes, userId] = await Promise.all([getTest(params.id), listNotes(params.id), requireUserId(request)]);
   if (!test) throw testNotFound();
   if (!test.submission) throw redirect(`/tests/${test.id}`);
-  return { results: toResultsView(test, test.submission) };
+  return { results: toResultsView(test, test.submission), notes, userId };
 }
 
+/** What each question card needs to show and add notes. */
+type NotesProps = { testId: string; notes: Record<string, Note[]>; userId: number };
+
 export default function Results({ loaderData }: Route.ComponentProps) {
-  const { results } = loaderData;
+  const { results, notes, userId } = loaderData;
+  useLiveNotes(results.id);
   const wrong = results.total - results.score;
   const passed = results.percent >= PASS_PERCENT;
 
@@ -74,7 +81,7 @@ export default function Results({ loaderData }: Route.ComponentProps) {
         <h2 className="mt-1.5 text-base font-semibold md:mt-2 md:text-lg">解答の確認</h2>
 
         {results.sections.map((section) => (
-          <SectionReview key={section.no} section={section} />
+          <SectionReview key={section.no} section={section} notes={{ testId: results.id, notes, userId }} />
         ))}
 
         <div className="mt-1 grid grid-cols-2 gap-2 md:mt-0 md:flex md:justify-end">
@@ -96,7 +103,7 @@ export default function Results({ loaderData }: Route.ComponentProps) {
   );
 }
 
-function SectionReview({ section }: { section: ResultSection }) {
+function SectionReview({ section, notes }: { section: ResultSection; notes: NotesProps }) {
   return (
     <section className="flex flex-col gap-2.5 md:gap-3" aria-labelledby={`review-${section.no}`}>
       <div className="mt-1 flex items-baseline gap-2 md:gap-2.5">
@@ -115,7 +122,7 @@ function SectionReview({ section }: { section: ResultSection }) {
         <Fragment key={g}>
           {group.segments && <PassageReview segments={group.segments} />}
           {group.questions.map((question) => (
-            <QuestionReview key={question.id} question={question} />
+            <QuestionReview key={question.id} question={question} notes={notes} />
           ))}
         </Fragment>
       ))}
@@ -150,7 +157,7 @@ function PassageReview({ segments }: { segments: ResultSegment[] }) {
   );
 }
 
-function QuestionReview({ question }: { question: ResultQuestion }) {
+function QuestionReview({ question, notes }: { question: ResultQuestion; notes: NotesProps }) {
   return (
     <Card
       className={cn(
@@ -198,6 +205,13 @@ function QuestionReview({ question }: { question: ResultQuestion }) {
           正解：{question.answer}
         </span>
       </div>
+
+      <QuestionNotes
+        testId={notes.testId}
+        questionId={question.id}
+        notes={notes.notes[question.id] ?? []}
+        userId={notes.userId}
+      />
     </Card>
   );
 }

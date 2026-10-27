@@ -22,6 +22,20 @@ const SCHEMA = [
     grammar_id TEXT NOT NULL,
     PRIMARY KEY (test_id, grammar_id)
   )`,
+  `CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE COLLATE NOCASE, -- shown on notes; "Huy" and "huy" are the same name
+    password TEXT NOT NULL, -- "<salt hex>:<scrypt hash hex>"
+    created_at TEXT NOT NULL
+  )`,
+  `CREATE TABLE IF NOT EXISTS notes (
+    id INTEGER PRIMARY KEY,
+    test_id TEXT NOT NULL REFERENCES tests (id),
+    question_id TEXT NOT NULL,
+    user_id INTEGER NOT NULL REFERENCES users (id),
+    text TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  )`,
 ];
 
 let ready: Promise<Client> | undefined;

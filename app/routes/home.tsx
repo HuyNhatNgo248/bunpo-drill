@@ -89,7 +89,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="min-h-screen">
-      <AppHeader logout />
+      <AppHeader account />
       <main lang="ja" className="mx-auto flex max-w-[1040px] flex-col gap-4 px-4 pt-5 pb-10 md:gap-6 md:px-6 md:pt-10 md:pb-16">
         <div className="flex flex-wrap items-center justify-between gap-3 md:gap-4">
           <h1 className="text-2xl font-bold tracking-tight md:text-[28px]">模擬試験</h1>

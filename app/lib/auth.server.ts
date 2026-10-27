@@ -3,12 +3,13 @@ import { createCookieSessionStorage, redirect, type SessionStorage } from "react
 import { requiredEnv } from "./env.server";
 
 /**
- * One person, one password (APP_PASSWORD). Signing in sets a signed cookie for
- * 30 days. The quiz skill has no cookie, so /api also takes BUNPO_API_TOKEN as
- * a Bearer token. Changing SESSION_SECRET signs everyone out.
+ * Users sign up (with APP_PASSWORD as the sign-up code) and sign in with a name and
+ * password (users.server.ts). Signing in sets a signed cookie holding the user's id for
+ * 30 days. The quiz skill has no cookie, so /api also takes BUNPO_API_TOKEN as a Bearer
+ * token. Changing SESSION_SECRET signs everyone out.
  */
 
-let storage: SessionStorage<{ signedIn: true }> | undefined;
+let storage: SessionStorage<{ userId: number }> | undefined;
 
 // Created on first use, so a missing SESSION_SECRET fails the request instead of the server start.
 function sessions() {
@@ -42,17 +43,33 @@ export async function requireSignIn(request: Request, url: URL) {
 }
 
 export async function isSignedIn(request: Request) {
-  const session = await sessions().getSession(request.headers.get("Cookie"));
-  return session.get("signedIn") === true;
+  return (await currentUserId(request)) !== null;
 }
 
-export function checkPassword(password: string) {
-  return same(password, requiredEnv("APP_PASSWORD"));
+/**
+ * The signed-in user's id, or null. Older cookies from before accounts have none.
+ * shortcut: trusts the signed cookie without a database lookup; check the user exists if users can be deleted.
+ */
+export async function currentUserId(request: Request): Promise<number | null> {
+  const session = await sessions().getSession(request.headers.get("Cookie"));
+  return session.get("userId") ?? null;
 }
 
-export async function signIn(request: Request, redirectTo: string) {
+/** The signed-in user's id; pages behind the root middleware always have one, /api calls may not. */
+export async function requireUserId(request: Request): Promise<number> {
+  const id = await currentUserId(request);
+  if (id === null) throw Response.json({ error: "Sign in to do this." }, { status: 401 });
+  return id;
+}
+
+/** Sign-up needs APP_PASSWORD, so only people it's shared with can make an account. */
+export function checkSignupCode(code: string) {
+  return same(code, requiredEnv("APP_PASSWORD"));
+}
+
+export async function signIn(request: Request, userId: number, redirectTo: string) {
   const session = await sessions().getSession(request.headers.get("Cookie"));
-  session.set("signedIn", true);
+  session.set("userId", userId);
   return redirect(redirectTo, { headers: { "Set-Cookie": await sessions().commitSession(session) } });
 }
 

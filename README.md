@@ -11,7 +11,7 @@ React Router 8 (framework mode, SSR) · TypeScript · Tailwind 4 · shadcn/ui ·
 ```sh
 pnpm install
 cp .env.example .env # then set APP_PASSWORD, SESSION_SECRET and BUNPO_API_TOKEN (Turso is optional)
-pnpm dev             # http://localhost:3001, sign in with APP_PASSWORD
+pnpm dev             # http://localhost:3001, create an account with APP_PASSWORD as the code
 ```
 
 Then ask Claude for a test, for example `/jlpt-grammar-quiz 第5週 1〜3日目` or
@@ -29,10 +29,13 @@ regenerates the skill's `schema.json` from it, and `pnpm typecheck` fails if the
 
 ## Sign-in
 
-One password for one person, in `app/lib/auth.server.ts`. A root middleware checks every request:
-without the login cookie, pages redirect to `/login` and `/api` answers 401. Signing in with
-`APP_PASSWORD` sets a cookie signed with `SESSION_SECRET` for 30 days; ログアウト on the home page
-clears it, and changing `SESSION_SECRET` signs everyone out.
+Accounts, in `app/lib/auth.server.ts` and `app/lib/users.server.ts`. Everyone signs up at
+`/login?mode=signup` with a name, a password and the sign-up code (`APP_PASSWORD`), so only people
+you give the code to can get in. All users see the same tests; the name shows on the notes they write.
+
+A root middleware checks every request: without the login cookie, pages redirect to `/login` and
+`/api` answers 401. Signing in sets a cookie signed with `SESSION_SECRET` for 30 days. `/account`
+changes your name or password and has ログアウト. Changing `SESSION_SECRET` signs everyone out.
 
 The quiz skill has no cookie, so `/api` also accepts `Authorization: Bearer <BUNPO_API_TOKEN>`.
 `post.sh` and `tests.sh` read the token from `.env` (or `BUNPO_API_TOKEN` in the environment).
@@ -50,7 +53,13 @@ All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without 
 | `PATCH` | `/api/tests/:id` | `{ grammarId, reviewed }`: mark a review chip |
 | `DELETE` | `/api/tests/:id` | Delete one test |
 
-Pages: `/login`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/results`.
+Pages: `/login`, `/account`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/results`.
+
+## Notes
+
+On the results page, every question has メモを追加 for tips, traps and ways to remember it. Each
+note shows who wrote it, and only they can delete it. Notes stay when the test is retaken, and
+appear on other open pages right away (over the same WebSocket as the live answers).
 
 ## Live answers
 
@@ -73,7 +82,8 @@ A libSQL (SQLite) database, set up in `app/lib/db.server.ts`:
 
 The tables are created on first use. `tests` has a row per test (payload and last submission as
 JSON, plus `position`, the place you dragged it to in the list; new tests have none and show
-first, newest first). `reviewed` has a row per review chip marked reviewed. All queries are in
+first, newest first). `reviewed` has a row per review chip marked reviewed. `users` has the accounts (passwords as
+salted scrypt hashes, in `app/lib/users.server.ts`) and `notes` the notes on questions. All queries are in
 `app/lib/tests.server.ts`.
 
 `pnpm db:import` copies tests from the old file storage (`data/tests/<id>.json` and

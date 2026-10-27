@@ -1,5 +1,5 @@
 import { ChevronLeft } from "lucide-react";
-import { Form, Link } from "react-router";
+import { Link } from "react-router";
 
 function Brand() {
   return (
@@ -14,17 +14,17 @@ function Brand() {
 
 /**
  * Desktop: brand on the left, "← テスト一覧" on the right when `back` is set,
- * or a ログアウト button when `logout` is set.
+ * or an アカウント link when `account` is set.
  * Mobile: with a `mobileTitle`, a back chevron and the title replace the brand.
  */
 export function AppHeader({
   back = false,
-  logout = false,
+  account = false,
   mobileTitle,
   mobileAside,
 }: {
   back?: boolean;
-  logout?: boolean;
+  account?: boolean;
   mobileTitle?: string;
   mobileAside?: React.ReactNode;
 }) {
@@ -38,12 +38,10 @@ export function AppHeader({
               ← テスト一覧
             </Link>
           )}
-          {logout && (
-            <Form method="post" action="/logout">
-              <button type="submit" className="text-[13px] text-subtle-foreground hover:text-foreground">
-                ログアウト
-              </button>
-            </Form>
+          {account && (
+            <Link to="/account" className="text-[13px] text-subtle-foreground no-underline hover:text-foreground">
+              アカウント
+            </Link>
           )}
         </div>
       </div>

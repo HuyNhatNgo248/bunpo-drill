@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import { useRevalidator } from "react-router";
 import type { Answers } from "./views";
 
 /**
- * The answer sheet, kept the same on every page open on this test (live.server.ts relays it).
- * The socket reconnects 2 s after a drop.
+ * A WebSocket to the live relay (live.server.ts) for one test; null until it's open.
+ * It reconnects 2 s after a drop. Answers from the relay go to `onAnswers`; a notes
+ * change reloads the page's data.
  */
-export function useLiveAnswers(testId: string) {
-  const [answers, setAnswers] = useState<Answers>({});
+function useLiveSocket(testId: string, onAnswers?: (answers: Answers) => void) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  // The sheet last received, so it isn't sent straight back.
-  const received = useRef<Answers | null>(null);
+  const { revalidate } = useRevalidator();
 
   useEffect(() => {
     let ws: WebSocket;
@@ -19,8 +19,9 @@ export function useLiveAnswers(testId: string) {
       ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/live/${testId}`);
       ws.onopen = () => setSocket(ws);
       ws.onmessage = (event) => {
-        received.current = JSON.parse(event.data);
-        setAnswers(received.current!);
+        const message = JSON.parse(event.data);
+        if (message.notes) revalidate();
+        else onAnswers?.(message.answers);
       };
       ws.onclose = () => {
         setSocket(null);
@@ -34,6 +35,24 @@ export function useLiveAnswers(testId: string) {
       ws.close();
     };
   }, [testId]);
+
+  return socket;
+}
+
+/** Shows notes added or deleted on another page as they happen. */
+export function useLiveNotes(testId: string) {
+  useLiveSocket(testId);
+}
+
+/** The answer sheet, kept the same on every page open on this test. */
+export function useLiveAnswers(testId: string) {
+  const [answers, setAnswers] = useState<Answers>({});
+  // The sheet last received, so it isn't sent straight back.
+  const received = useRef<Answers | null>(null);
+  const socket = useLiveSocket(testId, (answers) => {
+    received.current = answers;
+    setAnswers(answers);
+  });
 
   // On (re)connect, only a sheet with answers is sent, so a page that just opened takes the others' instead of clearing them.
   useEffect(() => {

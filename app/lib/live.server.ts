@@ -8,6 +8,7 @@ import { submittedAnswersSchema } from "./grading.server";
  * Live answers: every quiz page on a test connects to /live/:id and sends its answers
  * on each change. The relay keeps the last ones and sends them to every page on that
  * test (the sender too, so all pages end on the same answers). A page that joins gets them.
+ * Messages to pages are {"answers"} or {"notes": true} (notes changed: reload them).
  * shortcut: kept in memory, so they're lost on restart and need one server instance; use Redis to run several.
  */
 
@@ -38,11 +39,16 @@ export async function upgrade(req: IncomingMessage, socket: Duplex, head: Buffer
       } catch {
         return; // Not answers; ignored like a bad request.
       }
-      room.answers = JSON.stringify(answers);
+      room.answers = JSON.stringify({ answers });
       for (const other of room.sockets) other.send(room.answers);
     });
     ws.on("close", () => room.sockets.delete(ws));
   });
+}
+
+/** Tells every page on a test that its notes changed. */
+export function notifyNotes(id: string) {
+  for (const ws of rooms.get(id)?.sockets ?? []) ws.send(JSON.stringify({ notes: true }));
 }
 
 /** Drops a test's live answers once it's submitted or retaken, so the next attempt starts blank. */
