@@ -14,7 +14,8 @@ let storage: SessionStorage<{ signedIn: true }> | undefined;
 function sessions() {
   storage ??= createCookieSessionStorage({
     cookie: {
-      name: "__session",
+      // Its own name: cookies are shared by every app on localhost, whatever the port.
+      name: "bunpo_session",
       httpOnly: true,
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
