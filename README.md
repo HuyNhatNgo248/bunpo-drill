@@ -31,7 +31,7 @@ regenerates the skill's `schema.json` from it, and `pnpm typecheck` fails if the
 
 Accounts, in `app/lib/auth.server.ts` and `app/lib/users.server.ts`. Everyone signs up at
 `/login?mode=signup` with a name, a password and the sign-up code (`APP_PASSWORD`), so only people
-you give the code to can get in. All users see the same tests; the name shows on the notes they write.
+you give the code to can get in. All users see the same tests.
 
 A root middleware checks every request: without the login cookie, pages redirect to `/login` and
 `/api` answers 401. Signing in sets a cookie signed with `SESSION_SECRET` for 30 days. `/account`
@@ -55,24 +55,6 @@ All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without 
 
 Pages: `/login`, `/account`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/results`.
 
-## Notes
-
-On the results page, every question has メモを追加 for tips, traps and ways to remember it. Notes
-are Markdown (`react-markdown`, styled with the typography plugin; Enter starts a new line, raw HTML
-and images are left out). Each note shows who wrote it, and only they can edit or delete it. Notes stay when the test is retaken, and
-appear on other open pages right away (over the same WebSocket as the live answers).
-
-## Live answers
-
-Open the same `/tests/:id` on two devices (both signed in), for example yours and your teacher's:
-an answer picked on one shows up on the other right away. A page opened later takes the answers so
-far; submitting or retaking starts the next attempt blank.
-
-Each quiz page sends its answers over a WebSocket to `/live/:id`; `app/lib/live.server.ts` passes
-them to every page on that test and keeps the last ones in memory. So the app needs one long-running
-Node server (`server.ts`, used by `pnpm dev` and `pnpm start`); serverless hosts like Vercel can't
-hold WebSockets.
-
 ## Storage
 
 A libSQL (SQLite) database, set up in `app/lib/db.server.ts`:
@@ -84,7 +66,7 @@ A libSQL (SQLite) database, set up in `app/lib/db.server.ts`:
 The tables are created on first use. `tests` has a row per test (payload and last submission as
 JSON, plus `position`, the place you dragged it to in the list; new tests have none and show
 first, newest first). `reviewed` has a row per review chip marked reviewed. `users` has the accounts (passwords as
-salted scrypt hashes, in `app/lib/users.server.ts`) and `notes` the notes on questions. All queries are in
+salted scrypt hashes, in `app/lib/users.server.ts`). All queries are in
 `app/lib/tests.server.ts`.
 
 `pnpm db:import` copies tests from the old file storage (`data/tests/<id>.json` and

@@ -1,5 +1,5 @@
 import { cn } from "cn";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { data, redirect, useNavigation, useSubmit } from "react-router";
 import { z } from "zod";
 import type { Route } from "./+types/quiz";
@@ -15,8 +15,6 @@ import { RadioGroup, RadioGroupCard } from "~/components/ui/radio-group";
 import { submittedAnswersSchema, toQuizView, toSubmission } from "~/lib/grading.server";
 import { questionAnchor, SECTION_TITLES, sectionInstruction } from "~/lib/sections";
 import { testNotFound } from "~/lib/errors";
-import { useLiveAnswers } from "~/lib/live";
-import { forgetLive } from "~/lib/live.server";
 import { getTest, saveSubmission } from "~/lib/tests.server";
 import type { Answers, QuizQuestion, QuizSection, QuizSegment, QuizView } from "~/lib/views";
 
@@ -36,7 +34,6 @@ export async function action({ request, params }: Route.ActionArgs) {
   const body = z.object({ answers: submittedAnswersSchema }).safeParse(await request.json().catch(() => null));
   if (!body.success) return data({ error: "回答を読み取れませんでした。もう一度お試しください。" }, { status: 400 });
   await saveSubmission(test.id, toSubmission(test.payload, body.data.answers));
-  forgetLive(test.id);
   return redirect(`/tests/${test.id}/results`);
 }
 
@@ -46,7 +43,7 @@ export default function QuizRoute({ loaderData, actionData }: Route.ComponentPro
 }
 
 function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
-  const [answers, setAnswers] = useLiveAnswers(quiz.id);
+  const [answers, setAnswers] = useState<Answers>({});
   const submit = useSubmit();
   const submitting = useNavigation().state !== "idle";
 

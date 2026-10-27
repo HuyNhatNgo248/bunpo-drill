@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@plugin "@tailwindcss/typography";
 
 /* Dark mode is opt-in via a .dark class (the app ships light only). */
 @custom-variant dark (&:is(.dark *));
@@ -124,20 +123,4 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-}
-
-/* Markdown in notes uses the typography plugin's .prose; its colors come from the tokens above. */
-.prose {
-  --tw-prose-body: var(--foreground);
-  --tw-prose-headings: var(--foreground);
-  --tw-prose-bold: var(--foreground);
-  --tw-prose-links: var(--primary);
-  --tw-prose-counters: var(--muted-foreground);
-  --tw-prose-bullets: var(--faint);
-  --tw-prose-hr: var(--border);
-  --tw-prose-quotes: var(--muted-foreground);
-  --tw-prose-quote-borders: var(--faint);
-  --tw-prose-code: var(--foreground);
-  --tw-prose-pre-code: var(--foreground);
-  --tw-prose-pre-bg: var(--card);
 }

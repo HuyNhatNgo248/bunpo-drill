@@ -1,14 +1,12 @@
 import { redirect } from "react-router";
 import type { Route } from "./+types/retake";
 import { testNotFound } from "~/lib/errors";
-import { forgetLive } from "~/lib/live.server";
 import { resetTest } from "~/lib/tests.server";
 
 /** POST /tests/:id/retake: clear the last result and review chips, then open the quiz. */
 export async function action({ params }: Route.ActionArgs) {
   const test = await resetTest(params.id);
   if (!test) throw testNotFound();
-  forgetLive(test.id);
   return redirect(`/tests/${test.id}`);
 }
 

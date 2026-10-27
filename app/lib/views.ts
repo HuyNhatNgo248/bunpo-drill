@@ -58,9 +58,6 @@ export type ResultQuestion = {
   sentence: { before: string; after: string; pieces: { text: string; star: boolean }[] } | null;
 };
 
-/** A note on a question, written by a user. */
-export type Note = { id: number; questionId: string; userId: number; author: string; text: string };
-
 export type ResultSegment =
   | { kind: "text"; text: string }
   | { kind: "blank"; num: number; fill: string; correct: boolean };

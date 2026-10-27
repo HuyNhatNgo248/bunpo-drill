@@ -2,12 +2,12 @@ import { randomBytes } from "node:crypto";
 import type { InStatement, Row } from "@libsql/client";
 import { db } from "./db.server";
 import { testPayloadSchema, type TestPayload } from "./payload";
-import type { Answers, Note } from "./views";
+import type { Answers } from "./views";
 
 /**
  * Storage in the database from db.server.ts: a `tests` row per test holding the
  * payload, the last submission and its place in the home list, and a `reviewed`
- * row per review chip marked reviewed. `notes` rows are notes on questions, by user.
+ * row per review chip marked reviewed.
  */
 
 export type Submission = {
@@ -93,53 +93,9 @@ export async function setReviewed(id: string, grammarId: string, reviewed: boole
   return getTest(id);
 }
 
-/** A test's notes in the order written, grouped by question id. */
-export async function listNotes(testId: string): Promise<Record<string, Note[]>> {
-  const { rows } = await (await db()).execute({
-    sql: `SELECT notes.id, question_id, user_id, users.name, text FROM notes
-      JOIN users ON users.id = notes.user_id WHERE test_id = ? ORDER BY notes.id`,
-    args: [testId],
-  });
-  const notes: Record<string, Note[]> = {};
-  for (const row of rows) {
-    const questionId = String(row.question_id);
-    (notes[questionId] ??= []).push({
-      id: Number(row.id),
-      questionId,
-      userId: Number(row.user_id),
-      author: String(row.name),
-      text: String(row.text),
-    });
-  }
-  return notes;
-}
-
-export async function addNote(testId: string, questionId: string, userId: number, text: string) {
-  await write([
-    {
-      // Selecting from tests adds nothing when the test doesn't exist.
-      sql: "INSERT INTO notes (test_id, question_id, user_id, text, created_at) SELECT id, ?, ?, ?, ? FROM tests WHERE id = ?",
-      args: [questionId, userId, text, new Date().toISOString(), testId],
-    },
-  ]);
-}
-
-/** Changes a note's text, only when it's the user's own. */
-export async function editNote(testId: string, noteId: number, userId: number, text: string) {
-  await write([
-    { sql: "UPDATE notes SET text = ? WHERE id = ? AND test_id = ? AND user_id = ?", args: [text, noteId, testId, userId] },
-  ]);
-}
-
-/** Deletes a note, only when it's the user's own. */
-export async function deleteNote(testId: string, noteId: number, userId: number) {
-  await write([{ sql: "DELETE FROM notes WHERE id = ? AND test_id = ? AND user_id = ?", args: [noteId, testId, userId] }]);
-}
-
 export async function deleteTest(id: string): Promise<boolean> {
   if (!ID.test(id)) return false;
-  const [, , deleted] = await write([
-    { sql: "DELETE FROM notes WHERE test_id = ?", args: [id] },
+  const [, deleted] = await write([
     { sql: "DELETE FROM reviewed WHERE test_id = ?", args: [id] },
     { sql: "DELETE FROM tests WHERE id = ?", args: [id] },
   ]);
@@ -147,7 +103,7 @@ export async function deleteTest(id: string): Promise<boolean> {
 }
 
 export async function deleteAllTests(): Promise<number> {
-  const [, , deleted] = await write(["DELETE FROM notes", "DELETE FROM reviewed", "DELETE FROM tests"]);
+  const [, deleted] = await write(["DELETE FROM reviewed", "DELETE FROM tests"]);
   return deleted.rowsAffected;
 }
 

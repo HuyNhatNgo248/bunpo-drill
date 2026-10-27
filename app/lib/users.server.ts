@@ -2,7 +2,7 @@ import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { db } from "./db.server";
 
-/** Accounts: a name (shown on notes) and a password, stored as a salted scrypt hash. */
+/** Accounts: a name and a password, stored as a salted scrypt hash. */
 
 const hash = promisify(scrypt) as (password: string, salt: Buffer, length: number) => Promise<Buffer>;
 
