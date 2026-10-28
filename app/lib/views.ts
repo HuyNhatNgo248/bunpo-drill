@@ -56,6 +56,8 @@ export type ResultQuestion = {
   prompt: { before: string; after: string; fill: string } | null;
   /** sentence-order: the full sentence with pieces in the correct order. */
   sentence: { before: string; after: string; pieces: { text: string; star: boolean }[] } | null;
+  /** Why the answer is right, or null for a test made without explanations. */
+  explanation: string | null;
 };
 
 export type ResultSegment =

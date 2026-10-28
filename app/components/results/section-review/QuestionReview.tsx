@@ -2,7 +2,7 @@ import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import type { ResultQuestion } from "~/lib/views";
 
-/** One graded question: the sentence with the right answer in place, the learner's answer when wrong, and the answer. */
+/** One graded question: the sentence with the right answer in place, the learner's answer when wrong, the answer and why. */
 export function QuestionReview({ question }: { question: ResultQuestion }) {
   return (
     <Card
@@ -51,6 +51,12 @@ export function QuestionReview({ question }: { question: ResultQuestion }) {
           正解：{question.answer}
         </span>
       </div>
+
+      {question.explanation && (
+        <p lang="en" className="text-caption leading-relaxed text-secondary-foreground md:text-sm">
+          {question.explanation}
+        </p>
+      )}
     </Card>
   );
 }

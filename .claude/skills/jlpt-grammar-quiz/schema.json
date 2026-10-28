@@ -118,6 +118,12 @@
                     "minimum": 0,
                     "maximum": 3,
                     "description": "0-based index of the correct option in choices."
+                  },
+                  "explanation": {
+                    "description": "Shown under the answer on the results page. In English, one or two sentences: why the answer fits and what rules out the other choices (sentence-order: why the ★ piece goes in its slot).",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 400
                   }
                 },
                 "required": [
@@ -197,6 +203,12 @@
                     "minimum": 1,
                     "maximum": 4,
                     "description": "1-based slot that holds ★. Only the piece in this slot is graded."
+                  },
+                  "explanation": {
+                    "description": "Shown under the answer on the results page. In English, one or two sentences: why the answer fits and what rules out the other choices (sentence-order: why the ★ piece goes in its slot).",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 400
                   }
                 },
                 "required": [
@@ -275,6 +287,12 @@
                           "minimum": 0,
                           "maximum": 3,
                           "description": "0-based index of the correct option in choices."
+                        },
+                        "explanation": {
+                          "description": "Shown under the answer on the results page. In English, one or two sentences: why the answer fits and what rules out the other choices (sentence-order: why the ★ piece goes in its slot).",
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 400
                         }
                       },
                       "required": [

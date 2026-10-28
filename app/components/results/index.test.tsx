@@ -1,7 +1,13 @@
 import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { buildPayload } from "#mocks/factories/payload";
+import {
+  buildFillBlankQuestion,
+  buildFillBlankSection,
+  buildPassageSection,
+  buildPayload,
+  buildSentenceOrderSection,
+} from "#mocks/factories/payload";
 import { buildResultsView, buildReviewChip } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute } from "#tests/helpers/render";
@@ -13,6 +19,19 @@ import { Results } from ".";
 const SECTIONS = gradeTest(buildPayload(), { q1: 0, q2: [1, 0, 2, 3] }).sections;
 
 const FAILED = buildResultsView({ score: 1, total: 3, percent: 33, sections: SECTIONS, review: [buildReviewChip({ pattern: "〜かいがある" })] });
+
+const EXPLAINED = buildResultsView({
+  sections: gradeTest(
+    buildPayload({
+      sections: [
+        buildFillBlankSection({ questions: [buildFillBlankQuestion({ explanation: "The effort paid off, so かいがあって." })] }),
+        buildSentenceOrderSection(),
+        buildPassageSection(),
+      ],
+    }),
+    {},
+  ).sections,
+});
 
 const PASSED = buildResultsView({ score: 3, total: 3, percent: 100, review: [] });
 
@@ -98,6 +117,14 @@ describe("Results", () => {
       renderResults(FAILED);
 
       expect(await screen.findByText("（3）かいがあって")).toBeInTheDocument();
+    });
+
+    it("explains the answer under it, for a question that has an explanation", async () => {
+      renderResults(EXPLAINED);
+      await screen.findByRole("region", { name: "問題1" });
+
+      expect(within(reviewOf(1)).getByText("The effort paid off, so かいがあって.")).toBeInTheDocument();
+      expect(within(reviewOf(2)).queryByText(/かいがあって\./)).toBeNull();
     });
   });
 

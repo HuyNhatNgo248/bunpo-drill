@@ -1,5 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { buildGrammarPoint, buildPassage, buildPassageSection, buildPayload, GRAMMAR_ID } from "#mocks/factories/payload";
+import {
+  buildFillBlankQuestion,
+  buildFillBlankSection,
+  buildGrammarPoint,
+  buildPassage,
+  buildPassageSection,
+  buildPayload,
+  buildSentenceOrderSection,
+  GRAMMAR_ID,
+} from "#mocks/factories/payload";
 import { buildStoredTest, buildSubmission } from "#mocks/factories/tests";
 import {
   gradeTest,
@@ -127,6 +136,15 @@ describe("gradeTest", () => {
   it("writes the learner's answer and the right one as number and text", () => {
     expect(questionOf({ q1: 0 }, "q1")).toMatchObject({ correct: false, yours: "1 かいもなく", answer: "3 かいがあって" });
     expect(questionOf({ q2: [null, null, 0, null] }, "q2")).toMatchObject({ yours: "1 練習した", answer: "3 かいが" });
+  });
+
+  it("carries a question's explanation into its result, and null for a question without one", () => {
+    const explained = buildFillBlankQuestion({ explanation: "かいがあって needs a result that is good." });
+    const payload = buildPayload({ sections: [buildFillBlankSection({ questions: [explained] }), buildSentenceOrderSection(), buildPassageSection()] });
+
+    const [q1, q2] = gradeTest(payload, {}).sections.flatMap((s) => s.groups.flatMap((g) => g.questions));
+
+    expect([q1.explanation, q2.explanation]).toEqual(["かいがあって needs a result that is good.", null]);
   });
 
   it("gives no learner's answer for a question left blank", () => {

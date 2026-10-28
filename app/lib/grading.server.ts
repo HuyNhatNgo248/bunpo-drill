@@ -111,6 +111,7 @@ export function gradeTest(payload: TestPayload, answers: Answers) {
       answer: label(q.choices, q.answerIndex),
       prompt: { before, after, fill: q.choices[q.answerIndex] },
       sentence: null,
+      explanation: q.explanation ?? null,
     };
   });
 
@@ -132,6 +133,7 @@ export function gradeTest(payload: TestPayload, answers: Answers) {
         after: q.after,
         pieces: q.correctOrder.map((piece, slot) => ({ text: q.pieces[piece], star: slot === star })),
       },
+      explanation: q.explanation ?? null,
     };
   });
 
@@ -146,6 +148,7 @@ export function gradeTest(payload: TestPayload, answers: Answers) {
       answer: label(q.choices, q.answerIndex),
       prompt: null,
       sentence: null,
+      explanation: q.explanation ?? null,
     };
   };
 

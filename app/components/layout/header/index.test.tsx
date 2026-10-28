@@ -1,5 +1,7 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute } from "#tests/helpers/render";
 import { AppHeader } from ".";
 
@@ -30,6 +32,15 @@ describe("AppHeader", () => {
 
     expect(await screen.findByRole("link", { name: "← テスト一覧" })).toHaveAttribute("href", "/");
     expect(linkTo("アカウント")).toHaveAttribute("href", "/account");
+  });
+
+  it("logs out through the logout route with `account`", async () => {
+    const { action, requests } = recordingAction();
+    renderRoute(<AppHeader account />, { routes: [{ path: "/logout", action }] });
+
+    await userEvent.click(await screen.findByRole("button", { name: "ログアウト" }));
+
+    await waitFor(() => expect(requests).toEqual([{ method: "POST", path: "/logout", body: null }]));
   });
 
   it("shows the mobile title with a back chevron and the extra content", async () => {

@@ -45,6 +45,15 @@ const answerIndex = z
   .max(3)
   .describe("0-based index of the correct option in choices.");
 
+const explanation = z
+  .string()
+  .min(1)
+  .max(400)
+  .optional()
+  .describe(
+    "Shown under the answer on the results page. In English, one or two sentences: why the answer fits and what rules out the other choices (sentence-order: why the ★ piece goes in its slot).",
+  );
+
 export const grammarPointSchema = z
   .strictObject({
     id: z
@@ -68,6 +77,7 @@ export const fillBlankQuestionSchema = z.strictObject({
     .describe(`One sentence containing the blank ${BLANK} exactly once.`),
   choices,
   answerIndex,
+  explanation,
 });
 
 export const sentenceOrderQuestionSchema = z.strictObject({
@@ -89,6 +99,7 @@ export const sentenceOrderQuestionSchema = z.strictObject({
     .min(1)
     .max(4)
     .describe("1-based slot that holds ★. Only the piece in this slot is graded."),
+  explanation,
 });
 
 export const passageQuestionSchema = z.strictObject({
@@ -97,6 +108,7 @@ export const passageQuestionSchema = z.strictObject({
   grammarId,
   choices,
   answerIndex,
+  explanation,
 });
 
 export const fillBlankSectionSchema = z.strictObject({

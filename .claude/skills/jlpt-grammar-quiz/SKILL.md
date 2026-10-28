@@ -100,6 +100,10 @@ word or two swapped: new situation, new subject, new wording. The notes tell you
 - Spread `answerIndex` (and the ★ piece's position in `pieces`) evenly over 0–3, and don't let
   the right answer always be the longest.
 - Read every sentence once with each choice. If two choices work, rewrite the question.
+- Give every question an `explanation`, its last key: one or two sentences in English (at most
+  400 characters) on why the answer fits and what rules out the others, with the rule from the
+  notes (`な-adjectives take で: 心配でたまらない. かなわない is not used for feelings.`). For
+  sentence-order, say why the ★ piece goes in its slot. The app shows it only on the results page.
 
 ## 5. Build the payload
 
@@ -121,17 +125,17 @@ to show the shape; a real test uses the counts from step 1.
     {
       "type": "fill-blank",
       "questions": [
-        { "id": "q1", "grammarId": "n3-w5-d1-g1", "prompt": "この店は、平日（　　）、週末もとても混んでいる。", "choices": ["に対して", "について", "はもちろん", "として"], "answerIndex": 2 },
-        { "id": "q2", "grammarId": "n3-w5-d1-g2", "prompt": "あの店の料理はおいしくない（　　）、値段もとても高い。", "choices": ["はもちろん", "ばかりか", "に比べて", "に対して"], "answerIndex": 1 },
-        { "id": "q3", "grammarId": "n3-w5-d1-g3", "prompt": "今年の夏は、去年（　　）雨が少なかった。", "choices": ["に対して", "ばかりか", "はもちろん", "に比べて"], "answerIndex": 3 },
-        { "id": "q4", "grammarId": "n3-w5-d1-g4", "prompt": "田中先生は、どの学生（　　）も同じように優しい。", "choices": ["に対して", "に比べて", "について", "によって"], "answerIndex": 0 }
+        { "id": "q1", "grammarId": "n3-w5-d1-g1", "prompt": "この店は、平日（　　）、週末もとても混んでいる。", "choices": ["に対して", "について", "はもちろん", "として"], "answerIndex": 2, "explanation": "Weekdays are the obvious case and weekends the addition, marked by も: 平日はもちろん、週末も. The other choices add nothing." },
+        { "id": "q2", "grammarId": "n3-w5-d1-g2", "prompt": "あの店の料理はおいしくない（　　）、値段もとても高い。", "choices": ["はもちろん", "ばかりか", "に比べて", "に対して"], "answerIndex": 1, "explanation": "ばかりか adds a second bad point after a plain verb. はもちろん needs a noun or の, and に比べて / に対して compare instead of adding." },
+        { "id": "q3", "grammarId": "n3-w5-d1-g3", "prompt": "今年の夏は、去年（　　）雨が少なかった。", "choices": ["に対して", "ばかりか", "はもちろん", "に比べて"], "answerIndex": 3, "explanation": "This summer is measured against last year: 去年に比べて. に対して sets two sides against each other, and ばかりか / はもちろん add." },
+        { "id": "q4", "grammarId": "n3-w5-d1-g4", "prompt": "田中先生は、どの学生（　　）も同じように優しい。", "choices": ["に対して", "に比べて", "について", "によって"], "answerIndex": 0, "explanation": "The kindness is directed at every student: どの学生に対しても. に比べて compares, について is about, and によって is depending on." }
       ]
     },
     {
       "type": "sentence-order",
       "questions": [
-        { "id": "q5", "grammarId": "n3-w5-d1-g2", "before": "この薬は", "after": "ある。", "pieces": ["まで", "効かない", "副作用", "ばかりか"], "correctOrder": [1, 3, 2, 0], "starSlot": 3 },
-        { "id": "q6", "grammarId": "n3-w5-d1-g1", "before": "彼女は英語", "after": "そうだ。", "pieces": ["話せる", "まで", "はもちろん", "中国語"], "correctOrder": [2, 3, 1, 0], "starSlot": 2 }
+        { "id": "q5", "grammarId": "n3-w5-d1-g2", "before": "この薬は", "after": "ある。", "pieces": ["まで", "効かない", "副作用", "ばかりか"], "correctOrder": [1, 3, 2, 0], "starSlot": 3, "explanation": "効かないばかりか副作用まである: after ばかりか comes the worse extra, 副作用, which まで marks. So ★ is 副作用." },
+        { "id": "q6", "grammarId": "n3-w5-d1-g1", "before": "彼女は英語", "after": "そうだ。", "pieces": ["話せる", "まで", "はもちろん", "中国語"], "correctOrder": [2, 3, 1, 0], "starSlot": 2, "explanation": "英語はもちろん中国語まで話せる: はもちろん follows the obvious case, and the surprising one takes まで. So ★ is 中国語." }
       ]
     },
     {
@@ -140,8 +144,8 @@ to show the shape; a real test uses the counts from step 1.
         {
           "passage": "私が住んでいる町は、十年前[7]ずいぶん便利になった。駅前に大きなスーパーや病院ができて、生活がとても楽になった。若い人たちがその便利さを喜んでいる[8]、お年寄りの中には、昔の静かな町をなつかしく思う人も多い。町が変わることは、いいことばかりではないのかもしれない。",
           "questions": [
-            { "id": "q7", "blank": 7, "grammarId": "n3-w5-d1-g3", "choices": ["に対して", "に比べて", "はもちろん", "ばかりか"], "answerIndex": 1 },
-            { "id": "q8", "blank": 8, "grammarId": "n3-w5-d1-g4", "choices": ["ばかりか", "はもちろん", "のに対して", "に比べて"], "answerIndex": 2 }
+            { "id": "q7", "blank": 7, "grammarId": "n3-w5-d1-g3", "choices": ["に対して", "に比べて", "はもちろん", "ばかりか"], "answerIndex": 1, "explanation": "The town now is measured against ten years ago: 十年前に比べて. に対して would need two sides that contrast." },
+            { "id": "q8", "blank": 8, "grammarId": "n3-w5-d1-g4", "choices": ["ばかりか", "はもちろん", "のに対して", "に比べて"], "answerIndex": 2, "explanation": "The young people's joy is set against the older people's nostalgia. After a verb, に対して needs の: 喜んでいるのに対して." }
           ]
         }
       ]
