@@ -4,7 +4,7 @@ import { INPUT_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
 
 /**
- * The username and password fields; on sign-up also the email (where a password reset goes) and the sign-up code.
+ * The username and password fields; on sign-up also the email (where a password reset goes).
  * The error of the last try shows above the button.
  */
 export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redirectTo: string; error?: string }) {
@@ -59,17 +59,6 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
         aria-describedby={describedBy}
         className={INPUT_CLASS}
       />
-      {signup && (
-        <PasswordField
-          label="招待コード"
-          name="code"
-          required
-          autoComplete="off"
-          aria-invalid={invalid}
-          aria-describedby={describedBy}
-          className={INPUT_CLASS}
-        />
-      )}
       {error && (
         <p id="login-error" role="alert" className="text-caption text-primary-soft-foreground">
           {error}

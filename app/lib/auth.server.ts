@@ -3,7 +3,7 @@ import { createCookieSessionStorage, redirect, type SessionStorage } from "react
 import { requiredEnv } from "./env.server";
 
 /**
- * Users sign up (with APP_PASSWORD as the sign-up code) and sign in with a name and
+ * Anyone can sign up, then sign in with a name and
  * password (users.server.ts). Signing in sets a signed cookie holding the user's id for
  * 30 days. The quiz skill has no cookie, so /api also takes BUNPO_API_TOKEN as a Bearer
  * token. Changing SESSION_SECRET signs everyone out.
@@ -63,11 +63,6 @@ export async function requireUserId(request: Request): Promise<number> {
   const id = await currentUserId(request);
   if (id === null) throw Response.json({ error: "Sign in to do this." }, { status: 401 });
   return id;
-}
-
-/** Sign-up needs APP_PASSWORD, so only people it's shared with can make an account. */
-export function checkSignupCode(code: string) {
-  return same(code, requiredEnv("APP_PASSWORD"));
 }
 
 export async function signIn(request: Request, userId: number, redirectTo: string) {

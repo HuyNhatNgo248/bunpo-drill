@@ -41,15 +41,6 @@ describe("Login", () => {
     );
   });
 
-  it("asks for no sign-up code on sign-in", async () => {
-    renderLogin();
-
-    expect(
-      await screen.findByRole("heading", { name: "ログイン" }),
-    ).toBeInTheDocument();
-    expect(screen.queryByLabelText("招待コード")).toBeNull();
-  });
-
   it("links to sign-up, and keeps the page to return to", async () => {
     renderLogin("/login?redirectTo=%2Faccount");
 
@@ -72,7 +63,7 @@ describe("Login", () => {
       expect(screen.queryByRole("link", { name: "パスワードを忘れた場合" })).toBeNull();
     });
 
-    it("asks for the sign-up code too, and sends it with the sign-up intent", async () => {
+    it("sends the new account with the sign-up intent", async () => {
       const requests = renderLogin("/login?mode=signup");
 
       expect(
@@ -90,7 +81,6 @@ describe("Login", () => {
         screen.getByLabelText("パスワード"),
         "a long passphrase",
       );
-      await userEvent.type(screen.getByLabelText("招待コード"), "code");
       await userEvent.click(
         screen.getByRole("button", { name: "アカウントを作成" }),
       );
@@ -98,7 +88,8 @@ describe("Login", () => {
       await waitFor(() =>
         expect(requests[0]?.body).toMatchObject({
           intent: "signup",
-          code: "code",
+          name: "Mai",
+          email: "mai@example.com",
         }),
       );
     });

@@ -1,5 +1,4 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { SIGNUP_CODE } from "#tests/helpers/env";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
 import { cookieOf, signedInRequest } from "#tests/helpers/session";
@@ -87,7 +86,7 @@ describe("login action", () => {
 
   describe("signing up", () => {
     const signUp = (fields: Record<string, string>) =>
-      post({ intent: "signup", name: "Mai", email: "mai@example.com", password: PASSWORD, code: SIGNUP_CODE, ...fields });
+      post({ intent: "signup", name: "Mai", email: "mai@example.com", password: PASSWORD, ...fields });
 
     it("makes the account, signs it in, and goes on to the page", async () => {
       const response = (await signUp({ redirectTo: "/account" })) as Response;
@@ -95,12 +94,6 @@ describe("login action", () => {
       expect(response.headers.get("Location")).toBe("/account");
       const id = await verifyUser("Mai", PASSWORD);
       expect(await currentUserId(new Request(URL, { headers: { Cookie: cookieOf(response) } }))).toBe(id);
-    });
-
-    it("answers 401 for a wrong sign-up code, after the wait, and makes no account", async () => {
-      expect(await signUp({ code: "wrong" })).toMatchObject({ data: { error: "招待コードが違います。" }, init: { status: 401 } });
-      expect(waits).toEqual([1000]);
-      expect(await verifyUser("Mai", PASSWORD)).toBeNull();
     });
 
     it("answers 400 for a name or a password that breaks the rules", async () => {

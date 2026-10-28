@@ -4,7 +4,7 @@ import path from "node:path";
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
 import { afterAll, afterEach, expect } from "vitest";
-import { API_TOKEN, APP_URL, MAIL_FROM, SESSION_SECRET, SIGNUP_CODE } from "#tests/helpers/env";
+import { API_TOKEN, APP_URL, MAIL_FROM, SESSION_SECRET } from "#tests/helpers/env";
 
 // Registered from `./matchers` rather than the `./vitest` entrypoint: that entrypoint imports
 // `expect` from vitest, but jest-dom declares no dependency on vitest, so pnpm cannot resolve it.
@@ -32,7 +32,6 @@ process.env.TURSO_DATABASE_URL = "";
 process.env.TURSO_AUTH_TOKEN = "";
 process.env.DATA_DIR = dataDir;
 process.env.SESSION_SECRET = SESSION_SECRET;
-process.env.APP_PASSWORD = SIGNUP_CODE;
 process.env.BUNPO_API_TOKEN = API_TOKEN;
 process.env.RESEND_API_KEY = "";
 process.env.MAIL_FROM = MAIL_FROM;

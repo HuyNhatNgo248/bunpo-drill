@@ -4,7 +4,7 @@ import { LoginForm } from "./LoginForm";
 
 const LINK_CLASS = "font-medium text-primary underline-offset-4 hover:underline";
 
-/** /login signs in; /login?mode=signup makes an account (with the sign-up code) and signs in. */
+/** /login signs in; /login?mode=signup makes an account and signs in. */
 export function Login({ error }: { error?: string }) {
   const [params] = useSearchParams();
   const signup = params.get("mode") === "signup";
@@ -16,7 +16,7 @@ export function Login({ error }: { error?: string }) {
       title={signup ? "アカウント作成" : "ログイン"}
       description={
         signup
-          ? "ユーザー名とメールアドレス、パスワードを決めて、招待コードを入力してください。"
+          ? "ユーザー名とメールアドレス、パスワードを決めてください。"
           : "ユーザー名とパスワードを入力してください。"
       }
     >

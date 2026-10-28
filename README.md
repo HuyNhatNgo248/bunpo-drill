@@ -10,8 +10,8 @@ React Router 8 (framework mode, SSR) · TypeScript · Tailwind 4 · shadcn/ui ·
 
 ```sh
 pnpm install
-cp .env.example .env # then set APP_PASSWORD, SESSION_SECRET and BUNPO_API_TOKEN (Turso is optional)
-pnpm dev             # http://localhost:3001, create an account with APP_PASSWORD as the code
+cp .env.example .env # then set SESSION_SECRET and BUNPO_API_TOKEN (Turso is optional)
+pnpm dev             # http://localhost:3001, then create an account
 pnpm test            # tests next to the files in app/lib, app/routes/helpers and app/components; a temp SQLite file per test file, never Turso
 ```
 
@@ -31,8 +31,7 @@ regenerates the skill's `schema.json` from it, and `pnpm test` fails if they dri
 ## Sign-in
 
 Accounts, in `app/lib/auth.server.ts` and `app/lib/users.server.ts`. Everyone signs up at
-`/login?mode=signup` with a username, an email, a password and the sign-up code (`APP_PASSWORD`), so
-only people you give the code to can get in. All users see the same tests.
+`/login?mode=signup` with a username, an email and a password. Anyone who finds the site can make an account. All users see the same tests.
 
 A root middleware checks every request: without the login cookie, pages redirect to `/login` and
 `/api` answers 401. Signing in sets a cookie signed with `SESSION_SECRET` for 30 days. `/account`

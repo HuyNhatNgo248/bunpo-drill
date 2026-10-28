@@ -1,7 +1,7 @@
 import { data, redirect } from "react-router";
 import type { Route } from "./+types/login";
 import { Login } from "~/components/login";
-import { checkSignupCode, isSignedIn, safeRedirect, signIn } from "~/lib/auth.server";
+import { isSignedIn, safeRedirect, signIn } from "~/lib/auth.server";
 import { createUser, findUserByEmail, verifyUser } from "~/lib/users.server";
 import { checkEmail, checkName, checkNewPassword, normalizeEmail } from "~/lib/users";
 
@@ -24,10 +24,6 @@ export async function action({ request }: Route.ActionArgs) {
   const redirectTo = safeRedirect(form.get("redirectTo"));
 
   if (form.get("intent") === "signup") {
-    if (!checkSignupCode(String(form.get("code") ?? ""))) {
-      await slowDown();
-      return data({ error: "招待コードが違います。" }, { status: 401 });
-    }
     const email = normalizeEmail(String(form.get("email") ?? ""));
     const invalid = checkName(name) ?? checkEmail(email) ?? checkNewPassword(password);
     if (invalid) return data({ error: invalid }, { status: 400 });

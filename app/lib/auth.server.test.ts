@@ -1,8 +1,7 @@
 import { createCookieSessionStorage } from "react-router";
 import { describe, expect, it } from "vitest";
-import { API_TOKEN, SESSION_SECRET, SIGNUP_CODE } from "#tests/helpers/env";
+import { API_TOKEN, SESSION_SECRET } from "#tests/helpers/env";
 import {
-  checkSignupCode,
   currentUserId,
   isSignedIn,
   requireSignIn,
@@ -49,18 +48,6 @@ async function thrownBy(run: () => Promise<unknown>): Promise<Response> {
   }
   throw new Error("expected a Response to be thrown");
 }
-
-describe("checkSignupCode", () => {
-  it("accepts the sign-up code", () => {
-    expect(checkSignupCode(SIGNUP_CODE)).toBe(true);
-  });
-
-  it("refuses any other code", () => {
-    expect(checkSignupCode("wrong")).toBe(false);
-    expect(checkSignupCode("")).toBe(false);
-    expect(checkSignupCode(`${SIGNUP_CODE}x`)).toBe(false);
-  });
-});
 
 describe("safeRedirect", () => {
   it("keeps a path on this site", () => {
