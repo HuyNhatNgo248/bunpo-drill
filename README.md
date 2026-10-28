@@ -18,6 +18,23 @@ pnpm test            # tests next to the files in app/lib, app/routes/helpers an
 Then ask Claude for a test, for example `/jlpt-grammar-quiz 第5週 1〜3日目` or
 `/jlpt-grammar-quiz weak ones 10 per section`.
 
+## Deploy
+
+The `Dockerfile` builds the app and runs `pnpm start` on port 3001. Set these on the host
+(see `.env.example` for what each one is):
+
+- `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`. A container's disk is wiped on every deploy, so
+  without Turso every test and account is lost.
+- `SESSION_SECRET`: a new long random string, not the one in your local `.env`.
+- `BUNPO_API_TOKEN`, so the quiz skill can post tests.
+- `APP_URL`: the address people open the app at. Password reset links start with it.
+- `RESEND_API_KEY` and `MAIL_FROM`: password reset emails go out through
+  [Resend](https://resend.com), from a sender on a domain verified there. In dev, without the key,
+  each email is printed to the server log. In production, without them, the forgot-password page fails.
+
+Then point the quiz skill at the deployed app: set `BUNPO_URL` to its address and `BUNPO_API_TOKEN`
+to the same token in your shell.
+
 ## How a test gets in
 
 1. The skill (`.claude/skills/jlpt-grammar-quiz/`) reads `~/Documents/JLPT 🇯🇵/<level>/<level> 文法 ノート/`
