@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import { AppHeader } from "~/components/layout/header";
 import { NotebookFigure } from "~/components/layout/notebook-figure";
 import { Card } from "~/components/ui/card";
@@ -15,7 +16,9 @@ export function AuthCard({ title, description, children }: { title: string; desc
           <div className="hidden flex-col items-center justify-center gap-3 border-r px-10 py-12 lg:flex">
             {/* The drawing keeps room at its foot for a tab pulled all the way out; the text below may sit in it. */}
             <NotebookFigure className="-mb-12 w-full max-w-90" />
-            <p className="text-center text-sm font-medium text-secondary-foreground">文法ノートから作る、JLPT形式の模擬試験。</p>
+            <p className="text-center text-sm font-medium text-secondary-foreground">
+              <Trans>JLPT-style mock tests, made from your grammar notes.</Trans>
+            </p>
           </div>
           <div className="flex flex-col justify-center gap-5 p-6 lg:p-10">
             <div className="flex flex-col gap-1">

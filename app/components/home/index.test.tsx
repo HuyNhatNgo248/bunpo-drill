@@ -44,29 +44,29 @@ describe("Home", () => {
   it("shows the figures over the tests of the level, then the list", async () => {
     renderHome([TAKEN, NOT_TAKEN]);
 
-    expect(await screen.findByRole("heading", { name: "模擬試験" })).toBeInTheDocument();
-    expect(screen.getByText("平均正答率").nextSibling).toHaveTextContent("67%");
-    expect(screen.getByText("要復習の文法").nextSibling).toHaveTextContent("1");
-    expect(screen.getByText("受験済み").nextSibling).toHaveTextContent("1 / 2");
+    expect(await screen.findByRole("heading", { name: "Mock tests" })).toBeInTheDocument();
+    expect(screen.getByText("Average score").nextSibling).toHaveTextContent("67%");
+    expect(screen.getByText("Grammar to review").nextSibling).toHaveTextContent("1");
+    expect(screen.getByText("Taken").nextSibling).toHaveTextContent("1 / 2");
     expect(screen.getAllByRole("listitem")).toHaveLength(2);
   });
 
   it("shows a dash for the average before any test is taken", async () => {
     renderHome([NOT_TAKEN], { stats: { average: null, toReview: 0, taken: 0 } });
 
-    expect((await screen.findByText("平均正答率")).nextSibling).toHaveTextContent("—");
+    expect((await screen.findByText("Average score")).nextSibling).toHaveTextContent("—");
   });
 
   it("explains where tests come from when there are none", async () => {
     renderHome([]);
 
-    expect(await screen.findByRole("heading", { name: "模擬試験はまだありません" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "No mock tests yet" })).toBeInTheDocument();
   });
 
   it("links to each level when both have tests, and marks the one shown", async () => {
     renderHome([TAKEN, NOT_TAKEN], { levels: ["N3", "N2"] });
 
-    const nav = await screen.findByRole("navigation", { name: "レベル" });
+    const nav = await screen.findByRole("navigation", { name: "Level" });
     expect(within(nav).getByRole("link", { name: "N3" })).toHaveAttribute("href", "/?level=N3");
     expect(within(nav).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
   });
@@ -74,8 +74,8 @@ describe("Home", () => {
   it("has no level links when every test is one level", async () => {
     renderHome([TAKEN, NOT_TAKEN]);
 
-    await screen.findByRole("heading", { name: "模擬試験" });
-    expect(screen.queryByRole("navigation", { name: "レベル" })).toBeNull();
+    await screen.findByRole("heading", { name: "Mock tests" });
+    expect(screen.queryByRole("navigation", { name: "Level" })).toBeNull();
   });
 
   describe("deleting one test", () => {
@@ -83,8 +83,8 @@ describe("Home", () => {
       renderHome([TAKEN, NOT_TAKEN], { api: () => new Promise(() => {}) });
 
       // A row has two delete buttons, one for mobile and one for desktop.
-      const [deleteButton] = await screen.findAllByRole("button", { name: "「第1週 1日目」を削除" });
-      await confirm(deleteButton, "削除");
+      const [deleteButton] = await screen.findAllByRole("button", { name: "Delete “第1週 1日目”" });
+      await confirm(deleteButton, "Delete");
 
       await waitFor(() => expect(screen.getAllByRole("listitem")).toHaveLength(1));
       expect(screen.queryByText("第1週 1日目")).toBeNull();
@@ -93,8 +93,8 @@ describe("Home", () => {
     it("sends the delete to the test", async () => {
       const requests = renderHome([TAKEN]);
 
-      const [deleteButton] = await screen.findAllByRole("button", { name: "「第1週 1日目」を削除" });
-      await confirm(deleteButton, "削除");
+      const [deleteButton] = await screen.findAllByRole("button", { name: "Delete “第1週 1日目”" });
+      await confirm(deleteButton, "Delete");
 
       await waitFor(() => expect(requests).toEqual([{ method: "DELETE", path: `/api/tests/${TAKEN.id}`, body: null }]));
     });

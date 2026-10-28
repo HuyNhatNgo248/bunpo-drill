@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { questionAnchor } from "~/lib/sections";
@@ -15,6 +16,7 @@ export function QuestionCard({
   answer: Answers[string] | undefined;
   onAnswer: (value: Answers[string]) => void;
 }) {
+  const num = question.num;
   return (
     <Card
       id={questionAnchor(question.num)}
@@ -32,8 +34,8 @@ export function QuestionCard({
           {question.num}
         </span>
         {question.type === "passage" && (
-          <span lang="ja" className="font-jp text-xs text-muted-foreground md:text-caption">
-            文章中の（{question.num}）に入るもの
+          <span className="text-xs text-muted-foreground md:text-caption">
+            <Trans>Blank （{num}） in the passage</Trans>
           </span>
         )}
       </div>

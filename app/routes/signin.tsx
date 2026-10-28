@@ -1,11 +1,13 @@
+import { msg } from "@lingui/core/macro";
 import { data, redirect } from "react-router";
 import type { Route } from "./+types/signin";
 import { Login } from "~/components/login";
 import { isSignedIn, safeRedirect, signIn } from "~/lib/auth.server";
 import { verifyUser } from "~/lib/users.server";
+import { localeFromMatches, requestLocale, translate } from "~/lib/i18n";
 
-export function meta() {
-  return [{ title: "ログイン · 文法ドリル" }];
+export function meta({ matches }: Route.MetaArgs) {
+  return [{ title: `${translate(localeFromMatches(matches), msg`Sign in`)} · 文法ドリル` }];
 }
 
 export async function loader({ request, url }: Route.LoaderArgs) {
@@ -22,7 +24,7 @@ export async function action({ request }: Route.ActionArgs) {
   const id = await verifyUser(String(form.get("name") ?? "").trim(), String(form.get("password") ?? ""));
   if (id === null) {
     await slowDown();
-    return data({ error: "ユーザー名（メールアドレス）かパスワードが違います。" }, { status: 401 });
+    return data({ error: translate(requestLocale(request), msg`Wrong username (or email) or password.`) }, { status: 401 });
   }
   return signIn(request, id, safeRedirect(form.get("redirectTo")));
 }

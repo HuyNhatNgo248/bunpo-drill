@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import {
   DndContext,
   KeyboardSensor,
@@ -16,6 +17,7 @@ import { TestRow } from "./TestRow";
 
 /** The tests, in the order the user dragged them to. Dropping a test saves the new order. */
 export function TestList({ tests }: { tests: TestSummary[] }) {
+  const { t, i18n } = useLingui();
   const reorder = useFetcher({ key: REORDER_KEY });
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
@@ -35,9 +37,9 @@ export function TestList({ tests }: { tests: TestSummary[] }) {
       sensors={sensors}
       modifiers={[restrictToVerticalAxis, restrictToParentElement]}
       accessibility={{
-        announcements: listAnnouncements(tests),
+        announcements: listAnnouncements(tests, i18n),
         screenReaderInstructions: {
-          draggable: "スペースキーで持ち上げ、上下の矢印キーで移動し、もう一度スペースキーで置きます。Escキーで取り消せます。",
+          draggable: t`Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel.`,
         },
       }}
       onDragEnd={onDragEnd}

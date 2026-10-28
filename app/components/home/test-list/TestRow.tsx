@@ -1,3 +1,4 @@
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { cn } from "~/lib/utils";
@@ -9,18 +10,23 @@ import { hasSavedAnswers, savedAnsweredCount } from "~/components/quiz/helpers/s
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import type { TestSummary } from "~/lib/views";
+import { weekLabel } from "~/lib/sections";
 import { DeleteTest } from "./DeleteTest";
 
-/** One test: its handle to drag, its title and last score, and its buttons. 復習 opens its grammar chips. */
+/** One test: its handle to drag, its title and last score, and its buttons. Review opens its grammar chips. */
 export function TestRow({ test }: { test: TestSummary }) {
+  const { t, i18n } = useLingui();
   const [open, setOpen] = useState(false);
   // A test left before submitting has its answers saved in this browser, so the server cannot know; it is read after hydration.
   const [answered, setAnswered] = useState<number | null>(null);
   useEffect(() => setAnswered(hasSavedAnswers(test.id) ? savedAnsweredCount(test.id) : null), [test.id]);
   const inProgress = answered !== null;
-  const sortable = useSortable({ id: test.id, attributes: { roleDescription: "並べ替え可能" } });
+  const sortable = useSortable({ id: test.id, attributes: { roleDescription: t`sortable` } });
   const quizHref = `/tests/${test.id}`;
-  const weeks = test.weeks.map((week) => `第${week}週`).join("・");
+  const weeks = test.weeks.map((week) => weekLabel(i18n, week)).join(" · ");
+  const title = test.title;
+  const total = test.questionCount;
+  const reviewCount = test.review.length;
 
   return (
     <li
@@ -37,7 +43,7 @@ export function TestRow({ test }: { test: TestSummary }) {
         ref={sortable.setActivatorNodeRef}
         {...sortable.attributes}
         {...sortable.listeners}
-        aria-label={`「${test.title}」を並べ替え`}
+        aria-label={t`Reorder “${title}”`}
         className="-my-0.5 -ml-2 flex h-11 w-7 shrink-0 cursor-grab touch-none items-center justify-center rounded-md text-faint outline-none hover:text-subtle-foreground focus-visible:ring-3 focus-visible:ring-ring/40 active:cursor-grabbing md:-ml-3 md:h-10"
       >
         <GripVertical aria-hidden="true" className="size-4" />
@@ -59,13 +65,15 @@ export function TestRow({ test }: { test: TestSummary }) {
           )}
           {inProgress && !test.result && (
             <Badge variant="progress" className="tabular-nums">
-              解答中 {answered} / {test.questionCount}
+              <Trans>
+                In progress {answered} / {total}
+              </Trans>
             </Badge>
           )}
         </div>
         <div className="text-caption text-muted-foreground">
-          {test.questionCount}問
-          {weeks && <span lang="ja"> · {weeks}</span>}
+          <Plural value={total} one="# question" other="# questions" />
+          {weeks && <span> · {weeks}</span>}
         </div>
         {inProgress && !test.result && (
           // The badge says the numbers; the bar is for the eye, so it is not read out.
@@ -83,12 +91,12 @@ export function TestRow({ test }: { test: TestSummary }) {
             {/* Retake clears the last result and review chips on the server, then opens the quiz. */}
             <Form method="post" action={`${quizHref}/retake`} className="contents">
               <Button type="submit" variant="outline" className={cn("md:order-2", test.review.length === 0 && "col-span-2")}>
-                もう一度受ける
+                <Trans>Take it again</Trans>
               </Button>
             </Form>
             {test.review.length > 0 && (
               <Button variant="outline" aria-expanded={open} onClick={() => setOpen(!open)} className="md:order-1 md:px-3.5">
-                復習（{test.review.length}）
+                <Trans>Review ({reviewCount})</Trans>
                 <ChevronDown
                   aria-hidden="true"
                   className={cn("size-3.5 transition-transform duration-150", open && "rotate-180")}
@@ -98,7 +106,7 @@ export function TestRow({ test }: { test: TestSummary }) {
           </>
         ) : (
           <Button asChild className="col-span-2 md:px-4.5">
-            <Link to={quizHref}>{inProgress ? "続きから" : "テストを始める"}</Link>
+            <Link to={quizHref}>{inProgress ? t`Continue` : t`Start the test`}</Link>
           </Button>
         )}
         <DeleteTest test={test} className="hidden md:order-3 md:inline-flex" outlined />

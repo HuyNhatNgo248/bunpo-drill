@@ -1,5 +1,15 @@
+import { i18n } from "@lingui/core";
 import { describe, expect, it } from "vitest";
-import { checkEmail, checkName, checkNewPassword, normalizeEmail } from "./users";
+import { checkEmail as checkEmailOf, checkName as checkNameOf, checkNewPassword as checkNewPasswordOf, normalizeEmail } from "./users";
+
+/** Each check in English, the language of the tests, or null when it passes. */
+const english = <T,>(check: (value: T) => ReturnType<typeof checkNameOf>) => (value: T) => {
+  const error = check(value);
+  return error && i18n._(error);
+};
+const checkName = english(checkNameOf);
+const checkNewPassword = english(checkNewPasswordOf);
+const checkEmail = english(checkEmailOf);
 
 describe("checkName", () => {
   it("accepts a name of 1 to 30 characters", () => {
@@ -9,15 +19,15 @@ describe("checkName", () => {
   });
 
   it("rejects an empty name", () => {
-    expect(checkName("")).toBe("ユーザー名は1〜30文字で入力してください。");
+    expect(checkName("")).toBe("Use a username of 1 to 30 characters.");
   });
 
   it("rejects a name of more than 30 characters", () => {
-    expect(checkName("a".repeat(31))).toBe("ユーザー名は1〜30文字で入力してください。");
+    expect(checkName("a".repeat(31))).toBe("Use a username of 1 to 30 characters.");
   });
 
   it("rejects a name with @, which sign-in would read as an email", () => {
-    expect(checkName("huy@home")).toBe("ユーザー名に「@」は使えません。");
+    expect(checkName("huy@home")).toBe("A username can't contain “@”.");
   });
 });
 
@@ -28,8 +38,8 @@ describe("checkNewPassword", () => {
   });
 
   it("rejects a password of fewer than 8 characters", () => {
-    expect(checkNewPassword("1234567")).toBe("パスワードは8文字以上にしてください。");
-    expect(checkNewPassword("")).toBe("パスワードは8文字以上にしてください。");
+    expect(checkNewPassword("1234567")).toBe("Use a password of at least 8 characters.");
+    expect(checkNewPassword("")).toBe("Use a password of at least 8 characters.");
   });
 });
 
@@ -46,9 +56,9 @@ describe("checkEmail", () => {
   });
 
   it("rejects an address without an @ or without a domain", () => {
-    expect(checkEmail("huy.example.com")).toBe("メールアドレスの形式が正しくありません。");
-    expect(checkEmail("huy@example")).toBe("メールアドレスの形式が正しくありません。");
-    expect(checkEmail("")).toBe("メールアドレスの形式が正しくありません。");
+    expect(checkEmail("huy.example.com")).toBe("That email address doesn't look right.");
+    expect(checkEmail("huy@example")).toBe("That email address doesn't look right.");
+    expect(checkEmail("")).toBe("That email address doesn't look right.");
   });
 
   it("rejects an address with spaces, or longer than 254 characters", () => {

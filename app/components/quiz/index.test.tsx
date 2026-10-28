@@ -22,7 +22,7 @@ const renderRouteOfQuiz = () => renderRoute(<Quiz quiz={QUIZ} />, { url: URL });
 
 /** Picks the choice named `choice` of question `num`. */
 async function pick(num: number, choice: string) {
-  const group = await screen.findByRole("radiogroup", { name: `問題 ${num} の選択肢` });
+  const group = await screen.findByRole("radiogroup", { name: `Choices for question ${num}` });
   await userEvent.click(within(group).getByRole("radio", { name: new RegExp(choice) }));
 }
 
@@ -33,18 +33,18 @@ async function orderPieces() {
   }
 }
 
-const submitButton = () => screen.getByRole("button", { name: "提出する" });
+const submitButton = () => screen.getByRole("button", { name: "Submit" });
 
 describe("Quiz", () => {
   it("shows each section with its instruction and its questions", async () => {
     renderQuiz();
 
-    expect(await screen.findByRole("heading", { name: "問題1" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "問題2" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "問題3" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Part 1" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Part 2" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Part 3" })).toBeInTheDocument();
     // Testing Library joins the two ideographic spaces of the blank into one, so the prompt is matched by pattern.
     expect(screen.getByText(/^練習した（\s+）、合格できた。$/)).toBeInTheDocument();
-    expect(screen.getByText("回答済み 0 / 3")).toBeInTheDocument();
+    expect(screen.getByText("Answered 0 / 3")).toBeInTheDocument();
   });
 
   describe("answering", () => {
@@ -53,17 +53,17 @@ describe("Quiz", () => {
 
       await pick(1, "かいがあって");
 
-      expect(screen.getByText("回答済み 1 / 3")).toBeInTheDocument();
-      expect(screen.getAllByRole("button", { name: "問題1（回答済み）" }).length).toBeGreaterThan(0);
+      expect(screen.getByText("Answered 1 / 3")).toBeInTheDocument();
+      expect(screen.getAllByRole("button", { name: "Question 1 (answered)" }).length).toBeGreaterThan(0);
     });
 
     it("counts a sentence-order question once all 4 slots are filled", async () => {
       renderQuiz();
-      await screen.findByRole("heading", { name: "問題2" });
+      await screen.findByRole("heading", { name: "Part 2" });
 
       await orderPieces();
 
-      expect(screen.getByText("回答済み 1 / 3")).toBeInTheDocument();
+      expect(screen.getByText("Answered 1 / 3")).toBeInTheDocument();
     });
 
     it("writes the picked choice into the blank of the passage", async () => {
@@ -78,9 +78,9 @@ describe("Quiz", () => {
       renderQuiz();
       await pick(1, "かいがあって");
 
-      await userEvent.click(screen.getByRole("button", { name: /回答をクリア/ }));
+      await userEvent.click(screen.getByRole("button", { name: /Clear answers/ }));
 
-      expect(screen.getByText("回答済み 0 / 3")).toBeInTheDocument();
+      expect(screen.getByText("Answered 0 / 3")).toBeInTheDocument();
     });
   });
 
@@ -92,19 +92,19 @@ describe("Quiz", () => {
 
       renderQuiz();
 
-      expect(await screen.findByText("回答済み 1 / 3")).toBeInTheDocument();
-      expect(within(screen.getByRole("radiogroup", { name: "問題 1 の選択肢" })).getByRole("radio", { name: /かいがあって/ })).toBeChecked();
+      expect(await screen.findByText("Answered 1 / 3")).toBeInTheDocument();
+      expect(within(screen.getByRole("radiogroup", { name: "Choices for question 1" })).getByRole("radio", { name: /かいがあって/ })).toBeChecked();
     });
 
     it("forgets the answers that were cleared", async () => {
       const { unmount } = renderRouteOfQuiz();
       await pick(1, "かいがあって");
-      await userEvent.click(screen.getByRole("button", { name: /回答をクリア/ }));
+      await userEvent.click(screen.getByRole("button", { name: /Clear answers/ }));
       unmount();
 
       renderQuiz();
 
-      expect(await screen.findByText("回答済み 0 / 3")).toBeInTheDocument();
+      expect(await screen.findByText("Answered 0 / 3")).toBeInTheDocument();
     });
   });
 
@@ -114,8 +114,8 @@ describe("Quiz", () => {
       await pick(1, "かいがあって");
 
       await userEvent.click(submitButton());
-      const dialog = screen.getByRole("alertdialog", { name: "未回答が2問あります。提出しますか？" });
-      await userEvent.click(within(dialog).getByRole("button", { name: "提出する" }));
+      const dialog = screen.getByRole("alertdialog", { name: "2 questions are unanswered. Submit anyway?" });
+      await userEvent.click(within(dialog).getByRole("button", { name: "Submit" }));
 
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: URL, body: { answers: { q1: 2 } } }]));
     });
@@ -125,10 +125,10 @@ describe("Quiz", () => {
       await pick(1, "かいがあって");
 
       await userEvent.click(submitButton());
-      await userEvent.click(screen.getByRole("button", { name: "解答を続ける" }));
+      await userEvent.click(screen.getByRole("button", { name: "Keep answering" }));
 
       expect(requests).toEqual([]);
-      expect(screen.getByText("回答済み 1 / 3")).toBeInTheDocument();
+      expect(screen.getByText("Answered 1 / 3")).toBeInTheDocument();
     });
 
     it("sends at once when every question is answered", async () => {
@@ -144,9 +144,9 @@ describe("Quiz", () => {
     });
 
     it("shows the error of a submit that failed", async () => {
-      renderQuiz("回答を読み取れませんでした。もう一度お試しください。");
+      renderQuiz("Your answers couldn't be read. Please try again.");
 
-      expect(await screen.findByRole("alert")).toHaveTextContent("回答を読み取れませんでした。");
+      expect(await screen.findByRole("alert")).toHaveTextContent("Your answers couldn't be read.");
     });
   });
 });

@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
@@ -8,10 +9,14 @@ import type { ResultsView } from "~/lib/views";
 export function ScoreCard({ results }: { results: ResultsView }) {
   const wrong = results.total - results.score;
   const passed = results.percent >= PASS_PERCENT;
+  const pass = PASS_PERCENT;
+  const { t } = useLingui();
 
   return (
     <Card className="flex flex-col gap-3.5 p-4 md:gap-1.5 md:p-6">
-      <div className="hidden text-caption text-muted-foreground md:block">得点</div>
+      <div className="hidden text-caption text-muted-foreground md:block">
+        <Trans>Score</Trans>
+      </div>
       <div className="flex items-baseline justify-between gap-3">
         <div className="flex items-baseline gap-2 md:gap-2.5">
           <span className="text-4xl font-bold tracking-tighter md:text-score">
@@ -21,11 +26,15 @@ export function ScoreCard({ results }: { results: ResultsView }) {
             {results.percent}%
           </span>
         </div>
-        <span className="text-caption text-muted-foreground md:hidden">不正解 {wrong}問</span>
+        <span className="text-caption text-muted-foreground md:hidden">
+          <Trans>{wrong} wrong</Trans>
+        </span>
       </div>
-      <Progress value={results.percent} aria-label="得点" className="h-2" />
+      <Progress value={results.percent} aria-label={t`Score`} className="h-2" />
       <div className="hidden text-caption text-muted-foreground md:block">
-        不正解 {wrong}問 · 合格ライン {PASS_PERCENT}%
+        <Trans>
+          {wrong} wrong · pass line {pass}%
+        </Trans>
       </div>
     </Card>
   );

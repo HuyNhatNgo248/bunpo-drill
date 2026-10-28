@@ -1,11 +1,14 @@
-/** A 問題1 question for the welcome page: the sentence around the blank, 4 choices, the answer, and why. */
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+
+/** A 問題1 question for the welcome page: the sentence around the blank, 4 choices, the answer, and why (in the page's language). */
 export type Sample = {
   before: string;
   after: string;
   choices: [string, string, string, string];
   answer: number;
   pattern: string;
-  why: string;
+  why: MessageDescriptor;
 };
 
 /** Three real N2 patterns, in the format of the exam's 問題1. */
@@ -16,7 +19,7 @@ export const SAMPLES: Sample[] = [
     choices: ["かいもなく", "かいがなく", "かいがあって", "までして"],
     answer: 2,
     pattern: "〜かいがあって",
-    why: "努力した結果が、よい形で出たときに使います。「練習したかいがあって」＝練習した価値があった。",
+    why: msg`Used when effort led to a good result. 「練習したかいがあって」 = the practice was worth it.`,
   },
   {
     before: "雨が降っている",
@@ -24,7 +27,7 @@ export const SAMPLES: Sample[] = [
     choices: ["にもかかわらず", "によって", "に対して", "からといって"],
     answer: 0,
     pattern: "〜にもかかわらず",
-    why: "「〜のに」と同じで、予想と違う結果が続きます。雨なのに、試合は行われた。",
+    why: msg`Like 「〜のに」, a result that goes against what you would expect follows. It was raining, yet the match went ahead.`,
   },
   {
     before: "日本に住んでいる",
@@ -32,6 +35,6 @@ export const SAMPLES: Sample[] = [
     choices: ["ばかりか", "からといって", "ものの", "どころか"],
     answer: 1,
     pattern: "〜からといって…とは限らない",
-    why: "理由があっても、その結果になるとは言えないときの形です。",
+    why: msg`Used when a reason does not mean that the result must follow.`,
   },
 ];

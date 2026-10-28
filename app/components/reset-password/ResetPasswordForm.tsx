@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { Form, useNavigation } from "react-router";
 import { PasswordField } from "~/components/form/PasswordField";
 import { INPUT_CLASS } from "~/components/form/styles";
@@ -5,13 +6,14 @@ import { Button } from "~/components/ui/button";
 
 /** The new password, sent with the token of the link. The error of the last try shows above the button. */
 export function ResetPasswordForm({ token, error }: { token: string; error?: string }) {
+  const { t } = useLingui();
   const saving = useNavigation().state !== "idle";
   return (
     <Form method="post" className="flex flex-col gap-4">
       <input type="hidden" name="token" value={token} />
       <PasswordField
-        label="新しいパスワード"
-        hint="8文字以上"
+        label={t`New password`}
+        hint={t`At least 8 characters`}
         name="password"
         required
         autoFocus
@@ -27,7 +29,7 @@ export function ResetPasswordForm({ token, error }: { token: string; error?: str
         </p>
       )}
       <Button type="submit" disabled={saving}>
-        {saving ? "変更中…" : "パスワードを変更"}
+        {saving ? t`Changing…` : t`Change password`}
       </Button>
     </Form>
   );

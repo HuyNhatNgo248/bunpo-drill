@@ -13,7 +13,7 @@ import {
 } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
-import { routeArgs } from "#tests/helpers/route";
+import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { createTest, saveOrder, saveSubmission, setReviewed } from "~/lib/tests.server";
 import { loader, meta } from "../home";
 
@@ -124,6 +124,7 @@ describe("home loader levels", () => {
 
 describe("home meta", () => {
   it("names the page", () => {
-    expect(meta()).toEqual([{ title: "模擬試験 · 文法ドリル" }]);
+    expect(meta(metaArgs<Parameters<typeof meta>[0]>())).toEqual([{ title: "Mock tests · 文法ドリル" }]);
+    expect(meta(metaArgs<Parameters<typeof meta>[0]>({ locale: "ja" }))).toEqual([{ title: "模擬試験 · 文法ドリル" }]);
   });
 });

@@ -14,9 +14,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "react-router typegen && tsc",
-    "precommit": "pnpm typecheck && pnpm test",
+    "precommit": "pnpm run typecheck && pnpm test",
     "schema": "vitest run -u app/lib/payload.test.ts",
-    "precommit": "pnpm run typecheck && pnpm test"
+    "i18n:extract": "lingui extract --clean"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -24,6 +24,8 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@libsql/client": "^0.18.0",
+    "@lingui/core": "^6.6.0",
+    "@lingui/react": "^6.6.0",
     "@react-router/express": "^8.5.0",
     "@react-router/node": "^8.5.0",
     "class-variance-authority": "^0.7.1",
@@ -41,7 +43,11 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@lingui/babel-plugin-lingui-macro": "^6.6.0",
+    "@lingui/cli": "^6.6.0",
+    "@lingui/vite-plugin": "^6.6.0",
     "@react-router/dev": "^8.5.0",
+    "@rolldown/plugin-babel": "^0.2.3",
     "@tailwindcss/vite": "^4.2.2",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",

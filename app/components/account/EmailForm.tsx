@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Form } from "react-router";
 import { INPUT_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
@@ -9,12 +10,17 @@ import type { AccountResult } from "./types";
 /** Sets the email that a password reset link goes to. Accounts made before emails have none yet. */
 export function EmailForm({ email, result }: { email: string | null; result?: AccountResult }) {
   const saving = useSubmitting("email");
+  const { t } = useLingui();
   return (
     <Card className="flex flex-col gap-4 p-5 md:p-6">
       <div className="flex flex-col gap-1">
-        <h2 className="text-base font-semibold">メールアドレス</h2>
+        <h2 className="text-base font-semibold">
+          <Trans>Email address</Trans>
+        </h2>
         <p className="text-caption text-muted-foreground">
-          {email ? "パスワードを忘れたときに、再設定のリンクを送ります。" : "まだありません。登録すると、パスワードを忘れても再設定できます。"}
+          {email
+            ? t`We send a reset link here when you forget your password.`
+            : t`None yet. Add one, and you can reset your password if you forget it.`}
         </p>
       </div>
       {/* key: after a save, the field shows the saved email. */}
@@ -23,7 +29,7 @@ export function EmailForm({ email, result }: { email: string | null; result?: Ac
         <input
           name="email"
           type="email"
-          aria-label="メールアドレス"
+          aria-label={t`Email address`}
           required
           maxLength={254}
           autoComplete="email"
@@ -33,7 +39,7 @@ export function EmailForm({ email, result }: { email: string | null; result?: Ac
         />
         <Status result={result} />
         <Button type="submit" disabled={saving} className="self-end">
-          {saving ? "保存中…" : "保存"}
+          {saving ? t`Saving…` : t`Save`}
         </Button>
       </Form>
     </Card>

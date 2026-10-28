@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { APP_URL } from "#tests/helpers/env";
 import { resetDatabase } from "#tests/helpers/db";
-import { routeArgs } from "#tests/helpers/route";
+import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { createUser } from "~/lib/users.server";
 import { action, meta } from "../forgot-password";
 
@@ -58,12 +58,12 @@ describe("forgot-password action", () => {
   });
 
   it("answers 400 for a value that is not an email", async () => {
-    expect(await ask("huy")).toMatchObject({ data: { error: "メールアドレスの形式が正しくありません。" }, init: { status: 400 } });
+    expect(await ask("huy")).toMatchObject({ data: { error: "That email address doesn't look right." }, init: { status: 400 } });
   });
 });
 
 describe("forgot-password meta", () => {
   it("names the page", () => {
-    expect(meta()).toEqual([{ title: "パスワードの再設定 · 文法ドリル" }]);
+    expect(meta(metaArgs<Parameters<typeof meta>[0]>())).toEqual([{ title: "Reset your password · 文法ドリル" }]);
   });
 });

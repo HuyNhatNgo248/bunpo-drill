@@ -1,4 +1,5 @@
 import type { Active, Over } from "@dnd-kit/core";
+import { i18n } from "@lingui/core";
 import { describe, expect, it } from "vitest";
 import { buildTestSummary } from "#mocks/factories/views";
 import { listAnnouncements } from "./announcements";
@@ -8,22 +9,22 @@ const TESTS = [
   buildTestSummary({ id: "20261027-bbbbbb", title: "第2週" }),
 ];
 
-const ANNOUNCEMENTS = listAnnouncements(TESTS);
+const ANNOUNCEMENTS = listAnnouncements(TESTS, i18n);
 
 /** A test row as dnd-kit passes it: only its id is read. */
 const row = (id: string) => ({ id }) as unknown as Active & Over;
 
 describe("listAnnouncements", () => {
   it("names the test that is picked up", () => {
-    expect(ANNOUNCEMENTS.onDragStart({ active: row("20261027-aaaaaa") })).toBe("「第1週」を持ち上げました。");
+    expect(ANNOUNCEMENTS.onDragStart({ active: row("20261027-aaaaaa") })).toBe("Picked up “第1週”.");
   });
 
   it("gives the place the test moves to, counted from 1", () => {
     expect(ANNOUNCEMENTS.onDragOver?.({ active: row("20261027-aaaaaa"), over: row("20261027-bbbbbb") })).toBe(
-      "「第1週」を2番目に移動しました。",
+      "Moved “第1週” to place 2.",
     );
     expect(ANNOUNCEMENTS.onDragEnd({ active: row("20261027-aaaaaa"), over: row("20261027-bbbbbb") })).toBe(
-      "「第1週」を2番目に置きました。",
+      "Put “第1週” down in place 2.",
     );
   });
 
@@ -32,6 +33,6 @@ describe("listAnnouncements", () => {
   });
 
   it("says that a cancelled move was undone", () => {
-    expect(ANNOUNCEMENTS.onDragCancel({ active: row("20261027-bbbbbb"), over: null })).toBe("「第2週」の移動を取り消しました。");
+    expect(ANNOUNCEMENTS.onDragCancel({ active: row("20261027-bbbbbb"), over: null })).toBe("Cancelled moving “第2週”.");
   });
 });

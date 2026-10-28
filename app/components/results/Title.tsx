@@ -1,7 +1,8 @@
+import { Trans } from "@lingui/react/macro";
 import { Badge } from "~/components/ui/badge";
 import type { ResultsView } from "~/lib/views";
 
-/** Desktop: the level, the test title and the 結果 heading. */
+/** Desktop: the level, the test title and the Results heading. */
 export function Title({ results }: { results: ResultsView }) {
   return (
     <div className="hidden flex-col gap-2 md:flex">
@@ -9,7 +10,9 @@ export function Title({ results }: { results: ResultsView }) {
         <Badge>{results.level}</Badge>
         <span>{results.title}</span>
       </div>
-      <h1 className="text-title font-bold tracking-tight">結果</h1>
+      <h1 className="text-title font-bold tracking-tight">
+        <Trans>Results</Trans>
+      </h1>
     </div>
   );
 }

@@ -1,34 +1,53 @@
+import type { I18n, MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
 import type { SectionType } from "./payload";
 
 export const PASS_PERCENT = 80;
 
+/** The official names of the 問題, in Japanese in every language: they are what the exam prints. */
 export const SECTION_TITLES: Record<SectionType, string> = {
   "fill-blank": "文法形式の判断",
   "sentence-order": "文の組み立て",
   passage: "文章の文法",
 };
 
-export function sectionInstruction(type: SectionType, blankNums: number[] = []) {
+/** What each official name means, shown beside it on a page that is not Japanese. */
+export const SECTION_GLOSSES: Record<SectionType, MessageDescriptor> = {
+  "fill-blank": msg`Grammar form`,
+  "sentence-order": msg`Sentence order`,
+  passage: msg`Grammar in a passage`,
+};
+
+/** The English meaning of a 問題's name, or null on a Japanese page, where the name speaks for itself. */
+export const sectionGloss = (i18n: I18n, type: SectionType) => (i18n.locale === "ja" ? null : i18n._(SECTION_GLOSSES[type]));
+
+/** The instruction above a 問題. In Japanese it is the exam's own wording. */
+export function sectionInstruction(type: SectionType, blankNums: number[] = []): MessageDescriptor {
   switch (type) {
     case "fill-blank":
-      return "つぎの文の（　　）に入れるのに最もよいものを、1・2・3・4から一つえらびなさい。";
+      return msg`Choose the best answer for （　　） from 1, 2, 3 and 4.`;
     case "sentence-order":
-      return "つぎの文の ★ に入る最もよいものを、1・2・3・4から一つえらびなさい。ピースを空欄にドラッグするか、タップして入れてください。";
+      return msg`Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it.`;
     case "passage": {
       const first = blankNums[0];
       const last = blankNums[blankNums.length - 1];
-      const range =
-        blankNums.length <= 1
-          ? `（${first}）に`
-          : blankNums.length === 2
-            ? `（${first}）と（${last}）の中に`
-            : `（${first}）から（${last}）の中に`;
-      return `つぎの文章を読んで、文章全体の内容を考えて、${range}入る最もよいものを、1・2・3・4から一つえらびなさい。`;
+      if (blankNums.length <= 1) {
+        return msg`Read the passage, think about what it says as a whole, and choose the best answer for （${first}） from 1, 2, 3 and 4.`;
+      }
+      return blankNums.length === 2
+        ? msg`Read the passage, think about what it says as a whole, and choose the best answer for （${first}） and （${last}） from 1, 2, 3 and 4.`
+        : msg`Read the passage, think about what it says as a whole, and choose the best answer for each of （${first}） to （${last}） from 1, 2, 3 and 4.`;
     }
   }
 }
 
 const CIRCLED = ["①", "②", "③", "④"];
+
+/** 第2週 in Japanese, "Week 2" in English: the 文法ノート's week headings. Pass `i18n` from useLingui. */
+export const weekLabel = (i18n: I18n, week: number) => i18n._(msg`Week ${week}`);
+
+/** 3日目 in Japanese, "Day 3" in English. */
+export const dayLabel = (i18n: I18n, day: number) => i18n._(msg`Day ${day}`);
 
 /** 2 → "②", the way the 文法ノート number the points within a day. */
 export function circled(number: number) {

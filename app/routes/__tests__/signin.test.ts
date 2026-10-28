@@ -84,7 +84,7 @@ describe("signin action", () => {
     await createUser("Huy", PASSWORD);
 
     expect(await post({ name: "Huy", password: "wrong" })).toMatchObject({
-      data: { error: "ユーザー名（メールアドレス）かパスワードが違います。" },
+      data: { error: "Wrong username (or email) or password." },
       init: { status: 401 },
     });
     expect(waits).toEqual([1000]);

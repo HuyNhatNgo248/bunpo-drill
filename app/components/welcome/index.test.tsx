@@ -17,7 +17,7 @@ async function pick(choice: string) {
 async function answerAll() {
   for (const [i, sample] of SAMPLES.entries()) {
     await pick(sample.choices[sample.answer]);
-    await userEvent.click(screen.getByRole("button", { name: i === SAMPLES.length - 1 ? "結果を見る" : "次の問題" }));
+    await userEvent.click(screen.getByRole("button", { name: i === SAMPLES.length - 1 ? "See your score" : "Next question" }));
   }
 }
 
@@ -25,10 +25,10 @@ describe("Welcome", () => {
   it("counts down to the next exam in its own section", async () => {
     renderRoute(<Welcome exam={EXAM} />, { url: "/welcome" });
 
-    const section = await screen.findByRole("region", { name: "次の日本語能力試験（JLPT）" });
-    expect(section).toHaveTextContent("2026年12月6日（日）");
-    expect(section).toHaveTextContent("あと39日");
-    expect(section).toHaveTextContent("試験日までに39回解けます");
+    const section = await screen.findByRole("region", { name: "The next JLPT" });
+    expect(section).toHaveTextContent("Sunday, December 6, 2026");
+    expect(section).toHaveTextContent("in 39 days");
+    expect(section).toHaveTextContent("you can take 39 tests before the exam");
   });
 
   it("ends with a footer that says it is not the official JLPT, and links to it", async () => {
@@ -36,26 +36,26 @@ describe("Welcome", () => {
 
     const footer = await screen.findByRole("contentinfo");
     expect(footer).toHaveTextContent("継続は力なり");
-    expect(footer).toHaveTextContent("公式サービスではありません");
+    expect(footer).toHaveTextContent("Not an official JLPT service");
     expect(within(footer).getByRole("link", { name: "jlpt.jp" })).toHaveAttribute("href", "https://www.jlpt.jp/");
   });
 
   it("says when it is the exam day, with no count", async () => {
     renderRoute(<Welcome exam={{ date: "2026-12-06", daysLeft: 0 }} />, { url: "/welcome" });
 
-    const section = await screen.findByRole("region", { name: "次の日本語能力試験（JLPT）" });
-    expect(section).toHaveTextContent("今日が試験日です");
-    expect(section).not.toHaveTextContent("あと");
+    const section = await screen.findByRole("region", { name: "The next JLPT" });
+    expect(section).toHaveTextContent("It's exam day today");
+    expect(section).not.toHaveTextContent(/in \d+ day/);
   });
 
   it("pitches the app and links to sign-up and sign-in", async () => {
     renderRoute(<Welcome exam={EXAM} />, { url: "/welcome" });
 
-    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("自分の文法ノートから、本番形式の模擬試験。");
-    for (const link of screen.getAllByRole("link", { name: "アカウントを作成" })) {
+    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("Real-format mock tests, from your own grammar notes.");
+    for (const link of screen.getAllByRole("link", { name: "Create account" })) {
       expect(link).toHaveAttribute("href", "/signup");
     }
-    expect(screen.getAllByRole("link", { name: "ログイン" })[0]).toHaveAttribute("href", "/signin");
+    expect(screen.getAllByRole("link", { name: "Sign in" })[0]).toHaveAttribute("href", "/signin");
   });
 
   it("marks a right answer, fills the blank, and says why", async () => {
@@ -63,9 +63,9 @@ describe("Welcome", () => {
 
     await pick("かいがあって");
 
-    expect(screen.getByText("正解！")).toBeInTheDocument();
+    expect(screen.getByText("Correct!")).toBeInTheDocument();
     expect(screen.getByText("〜かいがあって")).toBeInTheDocument();
-    expect(screen.getByText("（正解）").closest("li")).toHaveTextContent("かいがあって");
+    expect(screen.getByText("(correct)").closest("li")).toHaveTextContent("かいがあって");
   });
 
   it("shows the right answer after a wrong one", async () => {
@@ -73,8 +73,8 @@ describe("Welcome", () => {
 
     await pick("かいもなく");
 
-    expect(screen.getByText("正解は 3「かいがあって」")).toBeInTheDocument();
-    expect(screen.getByText("（あなたの解答）").closest("li")).toHaveTextContent("かいもなく");
+    expect(screen.getByText("The answer is 3 “かいがあって”")).toBeInTheDocument();
+    expect(screen.getByText("(your answer)").closest("li")).toHaveTextContent("かいもなく");
   });
 
   it("gives the score after the last question, and starts again", async () => {
@@ -82,9 +82,9 @@ describe("Welcome", () => {
 
     await answerAll();
 
-    expect(screen.getByText("おつかれさまでした")).toBeInTheDocument();
+    expect(screen.getByText("Nice work")).toBeInTheDocument();
     expect(screen.getByText(String(SAMPLES.length), { selector: "strong" })).toBeInTheDocument();
-    await userEvent.click(screen.getByRole("button", { name: "もう一度" }));
+    await userEvent.click(screen.getByRole("button", { name: "Try again" }));
     expect(screen.getByText(`1 / ${SAMPLES.length}`)).toBeInTheDocument();
   });
 });

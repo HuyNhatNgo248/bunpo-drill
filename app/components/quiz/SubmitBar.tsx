@@ -1,3 +1,4 @@
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { useNavigation } from "react-router";
 import { ConfirmDialog } from "~/components/ConfirmDialog";
 import { Button } from "~/components/ui/button";
@@ -23,11 +24,12 @@ export function SubmitBar({
   onClear: () => void;
   onSubmit: () => void;
 }) {
+  const { t } = useLingui();
   const submitting = useNavigation().state !== "idle";
 
   const submitButton = (onClick?: () => void) => (
     <Button size="lg" disabled={submitting} onClick={onClick} className="font-semibold md:px-5 md:font-medium">
-      {submitting ? "提出中…" : "提出する"}
+      {submitting ? t`Submitting…` : t`Submit`}
     </Button>
   );
 
@@ -40,19 +42,29 @@ export function SubmitBar({
       )}
       <QuestionSheet sections={sections} answered={answered} remaining={left} className="lg:hidden" />
       <span role="status" className="hidden text-sm text-subtle-foreground lg:inline">
-        {left > 0 ? `未回答 ${left}問` : "すべて回答済み"}
+        {left > 0 ? t`${left} unanswered` : t`All answered`}
       </span>
       <div className="grid grid-cols-actions gap-2 md:flex">
         <Button variant="outline" size="lg" onClick={onClear} className="text-secondary-foreground">
-          <span className="md:hidden">クリア</span>
-          <span className="hidden md:inline">回答をクリア</span>
+          <span className="md:hidden">
+            <Trans>Clear</Trans>
+          </span>
+          <span className="hidden md:inline">
+            <Trans>Clear answers</Trans>
+          </span>
         </Button>
         {left > 0 ? (
           <ConfirmDialog
-            title={`未回答が${left}問あります。提出しますか？`}
-            description="未回答の問題は不正解になります。"
-            confirmLabel="提出する"
-            cancelLabel="解答を続ける"
+            title={
+              <Plural
+                value={left}
+                one="# question is unanswered. Submit anyway?"
+                other="# questions are unanswered. Submit anyway?"
+              />
+            }
+            description={t`Unanswered questions count as wrong.`}
+            confirmLabel={t`Submit`}
+            cancelLabel={t`Keep answering`}
             onConfirm={onSubmit}
           >
             {submitButton()}

@@ -1,9 +1,17 @@
+import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin";
 import { reactRouter } from "@react-router/dev/vite";
+import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [tailwindcss(), reactRouter()],
+  plugins: [
+    tailwindcss(),
+    lingui(),
+    // Expands the @lingui macros. React Router's plugin runs no Babel, so a <Trans> would reach the bundle unexpanded.
+    babel({ presets: [linguiTransformerBabelPreset()] }),
+    reactRouter(),
+  ],
   resolve: {
     tsconfigPaths: true,
   },

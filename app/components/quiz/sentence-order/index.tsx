@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import {
   DndContext,
   DragOverlay,
@@ -33,6 +34,7 @@ export function SentenceOrder({
   slots: Slots | undefined;
   onChange: (slots: Slots) => void;
 }) {
+  const { t, i18n } = useLingui();
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 4 } }),
     // Hold briefly before dragging on touch screens so the page still scrolls.
@@ -63,8 +65,10 @@ export function SentenceOrder({
       id={`order-${question.id}`}
       sensors={sensors}
       accessibility={{
-        announcements: pieceAnnouncements(question),
-        screenReaderInstructions: { draggable: "選択肢を押すと次の空欄に入り、埋まった空欄を押すと選択肢に戻ります。" },
+        announcements: pieceAnnouncements(question, i18n),
+        screenReaderInstructions: {
+          draggable: t`Press a choice to put it in the next empty slot. Press a filled slot to send it back to the choices.`,
+        },
       }}
       autoScroll={false}
       onDragStart={onDragStart}

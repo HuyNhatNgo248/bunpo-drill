@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { useEffect, useRef } from "react";
 import { Form } from "react-router";
 import { PasswordField } from "~/components/form/PasswordField";
@@ -11,6 +12,7 @@ import type { AccountResult } from "./types";
 /** Changes the password. The current password is needed, and the fields empty after a change. */
 export function PasswordForm({ result }: { result?: AccountResult }) {
   const saving = useSubmitting("password");
+  const { t } = useLingui();
   const form = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -19,13 +21,15 @@ export function PasswordForm({ result }: { result?: AccountResult }) {
 
   return (
     <Card className="flex flex-col gap-4 p-5 md:p-6">
-      <h2 className="text-base font-semibold">パスワード</h2>
+      <h2 className="text-base font-semibold">
+        <Trans>Password</Trans>
+      </h2>
       <Form ref={form} method="post" className="flex flex-col gap-3">
         <input type="hidden" name="intent" value="password" />
-        <PasswordField label="現在のパスワード" name="current" required autoComplete="current-password" className={INPUT_CLASS} />
+        <PasswordField label={t`Current password`} name="current" required autoComplete="current-password" className={INPUT_CLASS} />
         <PasswordField
-          label="新しいパスワード"
-          hint="8文字以上"
+          label={t`New password`}
+          hint={t`At least 8 characters`}
           name="next"
           required
           minLength={8}
@@ -34,7 +38,7 @@ export function PasswordForm({ result }: { result?: AccountResult }) {
         />
         <Status result={result} />
         <Button type="submit" disabled={saving} className="self-end">
-          {saving ? "変更中…" : "パスワードを変更"}
+          {saving ? t`Changing…` : t`Change password`}
         </Button>
       </Form>
     </Card>

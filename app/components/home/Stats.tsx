@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { StatCard } from "./StatCard";
 
 /** The figures over the tests of the level shown, which the home loader works out. */
@@ -5,12 +6,13 @@ export type HomeStats = { average: number | null; toReview: number; taken: numbe
 
 /** The average score, the grammar left to review, and how many of the `total` tests are taken. */
 export function Stats({ stats, total }: { stats: HomeStats; total: number }) {
+  const { t } = useLingui();
   return (
     <div className="grid grid-cols-3 gap-2 md:grid-cols-stats md:gap-3">
-      <StatCard label="平均正答率" value={stats.average === null ? "—" : `${stats.average}%`} />
-      <StatCard label="要復習の文法" value={stats.toReview} />
+      <StatCard label={t`Average score`} value={stats.average === null ? "—" : `${stats.average}%`} />
+      <StatCard label={t`Grammar to review`} value={stats.toReview} />
       <StatCard
-        label="受験済み"
+        label={t`Taken`}
         value={
           <>
             {stats.taken}{" "}

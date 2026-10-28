@@ -1,13 +1,15 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Check } from "lucide-react";
 import { useFetcher } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
-import { circled } from "~/lib/sections";
+import { circled, dayLabel, weekLabel } from "~/lib/sections";
 import type { ReviewChip } from "~/lib/views";
 
 /** One chip: tapping it opens where the point is in the 文法ノート, and a button to mark it reviewed. */
 export function GrammarChip({ testId, chip }: { testId: string; chip: ReviewChip }) {
+  const { t, i18n } = useLingui();
   const fetcher = useFetcher({ key: `review:${testId}:${chip.grammarId}` });
   const pending = fetcher.json as { reviewed: boolean } | undefined;
   const reviewed = pending ? pending.reviewed : chip.reviewed;
@@ -31,30 +33,38 @@ export function GrammarChip({ testId, chip }: { testId: string; chip: ReviewChip
         >
           {reviewed && <Check className="size-3.5" aria-hidden="true" />}
           <span lang="ja">{chip.pattern}</span>
-          {reviewed && <span className="sr-only">（復習済み）</span>}
+          {reviewed && <span className="sr-only">{t`(reviewed)`}</span>}
         </button>
       </PopoverTrigger>
-      <PopoverContent lang="ja" side="top" className="w-60 gap-3 border p-3.5 shadow-raised ring-0">
+      <PopoverContent side="top" className="w-60 gap-3 border p-3.5 shadow-raised ring-0">
         <span lang="ja" className="font-jp text-base font-semibold">
           {chip.pattern}
         </span>
         <dl className="grid grid-cols-term gap-x-4 gap-y-1 text-caption">
-          <dt className="text-muted-foreground">レベル</dt>
+          <dt className="text-muted-foreground">
+            <Trans>Level</Trans>
+          </dt>
           <dd className="font-medium">{chip.level}</dd>
-          <dt className="text-muted-foreground">週</dt>
-          <dd lang="ja" className="font-jp font-medium">第{chip.week}週</dd>
-          <dt className="text-muted-foreground">日</dt>
-          <dd lang="ja" className="font-jp font-medium">{chip.day}日目</dd>
-          <dt className="text-muted-foreground">番号</dt>
+          <dt className="text-muted-foreground">
+            <Trans>Week</Trans>
+          </dt>
+          <dd className="font-medium">{weekLabel(i18n, chip.week)}</dd>
+          <dt className="text-muted-foreground">
+            <Trans>Day</Trans>
+          </dt>
+          <dd className="font-medium">{dayLabel(i18n, chip.day)}</dd>
+          <dt className="text-muted-foreground">
+            <Trans>Number</Trans>
+          </dt>
           <dd lang="ja" className="font-jp font-medium">{circled(chip.number)}</dd>
         </dl>
         <Button variant={reviewed ? "outline" : "default"} onClick={toggle} className="w-full">
           {reviewed ? (
             <>
-              <Check aria-hidden="true" /> 復習済み · 元に戻す
+              <Check aria-hidden="true" /> <Trans>Reviewed · Undo</Trans>
             </>
           ) : (
-            "復習済みにする"
+            <Trans>Mark as reviewed</Trans>
           )}
         </Button>
       </PopoverContent>

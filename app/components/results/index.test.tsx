@@ -59,7 +59,7 @@ describe("Results", () => {
 
     expect(await screen.findByText("1 / 3")).toBeInTheDocument();
     expect(screen.getByText("33%")).toHaveClass("text-warning");
-    expect(screen.getByText("不正解 2問 · 合格ライン 80%")).toBeInTheDocument();
+    expect(screen.getByText("2 wrong · pass line 80%")).toBeInTheDocument();
   });
 
   it("shows the percent in green from the pass line up", async () => {
@@ -77,39 +77,39 @@ describe("Results", () => {
   it("says there is nothing to review after a full score", async () => {
     renderResults(PASSED);
 
-    expect(await screen.findByText("復習する文法はありません。全問正解でした。")).toBeInTheDocument();
+    expect(await screen.findByText("Nothing to review. You got every question right.")).toBeInTheDocument();
   });
 
   describe("the answer review", () => {
     it("shows the score of each section", async () => {
       renderResults(FAILED);
 
-      const section = await screen.findByRole("region", { name: "問題1" });
+      const section = await screen.findByRole("region", { name: "Part 1" });
       expect(section).toHaveTextContent("0 / 1");
     });
 
     it("strikes out a wrong answer, and gives the right one", async () => {
       renderResults(FAILED);
-      await screen.findByRole("region", { name: "問題1" });
+      await screen.findByRole("region", { name: "Part 1" });
 
       const card = within(reviewOf(1));
-      expect(card.getByText("あなたの解答：1 かいもなく").tagName).toBe("S");
-      expect(card.getByText("正解：3 かいがあって")).toBeInTheDocument();
+      expect(card.getByText("Your answer: 1 かいもなく").tagName).toBe("S");
+      expect(card.getByText("Answer: 3 かいがあって")).toBeInTheDocument();
     });
 
     it("says 未回答 for a question left blank", async () => {
       renderResults(FAILED);
-      await screen.findByRole("region", { name: "問題3" });
+      await screen.findByRole("region", { name: "Part 3" });
 
-      expect(within(reviewOf(3)).getByText("未回答")).toBeInTheDocument();
+      expect(within(reviewOf(3)).getByText("Unanswered")).toBeInTheDocument();
     });
 
     it("shows only the right answer for a question answered right, with the ★ piece marked", async () => {
       renderResults(FAILED);
-      await screen.findByRole("region", { name: "問題2" });
+      await screen.findByRole("region", { name: "Part 2" });
 
       const card = within(reviewOf(2));
-      expect(card.queryByText(/あなたの解答/)).toBeNull();
+      expect(card.queryByText(/Your answer/)).toBeNull();
       expect(card.getByText("★ かいが")).toBeInTheDocument();
     });
 
@@ -121,7 +121,7 @@ describe("Results", () => {
 
     it("explains the answer under it, for a question that has an explanation", async () => {
       renderResults(EXPLAINED);
-      await screen.findByRole("region", { name: "問題1" });
+      await screen.findByRole("region", { name: "Part 1" });
 
       expect(within(reviewOf(1)).getByText("The effort paid off, so かいがあって.")).toBeInTheDocument();
       expect(within(reviewOf(2)).queryByText(/かいがあって\./)).toBeNull();
@@ -132,7 +132,7 @@ describe("Results", () => {
     it("links back to the list, from the header and from the bottom", async () => {
       renderResults(FAILED);
 
-      const links = await screen.findAllByRole("link", { name: /テスト一覧に戻る/ });
+      const links = await screen.findAllByRole("link", { name: /Back to the mock tests/ });
       expect(links).toHaveLength(2);
       for (const link of links) expect(link).toHaveAttribute("href", "/");
     });
@@ -140,7 +140,7 @@ describe("Results", () => {
     it("posts to the retake route to take the test again", async () => {
       const requests = renderResults(FAILED);
 
-      await userEvent.click(await screen.findByRole("button", { name: "もう一度受ける" }));
+      await userEvent.click(await screen.findByRole("button", { name: "Take it again" }));
 
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${FAILED.id}/retake`, body: null }]));
     });

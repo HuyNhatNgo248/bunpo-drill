@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { ChevronUp, LayoutGrid } from "lucide-react";
 import { useRef, useState } from "react";
@@ -15,7 +16,11 @@ export function QuestionSheet({
   remaining,
   className,
 }: QuestionListProps & { remaining: number; className?: string }) {
+  const { t } = useLingui();
   const [open, setOpen] = useState(false);
+  const left = remaining;
+  const done = answered.size;
+  const total = done + remaining;
   const target = useRef<number | null>(null);
 
   return (
@@ -29,8 +34,10 @@ export function QuestionSheet({
           )}
         >
           <LayoutGrid className="size-4 text-subtle-foreground" aria-hidden="true" />
-          <span className="font-medium">問題一覧</span>
-          <span className="text-subtle-foreground">· {remaining > 0 ? `未回答 ${remaining}問` : "すべて回答済み"}</span>
+          <span className="font-medium">
+            <Trans>Question list</Trans>
+          </span>
+          <span className="text-subtle-foreground">· {left > 0 ? t`${left} unanswered` : t`All answered`}</span>
           <ChevronUp className="ml-auto size-4 text-subtle-foreground md:ml-1" aria-hidden="true" />
         </button>
       </SheetTrigger>
@@ -46,9 +53,13 @@ export function QuestionSheet({
         }}
       >
         <SheetHeader className="border-b pr-14">
-          <SheetTitle>問題一覧</SheetTitle>
+          <SheetTitle>
+            <Trans>Question list</Trans>
+          </SheetTitle>
           <SheetDescription>
-            回答済み {answered.size} / {answered.size + remaining}
+            <Trans>
+              Answered {done} / {total}
+            </Trans>
           </SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-4 overflow-y-auto p-4 pb-6">

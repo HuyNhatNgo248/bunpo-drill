@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
 import { useId, useState } from "react";
@@ -12,6 +13,7 @@ export function PasswordField({
   className,
   ...props
 }: { label: string; hint?: string } & Omit<React.ComponentProps<"input">, "type" | "id">) {
+  const { t } = useLingui();
   const id = useId();
   const [shown, setShown] = useState(false);
   return (
@@ -24,7 +26,7 @@ export function PasswordField({
         <button
           type="button"
           onClick={() => setShown(!shown)}
-          aria-label={shown ? `${label}を隠す` : `${label}を表示`}
+          aria-label={shown ? t`Hide ${label}` : t`Show ${label}`}
           aria-pressed={shown}
           aria-controls={id}
           className="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-lg text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/40"

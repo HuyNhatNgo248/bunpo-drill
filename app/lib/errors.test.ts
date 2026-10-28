@@ -1,4 +1,5 @@
 import { UNSAFE_ErrorResponseImpl as ErrorResponse } from "react-router";
+import { i18n } from "@lingui/core";
 import { describe, expect, it } from "vitest";
 import { describeError, testNotFound } from "./errors";
 
@@ -7,6 +8,12 @@ import { describeError, testNotFound } from "./errors";
  * `testNotFound` throws one with the data "Test not found".
  */
 const routeError = (status: number, data: unknown = null) => new ErrorResponse(status, "", data);
+
+/** The copy with its title and description in English, the way the error page shows them. */
+function wordsOf(error: unknown) {
+  const { title, description, ...rest } = describeError(error);
+  return { ...rest, title: i18n._(title), ...(description && { description: i18n._(description) }) };
+}
 
 describe("testNotFound", () => {
   it("answers 404 with the data that marks a missing test", () => {
@@ -19,39 +26,39 @@ describe("testNotFound", () => {
 
 describe("describeError", () => {
   it("says the test is missing, with no retry, for a missing test", () => {
-    expect(describeError(routeError(404, testNotFound().data))).toEqual({
+    expect(wordsOf(routeError(404, testNotFound().data))).toEqual({
       status: 404,
       kanji: "無",
-      title: "テストが見つかりません",
-      description: "このテストは存在しないか、削除された可能性があります。",
+      title: "Test not found",
+      description: "This test doesn't exist, or it may have been deleted.",
       retry: false,
     });
   });
 
   it("says the page is missing for any other 404", () => {
-    expect(describeError(routeError(404))).toEqual({
+    expect(wordsOf(routeError(404))).toEqual({
       status: 404,
       kanji: "無",
-      title: "ページが見つかりません",
+      title: "Page not found",
       retry: false,
     });
   });
 
   it("reports a failure and offers a retry for a 5xx answer", () => {
-    expect(describeError(routeError(503))).toEqual({
+    expect(wordsOf(routeError(503))).toEqual({
       status: 503,
       kanji: "障",
-      title: "システム障害が発生しました",
-      description: "ページを読み込めませんでした。しばらくしてから、もう一度お試しください。",
+      title: "Something went wrong",
+      description: "The page couldn't load. Please try again in a moment.",
       retry: true,
     });
   });
 
   it("reports a refused request with no retry for a 4xx answer other than 404", () => {
     // The same request gets the same answer again, so a retry does not help.
-    expect(describeError(routeError(400))).toMatchObject({
+    expect(wordsOf(routeError(400))).toMatchObject({
       status: 400,
-      description: "リクエストを処理できませんでした。",
+      description: "The request couldn't be handled.",
       retry: false,
     });
   });

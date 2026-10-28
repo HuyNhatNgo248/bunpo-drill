@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { buildPayload } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
-import { routeArgs } from "#tests/helpers/route";
+import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
 import { createTest, saveSubmission } from "~/lib/tests.server";
 import { loader, meta } from "../results";
@@ -41,9 +41,9 @@ describe("results loader", () => {
 
 describe("results meta", () => {
   it("names the page after the test, or the app alone when there is no result", () => {
-    const metaOf = (loaderData: unknown) => meta({ loaderData } as Parameters<typeof meta>[0]);
+    const metaOf = (loaderData: unknown) => meta(metaArgs<Parameters<typeof meta>[0]>({ loaderData }));
 
-    expect(metaOf({ results: { title: "第1週 1日目" } })).toEqual([{ title: "結果 · 第1週 1日目 · 文法ドリル" }]);
+    expect(metaOf({ results: { title: "第1週 1日目" } })).toEqual([{ title: "Results · 第1週 1日目 · 文法ドリル" }]);
     expect(metaOf(undefined)).toEqual([{ title: "文法ドリル" }]);
   });
 });

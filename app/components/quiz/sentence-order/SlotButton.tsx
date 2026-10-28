@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { cn } from "~/lib/utils";
 import type { DragData, DropData } from "./types";
@@ -18,13 +19,16 @@ export function SlotButton({
   text: string;
   onTap: () => void;
 }) {
+  const { t } = useLingui();
   const filled = piece !== null;
+  const n = index + 1;
+  const slotName = star ? t`★ slot` : t`Slot ${n}`;
   const drop = useDroppable({ id: `slot-${index}`, data: { slot: index } satisfies DropData });
   const drag = useDraggable({
     id: `slot-piece-${index}`,
     data: { piece: piece ?? -1 } satisfies DragData,
     disabled: !filled,
-    attributes: { roleDescription: "ドラッグ可能" },
+    attributes: { roleDescription: t`draggable` },
   });
 
   return (
@@ -40,7 +44,7 @@ export function SlotButton({
       data-drop={index}
       data-question={questionId}
       aria-disabled={undefined}
-      aria-label={`${star ? "★の空欄" : `空欄${index + 1}`}${filled ? `：${text}（タップで外す）` : ""}`}
+      aria-label={filled ? t`${slotName}: ${text} (tap to remove)` : slotName}
       className={cn(
         "inline-flex h-10 min-w-16 touch-manipulation items-center justify-center gap-1 rounded-t-md border-b-2 px-2 font-jp text-body-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:min-w-22 md:px-2.5 md:text-base",
         filled

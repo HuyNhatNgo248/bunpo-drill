@@ -49,14 +49,14 @@ describe("account action", () => {
   describe("the name form", () => {
     it("renames the user", async () => {
       expect(await post(userId, { intent: "name", name: "  Huy N.  " })).toMatchObject({
-        data: { form: "name", saved: "ユーザー名を変更しました。" },
+        data: { form: "name", saved: "Username changed." },
       });
       expect(await getUser(userId)).toEqual({ id: userId, name: "Huy N.", email: null });
     });
 
     it("answers 400 for a name of the wrong length", async () => {
       expect(await post(userId, { intent: "name", name: "a".repeat(31) })).toMatchObject({
-        data: { form: "name", error: "ユーザー名は1〜30文字で入力してください。" },
+        data: { form: "name", error: "Use a username of 1 to 30 characters." },
         init: { status: 400 },
       });
     });
@@ -65,7 +65,7 @@ describe("account action", () => {
       await createUser("Mai", PASSWORD);
 
       expect(await post(userId, { intent: "name", name: "Mai" })).toMatchObject({
-        data: { form: "name", error: "このユーザー名はもう使われています。" },
+        data: { form: "name", error: "That username is already taken." },
         init: { status: 409 },
       });
     });
@@ -74,14 +74,14 @@ describe("account action", () => {
   describe("the email form", () => {
     it("saves the email in lower case", async () => {
       expect(await post(userId, { intent: "email", email: " Huy@Example.com " })).toMatchObject({
-        data: { form: "email", saved: "メールアドレスを保存しました。" },
+        data: { form: "email", saved: "Email address saved." },
       });
       expect((await getUser(userId))?.email).toBe("huy@example.com");
     });
 
     it("answers 400 for a value that is not an email", async () => {
       expect(await post(userId, { intent: "email", email: "huy" })).toMatchObject({
-        data: { form: "email", error: "メールアドレスの形式が正しくありません。" },
+        data: { form: "email", error: "That email address doesn't look right." },
         init: { status: 400 },
       });
     });
@@ -90,7 +90,7 @@ describe("account action", () => {
       await createUser("Mai", PASSWORD, "mai@example.com");
 
       expect(await post(userId, { intent: "email", email: "mai@example.com" })).toMatchObject({
-        data: { form: "email", error: "このメールアドレスはもう使われています。" },
+        data: { form: "email", error: "That email address is already in use." },
         init: { status: 409 },
       });
     });
@@ -99,21 +99,21 @@ describe("account action", () => {
   describe("the password form", () => {
     it("changes the password when the current one matches", async () => {
       expect(await post(userId, { intent: "password", current: PASSWORD, next: "a new passphrase" })).toMatchObject({
-        data: { form: "password", saved: "パスワードを変更しました。" },
+        data: { form: "password", saved: "Password changed." },
       });
       expect(await verifyUser("Huy", "a new passphrase")).toBe(userId);
     });
 
     it("answers 400 for a new password that is too short", async () => {
       expect(await post(userId, { intent: "password", current: PASSWORD, next: "short" })).toMatchObject({
-        data: { form: "password", error: "パスワードは8文字以上にしてください。" },
+        data: { form: "password", error: "Use a password of at least 8 characters." },
         init: { status: 400 },
       });
     });
 
     it("answers 401 for a wrong current password, and keeps the old one", async () => {
       expect(await post(userId, { intent: "password", current: "wrong", next: "a new passphrase" })).toMatchObject({
-        data: { form: "password", error: "現在のパスワードが違います。" },
+        data: { form: "password", error: "Your current password is wrong." },
         init: { status: 401 },
       });
       expect(await verifyUser("Huy", PASSWORD)).toBe(userId);

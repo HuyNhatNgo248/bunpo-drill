@@ -30,8 +30,8 @@ function sessions() {
 }
 
 /** The pages a signed-out visitor can open: the welcome page, signing in or up, and getting back in after a forgotten password. */
-// /login only redirects old links to /signin or /signup.
-const PUBLIC_PAGES = new Set(["/welcome", "/signin", "/signup", "/login", "/forgot-password", "/reset-password"]);
+// /login only redirects old links to /signin or /signup. /locale switches the language, which a signed-out visitor needs too.
+const PUBLIC_PAGES = new Set(["/welcome", "/signin", "/signup", "/login", "/forgot-password", "/reset-password", "/locale"]);
 
 /**
  * Runs before every request (root middleware): no cookie means the sign-in page, or a 401 for /api.

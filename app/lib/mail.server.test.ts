@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MAIL_FROM } from "#tests/helpers/env";
 import { sendMail, type Mail } from "./mail.server";
 
-const MAIL: Mail = { to: "huy@example.com", subject: "文法ドリル：パスワードの再設定", text: "リンク：https://bunpo.test/reset-password?token=abc" };
+const MAIL: Mail = { to: "huy@example.com", subject: "文法ドリル: reset your password", text: "リンク：https://bunpo.test/reset-password?token=abc" };
 
 /** Replaces fetch with one that answers `status`, and returns it so a test can read what was sent. */
 function stubFetch(status = 200) {

@@ -7,6 +7,7 @@ export default [
   route("signup", "routes/signup.tsx"),
   route("login", "routes/helpers/login.ts"),
   route("logout", "routes/helpers/logout.ts"),
+  route("locale", "routes/helpers/locale.ts"),
   route("forgot-password", "routes/forgot-password.tsx"),
   route("reset-password", "routes/reset-password.tsx"),
   route("account", "routes/account.tsx"),

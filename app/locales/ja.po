@@ -1,0 +1,796 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-28 20:49+0900\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ja\n"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:24
+msgid "“{piece}” is over {zone}."
+msgstr "「{piece}」は{zone}の上にあります。"
+
+#: app/components/welcome/SampleQuiz.tsx:128
+msgid "(correct)"
+msgstr "（正解）"
+
+#: app/components/grammar-chips/GrammarChip.tsx:36
+msgid "(reviewed)"
+msgstr "（復習済み）"
+
+#: app/components/welcome/SampleQuiz.tsx:129
+msgid "(your answer)"
+msgstr "（あなたの解答）"
+
+#: app/components/welcome/ExamCountdown.tsx:23
+msgid "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
+msgstr "{daysLeft, plural, other {1日1回の模擬試験なら、試験日までに#回解けます。}}"
+
+#: app/components/quiz/SubmitBar.tsx:59
+msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
+msgstr "{left, plural, other {未回答が#問あります。提出しますか？}}"
+
+#: app/components/quiz/question-nav/QuestionSheet.tsx:40
+#: app/components/quiz/SubmitBar.tsx:45
+msgid "{left} unanswered"
+msgstr "未回答 {left}問"
+
+#: app/components/quiz/sentence-order/SlotButton.tsx:47
+msgid "{slotName}: {text} (tap to remove)"
+msgstr "{slotName}：{text}（タップで外す）"
+
+#: app/components/quiz/sentence-order/BankPiece.tsx:37
+msgid "{text} (placed)"
+msgstr "{text}（配置済み）"
+
+#: app/components/home/test-list/TestRow.tsx:75
+#: app/components/quiz/Title.tsx:13
+msgid "{total, plural, one {# question} other {# questions}}"
+msgstr "{total, plural, other {#問}}"
+
+#: app/components/results/ScoreCard.tsx:30
+msgid "{wrong} wrong"
+msgstr "不正解 {wrong}問"
+
+#: app/components/results/ScoreCard.tsx:35
+msgid "{wrong} wrong · pass line {pass}%"
+msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
+
+#: app/components/layout/header/index.tsx:39
+msgid "← Mock tests"
+msgstr "← テスト一覧"
+
+#: app/components/welcome/SampleQuiz.tsx:138
+msgid "<0>{pattern}</0>: {why}"
+msgstr "<0>{pattern}</0>：{why}"
+
+#: app/components/welcome/SampleQuiz.tsx:70
+msgid "<0>{score}</0> of {total} right."
+msgstr "{total}問中 <0>{score}</0> 問正解。"
+
+#: app/components/welcome/ExamCountdown.tsx:33
+msgid "<0>in</0> <1>{daysLeft}</1> <2>{daysLeft, plural, one {day} other {days}}</2>"
+msgstr "<0>あと</0><1>{daysLeft}</1><2>日</2>"
+
+#: app/components/welcome/index.tsx:25
+msgid "<0>Real-format mock tests,</0> <1>from <2>your own grammar notes</2>.</1>"
+msgstr "<1>自分の<2>文法ノート</2>から、</1><0>本番形式の模擬試験。</0>"
+
+#: app/components/quiz/sentence-order/SlotButton.tsx:25
+msgid "★ slot"
+msgstr "★の空欄"
+
+#: app/components/welcome/ExamSections.tsx:13
+#: app/components/welcome/ExamSections.tsx:20
+msgid "15 questions"
+msgstr "15問"
+
+#: app/components/welcome/ExamSections.tsx:27
+msgid "3 passages × 5 questions"
+msgstr "3文章 × 5問"
+
+#: app/lib/users.ts:20
+msgid "A username can't contain “@”."
+msgstr "ユーザー名に「@」は使えません。"
+
+#: app/components/account/index.tsx:17
+#: app/components/account/index.tsx:20
+#: app/components/layout/header/index.tsx:43
+#: app/components/layout/header/index.tsx:48
+#: app/components/layout/header/index.tsx:67
+#: app/routes/account.tsx:12
+msgid "Account"
+msgstr "アカウント"
+
+#: app/components/quiz/question-nav/QuestionSheet.tsx:40
+#: app/components/quiz/SubmitBar.tsx:45
+msgid "All answered"
+msgstr "すべて回答済み"
+
+#: app/components/results/section-review/QuestionReview.tsx:61
+msgid "Answer: {answer}"
+msgstr "正解：{answer}"
+
+#: app/components/quiz/Header.tsx:29
+#: app/components/quiz/ProgressCard.tsx:16
+#: app/components/quiz/question-nav/Legend.tsx:8
+msgid "Answered"
+msgstr "回答済み"
+
+#: app/components/quiz/ProgressCard.tsx:12
+msgid "Answered {answered} / {total}"
+msgstr "回答済み {answered} / {total}"
+
+#: app/components/quiz/question-nav/QuestionSheet.tsx:60
+msgid "Answered {done} / {total}"
+msgstr "回答済み {done} / {total}"
+
+#: app/components/home/EmptyState.tsx:12
+msgid "Ask Claude to make a test from your grammar notes, and it shows up here."
+msgstr "Claudeに文法ノートからテストを作ってもらうと、ここに表示されます。"
+
+#: app/components/account/PasswordForm.tsx:32
+#: app/components/login/LoginForm.tsx:58
+#: app/components/reset-password/ResetPasswordForm.tsx:16
+msgid "At least 8 characters"
+msgstr "8文字以上"
+
+#: app/components/home/Stats.tsx:12
+msgid "Average score"
+msgstr "平均正答率"
+
+#: app/components/forgot-password/index.tsx:28
+msgid "Back to sign in"
+msgstr "ログインに戻る"
+
+#: app/components/error-pages/ErrorPage.tsx:45
+#: app/components/layout/header/index.tsx:87
+#: app/components/results/Actions.tsx:15
+msgid "Back to the mock tests"
+msgstr "テスト一覧に戻る"
+
+#: app/components/quiz/QuestionCard.tsx:38
+msgid "Blank （{num}） in the passage"
+msgstr "文章中の（{num}）に入るもの"
+
+#: app/components/ConfirmDialog.tsx:40
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:33
+msgid "Cancelled moving “{piece}”."
+msgstr "「{piece}」の移動を取り消しました。"
+
+#: app/components/home/test-list/helpers/announcements.ts:29
+msgid "Cancelled moving “{title}”."
+msgstr "「{title}」の移動を取り消しました。"
+
+#: app/components/account/PasswordForm.tsx:41
+#: app/components/reset-password/ResetPasswordForm.tsx:32
+msgid "Change password"
+msgstr "パスワードを変更"
+
+#: app/components/account/PasswordForm.tsx:41
+#: app/components/reset-password/ResetPasswordForm.tsx:32
+msgid "Changing…"
+msgstr "変更中…"
+
+#: app/components/results/index.tsx:28
+msgid "Check your answers"
+msgstr "解答の確認"
+
+#: app/components/quiz/ChoiceList.tsx:19
+msgid "Choices for question {num}"
+msgstr "問題 {num} の選択肢"
+
+#: app/components/reset-password/index.tsx:21
+msgid "Choose a new password. Changing it signs you in."
+msgstr "新しいパスワードを決めてください。変更すると、そのままログインします。"
+
+#: app/components/login/index.tsx:20
+msgid "Choose a username, an email address and a password."
+msgstr "ユーザー名とメールアドレス、パスワードを決めてください。"
+
+#: app/lib/sections.ts:28
+msgid "Choose the best answer for （　　） from 1, 2, 3 and 4."
+msgstr "つぎの文の（　　）に入れるのに最もよいものを、1・2・3・4から一つえらびなさい。"
+
+#: app/lib/sections.ts:30
+msgid "Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it."
+msgstr "つぎの文の ★ に入る最もよいものを、1・2・3・4から一つえらびなさい。ピースを空欄にドラッグするか、タップして入れてください。"
+
+#: app/components/welcome/ExamSections.tsx:14
+msgid "Choose the most natural form for the （　） in a sentence, out of 4."
+msgstr "文の（　）に入る、いちばん自然な形を4つから選びます。"
+
+#: app/components/quiz/SubmitBar.tsx:50
+msgid "Clear"
+msgstr "クリア"
+
+#: app/components/quiz/SubmitBar.tsx:53
+msgid "Clear answers"
+msgstr "回答をクリア"
+
+#: app/components/ui/sheet.tsx:79
+msgid "Close"
+msgstr "閉じる"
+
+#: app/components/home/test-list/TestRow.tsx:109
+msgid "Continue"
+msgstr "続きから"
+
+#: app/components/welcome/SampleQuiz.tsx:135
+msgid "Correct!"
+msgstr "正解！"
+
+#: app/components/layout/header/index.tsx:75
+#: app/components/login/LoginForm.tsx:73
+#: app/components/welcome/index.tsx:41
+#: app/components/welcome/SampleQuiz.tsx:80
+msgid "Create account"
+msgstr "アカウントを作成"
+
+#: app/components/login/LoginForm.tsx:73
+msgid "Creating…"
+msgstr "作成中…"
+
+#: app/components/account/PasswordForm.tsx:29
+msgid "Current password"
+msgstr "現在のパスワード"
+
+#: app/components/grammar-chips/GrammarChip.tsx:53
+msgid "Day"
+msgstr "日"
+
+#: app/lib/sections.ts:50
+msgid "Day {day}"
+msgstr "{day}日目"
+
+#: app/components/home/test-list/DeleteTest.tsx:18
+msgid "Delete"
+msgstr "削除"
+
+#: app/components/home/test-list/DeleteTest.tsx:24
+msgid "Delete “{title}”"
+msgstr "「{title}」を削除"
+
+#: app/components/home/test-list/DeleteTest.tsx:16
+msgid "Delete “{title}”?"
+msgstr "「{title}」を削除しますか？"
+
+#: app/components/quiz/sentence-order/BankPiece.tsx:27
+#: app/components/quiz/sentence-order/SlotButton.tsx:31
+msgid "draggable"
+msgstr "ドラッグ可能"
+
+#: app/components/account/EmailForm.tsx:18
+#: app/components/account/EmailForm.tsx:32
+#: app/components/forgot-password/ForgotPasswordForm.tsx:14
+#: app/components/login/LoginForm.tsx:38
+msgid "Email address"
+msgstr "メールアドレス"
+
+#: app/routes/account.tsx:45
+msgid "Email address saved."
+msgstr "メールアドレスを保存しました。"
+
+#: app/components/forgot-password/index.tsx:16
+msgid "Enter your account's email address. We'll send a link to choose a new password."
+msgstr "アカウントのメールアドレスを入力してください。新しいパスワードを決めるリンクを送ります。"
+
+#: app/components/login/index.tsx:21
+msgid "Enter your username or email address, and your password."
+msgstr "ユーザー名またはメールアドレスと、パスワードを入力してください。"
+
+#: app/components/error-pages/ErrorPage.tsx:27
+msgid "Error {status}"
+msgstr "エラー {status}"
+
+#: app/components/login/index.tsx:29
+msgid "Forgot your password?"
+msgstr "パスワードを忘れた場合"
+
+#: app/components/welcome/SampleQuiz.tsx:75
+msgid "From your own grammar notes, you can make 45-question tests."
+msgstr "あなたの文法ノートからなら、45問のテストが作れます。"
+
+#: app/lib/sections.ts:16
+msgid "Grammar form"
+msgstr "文法形式の判断"
+
+#: app/lib/sections.ts:18
+msgid "Grammar in a passage"
+msgstr "文章の文法"
+
+#: app/components/welcome/index.tsx:21
+msgid "Grammar mock tests"
+msgstr "文法の模擬試験"
+
+#: app/components/home/Stats.tsx:13
+msgid "Grammar to review"
+msgstr "要復習の文法"
+
+#: app/components/results/ReviewCard.tsx:11
+msgid "Grammar worth reviewing"
+msgstr "復習におすすめの文法"
+
+#: app/components/login/index.tsx:34
+msgid "Have an account? <0>Sign in</0>"
+msgstr "アカウントをお持ちの方は <0>ログイン</0>"
+
+#: app/lib/password-reset.server.ts:90
+msgid "Hi {name},"
+msgstr "{name}さん"
+
+#: app/components/form/PasswordField.tsx:29
+msgid "Hide {label}"
+msgstr "{label}を隠す"
+
+#: app/components/forgot-password/index.tsx:20
+msgid "If there's an account for {sent}, we sent the link. It works for one hour. If it doesn't arrive, check your spam folder too."
+msgstr "{sent} のアカウントがあれば、リンクを送りました。リンクは1時間有効です。届かない場合は、迷惑メールのフォルダも確認してください。"
+
+#: app/lib/password-reset.server.ts:96
+msgid "If you didn't ask for this, ignore this email. Your password won't change."
+msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
+
+#: app/components/home/test-list/TestRow.tsx:68
+msgid "In progress {answered} / {total}"
+msgstr "解答中 {answered} / {total}"
+
+#: app/components/welcome/ExamSections.tsx:42
+msgid "In the same order and format as the grammar part of the JLPT. Each part has 15 questions, 45 in all by default, and you can change the counts."
+msgstr "JLPTの「文法」パートと同じ順番・同じ形式です。各問題15問、合計45問が基本で、問題数は変えられます。"
+
+#: app/components/welcome/ExamCountdown.tsx:21
+msgid "It's exam day today. Good luck!"
+msgstr "今日が試験日です。がんばってください。"
+
+#: app/routes/welcome.tsx:10
+msgid "JLPT-style mock tests from your own grammar notes"
+msgstr "自分の文法ノートから、JLPT形式の模擬試験"
+
+#: app/components/layout/AuthCard.tsx:20
+msgid "JLPT-style mock tests, made from your grammar notes."
+msgstr "文法ノートから作る、JLPT形式の模擬試験。"
+
+#: app/components/quiz/SubmitBar.tsx:67
+msgid "Keep answering"
+msgstr "解答を続ける"
+
+#. placeholder {0}: current.name
+#: app/components/layout/header/LanguageSwitch.tsx:38
+msgid "Language: {0}"
+msgstr "言語：{0}"
+
+#: app/components/grammar-chips/GrammarChip.tsx:45
+#: app/components/home/LevelTabs.tsx:9
+msgid "Level"
+msgstr "レベル"
+
+#: app/components/welcome/helpers/samples.ts:30
+msgid "Like 「〜のに」, a result that goes against what you would expect follows. It was raining, yet the match went ahead."
+msgstr "「〜のに」と同じで、予想と違う結果が続きます。雨なのに、試合は行われた。"
+
+#: app/components/grammar-chips/GrammarChip.tsx:67
+msgid "Mark as reviewed"
+msgstr "復習済みにする"
+
+#: app/components/home/index.tsx:23
+#: app/components/results/Actions.tsx:12
+#: app/routes/home.tsx:10
+msgid "Mock tests"
+msgstr "模擬試験"
+
+#: app/components/home/test-list/helpers/announcements.ts:19
+msgid "Moved “{title}” to place {place}."
+msgstr "「{title}」を{place}番目に移動しました。"
+
+#: app/components/login/index.tsx:41
+msgid "New here? <0>Create account</0>"
+msgstr "はじめての方は <0>アカウントを作成</0>"
+
+#: app/components/account/PasswordForm.tsx:31
+#: app/components/reset-password/index.tsx:21
+#: app/components/reset-password/ResetPasswordForm.tsx:15
+#: app/routes/reset-password.tsx:11
+msgid "New password"
+msgstr "新しいパスワード"
+
+#: app/components/welcome/SampleQuiz.tsx:143
+msgid "Next question"
+msgstr "次の問題"
+
+#: app/components/welcome/SampleQuiz.tsx:63
+msgid "Nice work"
+msgstr "おつかれさまでした"
+
+#: app/components/home/EmptyState.tsx:9
+msgid "No mock tests yet"
+msgstr "模擬試験はまだありません"
+
+#: app/components/account/EmailForm.tsx:23
+msgid "None yet. Add one, and you can reset your password if you forget it."
+msgstr "まだありません。登録すると、パスワードを忘れても再設定できます。"
+
+#: app/components/welcome/Footer.tsx:12
+msgid "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
+msgstr "日本語能力試験（JLPT）の公式サービスではありません。試験日と申し込みは <0>jlpt.jp</0> へ。"
+
+#: app/components/results/ReviewCard.tsx:17
+msgid "Nothing to review. You got every question right."
+msgstr "復習する文法はありません。全問正解でした。"
+
+#: app/components/grammar-chips/GrammarChip.tsx:57
+msgid "Number"
+msgstr "番号"
+
+#: app/lib/password-reset.server.ts:92
+msgid "Open the link below and choose a new password. The link works for one hour, and only once."
+msgstr "下のリンクを開いて、新しいパスワードを決めてください。リンクは1時間有効で、一度だけ使えます。"
+
+#: app/lib/errors.ts:31
+msgid "Page not found"
+msgstr "ページが見つかりません"
+
+#: app/components/quiz/question-nav/QuestionGrid.tsx:28
+#: app/components/quiz/Section.tsx:27
+#: app/components/results/section-review/index.tsx:17
+#: app/components/welcome/ExamSections.tsx:55
+#: app/components/welcome/SampleQuiz.tsx:55
+msgid "Part {no}"
+msgstr "問題{no}"
+
+#: app/components/account/PasswordForm.tsx:25
+#: app/components/login/LoginForm.tsx:57
+msgid "Password"
+msgstr "パスワード"
+
+#: app/routes/account.tsx:53
+msgid "Password changed."
+msgstr "パスワードを変更しました。"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:19
+msgid "Picked up “{piece}”."
+msgstr "「{piece}」を持ち上げました。"
+
+#: app/components/home/test-list/helpers/announcements.ts:13
+msgid "Picked up “{title}”."
+msgstr "「{title}」を持ち上げました。"
+
+#: app/components/quiz/sentence-order/index.tsx:70
+msgid "Press a choice to put it in the next empty slot. Press a filled slot to send it back to the choices."
+msgstr "選択肢を押すと次の空欄に入り、埋まった空欄を押すと選択肢に戻ります。"
+
+#: app/components/home/test-list/index.tsx:42
+msgid "Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
+msgstr "スペースキーで持ち上げ、上下の矢印キーで移動し、もう一度スペースキーで置きます。Escキーで取り消せます。"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:29
+msgid "Put “{piece}” back."
+msgstr "「{piece}」を戻しました。"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:29
+msgid "Put “{piece}” in {zone}."
+msgstr "「{piece}」を{zone}に置きました。"
+
+#: app/components/home/test-list/helpers/announcements.ts:25
+msgid "Put “{title}” down in place {place}."
+msgstr "「{title}」を{place}番目に置きました。"
+
+#: app/components/welcome/ExamSections.tsx:21
+msgid "Put 4 pieces in order, and choose the one that goes in ★."
+msgstr "4つの言葉を並べかえて、★に入るものを選びます。"
+
+#: app/components/quiz/question-nav/QuestionGrid.tsx:51
+msgid "Question {num} (answered)"
+msgstr "問題{num}（回答済み）"
+
+#: app/components/quiz/question-nav/QuestionGrid.tsx:51
+msgid "Question {num} (unanswered)"
+msgstr "問題{num}（未回答）"
+
+#: app/components/quiz/question-nav/index.tsx:11
+#: app/components/quiz/question-nav/QuestionSheet.tsx:38
+#: app/components/quiz/question-nav/QuestionSheet.tsx:57
+msgid "Question list"
+msgstr "問題一覧"
+
+#: app/components/welcome/ExamSections.tsx:28
+msgid "Read a passage, and fill each blank with the words that fit its flow."
+msgstr "文章を読んで、流れに合う言葉を空欄に入れます。"
+
+#: app/lib/sections.ts:38
+msgid "Read the passage, think about what it says as a whole, and choose the best answer for （{first}） and （{last}） from 1, 2, 3 and 4."
+msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{first}）と（{last}）の中に入る最もよいものを、1・2・3・4から一つえらびなさい。"
+
+#: app/lib/sections.ts:35
+msgid "Read the passage, think about what it says as a whole, and choose the best answer for （{first}） from 1, 2, 3 and 4."
+msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{first}）に入る最もよいものを、1・2・3・4から一つえらびなさい。"
+
+#: app/lib/sections.ts:39
+msgid "Read the passage, think about what it says as a whole, and choose the best answer for each of （{first}） to （{last}） from 1, 2, 3 and 4."
+msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{first}）から（{last}）の中に入る最もよいものを、1・2・3・4から一つえらびなさい。"
+
+#: app/components/error-pages/ErrorPage.tsx:40
+msgid "Reload"
+msgstr "再読み込み"
+
+#: app/components/home/test-list/TestRow.tsx:46
+msgid "Reorder “{title}”"
+msgstr "「{title}」を並べ替え"
+
+#: app/components/forgot-password/index.tsx:15
+#: app/routes/forgot-password.tsx:11
+msgid "Reset your password"
+msgstr "パスワードの再設定"
+
+#: app/components/results/index.tsx:20
+#: app/components/results/Title.tsx:14
+#: app/routes/results.tsx:11
+msgid "Results"
+msgstr "結果"
+
+#: app/components/home/test-list/TestRow.tsx:99
+msgid "Review ({reviewCount})"
+msgstr "復習（{reviewCount}）"
+
+#: app/components/grammar-chips/GrammarChip.tsx:64
+msgid "Reviewed · Undo"
+msgstr "復習済み · 元に戻す"
+
+#: app/components/account/EmailForm.tsx:42
+#: app/components/account/NameForm.tsx:39
+msgid "Save"
+msgstr "保存"
+
+#: app/components/account/EmailForm.tsx:42
+#: app/components/account/NameForm.tsx:39
+msgid "Saving…"
+msgstr "保存中…"
+
+#: app/components/results/ScoreCard.tsx:18
+#: app/components/results/ScoreCard.tsx:33
+msgid "Score"
+msgstr "得点"
+
+#: app/components/welcome/SampleQuiz.tsx:143
+msgid "See your score"
+msgstr "結果を見る"
+
+#: app/components/reset-password/index.tsx:15
+#: app/components/reset-password/index.tsx:24
+msgid "Send the email again"
+msgstr "もう一度メールを送る"
+
+#: app/components/forgot-password/ForgotPasswordForm.tsx:34
+msgid "Send the link"
+msgstr "リンクを送る"
+
+#: app/components/forgot-password/ForgotPasswordForm.tsx:34
+msgid "Sending…"
+msgstr "送信中…"
+
+#: app/lib/sections.ts:17
+msgid "Sentence order"
+msgstr "文の組み立て"
+
+#: app/components/form/PasswordField.tsx:29
+msgid "Show {label}"
+msgstr "{label}を表示"
+
+#: app/components/layout/header/index.tsx:70
+#: app/components/login/index.tsx:17
+#: app/components/login/LoginForm.tsx:73
+#: app/components/welcome/index.tsx:46
+#: app/routes/signin.tsx:10
+msgid "Sign in"
+msgstr "ログイン"
+
+#: app/components/account/index.tsx:27
+#: app/components/layout/header/index.tsx:60
+msgid "Sign out"
+msgstr "ログアウト"
+
+#: app/components/login/index.tsx:17
+#: app/routes/signup.tsx:11
+msgid "Sign up"
+msgstr "アカウント作成"
+
+#: app/components/login/LoginForm.tsx:73
+msgid "Signing in…"
+msgstr "ログイン中…"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:14
+msgid "slot {n}"
+msgstr "空欄{n}"
+
+#: app/components/quiz/sentence-order/SlotButton.tsx:25
+msgid "Slot {n}"
+msgstr "空欄{n}"
+
+#: app/lib/errors.ts:37
+msgid "Something went wrong"
+msgstr "システム障害が発生しました"
+
+#: app/components/home/test-list/TestRow.tsx:24
+msgid "sortable"
+msgstr "並べ替え可能"
+
+#: app/components/home/test-list/TestRow.tsx:109
+msgid "Start the test"
+msgstr "テストを始める"
+
+#: app/components/quiz/SubmitBar.tsx:32
+#: app/components/quiz/SubmitBar.tsx:66
+msgid "Submit"
+msgstr "提出する"
+
+#: app/components/quiz/SubmitBar.tsx:32
+msgid "Submitting…"
+msgstr "提出中…"
+
+#: app/components/home/test-list/TestRow.tsx:94
+#: app/components/results/Actions.tsx:22
+msgid "Take it again"
+msgstr "もう一度受ける"
+
+#: app/components/home/Stats.tsx:15
+msgid "Taken"
+msgstr "受験済み"
+
+#: app/lib/errors.ts:27
+msgid "Test not found"
+msgstr "テストが見つかりません"
+
+#: app/components/welcome/index.tsx:33
+msgid "Tests use only the patterns you have studied, in the same three formats as the real exam. The patterns you get wrong go straight to a review list."
+msgstr "勉強した文型だけで、本番と同じ3つの問題形式のテストを作ります。間違えた文型はそのまま復習リストに。"
+
+#: app/lib/users.ts:14
+msgid "That email address doesn't look right."
+msgstr "メールアドレスの形式が正しくありません。"
+
+#: app/routes/account.tsx:43
+#: app/routes/signup.tsx:28
+msgid "That email address is already in use."
+msgstr "このメールアドレスはもう使われています。"
+
+#: app/routes/account.tsx:34
+#: app/routes/signup.tsx:30
+msgid "That username is already taken."
+msgstr "このユーザー名はもう使われています。"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:14
+msgid "the ★ slot"
+msgstr "★の空欄"
+
+#: app/components/welcome/SampleQuiz.tsx:135
+msgid "The answer is {n} “{choice}”"
+msgstr "正解は {n}「{choice}」"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:12
+msgid "the choices"
+msgstr "選択肢"
+
+#: app/components/welcome/ExamCountdown.tsx:16
+msgid "The next JLPT"
+msgstr "次の日本語能力試験（JLPT）"
+
+#: app/lib/errors.ts:39
+msgid "The page couldn't load. Please try again in a moment."
+msgstr "ページを読み込めませんでした。しばらくしてから、もう一度お試しください。"
+
+#: app/components/welcome/index.tsx:52
+msgid "The questions below are samples in the real test's format."
+msgstr "下の問題は、実際のテストと同じ形式のサンプルです。"
+
+#: app/components/welcome/index.tsx:55
+msgid "The questions on the right are samples in the real test's format."
+msgstr "右の問題は、実際のテストと同じ形式のサンプルです。"
+
+#: app/lib/errors.ts:39
+msgid "The request couldn't be handled."
+msgstr "リクエストを処理できませんでした。"
+
+#: app/components/welcome/ExamSections.tsx:39
+msgid "The same three formats as the real exam"
+msgstr "本番と同じ、3つの問題形式"
+
+#: app/components/home/test-list/DeleteTest.tsx:17
+msgid "The test and its saved result will be deleted. This can't be undone."
+msgstr "テストと保存された結果が削除されます。この操作は取り消せません。"
+
+#: app/components/reset-password/index.tsx:13
+msgid "This link can't be used"
+msgstr "リンクが使えません"
+
+#: app/components/reset-password/index.tsx:13
+#: app/routes/reset-password.tsx:29
+msgid "This link has expired or was already used. Send the email again."
+msgstr "このリンクは期限切れか、もう使われています。もう一度メールを送ってください。"
+
+#: app/lib/errors.ts:28
+msgid "This test doesn't exist, or it may have been deleted."
+msgstr "このテストは存在しないか、削除された可能性があります。"
+
+#: app/components/welcome/SampleQuiz.tsx:84
+msgid "Try again"
+msgstr "もう一度"
+
+#: app/components/quiz/question-nav/Legend.tsx:12
+#: app/components/results/section-review/QuestionReview.tsx:56
+msgid "Unanswered"
+msgstr "未回答"
+
+#: app/components/quiz/SubmitBar.tsx:65
+msgid "Unanswered questions count as wrong."
+msgstr "未回答の問題は不正解になります。"
+
+#: app/lib/users.ts:24
+msgid "Use a password of at least 8 characters."
+msgstr "パスワードは8文字以上にしてください。"
+
+#: app/lib/users.ts:18
+msgid "Use a username of 1 to 30 characters."
+msgstr "ユーザー名は1〜30文字で入力してください。"
+
+#: app/components/welcome/helpers/samples.ts:38
+msgid "Used when a reason does not mean that the result must follow."
+msgstr "理由があっても、その結果になるとは言えないときの形です。"
+
+#: app/components/welcome/helpers/samples.ts:22
+msgid "Used when effort led to a good result. 「練習したかいがあって」 = the practice was worth it."
+msgstr "努力した結果が、よい形で出たときに使います。「練習したかいがあって」＝練習した価値があった。"
+
+#: app/components/account/NameForm.tsx:18
+#: app/components/account/NameForm.tsx:29
+#: app/components/login/LoginForm.tsx:21
+msgid "Username"
+msgstr "ユーザー名"
+
+#: app/routes/account.tsx:36
+msgid "Username changed."
+msgstr "ユーザー名を変更しました。"
+
+#: app/components/login/LoginForm.tsx:21
+msgid "Username or email address"
+msgstr "ユーザー名またはメールアドレス"
+
+#: app/components/account/EmailForm.tsx:22
+#: app/components/login/LoginForm.tsx:52
+msgid "We send a reset link here when you forget your password."
+msgstr "パスワードを忘れたときに、再設定のリンクを送ります。"
+
+#: app/components/grammar-chips/GrammarChip.tsx:49
+msgid "Week"
+msgstr "週"
+
+#: app/lib/sections.ts:47
+msgid "Week {week}"
+msgstr "第{week}週"
+
+#: app/routes/signin.tsx:27
+msgid "Wrong username (or email) or password."
+msgstr "ユーザー名（メールアドレス）かパスワードが違います。"
+
+#: app/components/account/NameForm.tsx:21
+msgid "You sign in with it."
+msgstr "ログインに使います。"
+
+#: app/components/results/section-review/QuestionReview.tsx:53
+msgid "Your answer: {yours}"
+msgstr "あなたの解答：{yours}"
+
+#: app/routes/quiz.tsx:26
+msgid "Your answers couldn't be read. Please try again."
+msgstr "回答を読み取れませんでした。もう一度お試しください。"
+
+#: app/routes/account.tsx:51
+msgid "Your current password is wrong."
+msgstr "現在のパスワードが違います。"
+
+#: app/lib/password-reset.server.ts:88
+msgid "文法ドリル: reset your password"
+msgstr "文法ドリル：パスワードの再設定"

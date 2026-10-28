@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react";
 import { useEffect } from "react";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
@@ -5,10 +6,16 @@ import type { Route } from "./+types/root";
 import { ErrorPage } from "~/components/error-pages/ErrorPage";
 import { requireSignIn } from "~/lib/auth.server";
 import { describeError } from "~/lib/errors";
+import { localeFromCookie, localeFromMatches, translate } from "~/lib/i18n";
+import { loadServerCatalogs } from "~/lib/i18n/catalogs.server";
 import "./tailwind.css";
 
 // Every page and API call needs the login cookie (or, for /api, the quiz skill's token).
-export const middleware: Route.MiddlewareFunction[] = [({ request, url }) => requireSignIn(request, url)];
+// The catalogs load first: data requests skip entry.server, and actions translate their messages.
+export const middleware: Route.MiddlewareFunction[] = [
+  () => loadServerCatalogs(),
+  ({ request, url }) => requireSignIn(request, url),
+];
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,9 +30,16 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+/** The language of the cookie, for the meta() of every route: meta() cannot read the request. */
+export function loader({ request }: Route.LoaderArgs) {
+  return { locale: localeFromCookie(request.headers.get("Cookie")) };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  // entry.server and entry.client wrap the router in the catalog of the cookie's language.
+  const { i18n } = useLingui();
   return (
-    <html lang="ja">
+    <html lang={i18n.locale}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,9 +55,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function meta({ error }: Route.MetaArgs) {
+export function meta({ error, matches }: Route.MetaArgs) {
   // Pages set their own titles; this one names the error page.
-  return error ? [{ title: `${describeError(error).title} · 文法ドリル` }] : [];
+  return error ? [{ title: `${translate(localeFromMatches(matches), describeError(error).title)} · 文法ドリル` }] : [];
 }
 
 export default function App() {

@@ -45,7 +45,7 @@ describe("signup action", () => {
   it("answers 400 for a name or a password that breaks the rules", async () => {
     expect(await signUp({ name: "" })).toMatchObject({ init: { status: 400 } });
     expect(await signUp({ password: "short" })).toMatchObject({
-      data: { error: "パスワードは8文字以上にしてください。" },
+      data: { error: "Use a password of at least 8 characters." },
       init: { status: 400 },
     });
   });
@@ -58,7 +58,7 @@ describe("signup action", () => {
 
   it("answers 400 for an email that is not an email", async () => {
     expect(await signUp({ email: "mai" })).toMatchObject({
-      data: { error: "メールアドレスの形式が正しくありません。" },
+      data: { error: "That email address doesn't look right." },
       init: { status: 400 },
     });
   });
@@ -66,12 +66,12 @@ describe("signup action", () => {
   it("answers 409 for an email that another account has", async () => {
     await createUser("Huy", PASSWORD, "mai@example.com");
 
-    expect(await signUp({})).toMatchObject({ data: { error: "このメールアドレスはもう使われています。" }, init: { status: 409 } });
+    expect(await signUp({})).toMatchObject({ data: { error: "That email address is already in use." }, init: { status: 409 } });
   });
 
   it("answers 409 for a name that is taken", async () => {
     await createUser("Mai", PASSWORD);
 
-    expect(await signUp({})).toMatchObject({ data: { error: "このユーザー名はもう使われています。" }, init: { status: 409 } });
+    expect(await signUp({})).toMatchObject({ data: { error: "That username is already taken." }, init: { status: 409 } });
   });
 });

@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import * as React from "react"
 import { cn } from "~/lib/utils"
 import { Dialog as SheetPrimitive } from "radix-ui"
@@ -74,7 +75,9 @@ function SheetContent({
               size="icon"
             >
               <XIcon />
-              <span className="sr-only">閉じる</span>
+              <span className="sr-only">
+                <Trans>Close</Trans>
+              </span>
             </Button>
           </SheetPrimitive.Close>
         )}

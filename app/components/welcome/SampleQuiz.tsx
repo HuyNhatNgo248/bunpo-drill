@@ -1,9 +1,11 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { ChoiceList } from "~/components/quiz/ChoiceList";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
+import { SECTION_TITLES, sectionGloss } from "~/lib/sections";
 import { SAMPLES } from "./helpers/samples";
 
 /**
@@ -11,6 +13,7 @@ import { SAMPLES } from "./helpers/samples";
  * answer and why, with a 正解 seal when it is right; after the third comes the score and sign-up.
  */
 export function SampleQuiz() {
+  const { t, i18n } = useLingui();
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -18,6 +21,13 @@ export function SampleQuiz() {
   const done = index === SAMPLES.length;
   const sample = SAMPLES[Math.min(index, SAMPLES.length - 1)];
   const right = picked === sample.answer;
+  const no = 1;
+  const gloss = sectionGloss(i18n, "fill-blank");
+  const total = SAMPLES.length;
+  const n = sample.answer + 1;
+  const choice = sample.choices[sample.answer];
+  const pattern = sample.pattern;
+  const why = i18n._(sample.why);
 
   // The choices go away once one is picked, so focus moves to what replaced them.
   useEffect(() => {
@@ -40,30 +50,38 @@ export function SampleQuiz() {
 
   return (
     <div className="flex min-w-0 flex-col gap-2.5">
-      <div className="flex items-baseline justify-between gap-3 font-jp">
+      <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-body-sm font-bold">
-          問題1<span className="ml-1.5 text-caption font-normal text-muted-foreground">文法形式の判断</span>
+          <Trans>Part {no}</Trans>
+          <span className="ml-1.5 text-caption font-normal text-muted-foreground">
+            <span lang="ja" className="font-jp">
+              {SECTION_TITLES["fill-blank"]}
+            </span>
+            {gloss && ` · ${gloss}`}
+          </span>
         </h2>
-        <span className="text-xs text-muted-foreground tabular-nums">
-          {done ? "おつかれさまでした" : `${index + 1} / ${SAMPLES.length}`}
-        </span>
+        <span className="text-xs text-muted-foreground tabular-nums">{done ? t`Nice work` : `${index + 1} / ${SAMPLES.length}`}</span>
       </div>
 
       <Card className="relative flex flex-col gap-4 overflow-hidden p-4 shadow-float md:p-5">
         {done ? (
-          <div ref={feedback} tabIndex={-1} className="flex flex-col items-start gap-3 font-jp outline-none">
+          <div ref={feedback} tabIndex={-1} className="flex flex-col items-start gap-3 outline-none">
             <p className="text-body-sm text-subtle-foreground">
-              {SAMPLES.length}問中 <strong className="text-title text-foreground tabular-nums">{score}</strong> 問正解。
+              <Trans>
+                <strong className="text-title text-foreground tabular-nums">{score}</strong> of {total} right.
+              </Trans>
             </p>
             <p className="text-body-sm leading-sentence text-subtle-foreground">
-              あなたの文法ノートからなら、45問のテストが作れます。
+              <Trans>From your own grammar notes, you can make 45-question tests.</Trans>
             </p>
             <div className="flex flex-wrap gap-2.5">
               <Button asChild>
-                <Link to="/signup">アカウントを作成</Link>
+                <Link to="/signup">
+                  <Trans>Create account</Trans>
+                </Link>
               </Button>
               <Button variant="outline" onClick={restart}>
-                もう一度
+                <Trans>Try again</Trans>
               </Button>
             </div>
           </div>
@@ -107,20 +125,22 @@ export function SampleQuiz() {
                       <span lang="ja" className="font-jp text-base">
                         {choice}
                       </span>
-                      {i === sample.answer && <span className="sr-only">（正解）</span>}
-                      {i === picked && i !== sample.answer && <span className="sr-only">（あなたの解答）</span>}
+                      {i === sample.answer && <span className="sr-only">{t`(correct)`}</span>}
+                      {i === picked && i !== sample.answer && <span className="sr-only">{t`(your answer)`}</span>}
                     </li>
                   ))}
                 </ol>
-                <div ref={feedback} tabIndex={-1} className="flex flex-col gap-1.5 border-t pt-3.5 font-jp outline-none">
+                <div ref={feedback} tabIndex={-1} className="flex flex-col gap-1.5 border-t pt-3.5 outline-none">
                   <span className={cn("text-sm font-bold", right ? "text-success" : "text-primary-soft-foreground")}>
-                    {right ? "正解！" : `正解は ${sample.answer + 1}「${sample.choices[sample.answer]}」`}
+                    {right ? t`Correct!` : t`The answer is ${n} “${choice}”`}
                   </span>
                   <p className="text-sm leading-sentence text-subtle-foreground">
-                    <b className="font-bold text-foreground">{sample.pattern}</b>：{sample.why}
+                    <Trans>
+                      <b className="font-bold text-foreground">{pattern}</b>: {why}
+                    </Trans>
                   </p>
                   <Button variant="outline" onClick={next} className="mt-1 self-end">
-                    {index === SAMPLES.length - 1 ? "結果を見る" : "次の問題"}
+                    {index === SAMPLES.length - 1 ? t`See your score` : t`Next question`}
                   </Button>
                 </div>
               </>

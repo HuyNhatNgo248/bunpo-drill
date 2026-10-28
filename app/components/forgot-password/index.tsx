@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "react-router";
 import { AuthCard } from "~/components/layout/AuthCard";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
@@ -7,20 +8,24 @@ import { ForgotPasswordForm } from "./ForgotPasswordForm";
  * whether or not an account has the email.
  */
 export function ForgotPassword({ result }: { result?: { sent?: string; error?: string } }) {
+  const { t } = useLingui();
+  const sent = result?.sent;
   return (
     <AuthCard
-      title="パスワードの再設定"
-      description="アカウントのメールアドレスを入力してください。新しいパスワードを決めるリンクを送ります。"
+      title={t`Reset your password`}
+      description={t`Enter your account's email address. We'll send a link to choose a new password.`}
     >
-      {result?.sent ? (
+      {sent ? (
         <p role="status" className="leading-sentence">
-          {result.sent} のアカウントがあれば、リンクを送りました。リンクは1時間有効です。届かない場合は、迷惑メールのフォルダも確認してください。
+          <Trans>
+            If there's an account for {sent}, we sent the link. It works for one hour. If it doesn't arrive, check your spam folder too.
+          </Trans>
         </p>
       ) : (
         <ForgotPasswordForm error={result?.error} />
       )}
       <Link to="/signin" className="text-center text-caption font-medium text-indigo underline-offset-4 hover:underline">
-        ログインに戻る
+        <Trans>Back to sign in</Trans>
       </Link>
     </AuthCard>
   );

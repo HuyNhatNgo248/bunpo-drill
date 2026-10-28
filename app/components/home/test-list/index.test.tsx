@@ -28,8 +28,8 @@ describe("TestList", () => {
     renderList([NOT_TAKEN]);
 
     expect(await screen.findByRole("link", { name: /第1週 1日目/ })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
-    expect(screen.getByText(/3問/)).toHaveTextContent("3問 · 第1週・第2週");
-    expect(screen.getByRole("link", { name: "テストを始める" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
+    expect(screen.getByText(/3 questions/)).toHaveTextContent("3 questions · Week 1 · Week 2");
+    expect(screen.getByRole("link", { name: "Start the test" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
   });
 
   it("offers to go on with a test that was left before submitting", async () => {
@@ -37,9 +37,9 @@ describe("TestList", () => {
 
     renderList([NOT_TAKEN]);
 
-    expect(await screen.findByRole("link", { name: "続きから" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
-    expect(screen.getByText(`解答中 1 / ${NOT_TAKEN.questionCount}`)).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "テストを始める" })).toBeNull();
+    expect(await screen.findByRole("link", { name: "Continue" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
+    expect(screen.getByText(`In progress 1 / ${NOT_TAKEN.questionCount}`)).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Start the test" })).toBeNull();
   });
 
   it("links a taken test to its results, with the last score", async () => {
@@ -47,20 +47,20 @@ describe("TestList", () => {
 
     expect(await screen.findByRole("link", { name: /第3週 1日目/ })).toHaveAttribute("href", `/tests/${TAKEN.id}/results`);
     expect(screen.getByText("1 / 3")).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "テストを始める" })).toBeNull();
+    expect(screen.queryByRole("link", { name: "Start the test" })).toBeNull();
   });
 
   it("gives every row a handle to drag, named after its test", async () => {
     renderList([NOT_TAKEN, TAKEN]);
 
-    expect(await screen.findByRole("button", { name: "「第1週 1日目」を並べ替え" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "「第3週 1日目」を並べ替え" })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Reorder “第1週 1日目”" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Reorder “第3週 1日目”" })).toBeInTheDocument();
   });
 
   describe("a taken test", () => {
     it("opens and closes its grammar to review", async () => {
       renderList([TAKEN]);
-      const review = await screen.findByRole("button", { name: /復習（1）/ });
+      const review = await screen.findByRole("button", { name: /Review \(1\)/ });
 
       await userEvent.click(review);
 
@@ -75,16 +75,16 @@ describe("TestList", () => {
     it("posts to the retake route to take the test again", async () => {
       const requests = renderList([TAKEN]);
 
-      await userEvent.click(await screen.findByRole("button", { name: "もう一度受ける" }));
+      await userEvent.click(await screen.findByRole("button", { name: "Take it again" }));
 
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${TAKEN.id}/retake`, body: null }]));
     });
 
     it("has no review button when there is nothing to review", async () => {
       renderList([buildTestSummary({ result: { score: 3, total: 3, percent: 100 } })]);
-      await screen.findByRole("button", { name: "もう一度受ける" });
+      await screen.findByRole("button", { name: "Take it again" });
 
-      expect(screen.queryByRole("button", { name: /復習/ })).toBeNull();
+      expect(screen.queryByRole("button", { name: /Review/ })).toBeNull();
     });
   });
 });

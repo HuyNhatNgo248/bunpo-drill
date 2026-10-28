@@ -1,9 +1,13 @@
 import { fileURLToPath } from "node:url";
+import { lingui, linguiTransformerBabelPreset } from "@lingui/vite-plugin";
+import babel from "@rolldown/plugin-babel";
 import { defineConfig } from "vitest/config";
 
 // A standalone Vitest config, separate from vite.config.ts on purpose: the React Router plugin
 // builds the app and must not run under the tests. Only the `~` alias stays, so app imports resolve.
 export default defineConfig({
+  // The two Lingui transforms of vite.config.ts: lingui() compiles the .po catalogs, babel expands the macros.
+  plugins: [lingui(), babel({ presets: [linguiTransformerBabelPreset()] })],
   resolve: {
     alias: {
       "~": fileURLToPath(new URL("./app", import.meta.url)),

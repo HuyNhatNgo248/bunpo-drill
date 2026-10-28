@@ -1,11 +1,13 @@
+import { msg } from "@lingui/core/macro";
 import { redirect } from "react-router";
 import type { Route } from "./+types/welcome";
 import { Welcome } from "~/components/welcome";
 import { isSignedIn } from "~/lib/auth.server";
 import { nextJlpt } from "~/lib/jlpt";
+import { localeFromMatches, translate } from "~/lib/i18n";
 
-export function meta() {
-  return [{ title: "文法ドリル · 自分の文法ノートから、JLPT形式の模擬試験" }];
+export function meta({ matches }: Route.MetaArgs) {
+  return [{ title: `文法ドリル · ${translate(localeFromMatches(matches), msg`JLPT-style mock tests from your own grammar notes`)}` }];
 }
 
 /** Signed-in users have their tests at /, so they go there. The countdown is worked out here, so the server and the page agree on the day. */

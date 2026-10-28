@@ -52,7 +52,7 @@ describe("quiz action", () => {
 
       for (const body of ["not json", JSON.stringify({ answers: { q1: 9 } })]) {
         expect(await submit(id, body)).toMatchObject({
-          data: { error: "回答を読み取れませんでした。もう一度お試しください。" },
+          data: { error: "Your answers couldn't be read. Please try again." },
           init: { status: 400 },
         });
       }

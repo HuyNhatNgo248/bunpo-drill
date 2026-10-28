@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,11 +15,11 @@ export function ConfirmDialog({
   title,
   description,
   confirmLabel,
-  cancelLabel = "キャンセル",
+  cancelLabel,
   onConfirm,
   children,
 }: {
-  title: string;
+  title: React.ReactNode;
   description: string;
   confirmLabel: string;
   cancelLabel?: string;
@@ -26,6 +27,7 @@ export function ConfirmDialog({
   /** The trigger button. */
   children: React.ReactNode;
 }) {
+  const { t } = useLingui();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -35,7 +37,7 @@ export function ConfirmDialog({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{cancelLabel}</AlertDialogCancel>
+          <AlertDialogCancel>{cancelLabel ?? t`Cancel`}</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>{confirmLabel}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

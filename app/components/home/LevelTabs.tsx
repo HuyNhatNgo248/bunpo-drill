@@ -1,10 +1,12 @@
+import { useLingui } from "@lingui/react/macro";
 import { Link } from "react-router";
 import type { Level } from "~/lib/payload";
 
 /** Switches the home page between the levels that have tests. The level is in the URL, so a reload keeps it. */
 export function LevelTabs({ levels, current }: { levels: Level[]; current: Level }) {
+  const { t } = useLingui();
   return (
-    <nav aria-label="レベル" className="flex gap-1 rounded-lg border bg-card p-1">
+    <nav aria-label={t`Level`} className="flex gap-1 rounded-lg border bg-card p-1">
       {levels.map((level) => (
         <Link
           key={level}

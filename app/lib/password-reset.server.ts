@@ -1,8 +1,10 @@
+import { msg } from "@lingui/core/macro";
 import { createHash, randomBytes } from "node:crypto";
 import { db } from "./db.server";
 import { requiredEnv } from "./env.server";
 import { sendMail } from "./mail.server";
 import { hashPassword, type User } from "./users.server";
+import { translate, type Locale } from "~/lib/i18n";
 
 /**
  * Forgot password: the user asks for a link by email, and the link sets a new password.
@@ -78,19 +80,20 @@ export async function resetPassword(token: string, password: string): Promise<nu
 }
 
 /** Emails the link. It is built from APP_URL, never from the request's Host header, which a visitor can forge. */
-export async function sendPasswordResetMail(user: User & { email: string }, token: string): Promise<void> {
+export async function sendPasswordResetMail(user: User & { email: string }, token: string, locale: Locale): Promise<void> {
   const link = new URL(`/reset-password?token=${token}`, requiredEnv("APP_URL")).toString();
+  const name = user.name;
   await sendMail({
     to: user.email,
-    subject: "文法ドリル：パスワードの再設定",
+    subject: translate(locale, msg`文法ドリル: reset your password`),
     text: [
-      `${user.name}さん`,
+      translate(locale, msg`Hi ${name},`),
       "",
-      "下のリンクを開いて、新しいパスワードを決めてください。リンクは1時間有効で、一度だけ使えます。",
+      translate(locale, msg`Open the link below and choose a new password. The link works for one hour, and only once.`),
       "",
       link,
       "",
-      "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。",
+      translate(locale, msg`If you didn't ask for this, ignore this email. Your password won't change.`),
       "",
       "文法ドリル",
     ].join("\n"),

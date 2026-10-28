@@ -1,11 +1,13 @@
+import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/home";
 import { Home } from "~/components/home";
 import { toSummary } from "~/lib/grading.server";
 import { LEVELS } from "~/lib/payload";
 import { listTests } from "~/lib/tests.server";
+import { localeFromMatches, translate } from "~/lib/i18n";
 
-export function meta() {
-  return [{ title: "模擬試験 · 文法ドリル" }];
+export function meta({ matches }: Route.MetaArgs) {
+  return [{ title: `${translate(localeFromMatches(matches), msg`Mock tests`)} · 文法ドリル` }];
 }
 
 export async function loader({ request }: Route.LoaderArgs) {

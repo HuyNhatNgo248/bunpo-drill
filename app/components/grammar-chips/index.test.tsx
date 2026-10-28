@@ -27,8 +27,8 @@ describe("GrammarChips", () => {
 
     const dialog = await screen.findByRole("dialog");
     expect(dialog).toHaveTextContent("N2");
-    expect(dialog).toHaveTextContent("第3週");
-    expect(dialog).toHaveTextContent("2日目");
+    expect(dialog).toHaveTextContent("Week 3");
+    expect(dialog).toHaveTextContent("Day 2");
     expect(dialog).toHaveTextContent("④");
   });
 
@@ -36,7 +36,7 @@ describe("GrammarChips", () => {
     const requests = renderChips();
     await userEvent.click(await chipButton());
 
-    await userEvent.click(screen.getByRole("button", { name: "復習済みにする" }));
+    await userEvent.click(screen.getByRole("button", { name: "Mark as reviewed" }));
 
     await waitFor(() =>
       expect(requests).toEqual([
@@ -52,17 +52,17 @@ describe("GrammarChips", () => {
     });
     await userEvent.click(await chipButton());
 
-    await userEvent.click(screen.getByRole("button", { name: "復習済みにする" }));
+    await userEvent.click(screen.getByRole("button", { name: "Mark as reviewed" }));
 
     // The open popover hides the chip from the accessibility tree, so the test reads the popover's button.
-    expect(await screen.findByRole("button", { name: /復習済み · 元に戻す/ })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: /Reviewed · Undo/ })).toBeInTheDocument();
   });
 
   it("clears the mark of a reviewed point", async () => {
     const requests = renderChips([buildReviewChip({ pattern: "〜ばかりか", reviewed: true })]);
     await userEvent.click(await chipButton());
 
-    await userEvent.click(screen.getByRole("button", { name: /元に戻す/ }));
+    await userEvent.click(screen.getByRole("button", { name: /Undo/ }));
 
     await waitFor(() => expect(requests[0]?.body).toEqual({ grammarId: CHIP.grammarId, reviewed: false }));
   });

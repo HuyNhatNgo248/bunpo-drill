@@ -3,8 +3,10 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
-import { afterAll, afterEach, expect } from "vitest";
+import { afterAll, afterEach, beforeAll, expect } from "vitest";
 import { API_TOKEN, APP_URL, MAIL_FROM, SESSION_SECRET } from "#tests/helpers/env";
+import { loadCatalog } from "~/lib/i18n";
+import { loadServerCatalogs } from "~/lib/i18n/catalogs.server";
 
 // Registered from `./matchers` rather than the `./vitest` entrypoint: that entrypoint imports
 // `expect` from vitest, but jest-dom declares no dependency on vitest, so pnpm cannot resolve it.
@@ -40,3 +42,9 @@ process.env.MAIL_FROM = MAIL_FROM;
 process.env.APP_URL = APP_URL;
 
 afterAll(() => rmSync(dataDir, { recursive: true, force: true }));
+
+// Every page is English unless a test loads another catalog: the components read the client
+// singleton, and translate() in meta(), actions and emails reads the server instances.
+beforeAll(async () => {
+  await Promise.all([loadCatalog("en"), loadServerCatalogs()]);
+});

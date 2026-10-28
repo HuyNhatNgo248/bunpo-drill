@@ -134,11 +134,21 @@ describe("sendPasswordResetMail", () => {
   it("emails the user a link from APP_URL with the token", async () => {
     const info = vi.spyOn(console, "info").mockImplementation(() => {});
 
-    await sendPasswordResetMail({ id: userId, name: "Huy", email: "huy@example.com" }, "the-token");
+    await sendPasswordResetMail({ id: userId, name: "Huy", email: "huy@example.com" }, "the-token", "en");
 
     const printed = String(info.mock.calls[0]?.[0]);
     expect(printed).toContain("To: huy@example.com");
-    expect(printed).toContain("Huyさん");
+    expect(printed).toContain("Hi Huy,");
     expect(printed).toContain(`${APP_URL}/reset-password?token=the-token`);
+  });
+
+  it("writes the email in the language the user picked", async () => {
+    const info = vi.spyOn(console, "info").mockImplementation(() => {});
+
+    await sendPasswordResetMail({ id: userId, name: "Huy", email: "huy@example.com" }, "the-token", "ja");
+
+    const printed = String(info.mock.calls[0]?.[0]);
+    expect(printed).toContain("文法ドリル：パスワードの再設定");
+    expect(printed).toContain("Huyさん");
   });
 });

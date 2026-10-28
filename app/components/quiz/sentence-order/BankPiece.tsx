@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { useDraggable } from "@dnd-kit/core";
 import { cn } from "~/lib/utils";
 import type { DragData } from "./types";
@@ -18,11 +19,12 @@ export function BankPiece({
   placed: boolean;
   onTap: () => void;
 }) {
+  const { t } = useLingui();
   const drag = useDraggable({
     id: `bank-${piece}`,
     data: { piece } satisfies DragData,
     disabled: placed,
-    attributes: { roleDescription: "ドラッグ可能" },
+    attributes: { roleDescription: t`draggable` },
   });
   return (
     <button
@@ -32,7 +34,7 @@ export function BankPiece({
       {...drag.listeners}
       onClick={onTap}
       disabled={placed}
-      aria-label={placed ? `${text}（配置済み）` : text}
+      aria-label={placed ? t`${text} (placed)` : text}
       className={cn(
         PILL,
         "outline-none focus-visible:ring-3 focus-visible:ring-ring/40",

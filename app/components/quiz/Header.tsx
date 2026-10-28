@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { AppHeader } from "~/components/layout/header";
 import { Progress } from "~/components/ui/progress";
 
@@ -13,6 +14,7 @@ export function Header({
   total: number;
   percent: number;
 }) {
+  const { t } = useLingui();
   return (
     <div className="sticky top-0 z-20 md:static">
       <AppHeader
@@ -24,7 +26,7 @@ export function Header({
           </span>
         }
       />
-      <Progress value={percent} minFill={1} aria-label="回答済み" className="rounded-none md:hidden" />
+      <Progress value={percent} minFill={1} aria-label={t`Answered`} className="rounded-none md:hidden" />
     </div>
   );
 }

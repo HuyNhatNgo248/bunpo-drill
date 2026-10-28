@@ -1,9 +1,13 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import type { ResultQuestion } from "~/lib/views";
 
 /** One graded question: the sentence with the right answer in place, the learner's answer when wrong, the answer and why. */
 export function QuestionReview({ question }: { question: ResultQuestion }) {
+  const { t } = useLingui();
+  const yours = question.yours;
+  const answer = question.answer;
   return (
     <Card
       className={cn(
@@ -44,11 +48,17 @@ export function QuestionReview({ question }: { question: ResultQuestion }) {
       <div className="flex flex-col gap-1.5 md:flex-row md:flex-wrap md:gap-2">
         {!question.correct && (
           <span className="rounded-lg border border-primary-border bg-card px-2.5 py-1.5 font-jp text-primary-soft-foreground md:px-3">
-            {question.yours ? <s>あなたの解答：{question.yours}</s> : "未回答"}
+            {yours ? (
+              <s>
+                <Trans>Your answer: {yours}</Trans>
+              </s>
+            ) : (
+              t`Unanswered`
+            )}
           </span>
         )}
         <span className="rounded-lg border border-success-border bg-card px-2.5 py-1.5 font-jp font-medium text-success md:px-3">
-          正解：{question.answer}
+          <Trans>Answer: {answer}</Trans>
         </span>
       </div>
 

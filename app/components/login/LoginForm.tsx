@@ -1,3 +1,4 @@
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Form, useNavigation } from "react-router";
 import { PasswordField } from "~/components/form/PasswordField";
 import { INPUT_CLASS } from "~/components/form/styles";
@@ -8,6 +9,7 @@ import { Button } from "~/components/ui/button";
  * The error of the last try shows above the button.
  */
 export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redirectTo: string; error?: string }) {
+  const { t } = useLingui();
   const pending = useNavigation().state !== "idle";
   const invalid = error ? true : undefined;
   const describedBy = error ? "login-error" : undefined;
@@ -16,7 +18,7 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
     <Form method="post" className="flex flex-col gap-4">
       <input type="hidden" name="redirectTo" value={redirectTo} />
       <label className="flex flex-col gap-1.5">
-        <span className="text-caption font-medium">{signup ? "ユーザー名" : "ユーザー名またはメールアドレス"}</span>
+        <span className="text-caption font-medium">{signup ? t`Username` : t`Username or email address`}</span>
         <input
           name="name"
           required
@@ -32,7 +34,9 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
         // The hint stays outside the label, so a screen reader reads the field's name alone.
         <div className="flex flex-col gap-1.5">
           <label className="flex flex-col gap-1.5">
-            <span className="text-caption font-medium">メールアドレス</span>
+            <span className="text-caption font-medium">
+              <Trans>Email address</Trans>
+            </span>
             <input
               name="email"
               type="email"
@@ -44,12 +48,14 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
               className={INPUT_CLASS}
             />
           </label>
-          <span className="text-xs text-muted-foreground">パスワードを忘れたときに、再設定のリンクを送ります。</span>
+          <span className="text-xs text-muted-foreground">
+            <Trans>We send a reset link here when you forget your password.</Trans>
+          </span>
         </div>
       )}
       <PasswordField
-        label="パスワード"
-        hint={signup ? "8文字以上" : undefined}
+        label={t`Password`}
+        hint={signup ? t`At least 8 characters` : undefined}
         name="password"
         required
         minLength={signup ? 8 : undefined}
@@ -64,7 +70,7 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
         </p>
       )}
       <Button type="submit" disabled={pending}>
-        {signup ? (pending ? "作成中…" : "アカウントを作成") : pending ? "ログイン中…" : "ログイン"}
+        {signup ? (pending ? t`Creating…` : t`Create account`) : pending ? t`Signing in…` : t`Sign in`}
       </Button>
     </Form>
   );

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { resetDatabase } from "#tests/helpers/db";
-import { routeArgs } from "#tests/helpers/route";
+import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { cookieOf } from "#tests/helpers/session";
 import { currentUserId } from "~/lib/auth.server";
 import { createPasswordReset, isPasswordResetValid } from "~/lib/password-reset.server";
@@ -52,7 +52,7 @@ describe("reset-password action", () => {
 
   it("answers 400 for a password that is too short, and keeps the link", async () => {
     expect(await post(token, "short")).toMatchObject({
-      data: { error: "パスワードは8文字以上にしてください。" },
+      data: { error: "Use a password of at least 8 characters." },
       init: { status: 400 },
     });
     expect(await isPasswordResetValid(token)).toBe(true);
@@ -60,7 +60,7 @@ describe("reset-password action", () => {
 
   it("answers 410 for a link that does not work, and keeps the password", async () => {
     expect(await post("made-up-token", "a new passphrase")).toMatchObject({
-      data: { error: "このリンクは期限切れか、もう使われています。もう一度メールを送ってください。" },
+      data: { error: "This link has expired or was already used. Send the email again." },
       init: { status: 410 },
     });
     expect(await verifyUser("Huy", PASSWORD)).toBe(userId);
@@ -69,6 +69,6 @@ describe("reset-password action", () => {
 
 describe("reset-password meta", () => {
   it("names the page", () => {
-    expect(meta()).toEqual([{ title: "新しいパスワード · 文法ドリル" }]);
+    expect(meta(metaArgs<Parameters<typeof meta>[0]>())).toEqual([{ title: "New password · 文法ドリル" }]);
   });
 });

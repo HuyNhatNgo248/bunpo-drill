@@ -1,3 +1,5 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
 import { data, isRouteErrorResponse } from "react-router";
 
 const TEST_NOT_FOUND = "Test not found";
@@ -7,36 +9,34 @@ export const testNotFound = () => data(TEST_NOT_FOUND, { status: 404 });
 
 export type ErrorCopy = {
   status: number;
-  /** One kanji for the tile, the way 文 marks the brand: 無 for missing, 障 (障害) for a failure. */
+  /** One kanji for the tile in every language, the way 文 marks the brand: 無 for missing, 障 (障害) for a failure. */
   kanji: string;
-  title: string;
-  description?: string;
-  /** Offer "再読み込み": a failure may not happen a second time. */
+  title: MessageDescriptor;
+  description?: MessageDescriptor;
+  /** Offer "Reload": a failure may not happen a second time. */
   retry: boolean;
 };
 
-/** The error page's words, all in Japanese: a missing test, a missing page, or something that broke. */
+/** The error page's words, for the page and its title to translate: a missing test, a missing page, or something that broke. */
 export function describeError(error: unknown): ErrorCopy {
   if (isRouteErrorResponse(error) && error.status === 404) {
     return error.data === TEST_NOT_FOUND
       ? {
           status: 404,
           kanji: "無",
-          title: "テストが見つかりません",
-          description: "このテストは存在しないか、削除された可能性があります。",
+          title: msg`Test not found`,
+          description: msg`This test doesn't exist, or it may have been deleted.`,
           retry: false,
         }
-      : { status: 404, kanji: "無", title: "ページが見つかりません", retry: false };
+      : { status: 404, kanji: "無", title: msg`Page not found`, retry: false };
   }
   const status = isRouteErrorResponse(error) ? error.status : 500;
   return {
     status,
     kanji: "障",
-    title: "システム障害が発生しました",
+    title: msg`Something went wrong`,
     description:
-      status >= 500
-        ? "ページを読み込めませんでした。しばらくしてから、もう一度お試しください。"
-        : "リクエストを処理できませんでした。",
+      status >= 500 ? msg`The page couldn't load. Please try again in a moment.` : msg`The request couldn't be handled.`,
     retry: status >= 500,
   };
 }

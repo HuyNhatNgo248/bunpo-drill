@@ -27,16 +27,16 @@ describe("Account", () => {
   it("shows the current name, ready to change", async () => {
     renderAccount();
 
-    expect(await screen.findByRole("textbox", { name: "ユーザー名" })).toHaveValue(NAME);
+    expect(await screen.findByRole("textbox", { name: "Username" })).toHaveValue(NAME);
   });
 
   it("sends a new name with the intent of the name form", async () => {
     const { page } = renderAccount();
-    const field = await screen.findByRole("textbox", { name: "ユーザー名" });
+    const field = await screen.findByRole("textbox", { name: "Username" });
 
     await userEvent.clear(field);
     await userEvent.type(field, "Mai");
-    await userEvent.click(cardOf("ユーザー名").getByRole("button", { name: "保存" }));
+    await userEvent.click(cardOf("Username").getByRole("button", { name: "Save" }));
 
     await waitFor(() => expect(page).toEqual([{ method: "POST", path: "/account", body: { intent: "name", name: "Mai" } }]));
   });
@@ -44,9 +44,9 @@ describe("Account", () => {
   it("sends the current and the new password with the intent of the password form", async () => {
     const { page } = renderAccount();
 
-    await userEvent.type(await screen.findByLabelText("現在のパスワード"), "old password");
-    await userEvent.type(screen.getByLabelText("新しいパスワード"), "new password");
-    await userEvent.click(screen.getByRole("button", { name: "パスワードを変更" }));
+    await userEvent.type(await screen.findByLabelText("Current password"), "old password");
+    await userEvent.type(screen.getByLabelText("New password"), "new password");
+    await userEvent.click(screen.getByRole("button", { name: "Change password" }));
 
     await waitFor(() =>
       expect(page[0]?.body).toEqual({ intent: "password", current: "old password", next: "new password" }),
@@ -57,57 +57,57 @@ describe("Account", () => {
     it("shows the saved email", async () => {
       renderAccount(undefined, "huy@example.com");
 
-      expect(await screen.findByRole("textbox", { name: "メールアドレス" })).toHaveValue("huy@example.com");
+      expect(await screen.findByRole("textbox", { name: "Email address" })).toHaveValue("huy@example.com");
     });
 
     it("tells an account with no email why to add one", async () => {
       renderAccount();
-      await screen.findByRole("heading", { name: "メールアドレス" });
+      await screen.findByRole("heading", { name: "Email address" });
 
-      expect(cardOf("メールアドレス").getByText("まだありません。登録すると、パスワードを忘れても再設定できます。")).toBeInTheDocument();
+      expect(cardOf("Email address").getByText("None yet. Add one, and you can reset your password if you forget it.")).toBeInTheDocument();
     });
 
     it("sends the email with the intent of the email form", async () => {
       const { page } = renderAccount();
 
-      await userEvent.type(await screen.findByRole("textbox", { name: "メールアドレス" }), "huy@example.com");
-      await userEvent.click(cardOf("メールアドレス").getByRole("button", { name: "保存" }));
+      await userEvent.type(await screen.findByRole("textbox", { name: "Email address" }), "huy@example.com");
+      await userEvent.click(cardOf("Email address").getByRole("button", { name: "Save" }));
 
       await waitFor(() => expect(page).toEqual([{ method: "POST", path: "/account", body: { intent: "email", email: "huy@example.com" } }]));
     });
 
     it("shows the answer under the email form", async () => {
-      renderAccount({ form: "email", error: "このメールアドレスはもう使われています。" });
-      await screen.findByRole("heading", { name: "メールアドレス" });
+      renderAccount({ form: "email", error: "That email address is already in use." });
+      await screen.findByRole("heading", { name: "Email address" });
 
-      expect(cardOf("メールアドレス").getByRole("alert")).toHaveTextContent("このメールアドレスはもう使われています。");
-      expect(cardOf("ユーザー名").queryByRole("alert")).toBeNull();
+      expect(cardOf("Email address").getByRole("alert")).toHaveTextContent("That email address is already in use.");
+      expect(cardOf("Username").queryByRole("alert")).toBeNull();
     });
   });
 
   describe("the answer of a form", () => {
     it("shows an error under the form it is for only, and marks the field", async () => {
-      renderAccount({ form: "name", error: "このユーザー名はもう使われています。" });
-      await screen.findByRole("heading", { name: "ユーザー名" });
+      renderAccount({ form: "name", error: "That username is already taken." });
+      await screen.findByRole("heading", { name: "Username" });
 
-      expect(cardOf("ユーザー名").getByRole("alert")).toHaveTextContent("このユーザー名はもう使われています。");
-      expect(cardOf("パスワード").queryByRole("alert")).toBeNull();
-      expect(screen.getByRole("textbox", { name: "ユーザー名" })).toHaveAttribute("aria-invalid", "true");
+      expect(cardOf("Username").getByRole("alert")).toHaveTextContent("That username is already taken.");
+      expect(cardOf("Password").queryByRole("alert")).toBeNull();
+      expect(screen.getByRole("textbox", { name: "Username" })).toHaveAttribute("aria-invalid", "true");
     });
 
     it("shows a saved message under its form", async () => {
-      renderAccount({ form: "password", saved: "パスワードを変更しました。" });
-      await screen.findByRole("heading", { name: "パスワード" });
+      renderAccount({ form: "password", saved: "Password changed." });
+      await screen.findByRole("heading", { name: "Password" });
 
-      expect(cardOf("パスワード").getByRole("status")).toHaveTextContent("パスワードを変更しました。");
-      expect(cardOf("ユーザー名").queryByRole("status")).toBeNull();
+      expect(cardOf("Password").getByRole("status")).toHaveTextContent("Password changed.");
+      expect(cardOf("Username").queryByRole("status")).toBeNull();
     });
   });
 
   it("logs out through the logout route", async () => {
     const { logout } = renderAccount();
 
-    await userEvent.click(await screen.findByRole("button", { name: "ログアウト" }));
+    await userEvent.click(await screen.findByRole("button", { name: "Sign out" }));
 
     await waitFor(() => expect(logout).toEqual([{ method: "POST", path: "/logout", body: null }]));
   });
