@@ -2,9 +2,10 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { cn } from "cn";
 import { ChevronDown, GripVertical } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Link } from "react-router";
 import { GrammarChips } from "~/components/grammar-chips";
+import { hasSavedAnswers, savedAnsweredCount } from "~/components/quiz/helpers/savedAnswers";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import type { TestSummary } from "~/lib/views";
@@ -13,6 +14,10 @@ import { DeleteTest } from "./DeleteTest";
 /** One test: its handle to drag, its title and last score, and its buttons. 復習 opens its grammar chips. */
 export function TestRow({ test }: { test: TestSummary }) {
   const [open, setOpen] = useState(false);
+  // A test left before submitting has its answers saved in this browser, so the server cannot know; it is read after hydration.
+  const [answered, setAnswered] = useState<number | null>(null);
+  useEffect(() => setAnswered(hasSavedAnswers(test.id) ? savedAnsweredCount(test.id) : null), [test.id]);
+  const inProgress = answered !== null;
   const sortable = useSortable({ id: test.id, attributes: { roleDescription: "並べ替え可能" } });
   const quizHref = `/tests/${test.id}`;
   const weeks = test.weeks.map((week) => `第${week}週`).join("・");
@@ -52,11 +57,22 @@ export function TestRow({ test }: { test: TestSummary }) {
               {test.result.score} / {test.result.total}
             </Badge>
           )}
+          {inProgress && !test.result && (
+            <Badge variant="progress" className="tabular-nums">
+              解答中 {answered} / {test.questionCount}
+            </Badge>
+          )}
         </div>
         <div className="text-caption text-muted-foreground">
           {test.questionCount}問
           {weeks && <span lang="ja"> · {weeks}</span>}
         </div>
+        {inProgress && !test.result && (
+          // The badge says the numbers; the bar is for the eye, so it is not read out.
+          <div aria-hidden="true" className="mt-1 h-1 w-full max-w-48 overflow-hidden rounded-full bg-muted">
+            <div className="h-full rounded-full bg-indigo" style={{ width: `${(answered / test.questionCount) * 100}%` }} />
+          </div>
+        )}
       </Link>
 
       <DeleteTest test={test} className="-mt-2 -mr-2 md:hidden" />
@@ -82,7 +98,7 @@ export function TestRow({ test }: { test: TestSummary }) {
           </>
         ) : (
           <Button asChild className="col-span-2 md:px-4.5">
-            <Link to={quizHref}>テストを始める</Link>
+            <Link to={quizHref}>{inProgress ? "続きから" : "テストを始める"}</Link>
           </Button>
         )}
         <DeleteTest test={test} className="hidden md:order-3 md:inline-flex" outlined />

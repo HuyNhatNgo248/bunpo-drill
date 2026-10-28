@@ -14,6 +14,8 @@ const badgeVariants = cva(
         soft: "rounded-md bg-primary-soft px-2 py-0.5 font-semibold text-primary-soft-foreground",
         /** Score pill, e.g. "7 / 8". */
         outline: "rounded-full border-border px-2.5 py-px text-secondary-foreground",
+        /** A test left before submitting, e.g. "解答中 2 / 3". */
+        progress: "rounded-full border-indigo/25 bg-indigo/10 px-2.5 py-px text-indigo",
       },
     },
     defaultVariants: {

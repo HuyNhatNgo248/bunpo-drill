@@ -27,6 +27,18 @@ export function loadAnswers(testId: string): Answers {
   }
 }
 
+/** True when the test has a saved sheet with at least one answer, even a half-filled sentence order. */
+export function hasSavedAnswers(testId: string): boolean {
+  return Object.values(loadAnswers(testId)).some((answer) => (Array.isArray(answer) ? answer.some((slot) => slot !== null) : answer !== null));
+}
+
+/** How many questions the saved sheet answers: a picked choice, or a sentence order with all 4 slots filled. */
+export function savedAnsweredCount(testId: string): number {
+  return Object.values(loadAnswers(testId)).filter((answer) =>
+    Array.isArray(answer) ? answer.every((slot) => slot !== null) : answer !== null,
+  ).length;
+}
+
 /** Saves the sheet. An empty sheet removes the saved one. */
 export function saveAnswers(testId: string, answers: Answers): void {
   try {

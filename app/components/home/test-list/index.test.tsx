@@ -32,6 +32,16 @@ describe("TestList", () => {
     expect(screen.getByRole("link", { name: "テストを始める" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
   });
 
+  it("offers to go on with a test that was left before submitting", async () => {
+    localStorage.setItem(`bunpo:answers:${NOT_TAKEN.id}`, JSON.stringify({ q1: 2 }));
+
+    renderList([NOT_TAKEN]);
+
+    expect(await screen.findByRole("link", { name: "続きから" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
+    expect(screen.getByText(`解答中 1 / ${NOT_TAKEN.questionCount}`)).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "テストを始める" })).toBeNull();
+  });
+
   it("links a taken test to its results, with the last score", async () => {
     renderList([TAKEN]);
 

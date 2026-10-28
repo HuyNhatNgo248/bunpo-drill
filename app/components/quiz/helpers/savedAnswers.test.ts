@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { forgetAnswers, loadAnswers, saveAnswers } from "./savedAnswers";
+import { forgetAnswers, hasSavedAnswers, loadAnswers, savedAnsweredCount, saveAnswers } from "./savedAnswers";
 
 const TEST_ID = "20261028-abc123";
 const KEY = `bunpo:answers:${TEST_ID}`;
@@ -20,6 +20,22 @@ describe("saved answers", () => {
     saveAnswers(TEST_ID, { q1: 2 });
     forgetAnswers(TEST_ID);
     expect(loadAnswers(TEST_ID)).toEqual({});
+  });
+
+  it("tells whether the test has an answer saved, a half-filled sentence order included", () => {
+    expect(hasSavedAnswers(TEST_ID)).toBe(false);
+
+    saveAnswers(TEST_ID, { q1: null, q2: [null, null, null, null] });
+    expect(hasSavedAnswers(TEST_ID)).toBe(false);
+
+    saveAnswers(TEST_ID, { q2: [null, 1, null, null] });
+    expect(hasSavedAnswers(TEST_ID)).toBe(true);
+  });
+
+  it("counts a picked choice and a full sentence order as answered, a half-filled one not", () => {
+    saveAnswers(TEST_ID, { q1: 2, q2: [0, 1, 2, 3], q3: [null, 1, null, null], q4: null });
+
+    expect(savedAnsweredCount(TEST_ID)).toBe(2);
   });
 
   it("leaves out anything that is not an answer, and reads broken JSON as an empty sheet", () => {
