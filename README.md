@@ -33,7 +33,7 @@ regenerates the skill's `schema.json` from it, and `pnpm test` fails if they dri
 Accounts, in `app/lib/auth.server.ts` and `app/lib/users.server.ts`. Everyone signs up at
 `/login?mode=signup` with a username, an email and a password. Anyone who finds the site can make an account. All users see the same tests.
 
-A root middleware checks every request: without the login cookie, pages redirect to `/login` and
+A root middleware checks every request: without the login cookie, `/` redirects to `/welcome`, other pages to `/login`, and
 `/api` answers 401. Signing in sets a cookie signed with `SESSION_SECRET` for 30 days. `/account`
 changes your username, email or password and has ログアウト. Changing `SESSION_SECRET` signs everyone out.
 
@@ -61,7 +61,7 @@ All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without 
 | `PATCH` | `/api/tests/:id` | `{ grammarId, reviewed }`: mark a review chip |
 | `DELETE` | `/api/tests/:id` | Delete one test |
 
-Pages: `/login`, `/account`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/results`.
+Pages: `/welcome` (for signed-out visitors, with 3 sample questions), `/login`, `/account`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/results`.
 
 ## Storage
 

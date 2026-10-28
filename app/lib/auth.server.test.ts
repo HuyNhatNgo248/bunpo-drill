@@ -162,7 +162,8 @@ describe("requireSignIn", () => {
     await expect(check(await signedInRequest("/tests/20261027-abc123"))).resolves.toBeUndefined();
   });
 
-  it("lets anyone open the login page, and the pages that reset a forgotten password", async () => {
+  it("lets anyone open the welcome page, the login page, and the pages that reset a forgotten password", async () => {
+    await expect(check(requestTo("/welcome"))).resolves.toBeUndefined();
     await expect(check(requestTo("/login"))).resolves.toBeUndefined();
     await expect(check(requestTo("/forgot-password"))).resolves.toBeUndefined();
     await expect(check(requestTo("/reset-password?token=x"))).resolves.toBeUndefined();
@@ -192,6 +193,12 @@ describe("requireSignIn", () => {
 
       expect(response.status).toBe(302);
       expect(response.headers.get("Location")).toBe("/login?redirectTo=%2Ftests%2F20261027-abc123%3Ftab%3D2");
+    });
+
+    it("goes to the welcome page from /, since the visitor may have no account yet", async () => {
+      const response = await thrownBy(() => check(requestTo("/")));
+
+      expect(response.headers.get("Location")).toBe("/welcome");
     });
   });
 });

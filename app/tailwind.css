@@ -129,6 +129,7 @@
   --text-title-lg: 1.75rem; /* 28px: the home and error page titles */
   --text-tile: 2.5rem; /* 40px: the kanji tile of the error page */
   --text-score: 2.75rem; /* 44px: the score on the results page */
+  --text-hero: 2.5rem; /* 40px: the welcome page headline, so 自分の文法ノートから、 fits on one line beside the sample */
 
   /* Japanese text needs more room between lines than Latin text. */
   --leading-sentence: 1.7; /* question sentences */
@@ -146,12 +147,24 @@
   --grid-template-columns-term: auto 1fr; /* a term and its value */
   --grid-template-columns-quiz: 208px minmax(0, 1fr); /* the question list beside the questions */
   --grid-template-columns-actions: 1fr 2fr; /* the clear and the submit button */
+  --grid-template-columns-welcome: minmax(0, 1fr) minmax(0, 460px); /* the pitch beside the sample question */
   --grid-template-rows-dialog-header: auto 1fr; /* a dialog's title and description */
   --grid-template-rows-dialog-header-media: auto auto 1fr; /* with an icon above them */
 
   /* A jump lands a passage question 12px below its pinned passage (top-16, or md:top-24). */
   --scroll-margin-passage: calc(var(--passage-h) + 4.75rem);
   --scroll-margin-passage-desktop: calc(var(--passage-h) + 6.75rem);
+}
+
+/* The 正解 seal on the welcome page, pressed on like a hanko. */
+@theme {
+  --animate-press: press 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  @keyframes press {
+    from {
+      opacity: 0;
+      scale: 1.6;
+    }
+  }
 }
 
 /* A test row's title takes the free space, so its buttons wrap below it before the title wraps. */

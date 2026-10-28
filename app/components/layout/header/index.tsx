@@ -1,20 +1,23 @@
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router";
+import { Button } from "~/components/ui/button";
 import { Brand } from "./Brand";
 
 /**
  * Desktop: brand on the left, "← テスト一覧" on the right when `back` is set,
- * or an アカウント link when `account` is set.
+ * an アカウント link when `account` is set, or ログイン and アカウントを作成 for a signed-out `guest`.
  * Mobile: with a `mobileTitle`, a back chevron and the title replace the brand.
  */
 export function AppHeader({
   back = false,
   account = false,
+  guest = false,
   mobileTitle,
   mobileAside,
 }: {
   back?: boolean;
   account?: boolean;
+  guest?: boolean;
   mobileTitle?: string;
   mobileAside?: React.ReactNode;
 }) {
@@ -32,6 +35,16 @@ export function AppHeader({
             <Link to="/account" className="text-caption text-subtle-foreground no-underline hover:text-foreground">
               アカウント
             </Link>
+          )}
+          {guest && (
+            <nav aria-label="アカウント" className="flex items-center gap-1">
+              <Button asChild variant="link" size="sm">
+                <Link to="/login">ログイン</Link>
+              </Button>
+              <Button asChild size="sm">
+                <Link to="/login?mode=signup">アカウントを作成</Link>
+              </Button>
+            </nav>
           )}
         </div>
       </div>
