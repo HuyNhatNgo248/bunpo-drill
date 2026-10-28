@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { Trash2 } from "lucide-react";
 import { useFetcher } from "react-router";
 import { ConfirmDialog } from "~/components/ConfirmDialog";

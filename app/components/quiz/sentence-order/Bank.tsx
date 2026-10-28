@@ -1,5 +1,5 @@
 import { useDroppable } from "@dnd-kit/core";
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import type { DropData } from "./types";
 
 /** The box of pieces. A piece dropped here leaves its slot. */

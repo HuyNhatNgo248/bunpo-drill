@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { questionAnchor } from "~/lib/sections";
 import type { Answers, QuizQuestion } from "~/lib/views";

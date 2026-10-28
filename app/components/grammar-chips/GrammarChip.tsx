@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { Check } from "lucide-react";
 import { useFetcher } from "react-router";
 import { Button } from "~/components/ui/button";

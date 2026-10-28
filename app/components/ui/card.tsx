@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "cn"
+import { cn } from "~/lib/utils"
 
 /** A paper surface, lighter than the page, with a 1px border and 12px corners. */
 function Card({ className, ...props }: React.ComponentProps<"section">) {

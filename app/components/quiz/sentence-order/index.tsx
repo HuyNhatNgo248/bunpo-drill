@@ -9,7 +9,7 @@ import {
   type DragStartEvent,
 } from "@dnd-kit/core";
 import { getEventCoordinates } from "@dnd-kit/utilities";
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { useRef, useState } from "react";
 import { Bank } from "./Bank";
 import { BankPiece, PILL } from "./BankPiece";

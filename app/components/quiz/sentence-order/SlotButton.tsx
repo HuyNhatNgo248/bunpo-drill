@@ -1,5 +1,5 @@
 import { useDraggable, useDroppable } from "@dnd-kit/core";
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import type { DragData, DropData } from "./types";
 
 /** One of the 4 slots: a drop zone, and once filled, a piece to drag away or tap to send back. */

@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { ChevronDown, GripVertical } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Form, Link } from "react-router";

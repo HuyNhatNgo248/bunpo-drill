@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { jumpTo } from "./helpers/jumpTo";
 import { QuestionGrid, type QuestionListProps } from "./QuestionGrid";
 

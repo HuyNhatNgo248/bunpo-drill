@@ -5,6 +5,8 @@ import { renderRoute } from "#tests/helpers/render";
 import { Welcome } from ".";
 import { SAMPLES } from "./helpers/samples";
 
+const EXAM = { date: "2026-12-06", daysLeft: 39 };
+
 /** Picks the choice named `choice` of the sample question on screen. */
 async function pick(choice: string) {
   const group = await screen.findByRole("radiogroup");
@@ -20,8 +22,34 @@ async function answerAll() {
 }
 
 describe("Welcome", () => {
+  it("counts down to the next exam in its own section", async () => {
+    renderRoute(<Welcome exam={EXAM} />, { url: "/welcome" });
+
+    const section = await screen.findByRole("region", { name: "次の日本語能力試験（JLPT）" });
+    expect(section).toHaveTextContent("2026年12月6日（日）");
+    expect(section).toHaveTextContent("あと39日");
+    expect(section).toHaveTextContent("試験日までに39回解けます");
+  });
+
+  it("ends with a footer that says it is not the official JLPT, and links to it", async () => {
+    renderRoute(<Welcome exam={EXAM} />, { url: "/welcome" });
+
+    const footer = await screen.findByRole("contentinfo");
+    expect(footer).toHaveTextContent("継続は力なり");
+    expect(footer).toHaveTextContent("公式サービスではありません");
+    expect(within(footer).getByRole("link", { name: "jlpt.jp" })).toHaveAttribute("href", "https://www.jlpt.jp/");
+  });
+
+  it("says when it is the exam day, with no count", async () => {
+    renderRoute(<Welcome exam={{ date: "2026-12-06", daysLeft: 0 }} />, { url: "/welcome" });
+
+    const section = await screen.findByRole("region", { name: "次の日本語能力試験（JLPT）" });
+    expect(section).toHaveTextContent("今日が試験日です");
+    expect(section).not.toHaveTextContent("あと");
+  });
+
   it("pitches the app and links to sign-up and sign-in", async () => {
-    renderRoute(<Welcome />, { url: "/welcome" });
+    renderRoute(<Welcome exam={EXAM} />, { url: "/welcome" });
 
     expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("自分の文法ノートから、本番形式の模擬試験。");
     for (const link of screen.getAllByRole("link", { name: "アカウントを作成" })) {
@@ -31,7 +59,7 @@ describe("Welcome", () => {
   });
 
   it("marks a right answer, fills the blank, and says why", async () => {
-    renderRoute(<Welcome />, { url: "/welcome" });
+    renderRoute(<Welcome exam={EXAM} />, { url: "/welcome" });
 
     await pick("かいがあって");
 
@@ -41,7 +69,7 @@ describe("Welcome", () => {
   });
 
   it("shows the right answer after a wrong one", async () => {
-    renderRoute(<Welcome />, { url: "/welcome" });
+    renderRoute(<Welcome exam={EXAM} />, { url: "/welcome" });
 
     await pick("かいもなく");
 
@@ -50,7 +78,7 @@ describe("Welcome", () => {
   });
 
   it("gives the score after the last question, and starts again", async () => {
-    renderRoute(<Welcome />, { url: "/welcome" });
+    renderRoute(<Welcome exam={EXAM} />, { url: "/welcome" });
 
     await answerAll();
 

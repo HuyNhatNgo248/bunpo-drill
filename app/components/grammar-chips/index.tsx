@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import type { ReviewChip } from "~/lib/views";
 import { GrammarChip } from "./GrammarChip";
 

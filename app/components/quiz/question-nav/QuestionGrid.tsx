@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { SECTION_TITLES } from "~/lib/sections";
 import type { QuizSection } from "~/lib/views";
 import { Legend } from "./Legend";

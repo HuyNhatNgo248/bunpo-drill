@@ -1,15 +1,18 @@
 import { Link } from "react-router";
 import { AppHeader } from "~/components/layout/header";
 import { Button } from "~/components/ui/button";
+import { ExamCountdown } from "./ExamCountdown";
 import { ExamSections } from "./ExamSections";
+import { Footer } from "./Footer";
 import { SampleQuiz } from "./SampleQuiz";
 
-/** The page a signed-out visitor sees at /: what the app does, a sample question to answer, and sign-up. */
-export function Welcome() {
+/** The page a signed-out visitor sees at /: what the app does, a sample question to answer, sign-up, and the days to the next exam. */
+export function Welcome({ exam }: { exam: { date: string; daysLeft: number } }) {
   return (
-    <div className="min-h-screen">
+    // A column the height of the screen, so the footer sits at the bottom even when the page is short.
+    <div className="flex min-h-screen flex-col">
       <AppHeader guest />
-      <main lang="ja" className="mx-auto flex max-w-260 flex-col gap-14 px-4 pt-10 pb-16 md:px-6 lg:gap-20 lg:pt-20 lg:pb-24">
+      <main lang="ja" className="mx-auto flex w-full max-w-260 flex-1 flex-col gap-14 px-4 pt-10 pb-16 md:px-6 lg:gap-20 lg:pt-20 lg:pb-24">
         <section className="grid items-center gap-10 lg:grid-cols-welcome lg:gap-16">
           <div className="flex min-w-0 flex-col gap-5">
             <p className="flex items-center gap-2 font-jp text-caption font-medium text-indigo">
@@ -44,7 +47,9 @@ export function Welcome() {
           <SampleQuiz />
         </section>
         <ExamSections />
+        <ExamCountdown exam={exam} />
       </main>
+      <Footer />
     </div>
   );
 }

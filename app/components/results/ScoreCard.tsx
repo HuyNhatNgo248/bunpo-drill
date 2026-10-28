@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
 import { PASS_PERCENT } from "~/lib/sections";

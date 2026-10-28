@@ -1,5 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import type { DragData } from "./types";
 
 /** The pill shape of a piece, in the bank and while it is dragged. */

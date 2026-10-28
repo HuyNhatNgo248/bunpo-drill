@@ -1,4 +1,4 @@
-import { cn } from "cn";
+import { cn } from "~/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { ChoiceList } from "~/components/quiz/ChoiceList";

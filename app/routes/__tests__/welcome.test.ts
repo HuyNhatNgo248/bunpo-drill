@@ -10,8 +10,10 @@ const URL = "https://bunpo.test/welcome";
 beforeEach(resetDatabase);
 
 describe("welcome loader", () => {
-  it("shows the page to a visitor who is not signed in", async () => {
-    expect(await loader(routeArgs<Parameters<typeof loader>[0]>(new Request(URL)))).toBeNull();
+  it("shows the page to a visitor who is not signed in, with the next exam", async () => {
+    expect(await loader(routeArgs<Parameters<typeof loader>[0]>(new Request(URL)))).toEqual({
+      exam: { date: expect.stringMatching(/^\d{4}-(07|12)-0[1-7]$/), daysLeft: expect.any(Number) },
+    });
   });
 
   it("sends a signed-in user to their tests", async () => {
