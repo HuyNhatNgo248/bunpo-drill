@@ -11,7 +11,7 @@ describe("deletingIds", () => {
     expect(deletingIds(fetchers)).toEqual(new Set(["20261027-abc123", "20261027-def456"]));
   });
 
-  it("skips the fetchers that delete nothing, and the clear-all", () => {
+  it("skips the fetchers that delete no single test", () => {
     const fetchers = [
       { formMethod: "PATCH", formAction: "/api/tests/20261027-abc123" },
       { formMethod: "DELETE", formAction: "/api/tests" },

@@ -27,6 +27,14 @@ function renderResults(results: ResultsView) {
 const reviewOf = (num: number) => screen.getByText(String(num), { selector: "span" }).closest<HTMLElement>("[data-slot=card]")!;
 
 describe("Results", () => {
+  it("forgets the saved answer sheet of the test, so a retake starts clean", async () => {
+    localStorage.setItem(`bunpo:answers:${FAILED.id}`, JSON.stringify({ q1: 0 }));
+
+    renderResults(FAILED);
+
+    await waitFor(() => expect(localStorage.getItem(`bunpo:answers:${FAILED.id}`)).toBeNull());
+  });
+
   it("shows the score, its percent, and the wrong answers against the pass line", async () => {
     renderResults(FAILED);
 

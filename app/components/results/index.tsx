@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { AppHeader } from "~/components/layout/header";
+import { forgetAnswers } from "~/components/quiz/helpers/savedAnswers";
 import type { ResultsView } from "~/lib/views";
 import { Actions } from "./Actions";
 import { ReviewCard } from "./ReviewCard";
@@ -8,6 +10,9 @@ import { Title } from "./Title";
 
 /** The results page: the score, the grammar to review, every answer checked, and the way on. */
 export function Results({ results }: { results: ResultsView }) {
+  // The test is submitted, so its saved answer sheet is done with; a retake starts clean.
+  useEffect(() => forgetAnswers(results.id), [results.id]);
+
   return (
     <div className="min-h-screen">
       <AppHeader back mobileTitle={`${results.title} · 結果`} />

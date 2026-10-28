@@ -1,17 +1,17 @@
-import { useState } from "react";
 import { useSubmit } from "react-router";
 import type { Answers, QuizView } from "~/lib/views";
 import { Header } from "./Header";
 import { quizProgress } from "./helpers/answers";
+import { useSavedAnswers } from "./hooks/useSavedAnswers";
 import { ProgressCard } from "./ProgressCard";
 import { QuestionNav } from "./question-nav";
 import { Section } from "./Section";
 import { SubmitBar } from "./SubmitBar";
 import { Title } from "./Title";
 
-/** The quiz page. The answer sheet lives here until it is submitted. */
+/** The quiz page. The answer sheet lives here, saved in the browser, until it is submitted. */
 export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
-  const [answers, setAnswers] = useState<Answers>({});
+  const [answers, setAnswers] = useSavedAnswers(quiz.id);
   const submit = useSubmit();
   const { answeredIds, answered, left, percent } = quizProgress(quiz, answers);
 

@@ -53,29 +53,10 @@ describe("Home", () => {
     expect((await screen.findByText("平均正答率")).nextSibling).toHaveTextContent("—");
   });
 
-  it("explains where tests come from when there are none, with no clear-all button", async () => {
+  it("explains where tests come from when there are none", async () => {
     renderHome([]);
 
     expect(await screen.findByRole("heading", { name: "模擬試験はまだありません" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /すべて削除/ })).toBeNull();
-  });
-
-  describe("clearing every test", () => {
-    it("asks first, then deletes every test", async () => {
-      const requests = renderHome([TAKEN, NOT_TAKEN]);
-
-      await confirm(await screen.findByRole("button", { name: /模擬試験をすべて削除/ }), "すべて削除");
-
-      await waitFor(() => expect(requests).toEqual([{ method: "DELETE", path: "/api/tests", body: null }]));
-    });
-
-    it("empties the list while the delete saves", async () => {
-      renderHome([TAKEN, NOT_TAKEN], { api: () => new Promise(() => {}) });
-
-      await confirm(await screen.findByRole("button", { name: /模擬試験をすべて削除/ }), "すべて削除");
-
-      expect(await screen.findByRole("heading", { name: "模擬試験はまだありません" })).toBeInTheDocument();
-    });
   });
 
   describe("deleting one test", () => {

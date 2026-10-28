@@ -17,6 +17,9 @@ function renderQuiz(error?: string) {
   return requests;
 }
 
+/** The quiz page alone, for a test that leaves it and opens it again. */
+const renderRouteOfQuiz = () => renderRoute(<Quiz quiz={QUIZ} />, { url: URL });
+
 /** Picks the choice named `choice` of question `num`. */
 async function pick(num: number, choice: string) {
   const group = await screen.findByRole("radiogroup", { name: `問題 ${num} の選択肢` });
@@ -78,6 +81,30 @@ describe("Quiz", () => {
       await userEvent.click(screen.getByRole("button", { name: /回答をクリア/ }));
 
       expect(screen.getByText("回答済み 0 / 3")).toBeInTheDocument();
+    });
+  });
+
+  describe("leaving before submitting", () => {
+    it("keeps the answers, so the test goes on where it was left when it is opened again", async () => {
+      const { unmount } = renderRouteOfQuiz();
+      await pick(1, "かいがあって");
+      unmount();
+
+      renderQuiz();
+
+      expect(await screen.findByText("回答済み 1 / 3")).toBeInTheDocument();
+      expect(within(screen.getByRole("radiogroup", { name: "問題 1 の選択肢" })).getByRole("radio", { name: /かいがあって/ })).toBeChecked();
+    });
+
+    it("forgets the answers that were cleared", async () => {
+      const { unmount } = renderRouteOfQuiz();
+      await pick(1, "かいがあって");
+      await userEvent.click(screen.getByRole("button", { name: /回答をクリア/ }));
+      unmount();
+
+      renderQuiz();
+
+      expect(await screen.findByText("回答済み 0 / 3")).toBeInTheDocument();
     });
   });
 

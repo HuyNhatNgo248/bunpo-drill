@@ -1,5 +1,4 @@
 /** The keys of the fetchers that change the list. The list reads them to show a change before it is saved. */
-export const CLEAR_ALL_KEY = "clear-all";
 export const REORDER_KEY = "reorder";
 
 const DELETE_ACTION = "/api/tests/";

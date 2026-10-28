@@ -11,8 +11,10 @@ import { API_TOKEN, APP_URL, MAIL_FROM, SESSION_SECRET } from "#tests/helpers/en
 expect.extend(matchers);
 
 // Unmount React trees after every test, so DOM assertions do not leak across tests.
+// Saved answer sheets go too; the server tests run in Node, which has no localStorage.
 afterEach(() => {
   cleanup();
+  globalThis.localStorage?.clear();
 });
 
 /**
