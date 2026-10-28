@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { buildTestSummary } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute, type StubRoute } from "#tests/helpers/render";
+import type { Level } from "~/lib/payload";
 import type { TestSummary } from "~/lib/views";
 import { Home } from ".";
 import type { HomeStats } from "./Stats";
@@ -19,9 +20,12 @@ const NOT_TAKEN = buildTestSummary({ id: "20261027-bbbbbb", title: "第2週 1日
 const STATS: HomeStats = { average: 67, toReview: 1, taken: 1 };
 
 /** The home page, with the API routes that its fetchers reach. */
-function renderHome(tests: TestSummary[], { stats = STATS, api }: { stats?: HomeStats; api?: StubRoute["action"] } = {}) {
+function renderHome(
+  tests: TestSummary[],
+  { stats = STATS, levels = ["N2"], api }: { stats?: HomeStats; levels?: Level[]; api?: StubRoute["action"] } = {},
+) {
   const { action, requests } = recordingAction();
-  renderRoute(<Home tests={tests} stats={stats} />, {
+  renderRoute(<Home tests={tests} stats={stats} level={tests.length ? "N2" : null} levels={levels} />, {
     routes: [
       { path: "/api/tests", action: api ?? action },
       { path: "/api/tests/:id", action: api ?? action },
@@ -37,7 +41,7 @@ async function confirm(button: HTMLElement, confirmLabel: string) {
 }
 
 describe("Home", () => {
-  it("shows the figures over all tests, then the list", async () => {
+  it("shows the figures over the tests of the level, then the list", async () => {
     renderHome([TAKEN, NOT_TAKEN]);
 
     expect(await screen.findByRole("heading", { name: "模擬試験" })).toBeInTheDocument();
@@ -57,6 +61,21 @@ describe("Home", () => {
     renderHome([]);
 
     expect(await screen.findByRole("heading", { name: "模擬試験はまだありません" })).toBeInTheDocument();
+  });
+
+  it("links to each level when both have tests, and marks the one shown", async () => {
+    renderHome([TAKEN, NOT_TAKEN], { levels: ["N3", "N2"] });
+
+    const nav = await screen.findByRole("navigation", { name: "レベル" });
+    expect(within(nav).getByRole("link", { name: "N3" })).toHaveAttribute("href", "/?level=N3");
+    expect(within(nav).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
+  });
+
+  it("has no level links when every test is one level", async () => {
+    renderHome([TAKEN, NOT_TAKEN]);
+
+    await screen.findByRole("heading", { name: "模擬試験" });
+    expect(screen.queryByRole("navigation", { name: "レベル" })).toBeNull();
   });
 
   describe("deleting one test", () => {

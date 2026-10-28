@@ -1,6 +1,6 @@
 import { StatCard } from "./StatCard";
 
-/** The figures over all tests that the home loader works out. */
+/** The figures over the tests of the level shown, which the home loader works out. */
 export type HomeStats = { average: number | null; toReview: number; taken: number };
 
 /** The average score, the grammar left to review, and how many of the `total` tests are taken. */
