@@ -38,7 +38,8 @@ A root middleware checks every request: without the login cookie, pages redirect
 changes your username, email or password and has ログアウト. Changing `SESSION_SECRET` signs everyone out.
 
 Forgot password (`app/lib/password-reset.server.ts`): `/login` links to `/forgot-password`, which
-emails a link to `/reset-password` that works once, for an hour. The page answers the same whether
+emails a link to `/reset-password` that works once, for an hour. A reset signs out every other device.
+The page answers the same whether
 or not an account has the email. Only a hash of each link's token is stored. Emails go out through
 [Resend](https://resend.com) (`RESEND_API_KEY`, `MAIL_FROM`) and the link starts with `APP_URL`; see
 `.env.example`. Without the key, `pnpm dev` prints each email to the server log. Accounts made before

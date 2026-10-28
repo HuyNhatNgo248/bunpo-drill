@@ -51,9 +51,9 @@ export async function isPasswordResetValid(token: string): Promise<boolean> {
 }
 
 /**
- * Uses the token up, sets the new password, and voids every other link of the user.
+ * Uses the token up, sets the new password, voids every other link of the user, and signs out
+ * every device by bumping the session version (the page that reset signs in again after).
  * Returns the user's id, or null when the token is unknown, expired or already used.
- * shortcut: other devices stay signed in, because the login cookie holds only the user id; add a session version to users if a reset must sign them out.
  */
 export async function resetPassword(token: string, password: string): Promise<number | null> {
   const client = await db();
@@ -66,7 +66,10 @@ export async function resetPassword(token: string, password: string): Promise<nu
   const userId = Number(rows[0].user_id);
   await client.batch(
     [
-      { sql: "UPDATE users SET password = ? WHERE id = ?", args: [await hashPassword(password), userId] },
+      {
+        sql: "UPDATE users SET password = ?, session_version = session_version + 1 WHERE id = ?",
+        args: [await hashPassword(password), userId],
+      },
       { sql: "DELETE FROM password_resets WHERE user_id = ?", args: [userId] },
     ],
     "write",

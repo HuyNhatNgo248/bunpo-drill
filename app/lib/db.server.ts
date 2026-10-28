@@ -26,7 +26,8 @@ const SCHEMA = [
     name TEXT NOT NULL UNIQUE COLLATE NOCASE, -- "Huy" and "huy" are the same name
     password TEXT NOT NULL, -- "<salt hex>:<scrypt hash hex>"
     created_at TEXT NOT NULL,
-    email TEXT -- lower case; where a password reset link goes; NULL until the user adds one
+    email TEXT, -- lower case; where a password reset link goes; NULL until the user adds one
+    session_version INTEGER NOT NULL DEFAULT 0 -- in every login cookie; a password reset bumps it, which signs out the other devices
   )`,
   `CREATE TABLE IF NOT EXISTS password_resets (
     token_hash TEXT PRIMARY KEY, -- sha256 of the token in the emailed link; the token itself is never stored
@@ -40,6 +41,8 @@ const SCHEMA = [
 async function migrate(client: Client) {
   const { rows } = await client.execute("PRAGMA table_info(users)");
   if (!rows.some((column) => column.name === "email")) await client.execute("ALTER TABLE users ADD COLUMN email TEXT");
+  if (!rows.some((column) => column.name === "session_version"))
+    await client.execute("ALTER TABLE users ADD COLUMN session_version INTEGER NOT NULL DEFAULT 0");
   // Unique, but many users may have none: SQLite lets NULLs repeat in a unique index.
   await client.execute("CREATE UNIQUE INDEX IF NOT EXISTS users_email ON users (email)");
 }

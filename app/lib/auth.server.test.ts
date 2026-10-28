@@ -1,6 +1,9 @@
 import { createCookieSessionStorage } from "react-router";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { resetDatabase } from "#tests/helpers/db";
 import { API_TOKEN, SESSION_SECRET } from "#tests/helpers/env";
+import { ensureUser } from "#tests/helpers/session";
+import { db } from "./db.server";
 import {
   currentUserId,
   isSignedIn,
@@ -14,6 +17,11 @@ import {
 const BASE_URL = "https://bunpo.test";
 
 const USER_ID = 7;
+
+beforeEach(async () => {
+  await resetDatabase();
+  await ensureUser(USER_ID);
+});
 
 /** The name=value part of a Set-Cookie header, the way a browser sends it back. */
 function cookieOf(response: Response) {
@@ -110,6 +118,27 @@ describe("currentUserId", () => {
     const cookie = await forgedCookie(SESSION_SECRET, { signedIn: true });
 
     expect(await currentUserId(requestTo("/", { Cookie: cookie }))).toBeNull();
+  });
+
+  it("returns null for a cookie of a user that no longer exists", async () => {
+    const request = await signedInRequest();
+    await (await db()).execute({ sql: "DELETE FROM users WHERE id = ?", args: [USER_ID] });
+
+    expect(await currentUserId(request)).toBeNull();
+  });
+
+  it("returns null for a cookie of an older session version, as after a password reset", async () => {
+    const request = await signedInRequest();
+    await (await db()).execute({ sql: "UPDATE users SET session_version = 1 WHERE id = ?", args: [USER_ID] });
+
+    expect(await currentUserId(request)).toBeNull();
+    expect(await currentUserId(await signedInRequest())).toBe(USER_ID);
+  });
+
+  it("takes a cookie from before session versions as version 0, so no one is signed out by the update", async () => {
+    const cookie = await forgedCookie(SESSION_SECRET, { userId: USER_ID });
+
+    expect(await currentUserId(requestTo("/", { Cookie: cookie }))).toBe(USER_ID);
   });
 });
 

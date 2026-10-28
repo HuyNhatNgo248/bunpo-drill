@@ -3,6 +3,7 @@ import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
 import { signedInRequest } from "#tests/helpers/session";
 import { thrownBy } from "#tests/helpers/thrown";
+import { db } from "~/lib/db.server";
 import { createUser, getUser, verifyUser } from "~/lib/users.server";
 import { action, loader } from "../account";
 
@@ -36,12 +37,11 @@ describe("account loader", () => {
     expect(thrown.status).toBe(401);
   });
 
-  it("throws a 404 for a cookie of a user that no longer exists", async () => {
+  it("answers 401 for a cookie of a user that no longer exists", async () => {
     const request = await signedInRequest(999, URL);
+    await (await db()).execute("DELETE FROM users WHERE id = 999");
 
-    expect(await thrownBy(() => loader(routeArgs<Parameters<typeof loader>[0]>(request)))).toMatchObject({
-      init: { status: 404 },
-    });
+    expect(await thrownBy(() => loader(routeArgs<Parameters<typeof loader>[0]>(request)))).toMatchObject({ status: 401 });
   });
 });
 

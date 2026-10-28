@@ -1,15 +1,16 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { createCookieSessionStorage, redirect, type SessionStorage } from "react-router";
 import { requiredEnv } from "./env.server";
+import { getSessionVersion } from "./users.server";
 
 /**
  * Anyone can sign up, then sign in with a name and
- * password (users.server.ts). Signing in sets a signed cookie holding the user's id for
- * 30 days. The quiz skill has no cookie, so /api also takes BUNPO_API_TOKEN as a Bearer
+ * password (users.server.ts). Signing in sets a signed cookie holding the user's id and
+ * session version for 30 days. The quiz skill has no cookie, so /api also takes BUNPO_API_TOKEN as a Bearer
  * token. Changing SESSION_SECRET signs everyone out.
  */
 
-let storage: SessionStorage<{ userId: number }> | undefined;
+let storage: SessionStorage<{ userId: number; version: number }> | undefined;
 
 // Created on first use, so a missing SESSION_SECRET fails the request instead of the server start.
 function sessions() {
@@ -51,11 +52,14 @@ export async function isSignedIn(request: Request) {
 
 /**
  * The signed-in user's id, or null. Older cookies from before accounts have none.
- * shortcut: trusts the signed cookie without a database lookup; check the user exists if users can be deleted.
+ * The user must still exist and the cookie must hold their current session version, so a
+ * password reset signs out every other device. Cookies from before versions count as version 0.
  */
 export async function currentUserId(request: Request): Promise<number | null> {
   const session = await sessions().getSession(request.headers.get("Cookie"));
-  return session.get("userId") ?? null;
+  const userId = session.get("userId");
+  if (userId === undefined) return null;
+  return (await getSessionVersion(userId)) === (session.get("version") ?? 0) ? userId : null;
 }
 
 /** The signed-in user's id; pages behind the root middleware always have one, /api calls may not. */
@@ -68,6 +72,7 @@ export async function requireUserId(request: Request): Promise<number> {
 export async function signIn(request: Request, userId: number, redirectTo: string) {
   const session = await sessions().getSession(request.headers.get("Cookie"));
   session.set("userId", userId);
+  session.set("version", (await getSessionVersion(userId)) ?? 0);
   return redirect(redirectTo, { headers: { "Set-Cookie": await sessions().commitSession(session) } });
 }
 

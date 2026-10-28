@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { APP_URL } from "#tests/helpers/env";
 import { resetDatabase } from "#tests/helpers/db";
+import { signedInRequest } from "#tests/helpers/session";
+import { currentUserId } from "./auth.server";
 import { db } from "./db.server";
 import {
   createPasswordReset,
@@ -83,6 +85,16 @@ describe("resetPassword", () => {
     expect(await resetPassword(token, "a new passphrase")).toBe(userId);
     expect(await verifyUser("Huy", "a new passphrase")).toBe(userId);
     expect(await verifyUser("Huy", PASSWORD)).toBeNull();
+  });
+
+  it("signs out every device that was signed in before the reset", async () => {
+    const before = await signedInRequest(userId, "https://bunpo.test/");
+    const token = (await createPasswordReset(userId))!;
+
+    await resetPassword(token, "a new passphrase");
+
+    expect(await currentUserId(before)).toBeNull();
+    expect(await currentUserId(await signedInRequest(userId, "https://bunpo.test/"))).toBe(userId);
   });
 
   it("works once, so a link that leaks later is of no use", async () => {

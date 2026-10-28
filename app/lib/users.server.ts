@@ -47,6 +47,12 @@ export async function getUser(id: number): Promise<User | null> {
   return rows[0] ? toUser(rows[0]) : null;
 }
 
+/** The version that the user's login cookies must hold, or null when there is no such user. */
+export async function getSessionVersion(id: number): Promise<number | null> {
+  const { rows } = await (await db()).execute({ sql: "SELECT session_version FROM users WHERE id = ?", args: [id] });
+  return rows[0] ? Number(rows[0].session_version) : null;
+}
+
 /** The user with this normalized email, or null. */
 export async function findUserByEmail(email: string): Promise<User | null> {
   const { rows } = await (await db()).execute({ sql: "SELECT id, name, email FROM users WHERE email = ?", args: [email] });
