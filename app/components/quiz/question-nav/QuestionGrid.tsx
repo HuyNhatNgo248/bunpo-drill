@@ -41,7 +41,7 @@ export function QuestionGrid({
                         "flex w-full items-center justify-center rounded-md border font-medium tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/40",
                         touch ? "h-11 text-sm" : "h-8 text-xs",
                         done
-                          ? "border-primary bg-primary text-primary-foreground hover:bg-primary-hover"
+                          ? "border-indigo bg-indigo text-indigo-foreground hover:bg-indigo-hover"
                           : "border-border bg-card text-subtle-foreground hover:bg-muted",
                       )}
                     >

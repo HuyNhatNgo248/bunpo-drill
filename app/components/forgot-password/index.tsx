@@ -19,7 +19,7 @@ export function ForgotPassword({ result }: { result?: { sent?: string; error?: s
       ) : (
         <ForgotPasswordForm error={result?.error} />
       )}
-      <Link to="/login" className="text-center text-caption font-medium text-primary underline-offset-4 hover:underline">
+      <Link to="/login" className="text-center text-caption font-medium text-indigo underline-offset-4 hover:underline">
         ログインに戻る
       </Link>
     </AuthCard>

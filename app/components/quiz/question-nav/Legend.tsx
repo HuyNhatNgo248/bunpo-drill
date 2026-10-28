@@ -3,7 +3,7 @@ export function Legend() {
   return (
     <div aria-hidden="true" className="flex flex-wrap gap-x-3 gap-y-1 border-t pt-3 text-xs text-muted-foreground">
       <span className="flex items-center gap-1.5">
-        <span className="size-3 rounded-sm bg-primary" />
+        <span className="size-3 rounded-sm bg-indigo" />
         回答済み
       </span>
       <span className="flex items-center gap-1.5">

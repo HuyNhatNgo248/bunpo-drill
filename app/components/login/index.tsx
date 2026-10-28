@@ -2,7 +2,7 @@ import { Link, useSearchParams } from "react-router";
 import { AuthCard } from "~/components/layout/AuthCard";
 import { LoginForm } from "./LoginForm";
 
-const LINK_CLASS = "font-medium text-primary underline-offset-4 hover:underline";
+const LINK_CLASS = "font-medium text-indigo underline-offset-4 hover:underline";
 
 /** /login signs in; /login?mode=signup makes an account and signs in. */
 export function Login({ error }: { error?: string }) {

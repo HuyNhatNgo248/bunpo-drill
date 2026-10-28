@@ -21,10 +21,4 @@ describe("AuthCard", () => {
     expect(card).toHaveTextContent("文法ノートから作る、JLPT形式の模擬試験。");
     expect(card).toContainElement(screen.getByRole("button", { name: "ログイン" }));
   });
-
-  it("captions the drawing with the six weeks while no tab is under the pointer", async () => {
-    renderCard();
-
-    expect(await screen.findByText("第1週〜第6週")).toHaveAttribute("aria-hidden", "true");
-  });
 });

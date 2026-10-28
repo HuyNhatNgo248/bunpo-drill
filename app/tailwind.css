@@ -15,43 +15,50 @@
   color-scheme: light;
 
   /* Surfaces */
-  --background: #fafafa; /* page */
-  --foreground: #09090b; /* body text */
-  --card: #ffffff; /* cards, header, bars */
-  --card-foreground: #09090b;
-  --popover: #ffffff;
-  --popover-foreground: #09090b;
-  --overlay: rgb(9 9 11 / 0.32); /* dialog backdrop */
+  /* Washi: the page is 生成り (unbleached paper); cards are a lighter sheet on it. */
+  --background: #f4efe2; /* page */
+  --foreground: #1c1917; /* body text */
+  --card: #f9f6ee; /* cards, header, bars */
+  --card-foreground: #1c1917;
+  --popover: #f9f6ee;
+  --popover-foreground: #1c1917;
+  --overlay: rgb(41 32 22 / 0.3); /* dialog backdrop, a warm shade of the paper */
 
-  /* Brand: red */
-  --primary: #dc2626; /* buttons, progress, selected state */
-  --primary-foreground: #ffffff;
-  --primary-hover: #b91c1c;
-  --primary-soft: #fef2f2; /* selected / reviewed / wrong background */
-  --primary-soft-foreground: #b91c1c; /* text on primary-soft */
-  --primary-border: #fecaca; /* border on primary-soft */
+  /* Brand: red, leaning toward 朱 (vermilion). Dark enough for paper-white text on it. */
+  --primary: #c8351c; /* buttons, progress, selected state */
+  --primary-foreground: #f9f6ee; /* paper-white text on red */
+  --primary-hover: #a82b15;
+  --primary-soft: #f9e8e1; /* selected / reviewed / wrong background, a warm blush on the paper */
+  --primary-soft-foreground: #a82b15; /* text on primary-soft */
+  --primary-border: #f1c6b8; /* border on primary-soft */
+
+  /* Second color: 藍 (indigo) */
+  --indigo: #2b4c7e; /* links, answered question numbers */
+  --indigo-foreground: #f9f6ee;
+  --indigo-hover: #223d66;
 
   /* Neutrals */
-  --secondary: #f4f4f5;
-  --secondary-foreground: #3f3f46; /* strong secondary text, number badges */
-  --muted: #f4f4f5; /* empty slots, progress track */
-  --muted-foreground: #71717a; /* labels, meta text */
-  --subtle-foreground: #52525b; /* instructions, secondary copy */
-  --faint: #a1a1aa; /* unfilled radio ring, slot underline, used pieces */
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
+  /* Warm greys, so they sit on the paper instead of looking blue against it. */
+  --secondary: #f0eadd;
+  --secondary-foreground: #44403c; /* strong secondary text, number badges */
+  --muted: #f0eadd; /* empty slots, progress track */
+  --muted-foreground: #78716c; /* labels, meta text */
+  --subtle-foreground: #57534e; /* instructions, secondary copy */
+  --faint: #a8a29e; /* unfilled radio ring, slot underline, used pieces */
+  --accent: #f0eadd;
+  --accent-foreground: #1c1917;
 
   /* Feedback */
   --success: #15803d; /* correct answer text */
-  --success-soft: #f0fdf4;
-  --success-border: #bbf7d0;
+  --success-soft: #ebf1df; /* a warm sage on the paper */
+  --success-border: #c7dbb3;
   --warning: #a16207; /* score under the pass line */
-  --destructive: #dc2626;
+  --destructive: #c8351c;
 
   /* Lines */
-  --border: #e4e4e7; /* card and control borders */
-  --input: #d4d4d8; /* dashed drop zones, piece borders */
-  --ring: #dc2626;
+  --border: #e3dccb; /* card and control borders */
+  --input: #d6cdb9; /* dashed drop zones, piece borders */
+  --ring: #c8351c;
 
   --radius: 0.5rem;
 }
@@ -76,6 +83,10 @@
   --color-primary-soft: var(--primary-soft);
   --color-primary-soft-foreground: var(--primary-soft-foreground);
   --color-primary-border: var(--primary-border);
+
+  --color-indigo: var(--indigo);
+  --color-indigo-foreground: var(--indigo-foreground);
+  --color-indigo-hover: var(--indigo-hover);
 
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -158,12 +169,29 @@
   body {
     @apply bg-background text-sm text-foreground antialiased;
   }
+  /* The paper's grain, over the whole screen, so the page, cards and header read as one sheet. No lines. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.28 0 0 0 0 0.15 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.36 0 0 0 0 0.2 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-  /* The notebook drawing's plates are opaque in the ground colour; here that is the muted panel it sits on. */
+  /* The notebook drawing's plates are opaque in the ground colour; here that is the card it sits on.
+     Its lines take the theme's warm greys instead of the drawing's own cool ones. */
   [data-hairline] {
-    --hairline-plate: var(--muted);
+    --hairline-plate: var(--card);
+    --hairline-hi: var(--foreground);
+    --hairline-edge: var(--faint);
+    --hairline-mid: var(--input);
+    --hairline-lo: var(--border);
   }
 }
