@@ -1,6 +1,7 @@
 import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { db } from "./db.server";
+import { normalizeEmail } from "./users";
 
 /** Accounts: a name, an email for password resets, and a password stored as a salted scrypt hash. */
 
@@ -36,9 +37,16 @@ export async function createUser(name: string, password: string, email: string |
   return rows[0] ? Number(rows[0].id) : null;
 }
 
-/** The user's id when the name and password match, or null. */
-export async function verifyUser(name: string, password: string): Promise<number | null> {
-  const { rows } = await (await db()).execute({ sql: "SELECT id, password FROM users WHERE name = ?", args: [name] });
+/**
+ * The user's id when the username or the email and the password match, or null.
+ * An email match comes first; usernames cannot hold "@", so the two never point at different users.
+ */
+export async function verifyUser(login: string, password: string): Promise<number | null> {
+  const email = normalizeEmail(login);
+  const { rows } = await (await db()).execute({
+    sql: "SELECT id, password FROM users WHERE email = ? OR name = ? ORDER BY email = ? DESC LIMIT 1",
+    args: [email, login, email],
+  });
   return rows[0] && (await matches(password, String(rows[0].password))) ? Number(rows[0].id) : null;
 }
 

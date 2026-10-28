@@ -4,7 +4,7 @@ import { INPUT_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
 
 /**
- * The username and password fields; on sign-up also the email (where a password reset goes).
+ * The username (or, to sign in, the email) and password fields; on sign-up also the email (where a password reset goes).
  * The error of the last try shows above the button.
  */
 export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redirectTo: string; error?: string }) {
@@ -15,14 +15,13 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
   return (
     <Form method="post" className="flex flex-col gap-4">
       <input type="hidden" name="redirectTo" value={redirectTo} />
-      <input type="hidden" name="intent" value={signup ? "signup" : "login"} />
       <label className="flex flex-col gap-1.5">
-        <span className="text-caption font-medium">ユーザー名</span>
+        <span className="text-caption font-medium">{signup ? "ユーザー名" : "ユーザー名またはメールアドレス"}</span>
         <input
           name="name"
           required
           autoFocus
-          maxLength={30}
+          maxLength={signup ? 30 : 254}
           autoComplete="username"
           aria-invalid={invalid}
           aria-describedby={describedBy}

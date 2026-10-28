@@ -53,9 +53,9 @@ describe("Welcome", () => {
 
     expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("自分の文法ノートから、本番形式の模擬試験。");
     for (const link of screen.getAllByRole("link", { name: "アカウントを作成" })) {
-      expect(link).toHaveAttribute("href", "/login?mode=signup");
+      expect(link).toHaveAttribute("href", "/signup");
     }
-    expect(screen.getAllByRole("link", { name: "ログイン" })[0]).toHaveAttribute("href", "/login");
+    expect(screen.getAllByRole("link", { name: "ログイン" })[0]).toHaveAttribute("href", "/signin");
   });
 
   it("marks a right answer, fills the blank, and says why", async () => {

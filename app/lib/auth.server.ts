@@ -29,14 +29,15 @@ function sessions() {
   return storage;
 }
 
-/** The pages a signed-out visitor can open: the welcome page, signing in, and getting back in after a forgotten password. */
-const PUBLIC_PAGES = new Set(["/welcome", "/login", "/forgot-password", "/reset-password"]);
+/** The pages a signed-out visitor can open: the welcome page, signing in or up, and getting back in after a forgotten password. */
+// /login only redirects old links to /signin or /signup.
+const PUBLIC_PAGES = new Set(["/welcome", "/signin", "/signup", "/login", "/forgot-password", "/reset-password"]);
 
 /**
- * Runs before every request (root middleware): no cookie means the login page, or a 401 for /api.
+ * Runs before every request (root middleware): no cookie means the sign-in page, or a 401 for /api.
  * A signed-out visit to / goes to the welcome page instead, since that visitor may have no account yet.
- * `url` is React Router's normalized URL: in-app navigations and form posts request "/login.data"
- * and the like, which it reports as "/login".
+ * `url` is React Router's normalized URL: in-app navigations and form posts request "/signin.data"
+ * and the like, which it reports as "/signin".
  */
 export async function requireSignIn(request: Request, url: URL) {
   if (PUBLIC_PAGES.has(url.pathname) || (await isSignedIn(request))) return;
@@ -45,7 +46,7 @@ export async function requireSignIn(request: Request, url: URL) {
     throw Response.json({ error: "Not signed in. Send BUNPO_API_TOKEN as a Bearer token." }, { status: 401 });
   }
   if (url.pathname === "/") throw redirect("/welcome");
-  throw redirect(`/login?redirectTo=${encodeURIComponent(url.pathname + url.search)}`);
+  throw redirect(`/signin?redirectTo=${encodeURIComponent(url.pathname + url.search)}`);
 }
 
 export async function isSignedIn(request: Request) {
@@ -80,13 +81,16 @@ export async function signIn(request: Request, userId: number, redirectTo: strin
 
 export async function signOut(request: Request) {
   const session = await sessions().getSession(request.headers.get("Cookie"));
-  return redirect("/login", { headers: { "Set-Cookie": await sessions().destroySession(session) } });
+  return redirect("/signin", { headers: { "Set-Cookie": await sessions().destroySession(session) } });
 }
 
-/** Where to go after signing in: only a path on this site, never back to the login page. */
+/** The pages that sign in or up, which are no place to go back to once signed in. */
+const SIGN_IN_PAGES = ["/signin", "/signup", "/login"];
+
+/** Where to go after signing in: only a path on this site, never back to a sign-in page. */
 export function safeRedirect(to: FormDataEntryValue | string | null) {
   if (typeof to !== "string" || !to.startsWith("/") || to.startsWith("//") || to.startsWith("/\\")) return "/";
-  return to.startsWith("/login") ? "/" : to;
+  return SIGN_IN_PAGES.some((page) => to === page || to.startsWith(`${page}?`) || to.startsWith(`${page}/`)) ? "/" : to;
 }
 
 function hasApiToken(request: Request) {

@@ -35,7 +35,7 @@ function requestTo(path: string, headers: Record<string, string> = {}) {
 
 /** A request with the login cookie of USER_ID, made the way the login page makes it. */
 async function signedInRequest(path = "/") {
-  return requestTo(path, { Cookie: cookieOf(await signIn(requestTo("/login"), USER_ID, "/")) });
+  return requestTo(path, { Cookie: cookieOf(await signIn(requestTo("/signin"), USER_ID, "/")) });
 }
 
 /** A login cookie that the app did not sign with its own data: another secret, or other session data. */
@@ -75,14 +75,17 @@ describe("safeRedirect", () => {
   });
 
   it("goes home instead of back to the login page", () => {
-    expect(safeRedirect("/login")).toBe("/");
-    expect(safeRedirect("/login?redirectTo=%2F")).toBe("/");
+    expect(safeRedirect("/signin")).toBe("/");
+    expect(safeRedirect("/signup?redirectTo=%2F")).toBe("/");
+    expect(safeRedirect("/login?mode=signup")).toBe("/");
+    // A page that only starts with the same letters is fine.
+    expect(safeRedirect("/signing-tips")).toBe("/signing-tips");
   });
 });
 
 describe("signIn", () => {
   it("sends the user on to the page, with a login cookie that lasts 30 days", async () => {
-    const response = await signIn(requestTo("/login"), USER_ID, "/tests/20261027-abc123");
+    const response = await signIn(requestTo("/signin"), USER_ID, "/tests/20261027-abc123");
     const setCookie = response.headers.get("Set-Cookie");
 
     expect(response.status).toBe(302);
@@ -164,7 +167,9 @@ describe("requireSignIn", () => {
 
   it("lets anyone open the welcome page, the login page, and the pages that reset a forgotten password", async () => {
     await expect(check(requestTo("/welcome"))).resolves.toBeUndefined();
-    await expect(check(requestTo("/login"))).resolves.toBeUndefined();
+    await expect(check(requestTo("/signin"))).resolves.toBeUndefined();
+    await expect(check(requestTo("/signup"))).resolves.toBeUndefined();
+    await expect(check(requestTo("/login?mode=signup"))).resolves.toBeUndefined();
     await expect(check(requestTo("/forgot-password"))).resolves.toBeUndefined();
     await expect(check(requestTo("/reset-password?token=x"))).resolves.toBeUndefined();
   });
@@ -192,7 +197,7 @@ describe("requireSignIn", () => {
       const response = await thrownBy(() => check(requestTo("/tests/20261027-abc123?tab=2")));
 
       expect(response.status).toBe(302);
-      expect(response.headers.get("Location")).toBe("/login?redirectTo=%2Ftests%2F20261027-abc123%3Ftab%3D2");
+      expect(response.headers.get("Location")).toBe("/signin?redirectTo=%2Ftests%2F20261027-abc123%3Ftab%3D2");
     });
 
     it("goes to the welcome page from /, since the visitor may have no account yet", async () => {
@@ -207,7 +212,7 @@ describe("signOut", () => {
   it("goes to the login page and clears the cookie, so the next request is signed out", async () => {
     const response = await signOut(await signedInRequest());
 
-    expect(response.headers.get("Location")).toBe("/login");
+    expect(response.headers.get("Location")).toBe("/signin");
     expect(response.headers.get("Set-Cookie")).toContain("Expires=Thu, 01 Jan 1970 00:00:00 GMT");
     expect(await currentUserId(requestTo("/", { Cookie: cookieOf(response) }))).toBeNull();
   });

@@ -32,10 +32,10 @@ export function Welcome({ exam }: { exam: { date: string; daysLeft: number } }) 
             </p>
             <div className="flex flex-wrap gap-2.5 pt-1">
               <Button asChild size="lg">
-                <Link to="/login?mode=signup">アカウントを作成</Link>
+                <Link to="/signup">アカウントを作成</Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/login">ログイン</Link>
+                <Link to="/signin">ログイン</Link>
               </Button>
             </div>
             <p className="font-jp text-xs text-muted-foreground">

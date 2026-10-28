@@ -9,7 +9,9 @@ export function checkEmail(email: string) {
 }
 
 export function checkName(name: string) {
-  return name.length >= 1 && name.length <= 30 ? null : "ユーザー名は1〜30文字で入力してください。";
+  if (name.length < 1 || name.length > 30) return "ユーザー名は1〜30文字で入力してください。";
+  // Sign-in takes a username or an email, so a name with "@" could be mistaken for someone's email.
+  return name.includes("@") ? "ユーザー名に「@」は使えません。" : null;
 }
 
 export function checkNewPassword(password: string) {

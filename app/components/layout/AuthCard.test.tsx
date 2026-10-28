@@ -8,7 +8,7 @@ function renderCard() {
     <AuthCard title="ログイン" description="ユーザー名とパスワードを入力してください。">
       <button type="button">ログイン</button>
     </AuthCard>,
-    { url: "/login" },
+    { url: "/signin" },
   );
 }
 

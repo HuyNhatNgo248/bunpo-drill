@@ -5,21 +5,21 @@ import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute } from "#tests/helpers/render";
 import { Login } from ".";
 
-/** The login page at `url`, with the action that its form posts to. */
-function renderLogin(url = "/login", error?: string) {
+/** The sign-in page (or with `signup`, the sign-up page) at `url`, with the action that its form posts to. */
+function renderLogin(url = "/signin", error?: string) {
   const { action, requests } = recordingAction();
-  renderRoute(<Login error={error} />, { url, action });
+  renderRoute(<Login signup={url.startsWith("/signup")} error={error} />, { url, action });
   return requests;
 }
 
 describe("Login", () => {
   it("signs in with a name and a password", async () => {
     const requests = renderLogin(
-      "/login?redirectTo=%2Ftests%2F20261027-abc123",
+      "/signin?redirectTo=%2Ftests%2F20261027-abc123",
     );
 
     await userEvent.type(
-      await screen.findByRole("textbox", { name: "ユーザー名" }),
+      await screen.findByRole("textbox", { name: "ユーザー名またはメールアドレス" }),
       "Huy",
     );
     await userEvent.type(screen.getByLabelText("パスワード"), "correct horse");
@@ -29,10 +29,9 @@ describe("Login", () => {
       expect(requests).toEqual([
         {
           method: "POST",
-          path: "/login",
+          path: "/signin",
           body: {
             redirectTo: "/tests/20261027-abc123",
-            intent: "login",
             name: "Huy",
             password: "correct horse",
           },
@@ -42,11 +41,11 @@ describe("Login", () => {
   });
 
   it("links to sign-up, and keeps the page to return to", async () => {
-    renderLogin("/login?redirectTo=%2Faccount");
+    renderLogin("/signin?redirectTo=%2Faccount");
 
     expect(
       await screen.findByRole("link", { name: "アカウントを作成" }),
-    ).toHaveAttribute("href", "/login?mode=signup&redirectTo=%2Faccount");
+    ).toHaveAttribute("href", "/signup?redirectTo=%2Faccount");
   });
 
   it("links to the page for a forgotten password", async () => {
@@ -57,14 +56,14 @@ describe("Login", () => {
 
   describe("sign-up", () => {
     it("asks for the email that a password reset goes to, and shows no forgot link", async () => {
-      renderLogin("/login?mode=signup");
+      renderLogin("/signup");
 
       expect(await screen.findByRole("textbox", { name: "メールアドレス" })).toBeRequired();
       expect(screen.queryByRole("link", { name: "パスワードを忘れた場合" })).toBeNull();
     });
 
-    it("sends the new account with the sign-up intent", async () => {
-      const requests = renderLogin("/login?mode=signup");
+    it("sends the new account to the sign-up page", async () => {
+      const requests = renderLogin("/signup");
 
       expect(
         await screen.findByRole("heading", { name: "アカウント作成" }),
@@ -86,33 +85,29 @@ describe("Login", () => {
       );
 
       await waitFor(() =>
-        expect(requests[0]?.body).toMatchObject({
-          intent: "signup",
-          name: "Mai",
-          email: "mai@example.com",
-        }),
+        expect(requests[0]).toMatchObject({ path: "/signup", body: { name: "Mai", email: "mai@example.com" } }),
       );
     });
 
     it("links back to sign-in", async () => {
-      renderLogin("/login?mode=signup");
+      renderLogin("/signup");
 
       expect(
         await screen.findByRole("link", { name: "ログイン" }),
-      ).toHaveAttribute("href", "/login?redirectTo=%2F");
+      ).toHaveAttribute("href", "/signin?redirectTo=%2F");
     });
   });
 
   describe("a failed try", () => {
     it("shows the error, and ties it to the fields", async () => {
-      renderLogin("/login", "ユーザー名かパスワードが違います。");
+      renderLogin("/signin", "ユーザー名（メールアドレス）かパスワードが違います。");
 
       expect(await screen.findByRole("alert")).toHaveTextContent(
-        "ユーザー名かパスワードが違います。",
+        "ユーザー名（メールアドレス）かパスワードが違います。",
       );
       expect(
-        screen.getByRole("textbox", { name: "ユーザー名" }),
-      ).toHaveAccessibleDescription("ユーザー名かパスワードが違います。");
+        screen.getByRole("textbox", { name: "ユーザー名またはメールアドレス" }),
+      ).toHaveAccessibleDescription("ユーザー名（メールアドレス）かパスワードが違います。");
       expect(screen.getByLabelText("パスワード")).toHaveAttribute(
         "aria-invalid",
         "true",

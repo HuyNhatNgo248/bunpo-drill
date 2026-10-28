@@ -7,12 +7,12 @@ import { action, loader } from "../logout";
 const URL = "https://bunpo.test/logout";
 
 describe("POST /logout", () => {
-  it("clears the login cookie and goes to the login page", async () => {
+  it("clears the login cookie and goes to the sign-in page", async () => {
     const request = await signedInRequest(7, URL, { method: "POST" });
 
     const response = await action(routeArgs<Parameters<typeof action>[0]>(request));
 
-    expect(response.headers.get("Location")).toBe("/login");
+    expect(response.headers.get("Location")).toBe("/signin");
     expect(await currentUserId(new Request(URL, { headers: { Cookie: cookieOf(response) } }))).toBeNull();
   });
 });

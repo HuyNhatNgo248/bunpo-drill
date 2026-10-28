@@ -39,10 +39,10 @@ export function AppHeader({
           {guest && (
             <nav aria-label="アカウント" className="flex items-center gap-1">
               <Button asChild variant="link" size="sm">
-                <Link to="/login">ログイン</Link>
+                <Link to="/signin">ログイン</Link>
               </Button>
               <Button asChild size="sm">
-                <Link to="/login?mode=signup">アカウントを作成</Link>
+                <Link to="/signup">アカウントを作成</Link>
               </Button>
             </nav>
           )}

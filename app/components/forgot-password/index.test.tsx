@@ -39,6 +39,6 @@ describe("ForgotPassword", () => {
   it("links back to the login page", async () => {
     renderPage();
 
-    expect(await screen.findByRole("link", { name: "ログインに戻る" })).toHaveAttribute("href", "/login");
+    expect(await screen.findByRole("link", { name: "ログインに戻る" })).toHaveAttribute("href", "/signin");
   });
 });

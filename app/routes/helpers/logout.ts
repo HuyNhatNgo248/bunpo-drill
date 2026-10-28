@@ -2,7 +2,7 @@ import { redirect } from "react-router";
 import type { Route } from "./+types/logout";
 import { signOut } from "~/lib/auth.server";
 
-/** POST /logout: forget the login cookie, then show the login page. */
+/** POST /logout: forget the login cookie, then show the sign-in page. */
 export function action({ request }: Route.ActionArgs) {
   return signOut(request);
 }

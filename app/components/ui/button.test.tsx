@@ -12,7 +12,7 @@ describe("Button", () => {
   it("keeps the light text when it wraps a link", () => {
     render(
       <Button asChild size="sm">
-        <a href="/login?mode=signup">アカウントを作成</a>
+        <a href="/signup">アカウントを作成</a>
       </Button>,
     );
 

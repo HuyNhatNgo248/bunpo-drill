@@ -4,12 +4,11 @@ import { LoginForm } from "./LoginForm";
 
 const LINK_CLASS = "font-medium text-indigo underline-offset-4 hover:underline";
 
-/** /login signs in; /login?mode=signup makes an account and signs in. */
-export function Login({ error }: { error?: string }) {
+/** /signin signs in; /signup makes an account and signs in. Both keep `redirectTo` for after. */
+export function Login({ signup, error }: { signup: boolean; error?: string }) {
   const [params] = useSearchParams();
-  const signup = params.get("mode") === "signup";
   const redirectTo = params.get("redirectTo") ?? "/";
-  const switchTo = new URLSearchParams({ ...(signup ? {} : { mode: "signup" }), redirectTo });
+  const switchTo = `${signup ? "/signin" : "/signup"}?${new URLSearchParams({ redirectTo })}`;
 
   return (
     <AuthCard
@@ -17,7 +16,7 @@ export function Login({ error }: { error?: string }) {
       description={
         signup
           ? "ユーザー名とメールアドレス、パスワードを決めてください。"
-          : "ユーザー名とパスワードを入力してください。"
+          : "ユーザー名またはメールアドレスと、パスワードを入力してください。"
       }
     >
       {/* key: switching modes starts with empty fields. */}
@@ -30,7 +29,7 @@ export function Login({ error }: { error?: string }) {
         )}
         <p>
           {signup ? "アカウントをお持ちの方は " : "はじめての方は "}
-          <Link to={`/login?${switchTo}`} className={LINK_CLASS}>
+          <Link to={switchTo} className={LINK_CLASS}>
             {signup ? "ログイン" : "アカウントを作成"}
           </Link>
         </p>

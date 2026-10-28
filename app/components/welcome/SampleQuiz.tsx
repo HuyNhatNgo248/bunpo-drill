@@ -60,7 +60,7 @@ export function SampleQuiz() {
             </p>
             <div className="flex flex-wrap gap-2.5">
               <Button asChild>
-                <Link to="/login?mode=signup">アカウントを作成</Link>
+                <Link to="/signup">アカウントを作成</Link>
               </Button>
               <Button variant="outline" onClick={restart}>
                 もう一度

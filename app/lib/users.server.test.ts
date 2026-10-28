@@ -58,6 +58,13 @@ describe("verifyUser", () => {
     expect(await verifyUser("Huy", PASSWORD)).toBe(id);
   });
 
+  it("matches the email instead of the name, whatever its case and spaces", async () => {
+    const id = await createUser("Huy", PASSWORD, "huy@example.com");
+
+    expect(await verifyUser(" HUY@example.com", PASSWORD)).toBe(id);
+    expect(await verifyUser("huy@example.com", "wrong")).toBeNull();
+  });
+
   it("matches the name whatever its case", async () => {
     const id = await createUser("Huy", PASSWORD);
 

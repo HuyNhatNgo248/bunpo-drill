@@ -15,6 +15,10 @@ describe("checkName", () => {
   it("rejects a name of more than 30 characters", () => {
     expect(checkName("a".repeat(31))).toBe("ユーザー名は1〜30文字で入力してください。");
   });
+
+  it("rejects a name with @, which sign-in would read as an email", () => {
+    expect(checkName("huy@home")).toBe("ユーザー名に「@」は使えません。");
+  });
 });
 
 describe("checkNewPassword", () => {
