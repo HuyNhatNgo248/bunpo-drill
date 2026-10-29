@@ -74,6 +74,16 @@ describe("safeRedirect", () => {
     expect(safeRedirect("tests")).toBe("/");
   });
 
+  it("goes home for a target that a browser reads as another site once it drops tabs and newlines", () => {
+    expect(safeRedirect("/\t/evil.test/")).toBe("/");
+    expect(safeRedirect("/\n/evil.test/")).toBe("/");
+    expect(safeRedirect("/\t\\evil.test/")).toBe("/");
+  });
+
+  it("goes home, without failing, for a target that is not a URL", () => {
+    expect(safeRedirect("//[")).toBe("/");
+  });
+
   it("goes home instead of back to the login page", () => {
     expect(safeRedirect("/signin")).toBe("/");
     expect(safeRedirect("/signup?redirectTo=%2F")).toBe("/");

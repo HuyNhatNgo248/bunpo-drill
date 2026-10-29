@@ -15,12 +15,15 @@ export function meta({ loaderData }: Route.MetaArgs) {
 export async function loader({ params }: Route.LoaderArgs) {
   const test = await getTest(params.id);
   if (!test) throw testNotFound();
+  if (test.submission) throw redirect(`/tests/${test.id}/results`);
   return { quiz: toQuizView(test) };
 }
 
 export async function action({ request, params }: Route.ActionArgs) {
   const test = await getTest(params.id);
   if (!test) throw testNotFound();
+  // Taken already (a second tab, a double click): only a retake clears a result.
+  if (test.submission) return redirect(`/tests/${test.id}/results`);
   const body = z.object({ answers: submittedAnswersSchema }).safeParse(await request.json().catch(() => null));
   if (!body.success) {
     return data({ error: translate(requestLocale(request), msg`Your answers couldn't be read. Please try again.`) }, { status: 400 });

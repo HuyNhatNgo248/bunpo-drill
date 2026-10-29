@@ -25,7 +25,7 @@ describe("POST /locale", () => {
   });
 
   it("goes home instead of to another site", async () => {
-    for (const redirectTo of ["//evil.example", "https://evil.example", "/\\evil.example"]) {
+    for (const redirectTo of ["//evil.example", "https://evil.example", "/\\evil.example", "/\t/evil.example"]) {
       expect((await post({ locale: "en", redirectTo })).headers.get("Location")).toBe("/");
     }
   });

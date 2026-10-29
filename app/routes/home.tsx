@@ -11,11 +11,14 @@ export function meta({ matches }: Route.MetaArgs) {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const all = (await listTests()).map(toSummary);
-  // One level at a time: the one in ?level= if it has tests, else the level of the top test.
+  const saved = await listTests();
+  const all = saved.map(toSummary);
+  // One level at a time: the one in ?level= if it has tests, else the level of the newest test.
+  // Not the top test's: a drag places only the tests of one level, which brings the other level's to the top.
   const levels = LEVELS.filter((level) => all.some((test) => test.level === level));
   const asked = new URL(request.url).searchParams.get("level");
-  const level = levels.find((candidate) => candidate === asked) ?? all[0]?.level ?? null;
+  const newest = saved.reduce<(typeof saved)[number] | undefined>((a, b) => (!a || b.createdAt > a.createdAt ? b : a), undefined);
+  const level = levels.find((candidate) => candidate === asked) ?? newest?.payload.level ?? null;
   const tests = all.filter((test) => test.level === level);
   const taken = tests.filter((test) => test.result);
   const average = taken.length

@@ -10,7 +10,7 @@ export async function action({ params }: Route.ActionArgs) {
   return redirect(`/tests/${test.id}`);
 }
 
-/** A plain visit just opens the quiz without clearing anything. */
+/** A plain visit clears nothing: it goes to the quiz, which shows the results of a test that is taken. */
 export function loader({ params }: Route.LoaderArgs) {
   return redirect(`/tests/${params.id}`);
 }

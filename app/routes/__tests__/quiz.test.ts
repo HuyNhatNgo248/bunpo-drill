@@ -3,7 +3,8 @@ import { buildPayload } from "#mocks/factories/payload";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
-import { createTest, getTest } from "~/lib/tests.server";
+import { buildSubmission } from "#mocks/factories/tests";
+import { createTest, getTest, saveSubmission } from "~/lib/tests.server";
 import { action, loader, meta } from "../quiz";
 
 const UNKNOWN_ID = "20261027-000000";
@@ -28,6 +29,14 @@ describe("quiz loader", () => {
     expect(JSON.stringify(quiz)).not.toContain("answerIndex");
   });
 
+  it("opens the results of a test that is taken, since only a retake clears them", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveSubmission(id, buildSubmission());
+    const args = routeArgs<Parameters<typeof loader>[0]>(new Request(quizUrl(id)), { id });
+
+    expect(((await thrownBy(() => loader(args))) as Response).headers.get("Location")).toBe(`/tests/${id}/results`);
+  });
+
   it("throws a 404 for a test that does not exist", async () => {
     const args = routeArgs<Parameters<typeof loader>[0]>(new Request(quizUrl(UNKNOWN_ID)), { id: UNKNOWN_ID });
 
@@ -44,6 +53,16 @@ describe("quiz action", () => {
     expect(response).toBeInstanceOf(Response);
     expect((response as Response).headers.get("Location")).toBe(`/tests/${id}/results`);
     expect((await getTest(id))?.submission).toMatchObject({ answers: { q1: 2, q3: 1 }, score: 1, total: 3 });
+  });
+
+  it("keeps the first result when the test is submitted again, and opens it", async () => {
+    const { id } = await createTest(buildPayload());
+    await submit(id, JSON.stringify({ answers: { q1: 2 } }));
+
+    const response = await submit(id, JSON.stringify({ answers: { q1: 0, q3: 1 } }));
+
+    expect((response as Response).headers.get("Location")).toBe(`/tests/${id}/results`);
+    expect(await getTest(id)).toMatchObject({ submission: { answers: { q1: 2 } }, attempts: [{ score: 1 }] });
   });
 
   describe("reading the answers", () => {

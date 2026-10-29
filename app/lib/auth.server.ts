@@ -87,10 +87,21 @@ export async function signOut(request: Request) {
 /** The pages that sign in or up, which are no place to go back to once signed in. */
 const SIGN_IN_PAGES = ["/signin", "/signup", "/login"];
 
+const SITE = "http://site.invalid";
+
+/**
+ * `to` when it is a path on this site, else "/". It is read the way a browser reads a Location,
+ * which drops tabs and newlines and takes a backslash for /, so "/\t/evil.example" can't leave the site.
+ */
+export function sitePath(to: FormDataEntryValue | string | null) {
+  const url = typeof to === "string" && to.startsWith("/") ? URL.parse(to, SITE) : null;
+  return url?.origin === SITE ? `${url.pathname}${url.search}${url.hash}` : "/";
+}
+
 /** Where to go after signing in: only a path on this site, never back to a sign-in page. */
 export function safeRedirect(to: FormDataEntryValue | string | null) {
-  if (typeof to !== "string" || !to.startsWith("/") || to.startsWith("//") || to.startsWith("/\\")) return "/";
-  return SIGN_IN_PAGES.some((page) => to === page || to.startsWith(`${page}?`) || to.startsWith(`${page}/`)) ? "/" : to;
+  const path = sitePath(to);
+  return SIGN_IN_PAGES.some((page) => path === page || path.startsWith(`${page}?`) || path.startsWith(`${page}/`)) ? "/" : path;
 }
 
 function hasApiToken(request: Request) {

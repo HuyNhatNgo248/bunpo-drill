@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   buildFillBlankQuestion,
   buildFillBlankSection,
@@ -101,15 +101,33 @@ describe("home loader levels", () => {
     expect({ level, levels }).toEqual({ level: "N3", levels: ["N3", "N2"] });
   });
 
-  it("shows the level of the top test when the URL names none", async () => {
-    const n3 = await createTest(buildN3Payload());
-    const n2 = await createTest(buildPayload());
-    await saveOrder([n3.id, n2.id]);
+  describe("when the URL names no level", () => {
+    beforeEach(() => vi.useFakeTimers({ toFake: ["Date"] }));
+    afterEach(() => vi.useRealTimers());
 
-    expect((await load()).level).toBe("N3");
+    it("shows the level of the newest test, even when a drag put another level's test on top", async () => {
+      vi.setSystemTime(new Date("2026-10-27T09:00:00.000Z"));
+      const n3 = await createTest(buildN3Payload());
+      vi.setSystemTime(new Date("2026-10-28T09:00:00.000Z"));
+      const n2 = await createTest(buildPayload());
+      await saveOrder([n3.id, n2.id]);
+
+      expect((await load()).level).toBe("N2");
+    });
+
+    it("keeps showing the same level after a test of it is dragged", async () => {
+      vi.setSystemTime(new Date("2026-10-27T09:00:00.000Z"));
+      await createTest(buildPayload());
+      vi.setSystemTime(new Date("2026-10-28T09:00:00.000Z"));
+      const n3 = await createTest(buildN3Payload());
+      // Dragging on the N3 page places the N3 tests only; the N2 test, never placed, now sorts first.
+      await saveOrder([n3.id]);
+
+      expect((await load()).level).toBe("N3");
+    });
   });
 
-  it("shows the level of the top test when the level in the URL has no tests", async () => {
+  it("shows the level of the newest test when the level in the URL has no tests", async () => {
     await createTest(buildPayload());
 
     const { tests, level, levels } = await load("?level=N3");

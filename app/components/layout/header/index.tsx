@@ -41,6 +41,10 @@ export function AppHeader({
             )}
             {account && (
               <nav aria-label={t`Account`} className="flex items-center gap-1">
+                <Separator
+                  orientation="vertical"
+                  className="data-[orientation=vertical]:h-4 data-[orientation=vertical]:self-center"
+                />
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/account">
                     <UserRound aria-hidden="true" />
