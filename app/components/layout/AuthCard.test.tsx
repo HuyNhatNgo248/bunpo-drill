@@ -13,12 +13,11 @@ function renderCard() {
 }
 
 describe("AuthCard", () => {
-  it("puts the form beside the notebook, with what the app is for under the drawing", async () => {
+  it("puts the title and the form in one card", async () => {
     renderCard();
 
     const card = (await screen.findByRole("heading", { name: "Sign in" })).closest("[data-slot=card]")!;
-    expect(card.querySelector("[data-hairline]")).not.toBeNull();
-    expect(card).toHaveTextContent("JLPT grammar practice, in the real test's format.");
+    expect(card).toHaveTextContent("ユーザー名とパスワードを入力してください。");
     expect(card).toContainElement(screen.getByRole("button", { name: "Sign in" }));
   });
 });

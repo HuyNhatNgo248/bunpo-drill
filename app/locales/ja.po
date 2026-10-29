@@ -53,11 +53,11 @@ msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 msgid "← Mock tests"
 msgstr "← テスト一覧"
 
-#: app/components/welcome/SampleQuiz.tsx:184
+#: app/components/welcome/SampleQuiz.tsx:205
 msgid "<0>{pattern}</0>: {why}"
 msgstr "<0>{pattern}</0>：{why}"
 
-#: app/components/welcome/SampleQuiz.tsx:200
+#: app/components/welcome/SampleQuiz.tsx:221
 msgid "<0>{score}</0> of {total} right."
 msgstr "{total}問中 <0>{score}</0> 問正解。"
 
@@ -73,12 +73,12 @@ msgstr "<1><2>本番と同じ形式</2>で、</1><0>JLPTの文法を練習。</0
 msgid "★ slot"
 msgstr "★の空欄"
 
-#: app/components/welcome/ExamSections.tsx:16
-#: app/components/welcome/ExamSections.tsx:23
+#: app/components/welcome/ExamSections.tsx:20
+#: app/components/welcome/ExamSections.tsx:26
 msgid "15 questions"
 msgstr "15問"
 
-#: app/components/welcome/ExamSections.tsx:30
+#: app/components/welcome/ExamSections.tsx:32
 msgid "3 passages × 5 questions"
 msgstr "3文章 × 5問"
 
@@ -188,7 +188,7 @@ msgstr "つぎの文の（　　）に入れるのに最もよいものを、1�
 msgid "Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it."
 msgstr "つぎの文の ★ に入る最もよいものを、1・2・3・4から一つえらびなさい。ピースを空欄にドラッグするか、タップして入れてください。"
 
-#: app/components/welcome/ExamSections.tsx:17
+#: app/components/welcome/ExamSections.tsx:21
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "文の（　）に入る、いちばん自然な形を4つから選びます。"
 
@@ -208,14 +208,14 @@ msgstr "閉じる"
 msgid "Continue"
 msgstr "続きから"
 
-#: app/components/welcome/SampleQuiz.tsx:177
+#: app/components/welcome/SampleQuiz.tsx:198
 msgid "Correct!"
 msgstr "正解！"
 
 #: app/components/layout/header/index.tsx:75
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:44
-#: app/components/welcome/SampleQuiz.tsx:210
+#: app/components/welcome/SampleQuiz.tsx:231
 msgid "Create account"
 msgstr "アカウントを作成"
 
@@ -339,10 +339,6 @@ msgstr "今日が試験日です。がんばってください。"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "本番形式で練習する、JLPTの文法"
 
-#: app/components/layout/AuthCard.tsx:20
-msgid "JLPT grammar practice, in the real test's format."
-msgstr "本番形式で練習する、JLPTの文法。"
-
 #: app/components/quiz/SubmitBar.tsx:67
 msgid "Keep answering"
 msgstr "解答を続ける"
@@ -390,11 +386,11 @@ msgstr "新しい模擬試験はここに表示されます。"
 msgid "New password"
 msgstr "新しいパスワード"
 
-#: app/components/welcome/SampleQuiz.tsx:180
+#: app/components/welcome/SampleQuiz.tsx:201
 msgid "Next question"
 msgstr "次の問題"
 
-#: app/components/welcome/SampleQuiz.tsx:60
+#: app/components/welcome/SampleQuiz.tsx:71
 msgid "Nice work"
 msgstr "おつかれさまでした"
 
@@ -429,8 +425,8 @@ msgstr "ページが見つかりません"
 #: app/components/quiz/question-nav/QuestionGrid.tsx:28
 #: app/components/quiz/Section.tsx:27
 #: app/components/results/section-review/index.tsx:17
-#: app/components/welcome/ExamSections.tsx:64
-#: app/components/welcome/SampleQuiz.tsx:51
+#: app/components/welcome/ExamSections.tsx:77
+#: app/components/welcome/SampleQuiz.tsx:62
 msgid "Part {no}"
 msgstr "問題{no}"
 
@@ -471,7 +467,7 @@ msgstr "「{piece}」を{zone}に置きました。"
 msgid "Put “{title}” down in place {place}."
 msgstr "「{title}」を{place}番目に置きました。"
 
-#: app/components/welcome/ExamSections.tsx:24
+#: app/components/welcome/ExamSections.tsx:27
 msgid "Put 4 pieces in order, and choose the one that goes in ★."
 msgstr "4つの言葉を並べかえて、★に入るものを選びます。"
 
@@ -489,7 +485,7 @@ msgstr "問題{num}（未回答）"
 msgid "Question list"
 msgstr "問題一覧"
 
-#: app/components/welcome/ExamSections.tsx:31
+#: app/components/welcome/ExamSections.tsx:33
 msgid "Read a passage, and fill each blank with the words that fit its flow."
 msgstr "文章を読んで、流れに合う言葉を空欄に入れます。"
 
@@ -532,7 +528,7 @@ msgstr "復習（{reviewCount}）"
 msgid "Reviewed · Undo"
 msgstr "復習済み · 元に戻す"
 
-#: app/components/welcome/SampleQuiz.tsx:80
+#: app/components/welcome/SampleQuiz.tsx:91
 msgid "Sample question"
 msgstr "例題"
 
@@ -551,7 +547,7 @@ msgstr "保存中…"
 msgid "Score"
 msgstr "得点"
 
-#: app/components/welcome/SampleQuiz.tsx:180
+#: app/components/welcome/SampleQuiz.tsx:201
 msgid "See your score"
 msgstr "結果を見る"
 
@@ -662,7 +658,7 @@ msgstr "このユーザー名はもう使われています。"
 msgid "the ★ slot"
 msgstr "★の空欄"
 
-#: app/components/welcome/SampleQuiz.tsx:177
+#: app/components/welcome/SampleQuiz.tsx:198
 msgid "The answer is {n} “{choice}”"
 msgstr "正解は {n}「{choice}」"
 
@@ -711,7 +707,7 @@ msgstr "このリンクは期限切れか、もう使われています。もう
 msgid "This test doesn't exist, or it may have been deleted."
 msgstr "このテストは存在しないか、削除された可能性があります。"
 
-#: app/components/welcome/SampleQuiz.tsx:214
+#: app/components/welcome/SampleQuiz.tsx:235
 msgid "Try again"
 msgstr "もう一度"
 
@@ -767,7 +763,7 @@ msgstr "週"
 msgid "Week {week}"
 msgstr "第{week}週"
 
-#: app/components/welcome/SampleQuiz.tsx:205
+#: app/components/welcome/SampleQuiz.tsx:226
 msgid "With an account, you can take full 45-question mock tests."
 msgstr "アカウントを作ると、45問の模擬試験が受けられます。"
 

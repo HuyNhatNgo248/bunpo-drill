@@ -187,13 +187,4 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-  /* The notebook drawing's plates are opaque in the ground colour; here that is the card it sits on.
-     Its lines take the theme's warm greys instead of the drawing's own cool ones. */
-  [data-hairline] {
-    --hairline-plate: var(--card);
-    --hairline-hi: var(--foreground);
-    --hairline-edge: var(--faint);
-    --hairline-mid: var(--input);
-    --hairline-lo: var(--border);
-  }
 }
