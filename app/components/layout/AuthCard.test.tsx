@@ -18,7 +18,7 @@ describe("AuthCard", () => {
 
     const card = (await screen.findByRole("heading", { name: "Sign in" })).closest("[data-slot=card]")!;
     expect(card.querySelector("[data-hairline]")).not.toBeNull();
-    expect(card).toHaveTextContent("JLPT-style mock tests, made from your grammar notes.");
+    expect(card).toHaveTextContent("JLPT grammar practice, in the real test's format.");
     expect(card).toContainElement(screen.getByRole("button", { name: "Sign in" }));
   });
 });

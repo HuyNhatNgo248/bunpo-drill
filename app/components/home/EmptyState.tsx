@@ -9,7 +9,7 @@ export function EmptyState() {
         <Trans>No mock tests yet</Trans>
       </h2>
       <p className="max-w-115 text-muted-foreground">
-        <Trans>Ask Claude to make a test from your grammar notes, and it shows up here.</Trans>
+        <Trans>New mock tests show up here.</Trans>
       </p>
     </Card>
   );

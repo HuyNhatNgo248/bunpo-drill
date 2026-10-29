@@ -1,9 +1,12 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { motion } from "motion/react";
 import { Card } from "~/components/ui/card";
 import type { SectionType } from "~/lib/payload";
 import { SECTION_TITLES, sectionGloss } from "~/lib/sections";
+
+const MotionCard = motion.create(Card);
 
 /** The three sections of the exam's 文法 part, in their real order, with a tiny example of each. Examples stay Japanese. */
 const SECTIONS: { no: number; type: SectionType; count: MessageDescriptor; how: MessageDescriptor; example: string }[] = [
@@ -40,16 +43,22 @@ export function ExamSections() {
         </h2>
         <p className="max-w-160 leading-sentence text-subtle-foreground">
           <Trans>
-            In the same order and format as the grammar part of the JLPT. Each part has 15 questions, 45 in all by default, and
-            you can change the counts.
+            In the same order and format as the grammar part of the JLPT. A full test has 15 questions per part, 45 in all.
           </Trans>
         </p>
       </div>
       <div className="grid gap-3 md:grid-cols-3 md:gap-4">
-        {SECTIONS.map(({ no, type, count, how, example }) => {
+        {SECTIONS.map(({ no, type, count, how, example }, i) => {
           const gloss = sectionGloss(i18n, type);
           return (
-            <Card key={no} className="flex min-w-0 flex-col gap-2 p-4.5 md:p-5">
+            <MotionCard
+              key={no}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.35, ease: "easeOut", delay: i * 0.1 }}
+              className="flex min-w-0 flex-col gap-2 p-4.5 md:p-5"
+            >
               <div className="flex items-baseline gap-2">
                 <span className="text-body-sm font-bold">
                   <Trans>Part {no}</Trans>
@@ -66,7 +75,7 @@ export function ExamSections() {
               <p lang="ja" className="rounded-lg bg-muted px-2.5 py-2 font-jp text-caption leading-sentence text-secondary-foreground">
                 {example}
               </p>
-            </Card>
+            </MotionCard>
           );
         })}
       </div>

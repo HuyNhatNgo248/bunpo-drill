@@ -7,7 +7,7 @@ import { nextJlpt } from "~/lib/jlpt";
 import { localeFromMatches, translate } from "~/lib/i18n";
 
 export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `文法ドリル · ${translate(localeFromMatches(matches), msg`JLPT-style mock tests from your own grammar notes`)}` }];
+  return [{ title: `文法ドリル · ${translate(localeFromMatches(matches), msg`JLPT grammar practice in the real test's format`)}` }];
 }
 
 /** Signed-in users have their tests at /, so they go there. The countdown is worked out here, so the server and the page agree on the day. */

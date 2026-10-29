@@ -156,17 +156,6 @@
   --scroll-margin-passage-desktop: calc(var(--passage-h) + 6.75rem);
 }
 
-/* The 正解 seal on the welcome page, pressed on like a hanko. */
-@theme {
-  --animate-press: press 0.35s cubic-bezier(0.3, 1.4, 0.5, 1) both;
-  @keyframes press {
-    from {
-      opacity: 0;
-      scale: 1.6;
-    }
-  }
-}
-
 /* A test row's title takes the free space, so its buttons wrap below it before the title wraps. */
 @utility flex-row-title {
   flex: 999 1 380px;

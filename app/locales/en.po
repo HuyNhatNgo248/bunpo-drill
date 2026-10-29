@@ -11,19 +11,11 @@ msgstr ""
 msgid "“{piece}” is over {zone}."
 msgstr "“{piece}” is over {zone}."
 
-#: app/components/welcome/SampleQuiz.tsx:128
-msgid "(correct)"
-msgstr "(correct)"
-
 #: app/components/grammar-chips/GrammarChip.tsx:36
 msgid "(reviewed)"
 msgstr "(reviewed)"
 
-#: app/components/welcome/SampleQuiz.tsx:129
-msgid "(your answer)"
-msgstr "(your answer)"
-
-#: app/components/welcome/ExamCountdown.tsx:23
+#: app/components/welcome/ExamCountdown.tsx:41
 msgid "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
 msgstr "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
 
@@ -44,7 +36,7 @@ msgstr "{slotName}: {text} (tap to remove)"
 msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
-#: app/components/home/test-list/TestRow.tsx:75
+#: app/components/home/test-list/TestRow.tsx:76
 #: app/components/quiz/Title.tsx:13
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
@@ -61,32 +53,32 @@ msgstr "{wrong} wrong · pass line {pass}%"
 msgid "← Mock tests"
 msgstr "← Mock tests"
 
-#: app/components/welcome/SampleQuiz.tsx:138
+#: app/components/welcome/SampleQuiz.tsx:184
 msgid "<0>{pattern}</0>: {why}"
 msgstr "<0>{pattern}</0>: {why}"
 
-#: app/components/welcome/SampleQuiz.tsx:70
+#: app/components/welcome/SampleQuiz.tsx:200
 msgid "<0>{score}</0> of {total} right."
 msgstr "<0>{score}</0> of {total} right."
 
-#: app/components/welcome/ExamCountdown.tsx:33
-msgid "<0>in</0> <1>{daysLeft}</1> <2>{daysLeft, plural, one {day} other {days}}</2>"
-msgstr "<0>in</0> <1>{daysLeft}</1> <2>{daysLeft, plural, one {day} other {days}}</2>"
+#: app/components/welcome/ExamCountdown.tsx:28
+msgid "<0>in</0> <1/> <2>{daysLeft, plural, one {day} other {days}}</2>"
+msgstr "<0>in</0> <1/> <2>{daysLeft, plural, one {day} other {days}}</2>"
 
-#: app/components/welcome/index.tsx:25
-msgid "<0>Real-format mock tests,</0> <1>from <2>your own grammar notes</2>.</1>"
-msgstr "<0>Real-format mock tests,</0> <1>from <2>your own grammar notes</2>.</1>"
+#: app/components/welcome/index.tsx:28
+msgid "<0>Practice JLPT grammar</0> <1>in <2>the real test's format</2>.</1>"
+msgstr "<0>Practice JLPT grammar</0> <1>in <2>the real test's format</2>.</1>"
 
 #: app/components/quiz/sentence-order/SlotButton.tsx:25
 msgid "★ slot"
 msgstr "★ slot"
 
-#: app/components/welcome/ExamSections.tsx:13
-#: app/components/welcome/ExamSections.tsx:20
+#: app/components/welcome/ExamSections.tsx:16
+#: app/components/welcome/ExamSections.tsx:23
 msgid "15 questions"
 msgstr "15 questions"
 
-#: app/components/welcome/ExamSections.tsx:27
+#: app/components/welcome/ExamSections.tsx:30
 msgid "3 passages × 5 questions"
 msgstr "3 passages × 5 questions"
 
@@ -125,10 +117,6 @@ msgstr "Answered {answered} / {total}"
 #: app/components/quiz/question-nav/QuestionSheet.tsx:60
 msgid "Answered {done} / {total}"
 msgstr "Answered {done} / {total}"
-
-#: app/components/home/EmptyState.tsx:12
-msgid "Ask Claude to make a test from your grammar notes, and it shows up here."
-msgstr "Ask Claude to make a test from your grammar notes, and it shows up here."
 
 #: app/components/account/PasswordForm.tsx:32
 #: app/components/login/LoginForm.tsx:58
@@ -200,7 +188,7 @@ msgstr "Choose the best answer for （　　） from 1, 2, 3 and 4."
 msgid "Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it."
 msgstr "Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it."
 
-#: app/components/welcome/ExamSections.tsx:14
+#: app/components/welcome/ExamSections.tsx:17
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 
@@ -216,18 +204,18 @@ msgstr "Clear answers"
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:109
+#: app/components/home/test-list/TestRow.tsx:110
 msgid "Continue"
 msgstr "Continue"
 
-#: app/components/welcome/SampleQuiz.tsx:135
+#: app/components/welcome/SampleQuiz.tsx:177
 msgid "Correct!"
 msgstr "Correct!"
 
 #: app/components/layout/header/index.tsx:75
 #: app/components/login/LoginForm.tsx:73
-#: app/components/welcome/index.tsx:41
-#: app/components/welcome/SampleQuiz.tsx:80
+#: app/components/welcome/index.tsx:44
+#: app/components/welcome/SampleQuiz.tsx:210
 msgid "Create account"
 msgstr "Create account"
 
@@ -291,9 +279,9 @@ msgstr "Error {status}"
 msgid "Forgot your password?"
 msgstr "Forgot your password?"
 
-#: app/components/welcome/SampleQuiz.tsx:75
-msgid "From your own grammar notes, you can make 45-question tests."
-msgstr "From your own grammar notes, you can make 45-question tests."
+#: app/components/welcome/index.tsx:36
+msgid "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
+msgstr "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 
 #: app/lib/sections.ts:16
 msgid "Grammar form"
@@ -303,7 +291,7 @@ msgstr "Grammar form"
 msgid "Grammar in a passage"
 msgstr "Grammar in a passage"
 
-#: app/components/welcome/index.tsx:21
+#: app/components/welcome/index.tsx:24
 msgid "Grammar mock tests"
 msgstr "Grammar mock tests"
 
@@ -335,25 +323,25 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/TestRow.tsx:69
 msgid "In progress {answered} / {total}"
 msgstr "In progress {answered} / {total}"
 
-#: app/components/welcome/ExamSections.tsx:42
-msgid "In the same order and format as the grammar part of the JLPT. Each part has 15 questions, 45 in all by default, and you can change the counts."
-msgstr "In the same order and format as the grammar part of the JLPT. Each part has 15 questions, 45 in all by default, and you can change the counts."
+#: app/components/welcome/ExamSections.tsx:45
+msgid "In the same order and format as the grammar part of the JLPT. A full test has 15 questions per part, 45 in all."
+msgstr "In the same order and format as the grammar part of the JLPT. A full test has 15 questions per part, 45 in all."
 
-#: app/components/welcome/ExamCountdown.tsx:21
+#: app/components/welcome/ExamCountdown.tsx:39
 msgid "It's exam day today. Good luck!"
 msgstr "It's exam day today. Good luck!"
 
 #: app/routes/welcome.tsx:10
-msgid "JLPT-style mock tests from your own grammar notes"
-msgstr "JLPT-style mock tests from your own grammar notes"
+msgid "JLPT grammar practice in the real test's format"
+msgstr "JLPT grammar practice in the real test's format"
 
 #: app/components/layout/AuthCard.tsx:20
-msgid "JLPT-style mock tests, made from your grammar notes."
-msgstr "JLPT-style mock tests, made from your grammar notes."
+msgid "JLPT grammar practice, in the real test's format."
+msgstr "JLPT grammar practice, in the real test's format."
 
 #: app/components/quiz/SubmitBar.tsx:67
 msgid "Keep answering"
@@ -391,6 +379,10 @@ msgstr "Moved “{title}” to place {place}."
 msgid "New here? <0>Create account</0>"
 msgstr "New here? <0>Create account</0>"
 
+#: app/components/home/EmptyState.tsx:12
+msgid "New mock tests show up here."
+msgstr "New mock tests show up here."
+
 #: app/components/account/PasswordForm.tsx:31
 #: app/components/reset-password/index.tsx:21
 #: app/components/reset-password/ResetPasswordForm.tsx:15
@@ -398,11 +390,11 @@ msgstr "New here? <0>Create account</0>"
 msgid "New password"
 msgstr "New password"
 
-#: app/components/welcome/SampleQuiz.tsx:143
+#: app/components/welcome/SampleQuiz.tsx:180
 msgid "Next question"
 msgstr "Next question"
 
-#: app/components/welcome/SampleQuiz.tsx:63
+#: app/components/welcome/SampleQuiz.tsx:60
 msgid "Nice work"
 msgstr "Nice work"
 
@@ -437,8 +429,8 @@ msgstr "Page not found"
 #: app/components/quiz/question-nav/QuestionGrid.tsx:28
 #: app/components/quiz/Section.tsx:27
 #: app/components/results/section-review/index.tsx:17
-#: app/components/welcome/ExamSections.tsx:55
-#: app/components/welcome/SampleQuiz.tsx:55
+#: app/components/welcome/ExamSections.tsx:64
+#: app/components/welcome/SampleQuiz.tsx:51
 msgid "Part {no}"
 msgstr "Part {no}"
 
@@ -479,7 +471,7 @@ msgstr "Put “{piece}” in {zone}."
 msgid "Put “{title}” down in place {place}."
 msgstr "Put “{title}” down in place {place}."
 
-#: app/components/welcome/ExamSections.tsx:21
+#: app/components/welcome/ExamSections.tsx:24
 msgid "Put 4 pieces in order, and choose the one that goes in ★."
 msgstr "Put 4 pieces in order, and choose the one that goes in ★."
 
@@ -497,7 +489,7 @@ msgstr "Question {num} (unanswered)"
 msgid "Question list"
 msgstr "Question list"
 
-#: app/components/welcome/ExamSections.tsx:28
+#: app/components/welcome/ExamSections.tsx:31
 msgid "Read a passage, and fill each blank with the words that fit its flow."
 msgstr "Read a passage, and fill each blank with the words that fit its flow."
 
@@ -532,13 +524,17 @@ msgstr "Reset your password"
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:99
+#: app/components/home/test-list/TestRow.tsx:100
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
 #: app/components/grammar-chips/GrammarChip.tsx:64
 msgid "Reviewed · Undo"
 msgstr "Reviewed · Undo"
+
+#: app/components/welcome/SampleQuiz.tsx:80
+msgid "Sample question"
+msgstr "Sample question"
 
 #: app/components/account/EmailForm.tsx:42
 #: app/components/account/NameForm.tsx:39
@@ -555,7 +551,7 @@ msgstr "Saving…"
 msgid "Score"
 msgstr "Score"
 
-#: app/components/welcome/SampleQuiz.tsx:143
+#: app/components/welcome/SampleQuiz.tsx:180
 msgid "See your score"
 msgstr "See your score"
 
@@ -583,7 +579,7 @@ msgstr "Show {label}"
 #: app/components/layout/header/index.tsx:70
 #: app/components/login/index.tsx:17
 #: app/components/login/LoginForm.tsx:73
-#: app/components/welcome/index.tsx:46
+#: app/components/welcome/index.tsx:49
 #: app/routes/signin.tsx:10
 msgid "Sign in"
 msgstr "Sign in"
@@ -618,7 +614,11 @@ msgstr "Something went wrong"
 msgid "sortable"
 msgstr "sortable"
 
-#: app/components/home/test-list/TestRow.tsx:109
+#: app/components/welcome/ExamCountdown.tsx:50
+msgid "Start practicing today"
+msgstr "Start practicing today"
+
+#: app/components/home/test-list/TestRow.tsx:110
 msgid "Start the test"
 msgstr "Start the test"
 
@@ -631,7 +631,7 @@ msgstr "Submit"
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:94
+#: app/components/home/test-list/TestRow.tsx:95
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "Take it again"
@@ -643,10 +643,6 @@ msgstr "Taken"
 #: app/lib/errors.ts:27
 msgid "Test not found"
 msgstr "Test not found"
-
-#: app/components/welcome/index.tsx:33
-msgid "Tests use only the patterns you have studied, in the same three formats as the real exam. The patterns you get wrong go straight to a review list."
-msgstr "Tests use only the patterns you have studied, in the same three formats as the real exam. The patterns you get wrong go straight to a review list."
 
 #: app/lib/users.ts:14
 msgid "That email address doesn't look right."
@@ -666,7 +662,7 @@ msgstr "That username is already taken."
 msgid "the ★ slot"
 msgstr "the ★ slot"
 
-#: app/components/welcome/SampleQuiz.tsx:135
+#: app/components/welcome/SampleQuiz.tsx:177
 msgid "The answer is {n} “{choice}”"
 msgstr "The answer is {n} “{choice}”"
 
@@ -674,7 +670,7 @@ msgstr "The answer is {n} “{choice}”"
 msgid "the choices"
 msgstr "the choices"
 
-#: app/components/welcome/ExamCountdown.tsx:16
+#: app/components/welcome/ExamCountdown.tsx:22
 msgid "The next JLPT"
 msgstr "The next JLPT"
 
@@ -682,11 +678,11 @@ msgstr "The next JLPT"
 msgid "The page couldn't load. Please try again in a moment."
 msgstr "The page couldn't load. Please try again in a moment."
 
-#: app/components/welcome/index.tsx:52
+#: app/components/welcome/index.tsx:55
 msgid "The questions below are samples in the real test's format."
 msgstr "The questions below are samples in the real test's format."
 
-#: app/components/welcome/index.tsx:55
+#: app/components/welcome/index.tsx:58
 msgid "The questions on the right are samples in the real test's format."
 msgstr "The questions on the right are samples in the real test's format."
 
@@ -694,7 +690,7 @@ msgstr "The questions on the right are samples in the real test's format."
 msgid "The request couldn't be handled."
 msgstr "The request couldn't be handled."
 
-#: app/components/welcome/ExamSections.tsx:39
+#: app/components/welcome/ExamSections.tsx:42
 msgid "The same three formats as the real exam"
 msgstr "The same three formats as the real exam"
 
@@ -715,7 +711,7 @@ msgstr "This link has expired or was already used. Send the email again."
 msgid "This test doesn't exist, or it may have been deleted."
 msgstr "This test doesn't exist, or it may have been deleted."
 
-#: app/components/welcome/SampleQuiz.tsx:84
+#: app/components/welcome/SampleQuiz.tsx:214
 msgid "Try again"
 msgstr "Try again"
 
@@ -770,6 +766,10 @@ msgstr "Week"
 #: app/lib/sections.ts:47
 msgid "Week {week}"
 msgstr "Week {week}"
+
+#: app/components/welcome/SampleQuiz.tsx:205
+msgid "With an account, you can take full 45-question mock tests."
+msgstr "With an account, you can take full 45-question mock tests."
 
 #: app/routes/signin.tsx:27
 msgid "Wrong username (or email) or password."

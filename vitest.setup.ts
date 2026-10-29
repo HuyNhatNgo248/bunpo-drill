@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
+import { MotionGlobalConfig } from "motion";
 import { afterAll, afterEach, beforeAll, expect } from "vitest";
 import { API_TOKEN, APP_URL, MAIL_FROM, SESSION_SECRET } from "#tests/helpers/env";
 import { loadCatalog } from "~/lib/i18n";
@@ -11,6 +12,9 @@ import { loadServerCatalogs } from "~/lib/i18n/catalogs.server";
 // Registered from `./matchers` rather than the `./vitest` entrypoint: that entrypoint imports
 // `expect` from vitest, but jest-dom declares no dependency on vitest, so pnpm cannot resolve it.
 expect.extend(matchers);
+
+// Animations end at once: happy-dom cancels the browser animations motion starts, which throws.
+MotionGlobalConfig.skipAnimations = true;
 
 // Unmount React trees after every test, so DOM assertions do not leak across tests.
 // Saved answer sheets go too; the server tests run in Node, which has no localStorage.
