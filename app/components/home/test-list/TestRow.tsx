@@ -33,7 +33,7 @@ export function TestRow({ test }: { test: TestSummary }) {
       ref={sortable.setNodeRef}
       style={{ transform: CSS.Translate.toString(sortable.transform), transition: sortable.transition }}
       className={cn(
-        "flex flex-wrap items-start gap-3 rounded-xl border bg-card p-4 transition-colors hover:bg-muted/60 md:items-center md:gap-4 md:rounded-none md:border-x-0 md:border-t-0 md:p-5 md:last:border-b-0",
+        "relative isolate flex flex-wrap items-start gap-3 rounded-xl border bg-card p-4 transition-colors hover:bg-muted/60 md:items-center md:gap-4 md:rounded-none md:border-x-0 md:border-t-0 md:p-5 md:last:border-b-0",
         sortable.isDragging && "relative z-10 shadow-float hover:bg-card",
       )}
     >
@@ -49,9 +49,10 @@ export function TestRow({ test }: { test: TestSummary }) {
         <GripVertical aria-hidden="true" className="size-4" />
       </button>
 
+      {/* Its ::after fills the row under the buttons, so the whole row opens the test but the buttons still work. */}
       <Link
         to={test.result ? `${quizHref}/results` : quizHref}
-        className="flex min-w-0 flex-1 flex-col gap-1 text-foreground no-underline md:flex-row-title md:gap-2"
+        className="flex min-w-0 flex-1 flex-col gap-1 text-foreground no-underline after:absolute after:inset-0 after:-z-10 md:flex-row-title md:gap-2"
       >
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="soft" className="text-2xs md:text-xs">
