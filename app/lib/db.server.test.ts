@@ -3,7 +3,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 /** The tables that the app reads and writes. */
-const TABLES = ["password_resets", "reviewed", "tests", "users"];
+const TABLES = ["attempts", "password_resets", "reviewed", "tests", "users"];
 
 /**
  * A fresh copy of db.server.ts. The module keeps one client for the life of the process,
@@ -66,6 +66,28 @@ describe("db", () => {
     await client.execute("UPDATE users SET email = 'huy@example.com'");
     await client.execute("INSERT INTO users (name, password, created_at) VALUES ('Mai', 'x', 'now')");
     await expect(client.execute("UPDATE users SET email = 'huy@example.com' WHERE name = 'Mai'")).rejects.toThrow(/UNIQUE/);
+  });
+
+  it("turns each result saved before attempts were kept into the first attempt of its test", async () => {
+    const dir = path.join(process.env.DATA_DIR!, "before-attempts");
+    mkdirSync(dir);
+    vi.stubEnv("DATA_DIR", dir);
+    const { createClient } = await import("@libsql/client");
+    const old = createClient({ url: `file:${path.join(dir, "bunpo.db")}` });
+    await old.execute("CREATE TABLE tests (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, position INTEGER, payload TEXT NOT NULL, submission TEXT)");
+    await old.execute(`INSERT INTO tests (id, created_at, payload, submission) VALUES
+      ('20261027-aaaaaa', 'now', '{}', '{"submittedAt":"2026-10-27T09:30:00.000Z","score":2,"total":3}'),
+      ('20261027-bbbbbb', 'now', '{}', NULL),
+      ('20261027-cccccc', 'now', '{}', 'not json')`);
+    old.close();
+
+    const client = await (await loadDb())();
+    await (await loadDb())(); // Starting again adds no second copy.
+
+    const { rows } = await client.execute("SELECT test_id, submitted_at, score, total FROM attempts");
+    expect(rows.map((row) => ({ ...row }))).toEqual([
+      { test_id: "20261027-aaaaaa", submitted_at: "2026-10-27T09:30:00.000Z", score: 2, total: 3 },
+    ]);
   });
 
   describe("connecting", () => {

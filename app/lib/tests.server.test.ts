@@ -56,6 +56,7 @@ describe("createTest", () => {
       payload: buildPayload(),
       submission: null,
       reviewed: {},
+      attempts: [],
     });
     expect(await getTest(test.id)).toEqual(test);
   });
@@ -126,6 +127,17 @@ describe("saveSubmission", () => {
     expect(await saveSubmission(id, submission)).toMatchObject({ id, submission });
     expect((await getTest(id))?.submission).toEqual(submission);
   });
+
+  it("keeps the score of every submission as an attempt, oldest first", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveSubmission(id, buildSubmission({ submittedAt: "2026-10-28T09:00:00.000Z", score: 2 }));
+    await saveSubmission(id, buildSubmission({ submittedAt: "2026-10-27T09:00:00.000Z", score: 1 }));
+
+    expect((await getTest(id))?.attempts).toEqual([
+      { submittedAt: "2026-10-27T09:00:00.000Z", score: 1, total: 3 },
+      { submittedAt: "2026-10-28T09:00:00.000Z", score: 2, total: 3 },
+    ]);
+  });
 });
 
 describe("setReviewed", () => {
@@ -159,15 +171,24 @@ describe("resetTest", () => {
 
     expect(await resetTest(id)).toMatchObject({ id, submission: null, reviewed: {} });
   });
+
+  it("keeps the attempts, so the earlier scores stay", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveSubmission(id, buildSubmission({ score: 1 }));
+
+    expect((await resetTest(id))?.attempts).toEqual([{ submittedAt: buildSubmission().submittedAt, score: 1, total: 3 }]);
+  });
 });
 
 describe("deleteTest", () => {
-  it("deletes the test and its review marks, and returns true", async () => {
+  it("deletes the test, its review marks and its attempts, and returns true", async () => {
     const { id } = await createTest(buildPayload());
     await setReviewed(id, GRAMMAR_ID, true);
+    await saveSubmission(id, buildSubmission());
 
     expect(await deleteTest(id)).toBe(true);
     expect(await getTest(id)).toBeNull();
+    expect((await (await db()).execute("SELECT * FROM attempts")).rows).toHaveLength(0);
   });
 
   it("returns false for an id that no test has", async () => {
@@ -184,6 +205,7 @@ describe("deleteAllTests", () => {
     const { id } = await createTest(buildPayload());
     await createTest(buildPayload());
     await setReviewed(id, GRAMMAR_ID, true);
+    await saveSubmission(id, buildSubmission());
 
     expect(await deleteAllTests()).toBe(2);
     expect(await listTests()).toEqual([]);

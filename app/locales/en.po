@@ -36,16 +36,16 @@ msgstr "{slotName}: {text} (tap to remove)"
 msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
-#: app/components/home/test-list/TestRow.tsx:76
+#: app/components/home/test-list/TestRow.tsx:77
 #: app/components/quiz/Title.tsx:13
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
-#: app/components/results/ScoreCard.tsx:30
+#: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "{wrong} wrong"
 
-#: app/components/results/ScoreCard.tsx:35
+#: app/components/results/ScoreCard.tsx:37
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "{wrong} wrong · pass line {pass}%"
 
@@ -204,7 +204,7 @@ msgstr "Clear answers"
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:110
+#: app/components/home/test-list/TestRow.tsx:117
 msgid "Continue"
 msgstr "Continue"
 
@@ -323,7 +323,7 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/TestRow.tsx:69
+#: app/components/home/test-list/TestRow.tsx:70
 msgid "In progress {answered} / {total}"
 msgstr "In progress {answered} / {total}"
 
@@ -348,8 +348,13 @@ msgstr "Keep answering"
 msgid "Language: {0}"
 msgstr "Language: {0}"
 
+#: app/components/home/test-list/TestRow.tsx:82
+#: app/components/results/ScoreCard.tsx:43
+msgid "Last time {lastScore}"
+msgstr "Last time {lastScore}"
+
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/home/LevelTabs.tsx:9
+#: app/components/home/LevelTabs.tsx:17
 msgid "Level"
 msgstr "Level"
 
@@ -505,7 +510,7 @@ msgstr "Read the passage, think about what it says as a whole, and choose the be
 msgid "Reload"
 msgstr "Reload"
 
-#: app/components/home/test-list/TestRow.tsx:46
+#: app/components/home/test-list/TestRow.tsx:47
 msgid "Reorder “{title}”"
 msgstr "Reorder “{title}”"
 
@@ -520,7 +525,7 @@ msgstr "Reset your password"
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:100
+#: app/components/home/test-list/TestRow.tsx:107
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
@@ -542,8 +547,8 @@ msgstr "Save"
 msgid "Saving…"
 msgstr "Saving…"
 
-#: app/components/results/ScoreCard.tsx:18
-#: app/components/results/ScoreCard.tsx:33
+#: app/components/results/ScoreCard.tsx:19
+#: app/components/results/ScoreCard.tsx:34
 msgid "Score"
 msgstr "Score"
 
@@ -614,7 +619,7 @@ msgstr "sortable"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/home/test-list/TestRow.tsx:110
+#: app/components/home/test-list/TestRow.tsx:117
 msgid "Start the test"
 msgstr "Start the test"
 
@@ -627,7 +632,7 @@ msgstr "Submit"
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:95
+#: app/components/home/test-list/TestRow.tsx:102
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "Take it again"

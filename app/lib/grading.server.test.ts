@@ -200,6 +200,9 @@ describe("toSubmission", () => {
   });
 });
 
+const EARLIER = { submittedAt: "2026-10-27T09:30:00.000Z", score: 1, total: 3 };
+const LATER = { submittedAt: "2026-10-28T09:30:00.000Z", score: 2, total: 3 };
+
 describe("toResultsView", () => {
   it("adds the title, the level and a rounded percent to the grades", () => {
     const view = toResultsView(buildStoredTest(), buildSubmission({ answers: { q1: 2, q2: [1, 0, 2, 3] } }));
@@ -218,6 +221,13 @@ describe("toResultsView", () => {
       { grammarId: GRAMMAR_ID, pattern: "〜かいがある", level: "N2", week: 1, day: 1, number: 1, reviewed: true },
     ]);
   });
+
+  it("gives the score of the attempt before this one, or none on the first", () => {
+    const test = buildStoredTest({ attempts: [EARLIER, LATER] });
+
+    expect(toResultsView(test, buildSubmission({ submittedAt: LATER.submittedAt })).previous).toEqual({ score: 1, total: 3 });
+    expect(toResultsView(test, buildSubmission({ submittedAt: EARLIER.submittedAt })).previous).toBeNull();
+  });
 });
 
 describe("toSummary", () => {
@@ -230,6 +240,7 @@ describe("toSummary", () => {
       weeks: [1],
       result: null,
       review: [],
+      previous: null,
     });
   });
 
@@ -256,5 +267,15 @@ describe("toSummary", () => {
     const test = buildStoredTest({ submission: buildSubmission({ wrongGrammarIds: ["n2-w9-d6-g4"] }) });
 
     expect(toSummary(test).review).toEqual([]);
+  });
+
+  it("gives the score of the attempt before the last result", () => {
+    const test = buildStoredTest({ submission: buildSubmission({ submittedAt: LATER.submittedAt }), attempts: [EARLIER, LATER] });
+
+    expect(toSummary(test).previous).toEqual({ score: 1, total: 3 });
+  });
+
+  it("gives the last score while a retake is under way", () => {
+    expect(toSummary(buildStoredTest({ attempts: [EARLIER, LATER] })).previous).toEqual({ score: 2, total: 3 });
   });
 });

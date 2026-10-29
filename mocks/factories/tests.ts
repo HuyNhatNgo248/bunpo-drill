@@ -19,6 +19,7 @@ export function buildStoredTest(overrides: Partial<StoredTest> = {}): StoredTest
     payload: buildPayload(),
     submission: null,
     reviewed: {},
+    attempts: [],
     ...overrides,
   };
 }

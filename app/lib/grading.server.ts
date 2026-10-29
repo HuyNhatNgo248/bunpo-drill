@@ -199,6 +199,7 @@ export function toResultsView(test: StoredTest, submission: Submission): Results
     percent: percentOf(score, total),
     sections,
     review: reviewChips(test, wrongGrammarIds),
+    previous: previousAttempt(test, submission),
   };
 }
 
@@ -214,7 +215,14 @@ export function toSummary(test: StoredTest): TestSummary {
       ? { score: submission.score, total: submission.total, percent: percentOf(submission.score, submission.total) }
       : null,
     review: submission ? reviewChips(test, submission.wrongGrammarIds) : [],
+    previous: previousAttempt(test, submission),
   };
+}
+
+/** The last attempt from before `submission`, or the last of all when there is none (a retake under way). */
+function previousAttempt({ attempts }: StoredTest, submission: Submission | null) {
+  const before = attempts.filter((attempt) => !submission || attempt.submittedAt < submission.submittedAt).at(-1);
+  return before ? { score: before.score, total: before.total } : null;
 }
 
 function reviewChips(test: StoredTest, grammarIds: string[]): ReviewChip[] {

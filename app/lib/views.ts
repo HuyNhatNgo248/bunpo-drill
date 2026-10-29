@@ -83,6 +83,8 @@ export type ResultsView = {
   percent: number;
   sections: ResultSection[];
   review: ReviewChip[];
+  /** The score of the attempt before this one, or null on the first. */
+  previous: { score: number; total: number } | null;
 };
 
 export type TestSummary = {
@@ -93,4 +95,6 @@ export type TestSummary = {
   weeks: number[];
   result: { score: number; total: number; percent: number } | null;
   review: ReviewChip[];
+  /** The score of the attempt before `result`, or the last score while a retake is under way. */
+  previous: { score: number; total: number } | null;
 };

@@ -36,16 +36,16 @@ msgstr "{slotName}：{text}（タップで外す）"
 msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
 
-#: app/components/home/test-list/TestRow.tsx:76
+#: app/components/home/test-list/TestRow.tsx:77
 #: app/components/quiz/Title.tsx:13
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
-#: app/components/results/ScoreCard.tsx:30
+#: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "不正解 {wrong}問"
 
-#: app/components/results/ScoreCard.tsx:35
+#: app/components/results/ScoreCard.tsx:37
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 
@@ -204,7 +204,7 @@ msgstr "回答をクリア"
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:110
+#: app/components/home/test-list/TestRow.tsx:117
 msgid "Continue"
 msgstr "続きから"
 
@@ -323,7 +323,7 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/TestRow.tsx:69
+#: app/components/home/test-list/TestRow.tsx:70
 msgid "In progress {answered} / {total}"
 msgstr "解答中 {answered} / {total}"
 
@@ -348,8 +348,13 @@ msgstr "解答を続ける"
 msgid "Language: {0}"
 msgstr "言語：{0}"
 
+#: app/components/home/test-list/TestRow.tsx:82
+#: app/components/results/ScoreCard.tsx:43
+msgid "Last time {lastScore}"
+msgstr "前回 {lastScore}"
+
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/home/LevelTabs.tsx:9
+#: app/components/home/LevelTabs.tsx:17
 msgid "Level"
 msgstr "レベル"
 
@@ -505,7 +510,7 @@ msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{fi
 msgid "Reload"
 msgstr "再読み込み"
 
-#: app/components/home/test-list/TestRow.tsx:46
+#: app/components/home/test-list/TestRow.tsx:47
 msgid "Reorder “{title}”"
 msgstr "「{title}」を並べ替え"
 
@@ -520,7 +525,7 @@ msgstr "パスワードの再設定"
 msgid "Results"
 msgstr "結果"
 
-#: app/components/home/test-list/TestRow.tsx:100
+#: app/components/home/test-list/TestRow.tsx:107
 msgid "Review ({reviewCount})"
 msgstr "復習（{reviewCount}）"
 
@@ -542,8 +547,8 @@ msgstr "保存"
 msgid "Saving…"
 msgstr "保存中…"
 
-#: app/components/results/ScoreCard.tsx:18
-#: app/components/results/ScoreCard.tsx:33
+#: app/components/results/ScoreCard.tsx:19
+#: app/components/results/ScoreCard.tsx:34
 msgid "Score"
 msgstr "得点"
 
@@ -614,7 +619,7 @@ msgstr "並べ替え可能"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/home/test-list/TestRow.tsx:110
+#: app/components/home/test-list/TestRow.tsx:117
 msgid "Start the test"
 msgstr "テストを始める"
 
@@ -627,7 +632,7 @@ msgstr "提出する"
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:95
+#: app/components/home/test-list/TestRow.tsx:102
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "もう一度受ける"

@@ -27,6 +27,7 @@ export function TestRow({ test }: { test: TestSummary }) {
   const title = test.title;
   const total = test.questionCount;
   const reviewCount = test.review.length;
+  const lastScore = test.previous && `${test.previous.score} / ${test.previous.total}`;
 
   return (
     <li
@@ -75,6 +76,12 @@ export function TestRow({ test }: { test: TestSummary }) {
         <div className="text-caption text-muted-foreground">
           <Plural value={total} one="# question" other="# questions" />
           {weeks && <span> · {weeks}</span>}
+          {lastScore && (
+            <span>
+              {" · "}
+              <Trans>Last time {lastScore}</Trans>
+            </span>
+          )}
         </div>
         {inProgress && !test.result && (
           // The badge says the numbers; the bar is for the eye, so it is not read out.

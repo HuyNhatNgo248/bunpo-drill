@@ -50,6 +50,12 @@ describe("TestList", () => {
     expect(screen.queryByRole("link", { name: "Start the test" })).toBeNull();
   });
 
+  it("shows the score of the attempt before", async () => {
+    renderList([{ ...TAKEN, previous: { score: 0, total: 3 } }]);
+
+    expect(await screen.findByText(/3 questions/)).toHaveTextContent("3 questions · Week 1 · Last time 0 / 3");
+  });
+
   it("gives every row a handle to drag, named after its test", async () => {
     renderList([NOT_TAKEN, TAKEN]);
 

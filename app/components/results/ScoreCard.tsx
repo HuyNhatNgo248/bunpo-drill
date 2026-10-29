@@ -5,11 +5,12 @@ import { Progress } from "~/components/ui/progress";
 import { PASS_PERCENT } from "~/lib/sections";
 import type { ResultsView } from "~/lib/views";
 
-/** The score, its percent (green from the pass line up), and the number of wrong answers. */
+/** The score, its percent (green from the pass line up), the number of wrong answers, and the score the time before. */
 export function ScoreCard({ results }: { results: ResultsView }) {
   const wrong = results.total - results.score;
   const passed = results.percent >= PASS_PERCENT;
   const pass = PASS_PERCENT;
+  const lastScore = results.previous && `${results.previous.score} / ${results.previous.total}`;
   const { t } = useLingui();
 
   return (
@@ -31,10 +32,17 @@ export function ScoreCard({ results }: { results: ResultsView }) {
         </span>
       </div>
       <Progress value={results.percent} aria-label={t`Score`} className="h-2" />
-      <div className="hidden text-caption text-muted-foreground md:block">
-        <Trans>
-          {wrong} wrong · pass line {pass}%
-        </Trans>
+      <div className={cn("flex justify-between gap-3 text-caption text-muted-foreground", !lastScore && "hidden md:flex")}>
+        <span className="hidden md:inline">
+          <Trans>
+            {wrong} wrong · pass line {pass}%
+          </Trans>
+        </span>
+        {lastScore && (
+          <span>
+            <Trans>Last time {lastScore}</Trans>
+          </span>
+        )}
       </div>
     </Card>
   );

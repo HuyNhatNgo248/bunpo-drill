@@ -8,5 +8,5 @@ import { db } from "~/lib/db.server";
  * beforeEach(resetDatabase);
  */
 export async function resetDatabase(): Promise<void> {
-  await (await db()).batch(["DELETE FROM reviewed", "DELETE FROM tests", "DELETE FROM password_resets", "DELETE FROM users"], "write");
+  await (await db()).batch(["DELETE FROM reviewed", "DELETE FROM attempts", "DELETE FROM tests", "DELETE FROM password_resets", "DELETE FROM users"], "write");
 }

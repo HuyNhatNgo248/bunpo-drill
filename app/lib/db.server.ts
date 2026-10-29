@@ -21,6 +21,13 @@ const SCHEMA = [
     grammar_id TEXT NOT NULL,
     PRIMARY KEY (test_id, grammar_id)
   )`,
+  `CREATE TABLE IF NOT EXISTS attempts (
+    test_id TEXT NOT NULL REFERENCES tests (id),
+    submitted_at TEXT NOT NULL,
+    score INTEGER NOT NULL,
+    total INTEGER NOT NULL,
+    PRIMARY KEY (test_id, submitted_at) -- one row per submission; a retake keeps the earlier ones
+  )`,
   `CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL UNIQUE COLLATE NOCASE, -- "Huy" and "huy" are the same name
@@ -45,6 +52,10 @@ async function migrate(client: Client) {
     await client.execute("ALTER TABLE users ADD COLUMN session_version INTEGER NOT NULL DEFAULT 0");
   // Unique, but many users may have none: SQLite lets NULLs repeat in a unique index.
   await client.execute("CREATE UNIQUE INDEX IF NOT EXISTS users_email ON users (email)");
+  // A result saved before attempts were kept becomes its test's first attempt. Rows that can't be read are left out.
+  await client.execute(`INSERT OR IGNORE INTO attempts (test_id, submitted_at, score, total)
+    SELECT id, json_extract(submission, '$.submittedAt'), json_extract(submission, '$.score'), json_extract(submission, '$.total')
+    FROM tests WHERE json_valid(submission)`);
 }
 
 let ready: Promise<Client> | undefined;

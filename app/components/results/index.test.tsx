@@ -62,6 +62,19 @@ describe("Results", () => {
     expect(screen.getByText("2 wrong · pass line 80%")).toBeInTheDocument();
   });
 
+  it("shows the score of the attempt before, when there was one", async () => {
+    renderResults({ ...FAILED, previous: { score: 0, total: 3 } });
+
+    expect(await screen.findByText("Last time 0 / 3")).toBeInTheDocument();
+  });
+
+  it("shows no earlier score on a first attempt", async () => {
+    renderResults(FAILED);
+
+    await screen.findByText("1 / 3");
+    expect(screen.queryByText(/Last time/)).toBeNull();
+  });
+
   it("shows the percent in green from the pass line up", async () => {
     renderResults(PASSED);
 

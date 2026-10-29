@@ -90,7 +90,8 @@ A libSQL (SQLite) database, set up in `app/lib/db.server.ts`:
 
 The tables are created on first use. `tests` has a row per test (payload and last submission as
 JSON, plus `position`, the place you dragged it to in the list; new tests have none and show
-first, newest first). `reviewed` has a row per review chip marked reviewed. `users` has the accounts (passwords as
+first, newest first). `reviewed` has a row per review chip marked reviewed. `attempts` has the score of every
+submission, so a retake keeps the earlier ones. `users` has the accounts (passwords as
 salted scrypt hashes, in `app/lib/users.server.ts`). All queries are in
 `app/lib/tests.server.ts`.
 
