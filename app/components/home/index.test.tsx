@@ -1,9 +1,8 @@
-import { screen, waitFor, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { buildTestSummary } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
-import { renderRoute, type StubRoute } from "#tests/helpers/render";
+import { renderRoute } from "#tests/helpers/render";
 import type { JlptLevel } from "~/lib/payload";
 import type { TestSummary } from "~/lib/views";
 import { Home } from ".";
@@ -25,23 +24,15 @@ function renderHome(
   {
     stats = STATS,
     level = tests.length ? "N2" : null,
-    api,
-  }: { stats?: HomeStats; level?: JlptLevel | null; api?: StubRoute["action"] } = {},
+  }: { stats?: HomeStats; level?: JlptLevel | null } = {},
 ) {
-  const { action, requests } = recordingAction();
+  const { action } = recordingAction();
   renderRoute(<Home tests={tests} stats={stats} level={level} />, {
     routes: [
-      { path: "/api/tests", action: api ?? action },
-      { path: "/api/tests/:id", action: api ?? action },
+      { path: "/api/tests", action },
+      { path: "/api/tests/:id", action },
     ],
   });
-  return requests;
-}
-
-/** Opens the confirm dialog behind `button`, and confirms with `confirmLabel`. */
-async function confirm(button: HTMLElement, confirmLabel: string) {
-  await userEvent.click(button);
-  await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: confirmLabel }));
 }
 
 describe("Home", () => {
@@ -95,27 +86,5 @@ describe("Home", () => {
     renderHome([], { level: "N3" });
 
     expect(await screen.findByRole("heading", { name: "No mock tests yet" })).toBeInTheDocument();
-  });
-
-  describe("deleting one test", () => {
-    it("asks first, deletes the test, and hides it while the delete saves", async () => {
-      renderHome([TAKEN, NOT_TAKEN], { api: () => new Promise(() => {}) });
-
-      // A row has two delete buttons, one for mobile and one for desktop.
-      const [deleteButton] = await screen.findAllByRole("button", { name: "Delete “第1週 1日目”" });
-      await confirm(deleteButton, "Delete");
-
-      await waitFor(() => expect(screen.getAllByRole("listitem")).toHaveLength(1));
-      expect(screen.queryByText("第1週 1日目")).toBeNull();
-    });
-
-    it("sends the delete to the test", async () => {
-      const requests = renderHome([TAKEN]);
-
-      const [deleteButton] = await screen.findAllByRole("button", { name: "Delete “第1週 1日目”" });
-      await confirm(deleteButton, "Delete");
-
-      await waitFor(() => expect(requests).toEqual([{ method: "DELETE", path: `/api/tests/${TAKEN.id}`, body: null }]));
-    });
   });
 });

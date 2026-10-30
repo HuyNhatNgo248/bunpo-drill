@@ -39,7 +39,7 @@ msgstr "{slotName}: {text} (tap to remove)"
 msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
-#: app/components/home/test-list/TestRow.tsx:75
+#: app/components/home/test-list/TestRow.tsx:74
 #: app/components/quiz/Title.tsx:14
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
@@ -231,7 +231,7 @@ msgstr "Clear answers"
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:114
+#: app/components/home/test-list/TestRow.tsx:111
 msgid "Continue"
 msgstr "Continue"
 
@@ -269,18 +269,6 @@ msgstr "Day"
 #: app/lib/sections.ts:50
 msgid "Day {day}"
 msgstr "Day {day}"
-
-#: app/components/home/test-list/DeleteTest.tsx:18
-msgid "Delete"
-msgstr "Delete"
-
-#: app/components/home/test-list/DeleteTest.tsx:24
-msgid "Delete “{title}”"
-msgstr "Delete “{title}”"
-
-#: app/components/home/test-list/DeleteTest.tsx:16
-msgid "Delete “{title}”?"
-msgstr "Delete “{title}”?"
 
 #: app/components/quiz/sentence-order/BankPiece.tsx:27
 #: app/components/quiz/sentence-order/SlotButton.tsx:31
@@ -358,7 +346,7 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/TestRow.tsx:67
 msgid "In progress {answered} / {total}"
 msgstr "In progress {answered} / {total}"
 
@@ -384,7 +372,7 @@ msgstr "Keep answering"
 msgid "Language: {0}"
 msgstr "Language: {0}"
 
-#: app/components/home/test-list/TestRow.tsx:79
+#: app/components/home/test-list/TestRow.tsx:78
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
@@ -558,7 +546,7 @@ msgstr "Read the passage, think about what it says as a whole, and choose the be
 msgid "Reload"
 msgstr "Reload"
 
-#: app/components/home/test-list/TestRow.tsx:45
+#: app/components/home/test-list/TestRow.tsx:44
 msgid "Reorder “{title}”"
 msgstr "Reorder “{title}”"
 
@@ -573,7 +561,7 @@ msgstr "Reset your password"
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:104
+#: app/components/home/test-list/TestRow.tsx:101
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
@@ -659,7 +647,7 @@ msgstr "Slot {n}"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: app/components/home/test-list/TestRow.tsx:23
+#: app/components/home/test-list/TestRow.tsx:22
 msgid "sortable"
 msgstr "sortable"
 
@@ -667,7 +655,7 @@ msgstr "sortable"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/home/test-list/TestRow.tsx:114
+#: app/components/home/test-list/TestRow.tsx:111
 msgid "Start the test"
 msgstr "Start the test"
 
@@ -680,7 +668,7 @@ msgstr "Submit"
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:99
+#: app/components/home/test-list/TestRow.tsx:96
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "Take it again"
@@ -742,10 +730,6 @@ msgstr "The request couldn't be handled."
 #: app/components/welcome/ExamSections.tsx:42
 msgid "The same three formats as the real exam"
 msgstr "The same three formats as the real exam"
-
-#: app/components/home/test-list/DeleteTest.tsx:17
-msgid "The test and its saved result will be deleted. This can't be undone."
-msgstr "The test and its saved result will be deleted. This can't be undone."
 
 #: app/components/reset-password/index.tsx:13
 msgid "This link can't be used"

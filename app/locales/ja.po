@@ -39,7 +39,7 @@ msgstr "{slotName}：{text}（タップで外す）"
 msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
 
-#: app/components/home/test-list/TestRow.tsx:75
+#: app/components/home/test-list/TestRow.tsx:74
 #: app/components/quiz/Title.tsx:14
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
@@ -231,7 +231,7 @@ msgstr "回答をクリア"
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:114
+#: app/components/home/test-list/TestRow.tsx:111
 msgid "Continue"
 msgstr "続きから"
 
@@ -269,18 +269,6 @@ msgstr "日"
 #: app/lib/sections.ts:50
 msgid "Day {day}"
 msgstr "{day}日目"
-
-#: app/components/home/test-list/DeleteTest.tsx:18
-msgid "Delete"
-msgstr "削除"
-
-#: app/components/home/test-list/DeleteTest.tsx:24
-msgid "Delete “{title}”"
-msgstr "「{title}」を削除"
-
-#: app/components/home/test-list/DeleteTest.tsx:16
-msgid "Delete “{title}”?"
-msgstr "「{title}」を削除しますか？"
 
 #: app/components/quiz/sentence-order/BankPiece.tsx:27
 #: app/components/quiz/sentence-order/SlotButton.tsx:31
@@ -358,7 +346,7 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/TestRow.tsx:67
 msgid "In progress {answered} / {total}"
 msgstr "解答中 {answered} / {total}"
 
@@ -384,7 +372,7 @@ msgstr "解答を続ける"
 msgid "Language: {0}"
 msgstr "言語：{0}"
 
-#: app/components/home/test-list/TestRow.tsx:79
+#: app/components/home/test-list/TestRow.tsx:78
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
@@ -558,7 +546,7 @@ msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{fi
 msgid "Reload"
 msgstr "再読み込み"
 
-#: app/components/home/test-list/TestRow.tsx:45
+#: app/components/home/test-list/TestRow.tsx:44
 msgid "Reorder “{title}”"
 msgstr "「{title}」を並べ替え"
 
@@ -573,7 +561,7 @@ msgstr "パスワードの再設定"
 msgid "Results"
 msgstr "結果"
 
-#: app/components/home/test-list/TestRow.tsx:104
+#: app/components/home/test-list/TestRow.tsx:101
 msgid "Review ({reviewCount})"
 msgstr "復習（{reviewCount}）"
 
@@ -659,7 +647,7 @@ msgstr "空欄{n}"
 msgid "Something went wrong"
 msgstr "システム障害が発生しました"
 
-#: app/components/home/test-list/TestRow.tsx:23
+#: app/components/home/test-list/TestRow.tsx:22
 msgid "sortable"
 msgstr "並べ替え可能"
 
@@ -667,7 +655,7 @@ msgstr "並べ替え可能"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/home/test-list/TestRow.tsx:114
+#: app/components/home/test-list/TestRow.tsx:111
 msgid "Start the test"
 msgstr "テストを始める"
 
@@ -680,7 +668,7 @@ msgstr "提出する"
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:99
+#: app/components/home/test-list/TestRow.tsx:96
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "もう一度受ける"
@@ -742,10 +730,6 @@ msgstr "リクエストを処理できませんでした。"
 #: app/components/welcome/ExamSections.tsx:42
 msgid "The same three formats as the real exam"
 msgstr "本番と同じ、3つの問題形式"
-
-#: app/components/home/test-list/DeleteTest.tsx:17
-msgid "The test and its saved result will be deleted. This can't be undone."
-msgstr "テストと保存された結果が削除されます。この操作は取り消せません。"
 
 #: app/components/reset-password/index.tsx:13
 msgid "This link can't be used"

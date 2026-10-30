@@ -6,17 +6,13 @@ const FIRST = buildTestSummary({ id: "20261027-aaaaaa" });
 const SECOND = buildTestSummary({ id: "20261027-bbbbbb" });
 const THIRD = buildTestSummary({ id: "20261027-cccccc" });
 
-const NOTHING_PENDING: PendingChanges = { deleting: new Set(), order: null };
+const NOTHING_PENDING: PendingChanges = { order: null };
 
 const idsOf = (tests: { id: string }[]) => tests.map((test) => test.id);
 
 describe("visibleTests", () => {
   it("shows the saved tests as they are while nothing saves", () => {
     expect(visibleTests([FIRST, SECOND], NOTHING_PENDING)).toEqual([FIRST, SECOND]);
-  });
-
-  it("hides a test that is being deleted", () => {
-    expect(idsOf(visibleTests([FIRST, SECOND], { ...NOTHING_PENDING, deleting: new Set([FIRST.id]) }))).toEqual([SECOND.id]);
   });
 
   it("puts the tests in the order that is saving", () => {

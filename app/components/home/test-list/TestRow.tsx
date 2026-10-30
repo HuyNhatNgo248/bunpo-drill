@@ -10,7 +10,6 @@ import { hasSavedAnswers, savedAnsweredCount } from "~/components/quiz/helpers/s
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import type { TestSummary } from "~/lib/views";
-import { DeleteTest } from "./DeleteTest";
 
 /** One test: its handle to drag, its title and last score, and its buttons. Review opens its grammar chips. */
 export function TestRow({ test }: { test: TestSummary }) {
@@ -88,8 +87,6 @@ export function TestRow({ test }: { test: TestSummary }) {
         )}
       </Link>
 
-      <DeleteTest test={test} className="-mt-2 -mr-2 md:hidden" />
-
       <div className="grid w-full grid-cols-2 gap-2 md:flex md:w-auto md:flex-auto md:flex-wrap md:items-center md:justify-end">
         {test.result ? (
           <>
@@ -114,7 +111,6 @@ export function TestRow({ test }: { test: TestSummary }) {
             <Link to={quizHref}>{inProgress ? t`Continue` : t`Start the test`}</Link>
           </Button>
         )}
-        <DeleteTest test={test} className="hidden md:order-3 md:inline-flex" outlined />
       </div>
 
       {open && <GrammarChips testId={test.id} chips={test.review} className="w-full" />}

@@ -1,14 +1,11 @@
 import type { TestSummary } from "~/lib/views";
 
-/** The changes that are saving now: tests being deleted, a new order. */
-export type PendingChanges = { deleting: Set<string>; order: string[] | null };
+/** The change that is saving now: a new order. */
+export type PendingChanges = { order: string[] | null };
 
-/**
- * The tests to show while changes save, so the list changes at once instead of after the reload:
- * no deleted tests, and a dragged test in its new place.
- */
+/** The tests to show while a new order saves, so a dragged test takes its place at once instead of after the reload. */
 export function visibleTests(tests: TestSummary[], pending: PendingChanges): TestSummary[] {
-  const shown = tests.filter((test) => !pending.deleting.has(test.id));
+  const shown = [...tests];
   const { order } = pending;
   if (order) shown.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
   return shown;
