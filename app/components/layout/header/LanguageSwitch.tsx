@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { Check, Languages } from "lucide-react";
+import { Check, ChevronDown, Languages } from "lucide-react";
 import { Form, useLocation } from "react-router";
 import { Button } from "~/components/ui/button";
 import {
@@ -21,7 +21,7 @@ const FORM_ID = "language-switch";
 /**
  * The language menu. A choice submits a form that reloads the whole page (`reloadDocument`), so the
  * server renders the new language and the browser loads its catalog. The items sit in a portal, so
- * they reach the form by its id. On a phone the button shows only its icon.
+ * they reach the form by its id. On a phone the button hides the language name.
  */
 export function LanguageSwitch() {
   const { t, i18n } = useLingui();
@@ -40,6 +40,7 @@ export function LanguageSwitch() {
             <span lang={current.locale} className="hidden md:inline">
               {current.name}
             </span>
+            <ChevronDown aria-hidden="true" className="opacity-60" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
