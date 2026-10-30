@@ -44,7 +44,7 @@ msgstr "{total, plural, one {# question} other {# questions}}"
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 
-#: app/components/results/index.tsx:61
+#: app/components/results/index.tsx:62
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "{wrong} wrong"
@@ -103,7 +103,7 @@ msgstr "Account"
 msgid "All answered"
 msgstr "All answered"
 
-#: app/components/results/index.tsx:61
+#: app/components/results/index.tsx:62
 msgid "All correct"
 msgstr "All correct"
 
@@ -227,7 +227,7 @@ msgstr "Clear answers"
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:115
+#: app/components/home/test-list/TestRow.tsx:114
 msgid "Continue"
 msgstr "Continue"
 
@@ -235,7 +235,7 @@ msgstr "Continue"
 msgid "Correct"
 msgstr "Correct"
 
-#: app/components/results/index.tsx:62
+#: app/components/results/index.tsx:63
 msgid "Correct {score} / {total}"
 msgstr "Correct {score} / {total}"
 
@@ -565,7 +565,7 @@ msgstr "Reset your password"
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:105
+#: app/components/home/test-list/TestRow.tsx:104
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
@@ -659,7 +659,7 @@ msgstr "sortable"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/home/test-list/TestRow.tsx:115
+#: app/components/home/test-list/TestRow.tsx:114
 msgid "Start the test"
 msgstr "Start the test"
 
@@ -672,7 +672,7 @@ msgstr "Submit"
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:100
+#: app/components/home/test-list/TestRow.tsx:99
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "Take it again"

@@ -42,7 +42,7 @@ export function QuestionSheet({
             <Trans>Question list</Trans>
           </span>
           <span className="text-subtle-foreground">· {status}</span>
-          <ChevronUp className="ml-auto size-4 text-subtle-foreground md:ml-1" aria-hidden="true" />
+          <ChevronUp className="ml-auto size-4 text-subtle-foreground" aria-hidden="true" />
         </button>
       </SheetTrigger>
       <SheetContent

@@ -53,13 +53,15 @@ export function Results({ results }: { results: ResultsView }) {
 
         <Actions testId={results.id} />
 
-        <div className="sticky bottom-0 z-10 -mx-4 border-t bg-card px-4 pt-3 pb-5 md:bottom-4 md:mx-0 md:rounded-xl md:border md:px-4 md:py-3.5 md:shadow-float lg:hidden">
+        {/* Phone and tablet: a solid bar on the bottom edge, its button across the whole width. */}
+        <div className="sticky bottom-0 z-10 -mx-4 border-t bg-card px-4 pt-3 pb-5 md:-mx-6 md:px-6 lg:hidden">
           <QuestionSheet
             sections={results.sections}
             markOf={markOf}
             marks={RESULT_MARKS}
             status={wrong > 0 ? t`${wrong} wrong` : t`All correct`}
             summary={t`Correct ${score} / ${total}`}
+            className="md:w-full"
           />
         </div>
       </main>

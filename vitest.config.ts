@@ -18,9 +18,17 @@ export default defineConfig({
     setupFiles: ["./vitest.setup.ts"],
     projects: [
       {
-        // happy-dom gives the components a DOM.
+        // happy-dom gives the components a DOM. The files share each worker's modules (isolate: false) on threads, so React,
+        // Radix and the catalogs load once per worker instead of once per file: about 3× faster. That is safe while no
+        // component test mocks a module or leaves a global changed; each test cleans up its DOM and storage (vitest.setup.ts).
         extends: true,
-        test: { name: "components", environment: "happy-dom", include: ["app/components/**/*.test.{ts,tsx}"] },
+        test: {
+          name: "components",
+          environment: "happy-dom",
+          include: ["app/components/**/*.test.{ts,tsx}"],
+          isolate: false,
+          pool: "threads",
+        },
       },
       {
         // Node, not happy-dom: a happy-dom Response follows the browser and hides Set-Cookie,

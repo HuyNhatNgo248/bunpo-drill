@@ -44,7 +44,7 @@ msgstr "{total, plural, other {#問}}"
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, other {この問題には未回答が#問あります。採点しますか？}}"
 
-#: app/components/results/index.tsx:61
+#: app/components/results/index.tsx:62
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "不正解 {wrong}問"
@@ -103,7 +103,7 @@ msgstr "アカウント"
 msgid "All answered"
 msgstr "すべて回答済み"
 
-#: app/components/results/index.tsx:61
+#: app/components/results/index.tsx:62
 msgid "All correct"
 msgstr "全問正解"
 
@@ -227,7 +227,7 @@ msgstr "回答をクリア"
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:115
+#: app/components/home/test-list/TestRow.tsx:114
 msgid "Continue"
 msgstr "続きから"
 
@@ -235,7 +235,7 @@ msgstr "続きから"
 msgid "Correct"
 msgstr "正解"
 
-#: app/components/results/index.tsx:62
+#: app/components/results/index.tsx:63
 msgid "Correct {score} / {total}"
 msgstr "正解 {score} / {total}"
 
@@ -565,7 +565,7 @@ msgstr "パスワードの再設定"
 msgid "Results"
 msgstr "結果"
 
-#: app/components/home/test-list/TestRow.tsx:105
+#: app/components/home/test-list/TestRow.tsx:104
 msgid "Review ({reviewCount})"
 msgstr "復習（{reviewCount}）"
 
@@ -659,7 +659,7 @@ msgstr "並べ替え可能"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/home/test-list/TestRow.tsx:115
+#: app/components/home/test-list/TestRow.tsx:114
 msgid "Start the test"
 msgstr "テストを始める"
 
@@ -672,7 +672,7 @@ msgstr "提出する"
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:100
+#: app/components/home/test-list/TestRow.tsx:99
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "もう一度受ける"
