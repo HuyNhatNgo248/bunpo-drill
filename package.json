@@ -15,7 +15,7 @@
     "test:watch": "vitest",
     "typecheck": "react-router typegen && tsc",
     "precommit": "pnpm run typecheck && pnpm run i18n:check && pnpm test",
-    "deploy": "scripts/deploy.sh",
+    "prod:deploy": "scripts/deploy.sh",
     "schema": "vitest run -u app/lib/payload.test.ts",
     "i18n:extract": "lingui extract --clean",
     "i18n:check": "scripts/check-translations.sh"
