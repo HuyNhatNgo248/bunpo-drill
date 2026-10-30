@@ -19,12 +19,11 @@ msgstr "（復習済み）"
 msgid "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
 msgstr "{daysLeft, plural, other {1日1回の模擬試験なら、試験日までに#回解けます。}}"
 
-#: app/components/quiz/SubmitBar.tsx:59
+#: app/components/quiz/SubmitBar.tsx:70
 msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 msgstr "{left, plural, other {未回答が#問あります。提出しますか？}}"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:46
-#: app/components/quiz/SubmitBar.tsx:45
+#: app/components/quiz/SubmitBar.tsx:30
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
@@ -36,7 +35,7 @@ msgstr "{slotName}：{text}（タップで外す）"
 msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
 
-#: app/components/home/test-list/TestRow.tsx:77
+#: app/components/home/test-list/TestRow.tsx:75
 #: app/components/quiz/Title.tsx:14
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
@@ -45,6 +44,7 @@ msgstr "{total, plural, other {#問}}"
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, other {この問題には未回答が#問あります。採点しますか？}}"
 
+#: app/components/results/index.tsx:61
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "不正解 {wrong}問"
@@ -99,10 +99,13 @@ msgstr "ユーザー名に「@」は使えません。"
 msgid "Account"
 msgstr "アカウント"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:46
-#: app/components/quiz/SubmitBar.tsx:45
+#: app/components/quiz/SubmitBar.tsx:30
 msgid "All answered"
 msgstr "すべて回答済み"
+
+#: app/components/results/index.tsx:61
+msgid "All correct"
+msgstr "全問正解"
 
 #: app/components/results/section-review/QuestionReview.tsx:68
 msgid "Answer: {answer}"
@@ -118,7 +121,7 @@ msgstr "回答済み"
 msgid "Answered {answered} / {total}"
 msgstr "回答済み {answered} / {total}"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:66
+#: app/components/quiz/SubmitBar.tsx:52
 msgid "Answered {done} / {total}"
 msgstr "回答済み {done} / {total}"
 
@@ -180,7 +183,7 @@ msgstr "問題{no}を採点"
 msgid "Check Part {no}?"
 msgstr "問題{no}を採点しますか？"
 
-#: app/components/results/index.tsx:33
+#: app/components/results/index.tsx:38
 msgid "Check your answers"
 msgstr "解答の確認"
 
@@ -212,11 +215,11 @@ msgstr "つぎの文の ★ に入る最もよいものを、1・2・3・4から
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "文の（　）に入る、いちばん自然な形を4つから選びます。"
 
-#: app/components/quiz/SubmitBar.tsx:50
+#: app/components/quiz/SubmitBar.tsx:61
 msgid "Clear"
 msgstr "クリア"
 
-#: app/components/quiz/SubmitBar.tsx:53
+#: app/components/quiz/SubmitBar.tsx:64
 msgid "Clear answers"
 msgstr "回答をクリア"
 
@@ -224,13 +227,17 @@ msgstr "回答をクリア"
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:117
+#: app/components/home/test-list/TestRow.tsx:115
 msgid "Continue"
 msgstr "続きから"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Correct"
 msgstr "正解"
+
+#: app/components/results/index.tsx:62
+msgid "Correct {score} / {total}"
+msgstr "正解 {score} / {total}"
 
 #: app/components/welcome/SampleQuiz.tsx:198
 msgid "Correct!"
@@ -347,7 +354,7 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/TestRow.tsx:70
+#: app/components/home/test-list/TestRow.tsx:68
 msgid "In progress {answered} / {total}"
 msgstr "解答中 {answered} / {total}"
 
@@ -364,7 +371,7 @@ msgid "JLPT grammar practice in the real test's format"
 msgstr "本番形式で練習する、JLPTの文法"
 
 #: app/components/quiz/CheckSection.tsx:59
-#: app/components/quiz/SubmitBar.tsx:67
+#: app/components/quiz/SubmitBar.tsx:78
 msgid "Keep answering"
 msgstr "解答を続ける"
 
@@ -373,7 +380,7 @@ msgstr "解答を続ける"
 msgid "Language: {0}"
 msgstr "言語：{0}"
 
-#: app/components/home/test-list/TestRow.tsx:82
+#: app/components/home/test-list/TestRow.tsx:79
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
@@ -518,8 +525,8 @@ msgid "Question {num} (wrong)"
 msgstr "問題{num}（不正解）"
 
 #: app/components/quiz/question-nav/index.tsx:11
-#: app/components/quiz/question-nav/QuestionSheet.tsx:44
-#: app/components/quiz/question-nav/QuestionSheet.tsx:63
+#: app/components/quiz/question-nav/QuestionSheet.tsx:42
+#: app/components/quiz/question-nav/QuestionSheet.tsx:61
 msgid "Question list"
 msgstr "問題一覧"
 
@@ -543,7 +550,7 @@ msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{fi
 msgid "Reload"
 msgstr "再読み込み"
 
-#: app/components/home/test-list/TestRow.tsx:47
+#: app/components/home/test-list/TestRow.tsx:45
 msgid "Reorder “{title}”"
 msgstr "「{title}」を並べ替え"
 
@@ -552,13 +559,13 @@ msgstr "「{title}」を並べ替え"
 msgid "Reset your password"
 msgstr "パスワードの再設定"
 
-#: app/components/results/index.tsx:25
+#: app/components/results/index.tsx:30
 #: app/components/results/Title.tsx:14
 #: app/routes/results.tsx:11
 msgid "Results"
 msgstr "結果"
 
-#: app/components/home/test-list/TestRow.tsx:107
+#: app/components/home/test-list/TestRow.tsx:105
 msgid "Review ({reviewCount})"
 msgstr "復習（{reviewCount}）"
 
@@ -644,7 +651,7 @@ msgstr "空欄{n}"
 msgid "Something went wrong"
 msgstr "システム障害が発生しました"
 
-#: app/components/home/test-list/TestRow.tsx:24
+#: app/components/home/test-list/TestRow.tsx:23
 msgid "sortable"
 msgstr "並べ替え可能"
 
@@ -652,20 +659,20 @@ msgstr "並べ替え可能"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/home/test-list/TestRow.tsx:117
+#: app/components/home/test-list/TestRow.tsx:115
 msgid "Start the test"
 msgstr "テストを始める"
 
-#: app/components/quiz/SubmitBar.tsx:32
-#: app/components/quiz/SubmitBar.tsx:66
+#: app/components/quiz/SubmitBar.tsx:36
+#: app/components/quiz/SubmitBar.tsx:77
 msgid "Submit"
 msgstr "提出する"
 
-#: app/components/quiz/SubmitBar.tsx:32
+#: app/components/quiz/SubmitBar.tsx:36
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:102
+#: app/components/home/test-list/TestRow.tsx:100
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "もう一度受ける"
@@ -758,7 +765,7 @@ msgstr "もう一度"
 msgid "Unanswered"
 msgstr "未回答"
 
-#: app/components/quiz/SubmitBar.tsx:65
+#: app/components/quiz/SubmitBar.tsx:76
 msgid "Unanswered questions count as wrong."
 msgstr "未回答の問題は不正解になります。"
 

@@ -98,6 +98,17 @@ describe("Quiz", () => {
       expect(screen.getByText("（3）かいがあって")).toBeInTheDocument();
     });
 
+    it("says on the question list's button how many are left, until all are answered", async () => {
+      renderQuiz();
+      const listButton = async () => screen.findByRole("button", { name: /Question list/ });
+
+      expect(await listButton()).toHaveTextContent("3 unanswered");
+      await pick(1, "かいがあって");
+      await orderPieces();
+      await pick(3, "かいがあって");
+      expect(await listButton()).toHaveTextContent("All answered");
+    });
+
     it("clears every answer", async () => {
       renderQuiz();
       await pick(1, "かいがあって");

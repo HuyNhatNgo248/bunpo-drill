@@ -19,7 +19,6 @@ export function buildTestSummary(overrides: Partial<TestSummary> = {}): TestSumm
     title: "第1週 1日目",
     level: "N2",
     questionCount: 3,
-    weeks: [1],
     result: null,
     review: [],
     previous: null,

@@ -4,6 +4,7 @@ import { AppHeader } from "~/components/layout/header";
 import { forgetAnswers } from "~/components/quiz/helpers/savedAnswers";
 import { QuestionNav } from "~/components/quiz/question-nav";
 import { gradedMarks, RESULT_MARKS } from "~/components/quiz/question-nav/QuestionGrid";
+import { QuestionSheet } from "~/components/quiz/question-nav/QuestionSheet";
 import type { ResultsView } from "~/lib/views";
 import { Actions } from "./Actions";
 import { ReviewCard } from "./ReviewCard";
@@ -13,10 +14,14 @@ import { Title } from "./Title";
 
 /**
  * The results page: the score, the grammar to review, every answer checked, and the way on. The question list
- * shows each number right or wrong and jumps to it: beside the answers on a desktop, above them on a phone.
+ * shows each number right or wrong and jumps to it: beside the answers on a desktop, in a sheet from a bar pinned
+ * to the bottom on a phone or tablet, as in the quiz.
  */
 export function Results({ results }: { results: ResultsView }) {
   const { t } = useLingui();
+  const { score, total } = results;
+  const wrong = total - score;
+  const markOf = gradedMarks(results.sections);
   // The test is submitted, so its saved answer sheet is done with; a retake starts clean.
   useEffect(() => forgetAnswers(results.id), [results.id]);
 
@@ -35,9 +40,9 @@ export function Results({ results }: { results: ResultsView }) {
         <div className="flex flex-col gap-3.5 md:gap-5 lg:grid lg:grid-cols-quiz lg:items-start lg:gap-6">
           <QuestionNav
             sections={results.sections}
-            markOf={gradedMarks(results.sections)}
+            markOf={markOf}
             marks={RESULT_MARKS}
-            className="lg:sticky lg:top-6"
+            className="hidden lg:sticky lg:top-6 lg:flex"
           />
           <div className="flex min-w-0 flex-col gap-3.5 md:gap-5">
             {results.sections.map((section) => (
@@ -47,6 +52,16 @@ export function Results({ results }: { results: ResultsView }) {
         </div>
 
         <Actions testId={results.id} />
+
+        <div className="sticky bottom-0 z-10 -mx-4 border-t bg-card px-4 pt-3 pb-5 md:bottom-4 md:mx-0 md:rounded-xl md:border md:px-4 md:py-3.5 md:shadow-float lg:hidden">
+          <QuestionSheet
+            sections={results.sections}
+            markOf={markOf}
+            marks={RESULT_MARKS}
+            status={wrong > 0 ? t`${wrong} wrong` : t`All correct`}
+            summary={t`Correct ${score} / ${total}`}
+          />
+        </div>
       </main>
     </div>
   );

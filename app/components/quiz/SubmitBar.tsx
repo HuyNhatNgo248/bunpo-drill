@@ -3,6 +3,7 @@ import { useNavigation } from "react-router";
 import { ConfirmDialog } from "~/components/ConfirmDialog";
 import { Button } from "~/components/ui/button";
 import type { QuizSection } from "~/lib/views";
+import { ANSWER_MARKS, answeredMarks } from "./question-nav/QuestionGrid";
 import { QuestionSheet } from "./question-nav/QuestionSheet";
 
 /**
@@ -26,6 +27,9 @@ export function SubmitBar({
 }) {
   const { t } = useLingui();
   const submitting = useNavigation().state !== "idle";
+  const status = left > 0 ? t`${left} unanswered` : t`All answered`;
+  const done = answered.size;
+  const total = done + left;
 
   const submitButton = (onClick?: () => void) => (
     <Button size="lg" disabled={submitting} onClick={onClick} className="font-semibold md:px-5 md:font-medium">
@@ -40,9 +44,16 @@ export function SubmitBar({
           {error}
         </span>
       )}
-      <QuestionSheet sections={sections} answered={answered} remaining={left} className="lg:hidden" />
+      <QuestionSheet
+        sections={sections}
+        markOf={answeredMarks(answered)}
+        marks={ANSWER_MARKS}
+        status={status}
+        summary={t`Answered ${done} / ${total}`}
+        className="lg:hidden"
+      />
       <span role="status" className="hidden text-sm text-subtle-foreground lg:inline">
-        {left > 0 ? t`${left} unanswered` : t`All answered`}
+        {status}
       </span>
       <div className="grid grid-cols-actions gap-2 md:flex">
         <Button variant="outline" size="lg" onClick={onClear} className="text-secondary-foreground">

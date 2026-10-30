@@ -10,12 +10,11 @@ import { hasSavedAnswers, savedAnsweredCount } from "~/components/quiz/helpers/s
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import type { TestSummary } from "~/lib/views";
-import { weekLabel } from "~/lib/sections";
 import { DeleteTest } from "./DeleteTest";
 
 /** One test: its handle to drag, its title and last score, and its buttons. Review opens its grammar chips. */
 export function TestRow({ test }: { test: TestSummary }) {
-  const { t, i18n } = useLingui();
+  const { t } = useLingui();
   const [open, setOpen] = useState(false);
   // A test left before submitting has its answers saved in this browser, so the server cannot know; it is read after hydration.
   const [answered, setAnswered] = useState<number | null>(null);
@@ -23,7 +22,6 @@ export function TestRow({ test }: { test: TestSummary }) {
   const inProgress = answered !== null;
   const sortable = useSortable({ id: test.id, attributes: { roleDescription: t`sortable` } });
   const quizHref = `/tests/${test.id}`;
-  const weeks = test.weeks.map((week) => weekLabel(i18n, week)).join(" · ");
   const title = test.title;
   const total = test.questionCount;
   const reviewCount = test.review.length;
@@ -75,7 +73,6 @@ export function TestRow({ test }: { test: TestSummary }) {
         </div>
         <div className="text-caption text-muted-foreground">
           <Plural value={total} one="# question" other="# questions" />
-          {weeks && <span> · {weeks}</span>}
           {lastScore && (
             <span>
               {" · "}

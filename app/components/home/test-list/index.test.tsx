@@ -7,7 +7,7 @@ import { renderRoute } from "#tests/helpers/render";
 import type { TestSummary } from "~/lib/views";
 import { TestList } from ".";
 
-const NOT_TAKEN = buildTestSummary({ id: "20261027-aaaaaa", title: "第1週 1日目", weeks: [1, 2] });
+const NOT_TAKEN = buildTestSummary({ id: "20261027-aaaaaa", title: "第1週 1日目" });
 
 const TAKEN = buildTestSummary({
   id: "20261027-bbbbbb",
@@ -24,11 +24,11 @@ function renderList(tests: TestSummary[]) {
 }
 
 describe("TestList", () => {
-  it("shows a test that is not taken, with its size and weeks, and a start link", async () => {
+  it("shows a test that is not taken, with its size, and a start link", async () => {
     renderList([NOT_TAKEN]);
 
     expect(await screen.findByRole("link", { name: /第1週 1日目/ })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
-    expect(screen.getByText(/3 questions/)).toHaveTextContent("3 questions · Week 1 · Week 2");
+    expect(screen.getByText(/3 questions/)).toHaveTextContent(/^3 questions$/);
     expect(screen.getByRole("link", { name: "Start the test" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
   });
 
@@ -53,7 +53,7 @@ describe("TestList", () => {
   it("shows the score of the attempt before", async () => {
     renderList([{ ...TAKEN, previous: { score: 0, total: 3 } }]);
 
-    expect(await screen.findByText(/3 questions/)).toHaveTextContent("3 questions · Week 1 · Last time 0 / 3");
+    expect(await screen.findByText(/3 questions/)).toHaveTextContent("3 questions · Last time 0 / 3");
   });
 
   it("gives every row a handle to drag, named after its test", async () => {

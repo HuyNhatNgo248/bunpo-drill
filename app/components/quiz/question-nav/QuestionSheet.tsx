@@ -1,32 +1,30 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Trans } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { ChevronUp, LayoutGrid } from "lucide-react";
 import { useRef, useState } from "react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "~/components/ui/sheet";
 import { jumpTo } from "./helpers/jumpTo";
-import type { QuizSection } from "~/lib/views";
-import { ANSWER_MARKS, answeredMarks, QuestionGrid } from "./QuestionGrid";
+import { QuestionGrid, type QuestionListProps } from "./QuestionGrid";
 
 /**
- * Mobile and tablet: a button in the bottom bar that opens the question list
- * as a bottom sheet. Picking a number closes the sheet and jumps there.
+ * Mobile and tablet: a button in the bottom bar that opens the question list as a bottom sheet, in the quiz
+ * and in the results. Picking a number closes the sheet and jumps there.
  */
 export function QuestionSheet({
   sections,
-  answered,
-  remaining,
+  markOf,
+  marks,
+  status,
+  summary,
   className,
-}: {
-  sections: QuizSection[];
-  answered: Set<string>;
-  remaining: number;
+}: QuestionListProps & {
+  /** After "Question list" on the button, e.g. "2 unanswered". */
+  status: string;
+  /** Under the sheet's title, e.g. "Answered 1 / 3". */
+  summary: string;
   className?: string;
 }) {
-  const { t } = useLingui();
   const [open, setOpen] = useState(false);
-  const left = remaining;
-  const done = answered.size;
-  const total = done + remaining;
   const target = useRef<number | null>(null);
 
   return (
@@ -43,7 +41,7 @@ export function QuestionSheet({
           <span className="font-medium">
             <Trans>Question list</Trans>
           </span>
-          <span className="text-subtle-foreground">· {left > 0 ? t`${left} unanswered` : t`All answered`}</span>
+          <span className="text-subtle-foreground">· {status}</span>
           <ChevronUp className="ml-auto size-4 text-subtle-foreground md:ml-1" aria-hidden="true" />
         </button>
       </SheetTrigger>
@@ -62,17 +60,13 @@ export function QuestionSheet({
           <SheetTitle>
             <Trans>Question list</Trans>
           </SheetTitle>
-          <SheetDescription>
-            <Trans>
-              Answered {done} / {total}
-            </Trans>
-          </SheetDescription>
+          <SheetDescription>{summary}</SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-4 overflow-y-auto p-4 pb-6">
           <QuestionGrid
             sections={sections}
-            markOf={answeredMarks(answered)}
-            marks={ANSWER_MARKS}
+            markOf={markOf}
+            marks={marks}
             onPick={(num) => {
               target.current = num;
               setOpen(false);

@@ -210,7 +210,6 @@ export function toSummary(test: ListedTest): TestSummary {
     title: payload.title,
     level: payload.level,
     questionCount: test.questionCount,
-    weeks: [...new Set(payload.grammarPoints.map((point) => point.week))].sort((a, b) => a - b),
     result: submission
       ? { score: submission.score, total: submission.total, percent: percentOf(submission.score, submission.total) }
       : null,

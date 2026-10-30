@@ -76,6 +76,24 @@ describe("Results", () => {
       expect(within(list).getByRole("button", { name: "Question 3 (wrong)" })).toBeInTheDocument();
     });
 
+    it("opens on a phone as a sheet from the bottom bar, with the wrong count and the score", async () => {
+      renderResults(FAILED);
+
+      const listButton = await screen.findByRole("button", { name: /Question list/ });
+      expect(listButton).toHaveTextContent("2 wrong");
+      await userEvent.click(listButton);
+
+      const sheet = screen.getByRole("dialog", { name: "Question list" });
+      expect(sheet).toHaveTextContent("Correct 1 / 3");
+      expect(within(sheet).getByRole("button", { name: "Question 2 (correct)" })).toBeInTheDocument();
+    });
+
+    it("says all are correct when none is wrong", async () => {
+      renderResults(PASSED);
+
+      expect(await screen.findByRole("button", { name: /Question list/ })).toHaveTextContent("All correct");
+    });
+
     it("jumps to the answer of the question picked", async () => {
       const scroll = vi.spyOn(HTMLElement.prototype, "scrollIntoView").mockImplementation(() => {});
       renderResults(FAILED);

@@ -92,7 +92,6 @@ export type TestSummary = {
   title: string;
   level: Level;
   questionCount: number;
-  weeks: number[];
   result: { score: number; total: number; percent: number } | null;
   review: ReviewChip[];
   /** The score of the attempt before `result`, or the last score while a retake is under way. */

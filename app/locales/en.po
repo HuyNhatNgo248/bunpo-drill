@@ -19,12 +19,11 @@ msgstr "(reviewed)"
 msgid "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
 msgstr "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
 
-#: app/components/quiz/SubmitBar.tsx:59
+#: app/components/quiz/SubmitBar.tsx:70
 msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:46
-#: app/components/quiz/SubmitBar.tsx:45
+#: app/components/quiz/SubmitBar.tsx:30
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
@@ -36,7 +35,7 @@ msgstr "{slotName}: {text} (tap to remove)"
 msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
-#: app/components/home/test-list/TestRow.tsx:77
+#: app/components/home/test-list/TestRow.tsx:75
 #: app/components/quiz/Title.tsx:14
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
@@ -45,6 +44,7 @@ msgstr "{total, plural, one {# question} other {# questions}}"
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 
+#: app/components/results/index.tsx:61
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "{wrong} wrong"
@@ -99,10 +99,13 @@ msgstr "A username can't contain “@”."
 msgid "Account"
 msgstr "Account"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:46
-#: app/components/quiz/SubmitBar.tsx:45
+#: app/components/quiz/SubmitBar.tsx:30
 msgid "All answered"
 msgstr "All answered"
+
+#: app/components/results/index.tsx:61
+msgid "All correct"
+msgstr "All correct"
 
 #: app/components/results/section-review/QuestionReview.tsx:68
 msgid "Answer: {answer}"
@@ -118,7 +121,7 @@ msgstr "Answered"
 msgid "Answered {answered} / {total}"
 msgstr "Answered {answered} / {total}"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:66
+#: app/components/quiz/SubmitBar.tsx:52
 msgid "Answered {done} / {total}"
 msgstr "Answered {done} / {total}"
 
@@ -180,7 +183,7 @@ msgstr "Check Part {no}"
 msgid "Check Part {no}?"
 msgstr "Check Part {no}?"
 
-#: app/components/results/index.tsx:33
+#: app/components/results/index.tsx:38
 msgid "Check your answers"
 msgstr "Check your answers"
 
@@ -212,11 +215,11 @@ msgstr "Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a sl
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 
-#: app/components/quiz/SubmitBar.tsx:50
+#: app/components/quiz/SubmitBar.tsx:61
 msgid "Clear"
 msgstr "Clear"
 
-#: app/components/quiz/SubmitBar.tsx:53
+#: app/components/quiz/SubmitBar.tsx:64
 msgid "Clear answers"
 msgstr "Clear answers"
 
@@ -224,13 +227,17 @@ msgstr "Clear answers"
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:117
+#: app/components/home/test-list/TestRow.tsx:115
 msgid "Continue"
 msgstr "Continue"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Correct"
 msgstr "Correct"
+
+#: app/components/results/index.tsx:62
+msgid "Correct {score} / {total}"
+msgstr "Correct {score} / {total}"
 
 #: app/components/welcome/SampleQuiz.tsx:198
 msgid "Correct!"
@@ -347,7 +354,7 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/TestRow.tsx:70
+#: app/components/home/test-list/TestRow.tsx:68
 msgid "In progress {answered} / {total}"
 msgstr "In progress {answered} / {total}"
 
@@ -364,7 +371,7 @@ msgid "JLPT grammar practice in the real test's format"
 msgstr "JLPT grammar practice in the real test's format"
 
 #: app/components/quiz/CheckSection.tsx:59
-#: app/components/quiz/SubmitBar.tsx:67
+#: app/components/quiz/SubmitBar.tsx:78
 msgid "Keep answering"
 msgstr "Keep answering"
 
@@ -373,7 +380,7 @@ msgstr "Keep answering"
 msgid "Language: {0}"
 msgstr "Language: {0}"
 
-#: app/components/home/test-list/TestRow.tsx:82
+#: app/components/home/test-list/TestRow.tsx:79
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
@@ -518,8 +525,8 @@ msgid "Question {num} (wrong)"
 msgstr "Question {num} (wrong)"
 
 #: app/components/quiz/question-nav/index.tsx:11
-#: app/components/quiz/question-nav/QuestionSheet.tsx:44
-#: app/components/quiz/question-nav/QuestionSheet.tsx:63
+#: app/components/quiz/question-nav/QuestionSheet.tsx:42
+#: app/components/quiz/question-nav/QuestionSheet.tsx:61
 msgid "Question list"
 msgstr "Question list"
 
@@ -543,7 +550,7 @@ msgstr "Read the passage, think about what it says as a whole, and choose the be
 msgid "Reload"
 msgstr "Reload"
 
-#: app/components/home/test-list/TestRow.tsx:47
+#: app/components/home/test-list/TestRow.tsx:45
 msgid "Reorder “{title}”"
 msgstr "Reorder “{title}”"
 
@@ -552,13 +559,13 @@ msgstr "Reorder “{title}”"
 msgid "Reset your password"
 msgstr "Reset your password"
 
-#: app/components/results/index.tsx:25
+#: app/components/results/index.tsx:30
 #: app/components/results/Title.tsx:14
 #: app/routes/results.tsx:11
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:107
+#: app/components/home/test-list/TestRow.tsx:105
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
@@ -644,7 +651,7 @@ msgstr "Slot {n}"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: app/components/home/test-list/TestRow.tsx:24
+#: app/components/home/test-list/TestRow.tsx:23
 msgid "sortable"
 msgstr "sortable"
 
@@ -652,20 +659,20 @@ msgstr "sortable"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/home/test-list/TestRow.tsx:117
+#: app/components/home/test-list/TestRow.tsx:115
 msgid "Start the test"
 msgstr "Start the test"
 
-#: app/components/quiz/SubmitBar.tsx:32
-#: app/components/quiz/SubmitBar.tsx:66
+#: app/components/quiz/SubmitBar.tsx:36
+#: app/components/quiz/SubmitBar.tsx:77
 msgid "Submit"
 msgstr "Submit"
 
-#: app/components/quiz/SubmitBar.tsx:32
+#: app/components/quiz/SubmitBar.tsx:36
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:102
+#: app/components/home/test-list/TestRow.tsx:100
 #: app/components/results/Actions.tsx:22
 msgid "Take it again"
 msgstr "Take it again"
@@ -758,7 +765,7 @@ msgstr "Try again"
 msgid "Unanswered"
 msgstr "Unanswered"
 
-#: app/components/quiz/SubmitBar.tsx:65
+#: app/components/quiz/SubmitBar.tsx:76
 msgid "Unanswered questions count as wrong."
 msgstr "Unanswered questions count as wrong."
 
