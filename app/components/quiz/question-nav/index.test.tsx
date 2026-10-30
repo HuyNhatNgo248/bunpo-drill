@@ -2,6 +2,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildQuizView } from "#mocks/factories/views";
+import { loadCatalog } from "~/lib/i18n";
 import { questionAnchor } from "~/lib/sections";
 import { QuestionNav } from ".";
 import { renderWithCatalog } from "#tests/helpers/render";
@@ -26,10 +27,24 @@ describe("QuestionNav", () => {
   it("lists every question by section, and marks the answered ones", () => {
     renderWithCatalog(<QuestionNav sections={SECTIONS} answered={new Set(["q2"])} />);
 
-    expect(screen.getByRole("navigation", { name: "Question list" })).toHaveTextContent("文法形式の判断 · Grammar form");
+    const nav = screen.getByRole("navigation", { name: "Question list" });
+    expect(nav).toHaveTextContent("Part 1Grammar form");
+    expect(nav).not.toHaveTextContent("文法形式の判断");
     expect(screen.getByRole("button", { name: "Question 1 (unanswered)" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Question 2 (answered)" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Question 3 (unanswered)" })).toBeInTheDocument();
+  });
+
+  describe("on a Japanese page", () => {
+    afterEach(() => loadCatalog("en"));
+
+    it("names each section by its official Japanese name", async () => {
+      await loadCatalog("ja");
+      renderWithCatalog(<QuestionNav sections={SECTIONS} answered={new Set()} />);
+
+      expect(screen.getByText("文法形式の判断")).toHaveAttribute("lang", "ja");
+      expect(screen.queryByText("Grammar form")).toBeNull();
+    });
   });
 
   it("jumps to the card of a picked number", async () => {

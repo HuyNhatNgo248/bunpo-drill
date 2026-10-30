@@ -7,7 +7,11 @@ import { Legend } from "./Legend";
 /** What every view of the question list needs. */
 export type QuestionListProps = { sections: QuizSection[]; answered: Set<string> };
 
-/** Question numbers grouped by section, filled red once answered. */
+/**
+ * Question numbers grouped by section, filled red once answered. The narrow list has room for one name per section,
+ * so it takes the page's language: the English gloss, or the official Japanese name on a Japanese page.
+ * The section headings show both.
+ */
 export function QuestionGrid({
   sections,
   answered,
@@ -27,11 +31,8 @@ export function QuestionGrid({
               <span className="shrink-0 font-bold">
                 <Trans>Part {no}</Trans>
               </span>
-              <span className="truncate text-muted-foreground">
-                <span lang="ja" className="font-jp">
-                  {SECTION_TITLES[section.type]}
-                </span>
-                {gloss && ` · ${gloss}`}
+              <span lang={gloss ? undefined : "ja"} className={cn("truncate text-muted-foreground", !gloss && "font-jp")}>
+                {gloss ?? SECTION_TITLES[section.type]}
               </span>
             </div>
             <ol

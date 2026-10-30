@@ -8,7 +8,7 @@ import { LanguageSwitch } from "./LanguageSwitch";
 
 /**
  * Desktop: brand on the left; on the right the language switch, then Account and Sign out when `account`
- * is set, or Sign in and Create account for a signed-out `guest`. The way back to the mock tests is BackLink, in the page.
+ * is set, or Sign in and Create account for a signed-out `guest`.
  * Mobile: the language, Account, Sign out and Sign in buttons show only their icons; with a `mobileTitle`,
  * a back chevron and the title replace the brand.
  */

@@ -37,7 +37,7 @@ msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
 #: app/components/home/test-list/TestRow.tsx:77
-#: app/components/quiz/Title.tsx:15
+#: app/components/quiz/Title.tsx:13
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
@@ -52,10 +52,6 @@ msgstr "{wrong} wrong"
 #: app/components/results/ScoreCard.tsx:37
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "{wrong} wrong · pass line {pass}%"
-
-#: app/components/layout/BackLink.tsx:8
-msgid "← Mock tests"
-msgstr "← Mock tests"
 
 #: app/components/welcome/SampleQuiz.tsx:205
 msgid "<0>{pattern}</0>: {why}"
@@ -90,8 +86,8 @@ msgstr "3 passages × 5 questions"
 msgid "A username can't contain “@”."
 msgstr "A username can't contain “@”."
 
-#: app/components/account/index.tsx:18
-#: app/components/account/index.tsx:23
+#: app/components/account/index.tsx:17
+#: app/components/account/index.tsx:20
 #: app/components/layout/header/index.tsx:36
 #: app/components/layout/header/index.tsx:42
 #: app/components/layout/header/index.tsx:58
@@ -448,7 +444,7 @@ msgstr "Open the link below and choose a new password. The link works for one ho
 msgid "Page not found"
 msgstr "Page not found"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:28
+#: app/components/quiz/question-nav/QuestionGrid.tsx:32
 #: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
 #: app/components/welcome/ExamSections.tsx:77
@@ -497,11 +493,11 @@ msgstr "Put “{title}” down in place {place}."
 msgid "Put 4 pieces in order, and choose the one that goes in ★."
 msgstr "Put 4 pieces in order, and choose the one that goes in ★."
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:51
+#: app/components/quiz/question-nav/QuestionGrid.tsx:52
 msgid "Question {num} (answered)"
 msgstr "Question {num} (answered)"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:51
+#: app/components/quiz/question-nav/QuestionGrid.tsx:52
 msgid "Question {num} (unanswered)"
 msgstr "Question {num} (unanswered)"
 
@@ -541,7 +537,7 @@ msgid "Reset your password"
 msgstr "Reset your password"
 
 #: app/components/results/index.tsx:20
-#: app/components/results/Title.tsx:16
+#: app/components/results/Title.tsx:14
 #: app/routes/results.tsx:11
 msgid "Results"
 msgstr "Results"
@@ -606,7 +602,7 @@ msgstr "Show {label}"
 msgid "Sign in"
 msgstr "Sign in"
 
-#: app/components/account/index.tsx:31
+#: app/components/account/index.tsx:27
 #: app/components/layout/header/index.tsx:51
 msgid "Sign out"
 msgstr "Sign out"

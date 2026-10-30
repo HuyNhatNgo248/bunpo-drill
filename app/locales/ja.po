@@ -37,7 +37,7 @@ msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
 
 #: app/components/home/test-list/TestRow.tsx:77
-#: app/components/quiz/Title.tsx:15
+#: app/components/quiz/Title.tsx:13
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
@@ -52,10 +52,6 @@ msgstr "不正解 {wrong}問"
 #: app/components/results/ScoreCard.tsx:37
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
-
-#: app/components/layout/BackLink.tsx:8
-msgid "← Mock tests"
-msgstr "← テスト一覧"
 
 #: app/components/welcome/SampleQuiz.tsx:205
 msgid "<0>{pattern}</0>: {why}"
@@ -90,8 +86,8 @@ msgstr "3文章 × 5問"
 msgid "A username can't contain “@”."
 msgstr "ユーザー名に「@」は使えません。"
 
-#: app/components/account/index.tsx:18
-#: app/components/account/index.tsx:23
+#: app/components/account/index.tsx:17
+#: app/components/account/index.tsx:20
 #: app/components/layout/header/index.tsx:36
 #: app/components/layout/header/index.tsx:42
 #: app/components/layout/header/index.tsx:58
@@ -448,7 +444,7 @@ msgstr "下のリンクを開いて、新しいパスワードを決めてくだ
 msgid "Page not found"
 msgstr "ページが見つかりません"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:28
+#: app/components/quiz/question-nav/QuestionGrid.tsx:32
 #: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
 #: app/components/welcome/ExamSections.tsx:77
@@ -497,11 +493,11 @@ msgstr "「{title}」を{place}番目に置きました。"
 msgid "Put 4 pieces in order, and choose the one that goes in ★."
 msgstr "4つの言葉を並べかえて、★に入るものを選びます。"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:51
+#: app/components/quiz/question-nav/QuestionGrid.tsx:52
 msgid "Question {num} (answered)"
 msgstr "問題{num}（回答済み）"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:51
+#: app/components/quiz/question-nav/QuestionGrid.tsx:52
 msgid "Question {num} (unanswered)"
 msgstr "問題{num}（未回答）"
 
@@ -541,7 +537,7 @@ msgid "Reset your password"
 msgstr "パスワードの再設定"
 
 #: app/components/results/index.tsx:20
-#: app/components/results/Title.tsx:16
+#: app/components/results/Title.tsx:14
 #: app/routes/results.tsx:11
 msgid "Results"
 msgstr "結果"
@@ -606,7 +602,7 @@ msgstr "{label}を表示"
 msgid "Sign in"
 msgstr "ログイン"
 
-#: app/components/account/index.tsx:31
+#: app/components/account/index.tsx:27
 #: app/components/layout/header/index.tsx:51
 msgid "Sign out"
 msgstr "ログアウト"
