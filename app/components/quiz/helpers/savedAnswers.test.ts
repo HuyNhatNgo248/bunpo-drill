@@ -1,8 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { forgetAnswers, hasSavedAnswers, loadAnswers, savedAnsweredCount, saveAnswers } from "./savedAnswers";
+import { buildResultsView } from "#mocks/factories/views";
+import {
+  forgetAnswers,
+  hasSavedAnswers,
+  loadAnswers,
+  loadChecks,
+  savedAnsweredCount,
+  saveAnswers,
+  saveChecks,
+} from "./savedAnswers";
 
 const TEST_ID = "20261028-abc123";
 const KEY = `bunpo:answers:${TEST_ID}`;
+const CHECKS_KEY = `bunpo:checked:${TEST_ID}`;
+
+/** Part 1 of the test, graded. */
+const PART_1 = buildResultsView().sections[0];
 
 describe("saved answers", () => {
   it("loads the sheet that was saved for the test", () => {
@@ -47,5 +60,33 @@ describe("saved answers", () => {
 
     localStorage.setItem(KEY, "[1, 2]");
     expect(loadAnswers(TEST_ID)).toEqual({});
+  });
+});
+
+describe("saved checked parts", () => {
+  it("loads the parts that were checked, and forgets them with the sheet", () => {
+    saveAnswers(TEST_ID, { q1: 2 });
+    saveChecks(TEST_ID, { 1: PART_1 });
+
+    expect(loadChecks(TEST_ID)).toEqual({ 1: PART_1 });
+
+    forgetAnswers(TEST_ID);
+    expect(localStorage.getItem(CHECKS_KEY)).toBeNull();
+    expect(localStorage.getItem(KEY)).toBeNull();
+  });
+
+  it("removes the saved parts when none are saved", () => {
+    saveChecks(TEST_ID, { 1: PART_1 });
+    saveChecks(TEST_ID, {});
+
+    expect(localStorage.getItem(CHECKS_KEY)).toBeNull();
+  });
+
+  it("leaves out a part saved under another number or that is not a graded part, and reads broken JSON as none", () => {
+    localStorage.setItem(CHECKS_KEY, JSON.stringify({ 1: PART_1, 2: PART_1, 3: { no: 3 } }));
+    expect(loadChecks(TEST_ID)).toEqual({ 1: PART_1 });
+
+    localStorage.setItem(CHECKS_KEY, "{");
+    expect(loadChecks(TEST_ID)).toEqual({});
   });
 });

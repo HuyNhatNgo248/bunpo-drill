@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import type { Answers } from "~/lib/views";
-import { loadAnswers, saveAnswers } from "../helpers/savedAnswers";
+import { loadAnswers, loadChecks, saveAnswers, saveChecks, type CheckedSections } from "../helpers/savedAnswers";
 
 /**
  * The answer sheet, saved in this browser on every change and loaded again when the test is reopened.
  * The server renders an empty sheet; the saved one loads after hydration.
  */
-export function useSavedAnswers(testId: string) {
-  const [answers, setAnswers] = useState<Answers>({});
-  // Saving waits for the load, so the empty first sheet cannot overwrite the saved one.
+export const useSavedAnswers = (testId: string) => useSaved<Answers>(testId, loadAnswers, saveAnswers);
+
+/** The parts checked so far, kept the same way as the sheet. */
+export const useSavedChecks = (testId: string) => useSaved<CheckedSections>(testId, loadChecks, saveChecks);
+
+function useSaved<T extends object>(testId: string, load: (testId: string) => T, save: (testId: string, value: T) => void) {
+  const [value, setValue] = useState<T>({} as T);
+  // Saving waits for the load, so the empty first value cannot overwrite the saved one.
   const [loadedId, setLoadedId] = useState<string | null>(null);
 
   useEffect(() => {
-    setAnswers(loadAnswers(testId));
+    setValue(load(testId));
     setLoadedId(testId);
-  }, [testId]);
+  }, [testId, load]);
 
   useEffect(() => {
-    if (loadedId === testId) saveAnswers(testId, answers);
-  }, [testId, loadedId, answers]);
+    if (loadedId === testId) save(testId, value);
+  }, [testId, loadedId, value, save]);
 
-  return [answers, setAnswers] as const;
+  return [value, setValue] as const;
 }

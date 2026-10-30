@@ -1,24 +1,35 @@
 import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { buildPayload } from "#mocks/factories/payload";
 import { buildQuizView } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
-import { renderRoute } from "#tests/helpers/render";
+import { renderRoute, type StubRoute } from "#tests/helpers/render";
+import { gradeTest } from "~/lib/grading.server";
 import { Quiz } from ".";
 
 const QUIZ = buildQuizView({ title: "第1週 1日目" });
 
 const URL = `/tests/${QUIZ.id}`;
 
+/** The server's check of one part: it grades the answers it gets against the payload of QUIZ. */
+const CHECK_ROUTE: StubRoute = {
+  path: "/tests/:id/check",
+  action: async ({ request }) => {
+    const { section, answers } = await request.json();
+    return { section: gradeTest(buildPayload(), answers).sections[section - 1] };
+  },
+};
+
 /** The quiz page, with the route action that its submit reaches. */
 function renderQuiz(error?: string) {
   const { action, requests } = recordingAction();
-  renderRoute(<Quiz quiz={QUIZ} error={error} />, { url: URL, action });
+  renderRoute(<Quiz quiz={QUIZ} error={error} />, { url: URL, action, routes: [CHECK_ROUTE] });
   return requests;
 }
 
 /** The quiz page alone, for a test that leaves it and opens it again. */
-const renderRouteOfQuiz = () => renderRoute(<Quiz quiz={QUIZ} />, { url: URL });
+const renderRouteOfQuiz = () => renderRoute(<Quiz quiz={QUIZ} />, { url: URL, routes: [CHECK_ROUTE] });
 
 /** Picks the choice named `choice` of question `num`. */
 async function pick(num: number, choice: string) {
@@ -34,6 +45,13 @@ async function orderPieces() {
 }
 
 const submitButton = () => screen.getByRole("button", { name: "Submit" });
+
+/** Checks part `no` and confirms the dialog, then waits for the part's score. */
+async function checkPart(no: number, score: string) {
+  await userEvent.click(await screen.findByRole("button", { name: `Check Part ${no}` }));
+  await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Check" }));
+  await screen.findByText(score);
+}
 
 describe("Quiz", () => {
   it("shows each section with its instruction and its questions", async () => {
@@ -105,6 +123,58 @@ describe("Quiz", () => {
       renderQuiz();
 
       expect(await screen.findByText("Answered 0 / 3")).toBeInTheDocument();
+    });
+  });
+
+  describe("checking a part", () => {
+    it("asks first, then shows the part graded with its score, and locks its answers", async () => {
+      renderQuiz();
+      await pick(1, "かいがあって");
+
+      await userEvent.click(screen.getByRole("button", { name: "Check Part 1" }));
+      const dialog = screen.getByRole("alertdialog", { name: "Check Part 1?" });
+      await userEvent.click(within(dialog).getByRole("button", { name: "Check" }));
+
+      expect(await screen.findByText("1 / 1")).toBeInTheDocument();
+      expect(screen.getByText(/^Answer: .*かいがあって/)).toBeInTheDocument();
+      expect(screen.queryByRole("radiogroup", { name: "Choices for question 1" })).toBeNull();
+      expect(screen.queryByRole("button", { name: "Check Part 1" })).toBeNull();
+      expect(screen.getByRole("radiogroup", { name: "Choices for question 3" })).toBeInTheDocument();
+    });
+
+    it("says how many questions of the part are unanswered, and checks nothing when the learner goes back", async () => {
+      renderQuiz();
+
+      await userEvent.click(await screen.findByRole("button", { name: "Check Part 2" }));
+      await userEvent.click(within(screen.getByRole("alertdialog", { name: "1 question in this part is unanswered. Check anyway?" })).getByRole("button", { name: "Keep answering" }));
+
+      expect(screen.getByRole("button", { name: "Check Part 2" })).toBeInTheDocument();
+    });
+
+    it("keeps the checked part when the test is opened again", async () => {
+      const { unmount } = renderRouteOfQuiz();
+      await pick(1, "かいがあって");
+      await checkPart(1, "1 / 1");
+      unmount();
+
+      renderQuiz();
+
+      expect(await screen.findByText("1 / 1")).toBeInTheDocument();
+      expect(screen.queryByRole("radiogroup", { name: "Choices for question 1" })).toBeNull();
+    });
+
+    it("keeps the answers of a checked part when the rest are cleared, and sends them with the whole test", async () => {
+      const requests = renderQuiz();
+      await pick(1, "かいがあって");
+      await checkPart(1, "1 / 1");
+      await pick(3, "かいがあって");
+
+      await userEvent.click(screen.getByRole("button", { name: /Clear answers/ }));
+      await userEvent.click(submitButton());
+      await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Submit" }));
+
+      expect(screen.getByText("Answered 1 / 3")).toBeInTheDocument();
+      await waitFor(() => expect(requests).toEqual([{ method: "POST", path: URL, body: { answers: { q1: 2 } } }]));
     });
   });
 

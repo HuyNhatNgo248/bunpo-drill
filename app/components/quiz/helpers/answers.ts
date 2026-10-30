@@ -1,4 +1,5 @@
-import type { Answers, QuizQuestion, QuizView } from "~/lib/views";
+import type { Answers, QuizQuestion, QuizSection, QuizView } from "~/lib/views";
+import type { CheckedSections } from "./savedAnswers";
 
 /** A sentence-order question counts once all 4 slots are filled; the others once a choice is picked. */
 export function isAnswered(question: QuizQuestion, answers: Answers) {
@@ -18,4 +19,15 @@ export function quizProgress(quiz: QuizView, answers: Answers) {
     left: quiz.questionCount - answeredIds.size,
     percent: Math.round((answeredIds.size / quiz.questionCount) * 100),
   };
+}
+
+/** The answers to the questions of one part: what its check sends. */
+export function answersOf(section: QuizSection, answers: Answers): Answers {
+  const ids = section.groups.flatMap((group) => group.questions.map((q) => q.id));
+  return Object.fromEntries(ids.filter((id) => id in answers).map((id) => [id, answers[id]]));
+}
+
+/** The answers of the parts already checked: they are locked, so clearing the sheet keeps them. */
+export function checkedAnswers(quiz: QuizView, checks: CheckedSections, answers: Answers): Answers {
+  return Object.assign({}, ...quiz.sections.filter((section) => checks[section.no]).map((section) => answersOf(section, answers)));
 }

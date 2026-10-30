@@ -41,6 +41,10 @@ msgstr "{text}（配置済み）"
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
+#: app/components/quiz/CheckSection.tsx:48
+msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
+msgstr "{unanswered, plural, other {この問題には未回答が#問あります。採点しますか？}}"
+
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "不正解 {wrong}問"
@@ -164,9 +168,25 @@ msgstr "パスワードを変更"
 msgid "Changing…"
 msgstr "変更中…"
 
+#: app/components/quiz/CheckSection.tsx:58
+msgid "Check"
+msgstr "採点する"
+
+#: app/components/quiz/CheckSection.tsx:63
+msgid "Check Part {no}"
+msgstr "問題{no}を採点"
+
+#: app/components/quiz/CheckSection.tsx:54
+msgid "Check Part {no}?"
+msgstr "問題{no}を採点しますか？"
+
 #: app/components/results/index.tsx:28
 msgid "Check your answers"
 msgstr "解答の確認"
+
+#: app/components/quiz/CheckSection.tsx:63
+msgid "Checking…"
+msgstr "採点中…"
 
 #: app/components/quiz/ChoiceList.tsx:19
 msgid "Choices for question {num}"
@@ -339,6 +359,7 @@ msgstr "今日が試験日です。がんばってください。"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "本番形式で練習する、JLPTの文法"
 
+#: app/components/quiz/CheckSection.tsx:59
 #: app/components/quiz/SubmitBar.tsx:67
 msgid "Keep answering"
 msgstr "解答を続ける"
@@ -428,7 +449,7 @@ msgid "Page not found"
 msgstr "ページが見つかりません"
 
 #: app/components/quiz/question-nav/QuestionGrid.tsx:28
-#: app/components/quiz/Section.tsx:27
+#: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
 #: app/components/welcome/ExamSections.tsx:77
 #: app/components/welcome/SampleQuiz.tsx:62
@@ -708,6 +729,10 @@ msgstr "リンクが使えません"
 msgid "This link has expired or was already used. Send the email again."
 msgstr "このリンクは期限切れか、もう使われています。もう一度メールを送ってください。"
 
+#: app/routes/helpers/check.ts:24
+msgid "This part couldn't be checked. Please try again."
+msgstr "採点できませんでした。もう一度お試しください。"
+
 #: app/lib/errors.ts:28
 msgid "This test doesn't exist, or it may have been deleted."
 msgstr "このテストは存在しないか、削除された可能性があります。"
@@ -779,6 +804,10 @@ msgstr "ユーザー名（メールアドレス）かパスワードが違いま
 #: app/components/account/NameForm.tsx:21
 msgid "You sign in with it."
 msgstr "ログインに使います。"
+
+#: app/components/quiz/CheckSection.tsx:57
+msgid "You'll see the right answers, and this part's answers can't be changed after."
+msgstr "正解が表示され、この問題の解答はあとから変更できなくなります。"
 
 #: app/components/results/section-review/QuestionReview.tsx:53
 msgid "Your answer: {yours}"

@@ -1,4 +1,4 @@
-import type { Answer, Answers } from "~/lib/views";
+import type { Answer, Answers, ResultSection } from "~/lib/views";
 
 /**
  * The answer sheet of a test that is not submitted yet, kept in this browser so leaving the page loses nothing.
@@ -7,6 +7,10 @@ import type { Answer, Answers } from "~/lib/views";
  */
 
 const keyOf = (testId: string) => `bunpo:answers:${testId}`;
+const checksKeyOf = (testId: string) => `bunpo:checked:${testId}`;
+
+/** The parts checked so far, by part number, as the server graded them. Their answers are locked. */
+export type CheckedSections = Record<number, ResultSection>;
 
 const isChoice = (value: unknown) => Number.isInteger(value) && (value as number) >= 0 && (value as number) <= 3;
 
@@ -49,10 +53,44 @@ export function saveAnswers(testId: string, answers: Answers): void {
   }
 }
 
-/** Drops the saved sheet, once the test is submitted. */
+/** The saved checked parts, or none. Anything that is not a graded part under its own number is left out. */
+export function loadChecks(testId: string): CheckedSections {
+  try {
+    const saved: unknown = JSON.parse(localStorage.getItem(checksKeyOf(testId)) ?? "{}");
+    if (typeof saved !== "object" || saved === null || Array.isArray(saved)) return {};
+    return Object.fromEntries(Object.entries(saved).filter(([no, section]) => isGradedSection(Number(no), section)));
+  } catch {
+    return {};
+  }
+}
+
+const isGradedSection = (no: number, value: unknown): value is ResultSection => {
+  const section = value as ResultSection | null;
+  return (
+    typeof section === "object" &&
+    section !== null &&
+    section.no === no &&
+    Number.isInteger(section.correct) &&
+    Number.isInteger(section.total) &&
+    Array.isArray(section.groups)
+  );
+};
+
+/** Saves the checked parts. None removes the saved ones. */
+export function saveChecks(testId: string, checks: CheckedSections): void {
+  try {
+    if (Object.keys(checks).length) localStorage.setItem(checksKeyOf(testId), JSON.stringify(checks));
+    else localStorage.removeItem(checksKeyOf(testId));
+  } catch {
+    // Blocked or full: nothing is kept.
+  }
+}
+
+/** Drops the saved sheet and its checked parts, once the test is submitted. */
 export function forgetAnswers(testId: string): void {
   try {
     localStorage.removeItem(keyOf(testId));
+    localStorage.removeItem(checksKeyOf(testId));
   } catch {
     // Blocked: there is nothing to drop.
   }

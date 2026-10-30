@@ -41,6 +41,10 @@ msgstr "{text} (placed)"
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
+#: app/components/quiz/CheckSection.tsx:48
+msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
+msgstr "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
+
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "{wrong} wrong"
@@ -164,9 +168,25 @@ msgstr "Change password"
 msgid "Changing…"
 msgstr "Changing…"
 
+#: app/components/quiz/CheckSection.tsx:58
+msgid "Check"
+msgstr "Check"
+
+#: app/components/quiz/CheckSection.tsx:63
+msgid "Check Part {no}"
+msgstr "Check Part {no}"
+
+#: app/components/quiz/CheckSection.tsx:54
+msgid "Check Part {no}?"
+msgstr "Check Part {no}?"
+
 #: app/components/results/index.tsx:28
 msgid "Check your answers"
 msgstr "Check your answers"
+
+#: app/components/quiz/CheckSection.tsx:63
+msgid "Checking…"
+msgstr "Checking…"
 
 #: app/components/quiz/ChoiceList.tsx:19
 msgid "Choices for question {num}"
@@ -339,6 +359,7 @@ msgstr "It's exam day today. Good luck!"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "JLPT grammar practice in the real test's format"
 
+#: app/components/quiz/CheckSection.tsx:59
 #: app/components/quiz/SubmitBar.tsx:67
 msgid "Keep answering"
 msgstr "Keep answering"
@@ -428,7 +449,7 @@ msgid "Page not found"
 msgstr "Page not found"
 
 #: app/components/quiz/question-nav/QuestionGrid.tsx:28
-#: app/components/quiz/Section.tsx:27
+#: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
 #: app/components/welcome/ExamSections.tsx:77
 #: app/components/welcome/SampleQuiz.tsx:62
@@ -708,6 +729,10 @@ msgstr "This link can't be used"
 msgid "This link has expired or was already used. Send the email again."
 msgstr "This link has expired or was already used. Send the email again."
 
+#: app/routes/helpers/check.ts:24
+msgid "This part couldn't be checked. Please try again."
+msgstr "This part couldn't be checked. Please try again."
+
 #: app/lib/errors.ts:28
 msgid "This test doesn't exist, or it may have been deleted."
 msgstr "This test doesn't exist, or it may have been deleted."
@@ -779,6 +804,10 @@ msgstr "Wrong username (or email) or password."
 #: app/components/account/NameForm.tsx:21
 msgid "You sign in with it."
 msgstr "You sign in with it."
+
+#: app/components/quiz/CheckSection.tsx:57
+msgid "You'll see the right answers, and this part's answers can't be changed after."
+msgstr "You'll see the right answers, and this part's answers can't be changed after."
 
 #: app/components/results/section-review/QuestionReview.tsx:53
 msgid "Your answer: {yours}"

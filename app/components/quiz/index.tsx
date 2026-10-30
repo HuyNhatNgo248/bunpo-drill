@@ -1,18 +1,22 @@
 import { useCallback } from "react";
 import { useSubmit } from "react-router";
-import type { Answers, QuizView } from "~/lib/views";
+import type { Answers, QuizView, ResultSection } from "~/lib/views";
 import { Header } from "./Header";
-import { quizProgress } from "./helpers/answers";
-import { useSavedAnswers } from "./hooks/useSavedAnswers";
+import { checkedAnswers, quizProgress } from "./helpers/answers";
+import { useSavedAnswers, useSavedChecks } from "./hooks/useSavedAnswers";
 import { ProgressCard } from "./ProgressCard";
 import { QuestionNav } from "./question-nav";
 import { Section } from "./Section";
 import { SubmitBar } from "./SubmitBar";
 import { Title } from "./Title";
 
-/** The quiz page. The answer sheet lives here, saved in the browser, until it is submitted. */
+/**
+ * The quiz page. The answer sheet lives here, saved in the browser, until it is submitted. Each part can be
+ * checked on the way; the final submit still grades the whole test.
+ */
 export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
   const [answers, setAnswers] = useSavedAnswers(quiz.id);
+  const [checks, setChecks] = useSavedChecks(quiz.id);
   const submit = useSubmit();
   const { answeredIds, answered, left, percent } = quizProgress(quiz, answers);
 
@@ -20,6 +24,10 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
   const setAnswer = useCallback(
     (id: string, value: Answers[string]) => setAnswers((current) => ({ ...current, [id]: value })),
     [setAnswers],
+  );
+  const onChecked = useCallback(
+    (section: ResultSection) => setChecks((current) => ({ ...current, [section.no]: section })),
+    [setChecks],
   );
   const send = () => submit({ answers }, { method: "post", encType: "application/json" });
 
@@ -36,7 +44,15 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
 
           <div className="flex min-w-0 flex-col gap-3.5 md:gap-5">
             {quiz.sections.map((section) => (
-              <Section key={section.no} section={section} answers={answers} onAnswer={setAnswer} />
+              <Section
+                key={section.no}
+                testId={quiz.id}
+                section={section}
+                answers={answers}
+                onAnswer={setAnswer}
+                checked={checks[section.no]}
+                onChecked={onChecked}
+              />
             ))}
 
             <SubmitBar
@@ -44,7 +60,7 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
               answered={answeredIds}
               left={left}
               error={error}
-              onClear={() => setAnswers({})}
+              onClear={() => setAnswers((current) => checkedAnswers(quiz, checks, current))}
               onSubmit={send}
             />
           </div>

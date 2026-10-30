@@ -14,6 +14,7 @@ export default [
   route("tests/:id", "routes/quiz.tsx"),
   route("tests/:id/results", "routes/results.tsx"),
   route("tests/:id/retake", "routes/helpers/retake.ts"),
+  route("tests/:id/check", "routes/helpers/check.ts"),
   route("api/tests", "routes/helpers/api.tests.ts"),
   route("api/tests/:id", "routes/helpers/api.tests.$id.ts"),
 ] satisfies RouteConfig;
