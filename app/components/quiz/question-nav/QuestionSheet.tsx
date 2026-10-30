@@ -4,7 +4,8 @@ import { ChevronUp, LayoutGrid } from "lucide-react";
 import { useRef, useState } from "react";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "~/components/ui/sheet";
 import { jumpTo } from "./helpers/jumpTo";
-import { QuestionGrid, type QuestionListProps } from "./QuestionGrid";
+import type { QuizSection } from "~/lib/views";
+import { ANSWER_MARKS, answeredMarks, QuestionGrid } from "./QuestionGrid";
 
 /**
  * Mobile and tablet: a button in the bottom bar that opens the question list
@@ -15,7 +16,12 @@ export function QuestionSheet({
   answered,
   remaining,
   className,
-}: QuestionListProps & { remaining: number; className?: string }) {
+}: {
+  sections: QuizSection[];
+  answered: Set<string>;
+  remaining: number;
+  className?: string;
+}) {
   const { t } = useLingui();
   const [open, setOpen] = useState(false);
   const left = remaining;
@@ -65,7 +71,8 @@ export function QuestionSheet({
         <div className="flex flex-col gap-4 overflow-y-auto p-4 pb-6">
           <QuestionGrid
             sections={sections}
-            answered={answered}
+            markOf={answeredMarks(answered)}
+            marks={ANSWER_MARKS}
             onPick={(num) => {
               target.current = num;
               setOpen(false);

@@ -6,6 +6,7 @@ import { checkedAnswers, quizProgress } from "./helpers/answers";
 import { useSavedAnswers, useSavedChecks } from "./hooks/useSavedAnswers";
 import { ProgressCard } from "./ProgressCard";
 import { QuestionNav } from "./question-nav";
+import { ANSWER_MARKS, answeredMarks } from "./question-nav/QuestionGrid";
 import { Section } from "./Section";
 import { SubmitBar } from "./SubmitBar";
 import { Title } from "./Title";
@@ -40,7 +41,12 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
         <ProgressCard answered={answered} total={quiz.questionCount} percent={percent} />
 
         <div className="flex flex-col gap-3.5 md:gap-5 lg:grid lg:grid-cols-quiz lg:items-start lg:gap-6">
-          <QuestionNav sections={quiz.sections} answered={answeredIds} className="hidden lg:sticky lg:top-24 lg:flex" />
+          <QuestionNav
+            sections={quiz.sections}
+            markOf={answeredMarks(answeredIds)}
+            marks={ANSWER_MARKS}
+            className="hidden lg:sticky lg:top-24 lg:flex"
+          />
 
           <div className="flex min-w-0 flex-col gap-3.5 md:gap-5">
             {quiz.sections.map((section) => (

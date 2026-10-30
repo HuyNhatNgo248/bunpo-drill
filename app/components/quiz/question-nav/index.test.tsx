@@ -5,6 +5,7 @@ import { buildQuizView } from "#mocks/factories/views";
 import { loadCatalog } from "~/lib/i18n";
 import { questionAnchor } from "~/lib/sections";
 import { QuestionNav } from ".";
+import { ANSWER_MARKS, answeredMarks } from "./QuestionGrid";
 import { renderWithCatalog } from "#tests/helpers/render";
 
 const SECTIONS = buildQuizView().sections;
@@ -25,7 +26,7 @@ afterEach(() => {
 
 describe("QuestionNav", () => {
   it("lists every question by section, and marks the answered ones", () => {
-    renderWithCatalog(<QuestionNav sections={SECTIONS} answered={new Set(["q2"])} />);
+    renderWithCatalog(<QuestionNav sections={SECTIONS} markOf={answeredMarks(new Set(["q2"]))} marks={ANSWER_MARKS} />);
 
     const nav = screen.getByRole("navigation", { name: "Question list" });
     expect(nav).toHaveTextContent("Part 1Grammar form");
@@ -40,7 +41,7 @@ describe("QuestionNav", () => {
 
     it("names each section by its official Japanese name", async () => {
       await loadCatalog("ja");
-      renderWithCatalog(<QuestionNav sections={SECTIONS} answered={new Set()} />);
+      renderWithCatalog(<QuestionNav sections={SECTIONS} markOf={answeredMarks(new Set())} marks={ANSWER_MARKS} />);
 
       expect(screen.getByText("文法形式の判断")).toHaveAttribute("lang", "ja");
       expect(screen.queryByText("Grammar form")).toBeNull();
@@ -48,7 +49,7 @@ describe("QuestionNav", () => {
   });
 
   it("jumps to the card of a picked number", async () => {
-    renderWithCatalog(<QuestionNav sections={SECTIONS} answered={new Set()} />);
+    renderWithCatalog(<QuestionNav sections={SECTIONS} markOf={answeredMarks(new Set())} marks={ANSWER_MARKS} />);
     const card = addCard(3);
 
     await userEvent.click(screen.getByRole("button", { name: "Question 3 (unanswered)" }));

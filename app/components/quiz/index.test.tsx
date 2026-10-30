@@ -65,6 +65,12 @@ describe("Quiz", () => {
     expect(screen.getByText("Answered 0 / 3")).toBeInTheDocument();
   });
 
+  it("links back to the mock tests", async () => {
+    renderQuiz();
+
+    expect(await screen.findByRole("link", { name: "← Mock tests" })).toHaveAttribute("href", "/");
+  });
+
   describe("answering", () => {
     it("counts a picked choice, and marks its number in the question list", async () => {
       renderQuiz();

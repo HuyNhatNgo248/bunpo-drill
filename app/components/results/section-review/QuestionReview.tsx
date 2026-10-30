@@ -1,18 +1,25 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
+import { questionAnchor } from "~/lib/sections";
 import type { ResultQuestion } from "~/lib/views";
 
-/** One graded question: the sentence with the right answer in place, the learner's answer when wrong, the answer and why. */
-export function QuestionReview({ question }: { question: ResultQuestion }) {
+/**
+ * One graded question: the sentence with the right answer in place, the learner's answer when wrong, the answer and why.
+ * It is the question's anchor, which the question list jumps to; `className` sets how far below the top it lands.
+ */
+export function QuestionReview({ question, className }: { question: ResultQuestion; className?: string }) {
   const { t } = useLingui();
   const yours = question.yours;
   const answer = question.answer;
   return (
     <Card
+      id={questionAnchor(question.num)}
+      tabIndex={-1}
       className={cn(
-        "flex flex-col gap-2.5 p-4 md:gap-3 md:p-5",
+        "flex scroll-mt-4 flex-col gap-2.5 p-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:scroll-mt-6 md:gap-3 md:p-5",
         !question.correct && "border-primary-border bg-primary-soft",
+        className,
       )}
     >
       <span className="flex size-6.5 items-center justify-center rounded-lg border bg-card text-xs font-semibold text-secondary-foreground md:size-7 md:text-caption">

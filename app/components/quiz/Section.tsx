@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { Fragment } from "react";
 import { PassageReview } from "~/components/results/section-review/PassageReview";
 import { QuestionReview } from "~/components/results/section-review/QuestionReview";
-import { questionAnchor, SECTION_TITLES, sectionGloss, sectionInstruction } from "~/lib/sections";
+import { SECTION_TITLES, sectionGloss, sectionInstruction } from "~/lib/sections";
 import type { Answers, QuizSection, ResultSection } from "~/lib/views";
 import { CheckSection } from "./CheckSection";
 import { answersOf, isAnswered } from "./helpers/answers";
@@ -89,20 +89,14 @@ export function Section({
   );
 }
 
-/** A checked part's questions, graded. Each keeps its question's anchor, so the question list still jumps to it. */
+/** A checked part's questions, graded. Each card is its question's anchor, so the question list still jumps to it. */
 function CheckedGroups({ section }: { section: ResultSection }) {
   return section.groups.map((group, g) => (
     <Fragment key={g}>
       {group.segments && <PassageReview segments={group.segments} />}
       {group.questions.map((question) => (
-        <div
-          key={question.id}
-          id={questionAnchor(question.num)}
-          tabIndex={-1}
-          className="scroll-mt-20 rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:scroll-mt-24"
-        >
-          <QuestionReview question={question} />
-        </div>
+        // Lands below the quiz's pinned header (phone) or progress bar (desktop), as its question cards do.
+        <QuestionReview key={question.id} question={question} className="scroll-mt-20 md:scroll-mt-24" />
       ))}
     </Fragment>
   ));

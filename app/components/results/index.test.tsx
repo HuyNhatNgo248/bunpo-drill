@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   buildFillBlankQuestion,
   buildFillBlankSection,
@@ -60,6 +60,31 @@ describe("Results", () => {
     expect(await screen.findByText("1 / 3")).toBeInTheDocument();
     expect(screen.getByText("33%")).toHaveClass("text-warning");
     expect(screen.getByText("2 wrong · pass line 80%")).toBeInTheDocument();
+  });
+
+  describe("question list", () => {
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    it("marks each question right or wrong, a blank one wrong", async () => {
+      renderResults(FAILED);
+
+      const list = await screen.findByRole("navigation", { name: "Question list" });
+      expect(within(list).getByRole("button", { name: "Question 1 (wrong)" })).toBeInTheDocument();
+      expect(within(list).getByRole("button", { name: "Question 2 (correct)" })).toBeInTheDocument();
+      expect(within(list).getByRole("button", { name: "Question 3 (wrong)" })).toBeInTheDocument();
+    });
+
+    it("jumps to the answer of the question picked", async () => {
+      const scroll = vi.spyOn(HTMLElement.prototype, "scrollIntoView").mockImplementation(() => {});
+      renderResults(FAILED);
+
+      await userEvent.click(await screen.findByRole("button", { name: "Question 2 (correct)" }));
+
+      expect(document.activeElement).toBe(reviewOf(2));
+      expect(scroll).toHaveBeenCalledTimes(1);
+    });
   });
 
   it("shows the score of the attempt before, when there was one", async () => {

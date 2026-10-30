@@ -23,7 +23,7 @@ msgstr "{daysLeft, plural, one {With one mock test a day, you can take # test be
 msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:40
+#: app/components/quiz/question-nav/QuestionSheet.tsx:46
 #: app/components/quiz/SubmitBar.tsx:45
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
@@ -37,7 +37,7 @@ msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
 #: app/components/home/test-list/TestRow.tsx:77
-#: app/components/quiz/Title.tsx:13
+#: app/components/quiz/Title.tsx:14
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
@@ -52,6 +52,10 @@ msgstr "{wrong} wrong"
 #: app/components/results/ScoreCard.tsx:37
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "{wrong} wrong · pass line {pass}%"
+
+#: app/components/quiz/Title.tsx:17
+msgid "← Mock tests"
+msgstr "← Mock tests"
 
 #: app/components/welcome/SampleQuiz.tsx:205
 msgid "<0>{pattern}</0>: {why}"
@@ -95,26 +99,26 @@ msgstr "A username can't contain “@”."
 msgid "Account"
 msgstr "Account"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:40
+#: app/components/quiz/question-nav/QuestionSheet.tsx:46
 #: app/components/quiz/SubmitBar.tsx:45
 msgid "All answered"
 msgstr "All answered"
 
-#: app/components/results/section-review/QuestionReview.tsx:61
+#: app/components/results/section-review/QuestionReview.tsx:68
 msgid "Answer: {answer}"
 msgstr "Answer: {answer}"
 
 #: app/components/quiz/Header.tsx:28
-#: app/components/quiz/ProgressCard.tsx:16
-#: app/components/quiz/question-nav/Legend.tsx:8
+#: app/components/quiz/ProgressCard.tsx:17
+#: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Answered"
 msgstr "Answered"
 
-#: app/components/quiz/ProgressCard.tsx:12
+#: app/components/quiz/ProgressCard.tsx:13
 msgid "Answered {answered} / {total}"
 msgstr "Answered {answered} / {total}"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:60
+#: app/components/quiz/question-nav/QuestionSheet.tsx:66
 msgid "Answered {done} / {total}"
 msgstr "Answered {done} / {total}"
 
@@ -176,7 +180,7 @@ msgstr "Check Part {no}"
 msgid "Check Part {no}?"
 msgstr "Check Part {no}?"
 
-#: app/components/results/index.tsx:28
+#: app/components/results/index.tsx:33
 msgid "Check your answers"
 msgstr "Check your answers"
 
@@ -223,6 +227,10 @@ msgstr "Close"
 #: app/components/home/test-list/TestRow.tsx:117
 msgid "Continue"
 msgstr "Continue"
+
+#: app/components/quiz/question-nav/Legend.tsx:15
+msgid "Correct"
+msgstr "Correct"
 
 #: app/components/welcome/SampleQuiz.tsx:198
 msgid "Correct!"
@@ -444,7 +452,7 @@ msgstr "Open the link below and choose a new password. The link works for one ho
 msgid "Page not found"
 msgstr "Page not found"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:32
+#: app/components/quiz/question-nav/QuestionGrid.tsx:58
 #: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
 #: app/components/welcome/ExamSections.tsx:77
@@ -493,17 +501,25 @@ msgstr "Put “{title}” down in place {place}."
 msgid "Put 4 pieces in order, and choose the one that goes in ★."
 msgstr "Put 4 pieces in order, and choose the one that goes in ★."
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:52
+#: app/components/quiz/question-nav/QuestionGrid.tsx:74
 msgid "Question {num} (answered)"
 msgstr "Question {num} (answered)"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:52
+#: app/components/quiz/question-nav/QuestionGrid.tsx:76
+msgid "Question {num} (correct)"
+msgstr "Question {num} (correct)"
+
+#: app/components/quiz/question-nav/QuestionGrid.tsx:75
 msgid "Question {num} (unanswered)"
 msgstr "Question {num} (unanswered)"
 
+#: app/components/quiz/question-nav/QuestionGrid.tsx:77
+msgid "Question {num} (wrong)"
+msgstr "Question {num} (wrong)"
+
 #: app/components/quiz/question-nav/index.tsx:11
-#: app/components/quiz/question-nav/QuestionSheet.tsx:38
-#: app/components/quiz/question-nav/QuestionSheet.tsx:57
+#: app/components/quiz/question-nav/QuestionSheet.tsx:44
+#: app/components/quiz/question-nav/QuestionSheet.tsx:63
 msgid "Question list"
 msgstr "Question list"
 
@@ -536,7 +552,7 @@ msgstr "Reorder “{title}”"
 msgid "Reset your password"
 msgstr "Reset your password"
 
-#: app/components/results/index.tsx:20
+#: app/components/results/index.tsx:25
 #: app/components/results/Title.tsx:14
 #: app/routes/results.tsx:11
 msgid "Results"
@@ -737,8 +753,8 @@ msgstr "This test doesn't exist, or it may have been deleted."
 msgid "Try again"
 msgstr "Try again"
 
-#: app/components/quiz/question-nav/Legend.tsx:12
-#: app/components/results/section-review/QuestionReview.tsx:56
+#: app/components/quiz/question-nav/Legend.tsx:15
+#: app/components/results/section-review/QuestionReview.tsx:63
 msgid "Unanswered"
 msgstr "Unanswered"
 
@@ -793,6 +809,10 @@ msgstr "Week {week}"
 msgid "With an account, you can take full 45-question mock tests."
 msgstr "With an account, you can take full 45-question mock tests."
 
+#: app/components/quiz/question-nav/Legend.tsx:15
+msgid "Wrong"
+msgstr "Wrong"
+
 #: app/routes/signin.tsx:27
 msgid "Wrong username (or email) or password."
 msgstr "Wrong username (or email) or password."
@@ -805,7 +825,7 @@ msgstr "You sign in with it."
 msgid "You'll see the right answers, and this part's answers can't be changed after."
 msgstr "You'll see the right answers, and this part's answers can't be changed after."
 
-#: app/components/results/section-review/QuestionReview.tsx:53
+#: app/components/results/section-review/QuestionReview.tsx:60
 msgid "Your answer: {yours}"
 msgstr "Your answer: {yours}"
 

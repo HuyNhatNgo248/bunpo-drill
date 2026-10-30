@@ -23,7 +23,7 @@ msgstr "{daysLeft, plural, other {1日1回の模擬試験なら、試験日ま�
 msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 msgstr "{left, plural, other {未回答が#問あります。提出しますか？}}"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:40
+#: app/components/quiz/question-nav/QuestionSheet.tsx:46
 #: app/components/quiz/SubmitBar.tsx:45
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
@@ -37,7 +37,7 @@ msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
 
 #: app/components/home/test-list/TestRow.tsx:77
-#: app/components/quiz/Title.tsx:13
+#: app/components/quiz/Title.tsx:14
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
@@ -52,6 +52,10 @@ msgstr "不正解 {wrong}問"
 #: app/components/results/ScoreCard.tsx:37
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
+
+#: app/components/quiz/Title.tsx:17
+msgid "← Mock tests"
+msgstr "← テスト一覧"
 
 #: app/components/welcome/SampleQuiz.tsx:205
 msgid "<0>{pattern}</0>: {why}"
@@ -95,26 +99,26 @@ msgstr "ユーザー名に「@」は使えません。"
 msgid "Account"
 msgstr "アカウント"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:40
+#: app/components/quiz/question-nav/QuestionSheet.tsx:46
 #: app/components/quiz/SubmitBar.tsx:45
 msgid "All answered"
 msgstr "すべて回答済み"
 
-#: app/components/results/section-review/QuestionReview.tsx:61
+#: app/components/results/section-review/QuestionReview.tsx:68
 msgid "Answer: {answer}"
 msgstr "正解：{answer}"
 
 #: app/components/quiz/Header.tsx:28
-#: app/components/quiz/ProgressCard.tsx:16
-#: app/components/quiz/question-nav/Legend.tsx:8
+#: app/components/quiz/ProgressCard.tsx:17
+#: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Answered"
 msgstr "回答済み"
 
-#: app/components/quiz/ProgressCard.tsx:12
+#: app/components/quiz/ProgressCard.tsx:13
 msgid "Answered {answered} / {total}"
 msgstr "回答済み {answered} / {total}"
 
-#: app/components/quiz/question-nav/QuestionSheet.tsx:60
+#: app/components/quiz/question-nav/QuestionSheet.tsx:66
 msgid "Answered {done} / {total}"
 msgstr "回答済み {done} / {total}"
 
@@ -176,7 +180,7 @@ msgstr "問題{no}を採点"
 msgid "Check Part {no}?"
 msgstr "問題{no}を採点しますか？"
 
-#: app/components/results/index.tsx:28
+#: app/components/results/index.tsx:33
 msgid "Check your answers"
 msgstr "解答の確認"
 
@@ -223,6 +227,10 @@ msgstr "閉じる"
 #: app/components/home/test-list/TestRow.tsx:117
 msgid "Continue"
 msgstr "続きから"
+
+#: app/components/quiz/question-nav/Legend.tsx:15
+msgid "Correct"
+msgstr "正解"
 
 #: app/components/welcome/SampleQuiz.tsx:198
 msgid "Correct!"
@@ -444,7 +452,7 @@ msgstr "下のリンクを開いて、新しいパスワードを決めてくだ
 msgid "Page not found"
 msgstr "ページが見つかりません"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:32
+#: app/components/quiz/question-nav/QuestionGrid.tsx:58
 #: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
 #: app/components/welcome/ExamSections.tsx:77
@@ -493,17 +501,25 @@ msgstr "「{title}」を{place}番目に置きました。"
 msgid "Put 4 pieces in order, and choose the one that goes in ★."
 msgstr "4つの言葉を並べかえて、★に入るものを選びます。"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:52
+#: app/components/quiz/question-nav/QuestionGrid.tsx:74
 msgid "Question {num} (answered)"
 msgstr "問題{num}（回答済み）"
 
-#: app/components/quiz/question-nav/QuestionGrid.tsx:52
+#: app/components/quiz/question-nav/QuestionGrid.tsx:76
+msgid "Question {num} (correct)"
+msgstr "問題{num}（正解）"
+
+#: app/components/quiz/question-nav/QuestionGrid.tsx:75
 msgid "Question {num} (unanswered)"
 msgstr "問題{num}（未回答）"
 
+#: app/components/quiz/question-nav/QuestionGrid.tsx:77
+msgid "Question {num} (wrong)"
+msgstr "問題{num}（不正解）"
+
 #: app/components/quiz/question-nav/index.tsx:11
-#: app/components/quiz/question-nav/QuestionSheet.tsx:38
-#: app/components/quiz/question-nav/QuestionSheet.tsx:57
+#: app/components/quiz/question-nav/QuestionSheet.tsx:44
+#: app/components/quiz/question-nav/QuestionSheet.tsx:63
 msgid "Question list"
 msgstr "問題一覧"
 
@@ -536,7 +552,7 @@ msgstr "「{title}」を並べ替え"
 msgid "Reset your password"
 msgstr "パスワードの再設定"
 
-#: app/components/results/index.tsx:20
+#: app/components/results/index.tsx:25
 #: app/components/results/Title.tsx:14
 #: app/routes/results.tsx:11
 msgid "Results"
@@ -737,8 +753,8 @@ msgstr "このテストは存在しないか、削除された可能性があり
 msgid "Try again"
 msgstr "もう一度"
 
-#: app/components/quiz/question-nav/Legend.tsx:12
-#: app/components/results/section-review/QuestionReview.tsx:56
+#: app/components/quiz/question-nav/Legend.tsx:15
+#: app/components/results/section-review/QuestionReview.tsx:63
 msgid "Unanswered"
 msgstr "未回答"
 
@@ -793,6 +809,10 @@ msgstr "第{week}週"
 msgid "With an account, you can take full 45-question mock tests."
 msgstr "アカウントを作ると、45問の模擬試験が受けられます。"
 
+#: app/components/quiz/question-nav/Legend.tsx:15
+msgid "Wrong"
+msgstr "不正解"
+
 #: app/routes/signin.tsx:27
 msgid "Wrong username (or email) or password."
 msgstr "ユーザー名（メールアドレス）かパスワードが違います。"
@@ -805,7 +825,7 @@ msgstr "ログインに使います。"
 msgid "You'll see the right answers, and this part's answers can't be changed after."
 msgstr "正解が表示され、この問題の解答はあとから変更できなくなります。"
 
-#: app/components/results/section-review/QuestionReview.tsx:53
+#: app/components/results/section-review/QuestionReview.tsx:60
 msgid "Your answer: {yours}"
 msgstr "あなたの解答：{yours}"
 
