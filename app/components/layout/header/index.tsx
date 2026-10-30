@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { ChevronLeft, LogOut, UserRound } from "lucide-react";
+import { ChevronLeft, LogIn, LogOut, UserRound } from "lucide-react";
 import { Form, Link } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
@@ -9,7 +9,7 @@ import { LanguageSwitch } from "./LanguageSwitch";
 /**
  * Desktop: brand on the left; on the right the language switch, then "← Mock tests" when `back` is set,
  * Account and Sign out when `account` is set, or Sign in and Create account for a signed-out `guest`.
- * Mobile: the language, Account and Sign out buttons show only their icons; with a `mobileTitle`,
+ * Mobile: the language, Account, Sign out and Sign in buttons show only their icons; with a `mobileTitle`,
  * a back chevron and the title replace the brand.
  */
 export function AppHeader({
@@ -41,10 +41,7 @@ export function AppHeader({
             )}
             {account && (
               <nav aria-label={t`Account`} className="flex items-center gap-1">
-                <Separator
-                  orientation="vertical"
-                  className="data-[orientation=vertical]:h-4 data-[orientation=vertical]:self-center"
-                />
+                <NavSeparator />
                 <Button asChild variant="ghost" size="sm">
                   <Link to="/account">
                     <UserRound aria-hidden="true" />
@@ -53,10 +50,7 @@ export function AppHeader({
                     </span>
                   </Link>
                 </Button>
-                <Separator
-                  orientation="vertical"
-                  className="data-[orientation=vertical]:h-4 data-[orientation=vertical]:self-center"
-                />
+                <NavSeparator />
                 <Form method="post" action="/logout">
                   <Button type="submit" variant="ghost" size="sm">
                     <LogOut aria-hidden="true" />
@@ -69,9 +63,13 @@ export function AppHeader({
             )}
             {guest && (
               <nav aria-label={t`Account`} className="flex items-center gap-1">
-                <Button asChild variant="link" size="sm">
+                <NavSeparator />
+                <Button asChild variant="ghost" size="sm">
                   <Link to="/signin">
-                    <Trans>Sign in</Trans>
+                    <LogIn aria-hidden="true" />
+                    <span className="sr-only md:not-sr-only">
+                      <Trans>Sign in</Trans>
+                    </span>
                   </Link>
                 </Button>
                 <Button asChild size="sm">
@@ -98,5 +96,14 @@ export function AppHeader({
         </div>
       )}
     </header>
+  );
+}
+
+function NavSeparator() {
+  return (
+    <Separator
+      orientation="vertical"
+      className="data-[orientation=vertical]:h-4 data-[orientation=vertical]:self-center"
+    />
   );
 }
