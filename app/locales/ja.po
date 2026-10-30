@@ -89,8 +89,8 @@ msgstr "ユーザー名に「@」は使えません。"
 #: app/components/account/index.tsx:17
 #: app/components/account/index.tsx:20
 #: app/components/layout/header/index.tsx:43
-#: app/components/layout/header/index.tsx:48
-#: app/components/layout/header/index.tsx:67
+#: app/components/layout/header/index.tsx:49
+#: app/components/layout/header/index.tsx:65
 #: app/routes/account.tsx:12
 msgid "Account"
 msgstr "アカウント"
@@ -133,12 +133,12 @@ msgid "Back to sign in"
 msgstr "ログインに戻る"
 
 #: app/components/error-pages/ErrorPage.tsx:45
-#: app/components/layout/header/index.tsx:87
+#: app/components/layout/header/index.tsx:89
 #: app/components/results/Actions.tsx:15
 msgid "Back to the mock tests"
 msgstr "テスト一覧に戻る"
 
-#: app/components/quiz/QuestionCard.tsx:38
+#: app/components/quiz/QuestionCard.tsx:43
 msgid "Blank （{num}） in the passage"
 msgstr "文章中の（{num}）に入るもの"
 
@@ -212,7 +212,7 @@ msgstr "続きから"
 msgid "Correct!"
 msgstr "正解！"
 
-#: app/components/layout/header/index.tsx:75
+#: app/components/layout/header/index.tsx:77
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:44
 #: app/components/welcome/SampleQuiz.tsx:231
@@ -307,7 +307,7 @@ msgstr "復習におすすめの文法"
 msgid "Have an account? <0>Sign in</0>"
 msgstr "アカウントをお持ちの方は <0>ログイン</0>"
 
-#: app/lib/password-reset.server.ts:90
+#: app/lib/password-reset.server.ts:91
 msgid "Hi {name},"
 msgstr "{name}さん"
 
@@ -319,7 +319,7 @@ msgstr "{label}を隠す"
 msgid "If there's an account for {sent}, we sent the link. It works for one hour. If it doesn't arrive, check your spam folder too."
 msgstr "{sent} のアカウントがあれば、リンクを送りました。リンクは1時間有効です。届かない場合は、迷惑メールのフォルダも確認してください。"
 
-#: app/lib/password-reset.server.ts:96
+#: app/lib/password-reset.server.ts:97
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
@@ -354,7 +354,7 @@ msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/home/LevelTabs.tsx:17
+#: app/components/home/LevelTabs.tsx:16
 msgid "Level"
 msgstr "レベル"
 
@@ -419,7 +419,7 @@ msgstr "復習する文法はありません。全問正解でした。"
 msgid "Number"
 msgstr "番号"
 
-#: app/lib/password-reset.server.ts:92
+#: app/lib/password-reset.server.ts:93
 msgid "Open the link below and choose a new password. The link works for one hour, and only once."
 msgstr "下のリンクを開いて、新しいパスワードを決めてください。リンクは1時間有効で、一度だけ使えます。"
 
@@ -577,7 +577,7 @@ msgstr "文の組み立て"
 msgid "Show {label}"
 msgstr "{label}を表示"
 
-#: app/components/layout/header/index.tsx:70
+#: app/components/layout/header/index.tsx:71
 #: app/components/login/index.tsx:17
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:49
@@ -586,7 +586,7 @@ msgid "Sign in"
 msgstr "ログイン"
 
 #: app/components/account/index.tsx:27
-#: app/components/layout/header/index.tsx:60
+#: app/components/layout/header/index.tsx:58
 msgid "Sign out"
 msgstr "ログアウト"
 
@@ -784,7 +784,7 @@ msgstr "ログインに使います。"
 msgid "Your answer: {yours}"
 msgstr "あなたの解答：{yours}"
 
-#: app/routes/quiz.tsx:26
+#: app/routes/quiz.tsx:29
 msgid "Your answers couldn't be read. Please try again."
 msgstr "回答を読み取れませんでした。もう一度お試しください。"
 
@@ -792,6 +792,6 @@ msgstr "回答を読み取れませんでした。もう一度お試しくださ
 msgid "Your current password is wrong."
 msgstr "現在のパスワードが違います。"
 
-#: app/lib/password-reset.server.ts:88
+#: app/lib/password-reset.server.ts:89
 msgid "文法ドリル: reset your password"
 msgstr "文法ドリル：パスワードの再設定"
