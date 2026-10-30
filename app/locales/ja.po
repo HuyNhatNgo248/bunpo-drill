@@ -27,7 +27,7 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
-#: app/components/home/LevelUnavailable.tsx:12
+#: app/components/home/LevelUnavailable.tsx:21
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
 
@@ -408,7 +408,7 @@ msgstr "復習済みにする"
 msgid "Mock tests"
 msgstr "模擬試験"
 
-#: app/components/home/LevelUnavailable.tsx:15
+#: app/components/home/LevelUnavailable.tsx:24
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 

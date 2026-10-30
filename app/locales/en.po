@@ -27,7 +27,7 @@ msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# q
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
-#: app/components/home/LevelUnavailable.tsx:12
+#: app/components/home/LevelUnavailable.tsx:21
 msgid "{level} isn't available yet"
 msgstr "{level} isn't available yet"
 
@@ -408,7 +408,7 @@ msgstr "Mark as reviewed"
 msgid "Mock tests"
 msgstr "Mock tests"
 
-#: app/components/home/LevelUnavailable.tsx:15
+#: app/components/home/LevelUnavailable.tsx:24
 msgid "Mock tests for {level} are coming later."
 msgstr "Mock tests for {level} are coming later."
 

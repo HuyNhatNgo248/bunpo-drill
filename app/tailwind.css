@@ -187,4 +187,12 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+  /* Hairline figures (@lucasmarkes/hairline) draw in the app's tokens: plates in the card colour they sit on. */
+  [data-hairline] {
+    --hairline-plate: var(--card);
+    --hairline-hi: var(--secondary-foreground);
+    --hairline-edge: var(--faint);
+    --hairline-mid: var(--input);
+    --hairline-lo: var(--border);
+  }
 }
