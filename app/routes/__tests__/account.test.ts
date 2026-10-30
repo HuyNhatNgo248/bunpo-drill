@@ -4,7 +4,7 @@ import { routeArgs } from "#tests/helpers/route";
 import { signedInRequest } from "#tests/helpers/session";
 import { thrownBy } from "#tests/helpers/thrown";
 import { db } from "~/lib/db.server";
-import { createUser, getUser, verifyUser } from "~/lib/users.server";
+import { createUser, forgetSessionVersions, getUser, verifyUser } from "~/lib/users.server";
 import { action, loader } from "../account";
 
 const URL = "https://bunpo.test/account";
@@ -40,6 +40,7 @@ describe("account loader", () => {
   it("answers 401 for a cookie of a user that no longer exists", async () => {
     const request = await signedInRequest(999, URL);
     await (await db()).execute("DELETE FROM users WHERE id = 999");
+    forgetSessionVersions();
 
     expect(await thrownBy(() => loader(routeArgs<Parameters<typeof loader>[0]>(request)))).toMatchObject({ status: 401 });
   });

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { BLANK, splitPassage, type PassageQuestion, type TestPayload } from "./payload";
-import type { StoredTest, Submission } from "./tests.server";
+import type { ListedTest, StoredTest, Submission } from "./tests.server";
 import type {
   Answer,
   Answers,
@@ -203,13 +203,13 @@ export function toResultsView(test: StoredTest, submission: Submission): Results
   };
 }
 
-export function toSummary(test: StoredTest): TestSummary {
+export function toSummary(test: ListedTest): TestSummary {
   const { payload, submission } = test;
   return {
     id: test.id,
     title: payload.title,
     level: payload.level,
-    questionCount: questionCount(payload),
+    questionCount: test.questionCount,
     weeks: [...new Set(payload.grammarPoints.map((point) => point.week))].sort((a, b) => a - b),
     result: submission
       ? { score: submission.score, total: submission.total, percent: percentOf(submission.score, submission.total) }
@@ -220,12 +220,12 @@ export function toSummary(test: StoredTest): TestSummary {
 }
 
 /** The last attempt from before `submission`, or the last of all when there is none (a retake under way). */
-function previousAttempt({ attempts }: StoredTest, submission: Submission | null) {
+function previousAttempt({ attempts }: Pick<StoredTest, "attempts">, submission: Pick<Submission, "submittedAt"> | null) {
   const before = attempts.filter((attempt) => !submission || attempt.submittedAt < submission.submittedAt).at(-1);
   return before ? { score: before.score, total: before.total } : null;
 }
 
-function reviewChips(test: StoredTest, grammarIds: string[]): ReviewChip[] {
+function reviewChips(test: Pick<ListedTest, "payload" | "reviewed">, grammarIds: string[]): ReviewChip[] {
   return grammarIds.flatMap((grammarId) => {
     const point = test.payload.grammarPoints.find((p) => p.id === grammarId);
     if (!point) return [];

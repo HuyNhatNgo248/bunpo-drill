@@ -1,4 +1,4 @@
-import type { StoredTest, Submission } from "~/lib/tests.server";
+import type { ListedTest, StoredTest, Submission } from "~/lib/tests.server";
 import { buildPayload } from "./payload";
 
 /**
@@ -22,6 +22,18 @@ export function buildStoredTest(overrides: Partial<StoredTest> = {}): StoredTest
     attempts: [],
     ...overrides,
   };
+}
+
+/**
+ * A test as the list reads it: `buildStoredTest()` without its questions and answers.
+ *
+ * @example
+ * buildListedTest().questionCount; // -> 3
+ */
+export function buildListedTest(overrides: Partial<ListedTest> = {}): ListedTest {
+  const { payload, ...test } = buildStoredTest();
+  const { title, level, grammarPoints } = payload;
+  return { ...test, payload: { title, level, grammarPoints }, questionCount: 3, ...overrides };
 }
 
 /** A submission with no answers: 0 of the 3 questions of `buildPayload()`. */

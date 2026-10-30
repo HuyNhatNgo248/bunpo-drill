@@ -55,10 +55,29 @@ export async function getUser(id: number): Promise<User | null> {
   return rows[0] ? toUser(rows[0]) : null;
 }
 
+/**
+ * Session versions read in the last minute, so a signed-in page needs no database round trip just to check
+ * the cookie. A password reset in this process forgets them at once.
+ * shortcut: per process, so a reset made by another one (a second instance, `pnpm dev` on the same Turso database)
+ * reaches this one only after VERSION_TTL_MS; share or drop the cache when running more than one instance.
+ */
+const versions = new Map<number, { version: number; readAt: number }>();
+const VERSION_TTL_MS = 60_000;
+
 /** The version that the user's login cookies must hold, or null when there is no such user. */
 export async function getSessionVersion(id: number): Promise<number | null> {
+  const cached = versions.get(id);
+  if (cached && Date.now() - cached.readAt < VERSION_TTL_MS) return cached.version;
   const { rows } = await (await db()).execute({ sql: "SELECT session_version FROM users WHERE id = ?", args: [id] });
-  return rows[0] ? Number(rows[0].session_version) : null;
+  if (!rows[0]) return null;
+  const version = Number(rows[0].session_version);
+  versions.set(id, { version, readAt: Date.now() });
+  return version;
+}
+
+/** Forgets every cached session version; call it after changing one. */
+export function forgetSessionVersions() {
+  versions.clear();
 }
 
 /** The user with this normalized email, or null. */

@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/react/macro";
+import { memo } from "react";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { questionAnchor } from "~/lib/sections";
@@ -6,16 +7,20 @@ import type { Answers, QuizQuestion } from "~/lib/views";
 import { ChoiceList } from "./ChoiceList";
 import { SentenceOrder } from "./sentence-order";
 
-/** One question: its number, its prompt, and the choices or the sentence-order slots. */
-export function QuestionCard({
+/**
+ * One question: its number, its prompt, and the choices or the sentence-order slots.
+ * Memoized with a stable `onAnswer`, so answering one question re-renders only its own card.
+ */
+export const QuestionCard = memo(function QuestionCard({
   question,
   answer,
   onAnswer,
 }: {
   question: QuizQuestion;
   answer: Answers[string] | undefined;
-  onAnswer: (value: Answers[string]) => void;
+  onAnswer: (id: string, value: Answers[string]) => void;
 }) {
+  const answerThis = (value: Answers[string]) => onAnswer(question.id, value);
   const num = question.num;
   return (
     <Card
@@ -47,15 +52,15 @@ export function QuestionCard({
       )}
 
       {question.type === "sentence-order" ? (
-        <SentenceOrder question={question} slots={Array.isArray(answer) ? answer : undefined} onChange={onAnswer} />
+        <SentenceOrder question={question} slots={Array.isArray(answer) ? answer : undefined} onChange={answerThis} />
       ) : (
         <ChoiceList
           num={question.num}
           choices={question.choices}
           picked={typeof answer === "number" ? answer : null}
-          onPick={onAnswer}
+          onPick={answerThis}
         />
       )}
     </Card>
   );
-}
+});

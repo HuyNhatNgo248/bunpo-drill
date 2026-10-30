@@ -42,7 +42,7 @@ export function Section({
             key={question.id}
             question={question}
             answer={answers[question.id]}
-            onAnswer={(value) => onAnswer(question.id, value)}
+            onAnswer={onAnswer}
           />
         ));
         // Its own box, so the passage only stays pinned while its own questions scroll by.

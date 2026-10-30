@@ -26,7 +26,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Noto+Sans+JP:wght@400..700&display=swap",
   },
 ];
 
@@ -57,7 +57,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export function meta({ error, matches }: Route.MetaArgs) {
   // Pages set their own titles; this one names the error page.
-  return error ? [{ title: `${translate(localeFromMatches(matches), describeError(error).title)} · 文法ドリル` }] : [];
+  return error
+    ? [
+        {
+          title: `${translate(localeFromMatches(matches), describeError(error).title)} · 文法ドリル`,
+        },
+      ]
+    : [];
 }
 
 export default function App() {

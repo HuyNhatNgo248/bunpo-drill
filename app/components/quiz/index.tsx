@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useSubmit } from "react-router";
 import type { Answers, QuizView } from "~/lib/views";
 import { Header } from "./Header";
@@ -15,7 +16,11 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
   const submit = useSubmit();
   const { answeredIds, answered, left, percent } = quizProgress(quiz, answers);
 
-  const setAnswer = (id: string, value: Answers[string]) => setAnswers((current) => ({ ...current, [id]: value }));
+  // Stable, so a question card re-renders only when its own answer changes.
+  const setAnswer = useCallback(
+    (id: string, value: Answers[string]) => setAnswers((current) => ({ ...current, [id]: value })),
+    [setAnswers],
+  );
   const send = () => submit({ answers }, { method: "post", encType: "application/json" });
 
   return (

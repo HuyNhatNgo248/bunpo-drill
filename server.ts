@@ -12,6 +12,12 @@ const PORT = Number(process.env.PORT ?? 3001);
 const app = express();
 app.disable("x-powered-by");
 app.use(compression());
+// React Router flushes after every chunk it writes, which restarts gzip each time (a page came out 3× larger).
+// shortcut: nothing streams late (no <Await> or Suspense), so compress each response whole; drop this once one does.
+app.use((_req, res, next) => {
+  res.flush = () => {};
+  next();
+});
 const server = createServer(app);
 
 let load: () => Promise<ServerApp>;

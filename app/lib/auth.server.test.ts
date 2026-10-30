@@ -4,6 +4,7 @@ import { resetDatabase } from "#tests/helpers/db";
 import { API_TOKEN, SESSION_SECRET } from "#tests/helpers/env";
 import { ensureUser } from "#tests/helpers/session";
 import { db } from "./db.server";
+import { forgetSessionVersions } from "./users.server";
 import {
   currentUserId,
   isSignedIn,
@@ -136,6 +137,7 @@ describe("currentUserId", () => {
   it("returns null for a cookie of a user that no longer exists", async () => {
     const request = await signedInRequest();
     await (await db()).execute({ sql: "DELETE FROM users WHERE id = ?", args: [USER_ID] });
+    forgetSessionVersions();
 
     expect(await currentUserId(request)).toBeNull();
   });
@@ -143,6 +145,7 @@ describe("currentUserId", () => {
   it("returns null for a cookie of an older session version, as after a password reset", async () => {
     const request = await signedInRequest();
     await (await db()).execute({ sql: "UPDATE users SET session_version = 1 WHERE id = ?", args: [USER_ID] });
+    forgetSessionVersions();
 
     expect(await currentUserId(request)).toBeNull();
     expect(await currentUserId(await signedInRequest())).toBe(USER_ID);

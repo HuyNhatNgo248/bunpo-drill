@@ -9,7 +9,7 @@ import {
   buildSentenceOrderSection,
   GRAMMAR_ID,
 } from "#mocks/factories/payload";
-import { buildStoredTest, buildSubmission } from "#mocks/factories/tests";
+import { buildListedTest, buildStoredTest, buildSubmission } from "#mocks/factories/tests";
 import {
   gradeTest,
   questionCount,
@@ -232,7 +232,7 @@ describe("toResultsView", () => {
 
 describe("toSummary", () => {
   it("sums up a test that is not taken yet", () => {
-    expect(toSummary(buildStoredTest())).toEqual({
+    expect(toSummary(buildListedTest())).toEqual({
       id: "20261027-abc123",
       title: "第1週 1日目",
       level: "N2",
@@ -251,11 +251,11 @@ describe("toSummary", () => {
       buildGrammarPoint({ id: "n2-w2-d2-g1", week: 2, day: 2 }),
     ];
 
-    expect(toSummary(buildStoredTest({ payload: buildPayload({ grammarPoints }) })).weeks).toEqual([1, 2]);
+    expect(toSummary(buildListedTest({ payload: buildPayload({ grammarPoints }) })).weeks).toEqual([1, 2]);
   });
 
   it("gives the last score as a percent, and the chips to review", () => {
-    const test = buildStoredTest({ submission: buildSubmission({ score: 1, total: 3, wrongGrammarIds: [GRAMMAR_ID] }) });
+    const test = buildListedTest({ submission: buildSubmission({ score: 1, total: 3, wrongGrammarIds: [GRAMMAR_ID] }) });
 
     expect(toSummary(test)).toMatchObject({
       result: { score: 1, total: 3, percent: 33 },
@@ -264,18 +264,18 @@ describe("toSummary", () => {
   });
 
   it("leaves out a chip for a grammar point that the payload does not have", () => {
-    const test = buildStoredTest({ submission: buildSubmission({ wrongGrammarIds: ["n2-w9-d6-g4"] }) });
+    const test = buildListedTest({ submission: buildSubmission({ wrongGrammarIds: ["n2-w9-d6-g4"] }) });
 
     expect(toSummary(test).review).toEqual([]);
   });
 
   it("gives the score of the attempt before the last result", () => {
-    const test = buildStoredTest({ submission: buildSubmission({ submittedAt: LATER.submittedAt }), attempts: [EARLIER, LATER] });
+    const test = buildListedTest({ submission: buildSubmission({ submittedAt: LATER.submittedAt }), attempts: [EARLIER, LATER] });
 
     expect(toSummary(test).previous).toEqual({ score: 1, total: 3 });
   });
 
   it("gives the last score while a retake is under way", () => {
-    expect(toSummary(buildStoredTest({ attempts: [EARLIER, LATER] })).previous).toEqual({ score: 2, total: 3 });
+    expect(toSummary(buildListedTest({ attempts: [EARLIER, LATER] })).previous).toEqual({ score: 2, total: 3 });
   });
 });

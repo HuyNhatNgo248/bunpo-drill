@@ -5,9 +5,8 @@ import { resetTest } from "~/lib/tests.server";
 
 /** POST /tests/:id/retake: clear the last result and review chips, then open the quiz. */
 export async function action({ params }: Route.ActionArgs) {
-  const test = await resetTest(params.id);
-  if (!test) throw testNotFound();
-  return redirect(`/tests/${test.id}`);
+  if (!(await resetTest(params.id))) throw testNotFound();
+  return redirect(`/tests/${params.id}`);
 }
 
 /** A plain visit clears nothing: it goes to the quiz, which shows the results of a test that is taken. */

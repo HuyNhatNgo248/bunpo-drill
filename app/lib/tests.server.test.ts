@@ -98,9 +98,35 @@ describe("listTests", () => {
     expect(await titlesOf()).toEqual(["2026-10-27T00:00:00.000Z", "2026-10-25T00:00:00.000Z", "2026-10-26T00:00:00.000Z"]);
   });
 
+  it("reads only what the list shows: the question count, and no questions or answers", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveSubmission(id, buildSubmission({ answers: { q1: 2 }, score: 1, wrongGrammarIds: [GRAMMAR_ID] }));
+    await setReviewed(id, GRAMMAR_ID, true);
+
+    const [listed] = await listTests();
+
+    expect(listed).toEqual({
+      id,
+      createdAt: NOW.toISOString(),
+      payload: { title: buildPayload().title, level: "N2", grammarPoints: buildPayload().grammarPoints },
+      questionCount: 3,
+      submission: { submittedAt: buildSubmission().submittedAt, score: 1, total: 3, wrongGrammarIds: [GRAMMAR_ID] },
+      reviewed: { [GRAMMAR_ID]: true },
+      attempts: [{ submittedAt: buildSubmission().submittedAt, score: 1, total: 3 }],
+    });
+  });
+
   it("skips a row whose payload is not valid, and lists the others", async () => {
     await createTest(buildPayload());
     await insertRawTest("20261027-aaaaaa", "not json");
+
+    expect(await listTests()).toHaveLength(1);
+  });
+
+  it("skips a row from an older payload format", async () => {
+    await createTest(buildPayload());
+    await insertRawTest("20261027-aaaaaa", JSON.stringify({ ...buildPayload(), version: 0 }));
+    await insertRawTest("20261027-bbbbbb", JSON.stringify({ ...buildPayload(), sections: [] }));
 
     expect(await listTests()).toHaveLength(1);
   });
@@ -120,11 +146,12 @@ describe("saveOrder", () => {
 });
 
 describe("saveSubmission", () => {
-  it("saves the submission and returns the test with it", async () => {
+  it("saves the submission", async () => {
     const { id } = await createTest(buildPayload());
     const submission = buildSubmission({ answers: { q1: 2 }, score: 1 });
 
-    expect(await saveSubmission(id, submission)).toMatchObject({ id, submission });
+    await saveSubmission(id, submission);
+
     expect((await getTest(id))?.submission).toEqual(submission);
   });
 
@@ -164,19 +191,25 @@ describe("setReviewed", () => {
 });
 
 describe("resetTest", () => {
-  it("clears the submission and the review marks, and keeps the test", async () => {
+  it("clears the submission and the review marks, keeps the test, and returns true", async () => {
     const { id } = await createTest(buildPayload());
     await saveSubmission(id, buildSubmission());
     await setReviewed(id, GRAMMAR_ID, true);
 
-    expect(await resetTest(id)).toMatchObject({ id, submission: null, reviewed: {} });
+    expect(await resetTest(id)).toBe(true);
+    expect(await getTest(id)).toMatchObject({ id, submission: null, reviewed: {} });
   });
 
   it("keeps the attempts, so the earlier scores stay", async () => {
     const { id } = await createTest(buildPayload());
     await saveSubmission(id, buildSubmission({ score: 1 }));
+    await resetTest(id);
 
-    expect((await resetTest(id))?.attempts).toEqual([{ submittedAt: buildSubmission().submittedAt, score: 1, total: 3 }]);
+    expect((await getTest(id))?.attempts).toEqual([{ submittedAt: buildSubmission().submittedAt, score: 1, total: 3 }]);
+  });
+
+  it("returns false for an id that no test has", async () => {
+    expect(await resetTest(UNKNOWN_ID)).toBe(false);
   });
 });
 

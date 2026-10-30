@@ -1,5 +1,13 @@
 import { i18n, type I18n, type MessageDescriptor, type Messages } from "@lingui/core";
-import { DEFAULT_LOCALE, type Locale } from "./locale";
+import { messages as en } from "../../locales/en.po";
+import { messages as ja } from "../../locales/ja.po";
+import type { Locale } from "./locale";
+
+/**
+ * Both catalogs ship in the bundle (a few KB each), so the page hydrates without first waiting for its
+ * language's catalog to download.
+ */
+const CATALOGS: Record<Locale, Messages> = { en, ja };
 
 /**
  * Gives the server instance of a language. `loadServerCatalogs` in catalogs.server.ts sets it. This
@@ -35,15 +43,7 @@ export async function loadCatalog(locale: Locale): Promise<void> {
   i18n.loadAndActivate({ locale, messages: await importMessages(locale) });
 }
 
-/**
- * The compiled messages of `locale`. A missing catalog falls back to English instead of failing the
- * page: our message ids are the English strings, so an empty catalog still reads.
- */
+/** The compiled messages of `locale`. */
 export async function importMessages(locale: Locale): Promise<Messages> {
-  try {
-    return (await import(`../../locales/${locale}.po`)).messages;
-  } catch (error) {
-    console.error(`Failed to load the ${locale} catalog:`, error);
-    return locale === DEFAULT_LOCALE ? {} : importMessages(DEFAULT_LOCALE);
-  }
+  return CATALOGS[locale];
 }

@@ -1,9 +1,24 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { resetDatabase } from "#tests/helpers/db";
 import { db } from "./db.server";
-import { changePassword, createUser, findUserByEmail, getUser, renameUser, setEmail, verifyUser } from "./users.server";
+import {
+  changePassword,
+  createUser,
+  findUserByEmail,
+  forgetSessionVersions,
+  getSessionVersion,
+  getUser,
+  renameUser,
+  setEmail,
+  verifyUser,
+} from "./users.server";
 
 const PASSWORD = "correct horse battery";
+
+/** Sets a user's session version straight in the database, the way another process would. */
+async function bumpVersion(id: number) {
+  await (await db()).execute({ sql: "UPDATE users SET session_version = session_version + 1 WHERE id = ?", args: [id] });
+}
 
 /** The password column of a user, as the database holds it. */
 async function storedPassword(id: number) {
@@ -165,5 +180,38 @@ describe("setEmail", () => {
 
     expect(await setEmail(id!, "mai@example.com")).toBe(false);
     expect((await getUser(id!))?.email).toBe("huy@example.com");
+  });
+});
+
+describe("getSessionVersion", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("returns the version of a user, and null for an id that has no account", async () => {
+    const id = await createUser("Huy", PASSWORD);
+
+    expect(await getSessionVersion(id!)).toBe(0);
+    expect(await getSessionVersion(id! + 1)).toBeNull();
+  });
+
+  it("keeps a version it read for a minute, then reads it again", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    const id = await createUser("Huy", PASSWORD);
+    await getSessionVersion(id!);
+    await bumpVersion(id!);
+
+    expect(await getSessionVersion(id!)).toBe(0);
+    vi.advanceTimersByTime(60_000);
+    expect(await getSessionVersion(id!)).toBe(1);
+  });
+
+  it("reads the version again once the cache is forgotten", async () => {
+    const id = await createUser("Huy", PASSWORD);
+    await getSessionVersion(id!);
+    await bumpVersion(id!);
+    forgetSessionVersions();
+
+    expect(await getSessionVersion(id!)).toBe(1);
   });
 });

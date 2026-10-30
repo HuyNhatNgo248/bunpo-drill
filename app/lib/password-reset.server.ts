@@ -3,7 +3,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { db } from "./db.server";
 import { requiredEnv } from "./env.server";
 import { sendMail } from "./mail.server";
-import { hashPassword, type User } from "./users.server";
+import { forgetSessionVersions, hashPassword, type User } from "./users.server";
 import { translate, type Locale } from "~/lib/i18n";
 
 /**
@@ -76,6 +76,7 @@ export async function resetPassword(token: string, password: string): Promise<nu
     ],
     "write",
   );
+  forgetSessionVersions();
   return userId;
 }
 

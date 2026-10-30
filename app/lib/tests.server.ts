@@ -1,7 +1,8 @@
 import { randomBytes } from "node:crypto";
 import type { InStatement, Row } from "@libsql/client";
+import { z } from "zod";
 import { db } from "./db.server";
-import { testPayloadSchema, type TestPayload } from "./payload";
+import { grammarPointSchema, LEVELS, PAYLOAD_VERSION, testPayloadSchema, type TestPayload } from "./payload";
 import type { Answers } from "./views";
 
 /**
@@ -31,19 +32,51 @@ export type StoredTest = {
   attempts: Attempt[];
 };
 
+/** A test as the list shows it: no questions and no answers, which are most of a test's size. */
+export type ListedTest = Omit<StoredTest, "payload" | "submission"> & {
+  payload: Pick<TestPayload, "title" | "level" | "grammarPoints">;
+  questionCount: number;
+  submission: Omit<Submission, "answers"> | null;
+};
+
 const ID = /^[0-9]{8}-[0-9a-f]{6}$/;
 
-const SELECT_TEST = `
-  SELECT id, created_at, payload, submission,
+const REVIEWED_AND_ATTEMPTS = `
     (SELECT json_group_array(grammar_id) FROM reviewed WHERE test_id = tests.id) AS reviewed,
     (SELECT json_group_array(json_object('submittedAt', submitted_at, 'score', score, 'total', total))
-      FROM attempts WHERE test_id = tests.id) AS attempts
-  FROM tests`;
+      FROM attempts WHERE test_id = tests.id) AS attempts`;
 
-export async function listTests(): Promise<StoredTest[]> {
+const SELECT_TEST = `SELECT id, created_at, payload, submission, ${REVIEWED_AND_ATTEMPTS} FROM tests`;
+
+// The list reads each payload in SQL down to what it shows, so the questions never leave the database.
+// Rows that are not JSON are skipped here, as toStoredTest skips them for getTest.
+const SELECT_LISTED = `
+  SELECT id, created_at,
+    payload ->> '$.version' AS version,
+    payload ->> '$.title' AS title,
+    payload ->> '$.level' AS level,
+    payload -> '$.grammarPoints' AS grammar_points,
+    json_array_length(payload, '$.sections[0].questions') + json_array_length(payload, '$.sections[1].questions')
+      + (SELECT ifnull(sum(json_array_length(value, '$.questions')), 0) FROM json_each(payload, '$.sections[2].passages'))
+      AS question_count,
+    json_remove(submission, '$.answers') AS submission,
+    ${REVIEWED_AND_ATTEMPTS}
+  FROM tests
+  WHERE json_valid(payload) AND (submission IS NULL OR json_valid(submission))`;
+
+/** What the list checks of a payload, the way toStoredTest checks all of it: older formats are skipped. */
+const listedSchema = z.object({
+  version: z.literal(PAYLOAD_VERSION),
+  title: z.string(),
+  level: z.enum(LEVELS),
+  grammarPoints: z.array(grammarPointSchema),
+  questionCount: z.number().int(),
+});
+
+export async function listTests(): Promise<ListedTest[]> {
   // Tests not placed by a drag yet (new ones) come first, newest first; the rest follow their saved place.
-  const { rows } = await (await db()).execute(`${SELECT_TEST} ORDER BY position IS NOT NULL, position, created_at DESC`);
-  return rows.map(toStoredTest).filter((test): test is StoredTest => test !== null);
+  const { rows } = await (await db()).execute(`${SELECT_LISTED} ORDER BY position IS NOT NULL, position, created_at DESC`);
+  return rows.map(toListedTest).filter((test): test is ListedTest => test !== null);
 }
 
 export async function getTest(id: string): Promise<StoredTest | null> {
@@ -86,16 +119,15 @@ export async function saveSubmission(id: string, submission: Submission) {
       args: [submittedAt, score, total, id],
     },
   ]);
-  return getTest(id);
 }
 
-/** Retake: forget the last submission and the reviewed chips. Its score stays in the attempts. */
-export async function resetTest(id: string) {
-  await write([
+/** Retake: forget the last submission and the reviewed chips. Its score stays in the attempts. False when there is no such test. */
+export async function resetTest(id: string): Promise<boolean> {
+  const [reset] = await write([
     { sql: "UPDATE tests SET submission = NULL WHERE id = ?", args: [id] },
     { sql: "DELETE FROM reviewed WHERE test_id = ?", args: [id] },
   ]);
-  return getTest(id);
+  return reset.rowsAffected > 0;
 }
 
 export async function setReviewed(id: string, grammarId: string, reviewed: boolean) {
@@ -133,17 +165,42 @@ function toStoredTest(row: Row): StoredTest | null {
     // Rows from an older payload format (or edited by hand) are skipped, not crashed on.
     const payload = testPayloadSchema.safeParse(JSON.parse(String(row.payload)));
     if (!payload.success) return null;
-    const reviewed = JSON.parse(String(row.reviewed)) as string[];
     return {
-      id: String(row.id),
-      createdAt: String(row.created_at),
+      ...rowBasics(row),
       payload: payload.data,
       submission: row.submission === null ? null : (JSON.parse(String(row.submission)) as Submission),
-      reviewed: Object.fromEntries(reviewed.map((grammarId) => [grammarId, true])),
-      attempts: (JSON.parse(String(row.attempts)) as Attempt[]).sort((a, b) => a.submittedAt.localeCompare(b.submittedAt)),
     };
   } catch (error) {
     if (error instanceof SyntaxError) return null;
     throw error;
   }
+}
+
+function toListedTest(row: Row): ListedTest | null {
+  const listed = listedSchema.safeParse({
+    version: row.version,
+    title: row.title,
+    level: row.level,
+    grammarPoints: row.grammar_points === null ? null : JSON.parse(String(row.grammar_points)),
+    questionCount: row.question_count === null ? null : Number(row.question_count),
+  });
+  if (!listed.success) return null;
+  const { title, level, grammarPoints, questionCount } = listed.data;
+  return {
+    ...rowBasics(row),
+    payload: { title, level, grammarPoints },
+    questionCount,
+    submission: row.submission === null ? null : (JSON.parse(String(row.submission)) as ListedTest["submission"]),
+  };
+}
+
+/** The columns that every read of a test has. */
+function rowBasics(row: Row) {
+  const reviewed = JSON.parse(String(row.reviewed)) as string[];
+  return {
+    id: String(row.id),
+    createdAt: String(row.created_at),
+    reviewed: Object.fromEntries(reviewed.map((grammarId) => [grammarId, true])),
+    attempts: (JSON.parse(String(row.attempts)) as Attempt[]).sort((a, b) => a.submittedAt.localeCompare(b.submittedAt)),
+  };
 }

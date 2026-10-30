@@ -16,4 +16,6 @@ WORKDIR /app
 COPY package.json server.ts /app/
 COPY --from=production-dependencies-env /app/node_modules /app/node_modules
 COPY --from=build-env /app/build /app/build
-CMD ["npm", "run", "start"]
+# node itself, not `npm run start`: npm would stay running next to the server and hold its own memory.
+ENV NODE_ENV=production
+CMD ["node", "server.ts"]
