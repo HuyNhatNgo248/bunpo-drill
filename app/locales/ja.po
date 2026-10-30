@@ -342,7 +342,7 @@ msgstr "復習におすすめの文法"
 msgid "Have an account? <0>Sign in</0>"
 msgstr "アカウントをお持ちの方は <0>ログイン</0>"
 
-#: app/lib/password-reset.server.ts:91
+#: app/lib/password-reset.server.ts:92
 msgid "Hi {name},"
 msgstr "{name}さん"
 
@@ -354,7 +354,7 @@ msgstr "{label}を隠す"
 msgid "If there's an account for {sent}, we sent the link. It works for one hour. If it doesn't arrive, check your spam folder too."
 msgstr "{sent} のアカウントがあれば、リンクを送りました。リンクは1時間有効です。届かない場合は、迷惑メールのフォルダも確認してください。"
 
-#: app/lib/password-reset.server.ts:97
+#: app/lib/password-reset.server.ts:98
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
@@ -459,7 +459,7 @@ msgstr "復習する文法はありません。全問正解でした。"
 msgid "Number"
 msgstr "番号"
 
-#: app/lib/password-reset.server.ts:93
+#: app/lib/password-reset.server.ts:94
 msgid "Open the link below and choose a new password. The link works for one hour, and only once."
 msgstr "下のリンクを開いて、新しいパスワードを決めてください。リンクは1時間有効で、一度だけ使えます。"
 
@@ -852,6 +852,6 @@ msgstr "回答を読み取れませんでした。もう一度お試しくださ
 msgid "Your current password is wrong."
 msgstr "現在のパスワードが違います。"
 
-#: app/lib/password-reset.server.ts:89
+#: app/lib/password-reset.server.ts:90
 msgid "文法ドリル: reset your password"
 msgstr "文法ドリル：パスワードの再設定"

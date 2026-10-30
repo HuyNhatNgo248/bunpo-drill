@@ -1,8 +1,9 @@
 import { randomBytes } from "node:crypto";
-import type { InStatement, Row } from "@libsql/client";
+import { and, desc, eq, isNull, or, sql } from "drizzle-orm";
 import { z } from "zod";
-import { db } from "./db.server";
+import { orm, write } from "./db.server";
 import { grammarPointSchema, LEVELS, PAYLOAD_VERSION, testPayloadSchema, type TestPayload } from "./payload";
+import { attempts, reviewed, tests } from "./schema.server";
 import type { Answers } from "./views";
 
 /**
@@ -41,28 +42,27 @@ export type ListedTest = Omit<StoredTest, "payload" | "submission"> & {
 
 const ID = /^[0-9]{8}-[0-9a-f]{6}$/;
 
-const REVIEWED_AND_ATTEMPTS = `
-    (SELECT json_group_array(grammar_id) FROM reviewed WHERE test_id = tests.id) AS reviewed,
-    (SELECT json_group_array(json_object('submittedAt', submitted_at, 'score', score, 'total', total))
-      FROM attempts WHERE test_id = tests.id) AS attempts`;
-
-const SELECT_TEST = `SELECT id, created_at, payload, submission, ${REVIEWED_AND_ATTEMPTS} FROM tests`;
+/** A test's marked chips and its attempts, as JSON arrays, read in the same query as the test. */
+const related = {
+  reviewed: sql<string>`(SELECT json_group_array(${reviewed.grammarId}) FROM ${reviewed} WHERE ${reviewed.testId} = ${tests.id})`,
+  attempts: sql<string>`(SELECT json_group_array(json_object('submittedAt', ${attempts.submittedAt}, 'score', ${attempts.score}, 'total', ${attempts.total}))
+    FROM ${attempts} WHERE ${attempts.testId} = ${tests.id})`,
+};
 
 // The list reads each payload in SQL down to what it shows, so the questions never leave the database.
-// Rows that are not JSON are skipped here, as toStoredTest skips them for getTest.
-const SELECT_LISTED = `
-  SELECT id, created_at,
-    payload ->> '$.version' AS version,
-    payload ->> '$.title' AS title,
-    payload ->> '$.level' AS level,
-    payload -> '$.grammarPoints' AS grammar_points,
-    json_array_length(payload, '$.sections[0].questions') + json_array_length(payload, '$.sections[1].questions')
-      + (SELECT ifnull(sum(json_array_length(value, '$.questions')), 0) FROM json_each(payload, '$.sections[2].passages'))
-      AS question_count,
-    json_remove(submission, '$.answers') AS submission,
-    ${REVIEWED_AND_ATTEMPTS}
-  FROM tests
-  WHERE json_valid(payload) AND (submission IS NULL OR json_valid(submission))`;
+const listed = {
+  id: tests.id,
+  createdAt: tests.createdAt,
+  version: sql<unknown>`${tests.payload} ->> '$.version'`,
+  title: sql<unknown>`${tests.payload} ->> '$.title'`,
+  level: sql<unknown>`${tests.payload} ->> '$.level'`,
+  grammarPoints: sql<string | null>`${tests.payload} -> '$.grammarPoints'`,
+  questionCount: sql<number | null>`json_array_length(${tests.payload}, '$.sections[0].questions')
+    + json_array_length(${tests.payload}, '$.sections[1].questions')
+    + (SELECT ifnull(sum(json_array_length(value, '$.questions')), 0) FROM json_each(${tests.payload}, '$.sections[2].passages'))`,
+  submission: sql<string | null>`json_remove(${tests.submission}, '$.answers')`,
+  ...related,
+};
 
 /** What the list checks of a payload, the way toStoredTest checks all of it: older formats are skipped. */
 const listedSchema = z.object({
@@ -74,15 +74,23 @@ const listedSchema = z.object({
 });
 
 export async function listTests(): Promise<ListedTest[]> {
-  // Tests not placed by a drag yet (new ones) come first, newest first; the rest follow their saved place.
-  const { rows } = await (await db()).execute(`${SELECT_LISTED} ORDER BY position IS NOT NULL, position, created_at DESC`);
+  const rows = await (await orm())
+    .select(listed)
+    .from(tests)
+    // Rows that are not JSON are skipped here, as toStoredTest skips them for getTest.
+    .where(and(sql`json_valid(${tests.payload})`, or(isNull(tests.submission), sql`json_valid(${tests.submission})`)))
+    // Tests not placed by a drag yet (new ones) come first, newest first; the rest follow their saved place.
+    .orderBy(sql`${tests.position} IS NOT NULL`, tests.position, desc(tests.createdAt));
   return rows.map(toListedTest).filter((test): test is ListedTest => test !== null);
 }
 
 export async function getTest(id: string): Promise<StoredTest | null> {
   if (!ID.test(id)) return null;
-  const { rows } = await (await db()).execute({ sql: `${SELECT_TEST} WHERE id = ?`, args: [id] });
-  return rows[0] ? toStoredTest(rows[0]) : null;
+  const [row] = await (await orm())
+    .select({ id: tests.id, createdAt: tests.createdAt, payload: tests.payload, submission: tests.submission, ...related })
+    .from(tests)
+    .where(eq(tests.id, id));
+  return row ? toStoredTest(row) : null;
 }
 
 export async function createTest(payload: TestPayload): Promise<StoredTest> {
@@ -95,9 +103,7 @@ export async function createTest(payload: TestPayload): Promise<StoredTest> {
     reviewed: {},
     attempts: [],
   };
-  await write([
-    { sql: "INSERT INTO tests (id, created_at, payload) VALUES (?, ?, ?)", args: [test.id, test.createdAt, JSON.stringify(payload)] },
-  ]);
+  await (await orm()).insert(tests).values({ id: test.id, createdAt: test.createdAt, payload: JSON.stringify(payload) });
   return test;
 }
 
@@ -105,70 +111,92 @@ export async function createTest(payload: TestPayload): Promise<StoredTest> {
 export async function saveOrder(ids: string[]): Promise<string[]> {
   const order = [...new Set(ids)].filter((id) => ID.test(id));
   if (order.length) {
-    await write(order.map((id, position) => ({ sql: "UPDATE tests SET position = ? WHERE id = ?", args: [position, id] })));
+    const db = await orm();
+    const [first, ...rest] = order.map((id, position) => db.update(tests).set({ position }).where(eq(tests.id, id)));
+    await write([first, ...rest]);
   }
   return order;
 }
 
 export async function saveSubmission(id: string, submission: Submission) {
   const { submittedAt, score, total } = submission;
+  const db = await orm();
   await write([
-    { sql: "UPDATE tests SET submission = ? WHERE id = ?", args: [JSON.stringify(submission), id] },
-    {
-      sql: "INSERT OR IGNORE INTO attempts (test_id, submitted_at, score, total) SELECT id, ?, ?, ? FROM tests WHERE id = ?",
-      args: [submittedAt, score, total, id],
-    },
+    db.update(tests).set({ submission: JSON.stringify(submission) }).where(eq(tests.id, id)),
+    // Selecting from tests adds no attempt for a test that is gone; the same submission twice adds one.
+    db
+      .insert(attempts)
+      .select(
+        db
+          .select({
+            testId: tests.id,
+            submittedAt: sql<string>`${submittedAt}`.as("submitted_at"),
+            score: sql<number>`${score}`.as("score"),
+            total: sql<number>`${total}`.as("total"),
+          })
+          .from(tests)
+          .where(eq(tests.id, id)),
+      )
+      .onConflictDoNothing(),
   ]);
 }
 
 /** Retake: forget the last submission and the reviewed chips. Its score stays in the attempts. False when there is no such test. */
 export async function resetTest(id: string): Promise<boolean> {
+  const db = await orm();
   const [reset] = await write([
-    { sql: "UPDATE tests SET submission = NULL WHERE id = ?", args: [id] },
-    { sql: "DELETE FROM reviewed WHERE test_id = ?", args: [id] },
+    db.update(tests).set({ submission: null }).where(eq(tests.id, id)),
+    db.delete(reviewed).where(eq(reviewed.testId, id)),
   ]);
   return reset.rowsAffected > 0;
 }
 
-export async function setReviewed(id: string, grammarId: string, reviewed: boolean) {
-  await write([
-    reviewed
-      ? // Selecting from tests adds nothing when the test doesn't exist.
-        { sql: "INSERT OR IGNORE INTO reviewed (test_id, grammar_id) SELECT id, ? FROM tests WHERE id = ?", args: [grammarId, id] }
-      : { sql: "DELETE FROM reviewed WHERE test_id = ? AND grammar_id = ?", args: [id, grammarId] },
-  ]);
+export async function setReviewed(id: string, grammarId: string, marked: boolean) {
+  const db = await orm();
+  await (marked
+    ? // Selecting from tests adds nothing when the test doesn't exist; marking twice keeps one mark.
+      db
+        .insert(reviewed)
+        .select(
+          db
+            .select({ testId: tests.id, grammarId: sql<string>`${grammarId}`.as("grammar_id") })
+            .from(tests)
+            .where(eq(tests.id, id)),
+        )
+        .onConflictDoNothing()
+    : db.delete(reviewed).where(and(eq(reviewed.testId, id), eq(reviewed.grammarId, grammarId))));
   return getTest(id);
 }
 
 export async function deleteTest(id: string): Promise<boolean> {
   if (!ID.test(id)) return false;
+  const db = await orm();
   const [, , deleted] = await write([
-    { sql: "DELETE FROM reviewed WHERE test_id = ?", args: [id] },
-    { sql: "DELETE FROM attempts WHERE test_id = ?", args: [id] },
-    { sql: "DELETE FROM tests WHERE id = ?", args: [id] },
+    db.delete(reviewed).where(eq(reviewed.testId, id)),
+    db.delete(attempts).where(eq(attempts.testId, id)),
+    db.delete(tests).where(eq(tests.id, id)),
   ]);
   return deleted.rowsAffected > 0;
 }
 
 export async function deleteAllTests(): Promise<number> {
-  const [, , deleted] = await write(["DELETE FROM reviewed", "DELETE FROM attempts", "DELETE FROM tests"]);
+  const db = await orm();
+  const [, , deleted] = await write([db.delete(reviewed), db.delete(attempts), db.delete(tests)]);
   return deleted.rowsAffected;
 }
 
-/** Runs the statements as one transaction. */
-async function write(statements: InStatement[]) {
-  return (await db()).batch(statements, "write");
-}
+/** The JSON of a test's marked chips and attempts, as `related` reads them. */
+type Related = { reviewed: string; attempts: string };
 
-function toStoredTest(row: Row): StoredTest | null {
+function toStoredTest(row: { id: string; createdAt: string; payload: string; submission: string | null } & Related): StoredTest | null {
   try {
     // Rows from an older payload format (or edited by hand) are skipped, not crashed on.
-    const payload = testPayloadSchema.safeParse(JSON.parse(String(row.payload)));
+    const payload = testPayloadSchema.safeParse(JSON.parse(row.payload));
     if (!payload.success) return null;
     return {
       ...rowBasics(row),
       payload: payload.data,
-      submission: row.submission === null ? null : (JSON.parse(String(row.submission)) as Submission),
+      submission: row.submission === null ? null : (JSON.parse(row.submission) as Submission),
     };
   } catch (error) {
     if (error instanceof SyntaxError) return null;
@@ -176,31 +204,36 @@ function toStoredTest(row: Row): StoredTest | null {
   }
 }
 
-function toListedTest(row: Row): ListedTest | null {
-  const listed = listedSchema.safeParse({
+function toListedTest(
+  row: { id: string; createdAt: string; version: unknown; title: unknown; level: unknown; grammarPoints: string | null } & {
+    questionCount: number | null;
+    submission: string | null;
+  } & Related,
+): ListedTest | null {
+  const parsed = listedSchema.safeParse({
     version: row.version,
     title: row.title,
     level: row.level,
-    grammarPoints: row.grammar_points === null ? null : JSON.parse(String(row.grammar_points)),
-    questionCount: row.question_count === null ? null : Number(row.question_count),
+    grammarPoints: row.grammarPoints === null ? null : JSON.parse(row.grammarPoints),
+    questionCount: row.questionCount === null ? null : Number(row.questionCount),
   });
-  if (!listed.success) return null;
-  const { title, level, grammarPoints, questionCount } = listed.data;
+  if (!parsed.success) return null;
+  const { title, level, grammarPoints, questionCount } = parsed.data;
   return {
     ...rowBasics(row),
     payload: { title, level, grammarPoints },
     questionCount,
-    submission: row.submission === null ? null : (JSON.parse(String(row.submission)) as ListedTest["submission"]),
+    submission: row.submission === null ? null : (JSON.parse(row.submission) as ListedTest["submission"]),
   };
 }
 
 /** The columns that every read of a test has. */
-function rowBasics(row: Row) {
-  const reviewed = JSON.parse(String(row.reviewed)) as string[];
+function rowBasics(row: { id: string; createdAt: string } & Related) {
+  const marked = JSON.parse(row.reviewed) as string[];
   return {
-    id: String(row.id),
-    createdAt: String(row.created_at),
-    reviewed: Object.fromEntries(reviewed.map((grammarId) => [grammarId, true])),
-    attempts: (JSON.parse(String(row.attempts)) as Attempt[]).sort((a, b) => a.submittedAt.localeCompare(b.submittedAt)),
+    id: row.id,
+    createdAt: row.createdAt,
+    reviewed: Object.fromEntries(marked.map((grammarId) => [grammarId, true])),
+    attempts: (JSON.parse(row.attempts) as Attempt[]).sort((a, b) => a.submittedAt.localeCompare(b.submittedAt)),
   };
 }

@@ -1,11 +1,14 @@
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { createClient, type Client } from "@libsql/client";
+import { drizzle, type LibSQLDatabase } from "drizzle-orm/libsql";
+import type { BatchItem, BatchResponse } from "drizzle-orm/batch";
 import "./env.server.ts";
 
 /**
  * The database: Turso when TURSO_DATABASE_URL is set (with TURSO_AUTH_TOKEN),
- * otherwise a local SQLite file at data/bunpo.db.
+ * otherwise a local SQLite file at data/bunpo.db. The app queries it through Drizzle (orm(), with the tables in
+ * schema.server.ts); the SQL below creates and upgrades the tables.
  */
 
 const SCHEMA = [
@@ -60,7 +63,24 @@ async function migrate(client: Client) {
 
 let ready: Promise<Client> | undefined;
 
-/** The client, with the tables created on first use. */
+type Orm = LibSQLDatabase & { $client: Client };
+let wrapped: Orm | undefined;
+
+/** Drizzle over the client below, for the app's typed queries. */
+export async function orm(): Promise<Orm> {
+  const client = await db();
+  if (wrapped?.$client !== client) wrapped = drizzle(client);
+  return wrapped;
+}
+
+/** Runs the statements as one transaction, in one round trip to the database. */
+export async function write<T extends Readonly<[BatchItem<"sqlite">, ...BatchItem<"sqlite">[]]>>(
+  statements: T,
+): Promise<BatchResponse<T>> {
+  return (await orm()).batch(statements);
+}
+
+/** The client, with the tables created on first use. Tests and the table upgrades use it directly. */
 export function db(): Promise<Client> {
   ready ??= connect().catch((error) => {
     ready = undefined; // Try again on the next request.

@@ -342,7 +342,7 @@ msgstr "Grammar worth reviewing"
 msgid "Have an account? <0>Sign in</0>"
 msgstr "Have an account? <0>Sign in</0>"
 
-#: app/lib/password-reset.server.ts:91
+#: app/lib/password-reset.server.ts:92
 msgid "Hi {name},"
 msgstr "Hi {name},"
 
@@ -354,7 +354,7 @@ msgstr "Hide {label}"
 msgid "If there's an account for {sent}, we sent the link. It works for one hour. If it doesn't arrive, check your spam folder too."
 msgstr "If there's an account for {sent}, we sent the link. It works for one hour. If it doesn't arrive, check your spam folder too."
 
-#: app/lib/password-reset.server.ts:97
+#: app/lib/password-reset.server.ts:98
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
@@ -459,7 +459,7 @@ msgstr "Nothing to review. You got every question right."
 msgid "Number"
 msgstr "Number"
 
-#: app/lib/password-reset.server.ts:93
+#: app/lib/password-reset.server.ts:94
 msgid "Open the link below and choose a new password. The link works for one hour, and only once."
 msgstr "Open the link below and choose a new password. The link works for one hour, and only once."
 
@@ -852,6 +852,6 @@ msgstr "Your answers couldn't be read. Please try again."
 msgid "Your current password is wrong."
 msgstr "Your current password is wrong."
 
-#: app/lib/password-reset.server.ts:89
+#: app/lib/password-reset.server.ts:90
 msgid "文法ドリル: reset your password"
 msgstr "文法ドリル: reset your password"

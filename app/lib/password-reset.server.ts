@@ -1,8 +1,10 @@
 import { msg } from "@lingui/core/macro";
 import { createHash, randomBytes } from "node:crypto";
-import { db } from "./db.server";
+import { and, eq, gt, lte, sql } from "drizzle-orm";
+import { orm, write } from "./db.server";
 import { requiredEnv } from "./env.server";
 import { sendMail } from "./mail.server";
+import { passwordResets, users } from "./schema.server";
 import { forgetSessionVersions, hashPassword, type User } from "./users.server";
 import { translate, type Locale } from "~/lib/i18n";
 
@@ -22,34 +24,36 @@ const hashToken = (token: string) => createHash("sha256").update(token).digest("
 /** Makes a link token for the user, or null when the user got one less than a minute ago. */
 export async function createPasswordReset(userId: number): Promise<string | null> {
   const now = Date.now();
-  const client = await db();
-  const { rows } = await client.execute({
-    sql: "SELECT 1 FROM password_resets WHERE user_id = ? AND created_at > ?",
-    args: [userId, new Date(now - RESEND_WAIT_MS).toISOString()],
-  });
-  if (rows.length) return null;
+  const db = await orm();
+  const recent = await db
+    .select({ userId: passwordResets.userId })
+    .from(passwordResets)
+    .where(and(eq(passwordResets.userId, userId), gt(passwordResets.createdAt, new Date(now - RESEND_WAIT_MS).toISOString())))
+    .limit(1);
+  if (recent.length) return null;
   const token = randomBytes(32).toString("base64url");
-  await client.batch(
-    [
-      // Expired tokens can do nothing, so they go whenever a new one is made.
-      { sql: "DELETE FROM password_resets WHERE expires_at <= ?", args: [new Date(now).toISOString()] },
-      {
-        sql: "INSERT INTO password_resets (token_hash, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)",
-        args: [hashToken(token), userId, new Date(now).toISOString(), new Date(now + LINK_LIFETIME_MS).toISOString()],
-      },
-    ],
-    "write",
-  );
+  const at = new Date(now).toISOString();
+  await write([
+    // Expired tokens can do nothing, so they go whenever a new one is made.
+    db.delete(passwordResets).where(lte(passwordResets.expiresAt, at)),
+    db.insert(passwordResets).values({
+      tokenHash: hashToken(token),
+      userId,
+      createdAt: at,
+      expiresAt: new Date(now + LINK_LIFETIME_MS).toISOString(),
+    }),
+  ]);
   return token;
 }
 
 /** True while the token can still set a password. */
 export async function isPasswordResetValid(token: string): Promise<boolean> {
-  const { rows } = await (await db()).execute({
-    sql: "SELECT 1 FROM password_resets WHERE token_hash = ? AND expires_at > ?",
-    args: [hashToken(token), new Date().toISOString()],
-  });
-  return rows.length > 0;
+  const valid = await (await orm())
+    .select({ userId: passwordResets.userId })
+    .from(passwordResets)
+    .where(and(eq(passwordResets.tokenHash, hashToken(token)), gt(passwordResets.expiresAt, new Date().toISOString())))
+    .limit(1);
+  return valid.length > 0;
 }
 
 /**
@@ -58,24 +62,21 @@ export async function isPasswordResetValid(token: string): Promise<boolean> {
  * Returns the user's id, or null when the token is unknown, expired or already used.
  */
 export async function resetPassword(token: string, password: string): Promise<number | null> {
-  const client = await db();
+  const db = await orm();
   // Deleting first uses the token up in one step, so two tabs cannot both use one link.
-  const { rows } = await client.execute({
-    sql: "DELETE FROM password_resets WHERE token_hash = ? AND expires_at > ? RETURNING user_id",
-    args: [hashToken(token), new Date().toISOString()],
-  });
-  if (!rows[0]) return null;
-  const userId = Number(rows[0].user_id);
-  await client.batch(
-    [
-      {
-        sql: "UPDATE users SET password = ?, session_version = session_version + 1 WHERE id = ?",
-        args: [await hashPassword(password), userId],
-      },
-      { sql: "DELETE FROM password_resets WHERE user_id = ?", args: [userId] },
-    ],
-    "write",
-  );
+  const [used] = await db
+    .delete(passwordResets)
+    .where(and(eq(passwordResets.tokenHash, hashToken(token)), gt(passwordResets.expiresAt, new Date().toISOString())))
+    .returning({ userId: passwordResets.userId });
+  if (!used) return null;
+  const { userId } = used;
+  await write([
+    db
+      .update(users)
+      .set({ password: await hashPassword(password), sessionVersion: sql`${users.sessionVersion} + 1` })
+      .where(eq(users.id, userId)),
+    db.delete(passwordResets).where(eq(passwordResets.userId, userId)),
+  ]);
   forgetSessionVersions();
   return userId;
 }
