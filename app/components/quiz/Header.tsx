@@ -18,7 +18,6 @@ export function Header({
   return (
     <div className="sticky top-0 z-20 md:static">
       <AppHeader
-        back
         mobileTitle={title}
         mobileAside={
           <span className="pr-2 text-caption text-subtle-foreground">

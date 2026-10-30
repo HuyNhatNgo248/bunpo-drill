@@ -7,19 +7,17 @@ import { Brand } from "./Brand";
 import { LanguageSwitch } from "./LanguageSwitch";
 
 /**
- * Desktop: brand on the left; on the right the language switch, then "← Mock tests" when `back` is set,
- * Account and Sign out when `account` is set, or Sign in and Create account for a signed-out `guest`.
+ * Desktop: brand on the left; on the right the language switch, then Account and Sign out when `account`
+ * is set, or Sign in and Create account for a signed-out `guest`. The way back to the mock tests is BackLink, in the page.
  * Mobile: the language, Account, Sign out and Sign in buttons show only their icons; with a `mobileTitle`,
  * a back chevron and the title replace the brand.
  */
 export function AppHeader({
-  back = false,
   account = false,
   guest = false,
   mobileTitle,
   mobileAside,
 }: {
-  back?: boolean;
   account?: boolean;
   guest?: boolean;
   mobileTitle?: string;
@@ -34,11 +32,6 @@ export function AppHeader({
           <Brand />
           <div className="flex items-center gap-1">
             <LanguageSwitch />
-            {back && (
-              <Link to="/" className="ml-2 text-caption text-subtle-foreground no-underline hover:text-foreground">
-                <Trans>← Mock tests</Trans>
-              </Link>
-            )}
             {account && (
               <nav aria-label={t`Account`} className="flex items-center gap-1">
                 <NavSeparator />

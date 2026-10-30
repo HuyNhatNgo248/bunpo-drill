@@ -37,7 +37,7 @@ msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
 #: app/components/home/test-list/TestRow.tsx:77
-#: app/components/quiz/Title.tsx:13
+#: app/components/quiz/Title.tsx:15
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
@@ -53,7 +53,7 @@ msgstr "{wrong} wrong"
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "{wrong} wrong · pass line {pass}%"
 
-#: app/components/layout/header/index.tsx:39
+#: app/components/layout/BackLink.tsx:8
 msgid "← Mock tests"
 msgstr "← Mock tests"
 
@@ -90,11 +90,11 @@ msgstr "3 passages × 5 questions"
 msgid "A username can't contain “@”."
 msgstr "A username can't contain “@”."
 
-#: app/components/account/index.tsx:17
-#: app/components/account/index.tsx:20
-#: app/components/layout/header/index.tsx:43
-#: app/components/layout/header/index.tsx:49
-#: app/components/layout/header/index.tsx:65
+#: app/components/account/index.tsx:18
+#: app/components/account/index.tsx:23
+#: app/components/layout/header/index.tsx:36
+#: app/components/layout/header/index.tsx:42
+#: app/components/layout/header/index.tsx:58
 #: app/routes/account.tsx:12
 msgid "Account"
 msgstr "Account"
@@ -108,7 +108,7 @@ msgstr "All answered"
 msgid "Answer: {answer}"
 msgstr "Answer: {answer}"
 
-#: app/components/quiz/Header.tsx:29
+#: app/components/quiz/Header.tsx:28
 #: app/components/quiz/ProgressCard.tsx:16
 #: app/components/quiz/question-nav/Legend.tsx:8
 msgid "Answered"
@@ -137,7 +137,7 @@ msgid "Back to sign in"
 msgstr "Back to sign in"
 
 #: app/components/error-pages/ErrorPage.tsx:45
-#: app/components/layout/header/index.tsx:89
+#: app/components/layout/header/index.tsx:82
 #: app/components/results/Actions.tsx:15
 msgid "Back to the mock tests"
 msgstr "Back to the mock tests"
@@ -232,7 +232,7 @@ msgstr "Continue"
 msgid "Correct!"
 msgstr "Correct!"
 
-#: app/components/layout/header/index.tsx:77
+#: app/components/layout/header/index.tsx:70
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:44
 #: app/components/welcome/SampleQuiz.tsx:231
@@ -541,7 +541,7 @@ msgid "Reset your password"
 msgstr "Reset your password"
 
 #: app/components/results/index.tsx:20
-#: app/components/results/Title.tsx:14
+#: app/components/results/Title.tsx:16
 #: app/routes/results.tsx:11
 msgid "Results"
 msgstr "Results"
@@ -598,7 +598,7 @@ msgstr "Sentence order"
 msgid "Show {label}"
 msgstr "Show {label}"
 
-#: app/components/layout/header/index.tsx:71
+#: app/components/layout/header/index.tsx:64
 #: app/components/login/index.tsx:17
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:49
@@ -606,8 +606,8 @@ msgstr "Show {label}"
 msgid "Sign in"
 msgstr "Sign in"
 
-#: app/components/account/index.tsx:27
-#: app/components/layout/header/index.tsx:58
+#: app/components/account/index.tsx:31
+#: app/components/layout/header/index.tsx:51
 msgid "Sign out"
 msgstr "Sign out"
 

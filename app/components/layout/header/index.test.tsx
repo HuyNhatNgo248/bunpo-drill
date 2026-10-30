@@ -15,7 +15,7 @@ describe("AppHeader", () => {
     expect(await screen.findByRole("link", { name: /文法ドリル/ })).toHaveAttribute("href", "/");
   });
 
-  it("shows no back link and no account link unless asked", async () => {
+  it("shows no back link, and no account link unless asked", async () => {
     renderRoute(<AppHeader />);
     await screen.findByRole("link", { name: /文法ドリル/ });
 
@@ -23,16 +23,11 @@ describe("AppHeader", () => {
     expect(linkTo("Account")).toBeNull();
   });
 
-  it("links back to the list with `back`, and to the account page with `account`", async () => {
-    renderRoute(
-      <>
-        <AppHeader back />
-        <AppHeader account />
-      </>,
-    );
+  it("links to the account page with `account`", async () => {
+    renderRoute(<AppHeader account />);
 
-    expect(await screen.findByRole("link", { name: "← Mock tests" })).toHaveAttribute("href", "/");
-    expect(linkTo("Account")).toHaveAttribute("href", "/account");
+    expect(await screen.findByRole("link", { name: "Account" })).toHaveAttribute("href", "/account");
+    expect(linkTo("← Mock tests")).toBeNull();
   });
 
   it("logs out through the logout route with `account`", async () => {
@@ -45,7 +40,7 @@ describe("AppHeader", () => {
   });
 
   it("shows the mobile title with a back chevron and the extra content", async () => {
-    renderRoute(<AppHeader back mobileTitle="第1週 1日目" mobileAside={<span>1 / 3</span>} />);
+    renderRoute(<AppHeader mobileTitle="第1週 1日目" mobileAside={<span>1 / 3</span>} />);
 
     expect(await screen.findByText("第1週 1日目")).toBeInTheDocument();
     expect(linkTo("Back to the mock tests")).toHaveAttribute("href", "/");

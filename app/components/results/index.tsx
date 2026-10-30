@@ -17,7 +17,7 @@ export function Results({ results }: { results: ResultsView }) {
 
   return (
     <div className="min-h-screen">
-      <AppHeader back mobileTitle={`${results.title} · ${t`Results`}`} />
+      <AppHeader mobileTitle={`${results.title} · ${t`Results`}`} />
 
       <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 pb-8 md:gap-5 md:px-6 md:pt-8 md:pb-16">
         <Title results={results} />

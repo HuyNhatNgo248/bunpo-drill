@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Form } from "react-router";
+import { BackLink } from "~/components/layout/BackLink";
 import { AppHeader } from "~/components/layout/header";
 import { Button } from "~/components/ui/button";
 import { EmailForm } from "./EmailForm";
@@ -14,11 +15,14 @@ export function Account({ name, email, result }: { name: string; email: string |
 
   return (
     <div className="min-h-screen">
-      <AppHeader back mobileTitle={t`Account`} />
+      <AppHeader mobileTitle={t`Account`} />
       <main className="mx-auto flex max-w-130 flex-col gap-3.5 px-4 pt-4 pb-10 md:gap-5 md:px-6 md:pt-10 md:pb-16">
-        <h1 className="hidden text-title font-bold tracking-tight md:block">
-          <Trans>Account</Trans>
-        </h1>
+        <div className="hidden flex-col gap-2 md:flex">
+          <BackLink />
+          <h1 className="text-title font-bold tracking-tight">
+            <Trans>Account</Trans>
+          </h1>
+        </div>
         <NameForm name={name} result={resultOf("name")} />
         <EmailForm email={email} result={resultOf("email")} />
         <PasswordForm result={resultOf("password")} />

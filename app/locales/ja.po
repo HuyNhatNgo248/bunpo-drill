@@ -37,7 +37,7 @@ msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
 
 #: app/components/home/test-list/TestRow.tsx:77
-#: app/components/quiz/Title.tsx:13
+#: app/components/quiz/Title.tsx:15
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
@@ -53,7 +53,7 @@ msgstr "不正解 {wrong}問"
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 
-#: app/components/layout/header/index.tsx:39
+#: app/components/layout/BackLink.tsx:8
 msgid "← Mock tests"
 msgstr "← テスト一覧"
 
@@ -90,11 +90,11 @@ msgstr "3文章 × 5問"
 msgid "A username can't contain “@”."
 msgstr "ユーザー名に「@」は使えません。"
 
-#: app/components/account/index.tsx:17
-#: app/components/account/index.tsx:20
-#: app/components/layout/header/index.tsx:43
-#: app/components/layout/header/index.tsx:49
-#: app/components/layout/header/index.tsx:65
+#: app/components/account/index.tsx:18
+#: app/components/account/index.tsx:23
+#: app/components/layout/header/index.tsx:36
+#: app/components/layout/header/index.tsx:42
+#: app/components/layout/header/index.tsx:58
 #: app/routes/account.tsx:12
 msgid "Account"
 msgstr "アカウント"
@@ -108,7 +108,7 @@ msgstr "すべて回答済み"
 msgid "Answer: {answer}"
 msgstr "正解：{answer}"
 
-#: app/components/quiz/Header.tsx:29
+#: app/components/quiz/Header.tsx:28
 #: app/components/quiz/ProgressCard.tsx:16
 #: app/components/quiz/question-nav/Legend.tsx:8
 msgid "Answered"
@@ -137,7 +137,7 @@ msgid "Back to sign in"
 msgstr "ログインに戻る"
 
 #: app/components/error-pages/ErrorPage.tsx:45
-#: app/components/layout/header/index.tsx:89
+#: app/components/layout/header/index.tsx:82
 #: app/components/results/Actions.tsx:15
 msgid "Back to the mock tests"
 msgstr "テスト一覧に戻る"
@@ -232,7 +232,7 @@ msgstr "続きから"
 msgid "Correct!"
 msgstr "正解！"
 
-#: app/components/layout/header/index.tsx:77
+#: app/components/layout/header/index.tsx:70
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:44
 #: app/components/welcome/SampleQuiz.tsx:231
@@ -541,7 +541,7 @@ msgid "Reset your password"
 msgstr "パスワードの再設定"
 
 #: app/components/results/index.tsx:20
-#: app/components/results/Title.tsx:14
+#: app/components/results/Title.tsx:16
 #: app/routes/results.tsx:11
 msgid "Results"
 msgstr "結果"
@@ -598,7 +598,7 @@ msgstr "文の組み立て"
 msgid "Show {label}"
 msgstr "{label}を表示"
 
-#: app/components/layout/header/index.tsx:71
+#: app/components/layout/header/index.tsx:64
 #: app/components/login/index.tsx:17
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:49
@@ -606,8 +606,8 @@ msgstr "{label}を表示"
 msgid "Sign in"
 msgstr "ログイン"
 
-#: app/components/account/index.tsx:27
-#: app/components/layout/header/index.tsx:58
+#: app/components/account/index.tsx:31
+#: app/components/layout/header/index.tsx:51
 msgid "Sign out"
 msgstr "ログアウト"
 
