@@ -390,7 +390,7 @@ msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/home/LevelTabs.tsx:17
+#: app/components/home/LevelTabs.tsx:19
 msgid "Level"
 msgstr "Level"
 

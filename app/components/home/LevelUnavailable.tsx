@@ -2,9 +2,9 @@ import { Trans } from "@lingui/react/macro";
 import { lazy, Suspense } from "react";
 import { Card } from "~/components/ui/card";
 import type { JlptLevel } from "~/lib/payload";
+import { loadDrawerFigure } from "./helpers/drawerFigure";
 
-// Loaded only when a level shows it: the package's React entry brings all its figures, about 75 KB gzipped.
-const Drawer = lazy(() => import("@lucasmarkes/hairline/react").then((m) => ({ default: m.Drawer })));
+const Drawer = lazy(() => loadDrawerFigure().then((m) => ({ default: m.Drawer })));
 
 /**
  * What a level's tab shows when the app makes no mock tests for that level yet (N5, N4, N1): a cabinet whose drawers

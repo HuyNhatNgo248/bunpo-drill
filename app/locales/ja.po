@@ -390,7 +390,7 @@ msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/home/LevelTabs.tsx:17
+#: app/components/home/LevelTabs.tsx:19
 msgid "Level"
 msgstr "レベル"
 
