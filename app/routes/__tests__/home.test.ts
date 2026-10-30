@@ -94,11 +94,11 @@ describe("home loader levels", () => {
     await takeTest(3);
     await createTest(buildN3Payload());
 
-    const { tests, stats, level, levels } = await load("?level=N3");
+    const { tests, stats, level } = await load("?level=N3");
 
     expect(tests.map((test) => test.level)).toEqual(["N3"]);
     expect(stats).toEqual({ average: null, toReview: 0, taken: 0 });
-    expect({ level, levels }).toEqual({ level: "N3", levels: ["N3", "N2"] });
+    expect(level).toBe("N3");
   });
 
   describe("when the URL names no level", () => {
@@ -127,16 +127,22 @@ describe("home loader levels", () => {
     });
   });
 
-  it("shows the level of the newest test when the level in the URL has no tests", async () => {
+  it("shows a JLPT level in the URL that has no tests, with none, so its tab can say so", async () => {
     await createTest(buildPayload());
 
-    const { tests, level, levels } = await load("?level=N3");
+    const { tests, level } = await load("?level=N1");
 
-    expect({ count: tests.length, level, levels }).toEqual({ count: 1, level: "N2", levels: ["N2"] });
+    expect({ count: tests.length, level }).toEqual({ count: 0, level: "N1" });
+  });
+
+  it("shows the level of the newest test when the URL names no JLPT level", async () => {
+    await createTest(buildPayload());
+
+    expect((await load("?level=N9")).level).toBe("N2");
   });
 
   it("has no level before any test is saved", async () => {
-    expect(await load()).toMatchObject({ tests: [], level: null, levels: [] });
+    expect(await load()).toMatchObject({ tests: [], level: null });
   });
 });
 

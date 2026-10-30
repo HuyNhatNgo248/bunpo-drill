@@ -1,19 +1,20 @@
 import { useLingui } from "@lingui/react/macro";
 import { Link, useNavigation } from "react-router";
 import { cn } from "~/lib/utils";
-import type { Level } from "~/lib/payload";
+import type { JlptLevel } from "~/lib/payload";
 
 /**
- * Switches the home page between the levels that have tests. The level is in the URL, so a reload keeps it.
+ * Switches the home page between the JLPT levels. The level is in the URL, so a reload keeps it.
  * One highlight slides to the level picked, as soon as it is picked rather than once its tests have loaded.
  * The tabs share one width, so the highlight moves by whole tabs with a CSS transition.
  */
-export function LevelTabs({ levels, current }: { levels: Level[]; current: Level }) {
+export function LevelTabs({ levels, current }: { levels: readonly JlptLevel[]; current: JlptLevel }) {
   const { t } = useLingui();
   const next = new URLSearchParams(useNavigation().location?.search).get("level");
   const shown = levels.find((level) => level === next) ?? current;
   return (
-    <nav aria-label={t`Level`} className="rounded-lg border bg-card p-1">
+    // A phone's row is too narrow for the title and five tabs, so the tabs wrap under it and fill the width.
+    <nav aria-label={t`Level`} className="w-full rounded-lg border bg-card p-1 md:w-auto">
       <div className="relative grid auto-cols-fr grid-flow-col">
         <span
           aria-hidden="true"

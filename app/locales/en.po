@@ -27,6 +27,10 @@ msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# q
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
+#: app/components/home/LevelUnavailable.tsx:12
+msgid "{level} isn't available yet"
+msgstr "{level} isn't available yet"
+
 #: app/components/quiz/sentence-order/SlotButton.tsx:47
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}: {text} (tap to remove)"
@@ -386,7 +390,7 @@ msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/home/LevelTabs.tsx:16
+#: app/components/home/LevelTabs.tsx:17
 msgid "Level"
 msgstr "Level"
 
@@ -398,11 +402,15 @@ msgstr "Like 「〜のに」, a result that goes against what you would expect f
 msgid "Mark as reviewed"
 msgstr "Mark as reviewed"
 
-#: app/components/home/index.tsx:23
+#: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:12
 #: app/routes/home.tsx:10
 msgid "Mock tests"
 msgstr "Mock tests"
+
+#: app/components/home/LevelUnavailable.tsx:15
+msgid "Mock tests for {level} are coming later."
+msgstr "Mock tests for {level} are coming later."
 
 #: app/components/home/test-list/helpers/announcements.ts:19
 msgid "Moved “{title}” to place {place}."

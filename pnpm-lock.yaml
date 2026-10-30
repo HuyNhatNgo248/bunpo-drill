@@ -29,6 +29,9 @@ importers:
       '@lingui/react':
         specifier: ^6.6.0
         version: 6.10.1(@babel/core@7.29.7)(react@19.3.1)
+      '@lucasmarkes/hairline':
+        specifier: 0.5.1
+        version: 0.5.1(react@19.3.1)
       '@react-router/express':
         specifier: ^8.5.0
         version: 8.5.0(express@5.3.0)(react-router@8.5.0(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3)
@@ -552,6 +555,14 @@ packages:
       '@rolldown/plugin-babel':
         optional: true
       rolldown:
+        optional: true
+
+  '@lucasmarkes/hairline@0.5.1':
+    resolution: {integrity: sha512-zjY3bdMC3As/+enKitZ1X+D1HjpesQiAKzG1sbCFsOrb5xIuJEoepkJTBIO4jmFh6JXOQlGGylhV71nr9ipNpQ==}
+    peerDependencies:
+      react: '>=18'
+    peerDependenciesMeta:
+      react:
         optional: true
 
   '@messageformat/date-skeleton@1.1.0':
@@ -4001,6 +4012,10 @@ snapshots:
       - babel-plugin-macros
       - esbuild
       - supports-color
+
+  '@lucasmarkes/hairline@0.5.1(react@19.3.1)':
+    optionalDependencies:
+      react: 19.3.1
 
   '@messageformat/date-skeleton@1.1.0': {}
 

@@ -28,6 +28,7 @@
     "@libsql/client": "^0.18.0",
     "@lingui/core": "^6.6.0",
     "@lingui/react": "^6.6.0",
+    "@lucasmarkes/hairline": "0.5.1",
     "@react-router/express": "^8.5.0",
     "@react-router/node": "^8.5.0",
     "class-variance-authority": "^0.7.1",

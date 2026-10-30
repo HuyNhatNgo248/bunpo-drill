@@ -13,8 +13,15 @@ export const PAYLOAD_VERSION = 1;
 /** The blank in a 文法形式の判断 prompt: full-width parentheses around two ideographic spaces. */
 export const BLANK = "（　　）";
 
-export const LEVELS = ["N3", "N2"] as const;
+/** Every JLPT level, easiest first: the home page has a tab for each. */
+export const JLPT_LEVELS = ["N5", "N4", "N3", "N2", "N1"] as const;
+export type JlptLevel = (typeof JLPT_LEVELS)[number];
+
+/** The levels a mock test can be made for so far; the others show that they are not available yet. */
+export const LEVELS = ["N3", "N2"] as const satisfies readonly JlptLevel[];
 export type Level = (typeof LEVELS)[number];
+
+export const isTestLevel = (level: JlptLevel): level is Level => LEVELS.some((l) => l === level);
 
 export const SECTION_TYPES = ["fill-blank", "sentence-order", "passage"] as const;
 export type SectionType = (typeof SECTION_TYPES)[number];

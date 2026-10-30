@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { buildTestSummary } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute, type StubRoute } from "#tests/helpers/render";
-import type { Level } from "~/lib/payload";
+import type { JlptLevel } from "~/lib/payload";
 import type { TestSummary } from "~/lib/views";
 import { Home } from ".";
 import type { HomeStats } from "./Stats";
@@ -22,10 +22,14 @@ const STATS: HomeStats = { average: 67, toReview: 1, taken: 1 };
 /** The home page, with the API routes that its fetchers reach. */
 function renderHome(
   tests: TestSummary[],
-  { stats = STATS, levels = ["N2"], api }: { stats?: HomeStats; levels?: Level[]; api?: StubRoute["action"] } = {},
+  {
+    stats = STATS,
+    level = tests.length ? "N2" : null,
+    api,
+  }: { stats?: HomeStats; level?: JlptLevel | null; api?: StubRoute["action"] } = {},
 ) {
   const { action, requests } = recordingAction();
-  renderRoute(<Home tests={tests} stats={stats} level={tests.length ? "N2" : null} levels={levels} />, {
+  renderRoute(<Home tests={tests} stats={stats} level={level} />, {
     routes: [
       { path: "/api/tests", action: api ?? action },
       { path: "/api/tests/:id", action: api ?? action },
@@ -63,19 +67,34 @@ describe("Home", () => {
     expect(await screen.findByRole("heading", { name: "No mock tests yet" })).toBeInTheDocument();
   });
 
-  it("links to each level when both have tests, and marks the one shown", async () => {
-    renderHome([TAKEN, NOT_TAKEN], { levels: ["N3", "N2"] });
+  it("links to every JLPT level, easiest first, and marks the one shown", async () => {
+    renderHome([TAKEN, NOT_TAKEN]);
 
     const nav = await screen.findByRole("navigation", { name: "Level" });
-    expect(within(nav).getByRole("link", { name: "N3" })).toHaveAttribute("href", "/?level=N3");
+    expect(within(nav).getAllByRole("link").map((link) => link.textContent)).toEqual(["N5", "N4", "N3", "N2", "N1"]);
+    expect(within(nav).getByRole("link", { name: "N5" })).toHaveAttribute("href", "/?level=N5");
     expect(within(nav).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
   });
 
-  it("has no level links when every test is one level", async () => {
-    renderHome([TAKEN, NOT_TAKEN]);
+  it("has no level links before any test is saved", async () => {
+    renderHome([]);
 
     await screen.findByRole("heading", { name: "Mock tests" });
     expect(screen.queryByRole("navigation", { name: "Level" })).toBeNull();
+  });
+
+  it("says a level the app makes no tests for yet is not available, under its empty trays", async () => {
+    renderHome([], { level: "N1" });
+
+    expect(await screen.findByRole("heading", { name: "N1 isn't available yet" })).toBeInTheDocument();
+    expect(screen.getByText("Mock tests for N1 are coming later.")).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Level" })).toBeInTheDocument();
+  });
+
+  it("keeps the usual empty state for a level that can have tests but has none", async () => {
+    renderHome([], { level: "N3" });
+
+    expect(await screen.findByRole("heading", { name: "No mock tests yet" })).toBeInTheDocument();
   });
 
   describe("deleting one test", () => {

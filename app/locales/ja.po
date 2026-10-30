@@ -27,6 +27,10 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
+#: app/components/home/LevelUnavailable.tsx:12
+msgid "{level} isn't available yet"
+msgstr "{level}はまだ準備中です"
+
 #: app/components/quiz/sentence-order/SlotButton.tsx:47
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}：{text}（タップで外す）"
@@ -386,7 +390,7 @@ msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/home/LevelTabs.tsx:16
+#: app/components/home/LevelTabs.tsx:17
 msgid "Level"
 msgstr "レベル"
 
@@ -398,11 +402,15 @@ msgstr "「〜のに」と同じで、予想と違う結果が続きます。雨
 msgid "Mark as reviewed"
 msgstr "復習済みにする"
 
-#: app/components/home/index.tsx:23
+#: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:12
 #: app/routes/home.tsx:10
 msgid "Mock tests"
 msgstr "模擬試験"
+
+#: app/components/home/LevelUnavailable.tsx:15
+msgid "Mock tests for {level} are coming later."
+msgstr "{level}の模擬試験は今後追加される予定です。"
 
 #: app/components/home/test-list/helpers/announcements.ts:19
 msgid "Moved “{title}” to place {place}."
