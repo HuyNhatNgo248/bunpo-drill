@@ -306,6 +306,14 @@ msgstr "Forgot your password?"
 msgid "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 msgstr "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 
+#: app/components/ui/pagination.tsx:95
+msgid "Go to next page"
+msgstr "Go to next page"
+
+#: app/components/ui/pagination.tsx:76
+msgid "Go to previous page"
+msgstr "Go to previous page"
+
 #: app/lib/sections.ts:16
 msgid "Grammar form"
 msgstr "Grammar form"
@@ -390,15 +398,19 @@ msgstr "Like 「〜のに」, a result that goes against what you would expect f
 msgid "Mark as reviewed"
 msgstr "Mark as reviewed"
 
-#: app/components/home/index.tsx:27
+#: app/components/home/index.tsx:28
 #: app/components/results/Actions.tsx:12
-#: app/routes/home.tsx:10
+#: app/routes/home.tsx:11
 msgid "Mock tests"
 msgstr "Mock tests"
 
 #: app/components/home/LevelUnavailable.tsx:24
 msgid "Mock tests for {level} are coming later."
 msgstr "Mock tests for {level} are coming later."
+
+#: app/components/ui/pagination.tsx:122
+msgid "More pages"
+msgstr "More pages"
 
 #: app/components/home/test-list/helpers/announcements.ts:19
 msgid "Moved “{title}” to place {place}."
@@ -418,6 +430,10 @@ msgstr "New mock tests show up here."
 #: app/routes/reset-password.tsx:11
 msgid "New password"
 msgstr "New password"
+
+#: app/components/ui/pagination.tsx:100
+msgid "Next"
+msgstr "Next"
 
 #: app/components/welcome/SampleQuiz.tsx:201
 msgid "Next question"
@@ -455,6 +471,10 @@ msgstr "Open the link below and choose a new password. The link works for one ho
 msgid "Page not found"
 msgstr "Page not found"
 
+#: app/components/ui/pagination.tsx:14
+msgid "Pagination"
+msgstr "Pagination"
+
 #: app/components/quiz/question-nav/QuestionGrid.tsx:58
 #: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
@@ -487,6 +507,10 @@ msgstr "Press a choice to put it in the next empty slot. Press a filled slot to 
 #: app/components/home/test-list/index.tsx:42
 msgid "Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
 msgstr "Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
+
+#: app/components/ui/pagination.tsx:82
+msgid "Previous"
+msgstr "Previous"
 
 #: app/components/quiz/sentence-order/helpers/announcements.ts:29
 msgid "Put “{piece}” back."

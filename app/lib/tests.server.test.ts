@@ -98,6 +98,14 @@ describe("listTests", () => {
     expect(await titlesOf()).toEqual(["2026-10-27T00:00:00.000Z", "2026-10-25T00:00:00.000Z", "2026-10-26T00:00:00.000Z"]);
   });
 
+  it("lists `limit` tests from `offset`, for a page", async () => {
+    await createTestAt("2026-10-25T00:00:00.000Z");
+    await createTestAt("2026-10-26T00:00:00.000Z");
+    await createTestAt("2026-10-27T00:00:00.000Z");
+
+    expect((await listTests({ limit: 1, offset: 1 })).map((test) => test.payload.title)).toEqual(["2026-10-26T00:00:00.000Z"]);
+  });
+
   it("reads only what the list shows: the question count, and no questions or answers", async () => {
     const { id } = await createTest(buildPayload());
     await saveSubmission(id, buildSubmission({ answers: { q1: 2 }, score: 1, wrongGrammarIds: [GRAMMAR_ID] }));
@@ -138,6 +146,18 @@ describe("saveOrder", () => {
     const second = await createTest(buildPayload());
 
     expect(await saveOrder([second.id, second.id, "not-an-id", first.id])).toEqual([second.id, first.id]);
+  });
+
+  it("orders a page's tests among the places they hold, so the tests on other pages keep theirs", async () => {
+    const a = await createTestAt("2026-10-25T00:00:00.000Z");
+    const b = await createTestAt("2026-10-26T00:00:00.000Z");
+    const c = await createTestAt("2026-10-27T00:00:00.000Z");
+    const d = await createTestAt("2026-10-28T00:00:00.000Z");
+    await saveOrder([a.id, b.id, c.id, d.id]);
+
+    await saveOrder([c.id, b.id]);
+
+    expect(await titlesOf()).toEqual([a, c, b, d].map((test) => test.payload.title));
   });
 
   it("saves nothing for an empty order", async () => {

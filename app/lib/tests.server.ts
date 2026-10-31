@@ -1,8 +1,8 @@
 import { randomBytes } from "node:crypto";
-import { and, desc, eq, isNull, or, sql } from "drizzle-orm";
+import { and, count, desc, eq, isNull, or, sql } from "drizzle-orm";
 import { z } from "zod";
 import { orm, write } from "./db.server";
-import { grammarPointSchema, LEVELS, PAYLOAD_VERSION, testPayloadSchema, type TestPayload } from "./payload";
+import { grammarPointSchema, LEVELS, PAYLOAD_VERSION, testPayloadSchema, type Level, type TestPayload } from "./payload";
 import { attempts, reviewed, tests } from "./schema.server";
 import type { Answers } from "./views";
 
@@ -73,15 +73,76 @@ const listedSchema = z.object({
   questionCount: z.number().int(),
 });
 
-export async function listTests(): Promise<ListedTest[]> {
+/** A column's JSON, or NULL when it is not JSON: ->> and json_each on a broken row would fail the whole query. */
+const json = (column: typeof tests.payload | typeof tests.submission) => sql`(CASE WHEN json_valid(${column}) THEN ${column} END)`;
+
+/** The rows the list can show: JSON in the current payload format, and of `level` when there is one. */
+const listable = (level?: Level) =>
+  and(
+    sql`${json(tests.payload)} ->> '$.version' = ${PAYLOAD_VERSION}`,
+    or(isNull(tests.submission), sql`json_valid(${tests.submission})`),
+    level && sql`${json(tests.payload)} ->> '$.level' = ${level}`,
+  );
+
+// Tests not placed by a drag yet (new ones) come first, newest first; the rest follow their saved place.
+// The id settles ties, so a test is never on two pages.
+const listOrder = [sql`${tests.position} IS NOT NULL`, tests.position, desc(tests.createdAt), tests.id];
+
+/** The tests in the list's order: every one, or one level's, `limit` of them from `offset`. */
+export async function listTests({ level, limit = -1, offset = 0 }: { level?: Level; limit?: number; offset?: number } = {}): Promise<ListedTest[]> {
   const rows = await (await orm())
     .select(listed)
     .from(tests)
-    // Rows that are not JSON are skipped here, as toStoredTest skips them for getTest.
-    .where(and(sql`json_valid(${tests.payload})`, or(isNull(tests.submission), sql`json_valid(${tests.submission})`)))
-    // Tests not placed by a drag yet (new ones) come first, newest first; the rest follow their saved place.
-    .orderBy(sql`${tests.position} IS NOT NULL`, tests.position, desc(tests.createdAt));
+    .where(listable(level))
+    .orderBy(...listOrder)
+    // SQLite reads a LIMIT of -1 as no limit.
+    .limit(limit)
+    .offset(offset);
   return rows.map(toListedTest).filter((test): test is ListedTest => test !== null);
+}
+
+/** The figures over all of a level's tests, not one page: how many, how many taken, their average, and the patterns to review. */
+export async function levelStats(level: Level) {
+  const db = await orm();
+  const score = sql`${tests.submission} ->> '$.score'`;
+  const total = sql`${tests.submission} ->> '$.total'`;
+  const [[counts], [review]] = await Promise.all([
+    db
+      .select({
+        total: count(),
+        taken: count(tests.submission),
+        // Each score as a whole percent first, as its row shows it; then their average.
+        average: sql<number | null>`avg(CASE WHEN ${total} = 0 THEN 0 ELSE round(100.0 * ${score} / ${total}) END)`,
+      })
+      .from(tests)
+      .where(listable(level)),
+    // A pattern counts once however many tests got it wrong, and not at all where its chip is marked reviewed.
+    db
+      .select({ toReview: sql<number>`count(DISTINCT point.value ->> '$.pattern')` })
+      .from(
+        sql`${tests}, json_each(${json(tests.submission)}, '$.wrongGrammarIds') AS wrong, json_each(${json(tests.payload)}, '$.grammarPoints') AS point`,
+      )
+      .where(
+        and(
+          listable(level),
+          sql`point.value ->> '$.id' = wrong.value`,
+          sql`NOT EXISTS (SELECT 1 FROM ${reviewed} WHERE ${reviewed.testId} = ${tests.id} AND ${reviewed.grammarId} = wrong.value)`,
+        ),
+      ),
+  ]);
+  const { average, ...rest } = counts!;
+  return { ...rest, average: average === null ? null : Math.round(average), toReview: review!.toReview };
+}
+
+/** The level of the newest test the list can show, or null before there is one. */
+export async function newestLevel(): Promise<Level | null> {
+  const [newest] = await (await orm())
+    .select({ level: sql<string>`${tests.payload} ->> '$.level'` })
+    .from(tests)
+    .where(listable())
+    .orderBy(desc(tests.createdAt))
+    .limit(1);
+  return LEVELS.find((level) => level === newest?.level) ?? null;
 }
 
 export async function getTest(id: string): Promise<StoredTest | null> {
@@ -107,14 +168,27 @@ export async function createTest(payload: TestPayload): Promise<StoredTest> {
   return test;
 }
 
-/** Saves the list order, top first. Ids that aren't tests are dropped. */
+/**
+ * Saves the order of some tests, top first, such as the tests of one page: they swap the places they hold between
+ * them, and every other test keeps its place. Ids that aren't tests are dropped.
+ * shortcut: places are numbered from 0 over all tests, so the first drag after a new test (unplaced, so first) rewrites
+ * every row; give a new test a place above the top one if that gets slow with thousands of tests.
+ */
 export async function saveOrder(ids: string[]): Promise<string[]> {
   const order = [...new Set(ids)].filter((id) => ID.test(id));
-  if (order.length) {
-    const db = await orm();
-    const [first, ...rest] = order.map((id, position) => db.update(tests).set({ position }).where(eq(tests.id, id)));
-    await write([first, ...rest]);
-  }
+  const db = await orm();
+  const all = await db.select({ id: tests.id, position: tests.position }).from(tests).orderBy(...listOrder);
+  const known = new Set(all.map((test) => test.id));
+  const moved = order.filter((id) => known.has(id));
+  const moving = new Set(moved);
+  // The tests being ordered take the slots they fill in the list now, in their new order.
+  let next = 0;
+  const placed = all.map((test) => (moving.has(test.id) ? moved[next++]! : test.id));
+  const was = new Map(all.map((test) => [test.id, test.position]));
+  const [first, ...rest] = placed.flatMap((id, position) =>
+    was.get(id) === position ? [] : [db.update(tests).set({ position }).where(eq(tests.id, id))],
+  );
+  if (first) await write([first, ...rest]);
   return order;
 }
 

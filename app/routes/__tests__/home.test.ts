@@ -15,7 +15,8 @@ import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { createTest, saveOrder, saveSubmission, setReviewed } from "~/lib/tests.server";
-import { loader, meta } from "../home";
+import { thrownBy } from "#tests/helpers/thrown";
+import { loader, meta, PAGE_SIZE } from "../home";
 
 /** Saves a test and a submission of it with `score` out of 3, and the grammar of the wrong answers. */
 async function takeTest(score: number, wrongGrammarIds: string[] = []) {
@@ -53,13 +54,13 @@ describe("home loader", () => {
 
     expect(tests).toHaveLength(3);
     // 100% and 33% give 66.5%, which rounds to 67%.
-    expect(stats).toEqual({ average: 67, toReview: 1, taken: 2 });
+    expect(stats).toEqual({ average: 67, toReview: 1, taken: 2, total: 3 });
   });
 
   it("gives no average before any test is taken", async () => {
     await createTest(buildPayload());
 
-    expect((await load()).stats).toEqual({ average: null, toReview: 0, taken: 0 });
+    expect((await load()).stats).toEqual({ average: null, toReview: 0, taken: 0, total: 1 });
   });
 
   it("counts a grammar pattern to review once, however many tests got it wrong", async () => {
@@ -89,6 +90,29 @@ describe("home loader", () => {
   });
 });
 
+describe("home loader pages", () => {
+  it("shows a page of the tests, with the figures over all of them", async () => {
+    await takeTest(3);
+    for (let i = 0; i < PAGE_SIZE; i++) await createTest(buildPayload());
+
+    const first = await load();
+    const second = await load("?level=N2&page=2");
+
+    expect({ count: first.tests.length, page: first.page, pages: first.pages }).toEqual({ count: PAGE_SIZE, page: 1, pages: 2 });
+    // The taken test is the oldest, so it is the one on page 2.
+    expect(second.tests.map((test) => test.result?.score)).toEqual([3]);
+    expect(first.stats).toEqual({ average: 100, toReview: 0, taken: 1, total: PAGE_SIZE + 1 });
+  });
+
+  it("sends a page past the last to the last page", async () => {
+    await createTest(buildPayload());
+
+    const thrown = (await thrownBy(() => load("?level=N2&page=4"))) as Response;
+
+    expect(thrown.headers.get("Location")).toBe("/?level=N2&page=1");
+  });
+});
+
 describe("home loader levels", () => {
   it("shows the level in ?level=, with the figures over its tests only", async () => {
     await takeTest(3);
@@ -97,7 +121,7 @@ describe("home loader levels", () => {
     const { tests, stats, level } = await load("?level=N3");
 
     expect(tests.map((test) => test.level)).toEqual(["N3"]);
-    expect(stats).toEqual({ average: null, toReview: 0, taken: 0 });
+    expect(stats).toEqual({ average: null, toReview: 0, taken: 0, total: 1 });
     expect(level).toBe("N3");
   });
 
@@ -120,7 +144,6 @@ describe("home loader levels", () => {
       await createTest(buildPayload());
       vi.setSystemTime(new Date("2026-10-28T09:00:00.000Z"));
       const n3 = await createTest(buildN3Payload());
-      // Dragging on the N3 page places the N3 tests only; the N2 test, never placed, now sorts first.
       await saveOrder([n3.id]);
 
       expect((await load()).level).toBe("N3");

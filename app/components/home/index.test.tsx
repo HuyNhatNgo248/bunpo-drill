@@ -16,7 +16,7 @@ const TAKEN = buildTestSummary({
 
 const NOT_TAKEN = buildTestSummary({ id: "20261027-bbbbbb", title: "第2週 1日目" });
 
-const STATS: HomeStats = { average: 67, toReview: 1, taken: 1 };
+const STATS: HomeStats = { average: 67, toReview: 1, taken: 1, total: 2 };
 
 /** The home page, with the API routes that its fetchers reach. */
 function renderHome(
@@ -24,10 +24,12 @@ function renderHome(
   {
     stats = STATS,
     level = tests.length ? "N2" : null,
-  }: { stats?: HomeStats; level?: JlptLevel | null } = {},
+    page = 1,
+    pages = 1,
+  }: { stats?: HomeStats; level?: JlptLevel | null; page?: number; pages?: number } = {},
 ) {
   const { action } = recordingAction();
-  renderRoute(<Home tests={tests} stats={stats} level={level} />, {
+  renderRoute(<Home tests={tests} stats={stats} level={level} page={page} pages={pages} />, {
     routes: [
       { path: "/api/tests", action },
       { path: "/api/tests/:id", action },
@@ -44,10 +46,28 @@ describe("Home", () => {
     expect(screen.getByText("Grammar to review").nextSibling).toHaveTextContent("1");
     expect(screen.getByText("Taken").nextSibling).toHaveTextContent("1 / 2");
     expect(screen.getAllByRole("listitem")).toHaveLength(2);
+    expect(screen.queryByRole("navigation", { name: "Pagination" })).toBeNull();
+  });
+
+  it("counts every test of the level as taken or not, not only the page's, and links to the pages either side", async () => {
+    renderHome([TAKEN, NOT_TAKEN], { stats: { ...STATS, total: 45 }, page: 2, pages: 3 });
+
+    expect((await screen.findByText("Taken")).nextSibling).toHaveTextContent("1 / 45");
+    const nav = screen.getByRole("navigation", { name: "Pagination" });
+    expect(within(nav).getAllByRole("link").map((link) => link.getAttribute("aria-label") ?? link.textContent)).toEqual([
+      "Go to previous page",
+      "1",
+      "2",
+      "3",
+      "Go to next page",
+    ]);
+    expect(within(nav).getByRole("link", { name: "2" })).toHaveAttribute("aria-current", "page");
+    expect(within(nav).getByRole("link", { name: "Go to previous page" })).toHaveAttribute("href", "/?level=N2");
+    expect(within(nav).getByRole("link", { name: "Go to next page" })).toHaveAttribute("href", "/?level=N2&page=3");
   });
 
   it("shows a dash for the average before any test is taken", async () => {
-    renderHome([NOT_TAKEN], { stats: { average: null, toReview: 0, taken: 0 } });
+    renderHome([NOT_TAKEN], { stats: { average: null, toReview: 0, taken: 0, total: 1 } });
 
     expect((await screen.findByText("Average score")).nextSibling).toHaveTextContent("—");
   });

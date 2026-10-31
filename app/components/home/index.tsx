@@ -6,16 +6,17 @@ import { EmptyState } from "./EmptyState";
 import { useVisibleTests } from "./hooks/useVisibleTests";
 import { LevelTabs } from "./LevelTabs";
 import { LevelUnavailable } from "./LevelUnavailable";
+import { PageLinks } from "./PageLinks";
 import { Stats, type HomeStats } from "./Stats";
 import { TestList } from "./test-list";
 
-type HomeProps = { tests: TestSummary[]; stats: HomeStats; level: JlptLevel | null };
+type HomeProps = { tests: TestSummary[]; stats: HomeStats; level: JlptLevel | null; page: number; pages: number };
 
 /**
- * The home page for one level: the figures over its tests, then the list. Once there is a test, a tab picks any JLPT
- * level; one the app has no tests for yet says it is not available.
+ * The home page for one level: the figures over its tests, then a page of the list. Once there is a test, a tab picks
+ * any JLPT level; one the app has no tests for yet says it is not available.
  */
-export function Home({ tests: saved, stats, level }: HomeProps) {
+export function Home({ tests: saved, stats, level, page, pages }: HomeProps) {
   const tests = useVisibleTests(saved);
 
   return (
@@ -31,8 +32,9 @@ export function Home({ tests: saved, stats, level }: HomeProps) {
 
         {tests.length > 0 ? (
           <>
-            <Stats stats={stats} total={tests.length} />
+            <Stats stats={stats} />
             <TestList tests={tests} />
+            {level && <PageLinks level={level} page={page} pages={pages} />}
           </>
         ) : level && !isTestLevel(level) ? (
           <LevelUnavailable level={level} />

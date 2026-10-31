@@ -306,6 +306,14 @@ msgstr "パスワードを忘れた場合"
 msgid "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 msgstr "本番と同じ3つの問題形式の模擬試験で、提出するとすぐに採点されます。間違えた文型はそのまま復習リストに。"
 
+#: app/components/ui/pagination.tsx:95
+msgid "Go to next page"
+msgstr "次のページへ"
+
+#: app/components/ui/pagination.tsx:76
+msgid "Go to previous page"
+msgstr "前のページへ"
+
 #: app/lib/sections.ts:16
 msgid "Grammar form"
 msgstr "文法形式の判断"
@@ -390,15 +398,19 @@ msgstr "「〜のに」と同じで、予想と違う結果が続きます。雨
 msgid "Mark as reviewed"
 msgstr "復習済みにする"
 
-#: app/components/home/index.tsx:27
+#: app/components/home/index.tsx:28
 #: app/components/results/Actions.tsx:12
-#: app/routes/home.tsx:10
+#: app/routes/home.tsx:11
 msgid "Mock tests"
 msgstr "模擬試験"
 
 #: app/components/home/LevelUnavailable.tsx:24
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
+
+#: app/components/ui/pagination.tsx:122
+msgid "More pages"
+msgstr "ほかのページ"
 
 #: app/components/home/test-list/helpers/announcements.ts:19
 msgid "Moved “{title}” to place {place}."
@@ -418,6 +430,10 @@ msgstr "新しい模擬試験はここに表示されます。"
 #: app/routes/reset-password.tsx:11
 msgid "New password"
 msgstr "新しいパスワード"
+
+#: app/components/ui/pagination.tsx:100
+msgid "Next"
+msgstr "次へ"
 
 #: app/components/welcome/SampleQuiz.tsx:201
 msgid "Next question"
@@ -455,6 +471,10 @@ msgstr "下のリンクを開いて、新しいパスワードを決めてくだ
 msgid "Page not found"
 msgstr "ページが見つかりません"
 
+#: app/components/ui/pagination.tsx:14
+msgid "Pagination"
+msgstr "ページ送り"
+
 #: app/components/quiz/question-nav/QuestionGrid.tsx:58
 #: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
@@ -487,6 +507,10 @@ msgstr "選択肢を押すと次の空欄に入り、埋まった空欄を押す
 #: app/components/home/test-list/index.tsx:42
 msgid "Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
 msgstr "スペースキーで持ち上げ、上下の矢印キーで移動し、もう一度スペースキーで置きます。Escキーで取り消せます。"
+
+#: app/components/ui/pagination.tsx:82
+msgid "Previous"
+msgstr "前へ"
 
 #: app/components/quiz/sentence-order/helpers/announcements.ts:29
 msgid "Put “{piece}” back."

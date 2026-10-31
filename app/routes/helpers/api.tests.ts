@@ -14,7 +14,7 @@ export async function loader(_: Route.LoaderArgs) {
 
 /**
  * POST /api/tests: save a new test (the standard v1 payload).
- * PATCH /api/tests with {"order": [id, …]}: set the list order, top first.
+ * PATCH /api/tests with {"order": [id, …]}: order those tests, top first, among the places they hold in the list.
  * DELETE /api/tests: clear all tests.
  */
 export async function action({ request }: Route.ActionArgs) {
