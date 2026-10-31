@@ -2,6 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { memo } from "react";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
+import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { questionAnchor } from "~/lib/sections";
 import type { Answers, QuizQuestion } from "~/lib/views";
 import { ChoiceList } from "./ChoiceList";
@@ -48,6 +49,12 @@ export const QuestionCard = memo(function QuestionCard({
       {question.type === "fill-blank" && (
         <p lang="ja" className="font-jp text-lg leading-sentence md:text-xl">
           {question.prompt}
+        </p>
+      )}
+
+      {(question.type === "kanji-reading" || question.type === "kanji-writing") && (
+        <p lang="ja" className="font-jp text-lg leading-sentence md:text-xl">
+          <UnderlinedSentence sentence={question.prompt} />
         </p>
       )}
 

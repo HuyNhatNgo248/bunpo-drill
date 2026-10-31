@@ -10,20 +10,23 @@ import { LanguageSwitch } from "./LanguageSwitch";
  * Desktop: brand on the left; on the right the language switch, then Account and Sign out when `account`
  * is set, or Sign in and Create account for a signed-out `guest`.
  * Mobile: the language, Account, Sign out and Sign in buttons show only their icons; with a `mobileTitle`,
- * a back chevron and the title replace the brand.
+ * a back chevron and the title replace the brand. The chevron goes to `back`, the mock tests unless given.
  */
 export function AppHeader({
   account = false,
   guest = false,
   mobileTitle,
   mobileAside,
+  back,
 }: {
   account?: boolean;
   guest?: boolean;
   mobileTitle?: string;
   mobileAside?: React.ReactNode;
+  back?: { to: string; label: string };
 }) {
   const { t } = useLingui();
+  const { to: backTo, label: backLabel } = back ?? { to: "/", label: t`Back to the mock tests` };
 
   return (
     <header className="border-b bg-card">
@@ -78,8 +81,8 @@ export function AppHeader({
       {mobileTitle && (
         <div className="flex items-center gap-1 px-2 py-1 md:hidden">
           <Link
-            to="/"
-            aria-label={t`Back to the mock tests`}
+            to={backTo}
+            aria-label={backLabel}
             className="flex size-11 items-center justify-center text-secondary-foreground"
           >
             <ChevronLeft className="size-5" aria-hidden="true" />

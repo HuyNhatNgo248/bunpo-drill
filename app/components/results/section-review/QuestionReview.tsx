@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
+import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { questionAnchor } from "~/lib/sections";
 import type { ResultQuestion } from "~/lib/views";
 
@@ -29,6 +30,12 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
       {question.prompt && (
         <p lang="ja" className="font-jp text-prompt leading-sentence md:text-lg">
           {question.prompt.before}（{question.prompt.fill}）{question.prompt.after}
+        </p>
+      )}
+
+      {question.underlined && (
+        <p lang="ja" className="font-jp text-prompt leading-sentence md:text-lg">
+          <UnderlinedSentence sentence={question.underlined} />
         </p>
       )}
 

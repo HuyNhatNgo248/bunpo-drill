@@ -2,7 +2,7 @@ import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { buildPayload } from "#mocks/factories/payload";
-import { buildQuizView } from "#mocks/factories/views";
+import { buildKanjiQuizView, buildQuizView } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute, type StubRoute } from "#tests/helpers/render";
 import { gradeTest } from "~/lib/grading.server";
@@ -69,6 +69,18 @@ describe("Quiz", () => {
     renderQuiz();
 
     expect(await screen.findByRole("link", { name: "← Mock tests" })).toHaveAttribute("href", "/");
+  });
+
+  describe("a kanji test", () => {
+    it("shows its 漢字読み and 表記 parts, each sentence with its word underlined, and links back to kanji", async () => {
+      renderRoute(<Quiz quiz={buildKanjiQuizView()} />, { url: URL });
+
+      expect(await screen.findByText("漢字読み")).toBeInTheDocument();
+      expect(screen.getByText("Choose the best way to write the underlined word in kanji from 1, 2, 3 and 4.")).toBeInTheDocument();
+      expect(screen.getByText("招待状", { selector: "u" })).toBeInTheDocument();
+      expect(screen.getByText("しょうたいじょう", { selector: "u" })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2");
+    });
   });
 
   describe("answering", () => {

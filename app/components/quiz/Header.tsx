@@ -8,17 +8,20 @@ export function Header({
   answered,
   total,
   percent,
+  back,
 }: {
   title: string;
   answered: number;
   total: number;
   percent: number;
+  back?: { to: string; label: string };
 }) {
   const { t } = useLingui();
   return (
     <div className="sticky top-0 z-20 md:static">
       <AppHeader
         mobileTitle={title}
+        back={back}
         mobileAside={
           <span className="pr-2 text-caption text-subtle-foreground">
             {answered} / {total}

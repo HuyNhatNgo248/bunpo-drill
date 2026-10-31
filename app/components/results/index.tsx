@@ -5,6 +5,7 @@ import { forgetAnswers } from "~/components/quiz/helpers/savedAnswers";
 import { QuestionNav } from "~/components/quiz/question-nav";
 import { gradedMarks, RESULT_MARKS } from "~/components/quiz/question-nav/QuestionGrid";
 import { QuestionSheet } from "~/components/quiz/question-nav/QuestionSheet";
+import { homeOf } from "~/lib/links";
 import type { ResultsView } from "~/lib/views";
 import { Actions } from "./Actions";
 import { ReviewCard } from "./ReviewCard";
@@ -27,7 +28,10 @@ export function Results({ results }: { results: ResultsView }) {
 
   return (
     <div className="min-h-screen">
-      <AppHeader mobileTitle={`${results.title} · ${t`Results`}`} />
+      <AppHeader
+        mobileTitle={`${results.title} · ${t`Results`}`}
+        back={results.kind === "kanji" ? { to: homeOf(results), label: t`Back to kanji` } : undefined}
+      />
 
       <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 pb-8 md:gap-5 md:px-6 md:pt-8 md:pb-16 lg:max-w-260">
         <Title results={results} />
@@ -51,7 +55,7 @@ export function Results({ results }: { results: ResultsView }) {
           </div>
         </div>
 
-        <Actions testId={results.id} />
+        <Actions results={results} />
 
         {/* Phone and tablet: a solid bar on the bottom edge, its button across the whole width. */}
         <div className="sticky bottom-0 z-10 -mx-4 border-t bg-card px-4 pt-3 pb-5 md:-mx-6 md:px-6 lg:hidden">

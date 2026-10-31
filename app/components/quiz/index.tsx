@@ -1,5 +1,7 @@
+import { useLingui } from "@lingui/react/macro";
 import { useCallback } from "react";
 import { useSubmit } from "react-router";
+import { homeOf } from "~/lib/links";
 import type { Answers, QuizView, ResultSection } from "~/lib/views";
 import { Header } from "./Header";
 import { checkedAnswers, quizProgress } from "./helpers/answers";
@@ -31,10 +33,12 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
     [setChecks],
   );
   const send = () => submit({ answers }, { method: "post", encType: "application/json" });
+  const { t } = useLingui();
+  const back = quiz.kind === "kanji" ? { to: homeOf(quiz), label: t`Back to kanji` } : undefined;
 
   return (
     <div className="min-h-screen">
-      <Header title={quiz.title} answered={answered} total={quiz.questionCount} percent={percent} />
+      <Header title={quiz.title} answered={answered} total={quiz.questionCount} percent={percent} back={back} />
 
       <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 md:gap-5 md:px-6 md:pt-8 md:pb-12 lg:max-w-260">
         <Title quiz={quiz} />

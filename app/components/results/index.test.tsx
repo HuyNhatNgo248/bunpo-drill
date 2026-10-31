@@ -8,7 +8,8 @@ import {
   buildPayload,
   buildSentenceOrderSection,
 } from "#mocks/factories/payload";
-import { buildResultsView, buildReviewChip } from "#mocks/factories/views";
+import { WORD_ID } from "#mocks/factories/kanji";
+import { buildKanjiResultsView, buildResultsView, buildReviewChip } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute } from "#tests/helpers/render";
 import { gradeTest } from "~/lib/grading.server";
@@ -34,6 +35,9 @@ const EXPLAINED = buildResultsView({
 });
 
 const PASSED = buildResultsView({ score: 3, total: 3, percent: 100, review: [] });
+
+/** A kanji test with both questions on 招待状 left blank. */
+const KANJI_FAILED = buildKanjiResultsView();
 
 /** The results page, with the retake route that its button posts to. */
 function renderResults(results: ResultsView) {
@@ -134,6 +138,27 @@ describe("Results", () => {
     renderResults(PASSED);
 
     expect(await screen.findByText("Nothing to review. You got every question right.")).toBeInTheDocument();
+  });
+
+  describe("a kanji test", () => {
+    it("lists the words of the wrong answers, and links to just their flashcards", async () => {
+      renderResults(KANJI_FAILED);
+
+      expect(await screen.findByRole("heading", { name: "Words to study" })).toBeInTheDocument();
+      expect(screen.getByText("しょうたいじょう", { selector: "li span" })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "Study this word as a flashcard" })).toHaveAttribute(
+        "href",
+        `/kanji/N2/1/cards?words=${encodeURIComponent(WORD_ID)}`,
+      );
+    });
+
+    it("shows each sentence with its word underlined, and links back to kanji", async () => {
+      renderResults(KANJI_FAILED);
+      await screen.findByRole("region", { name: "Part 1" });
+
+      expect(within(reviewOf(1)).getByText("招待状", { selector: "u" })).toBeInTheDocument();
+      for (const link of screen.getAllByRole("link", { name: /Back to kanji/ })) expect(link).toHaveAttribute("href", "/kanji?level=N2");
+    });
   });
 
   describe("the answer review", () => {
