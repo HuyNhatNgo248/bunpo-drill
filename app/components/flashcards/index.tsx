@@ -1,11 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Check, RotateCcw } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router";
-import { AppHeader } from "~/components/layout/header";
-import { Badge } from "~/components/ui/badge";
+import { Check, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { useEffect, useState } from "react";
+import { PageTitle } from "~/components/PageTitle";
+import { ProgressCard } from "~/components/ProgressCard";
+import { ProgressHeader } from "~/components/ProgressHeader";
 import { Button } from "~/components/ui/button";
-import { Progress } from "~/components/ui/progress";
 import { homeOf } from "~/lib/links";
 import { chapterLabel } from "~/lib/sections";
 import type { FlashcardsView } from "~/lib/views";
@@ -16,7 +15,8 @@ import { SessionDone } from "./SessionDone";
 
 /**
  * A flashcard session on one chapter: one card at a time, flipped by a tap or Show answer, then Again (it comes back a
- * few cards later) or Got it. The counts and the bar follow the cards done; the end shows how it went and the way on.
+ * few cards later) or Got it; ‹ and › (or the ← and → keys) step through the cards without rating them. The counts and
+ * the bar follow the cards done; the end shows how it went and the way on.
  */
 export function Flashcards({ view }: { view: FlashcardsView }) {
   const { t, i18n } = useLingui();
@@ -26,36 +26,42 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
   const name = `${chapterLabel(i18n, view.chapter)} ${view.title}`;
   const home = homeOf({ kind: "kanji", level: view.level });
   const percent = total === 0 ? 100 : (done / total) * 100;
-  const position = `${Math.min(done + 1, total)} / ${total}`;
+  const position = `${Math.min(session.position, total)} / ${total}`;
+  const { prev, next } = session;
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      // With a modifier, the arrows are the browser's (Alt+← goes back a page).
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.key === "ArrowLeft") prev?.();
+      if (event.key === "ArrowRight") next?.();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [prev, next]);
 
   return (
     <div className="min-h-screen">
-      <div className="sticky top-0 z-20 md:static">
-        <AppHeader
-          mobileTitle={`${name} · ${t`Flashcards`}`}
-          mobileAside={<span className="pr-2 text-caption text-subtle-foreground">{position}</span>}
-          back={{ to: home, label: t`Back to kanji` }}
-        />
-        <Progress value={percent} minFill={1} aria-label={t`Cards done`} className="rounded-none md:hidden" />
-      </div>
+      <ProgressHeader
+        title={`${name} · ${t`Flashcards`}`}
+        count={position}
+        percent={percent}
+        label={t`Cards done`}
+        back={{ to: home, label: t`Back to kanji` }}
+      />
 
       <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 pb-8 md:gap-5 md:px-6 md:pt-8 md:pb-16">
-        <div className="hidden flex-col gap-2 md:flex">
-          <div className="flex flex-wrap items-center gap-2 text-caption text-muted-foreground">
-            <Badge>{view.level}</Badge>
-            <span>{position}</span>
-            <Link to={home} className="ml-auto text-subtle-foreground no-underline hover:text-foreground">
-              <Trans>← Kanji</Trans>
-            </Link>
-          </div>
-          <h1 className="text-title font-bold tracking-tight">
-            <span lang="ja" className="font-jp">
-              {name}
-            </span>{" "}
-            · <Trans>Flashcards</Trans>
-          </h1>
-          <Progress value={percent} minFill={1} aria-label={t`Cards done`} className="h-2" />
-        </div>
+        <PageTitle level={view.level} meta={position} back={{ to: home, label: <Trans>← Kanji</Trans> }}>
+          <span lang="ja" className="font-jp">
+            {name}
+          </span>{" "}
+          · <Trans>Flashcards</Trans>
+        </PageTitle>
+        <ProgressCard percent={percent} label={t`Cards done`}>
+          <Trans>
+            Cards done {done} / {total}
+          </Trans>
+        </ProgressCard>
 
         {current ? (
           <>
@@ -68,22 +74,30 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
               </span>
             </div>
             <CardFace key={current.wordId} card={current} mode={mode} flipped={session.flipped} onFlip={session.flip} />
-            {session.flipped ? (
-              <div className="grid grid-cols-2 gap-2">
-                <Button variant="outline" size="lg" onClick={session.again} className="font-semibold">
-                  <RotateCcw aria-hidden="true" />
-                  <Trans>Again</Trans>
-                </Button>
-                <Button size="lg" onClick={session.gotIt} className="font-semibold">
-                  <Check aria-hidden="true" />
-                  <Trans>Got it</Trans>
-                </Button>
-              </div>
-            ) : (
-              <Button size="lg" onClick={session.flip} className="font-semibold">
-                <Trans>Show answer</Trans>
+            <div className="flex justify-center gap-2">
+              <Button variant="outline" size="lg" onClick={session.prev} disabled={!session.prev} aria-label={t`Previous card`} className="aspect-square px-0">
+                <ChevronLeft aria-hidden="true" />
               </Button>
-            )}
+              {session.flipped ? (
+                <div className="grid flex-1 grid-cols-2 gap-2 md:flex-none">
+                  <Button variant="outline" size="lg" onClick={session.again} className="font-semibold">
+                    <RotateCcw aria-hidden="true" />
+                    <Trans>Again</Trans>
+                  </Button>
+                  <Button size="lg" onClick={session.gotIt} className="font-semibold">
+                    <Check aria-hidden="true" />
+                    <Trans>Got it</Trans>
+                  </Button>
+                </div>
+              ) : (
+                <Button size="lg" onClick={session.flip} className="flex-1 font-semibold md:flex-none md:px-8">
+                  <Trans>Show answer</Trans>
+                </Button>
+              )}
+              <Button variant="outline" size="lg" onClick={session.next} disabled={!session.next} aria-label={t`Next card`} className="aspect-square px-0">
+                <ChevronRight aria-hidden="true" />
+              </Button>
+            </div>
           </>
         ) : (
           <SessionDone

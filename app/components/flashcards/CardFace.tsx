@@ -7,8 +7,8 @@ import type { CardMode } from "./ModeTabs";
 
 /**
  * The card on the table. Its front asks for the reading of the word (漢字読み) or for the word of a reading and meaning
- * (表記), and flips when tapped; its back shows the word, its reading and meaning, the readings of its kanji, and the
- * other words the book gives under the same kanji.
+ * (表記); a tap flips it over, and back. Its back shows the word, its reading and meaning, the readings of its kanji,
+ * and the other words the book gives under the same kanji.
  */
 export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mode: CardMode; flipped: boolean; onFlip: () => void }) {
   const { t } = useLingui();
@@ -48,7 +48,7 @@ export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mod
   }
 
   return (
-    <Card aria-label={t`Answer`} className="flex flex-col gap-4 p-4 shadow-raised md:p-6">
+    <Card aria-label={t`Answer`} className="relative flex flex-col gap-4 p-4 shadow-raised md:p-6">
       {lesson}
       <div className="flex flex-col items-center gap-1 text-center">
         <span lang="ja" className="font-jp text-4xl font-semibold tracking-wider">
@@ -104,6 +104,13 @@ export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mod
           <WordChips words={card.related} />
         </div>
       )}
+      {/* Over the whole back, so a tap anywhere turns the card face up again. */}
+      <button
+        type="button"
+        onClick={onFlip}
+        aria-label={t`Show the question`}
+        className="absolute inset-0 rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
+      />
     </Card>
   );
 }

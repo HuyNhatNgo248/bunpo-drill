@@ -2,6 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
+import { Progress } from "~/components/ui/progress";
 import { WordChips } from "~/components/WordChips";
 import { cardsOf, homeOf } from "~/lib/links";
 import { chapterLabel } from "~/lib/sections";
@@ -69,9 +70,7 @@ export function SessionDone({
             </span>
           </div>
           {/* The figures above say it; the bar is for the eye, so it is not read out. */}
-          <div aria-hidden="true" className="h-1.5 overflow-hidden rounded-full bg-muted">
-            <div className="h-full rounded-full bg-indigo" style={{ width: `${view.words === 0 ? 0 : (learned / view.words) * 100}%` }} />
-          </div>
+          <Progress aria-hidden="true" value={view.words === 0 ? 0 : (learned / view.words) * 100} className="h-2" />
         </div>
       </Card>
 

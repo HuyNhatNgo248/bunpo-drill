@@ -12,7 +12,7 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSo
 import { useFetcher } from "react-router";
 import type { TestSummary } from "~/lib/views";
 import { REORDER_KEY } from "../helpers/fetchers";
-import { listAnnouncements } from "./helpers/announcements";
+import { listAnnouncements } from "~/components/helpers/announcements";
 import { TestRow } from "./TestRow";
 
 /** The tests, in the order the user dragged them to. Dropping a test saves the new order. */

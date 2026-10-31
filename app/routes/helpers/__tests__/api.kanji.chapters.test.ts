@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { buildKanjiChapter } from "#mocks/factories/kanji";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
-import { getChapter } from "~/lib/kanji.server";
+import { getChapter, listChapters, saveChapter } from "~/lib/kanji.server";
 import { action } from "../api.kanji.chapters";
 
 const URL = "https://bunpo.test/api/kanji/chapters";
@@ -48,11 +48,30 @@ describe("POST /api/kanji/chapters", () => {
   });
 });
 
+describe("PATCH /api/kanji/chapters", () => {
+  it("saves the level's order and answers with the chapters it ordered", async () => {
+    await saveChapter(buildKanjiChapter({ chapter: 1 }));
+    await saveChapter(buildKanjiChapter({ chapter: 2 }));
+
+    const response = await send("PATCH", { level: "N2", order: [2, 1, 9] });
+
+    expect(await response.json()).toEqual({ order: [2, 1] });
+    expect((await listChapters("N2")).map((chapter) => chapter.chapter)).toEqual([2, 1]);
+  });
+
+  it("answers 400 for a body without a level and an order", async () => {
+    const response = await send("PATCH", { order: [1] });
+
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({ error: 'Body must be {"level": "N2", "order": number[]}.' });
+  });
+});
+
 describe("another method", () => {
-  it("answers 405 and names the method it allows", async () => {
+  it("answers 405 and names the methods it allows", async () => {
     const response = await send("PUT", {});
 
     expect(response.status).toBe(405);
-    expect(response.headers.get("Allow")).toBe("POST");
+    expect(response.headers.get("Allow")).toBe("POST, PATCH");
   });
 });

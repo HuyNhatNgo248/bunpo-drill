@@ -66,6 +66,45 @@ describe("Flashcards", () => {
     expect(screen.getByRole("region", { name: "Answer" })).toBeInTheDocument();
   });
 
+  it("flips the card back when its answer is tapped", async () => {
+    renderCards();
+    await userEvent.click(await screen.findByRole("button", { name: /招待状/ }));
+
+    await userEvent.click(screen.getByRole("button", { name: "Show the question" }));
+
+    expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByRole("region", { name: "Answer" })).toBeNull());
+  });
+
+  it("steps to the next card and back without rating it", async () => {
+    renderCards();
+    expect(await screen.findByRole("button", { name: "Previous card" })).toBeDisabled();
+
+    await userEvent.click(screen.getByRole("button", { name: "Next card" }));
+
+    expect(await screen.findByRole("button", { name: /招く/ })).toBeInTheDocument();
+    expect(screen.getAllByText("2 / 2")).toHaveLength(2); // the phone header and the desktop heading
+    expect(screen.getByRole("button", { name: "Next card" })).toBeDisabled();
+
+    await userEvent.click(screen.getByRole("button", { name: "Previous card" }));
+
+    expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
+    expect(screen.getByText("0 got it · 0 again")).toBeInTheDocument();
+  });
+
+  it("steps through the cards with the arrow keys", async () => {
+    renderCards();
+    await screen.findByRole("button", { name: /招待状/ });
+
+    await userEvent.keyboard("{ArrowRight}");
+
+    expect(await screen.findByRole("button", { name: /招く/ })).toBeInTheDocument();
+
+    await userEvent.keyboard("{ArrowLeft}");
+
+    expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
+  });
+
   describe("rating the cards", () => {
     it("marks a card got right the first time learned, and only that one", async () => {
       const requests = renderCards();

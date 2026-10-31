@@ -40,6 +40,15 @@ describe("KanjiHome", () => {
     expect(row.getByRole("link", { name: "Quiz" })).toHaveAttribute("href", "/tests/20261031-aaaaaa/results");
   });
 
+  it("opens a chapter's flashcards from anywhere on its row, and gives the row a handle to drag", async () => {
+    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
+    await screen.findByText("生活-1");
+    const row = within(rowOf("生活-1"));
+
+    expect(row.getByRole("link", { name: /生活-1/ })).toHaveAttribute("href", "/kanji/N2/1/cards");
+    expect(row.getByRole("button", { name: "Reorder “Chapter 1 生活-1”" })).toBeInTheDocument();
+  });
+
   it("says a chapter has no quiz yet, and offers only its flashcards", async () => {
     renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
     await screen.findByText("町");
@@ -55,11 +64,11 @@ describe("KanjiHome", () => {
     expect(await screen.findByRole("heading", { name: "No N1 chapters yet" })).toBeInTheDocument();
   });
 
-  it("switches to the grammar mock tests, and between the levels", async () => {
+  it("switches to the grammar mock tests at the same level, and between the levels", async () => {
     renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
 
     const subjects = await screen.findByRole("navigation", { name: "Subject" });
-    expect(within(subjects).getByRole("link", { name: /Grammar/ })).toHaveAttribute("href", "/");
+    expect(within(subjects).getByRole("link", { name: /Grammar/ })).toHaveAttribute("href", "/?level=N2");
     expect(within(subjects).getByRole("link", { name: /Kanji/ })).toHaveAttribute("aria-current", "page");
     expect(within(screen.getByRole("navigation", { name: "Level" })).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
   });

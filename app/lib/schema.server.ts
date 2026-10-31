@@ -56,6 +56,7 @@ export const kanjiChapters = sqliteTable(
     chapter: integer("chapter").notNull(),
     payload: text("payload").notNull(),
     updatedAt: text("updated_at").notNull(),
+    position: integer("position"),
   },
   (t) => [primaryKey({ columns: [t.level, t.chapter] })],
 );

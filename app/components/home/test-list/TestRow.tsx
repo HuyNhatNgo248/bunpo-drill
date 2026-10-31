@@ -9,6 +9,7 @@ import { GrammarChips } from "~/components/grammar-chips";
 import { hasSavedAnswers, savedAnsweredCount } from "~/components/quiz/helpers/savedAnswers";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { Progress } from "~/components/ui/progress";
 import type { TestSummary } from "~/lib/views";
 
 /** One test: its handle to drag, its title and last score, and its buttons. Review opens its grammar chips. */
@@ -81,9 +82,7 @@ export function TestRow({ test }: { test: TestSummary }) {
         </div>
         {inProgress && !test.result && (
           // The badge says the numbers; the bar is for the eye, so it is not read out.
-          <div aria-hidden="true" className="mt-1 h-1 w-full max-w-48 overflow-hidden rounded-full bg-muted">
-            <div className="h-full rounded-full bg-indigo" style={{ width: `${(answered / test.questionCount) * 100}%` }} />
-          </div>
+          <Progress aria-hidden="true" value={(answered / test.questionCount) * 100} className="mt-1 max-w-48" />
         )}
       </Link>
 

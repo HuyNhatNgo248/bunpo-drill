@@ -50,6 +50,7 @@ const SCHEMA = [
     chapter INTEGER NOT NULL,
     payload TEXT NOT NULL, -- KanjiChapter JSON: the chapter's words, for its flashcards
     updated_at TEXT NOT NULL,
+    position INTEGER, -- place in the kanji list, set by dragging; NULL until dragged
     PRIMARY KEY (level, chapter)
   )`,
   `CREATE TABLE IF NOT EXISTS learned_words (
@@ -64,6 +65,8 @@ async function migrate(client: Client) {
   if (!rows.some((column) => column.name === "email")) await client.execute("ALTER TABLE users ADD COLUMN email TEXT");
   if (!rows.some((column) => column.name === "session_version"))
     await client.execute("ALTER TABLE users ADD COLUMN session_version INTEGER NOT NULL DEFAULT 0");
+  const chapterColumns = (await client.execute("PRAGMA table_info(kanji_chapters)")).rows;
+  if (!chapterColumns.some((column) => column.name === "position")) await client.execute("ALTER TABLE kanji_chapters ADD COLUMN position INTEGER");
   // Unique, but many users may have none: SQLite lets NULLs repeat in a unique index.
   await client.execute("CREATE UNIQUE INDEX IF NOT EXISTS users_email ON users (email)");
   // A result saved before attempts were kept becomes its test's first attempt. Rows that can't be read are left out.

@@ -1,17 +1,17 @@
-import { useLingui } from "@lingui/react/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { useCallback } from "react";
 import { useSubmit } from "react-router";
+import { PageTitle } from "~/components/PageTitle";
+import { ProgressCard } from "~/components/ProgressCard";
+import { ProgressHeader } from "~/components/ProgressHeader";
 import { homeOf } from "~/lib/links";
 import type { Answers, QuizView, ResultSection } from "~/lib/views";
-import { Header } from "./Header";
 import { checkedAnswers, quizProgress } from "./helpers/answers";
 import { useSavedAnswers, useSavedChecks } from "./hooks/useSavedAnswers";
-import { ProgressCard } from "./ProgressCard";
 import { QuestionNav } from "./question-nav";
 import { ANSWER_MARKS, answeredMarks } from "./question-nav/QuestionGrid";
 import { Section } from "./Section";
 import { SubmitBar } from "./SubmitBar";
-import { Title } from "./Title";
 
 /**
  * The quiz page. The answer sheet lives here, saved in the browser, until it is submitted. Each part can be
@@ -35,14 +35,25 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
   const send = () => submit({ answers }, { method: "post", encType: "application/json" });
   const { t } = useLingui();
   const back = quiz.kind === "kanji" ? { to: homeOf(quiz), label: t`Back to kanji` } : undefined;
+  const total = quiz.questionCount;
 
   return (
     <div className="min-h-screen">
-      <Header title={quiz.title} answered={answered} total={quiz.questionCount} percent={percent} back={back} />
+      <ProgressHeader title={quiz.title} count={`${answered} / ${total}`} percent={percent} label={t`Answered`} back={back} />
 
       <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 md:gap-5 md:px-6 md:pt-8 md:pb-12 lg:max-w-260">
-        <Title quiz={quiz} />
-        <ProgressCard answered={answered} total={quiz.questionCount} percent={percent} />
+        <PageTitle
+          level={quiz.level}
+          meta={<Plural value={total} one="# question" other="# questions" />}
+          back={{ to: homeOf(quiz), label: quiz.kind === "kanji" ? <Trans>← Kanji</Trans> : <Trans>← Mock tests</Trans> }}
+        >
+          {quiz.title}
+        </PageTitle>
+        <ProgressCard percent={percent} label={t`Answered`}>
+          <Trans>
+            Answered {answered} / {total}
+          </Trans>
+        </ProgressCard>
 
         <div className="flex flex-col gap-3.5 md:gap-5 lg:grid lg:grid-cols-quiz lg:items-start lg:gap-6">
           <QuestionNav

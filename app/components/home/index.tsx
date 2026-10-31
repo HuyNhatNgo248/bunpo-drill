@@ -25,7 +25,7 @@ export function Home({ tests: saved, stats, level, page, pages }: HomeProps) {
     <div className="min-h-screen">
       <AppHeader account />
       <main className="mx-auto flex max-w-260 flex-col gap-4 px-4 pt-5 pb-10 md:gap-6 md:px-6 md:pt-10 md:pb-16">
-        <SubjectTabs current="grammar" />
+        <SubjectTabs current="grammar" level={level} />
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-bold tracking-tight md:text-title-lg">
             <Trans>Mock tests</Trans>
