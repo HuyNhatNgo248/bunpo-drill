@@ -28,6 +28,12 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
   const percent = total === 0 ? 100 : (done / total) * 100;
   const position = `${Math.min(session.position, total)} / ${total}`;
   const { prev, next, flip } = session;
+  const modeTabs = <ModeTabs mode={mode} onChange={setMode} />;
+  const counts = (
+    <Trans>
+      {session.firstTry} got it · {session.missed.length} again
+    </Trans>
+  );
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -63,21 +69,19 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
           </span>{" "}
           · <Trans>Flashcards</Trans>
         </PageTitle>
-        <ProgressCard percent={percent} label={t`Cards done`}>
+        <ProgressCard percent={percent} label={t`Cards done`} aside={current && modeTabs}>
           <Trans>
             Cards done {done} / {total}
           </Trans>
+          {current && <span className="font-normal text-muted-foreground"> · {counts}</span>}
         </ProgressCard>
 
         {current ? (
           <>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <ModeTabs mode={mode} onChange={setMode} />
-              <span className="text-caption text-muted-foreground">
-                <Trans>
-                  {session.firstTry} got it · {session.missed.length} again
-                </Trans>
-              </span>
+            {/* A phone has no progress card, so the switch and the counts get a row of their own. */}
+            <div className="flex flex-wrap items-center justify-between gap-3 md:hidden">
+              {modeTabs}
+              <span className="text-caption text-muted-foreground">{counts}</span>
             </div>
             <CardFace key={current.wordId} card={current} mode={mode} flipped={session.flipped} onFlip={session.flip} />
             <div className="flex justify-center gap-2">

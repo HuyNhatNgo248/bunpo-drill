@@ -59,6 +59,24 @@ describe("kanjiChapterSchema", () => {
       ]);
     });
   });
+
+  describe("rule 3: the example sentences", () => {
+    /** The chapter with its one kanji, 招, given `sentences`. */
+    const withExamples = (...sentences: string[]) =>
+      buildKanjiChapter({ lessons: [buildLesson({ kanji: [buildHeadword({ examples: sentences.map((sentence) => ({ sentence, meaning: "…" })) })] })] });
+
+    it("accepts sentences with one 【】 around a word with the kanji, conjugated or not", () => {
+      const chapter = withExamples("友人を食事に【招いた】。", "【招待状】が届いた。");
+
+      expect(kanjiChapterSchema.parse(chapter)).toEqual(chapter);
+    });
+
+    it("reports a sentence without 【】, with two, or around a word without the kanji", () => {
+      expect(issuesOf(kanjiChapterSchema, withExamples("招待状が届いた。", "【招待状】と【招く】", "【手紙】が届いた。"))).toEqual(
+        [0, 1, 2].map((e) => ({ path: `lessons.0.kanji.0.examples.${e}.sentence`, message: "The sentence must contain one 【…】 around a word with 招." })),
+      );
+    });
+  });
 });
 
 describe("kanjiTestPayloadSchema", () => {

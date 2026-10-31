@@ -95,9 +95,10 @@ export type FlashCard = {
   lesson: { title: string; page: number };
   /** Every kanji of the word, in order; `strokes` only for the chapter's own kanji, which the book counts. */
   kanji: { char: string; kun: string[]; on: string[]; strokes: number | null }[];
-  /** The kanji the book teaches the word under, and its other words. */
+  /** The kanji the book teaches the word under, its other words, and sentences with its words, the word underlined. */
   headword: string;
   related: { word: string; reading: string }[];
+  examples: { sentence: Underlined; meaning: string }[];
 };
 
 /** A flashcard session on one chapter. */

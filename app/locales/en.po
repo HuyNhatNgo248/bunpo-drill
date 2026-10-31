@@ -17,13 +17,13 @@ msgstr "(reviewed)"
 
 #. placeholder {0}: session.firstTry
 #. placeholder {1}: session.missed.length
-#: app/components/flashcards/index.tsx:71
+#: app/components/flashcards/index.tsx:33
 msgid "{0} got it · {1} again"
 msgstr "{0} got it · {1} again"
 
 #. placeholder {0}: card.lesson.title
 #. placeholder {1}: card.lesson.page
-#: app/components/flashcards/CardFace.tsx:17
+#: app/components/flashcards/CardFace.tsx:21
 msgid "{0} p.{1}"
 msgstr "{0} p.{1}"
 
@@ -67,7 +67,7 @@ msgstr "{level} isn't available yet"
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}: {text} (tap to remove)"
 
-#: app/components/flashcards/CardFace.tsx:89
+#: app/components/flashcards/CardFace.tsx:94
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, one {# stroke} other {# strokes}}"
 
@@ -101,7 +101,7 @@ msgstr "{wrong} wrong"
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "{wrong} wrong · pass line {pass}%"
 
-#: app/components/flashcards/index.tsx:54
+#: app/components/flashcards/index.tsx:66
 #: app/components/quiz/index.tsx:48
 msgid "← Kanji"
 msgstr "← Kanji"
@@ -156,7 +156,7 @@ msgstr "A username can't contain “@”."
 msgid "Account"
 msgstr "Account"
 
-#: app/components/flashcards/index.tsx:85
+#: app/components/flashcards/index.tsx:95
 #: app/components/flashcards/SessionDone.tsx:58
 msgid "Again"
 msgstr "Again"
@@ -169,7 +169,7 @@ msgstr "All answered"
 msgid "All correct"
 msgstr "All correct"
 
-#: app/components/flashcards/CardFace.tsx:51
+#: app/components/flashcards/CardFace.tsx:56
 msgid "Answer"
 msgstr "Answer"
 
@@ -205,7 +205,7 @@ msgstr "Average score"
 msgid "Back to chapters"
 msgstr "Back to chapters"
 
-#: app/components/flashcards/index.tsx:50
+#: app/components/flashcards/index.tsx:62
 #: app/components/quiz/index.tsx:37
 #: app/components/results/Actions.tsx:19
 #: app/components/results/index.tsx:33
@@ -242,12 +242,12 @@ msgstr "Cancelled moving “{title}”."
 msgid "Card side"
 msgstr "Card side"
 
-#: app/components/flashcards/index.tsx:49
-#: app/components/flashcards/index.tsx:60
+#: app/components/flashcards/index.tsx:61
+#: app/components/flashcards/index.tsx:72
 msgid "Cards done"
 msgstr "Cards done"
 
-#: app/components/flashcards/index.tsx:61
+#: app/components/flashcards/index.tsx:73
 msgid "Cards done {done} / {total}"
 msgstr "Cards done {done} / {total}"
 
@@ -404,8 +404,8 @@ msgstr "Enter your username or email address, and your password."
 msgid "Error {status}"
 msgstr "Error {status}"
 
-#: app/components/flashcards/index.tsx:46
 #: app/components/flashcards/index.tsx:58
+#: app/components/flashcards/index.tsx:70
 #: app/components/kanji/chapter-list/ChapterRow.tsx:83
 #: app/routes/flashcards.tsx:13
 msgid "Flashcards"
@@ -427,7 +427,7 @@ msgstr "Go to next page"
 msgid "Go to previous page"
 msgstr "Go to previous page"
 
-#: app/components/flashcards/index.tsx:89
+#: app/components/flashcards/index.tsx:99
 #: app/components/flashcards/SessionDone.tsx:52
 msgid "Got it"
 msgstr "Got it"
@@ -499,7 +499,7 @@ msgstr "JLPT grammar practice in the real test's format"
 msgid "Kanji"
 msgstr "Kanji"
 
-#: app/components/flashcards/CardFace.tsx:65
+#: app/components/flashcards/CardFace.tsx:70
 msgid "Kanji in this word"
 msgstr "Kanji in this word"
 
@@ -512,7 +512,7 @@ msgstr "Kanji reading"
 msgid "Keep answering"
 msgstr "Keep answering"
 
-#: app/components/flashcards/CardFace.tsx:75
+#: app/components/flashcards/CardFace.tsx:80
 msgid "kun"
 msgstr "kun"
 
@@ -562,7 +562,7 @@ msgid "More pages"
 msgstr "More pages"
 
 #. placeholder {0}: card.headword
-#: app/components/flashcards/CardFace.tsx:100
+#: app/components/flashcards/CardFace.tsx:125
 msgid "More words with <0>{0}</0>"
 msgstr "More words with <0>{0}</0>"
 
@@ -589,7 +589,7 @@ msgstr "New password"
 msgid "Next"
 msgstr "Next"
 
-#: app/components/flashcards/index.tsx:97
+#: app/components/flashcards/index.tsx:107
 msgid "Next card"
 msgstr "Next card"
 
@@ -633,7 +633,7 @@ msgstr "Nothing to review. You got every question right."
 msgid "Number"
 msgstr "Number"
 
-#: app/components/flashcards/CardFace.tsx:81
+#: app/components/flashcards/CardFace.tsx:86
 msgid "on"
 msgstr "on"
 
@@ -674,7 +674,7 @@ msgstr "Picked up “{piece}”."
 msgid "Picked up “{title}”."
 msgstr "Picked up “{title}”."
 
-#: app/components/flashcards/CardFace.tsx:43
+#: app/components/flashcards/CardFace.tsx:47
 msgid "Picture the kanji, then flip the card."
 msgstr "Picture the kanji, then flip the card."
 
@@ -694,7 +694,7 @@ msgstr "Press Space to pick a test up, the up and down arrow keys to move it, an
 msgid "Previous"
 msgstr "Previous"
 
-#: app/components/flashcards/index.tsx:78
+#: app/components/flashcards/index.tsx:88
 msgid "Previous card"
 msgstr "Previous card"
 
@@ -802,7 +802,7 @@ msgstr "Save"
 msgid "Saving…"
 msgstr "Saving…"
 
-#: app/components/flashcards/CardFace.tsx:43
+#: app/components/flashcards/CardFace.tsx:47
 msgid "Say the reading, then flip the card."
 msgstr "Say the reading, then flip the card."
 
@@ -832,6 +832,11 @@ msgstr "Sending…"
 msgid "Sentence order"
 msgstr "Sentence order"
 
+#. placeholder {0}: card.headword
+#: app/components/flashcards/CardFace.tsx:105
+msgid "Sentences with <0>{0}</0>"
+msgstr "Sentences with <0>{0}</0>"
+
 #: app/components/flashcards/SessionDone.tsx:39
 msgid "Session done"
 msgstr "Session done"
@@ -840,11 +845,11 @@ msgstr "Session done"
 msgid "Show {label}"
 msgstr "Show {label}"
 
-#: app/components/flashcards/index.tsx:94
+#: app/components/flashcards/index.tsx:104
 msgid "Show answer"
 msgstr "Show answer"
 
-#: app/components/flashcards/CardFace.tsx:111
+#: app/components/flashcards/CardFace.tsx:137
 msgid "Show the question"
 msgstr "Show the question"
 

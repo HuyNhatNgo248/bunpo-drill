@@ -1,4 +1,4 @@
-import { wordId, type ChapterWord, type KanjiChapter } from "./kanji-payload";
+import { splitTarget, wordId, type ChapterWord, type KanjiChapter } from "./kanji-payload";
 import type { LatestKanjiTest } from "./kanji.server";
 import type { Level } from "./payload";
 import type { ChapterSummary, FlashCard, FlashcardsView, KanjiHomeView } from "./views";
@@ -39,6 +39,7 @@ export function toFlashcards(chapter: KanjiChapter, learned: Set<string>, latest
     ...chapter.otherKanji.map(({ char, kun, on }) => [char, { char, kun, on, strokes: null }] as const),
     ...chapter.lessons.flatMap((lesson) => lesson.kanji.map(({ char, kun, on, strokes }) => [char, { char, kun, on, strokes }] as const)),
   ]);
+  const examples = new Map(chapter.lessons.flatMap((lesson) => lesson.kanji.map(({ char, examples = [] }) => [char, examples] as const)));
   return {
     level: chapter.level,
     chapter: chapter.chapter,
@@ -58,6 +59,7 @@ export function toFlashcards(chapter: KanjiChapter, learned: Set<string>, latest
       related: words
         .filter((other) => other.headword === word.headword && other.id !== word.id)
         .map(({ word: related, reading }) => ({ word: related, reading })),
+      examples: (examples.get(word.headword) ?? []).map(({ sentence, meaning }) => ({ sentence: splitTarget(sentence), meaning })),
     })),
   };
 }

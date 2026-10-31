@@ -26,8 +26,9 @@ Arguments: $ARGUMENTS
 Notes live in `~/Documents/JLPT 🇯🇵/N2/N2 漢字 ノート/第N章.md`. Follow step 3 of
 `../jlpt-kanji-quiz-terminal/SKILL.md` (next to this skill): it has the page of every
 chapter, the notes format and the rules for reading the scan. This skill needs the full
-format: stroke counts, a meaning per word and a 他の漢字 section. If the file is missing,
-or is in the older format without them, read the chapter's pages and write or complete it.
+format: stroke counts, a meaning per word, three `例：` sentences per kanji and a 他の漢字
+section. If the file is missing, or is in the older format without them, read the
+chapter's pages and write or complete it.
 
 The book is a scan, read with the Read tool's `pages` parameter. If Read says `pdftoppm is
 not installed`, ask the user to run `! brew install poppler` and wait.
@@ -59,6 +60,11 @@ the app's `app/lib/kanji-payload.ts` by `pnpm schema`):
             { "word": "贈る", "reading": "おくる", "meaning": "to give as a gift" },
             { "word": "贈答品", "reading": "ぞうとうひん", "meaning": "gifts, given and received" },
             { "word": "寄贈", "reading": "きぞう", "meaning": "donation", "rare": true }
+          ],
+          "examples": [
+            { "sentence": "友人の結婚祝いに、ペアのグラスを【贈った】。", "meaning": "I gave my friend a pair of glasses as a wedding present." },
+            { "sentence": "母の日の【贈り物】に、カーネーションの花束を選んだ。", "meaning": "For Mother's Day, I chose a bouquet of carnations as a present." },
+            { "sentence": "お中元の【贈答品】には、毎年同じお菓子を選んでいる。", "meaning": "Every year I choose the same sweets as our summer gift." }
           ]
         }
       ]
@@ -75,9 +81,12 @@ the app's `app/lib/kanji-payload.ts` by `pnpm schema`):
 - One lesson per page, in the book's order; one entry per kanji with its words in the
   book's order. `rare: true` for a △ word. A word with two readings in the book (きぞう／きそう)
   takes the first.
+- `examples` are the kanji's three `例：` lines from the notes: the sentence with its
+  【 】, and its English. The flashcards of the kanji's words show them.
 - `otherKanji` lists every kanji in the words that is not a headword of the chapter.
 - The server checks that each word contains its headword, that no word is in the chapter
-  twice, and that every kanji has its readings.
+  twice, that every kanji has its readings, and that every example has one 【…】 around a
+  word with its kanji.
 
 Write it to a temp file (`$TMPDIR/kanji-chapter-<N>.json`) and run, from the app's folder
 (`~/Downloads/bunpo-drill`):
@@ -99,7 +108,8 @@ Read `../jlpt-kanji-quiz-terminal/kanji-format.md` for the real format and its t
   readings, same-okurigana verbs).
 - **表記** (`kanji-writing`): a natural sentence with one chapter word in 【 】, written in
   hiragana. 4 spellings, each with kanji: the right one and same-sound or same-shape swaps.
-- Write every sentence new: never the book's example phrases, not even with a word swapped.
+- Write every sentence new: never the book's example phrases, not even with a word swapped,
+  nor the notes' `例：` sentences, which the flashcards show.
 - N2-level words; skip △ words unless the chapter runs short. Spread the questions over the
   chapter's lessons, and test each word once per test.
 - Each wrong choice must be wrong for anyone who knows the word; skip words with two

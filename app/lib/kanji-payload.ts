@@ -48,6 +48,20 @@ export const headwordSchema = z.strictObject({
   kun,
   on,
   words: z.array(chapterWordSchema).min(1).max(12).describe("Its example words, in the book's order. Each one contains the kanji."),
+  examples: z
+    .array(
+      z.strictObject({
+        sentence: z
+          .string()
+          .min(1)
+          .max(80)
+          .describe("A natural sentence with one of the kanji's words in 【 】, exactly once; a verb may be conjugated: \"友人の結婚祝いに、グラスを【贈った】。\"."),
+        meaning: z.string().min(1).max(200).describe("The sentence in English."),
+      }),
+    )
+    .max(5)
+    .optional()
+    .describe("Sentences the flashcards show with the kanji's words: 3, each new (not the book's), each on a different word."),
 });
 
 const chapterObject = z.strictObject({
@@ -81,6 +95,7 @@ export const kanjiChapterSchema = chapterObject
       "Rules the server also enforces:",
       "1. Every word contains its headword, and a word appears once in the chapter.",
       "2. Every kanji in a word is a headword of the chapter or is listed in otherKanji.",
+      "3. Every example sentence has one 【…】, around a word with its kanji.",
     ].join("\n"),
   });
 
@@ -175,6 +190,17 @@ function checkChapter(chapter: RawChapter, ctx: z.RefinementCtx) {
         seen.add(word);
         const missing = kanjiOf(word).filter((char) => !known.has(char));
         if (missing.length) ctx.addIssue({ code: "custom", path, message: `Add ${[...new Set(missing)].join(", ")} to otherKanji.` });
+      }),
+    ),
+  );
+  chapter.lessons.forEach((lesson, l) =>
+    lesson.kanji.forEach((headword, k) =>
+      headword.examples?.forEach(({ sentence }, e) => {
+        const targets = [...sentence.matchAll(TARGET)].map((match) => match[1]!);
+        if (targets.length !== 1 || !targets[0]!.includes(headword.char)) {
+          const path = ["lessons", l, "kanji", k, "examples", e, "sentence"];
+          ctx.addIssue({ code: "custom", path, message: `The sentence must contain one 【…】 around a word with ${headword.char}.` });
+        }
       }),
     ),
   );

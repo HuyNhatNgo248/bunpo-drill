@@ -59,6 +59,7 @@ export function buildFlashCard(overrides: Partial<FlashCard> = {}): FlashCard {
     ],
     headword: "招",
     related: [],
+    examples: [],
     ...overrides,
   };
 }

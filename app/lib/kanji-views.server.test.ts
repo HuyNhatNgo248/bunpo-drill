@@ -2,10 +2,17 @@ import { describe, expect, it } from "vitest";
 import { buildChapterWord, buildHeadword, buildKanjiChapter, buildLesson, WORD_ID } from "#mocks/factories/kanji";
 import { chapterWords, SESSION_SIZE, toFlashcards, toKanjiHome } from "./kanji-views.server";
 
-/** 招 with 招待状 and 招く, then 待 with 待合室: two lessons, in the book's order. */
+/** 招 with 招待状 and 招く and a sentence, then 待 with 待合室: two lessons, in the book's order. */
 const CHAPTER = buildKanjiChapter({
   lessons: [
-    buildLesson({ kanji: [buildHeadword({ words: [buildChapterWord(), buildChapterWord({ word: "招く", reading: "まねく", meaning: "to invite" })] })] }),
+    buildLesson({
+      kanji: [
+        buildHeadword({
+          words: [buildChapterWord(), buildChapterWord({ word: "招く", reading: "まねく", meaning: "to invite" })],
+          examples: [{ sentence: "友人を食事に【招いた】。", meaning: "I invited a friend to dinner." }],
+        }),
+      ],
+    }),
     buildLesson({
       title: "待つ",
       page: 21,
@@ -49,8 +56,10 @@ describe("toFlashcards", () => {
       ],
       headword: "待",
       related: [],
+      examples: [],
     });
     expect(view.cards[0]?.related).toEqual([{ word: "招待状", reading: "しょうたいじょう" }]);
+    expect(view.cards[0]?.examples).toEqual([{ sentence: { before: "友人を食事に", word: "招いた", after: "。" }, meaning: "I invited a friend to dinner." }]);
   });
 
   it("gives only the words asked for, a quiz's misses, learned or not", () => {

@@ -53,8 +53,9 @@ on readings (katakana) and example words with furigana; △ marks less common wo
 
 Save the notes in this shape, one section per lesson page, then one section for every
 other kanji that appears in the words. The app's flashcards (`jlpt-kanji-quiz`) read the
-same notes, so every word has a short English meaning after `｜`, and every kanji of every
-word has its readings, as a headword or under 他の漢字:
+same notes, so every word has a short English meaning after `｜`, every kanji of every
+word has its readings, as a headword or under 他の漢字, and every headword has three `例：`
+sentences, which the flashcards show:
 
 ```markdown
 # 第1章 生活-1（p.20–24）
@@ -62,7 +63,11 @@ word has its readings, as a headword or under 他の漢字:
 ## ギフト（p.20）
 
 - **贈**（18）おく-る／ゾウ・ソウ — 贈る（おくる｜to give as a gift）、贈り物（おくりもの｜a present）、贈答品（ぞうとうひん｜gifts, given and received）、△寄贈（きぞう／きそう｜donation）
+  - 例：友人の結婚祝いに、ペアのグラスを【贈った】。｜I gave my friend a pair of glasses as a wedding present.
+  - 例：母の日の【贈り物】に、カーネーションの花束を選んだ。｜For Mother's Day, I chose a bouquet of carnations as a present.
+  - 例：お中元の【贈答品】には、毎年同じお菓子を選んでいる。｜Every year I choose the same sweets as our summer gift.
 - **渡**（12）わた-る・わた-す／ト — 渡る（わたる｜to cross）、渡す（わたす｜to hand over）、渡り鳥（わたりどり｜migratory bird）、渡航（とこう｜travel abroad）
+  - 例：…
 
 ## 他の漢字
 
@@ -71,7 +76,12 @@ word has its readings, as a headword or under 他の漢字:
 - **鳥** とり／チョウ
 ```
 
-A notes file from before this format (no stroke counts, meanings or 他の漢字) still works
+Write the `例：` sentences yourself: a natural N2-level sentence of at most 80 characters with
+one of the kanji's words in 【 】, conjugated as the sentence needs (【贈った】), then its
+English after `｜`. Each of the three uses a different word (a △ word only when the kanji has
+too few), and none copies the book's example phrases.
+
+A notes file from before this format (no stroke counts, meanings, 例 or 他の漢字) still works
 here; add the missing parts the next time you read the chapter's pages.
 
 The furigana is small. Check every reading against what you know; if the scan and your
@@ -88,8 +98,9 @@ Read `kanji-format.md` again for the trap patterns, then for each chapter:
   4 spellings: the right one plus same-sound or same-shape swaps (2×2 grids for
   compounds, related-meaning kanji with the same okurigana for verbs and adjectives).
 - Write every sentence new. The word comes from the notes; the sentence around it never
-  copies the book's example phrases (not プレゼントを贈る for 贈る): new situation, new
-  collocation where the word allows one.
+  copies the book's example phrases (not プレゼントを贈る for 贈る) or the notes' `例：`
+  sentences, which the flashcards show: new situation, new collocation where the word
+  allows one.
 - Use N2-level words; skip △ words unless the chapter runs short. Spread the questions
   over the chapter's lessons, and test each word only once per session.
 - Each wrong choice must be wrong for anyone who knows the word. Skip words with two

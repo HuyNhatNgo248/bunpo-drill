@@ -1,6 +1,7 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Badge } from "~/components/ui/badge";
 import { Card } from "~/components/ui/card";
+import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { WordChips } from "~/components/WordChips";
 import type { FlashCard } from "~/lib/views";
 import type { CardMode } from "./ModeTabs";
@@ -8,7 +9,10 @@ import type { CardMode } from "./ModeTabs";
 /**
  * The card on the table. Its front asks for the reading of the word (漢字読み) or for the word of a reading and meaning
  * (表記); a tap flips it over, and back. Its back shows the word, its reading and meaning, the readings of its kanji,
- * and the other words the book gives under the same kanji.
+ * sentences with its kanji, and the other words the book gives under the same kanji.
+ *
+ * Both sides are one height, whatever the word, so neither a flip nor the next card moves the buttons under it; a long
+ * back scrolls inside the card.
  */
 export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mode: CardMode; flipped: boolean; onFlip: () => void }) {
   const { t } = useLingui();
@@ -23,7 +27,7 @@ export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mod
       <button
         type="button"
         onClick={onFlip}
-        className="flex min-h-80 flex-col rounded-xl border bg-card p-4 text-left shadow-raised outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:min-h-96 md:p-6"
+        className="flex h-112 flex-col rounded-xl border bg-card p-4 text-left shadow-raised outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:h-120 md:p-6"
       >
         {lesson}
         <span className="flex flex-1 flex-col items-center justify-center gap-3 py-6 text-center">
@@ -48,7 +52,8 @@ export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mod
   }
 
   return (
-    <Card aria-label={t`Answer`} className="relative flex flex-col gap-4 p-4 shadow-raised md:p-6">
+    // A tap anywhere on the back turns the card face up again, and still lets a long back scroll.
+    <Card aria-label={t`Answer`} onClick={onFlip} className="relative flex h-112 cursor-pointer flex-col gap-4 overflow-y-auto p-4 shadow-raised md:h-120 md:p-6">
       {lesson}
       <div className="flex flex-col items-center gap-1 text-center">
         <span lang="ja" className="font-jp text-4xl font-semibold tracking-wider">
@@ -94,6 +99,26 @@ export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mod
         </ul>
       </div>
 
+      {card.examples.length > 0 && (
+        <div className="flex flex-col gap-2.5 border-t pt-3.5">
+          <h2 className="text-xs font-medium text-muted-foreground">
+            <Trans>
+              Sentences with <span lang="ja" className="font-jp">{card.headword}</span>
+            </Trans>
+          </h2>
+          <ul className="flex flex-col gap-2.5">
+            {card.examples.map(({ sentence, meaning }) => (
+              <li key={sentence.before + sentence.word} className="flex flex-col gap-0.5">
+                <span lang="ja" className="font-jp">
+                  <UnderlinedSentence sentence={sentence} />
+                </span>
+                <span className="text-body-sm text-subtle-foreground">{meaning}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {card.related.length > 0 && (
         <div className="flex flex-col gap-2">
           <h2 className="text-xs font-medium text-muted-foreground">
@@ -104,13 +129,13 @@ export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mod
           <WordChips words={card.related} />
         </div>
       )}
-      {/* Over the whole back, so a tap anywhere turns the card face up again. */}
+      {/* For the keyboard and screen readers; its click reaches the card's. Shown only when it has focus. */}
       <button
         type="button"
-        onClick={onFlip}
-        aria-label={t`Show the question`}
-        className="absolute inset-0 rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
-      />
+        className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-3 focus-visible:right-3 focus-visible:rounded-md focus-visible:bg-card focus-visible:px-2 focus-visible:py-1 focus-visible:text-caption focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
+      >
+        {t`Show the question`}
+      </button>
     </Card>
   );
 }

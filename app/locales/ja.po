@@ -17,13 +17,13 @@ msgstr "（復習済み）"
 
 #. placeholder {0}: session.firstTry
 #. placeholder {1}: session.missed.length
-#: app/components/flashcards/index.tsx:71
+#: app/components/flashcards/index.tsx:33
 msgid "{0} got it · {1} again"
 msgstr "覚えた {0} · もう一度 {1}"
 
 #. placeholder {0}: card.lesson.title
 #. placeholder {1}: card.lesson.page
-#: app/components/flashcards/CardFace.tsx:17
+#: app/components/flashcards/CardFace.tsx:21
 msgid "{0} p.{1}"
 msgstr "{0} p.{1}"
 
@@ -67,7 +67,7 @@ msgstr "{level}はまだ準備中です"
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}：{text}（タップで外す）"
 
-#: app/components/flashcards/CardFace.tsx:89
+#: app/components/flashcards/CardFace.tsx:94
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, other {#画}}"
 
@@ -101,7 +101,7 @@ msgstr "不正解 {wrong}問"
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 
-#: app/components/flashcards/index.tsx:54
+#: app/components/flashcards/index.tsx:66
 #: app/components/quiz/index.tsx:48
 msgid "← Kanji"
 msgstr "← 漢字"
@@ -156,7 +156,7 @@ msgstr "ユーザー名に「@」は使えません。"
 msgid "Account"
 msgstr "アカウント"
 
-#: app/components/flashcards/index.tsx:85
+#: app/components/flashcards/index.tsx:95
 #: app/components/flashcards/SessionDone.tsx:58
 msgid "Again"
 msgstr "もう一度"
@@ -169,7 +169,7 @@ msgstr "すべて回答済み"
 msgid "All correct"
 msgstr "全問正解"
 
-#: app/components/flashcards/CardFace.tsx:51
+#: app/components/flashcards/CardFace.tsx:56
 msgid "Answer"
 msgstr "答え"
 
@@ -205,7 +205,7 @@ msgstr "平均正答率"
 msgid "Back to chapters"
 msgstr "章の一覧に戻る"
 
-#: app/components/flashcards/index.tsx:50
+#: app/components/flashcards/index.tsx:62
 #: app/components/quiz/index.tsx:37
 #: app/components/results/Actions.tsx:19
 #: app/components/results/index.tsx:33
@@ -242,12 +242,12 @@ msgstr "「{title}」の移動を取り消しました。"
 msgid "Card side"
 msgstr "カードの面"
 
-#: app/components/flashcards/index.tsx:49
-#: app/components/flashcards/index.tsx:60
+#: app/components/flashcards/index.tsx:61
+#: app/components/flashcards/index.tsx:72
 msgid "Cards done"
 msgstr "終わったカード"
 
-#: app/components/flashcards/index.tsx:61
+#: app/components/flashcards/index.tsx:73
 msgid "Cards done {done} / {total}"
 msgstr "終わったカード {done} / {total}"
 
@@ -404,8 +404,8 @@ msgstr "ユーザー名またはメールアドレスと、パスワードを入
 msgid "Error {status}"
 msgstr "エラー {status}"
 
-#: app/components/flashcards/index.tsx:46
 #: app/components/flashcards/index.tsx:58
+#: app/components/flashcards/index.tsx:70
 #: app/components/kanji/chapter-list/ChapterRow.tsx:83
 #: app/routes/flashcards.tsx:13
 msgid "Flashcards"
@@ -427,7 +427,7 @@ msgstr "次のページへ"
 msgid "Go to previous page"
 msgstr "前のページへ"
 
-#: app/components/flashcards/index.tsx:89
+#: app/components/flashcards/index.tsx:99
 #: app/components/flashcards/SessionDone.tsx:52
 msgid "Got it"
 msgstr "覚えた"
@@ -499,7 +499,7 @@ msgstr "本番形式で練習する、JLPTの文法"
 msgid "Kanji"
 msgstr "漢字"
 
-#: app/components/flashcards/CardFace.tsx:65
+#: app/components/flashcards/CardFace.tsx:70
 msgid "Kanji in this word"
 msgstr "この語の漢字"
 
@@ -512,7 +512,7 @@ msgstr "漢字読み"
 msgid "Keep answering"
 msgstr "解答を続ける"
 
-#: app/components/flashcards/CardFace.tsx:75
+#: app/components/flashcards/CardFace.tsx:80
 msgid "kun"
 msgstr "訓"
 
@@ -562,7 +562,7 @@ msgid "More pages"
 msgstr "ほかのページ"
 
 #. placeholder {0}: card.headword
-#: app/components/flashcards/CardFace.tsx:100
+#: app/components/flashcards/CardFace.tsx:125
 msgid "More words with <0>{0}</0>"
 msgstr "<0>{0}</0>を使うほかの語"
 
@@ -589,7 +589,7 @@ msgstr "新しいパスワード"
 msgid "Next"
 msgstr "次へ"
 
-#: app/components/flashcards/index.tsx:97
+#: app/components/flashcards/index.tsx:107
 msgid "Next card"
 msgstr "次のカード"
 
@@ -633,7 +633,7 @@ msgstr "復習する文法はありません。全問正解でした。"
 msgid "Number"
 msgstr "番号"
 
-#: app/components/flashcards/CardFace.tsx:81
+#: app/components/flashcards/CardFace.tsx:86
 msgid "on"
 msgstr "音"
 
@@ -674,7 +674,7 @@ msgstr "「{piece}」を持ち上げました。"
 msgid "Picked up “{title}”."
 msgstr "「{title}」を持ち上げました。"
 
-#: app/components/flashcards/CardFace.tsx:43
+#: app/components/flashcards/CardFace.tsx:47
 msgid "Picture the kanji, then flip the card."
 msgstr "漢字を思い浮かべてから、カードをめくりましょう。"
 
@@ -694,7 +694,7 @@ msgstr "スペースキーで持ち上げ、上下の矢印キーで移動し、
 msgid "Previous"
 msgstr "前へ"
 
-#: app/components/flashcards/index.tsx:78
+#: app/components/flashcards/index.tsx:88
 msgid "Previous card"
 msgstr "前のカード"
 
@@ -802,7 +802,7 @@ msgstr "保存"
 msgid "Saving…"
 msgstr "保存中…"
 
-#: app/components/flashcards/CardFace.tsx:43
+#: app/components/flashcards/CardFace.tsx:47
 msgid "Say the reading, then flip the card."
 msgstr "読み方を言ってから、カードをめくりましょう。"
 
@@ -832,6 +832,11 @@ msgstr "送信中…"
 msgid "Sentence order"
 msgstr "文の組み立て"
 
+#. placeholder {0}: card.headword
+#: app/components/flashcards/CardFace.tsx:105
+msgid "Sentences with <0>{0}</0>"
+msgstr "<0>{0}</0>の例文"
+
 #: app/components/flashcards/SessionDone.tsx:39
 msgid "Session done"
 msgstr "セッション終了"
@@ -840,11 +845,11 @@ msgstr "セッション終了"
 msgid "Show {label}"
 msgstr "{label}を表示"
 
-#: app/components/flashcards/index.tsx:94
+#: app/components/flashcards/index.tsx:104
 msgid "Show answer"
 msgstr "答えを見る"
 
-#: app/components/flashcards/CardFace.tsx:111
+#: app/components/flashcards/CardFace.tsx:137
 msgid "Show the question"
 msgstr "表に戻す"
 

@@ -14,7 +14,10 @@ const VIEW = buildFlashcardsView({
   learned: 0,
   quiz: { id: "20261031-aaaaaa", result: null },
   cards: [
-    buildFlashCard({ related: [{ word: "招く", reading: "まねく" }] }),
+    buildFlashCard({
+      related: [{ word: "招く", reading: "まねく" }],
+      examples: [{ sentence: { before: "友人の結婚式の", word: "招待状", after: "が届いた。" }, meaning: "The invitation to my friend's wedding arrived." }],
+    }),
     buildFlashCard({ wordId: INVITE_ID, word: "招く", reading: "まねく", meaning: "to invite", related: [{ word: "招待状", reading: "しょうたいじょう" }] }),
   ],
 });
@@ -36,8 +39,8 @@ describe("Flashcards", () => {
   it("shows a word on the front, and its reading, meaning and kanji readings on the back", async () => {
     renderCards();
 
-    expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
-    expect(screen.queryByText("しょうたいじょう")).toBeNull();
+    expect(await screen.findByRole("button", { name: /招待状/ })).not.toHaveTextContent("しょうたいじょう");
+    expect(screen.queryByRole("region", { name: "Answer" })).toBeNull();
 
     await userEvent.click(screen.getByRole("button", { name: "Show answer" }));
 
@@ -47,15 +50,18 @@ describe("Flashcards", () => {
     expect(within(answer).getByText("まね-く")).toBeInTheDocument();
     expect(within(answer).getByText("8 strokes")).toBeInTheDocument();
     expect(within(answer).getByText("まねく")).toBeInTheDocument();
+    expect(within(answer).getByText("The invitation to my friend's wedding arrived.")).toBeInTheDocument();
   });
 
   it("shows the reading and the meaning on the front in 表記, to write the word", async () => {
     renderCards();
 
-    await userEvent.click(await screen.findByRole("button", { name: "表記" }));
+    // The switch is in the progress card on a desktop and in a row of its own on a phone: both are on the page.
+    await userEvent.click((await screen.findAllByRole("button", { name: "表記" }))[0]!);
 
-    expect(screen.getByRole("button", { name: /しょうたいじょう/ })).toHaveTextContent("invitation card");
-    expect(screen.queryByText("招待状")).toBeNull();
+    const front = screen.getByRole("button", { name: /しょうたいじょう/ });
+    expect(front).toHaveTextContent("invitation card");
+    expect(front).not.toHaveTextContent("招待状");
   });
 
   it("flips the card when it is tapped", async () => {
@@ -66,14 +72,19 @@ describe("Flashcards", () => {
     expect(screen.getByRole("region", { name: "Answer" })).toBeInTheDocument();
   });
 
-  it("flips the card back when its answer is tapped", async () => {
+  it("flips the card back when its answer is tapped, or with its button for the keyboard", async () => {
     renderCards();
     await userEvent.click(await screen.findByRole("button", { name: /招待状/ }));
 
+    await userEvent.click(screen.getByRole("region", { name: "Answer" }));
+
+    expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Answer" })).toBeNull();
+
+    await userEvent.click(screen.getByRole("button", { name: /招待状/ }));
     await userEvent.click(screen.getByRole("button", { name: "Show the question" }));
 
     expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
-    await waitFor(() => expect(screen.queryByRole("region", { name: "Answer" })).toBeNull());
   });
 
   it("steps to the next card and back without rating it", async () => {

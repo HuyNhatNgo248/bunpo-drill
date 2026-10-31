@@ -116,6 +116,33 @@
                     "additionalProperties": false
                   },
                   "description": "Its example words, in the book's order. Each one contains the kanji."
+                },
+                "examples": {
+                  "description": "Sentences the flashcards show with the kanji's words: 3, each new (not the book's), each on a different word.",
+                  "maxItems": 5,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "sentence": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80,
+                        "description": "A natural sentence with one of the kanji's words in 【 】, exactly once; a verb may be conjugated: \"友人の結婚祝いに、グラスを【贈った】。\"."
+                      },
+                      "meaning": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "description": "The sentence in English."
+                      }
+                    },
+                    "required": [
+                      "sentence",
+                      "meaning"
+                    ],
+                    "additionalProperties": false
+                  }
                 }
               },
               "required": [
@@ -185,6 +212,6 @@
   ],
   "additionalProperties": false,
   "title": "漢字マスター chapter",
-  "description": "Body of POST /api/kanji/chapters: the words of one chapter, for its flashcards. Sending a chapter again replaces it.\nRules the server also enforces:\n1. Every word contains its headword, and a word appears once in the chapter.\n2. Every kanji in a word is a headword of the chapter or is listed in otherKanji.",
+  "description": "Body of POST /api/kanji/chapters: the words of one chapter, for its flashcards. Sending a chapter again replaces it.\nRules the server also enforces:\n1. Every word contains its headword, and a word appears once in the chapter.\n2. Every kanji in a word is a headword of the chapter or is listed in otherKanji.\n3. Every example sentence has one 【…】, around a word with its kanji.",
   "$id": "https://bunpo-drill.local/schema/kanji-chapter.v1.json"
 }
