@@ -51,16 +51,28 @@ tool's `pages` parameter (e.g. `pages: "20-24"`; needs poppler, `brew install po
 Each page has 6 kanji. Each entry has the kanji, stroke count, kun readings (hiragana),
 on readings (katakana) and example words with furigana; △ marks less common words.
 
-Save the notes in this shape, one section per lesson page:
+Save the notes in this shape, one section per lesson page, then one section for every
+other kanji that appears in the words. The app's flashcards (`jlpt-kanji-quiz`) read the
+same notes, so every word has a short English meaning after `｜`, and every kanji of every
+word has its readings, as a headword or under 他の漢字:
 
 ```markdown
 # 第1章 生活-1（p.20–24）
 
 ## ギフト（p.20）
 
-- **贈** おく-る／ゾウ・ソウ — 贈る（おくる）、贈り物（おくりもの）、贈答品（ぞうとうひん）、△寄贈（きぞう／きそう）
-- **渡** わた-る・わた-す／ト — 渡る（わたる）、渡す（わたす）、渡り鳥（わたりどり）、渡航（とこう）
+- **贈**（18）おく-る／ゾウ・ソウ — 贈る（おくる｜to give as a gift）、贈り物（おくりもの｜a present）、贈答品（ぞうとうひん｜gifts, given and received）、△寄贈（きぞう／きそう｜donation）
+- **渡**（12）わた-る・わた-す／ト — 渡る（わたる｜to cross）、渡す（わたす｜to hand over）、渡り鳥（わたりどり｜migratory bird）、渡航（とこう｜travel abroad）
+
+## 他の漢字
+
+- **答** こた-える・こた-え／トウ
+- **品** しな／ヒン
+- **鳥** とり／チョウ
 ```
+
+A notes file from before this format (no stroke counts, meanings or 他の漢字) still works
+here; add the missing parts the next time you read the chapter's pages.
 
 The furigana is small. Check every reading against what you know; if the scan and your
 knowledge disagree, or you can't read it, mark the word `⚠要確認` and never quiz it.

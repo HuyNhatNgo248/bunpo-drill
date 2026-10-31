@@ -1,8 +1,9 @@
 # 文法ドリル
 
-JLPT grammar mock tests made from your 文法ノート. Claude writes the questions with the
-`jlpt-grammar-quiz` skill and POSTs them here. The app shows the test, keeps the answers
-hidden until you submit, grades it on the server and shows what to review.
+JLPT grammar mock tests made from your 文法ノート, and kanji flashcards and mock tests made from
+漢字マスターN2. Claude writes the questions with the `jlpt-grammar-quiz` and `jlpt-kanji-quiz`
+skills and POSTs them here. The app shows the test, keeps the answers hidden until you submit,
+grades it on the server and shows what to review.
 
 React Router 8 (framework mode, SSR) · TypeScript · Tailwind 4 · shadcn/ui · dnd-kit · Zod · Turso (libSQL).
 
@@ -12,11 +13,13 @@ React Router 8 (framework mode, SSR) · TypeScript · Tailwind 4 · shadcn/ui ·
 pnpm install
 cp .env.example .env # then set SESSION_SECRET and BUNPO_API_TOKEN (Turso is optional)
 pnpm dev             # http://localhost:3001, then create an account
-pnpm test            # tests next to the files in app/lib, app/routes/helpers and app/components; a temp SQLite file per test file, never Turso
+pnpm test            # tests next to the files in app/lib and app/components, route tests in app/routes/__tests__ and app/routes/helpers/__tests__; a temp SQLite file per test file, never Turso
 ```
 
 Then ask Claude for a test, for example `/jlpt-grammar-quiz 第5週 1〜3日目` or
-`/jlpt-grammar-quiz weak ones 10 per section`.
+`/jlpt-grammar-quiz weak ones 10 per section`, or for a kanji chapter's flashcards and test with
+`/jlpt-kanji-quiz 1章`. The kanji skill reads the book's scanned pages, which needs poppler
+(`brew install poppler`).
 
 ## Deploy
 
@@ -44,6 +47,19 @@ to the same token in your shell.
 
 The payload format is defined once, in `app/lib/payload.ts` (Zod). `pnpm schema`
 regenerates the skill's `schema.json` from it, and `pnpm test` fails if they drift.
+
+## How kanji gets in
+
+1. The skill (`.claude/skills/jlpt-kanji-quiz/`) reads a chapter's notes in
+   `~/Documents/JLPT 🇯🇵/N2/N2 漢字 ノート/`, writing them from the book's pages first when they're missing.
+2. `post.sh chapter` sends the chapter's words to `/api/kanji/chapters`: they are its flashcards at
+   `/kanji/:level/:chapter/cards`.
+3. `post.sh test` sends a test on that chapter (5 漢字読み + 5 表記 by default) to `/api/tests`, which
+   checks that each of its words is in the chapter.
+
+Both formats are in `app/lib/kanji-payload.ts`; `pnpm schema` writes the skill's `chapter.schema.json`
+and `test.schema.json`. A flashcard got right the first time marks its word learned; a word the
+quiz gets wrong loses the mark, so it comes back first.
 
 ## Sign-in
 
@@ -77,8 +93,12 @@ All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without 
 | `DELETE` | `/api/tests` | Clear all tests |
 | `PATCH` | `/api/tests/:id` | `{ grammarId, reviewed }`: mark a review chip |
 | `DELETE` | `/api/tests/:id` | Delete one test |
+| `POST` | `/api/kanji/chapters` | Save (or replace) a kanji chapter's words. 201 → `{ level, chapter, words, url }`; 400 → `{ error, issues }` |
 
-Pages: `/welcome` (for signed-out visitors, with 3 sample questions), `/signin`, `/signup` (old `/login` links redirect to them), `/account`, `/` (mock tests), `/tests/:id` (quiz), `/tests/:id/results`.
+`POST /api/tests` takes a kanji test too (`"kind": "kanji"`); `GET /api/tests` and the list on `/`
+show only grammar tests.
+
+Pages: `/welcome` (for signed-out visitors, with 3 sample questions), `/signin`, `/signup` (old `/login` links redirect to them), `/account`, `/` (mock tests), `/kanji` (kanji chapters), `/kanji/:level/:chapter/cards` (flashcards), `/tests/:id` (quiz), `/tests/:id/results`.
 
 ## Storage
 
@@ -92,8 +112,10 @@ The tables are created on first use. `tests` has a row per test (payload and las
 JSON, plus `position`, the place you dragged it to in the list; new tests have none and show
 first, newest first). `reviewed` has a row per review chip marked reviewed. `attempts` has the score of every
 submission, so a retake keeps the earlier ones. `users` has the accounts (passwords as
-salted scrypt hashes, in `app/lib/users.server.ts`). All queries are in
-`app/lib/tests.server.ts`.
+salted scrypt hashes, in `app/lib/users.server.ts`). `kanji_chapters` has a row per kanji
+chapter (its words as JSON), and `learned_words` a row per word marked learned; like the tests, they
+are the same for every user. The test queries are in `app/lib/tests.server.ts`, the kanji ones in
+`app/lib/kanji.server.ts`.
 
 ## Theme
 
