@@ -1,10 +1,12 @@
 import { Trans } from "@lingui/react/macro";
 import { AppHeader } from "~/components/layout/header";
+import { LevelTabs } from "~/components/LevelTabs";
+import { SubjectTabs } from "~/components/SubjectTabs";
 import { isTestLevel, JLPT_LEVELS, type JlptLevel } from "~/lib/payload";
 import type { TestSummary } from "~/lib/views";
 import { EmptyState } from "./EmptyState";
+import { warmDrawerFigure } from "./helpers/drawerFigure";
 import { useVisibleTests } from "./hooks/useVisibleTests";
-import { LevelTabs } from "./LevelTabs";
 import { LevelUnavailable } from "./LevelUnavailable";
 import { PageLinks } from "./PageLinks";
 import { Stats, type HomeStats } from "./Stats";
@@ -23,11 +25,12 @@ export function Home({ tests: saved, stats, level, page, pages }: HomeProps) {
     <div className="min-h-screen">
       <AppHeader account />
       <main className="mx-auto flex max-w-260 flex-col gap-4 px-4 pt-5 pb-10 md:gap-6 md:px-6 md:pt-10 md:pb-16">
+        <SubjectTabs current="grammar" />
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-bold tracking-tight md:text-title-lg">
             <Trans>Mock tests</Trans>
           </h1>
-          {level && <LevelTabs levels={JLPT_LEVELS} current={level} />}
+          {level && <LevelTabs levels={JLPT_LEVELS} current={level} warmOf={warmDrawerFigure} />}
         </div>
 
         {tests.length > 0 ? (

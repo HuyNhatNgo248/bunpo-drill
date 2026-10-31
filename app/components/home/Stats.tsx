@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { StatCard } from "./StatCard";
+import { StatCard } from "~/components/StatCard";
 
 /** The figures over all the tests of the level shown, not only its page, which the home loader works out. */
 export type HomeStats = { average: number | null; toReview: number; taken: number; total: number };

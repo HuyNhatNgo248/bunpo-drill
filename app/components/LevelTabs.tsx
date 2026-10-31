@@ -1,16 +1,23 @@
 import { useLingui } from "@lingui/react/macro";
 import { Link, useNavigation } from "react-router";
 import { cn } from "~/lib/utils";
-import { isTestLevel, type JlptLevel } from "~/lib/payload";
-import { loadDrawerFigure } from "./helpers/drawerFigure";
+import type { JlptLevel } from "~/lib/payload";
 
 /**
- * Switches the home page between the JLPT levels. The level is in the URL, so a reload keeps it.
+ * Switches a page (the mock tests, or kanji) between the JLPT levels. The level is in the URL, so a reload keeps it.
  * One highlight slides to the level picked, as soon as it is picked rather than once its tests have loaded.
  * The tabs share one width, so the highlight moves by whole tabs with a CSS transition.
- * A level with no tests yet starts loading its empty state's figure on hover, focus or press, not once its page shows.
+ * `warmOf` gives a level's tab what to start loading on hover, focus or press, not once its page shows.
  */
-export function LevelTabs({ levels, current }: { levels: readonly JlptLevel[]; current: JlptLevel }) {
+export function LevelTabs({
+  levels,
+  current,
+  warmOf,
+}: {
+  levels: readonly JlptLevel[];
+  current: JlptLevel;
+  warmOf?: (level: JlptLevel) => (() => void) | undefined;
+}) {
   const { t } = useLingui();
   const next = new URLSearchParams(useNavigation().location?.search).get("level");
   const shown = levels.find((level) => level === next) ?? current;
@@ -24,7 +31,7 @@ export function LevelTabs({ levels, current }: { levels: readonly JlptLevel[]; c
           style={{ width: `${100 / levels.length}%`, transform: `translateX(${levels.indexOf(shown) * 100}%)` }}
         />
         {levels.map((level) => {
-          const warm = isTestLevel(level) ? undefined : () => void loadDrawerFigure();
+          const warm = warmOf?.(level);
           return (
             <Link
               key={level}
