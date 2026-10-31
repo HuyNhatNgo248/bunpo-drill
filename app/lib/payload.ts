@@ -23,14 +23,15 @@ export type Level = (typeof LEVELS)[number];
 
 export const isTestLevel = (level: JlptLevel): level is Level => LEVELS.some((l) => l === level);
 
-export const SECTION_TYPES = ["fill-blank", "sentence-order", "passage"] as const;
+/** The grammar test's 3 問題, then the kanji test's 2 (kanji-payload.ts). */
+export const SECTION_TYPES = ["fill-blank", "sentence-order", "passage", "kanji-reading", "kanji-writing"] as const;
 export type SectionType = (typeof SECTION_TYPES)[number];
 
 const GRAMMAR_ID = /^n[1-5]-w[1-9]-d[1-6]-g[1-4]$/;
 const QUESTION_ID = /^q[1-9][0-9]*$/;
 const PASSAGE_MARKER = /\[(\d+)\]/g;
 
-const questionId = z
+export const questionId = z
   .string()
   .regex(QUESTION_ID)
   .describe('Sequential across the whole test in section order: "q1", "q2", … with no gaps.');
@@ -40,12 +41,12 @@ const grammarId = z
   .regex(GRAMMAR_ID)
   .describe("The id of the grammar point (from grammarPoints) this question tests.");
 
-const choices = z
+export const choices = z
   .array(z.string().min(1))
   .length(4)
   .describe("Exactly 4 different options, shown to the learner as 1–4.");
 
-const answerIndex = z
+export const answerIndex = z
   .number()
   .int()
   .min(0)
@@ -183,11 +184,15 @@ export type PayloadIssue = { path: string; message: string };
 export function parsePayload(input: unknown) {
   const result = testPayloadSchema.safeParse(input);
   if (result.success) return { ok: true as const, payload: result.data };
-  const issues: PayloadIssue[] = result.error.issues.map((issue) => ({
+  return { ok: false as const, issues: issuesOf(result.error) };
+}
+
+/** Zod's issues as the API reports them: a dotted path ("(root)" for the whole body) and a message. */
+export function issuesOf(error: z.ZodError): PayloadIssue[] {
+  return error.issues.map((issue) => ({
     path: issue.path.map(String).join(".") || "(root)",
     message: issue.message,
   }));
-  return { ok: false as const, issues };
 }
 
 /** Splits a passage into text runs and the question numbers of its blanks. */

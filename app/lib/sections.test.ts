@@ -12,6 +12,8 @@ describe("SECTION_TITLES", () => {
       "fill-blank": "文法形式の判断",
       "sentence-order": "文の組み立て",
       passage: "文章の文法",
+      "kanji-reading": "漢字読み",
+      "kanji-writing": "表記",
     });
   });
 });
@@ -54,6 +56,20 @@ describe("sectionInstruction", () => {
       expect(getServerI18n("ja")._(sectionInstruction("passage", [31, 32, 33, 34, 35]))).toBe(
         "つぎの文章を読んで、文章全体の内容を考えて、（31）から（35）の中に入る最もよいものを、1・2・3・4から一つえらびなさい。",
       );
+    });
+  });
+
+  describe("a kanji section", () => {
+    it("asks for the reading of the underlined word in 漢字読み, and for its kanji in 表記", () => {
+      expect(instruction("kanji-reading")).toBe("Choose the best reading for the underlined word from 1, 2, 3 and 4.");
+      expect(instruction("kanji-writing")).toBe("Choose the best way to write the underlined word in kanji from 1, 2, 3 and 4.");
+    });
+
+    it("keeps the exam's own wording in Japanese", () => {
+      const ja = getServerI18n("ja");
+
+      expect(ja._(sectionInstruction("kanji-reading"))).toBe("＿＿＿の言葉の読み方として最もよいものを、1・2・3・4から一つ選びなさい。");
+      expect(ja._(sectionInstruction("kanji-writing"))).toBe("＿＿＿の言葉を漢字で書くとき、最もよいものを1・2・3・4から一つ選びなさい。");
     });
   });
 });

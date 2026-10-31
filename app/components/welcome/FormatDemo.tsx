@@ -4,7 +4,14 @@ import type { SectionType } from "~/lib/payload";
 import { cn } from "~/lib/utils";
 
 /** How many steps each demo plays: fill the blank; sort the pieces, then mark ★; fill blank 1, then blank 2. */
-export const DEMO_STEPS: Record<SectionType, number> = { "fill-blank": 1, "sentence-order": 2, passage: 2 };
+/** The grammar 問題, which the welcome page shows. */
+export type GrammarSection = Extract<SectionType, "fill-blank" | "sentence-order" | "passage">;
+
+export const DEMO_STEPS: Record<GrammarSection, number> = {
+  "fill-blank": 1,
+  "sentence-order": 2,
+  passage: 2,
+};
 
 /**
  * Plays a demo's steps one by one, the first time `ref` scrolls into view; `replay` plays them again once they are done.

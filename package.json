@@ -16,7 +16,7 @@
     "typecheck": "react-router typegen && tsc",
     "precommit": "pnpm run typecheck && pnpm run i18n:check && pnpm test",
     "prod:deploy": "scripts/deploy.sh",
-    "schema": "vitest run -u app/lib/payload.test.ts",
+    "schema": "vitest run -u app/lib/payload.test.ts app/lib/kanji-payload.test.ts",
     "i18n:extract": "lingui extract --clean",
     "i18n:check": "scripts/check-translations.sh"
   },

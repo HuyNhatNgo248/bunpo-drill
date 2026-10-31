@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "number",
+      "const": 1
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "N3",
+        "N2"
+      ]
+    },
+    "chapter": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 30,
+      "description": "The chapter of 漢字マスター (1章 → 1)."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "description": "The chapter title from the book: \"生活-1\"."
+    },
+    "lessons": {
+      "minItems": 1,
+      "maxItems": 12,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 30,
+            "description": "The lesson title: \"ギフト\"."
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 400,
+            "description": "Its page in the book."
+          },
+          "kanji": {
+            "minItems": 1,
+            "maxItems": 12,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "char": {
+                  "type": "string",
+                  "pattern": "^\\p{Script=Han}$",
+                  "description": "The kanji the book teaches: 贈."
+                },
+                "strokes": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30,
+                  "description": "Its stroke count, from the book: (18) → 18."
+                },
+                "kun": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": "Kun readings in hiragana, okurigana after a hyphen: [\"おく-る\"]. Empty when it has none."
+                },
+                "on": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": "On readings in katakana: [\"ゾウ\", \"ソウ\"]. Empty when it has none."
+                },
+                "words": {
+                  "minItems": 1,
+                  "maxItems": 12,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "word": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 20,
+                        "description": "The word as the book writes it: \"贈答品\", \"贈る\"."
+                      },
+                      "reading": {
+                        "type": "string",
+                        "maxLength": 40,
+                        "pattern": "^[^\\p{Script=Han}]+$",
+                        "description": "Its reading in hiragana: \"ぞうとうひん\"."
+                      },
+                      "meaning": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 80,
+                        "description": "A short English meaning: \"gifts, given and received\"."
+                      },
+                      "rare": {
+                        "description": "true for a word the book marks △ (less common).",
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "word",
+                      "reading",
+                      "meaning"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "Its example words, in the book's order. Each one contains the kanji."
+                }
+              },
+              "required": [
+                "char",
+                "strokes",
+                "kun",
+                "on",
+                "words"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "title",
+          "page",
+          "kanji"
+        ],
+        "additionalProperties": false
+      },
+      "description": "The chapter's lessons, one per page, in the book's order."
+    },
+    "otherKanji": {
+      "maxItems": 300,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "char": {
+            "type": "string",
+            "pattern": "^\\p{Script=Han}$"
+          },
+          "kun": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "Kun readings in hiragana, okurigana after a hyphen: [\"おく-る\"]. Empty when it has none."
+          },
+          "on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "On readings in katakana: [\"ゾウ\", \"ソウ\"]. Empty when it has none."
+          }
+        },
+        "required": [
+          "char",
+          "kun",
+          "on"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Every kanji in the words that is not one of the chapter's headwords (答 and 品 of 贈答品), with its readings."
+    }
+  },
+  "required": [
+    "version",
+    "level",
+    "chapter",
+    "title",
+    "lessons",
+    "otherKanji"
+  ],
+  "additionalProperties": false,
+  "title": "漢字マスター chapter",
+  "description": "Body of POST /api/kanji/chapters: the words of one chapter, for its flashcards. Sending a chapter again replaces it.\nRules the server also enforces:\n1. Every word contains its headword, and a word appears once in the chapter.\n2. Every kanji in a word is a headword of the chapter or is listed in otherKanji.",
+  "$id": "https://bunpo-drill.local/schema/kanji-chapter.v1.json"
+}

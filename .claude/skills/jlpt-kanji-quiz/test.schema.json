@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "number",
+      "const": 1
+    },
+    "kind": {
+      "type": "string",
+      "const": "kanji"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "N3",
+        "N2"
+      ]
+    },
+    "chapter": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 30,
+      "description": "The chapter of 漢字マスター (1章 → 1)."
+    },
+    "words": {
+      "minItems": 1,
+      "maxItems": 60,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^n[1-5]-c[1-9][0-9]*-.+$",
+            "description": "wordId of the word: \"n2-c1-招待状\"."
+          },
+          "word": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20
+          },
+          "reading": {
+            "type": "string",
+            "maxLength": 40,
+            "pattern": "^[^\\p{Script=Han}]+$"
+          }
+        },
+        "required": [
+          "id",
+          "word",
+          "reading"
+        ],
+        "additionalProperties": false
+      },
+      "description": "The chapter words this test covers, as the chapter writes them."
+    },
+    "sections": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "kanji-reading"
+            },
+            "questions": {
+              "minItems": 1,
+              "maxItems": 30,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^q[1-9][0-9]*$",
+                    "description": "Sequential across the whole test in section order: \"q1\", \"q2\", … with no gaps."
+                  },
+                  "wordId": {
+                    "type": "string",
+                    "pattern": "^n[1-5]-c[1-9][0-9]*-.+$",
+                    "description": "The id of the word (from words) this question tests."
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "One sentence with the tested word in 【 】, exactly once: in kanji for kanji-reading (【招待状】), in hiragana for kanji-writing (【じょうしゃけん】). A verb may be conjugated (【届けて】)."
+                  },
+                  "choices": {
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": "Exactly 4 different options, shown to the learner as 1–4."
+                  },
+                  "answerIndex": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 3,
+                    "description": "0-based index of the correct option in choices."
+                  },
+                  "explanation": {
+                    "description": "Shown under the answer on the results page. In English, one or two sentences: why the answer is right and which trap the others set.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 400
+                  }
+                },
+                "required": [
+                  "id",
+                  "wordId",
+                  "prompt",
+                  "choices",
+                  "answerIndex"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "type",
+            "questions"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "kanji-writing"
+            },
+            "questions": {
+              "minItems": 1,
+              "maxItems": 30,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^q[1-9][0-9]*$",
+                    "description": "Sequential across the whole test in section order: \"q1\", \"q2\", … with no gaps."
+                  },
+                  "wordId": {
+                    "type": "string",
+                    "pattern": "^n[1-5]-c[1-9][0-9]*-.+$",
+                    "description": "The id of the word (from words) this question tests."
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "One sentence with the tested word in 【 】, exactly once: in kanji for kanji-reading (【招待状】), in hiragana for kanji-writing (【じょうしゃけん】). A verb may be conjugated (【届けて】)."
+                  },
+                  "choices": {
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": "Exactly 4 different options, shown to the learner as 1–4."
+                  },
+                  "answerIndex": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 3,
+                    "description": "0-based index of the correct option in choices."
+                  },
+                  "explanation": {
+                    "description": "Shown under the answer on the results page. In English, one or two sentences: why the answer is right and which trap the others set.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 400
+                  }
+                },
+                "required": [
+                  "id",
+                  "wordId",
+                  "prompt",
+                  "choices",
+                  "answerIndex"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "type",
+            "questions"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "Always these 2 sections, in this order: 漢字読み, then 表記."
+    }
+  },
+  "required": [
+    "version",
+    "kind",
+    "title",
+    "level",
+    "chapter",
+    "words",
+    "sections"
+  ],
+  "additionalProperties": false,
+  "title": "Kanji mock test payload",
+  "description": "Body of POST /api/tests for a kanji test, version 1. The chapter must be POSTed to /api/kanji/chapters first.\nRules the server also enforces:\n1. Each word id is \"<level>-c<chapter>-<word>\", the word is in the chapter, and every word is tested.\n2. Question ids run \"q1\", \"q2\", … with no gaps, and every wordId is listed in words.\n3. A prompt has exactly one 【…】. In kanji-reading it holds the word's kanji, and the 4 choices are readings without kanji; in kanji-writing it holds no kanji, and every choice has some.\n4. The right choice of a kanji-writing question contains the word's kanji. The 4 choices are all different.\nStandard size: 5 kanji-reading and 5 kanji-writing questions (q1–q10), as in the exam.",
+  "$id": "https://bunpo-drill.local/schema/kanji-test.v1.json"
+}

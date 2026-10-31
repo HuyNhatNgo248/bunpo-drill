@@ -4,13 +4,12 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { motion } from "motion/react";
 import { useRef } from "react";
 import { Card } from "~/components/ui/card";
-import type { SectionType } from "~/lib/payload";
 import { SECTION_TITLES, sectionGloss } from "~/lib/sections";
-import { DEMO_STEPS, FormatDemo, useDemoSteps } from "./FormatDemo";
+import { DEMO_STEPS, FormatDemo, useDemoSteps, type GrammarSection } from "./FormatDemo";
 
 const MotionCard = motion.create(Card);
 
-type Section = { no: number; type: SectionType; count: MessageDescriptor; how: MessageDescriptor };
+type Section = { no: number; type: GrammarSection; count: MessageDescriptor; how: MessageDescriptor };
 
 /** The three sections of the exam's 文法 part, in their real order. */
 const SECTIONS: Section[] = [
