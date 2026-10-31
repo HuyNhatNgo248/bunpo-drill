@@ -3,7 +3,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 /** The tables that the app reads and writes. */
-const TABLES = ["attempts", "password_resets", "reviewed", "tests", "users"];
+const TABLES = ["attempts", "kanji_chapters", "learned_words", "password_resets", "reviewed", "tests", "users"];
 
 /**
  * A fresh copy of db.server.ts. The module keeps one client for the life of the process,

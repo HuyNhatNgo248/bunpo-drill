@@ -23,5 +23,10 @@ export async function action({ request, params }: Route.ActionArgs) {
   if (!body.success) {
     return data({ error: translate(requestLocale(request), msg`This part couldn't be checked. Please try again.`) }, { status: 400 });
   }
-  return { section: gradeTest(test.payload, body.data.answers).sections[body.data.section - 1] };
+  const section = gradeTest(test.payload, body.data.answers).sections[body.data.section - 1];
+  // A kanji test has 2 parts, not 3.
+  if (!section) {
+    return data({ error: translate(requestLocale(request), msg`This part couldn't be checked. Please try again.`) }, { status: 400 });
+  }
+  return { section };
 }

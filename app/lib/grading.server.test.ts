@@ -8,6 +8,7 @@ import {
   buildSentenceOrderSection,
   GRAMMAR_ID,
 } from "#mocks/factories/payload";
+import { buildKanjiTestPayload, WORD_ID } from "#mocks/factories/kanji";
 import { buildListedTest, buildStoredTest, buildSubmission } from "#mocks/factories/tests";
 import {
   gradeTest,
@@ -26,6 +27,9 @@ const ALL_RIGHT: Answers = { q1: 2, q2: [1, 0, 2, 3], q3: 0 };
 const NOW = new Date("2026-10-27T09:30:00.000Z");
 
 const PAYLOAD = buildPayload();
+
+/** q1 漢字読み and q2 表記, both on 招待状; the right answers are index 2 and index 0. */
+const KANJI = buildKanjiTestPayload();
 
 /** One graded question, found by its id across every section and group. */
 function questionOf(answers: Answers, id: string): ResultQuestion {
@@ -74,6 +78,10 @@ describe("questionCount", () => {
 
     expect(questionCount(buildPayload({ sections: [PAYLOAD.sections[0], PAYLOAD.sections[1], passages] }))).toBe(4);
   });
+
+  it("counts the questions of both parts of a kanji test", () => {
+    expect(questionCount(KANJI)).toBe(2);
+  });
 });
 
 describe("toQuizView", () => {
@@ -94,6 +102,28 @@ describe("toQuizView", () => {
     expect(json).not.toContain("answerIndex");
     expect(json).not.toContain("correctOrder");
     expect(json).not.toContain("grammarId");
+  });
+
+  it("gives a kanji test its 2 parts, each sentence split around its underlined word, and no answers or word ids", () => {
+    const view = toQuizView(buildStoredTest({ payload: KANJI }));
+
+    expect(view).toMatchObject({ kind: "kanji", chapter: 1, questionCount: 2 });
+    expect(view.sections.map((s) => [s.no, s.type])).toEqual([
+      [1, "kanji-reading"],
+      [2, "kanji-writing"],
+    ]);
+    expect(view.sections[0].groups[0].questions[0]).toEqual({
+      type: "kanji-reading",
+      id: "q1",
+      num: 1,
+      prompt: { before: "取引先から新年会の", word: "招待状", after: "をいただいた。" },
+      choices: ["しょたいじょう", "しょだいじょう", "しょうたいじょう", "しょうだいじょう"],
+    });
+    expect(JSON.stringify(view)).not.toMatch(/answerIndex|wordId/);
+  });
+
+  it("marks a grammar test's kind, with no chapter", () => {
+    expect(toQuizView(buildStoredTest())).toMatchObject({ kind: "grammar", chapter: null });
   });
 
   it("links each blank of a passage to its question", () => {
@@ -179,6 +209,24 @@ describe("gradeTest", () => {
     expect(blankOf(ALL_RIGHT)).toEqual({ kind: "blank", num: 3, fill: "かいがあって", correct: true });
     expect(blankOf({ q3: 1 })).toEqual({ kind: "blank", num: 3, fill: "かいがあって", correct: false });
   });
+
+  it("grades a kanji test by its choices, and lists each wrong word once", () => {
+    expect(gradeTest(KANJI, { q1: 2, q2: 0 })).toMatchObject({ score: 2, total: 2, wrongGrammarIds: [] });
+    expect(gradeTest(KANJI, { q1: 0, q2: 1 })).toMatchObject({ score: 0, total: 2, wrongGrammarIds: [WORD_ID] });
+  });
+
+  it("shows a kanji question's sentence around its underlined word, with the answers", () => {
+    const [q1] = gradeTest(KANJI, { q1: 0 }).sections[0].groups[0].questions;
+
+    expect(q1).toMatchObject({
+      type: "kanji-reading",
+      correct: false,
+      yours: "1 しょたいじょう",
+      answer: "3 しょうたいじょう",
+      prompt: null,
+      underlined: { before: "取引先から新年会の", word: "招待状", after: "をいただいた。" },
+    });
+  });
 });
 
 describe("toSubmission", () => {
@@ -219,6 +267,17 @@ describe("toResultsView", () => {
     expect(toResultsView(test, buildSubmission()).review).toEqual([
       { grammarId: GRAMMAR_ID, pattern: "〜かいがある", level: "N2", week: 1, day: 1, number: 1, reviewed: true },
     ]);
+  });
+
+  it("gives a kanji test the words it got wrong to study, and no grammar chips", () => {
+    const view = toResultsView(buildStoredTest({ payload: KANJI }), buildSubmission({ answers: { q1: 0, q2: 0 } }));
+
+    expect(view).toMatchObject({ kind: "kanji", chapter: 1, score: 1, total: 2, review: [] });
+    expect(view.words).toEqual([{ wordId: WORD_ID, word: "招待状", reading: "しょうたいじょう" }]);
+  });
+
+  it("gives a grammar test no words", () => {
+    expect(toResultsView(buildStoredTest(), buildSubmission())).toMatchObject({ kind: "grammar", chapter: null, words: [] });
   });
 
   it("gives the score of the attempt before this one, or none on the first", () => {

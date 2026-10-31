@@ -49,6 +49,22 @@ export const users = sqliteTable("users", {
   sessionVersion: integer("session_version").notNull().default(0),
 });
 
+export const kanjiChapters = sqliteTable(
+  "kanji_chapters",
+  {
+    level: text("level").notNull(),
+    chapter: integer("chapter").notNull(),
+    payload: text("payload").notNull(),
+    updatedAt: text("updated_at").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.level, t.chapter] })],
+);
+
+export const learnedWords = sqliteTable("learned_words", {
+  wordId: text("word_id").primaryKey(),
+  learnedAt: text("learned_at").notNull(),
+});
+
 export const passwordResets = sqliteTable("password_resets", {
   tokenHash: text("token_hash").primaryKey(),
   userId: integer("user_id")

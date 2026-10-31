@@ -32,7 +32,7 @@ export function buildStoredTest(overrides: Partial<StoredTest> = {}): StoredTest
  */
 export function buildListedTest(overrides: Partial<ListedTest> = {}): ListedTest {
   const { payload, ...test } = buildStoredTest();
-  const { title, level, grammarPoints } = payload;
+  const { title, level, grammarPoints } = buildPayload();
   return { ...test, payload: { title, level, grammarPoints }, questionCount: 3, ...overrides };
 }
 

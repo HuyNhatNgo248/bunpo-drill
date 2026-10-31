@@ -1,5 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
+import { buildKanjiTestPayload, WORD_ID } from "#mocks/factories/kanji";
 import { buildPayload } from "#mocks/factories/payload";
+import { learnedIds, markLearned } from "~/lib/kanji.server";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
@@ -53,6 +55,21 @@ describe("quiz action", () => {
     expect(response).toBeInstanceOf(Response);
     expect((response as Response).headers.get("Location")).toBe(`/tests/${id}/results`);
     expect((await getTest(id))?.submission).toMatchObject({ answers: { q1: 2, q3: 1 }, score: 1, total: 3 });
+  });
+
+  it("takes the learned mark off each word a kanji test got wrong, and keeps the right ones", async () => {
+    const { id } = await createTest(buildKanjiTestPayload());
+    await markLearned(WORD_ID);
+
+    await submit(id, JSON.stringify({ answers: { q1: 0, q2: 0 } }));
+
+    expect(await learnedIds()).toEqual(new Set());
+
+    const right = await createTest(buildKanjiTestPayload());
+    await markLearned(WORD_ID);
+    await submit(right.id, JSON.stringify({ answers: { q1: 2, q2: 0 } }));
+
+    expect(await learnedIds()).toEqual(new Set([WORD_ID]));
   });
 
   it("keeps the first result when the test is submitted again, and opens it", async () => {

@@ -1,7 +1,7 @@
 import { UNSAFE_ErrorResponseImpl as ErrorResponse } from "react-router";
 import { i18n } from "@lingui/core";
 import { describe, expect, it } from "vitest";
-import { describeError, testNotFound } from "./errors";
+import { chapterNotFound, describeError, testNotFound } from "./errors";
 
 /**
  * What React Router gives the error page when a loader throws `data(…, { status })`.
@@ -24,7 +24,23 @@ describe("testNotFound", () => {
   });
 });
 
+describe("chapterNotFound", () => {
+  it("answers 404 with the data that marks a missing chapter", () => {
+    expect(chapterNotFound()).toMatchObject({ data: "Chapter not found", init: { status: 404 } });
+  });
+});
+
 describe("describeError", () => {
+  it("says the chapter is missing, and how to send it, for a missing chapter", () => {
+    expect(wordsOf(routeError(404, chapterNotFound().data))).toEqual({
+      status: 404,
+      kanji: "無",
+      title: "Chapter not found",
+      description: "This chapter's words haven't been sent yet. Ask Claude for them with /jlpt-kanji-quiz.",
+      retry: false,
+    });
+  });
+
   it("says the test is missing, with no retry, for a missing test", () => {
     expect(wordsOf(routeError(404, testNotFound().data))).toEqual({
       status: 404,

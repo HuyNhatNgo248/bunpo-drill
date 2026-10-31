@@ -1,9 +1,12 @@
 import { z } from "zod";
+import { splitTarget, type KanjiTestPayload } from "./kanji-payload";
 import { BLANK, splitPassage, type PassageQuestion, type TestPayload } from "./payload";
+import { isKanji, type AnyPayload } from "./test-kinds";
 import type { ListedTest, StoredTest, Submission } from "./tests.server";
 import type {
   Answer,
   Answers,
+  QuizSection,
   QuizView,
   ResultGroup,
   ResultQuestion,
@@ -11,6 +14,7 @@ import type {
   ResultsView,
   ReviewChip,
   TestSummary,
+  WordChip,
 } from "./views";
 
 const choiceIndex = z.number().int().min(0).max(3);
@@ -25,7 +29,8 @@ const numberOf = (id: string) => Number(id.slice(1));
 const label = (options: string[], index: number) => `${index + 1} ${options[index]}`;
 const choiceOf = (answer: Answer | undefined) => (typeof answer === "number" ? answer : null);
 
-export function questionCount(payload: TestPayload) {
+export function questionCount(payload: AnyPayload) {
+  if (isKanji(payload)) return payload.sections.reduce((sum, section) => sum + section.questions.length, 0);
   const [fill, order, passage] = payload.sections;
   return (
     fill.questions.length +
@@ -34,64 +39,84 @@ export function questionCount(payload: TestPayload) {
   );
 }
 
-/** The quiz as the browser sees it: no answers and no grammar ids. */
+/** The quiz as the browser sees it: no answers, no grammar ids and no word ids. */
 export function toQuizView(test: StoredTest): QuizView {
-  const [fill, order, passage] = test.payload.sections;
-  return {
-    id: test.id,
-    title: test.payload.title,
-    level: test.payload.level,
-    questionCount: questionCount(test.payload),
-    sections: [
-      {
-        no: 1,
-        type: "fill-blank",
-        groups: [
-          {
-            segments: null,
-            questions: fill.questions.map(({ id, prompt, choices }) => ({
-              type: "fill-blank",
-              id,
-              num: numberOf(id),
-              prompt,
-              choices,
-            })),
-          },
-        ],
-      },
-      {
-        no: 2,
-        type: "sentence-order",
-        groups: [
-          {
-            segments: null,
-            questions: order.questions.map(({ id, before, after, starSlot, pieces }) => ({
-              type: "sentence-order",
-              id,
-              num: numberOf(id),
-              before,
-              after,
-              starSlot,
-              pieces,
-            })),
-          },
-        ],
-      },
-      {
-        no: 3,
-        type: "passage",
-        groups: passage.passages.map((p) => ({
-          segments: splitPassage(p.passage).map((part) =>
-            part.kind === "text" ? part : { kind: "blank", num: part.num, questionId: `q${part.num}` },
-          ),
-          questions: p.questions.map(({ id, choices }) => ({ type: "passage", id, num: numberOf(id), choices })),
-        })),
-      },
-    ],
-  };
+  const { payload } = test;
+  const basics = { id: test.id, title: payload.title, level: payload.level, questionCount: questionCount(payload) };
+  return isKanji(payload)
+    ? { ...basics, kind: "kanji", chapter: payload.chapter, sections: kanjiQuizSections(payload) }
+    : { ...basics, kind: "grammar", chapter: null, sections: grammarQuizSections(payload) };
 }
 
-export function gradeTest(payload: TestPayload, answers: Answers) {
+function grammarQuizSections(payload: TestPayload): QuizSection[] {
+  const [fill, order, passage] = payload.sections;
+  return [
+    {
+      no: 1,
+      type: "fill-blank",
+      groups: [
+        {
+          segments: null,
+          questions: fill.questions.map(({ id, prompt, choices }) => ({
+            type: "fill-blank",
+            id,
+            num: numberOf(id),
+            prompt,
+            choices,
+          })),
+        },
+      ],
+    },
+    {
+      no: 2,
+      type: "sentence-order",
+      groups: [
+        {
+          segments: null,
+          questions: order.questions.map(({ id, before, after, starSlot, pieces }) => ({
+            type: "sentence-order",
+            id,
+            num: numberOf(id),
+            before,
+            after,
+            starSlot,
+            pieces,
+          })),
+        },
+      ],
+    },
+    {
+      no: 3,
+      type: "passage",
+      groups: passage.passages.map((p) => ({
+        segments: splitPassage(p.passage).map((part) =>
+          part.kind === "text" ? part : { kind: "blank", num: part.num, questionId: `q${part.num}` },
+        ),
+        questions: p.questions.map(({ id, choices }) => ({ type: "passage", id, num: numberOf(id), choices })),
+      })),
+    },
+  ];
+}
+
+function kanjiQuizSections(payload: KanjiTestPayload): QuizSection[] {
+  return payload.sections.map(({ type, questions }, i) => ({
+    no: i + 1,
+    type,
+    groups: [
+      {
+        segments: null,
+        questions: questions.map(({ id, prompt, choices }) => ({ type, id, num: numberOf(id), prompt: splitTarget(prompt), choices })),
+      },
+    ],
+  }));
+}
+
+/** Grades the answers: each part's questions, the score, and the grammar points (or, on a kanji test, the words) got wrong. */
+export function gradeTest(payload: AnyPayload, answers: Answers) {
+  return isKanji(payload) ? gradeKanji(payload, answers) : gradeGrammar(payload, answers);
+}
+
+function gradeGrammar(payload: TestPayload, answers: Answers) {
   const [fill, order, passage] = payload.sections;
   const wrong: string[] = [];
   const track = (question: { grammarId: string }, correct: boolean) => {
@@ -111,6 +136,7 @@ export function gradeTest(payload: TestPayload, answers: Answers) {
       answer: label(q.choices, q.answerIndex),
       prompt: { before, after, fill: q.choices[q.answerIndex] },
       sentence: null,
+      underlined: null,
       explanation: q.explanation ?? null,
     };
   });
@@ -133,6 +159,7 @@ export function gradeTest(payload: TestPayload, answers: Answers) {
         after: q.after,
         pieces: q.correctOrder.map((piece, slot) => ({ text: q.pieces[piece], star: slot === star })),
       },
+      underlined: null,
       explanation: q.explanation ?? null,
     };
   });
@@ -148,6 +175,7 @@ export function gradeTest(payload: TestPayload, answers: Answers) {
       answer: label(q.choices, q.answerIndex),
       prompt: null,
       sentence: null,
+      underlined: null,
       explanation: q.explanation ?? null,
     };
   };
@@ -165,23 +193,57 @@ export function gradeTest(payload: TestPayload, answers: Answers) {
     };
   });
 
-  const section = (no: number, type: ResultSection["type"], groups: ResultGroup[]): ResultSection => {
-    const questions = groups.flatMap((group) => group.questions);
-    return { no, type, correct: questions.filter((q) => q.correct).length, total: questions.length, groups };
-  };
+  return graded(
+    [
+      resultSection(1, "fill-blank", [{ segments: null, questions: fillQuestions }]),
+      resultSection(2, "sentence-order", [{ segments: null, questions: orderQuestions }]),
+      resultSection(3, "passage", passageGroups),
+    ],
+    wrong,
+  );
+}
 
-  const sections = [
-    section(1, "fill-blank", [{ segments: null, questions: fillQuestions }]),
-    section(2, "sentence-order", [{ segments: null, questions: orderQuestions }]),
-    section(3, "passage", passageGroups),
-  ];
+function gradeKanji(payload: KanjiTestPayload, answers: Answers) {
+  const wrong: string[] = [];
+  const sections = payload.sections.map(({ type, questions }, i) =>
+    resultSection(i + 1, type, [
+      {
+        segments: null,
+        questions: questions.map((q): ResultQuestion => {
+          const picked = choiceOf(answers[q.id]);
+          const correct = picked === q.answerIndex;
+          if (!correct && !wrong.includes(q.wordId)) wrong.push(q.wordId);
+          return {
+            id: q.id,
+            num: numberOf(q.id),
+            type,
+            correct,
+            yours: picked === null ? null : label(q.choices, picked),
+            answer: label(q.choices, q.answerIndex),
+            prompt: null,
+            sentence: null,
+            underlined: splitTarget(q.prompt),
+            explanation: q.explanation ?? null,
+          };
+        }),
+      },
+    ]),
+  );
+  return graded(sections, wrong);
+}
 
+function resultSection(no: number, type: ResultSection["type"], groups: ResultGroup[]): ResultSection {
+  const questions = groups.flatMap((group) => group.questions);
+  return { no, type, correct: questions.filter((q) => q.correct).length, total: questions.length, groups };
+}
+
+function graded(sections: ResultSection[], wrong: string[]) {
   const score = sections.reduce((sum, s) => sum + s.correct, 0);
   const total = sections.reduce((sum, s) => sum + s.total, 0);
   return { sections, score, total, wrongGrammarIds: wrong };
 }
 
-export function toSubmission(payload: TestPayload, submitted: Answers): Submission {
+export function toSubmission(payload: AnyPayload, submitted: Answers): Submission {
   const ids = new Set(Object.keys(submitted).filter((id) => /^q[1-9][0-9]*$/.test(id) && numberOf(id) <= questionCount(payload)));
   const answers = Object.fromEntries(Object.entries(submitted).filter(([id]) => ids.has(id)));
   const { score, total, wrongGrammarIds } = gradeTest(payload, answers);
@@ -189,18 +251,21 @@ export function toSubmission(payload: TestPayload, submitted: Answers): Submissi
 }
 
 export function toResultsView(test: StoredTest, submission: Submission): ResultsView {
-  const { sections, score, total, wrongGrammarIds } = gradeTest(test.payload, submission.answers);
-  return {
+  const { payload } = test;
+  const { sections, score, total, wrongGrammarIds } = gradeTest(payload, submission.answers);
+  const basics = {
     id: test.id,
-    title: test.payload.title,
-    level: test.payload.level,
+    title: payload.title,
+    level: payload.level,
     score,
     total,
     percent: percentOf(score, total),
     sections,
-    review: reviewChips(test, wrongGrammarIds),
     previous: previousAttempt(test, submission),
   };
+  return isKanji(payload)
+    ? { ...basics, kind: "kanji", chapter: payload.chapter, review: [], words: wordChips(payload, wrongGrammarIds) }
+    : { ...basics, kind: "grammar", chapter: null, review: reviewChips({ payload, reviewed: test.reviewed }, wrongGrammarIds), words: [] };
 }
 
 export function toSummary(test: ListedTest): TestSummary {
@@ -230,6 +295,13 @@ function reviewChips(test: Pick<ListedTest, "payload" | "reviewed">, grammarIds:
     if (!point) return [];
     const { pattern, week, day, number } = point;
     return [{ grammarId, pattern, level: test.payload.level, week, day, number, reviewed: !!test.reviewed[grammarId] }];
+  });
+}
+
+function wordChips(payload: KanjiTestPayload, wordIds: string[]): WordChip[] {
+  return wordIds.flatMap((wordId) => {
+    const word = payload.words.find((w) => w.id === wordId);
+    return word ? [{ wordId, word: word.word, reading: word.reading }] : [];
   });
 }
 

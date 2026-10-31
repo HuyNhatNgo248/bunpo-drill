@@ -1,7 +1,11 @@
 import { z } from "zod";
 import type { Route } from "./+types/api.tests";
 import { toSummary } from "~/lib/grading.server";
-import { parsePayload } from "~/lib/payload";
+import { getChapter } from "~/lib/kanji.server";
+import { chapterWords } from "~/lib/kanji-views.server";
+import type { KanjiTestPayload } from "~/lib/kanji-payload";
+import type { PayloadIssue } from "~/lib/payload";
+import { isKanji, parseAnyPayload } from "~/lib/test-kinds";
 import { createTest, deleteAllTests, listTests, saveOrder } from "~/lib/tests.server";
 
 const orderSchema = z.object({ order: z.array(z.string()) });
@@ -13,7 +17,7 @@ export async function loader(_: Route.LoaderArgs) {
 }
 
 /**
- * POST /api/tests: save a new test (the standard v1 payload).
+ * POST /api/tests: save a new test (the standard v1 payload, or a kanji test on a chapter already sent).
  * PATCH /api/tests with {"order": [id, …]}: order those tests, top first, among the places they hold in the list.
  * DELETE /api/tests: clear all tests.
  */
@@ -26,9 +30,13 @@ export async function action({ request }: Route.ActionArgs) {
       } catch {
         return Response.json({ error: "Body must be JSON." }, { status: 400 });
       }
-      const parsed = parsePayload(body);
+      const parsed = parseAnyPayload(body);
       if (!parsed.ok) {
         return Response.json({ error: "Invalid payload.", issues: parsed.issues }, { status: 400 });
+      }
+      const issues = isKanji(parsed.payload) ? await chapterIssues(parsed.payload) : [];
+      if (issues.length) {
+        return Response.json({ error: "Invalid payload.", issues }, { status: 400 });
       }
       const test = await createTest(parsed.payload);
       const url = new URL(`/tests/${test.id}`, request.url).toString();
@@ -51,4 +59,18 @@ export async function action({ request }: Route.ActionArgs) {
         { status: 405, headers: { Allow: "GET, POST, PATCH, DELETE" } },
       );
   }
+}
+
+/** A kanji test's words must be its chapter's, as the chapter writes them, so a miss always has a flashcard. */
+async function chapterIssues(payload: KanjiTestPayload): Promise<PayloadIssue[]> {
+  const chapter = await getChapter(payload.level, payload.chapter);
+  if (!chapter) {
+    return [{ path: "chapter", message: `${payload.level} chapter ${payload.chapter} isn't saved. POST it to /api/kanji/chapters first.` }];
+  }
+  const known = new Map(chapterWords(chapter).map((word) => [word.id, word]));
+  return payload.words.flatMap((word, i) => {
+    const saved = known.get(word.id);
+    if (!saved) return [{ path: `words.${i}.id`, message: `"${word.word}" is not a word of this chapter.` }];
+    return saved.reading === word.reading ? [] : [{ path: `words.${i}.reading`, message: `The chapter reads ${word.word} as ${saved.reading}.` }];
+  });
 }

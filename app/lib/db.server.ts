@@ -45,6 +45,17 @@ const SCHEMA = [
     created_at TEXT NOT NULL,
     expires_at TEXT NOT NULL
   )`,
+  `CREATE TABLE IF NOT EXISTS kanji_chapters (
+    level TEXT NOT NULL,
+    chapter INTEGER NOT NULL,
+    payload TEXT NOT NULL, -- KanjiChapter JSON: the chapter's words, for its flashcards
+    updated_at TEXT NOT NULL,
+    PRIMARY KEY (level, chapter)
+  )`,
+  `CREATE TABLE IF NOT EXISTS learned_words (
+    word_id TEXT PRIMARY KEY, -- wordId(): "n2-c1-贈答品"; a quiz miss deletes the row
+    learned_at TEXT NOT NULL
+  )`,
 ];
 
 /** Brings a database made by an older version up to date. Each step does nothing once it has run. */

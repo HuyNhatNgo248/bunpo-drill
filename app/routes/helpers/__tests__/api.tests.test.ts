@@ -1,8 +1,10 @@
 import { beforeEach, describe, expect, it } from "vitest";
+import { buildChapterWord, buildHeadword, buildKanjiChapter, buildKanjiTestPayload, buildLesson } from "#mocks/factories/kanji";
 import { buildPayload } from "#mocks/factories/payload";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
-import { createTest, listTests } from "~/lib/tests.server";
+import { saveChapter } from "~/lib/kanji.server";
+import { createTest, getTest, listTests } from "~/lib/tests.server";
 import { action, loader } from "../api.tests";
 
 const URL = "https://bunpo.test/api/tests";
@@ -50,6 +52,15 @@ describe("POST /api/tests", () => {
     });
   });
 
+  it("saves a kanji test on a chapter that is saved", async () => {
+    await saveChapter(buildKanjiChapter());
+
+    const response = await send("POST", buildKanjiTestPayload());
+
+    expect(response.status).toBe(201);
+    expect((await getTest((await response.json()).id))?.payload).toEqual(buildKanjiTestPayload());
+  });
+
   describe("checking the payload", () => {
     it("answers 400 with every issue, and saves nothing", async () => {
       const response = await send("POST", buildPayload({ title: "" }));
@@ -60,6 +71,32 @@ describe("POST /api/tests", () => {
         issues: [{ path: "title", message: expect.any(String) }],
       });
       expect(await listTests()).toEqual([]);
+    });
+  });
+
+  describe("checking a kanji test against its chapter", () => {
+    it("answers 400 when the chapter is not saved, so a miss would have no flashcard", async () => {
+      const response = await send("POST", buildKanjiTestPayload());
+
+      expect(response.status).toBe(400);
+      expect(await response.json()).toEqual({
+        error: "Invalid payload.",
+        issues: [{ path: "chapter", message: "N2 chapter 1 isn't saved. POST it to /api/kanji/chapters first." }],
+      });
+    });
+
+    it("answers 400 for a word that the chapter does not have, or reads another way", async () => {
+      await saveChapter(buildKanjiChapter({ lessons: [buildLesson({ kanji: [buildHeadword({ words: [buildChapterWord({ reading: "しょうだいじょう" })] })] })] }));
+
+      expect(await (await send("POST", buildKanjiTestPayload())).json()).toMatchObject({
+        issues: [{ path: "words.0.reading", message: "The chapter reads 招待状 as しょうだいじょう." }],
+      });
+
+      await saveChapter(buildKanjiChapter({ lessons: [buildLesson({ kanji: [buildHeadword({ words: [buildChapterWord({ word: "招く", reading: "まねく" })] })] })] }));
+
+      expect(await (await send("POST", buildKanjiTestPayload())).json()).toMatchObject({
+        issues: [{ path: "words.0.id", message: '"招待状" is not a word of this chapter.' }],
+      });
     });
   });
 });

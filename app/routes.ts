@@ -17,4 +17,5 @@ export default [
   route("tests/:id/check", "routes/helpers/check.ts"),
   route("api/tests", "routes/helpers/api.tests.ts"),
   route("api/tests/:id", "routes/helpers/api.tests.$id.ts"),
+  route("api/kanji/chapters", "routes/helpers/api.kanji.chapters.ts"),
 ] satisfies RouteConfig;

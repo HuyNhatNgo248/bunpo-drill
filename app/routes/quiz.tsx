@@ -5,6 +5,7 @@ import type { Route } from "./+types/quiz";
 import { Quiz } from "~/components/quiz";
 import { testNotFound } from "~/lib/errors";
 import { submittedAnswersSchema, toQuizView, toSubmission } from "~/lib/grading.server";
+import { isKanji } from "~/lib/test-kinds";
 import { getTest, saveSubmission } from "~/lib/tests.server";
 import { requestLocale, translate } from "~/lib/i18n";
 
@@ -28,7 +29,9 @@ export async function action({ request, params }: Route.ActionArgs) {
   if (!body.success) {
     return data({ error: translate(requestLocale(request), msg`Your answers couldn't be read. Please try again.`) }, { status: 400 });
   }
-  await saveSubmission(test.id, toSubmission(test.payload, body.data.answers));
+  const submission = toSubmission(test.payload, body.data.answers);
+  // A kanji test's misses lose their learned mark, so their flashcards come back first.
+  await saveSubmission(test.id, submission, isKanji(test.payload) ? submission.wrongGrammarIds : []);
   return redirect(`/tests/${test.id}/results`);
 }
 

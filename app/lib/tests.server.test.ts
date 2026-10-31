@@ -1,13 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { buildKanjiTestPayload, WORD_ID } from "#mocks/factories/kanji";
 import { buildPayload, GRAMMAR_ID } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
 import { db } from "./db.server";
+import { learnedIds, markLearned } from "./kanji.server";
 import {
   createTest,
   deleteAllTests,
   deleteTest,
   getTest,
+  levelStats,
   listTests,
   resetTest,
   saveOrder,
@@ -78,6 +81,12 @@ describe("getTest", () => {
     expect(await getTest("20261027-aaaaaa")).toBeNull();
     expect(await getTest("20261027-bbbbbb")).toBeNull();
   });
+
+  it("reads a kanji test", async () => {
+    const { id } = await createTest(buildKanjiTestPayload());
+
+    expect((await getTest(id))?.payload).toEqual(buildKanjiTestPayload());
+  });
 });
 
 describe("listTests", () => {
@@ -138,6 +147,15 @@ describe("listTests", () => {
 
     expect(await listTests()).toHaveLength(1);
   });
+
+  it("leaves out kanji tests, which the kanji page lists by chapter, and keeps them out of the level's figures", async () => {
+    await createTest(buildPayload());
+    const kanji = await createTest(buildKanjiTestPayload());
+    await saveSubmission(kanji.id, buildSubmission({ score: 0, total: 2 }));
+
+    expect(await listTests()).toHaveLength(1);
+    expect(await levelStats("N2")).toEqual({ total: 1, taken: 0, average: null, toReview: 0 });
+  });
 });
 
 describe("saveOrder", () => {
@@ -184,6 +202,16 @@ describe("saveSubmission", () => {
       { submittedAt: "2026-10-27T09:00:00.000Z", score: 1, total: 3 },
       { submittedAt: "2026-10-28T09:00:00.000Z", score: 2, total: 3 },
     ]);
+  });
+
+  it("forgets the learned marks of the words to unlearn, and keeps the others", async () => {
+    const { id } = await createTest(buildKanjiTestPayload());
+    await markLearned(WORD_ID);
+    await markLearned("n2-c1-招く");
+
+    await saveSubmission(id, buildSubmission({ wrongGrammarIds: [WORD_ID] }), [WORD_ID]);
+
+    expect(await learnedIds()).toEqual(new Set(["n2-c1-招く"]));
   });
 });
 
