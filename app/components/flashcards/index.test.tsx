@@ -105,6 +105,34 @@ describe("Flashcards", () => {
     expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
   });
 
+  it("flips the card with Space, and with the up and down arrow keys", async () => {
+    renderCards();
+    await screen.findByRole("button", { name: /招待状/ });
+
+    await userEvent.keyboard(" ");
+
+    expect(await screen.findByRole("region", { name: "Answer" })).toBeInTheDocument();
+
+    await userEvent.keyboard("{ArrowDown}");
+
+    expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
+
+    await userEvent.keyboard("{ArrowUp}");
+
+    expect(await screen.findByRole("region", { name: "Answer" })).toBeInTheDocument();
+  });
+
+  it("leaves Space to a focused button", async () => {
+    renderCards();
+    await screen.findByRole("button", { name: /招待状/ });
+    screen.getByRole("button", { name: "Next card" }).focus();
+
+    await userEvent.keyboard(" ");
+
+    expect(await screen.findByRole("button", { name: /招く/ })).toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Answer" })).toBeNull();
+  });
+
   describe("rating the cards", () => {
     it("marks a card got right the first time learned, and only that one", async () => {
       const requests = renderCards();

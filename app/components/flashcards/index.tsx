@@ -14,9 +14,9 @@ import { ModeTabs, type CardMode } from "./ModeTabs";
 import { SessionDone } from "./SessionDone";
 
 /**
- * A flashcard session on one chapter: one card at a time, flipped by a tap or Show answer, then Again (it comes back a
- * few cards later) or Got it; ‹ and › (or the ← and → keys) step through the cards without rating them. The counts and
- * the bar follow the cards done; the end shows how it went and the way on.
+ * A flashcard session on one chapter: one card at a time, flipped by a tap, Show answer, Space or ↑ ↓, then Again (it
+ * comes back a few cards later) or Got it; ‹ and › (or ← and →) step through the cards without rating them. The counts
+ * and the bar follow the cards done; the end shows how it went and the way on.
  */
 export function Flashcards({ view }: { view: FlashcardsView }) {
   const { t, i18n } = useLingui();
@@ -27,18 +27,24 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
   const home = homeOf({ kind: "kanji", level: view.level });
   const percent = total === 0 ? 100 : (done / total) * 100;
   const position = `${Math.min(session.position, total)} / ${total}`;
-  const { prev, next } = session;
+  const { prev, next, flip } = session;
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      // With a modifier, the arrows are the browser's (Alt+← goes back a page).
-      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      // With a modifier, the keys are the browser's (Alt+← goes back a page).
+      if (!current || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      // Space on a focused button or link presses it, as anywhere else; ↑ and ↓ flip whatever has focus.
+      const onControl = event.target instanceof Element && event.target.closest("button, a, input, select, textarea");
       if (event.key === "ArrowLeft") prev?.();
-      if (event.key === "ArrowRight") next?.();
+      else if (event.key === "ArrowRight") next?.();
+      else if (event.key === "ArrowUp" || event.key === "ArrowDown" || (event.key === " " && !onControl)) {
+        event.preventDefault(); // instead of scrolling the page
+        flip();
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [prev, next]);
+  }, [current, prev, next, flip]);
 
   return (
     <div className="min-h-screen">
