@@ -4,6 +4,54 @@
   "level": "N3",
   "grammarPoints": [
     {
+      "id": "n3-w1-d1-g2",
+      "week": 1,
+      "day": 1,
+      "number": 2,
+      "pattern": "迷惑の受身",
+      "meaning": "it happened, and I was the one troubled by it"
+    },
+    {
+      "id": "n3-w1-d2-g2",
+      "week": 1,
+      "day": 2,
+      "number": 2,
+      "pattern": "〜ちゃう",
+      "meaning": "casual てしまう: went and did it; done completely"
+    },
+    {
+      "id": "n3-w1-d3-g2",
+      "week": 1,
+      "day": 3,
+      "number": 2,
+      "pattern": "〜らしい",
+      "meaning": "typical of N; just what N should be"
+    },
+    {
+      "id": "n3-w1-d4-g2",
+      "week": 1,
+      "day": 4,
+      "number": 2,
+      "pattern": "〜ように（目的）",
+      "meaning": "so that (a state comes about)"
+    },
+    {
+      "id": "n3-w1-d5-g2",
+      "week": 1,
+      "day": 5,
+      "number": 2,
+      "pattern": "〜ように。（指示）",
+      "meaning": "light command: make sure you …"
+    },
+    {
+      "id": "n3-w1-d6-g2",
+      "week": 1,
+      "day": 6,
+      "number": 2,
+      "pattern": "〜（よ）うとする",
+      "meaning": "be about to; try to"
+    },
+    {
       "id": "n3-w2-d1-g2",
       "week": 2,
       "day": 1,
@@ -17,7 +65,7 @@
       "day": 2,
       "number": 1,
       "pattern": "〜に関して",
-      "meaning": "regarding; about (formal)"
+      "meaning": "regarding; concerning"
     },
     {
       "id": "n3-w2-d2-g4",
@@ -33,7 +81,7 @@
       "day": 3,
       "number": 3,
       "pattern": "〜のこと",
-      "meaning": "about; the matter of"
+      "meaning": "about (a person or matter)"
     },
     {
       "id": "n3-w2-d4-g2",
@@ -49,7 +97,7 @@
       "day": 5,
       "number": 2,
       "pattern": "〜というと",
-      "meaning": "speaking of; when you say …"
+      "meaning": "speaking of; that word brings to mind"
     },
     {
       "id": "n3-w2-d6-g2",
@@ -89,7 +137,7 @@
       "day": 3,
       "number": 3,
       "pattern": "〜べきだ / 〜べきではない",
-      "meaning": "should; ought to / should not"
+      "meaning": "should; ought (not) to"
     },
     {
       "id": "n3-w3-d4-g2",
@@ -105,7 +153,7 @@
       "day": 5,
       "number": 1,
       "pattern": "〜とおり（に）",
-      "meaning": "just as; the way …"
+      "meaning": "just as; exactly the way"
     },
     {
       "id": "n3-w3-d5-g4",
@@ -137,7 +185,7 @@
       "day": 2,
       "number": 2,
       "pattern": "〜せいで",
-      "meaning": "because of (a bad result)"
+      "meaning": "because of (a bad result, with blame)"
     },
     {
       "id": "n3-w4-d3-g1",
@@ -145,7 +193,7 @@
       "day": 3,
       "number": 1,
       "pattern": "〜くらい／〜ほど",
-      "meaning": "about; so much that; at least"
+      "meaning": "about; to the extent that; at least"
     },
     {
       "id": "n3-w4-d3-g4",
@@ -161,7 +209,7 @@
       "day": 4,
       "number": 3,
       "pattern": "〜ことだ",
-      "meaning": "you should (advice)"
+      "meaning": "the thing to do is … (advice)"
     },
     {
       "id": "n3-w4-d5-g2",
@@ -201,7 +249,7 @@
       "day": 2,
       "number": 2,
       "pattern": "〜切る・〜切れない",
-      "meaning": "do completely / can't finish"
+      "meaning": "do completely; can't do it all"
     },
     {
       "id": "n3-w5-d3-g1",
@@ -209,7 +257,7 @@
       "day": 3,
       "number": 1,
       "pattern": "〜といいなあ",
-      "meaning": "I hope …; it would be nice if"
+      "meaning": "I hope; it'd be nice if"
     },
     {
       "id": "n3-w5-d3-g4",
@@ -225,7 +273,7 @@
       "day": 4,
       "number": 3,
       "pattern": "〜から〜にかけて",
-      "meaning": "from … through …"
+      "meaning": "from … through … (over a span)"
     },
     {
       "id": "n3-w5-d5-g2",
@@ -233,7 +281,7 @@
       "day": 5,
       "number": 2,
       "pattern": "もしかすると〜かもしれない",
-      "meaning": "perhaps; it might be that"
+      "meaning": "it just might be; possibly"
     },
     {
       "id": "n3-w5-d6-g1",
@@ -241,7 +289,7 @@
       "day": 6,
       "number": 1,
       "pattern": "だけど",
-      "meaning": "but"
+      "meaning": "but; however (casual)"
     },
     {
       "id": "n3-w5-d6-g4",
@@ -257,7 +305,7 @@
       "day": 1,
       "number": 3,
       "pattern": "もしも〜なら",
-      "meaning": "if (ever)"
+      "meaning": "if (emphatic, remote or grave)"
     },
     {
       "id": "n3-w6-d2-g3",
@@ -265,7 +313,7 @@
       "day": 2,
       "number": 3,
       "pattern": "〜ことは〜が",
-      "meaning": "it is true that …, but"
+      "meaning": "it is …, but (that's not the point)"
     },
     {
       "id": "n3-w6-d3-g2",
@@ -273,7 +321,7 @@
       "day": 3,
       "number": 2,
       "pattern": "もう少しで〜ところだった",
-      "meaning": "almost; nearly"
+      "meaning": "almost; nearly did"
     },
     {
       "id": "n3-w6-d4-g1",
@@ -289,7 +337,7 @@
       "day": 4,
       "number": 4,
       "pattern": "〜わけにはいかない",
-      "meaning": "can't very well; mustn't"
+      "meaning": "can't very well; can't afford to"
     },
     {
       "id": "n3-w6-d5-g3",
@@ -305,7 +353,7 @@
       "day": 6,
       "number": 2,
       "pattern": "それとも",
-      "meaning": "or (between questions)"
+      "meaning": "or (a choice between questions)"
     }
   ],
   "sections": [
@@ -314,198 +362,198 @@
       "questions": [
         {
           "id": "q1",
-          "grammarId": "n3-w2-d2-g1",
-          "prompt": "図書館で、日本の昔の暮らし（　　）本を三冊借りてきた。",
+          "grammarId": "n3-w1-d2-g2",
+          "prompt": "おなかがすいていたので、一人でピザを二枚も（　　）。",
           "choices": [
-            "に対して",
-            "に関する",
-            "に関して",
-            "にとって"
+            "頼んちゃった",
+            "頼みちゃった",
+            "頼んじゃった",
+            "頼むちゃった"
           ],
-          "answerIndex": 1,
-          "explanation": "Before a noun (本) the form is に関する: 昔の暮らしに関する本 = books about life in the old days. に関して cannot modify a noun, に対して marks a target rather than a topic, and にとって marks who something matters to."
+          "answerIndex": 2,
+          "explanation": "頼む has the て-form 頼んで, and で-verbs contract てしまった to じゃった: 頼んじゃった. ちゃう joins the て-form, never the stem or the dictionary form."
         },
         {
           "id": "q2",
-          "grammarId": "n3-w2-d2-g4",
-          "prompt": "同じ料理でも、家庭（　　）味つけがずいぶん違う。",
+          "grammarId": "n3-w1-d3-g2",
+          "prompt": "会社を辞めて、これからはもっと自分（　　）生き方をしようと決めた。",
           "choices": [
-            "によると",
-            "に対して",
-            "として",
-            "によって"
+            "らしい",
+            "らしく",
+            "みたい",
+            "ような"
           ],
-          "answerIndex": 3,
-          "explanation": "The seasoning changes with each household, the 'depending on' use: 家庭によって違う. によると names a source of information, に対して a target, and として a role."
+          "answerIndex": 0,
+          "explanation": "Nらしい means true to what N really is, and before a noun (生き方) it stays らしい. らしく modifies a verb (自分らしく生きる), and before a noun みたい needs な and ような needs の."
         },
         {
           "id": "q3",
-          "grammarId": "n3-w3-d2-g4",
-          "prompt": "もし来月から電車代が二倍になる（　　）、自転車で通うことも考えなければならない。",
+          "grammarId": "n3-w1-d4-g2",
+          "prompt": "明日は朝六時に目が（　　）、目覚まし時計を二つかけておいた。",
           "choices": [
-            "としたら",
-            "としても",
-            "として",
-            "にしては"
+            "覚めるために",
+            "覚ますために",
+            "覚ますように",
+            "覚めるように"
           ],
-          "answerIndex": 0,
-          "explanation": "The speaker supposes a premise (もし…) and works out what follows, so としたら. としても would mean nothing follows from it, として attaches only to nouns, and にしては means 'unexpectedly, for a …'."
+          "answerIndex": 3,
+          "explanation": "目が覚める happens by itself, so the goal takes ように. ために needs an action you choose to do, and 覚ます is transitive, so it cannot follow 目が."
         },
         {
           "id": "q4",
-          "grammarId": "n3-w3-d3-g3",
-          "prompt": "人が一生懸命作ったものを、よく見もしないで悪く（　　）。",
+          "grammarId": "n3-w1-d5-g2",
+          "prompt": "（先生が生徒に）教室を最後に出る人は、電気を（　　）。",
           "choices": [
-            "言わないべきだ",
-            "言うべきだった",
-            "言うべきではない",
-            "言うしかない"
+            "消せるように",
+            "消すように",
+            "消したように",
+            "消してように"
           ],
-          "answerIndex": 2,
-          "explanation": "A principle about what is wrong: 言うべきではない. べき never follows the ない-form (✗言わないべきだ); 言うべきだった is regret about the past, and 言うしかない means there is no other choice."
+          "answerIndex": 1,
+          "explanation": "A light command from above is Vる＋ように。 and names an action the listener can choose. A potential form (消せる) is not an instruction, and ように never follows the past or the て-form."
         },
         {
           "id": "q5",
-          "grammarId": "n3-w3-d4-g2",
-          "prompt": "去年の夏、大阪に（　　）たびに、同じたこ焼き屋に寄った。",
+          "grammarId": "n3-w2-d2-g1",
+          "prompt": "市役所では、ごみの出し方（　　）質問に、電話で答えている。",
           "choices": [
-            "行った",
-            "行く",
-            "行って",
-            "行けば"
+            "に関して",
+            "に対して",
+            "に関する",
+            "による"
           ],
-          "answerIndex": 1,
-          "explanation": "たびに takes the dictionary form even when the whole sentence is in the past: 行くたびに. 行った, 行って and 行けば cannot connect to たびに."
+          "answerIndex": 2,
+          "explanation": "Before a noun (質問) the form is に関する. に関して modifies a verb, に対して marks a target rather than a topic, and による means caused by or depending on."
         },
         {
           "id": "q6",
-          "grammarId": "n3-w3-d5-g1",
-          "prompt": "レシピに書いてある（　　）作ったのに、写真とは全然違う見た目になった。",
+          "grammarId": "n3-w2-d3-g3",
+          "prompt": "転校していった友達（　　）を、今でもときどき思い出す。",
           "choices": [
-            "くせに",
-            "たびに",
-            "せいで",
-            "とおりに"
+            "のこと",
+            "について",
+            "に関して",
+            "こと"
           ],
-          "answerIndex": 3,
-          "explanation": "The dish was made exactly as the recipe says: 書いてあるとおりに. くせに blames a person, たびに needs a repeated occasion, and せいで gives the cause of a bad result."
+          "answerIndex": 0,
+          "explanation": "Thinking of a person as a whole takes 人のことを: 友達のことを思い出す. について and に関して cannot be followed by を, and after a noun こと needs の."
         },
         {
           "id": "q7",
-          "grammarId": "n3-w3-d5-g4",
-          "prompt": "久しぶりに母と二人（　　）で温泉旅行に行った。",
+          "grammarId": "n3-w2-d5-g2",
+          "prompt": "「温泉」（　　）、私は子どものころ家族で行った箱根の旅行を思い出す。",
           "choices": [
-            "きり",
-            "だけしか",
-            "ばかり",
-            "ほど"
+            "というのは",
+            "というと",
+            "といっても",
+            "について"
           ],
-          "answerIndex": 0,
-          "explanation": "二人きりで = just the two of us, nobody else. だけしか needs a negative verb, ばかり means 'nothing but' or 'about', and ほど gives a rough amount, which makes no sense with 母と二人."
+          "answerIndex": 1,
+          "explanation": "The word calls up a memory (思い出す), so というと. というのは opens a definition ending in 〜のことだ, といっても concedes and then limits, and について only names a topic."
         },
         {
           "id": "q8",
-          "grammarId": "n3-w4-d1-g3",
-          "prompt": "兄は自分では一度も料理をしたことがない（　　）、私が作ったものにはいつも文句を言う。",
+          "grammarId": "n3-w3-d2-g4",
+          "prompt": "この仕事が毎日こんなに大変（　　）、長く続けられる自信がない。",
           "choices": [
-            "おかげで",
-            "たびに",
-            "くせに",
-            "とおりに"
+            "としたら",
+            "なとしたら",
+            "にしては",
+            "だとしたら"
           ],
-          "answerIndex": 2,
-          "explanation": "The speaker blames the brother: he never cooks, yet he complains. くせに marks that contradiction plus blame. おかげで is for a good result, たびに needs a repeated occasion, and とおりに means 'exactly as'."
+          "answerIndex": 3,
+          "explanation": "としたら keeps だ after な-adjectives and nouns: 大変だとしたら. Dropping だ or using な is wrong, and にしては (for a …) has the wrong meaning."
         },
         {
           "id": "q9",
-          "grammarId": "n3-w4-d2-g2",
-          "prompt": "隣の部屋のパーティーがうるさかった（　　）、ゆうべはほとんど眠れなかった。",
+          "grammarId": "n3-w3-d3-g3",
+          "prompt": "人から聞いた秘密は、本人に断らずにほかの人に（　　）。",
           "choices": [
-            "おかげで",
-            "せいで",
-            "くせに",
-            "わりに"
+            "話さないべきだ",
+            "話すべきではない",
+            "話しべきではない",
+            "話すべきだった"
           ],
           "answerIndex": 1,
-          "explanation": "A cause that led to a bad result for the speaker: うるさかったせいで. おかげで is for good results, くせに needs a person to blame, and わりに (considering) clashes with the result."
+          "explanation": "べき follows only the dictionary form, so the negative goes on べき: 話すべきではない. 話さないべきだ and 話しべき break that rule, and 話すべきだった says the opposite."
         },
         {
           "id": "q10",
-          "grammarId": "n3-w4-d3-g1",
-          "prompt": "忙しいのはわかるけど、電話（　　）かけてくれてもいいでしょう。",
+          "grammarId": "n3-w4-d2-g2",
+          "prompt": "昨日の夜、辛いものを食べすぎた（　　）、今朝からおなかの調子が悪い。",
           "choices": [
-            "ほど",
-            "だけしか",
-            "きり",
-            "くらい"
+            "せいで",
+            "おかげで",
+            "くせに",
+            "わりに"
           ],
-          "answerIndex": 3,
-          "explanation": "くらい after a noun can mark the bare minimum: 電話くらい = at least a phone call. ほど cannot take this meaning, だけしか needs a negative verb, and きり means 'only, and nothing more'."
+          "answerIndex": 0,
+          "explanation": "A cause that led to a bad result for the speaker: せいで. おかげで is for good results, くせに needs a person as its subject, and わりに compares with what you would expect."
         },
         {
           "id": "q11",
-          "grammarId": "n3-w4-d4-g3",
-          "prompt": "部屋を散らかさないようにしたいなら、使ったものはすぐ元の場所に戻す（　　）。",
+          "grammarId": "n3-w4-d3-g1",
+          "prompt": "毎日同じクラスなんだから、私の名前（　　）覚えてくれてもいいのに。",
           "choices": [
-            "ことだ",
-            "ことはない",
-            "わけだ",
-            "ところだった"
+            "ほど",
+            "ばかり",
+            "くらい",
+            "しか"
           ],
-          "answerIndex": 0,
-          "explanation": "Confident advice: 戻すことだ = the thing to do is put it back. ことはない means 'there is no need to', わけだ explains a result, and ところだった means something nearly happened."
+          "answerIndex": 2,
+          "explanation": "\"At least this much\" is くらい's own use: 名前くらい覚えて. ほど cannot mean the bare minimum, ばかり means nothing but, and しか needs a negative verb."
         },
         {
           "id": "q12",
-          "grammarId": "n3-w4-d5-g2",
-          "prompt": "台風で飛行機が欠航になったので、空港の近くのホテルにもう一泊（　　）。",
+          "grammarId": "n3-w4-d4-g3",
+          "prompt": "（先輩が後輩に）初めての海外旅行なら、大事なものを全部一つのかばんに入れない（　　）。",
           "choices": [
-            "したしかなかった",
-            "しないしかなかった",
-            "するしかなかった",
-            "するわけにはいかなかった"
+            "ことにする",
+            "わけだ",
+            "べきだ",
+            "ことだ"
           ],
-          "answerIndex": 2,
-          "explanation": "No other option was left, so dictionary form + しかない, with the past on the end: するしかなかった. ✗したしかなかった and ✗しないしかなかった break the connection rule, and するわけにはいかなかった says the opposite."
+          "answerIndex": 3,
+          "explanation": "Someone experienced giving advice uses Vない＋ことだ. ことにする is the speaker's own decision, わけだ means no wonder, and べき cannot follow a ない-form."
         },
         {
           "id": "q13",
           "grammarId": "n3-w5-d3-g1",
-          "prompt": "来月から通う新しい学校に、気の合う友達が（　　）といいなあ。",
+          "prompt": "夏休みが終わるまでに、私も二十五メートル（　　）といいなあ。",
           "choices": [
-            "いた",
-            "いる",
-            "いれば",
-            "いない"
+            "泳ぐ",
+            "泳げる",
+            "泳げた",
+            "泳いで"
           ],
           "answerIndex": 1,
-          "explanation": "A wish about the future stays in the plain present: いるといいなあ. いた is past, いれば cannot be followed by と, and いない turns the wish around."
+          "explanation": "A wish about your own (私も) ability takes the potential: 泳げるといいなあ. Plain 泳ぐといい sounds like advice, a wish about the future stays non-past, and と cannot follow the て-form."
         },
         {
           "id": "q14",
-          "grammarId": "n3-w5-d3-g4",
-          "prompt": "来週の土曜日は、ずっと行きたかった遊園地に行く。早くその日が（　　）。",
+          "grammarId": "n3-w5-d6-g4",
+          "prompt": "この紅茶、いい香りだね。（　　）、山田さんの赤ちゃん、もう生まれた？",
           "choices": [
-            "来るといいですよ",
-            "来るはずがない",
-            "来るべきだ",
-            "来ないかなあ"
+            "ところが",
+            "それとも",
+            "ところで",
+            "つまり"
           ],
-          "answerIndex": 3,
-          "explanation": "An impatient wish: 早く〜ないかなあ = I wish it would hurry up and come; the ない is not negative. といいですよ is advice to someone, はずがない denies it, and べきだ cannot be used for something nobody controls."
+          "answerIndex": 2,
+          "explanation": "The speaker jumps to an unrelated topic, so ところで. ところが brings an unexpected result, それとも offers a choice between two questions, and つまり restates."
         },
         {
           "id": "q15",
-          "grammarId": "n3-w5-d6-g4",
-          "prompt": "今日の会議、長かったね。お疲れさま。（　　）、来月の社員旅行の行き先はもう決まった？",
+          "grammarId": "n3-w6-d1-g3",
+          "prompt": "（　　）の時は、となりの家の人に頼んであるから大丈夫だよ。",
           "choices": [
-            "ところで",
-            "ところが",
-            "それとも",
-            "つまり"
+            "もし",
+            "もしかして",
+            "仮に",
+            "もしも"
           ],
-          "answerIndex": 0,
-          "explanation": "The speaker moves on to a new topic, so ところで (by the way). ところが introduces a surprising result, それとも joins two questions as a choice, and つまり restates what came before."
+          "answerIndex": 3,
+          "explanation": "もしもの時 (the worst case) is a fixed noun, and only もしも can take の this way. もし, もしかして and 仮に are adverbs and cannot be followed by の."
         }
       ]
     },
@@ -514,194 +562,54 @@
       "questions": [
         {
           "id": "q16",
-          "grammarId": "n3-w2-d1-g2",
-          "before": "夕飯を作ろうと冷蔵庫を開けたら、卵が",
-          "after": "ので、急いでスーパーへ行った。",
+          "grammarId": "n3-w1-d1-g2",
+          "before": "飛行機の中で、",
+          "after": "ほとんど眠れなかった。",
           "pieces": [
-            "だけしか",
-            "いなかった",
-            "残って",
-            "二つ"
+            "子どもに",
+            "泣かれて",
+            "座った",
+            "後ろの席に"
           ],
           "correctOrder": [
             3,
-            0,
             2,
+            0,
             1
           ],
-          "starSlot": 2,
-          "explanation": "卵が二つだけしか残っていなかった: だけしか follows the number, and the verb at the end must be negative (残っていなかった). So ★ is だけしか."
+          "starSlot": 3,
+          "explanation": "後ろの席に座った子どもに泣かれて: the one who caused the trouble takes に, right before the passive 泣かれて. 座った modifies 子ども, so ★ 子どもに is third."
         },
         {
           "id": "q17",
-          "grammarId": "n3-w2-d3-g3",
-          "before": "最近、",
-          "after": "、毎晩電話をかけている。",
+          "grammarId": "n3-w1-d6-g2",
+          "before": "ベッドに",
+          "after": "、外で大きな音がした。",
           "pieces": [
-            "心配で",
-            "祖母",
-            "のことが",
-            "一人で暮らしている"
+            "とき",
+            "とした",
+            "寝よう",
+            "入って"
           ],
           "correctOrder": [
             3,
-            1,
             2,
+            1,
             0
           ],
           "starSlot": 3,
-          "explanation": "一人で暮らしている祖母のことが心配で: the clause describes 祖母, and a feeling about a person goes through のことが. So ★ is のことが."
+          "explanation": "入って寝ようとしたとき: the volitional 寝よう takes とする, and とき follows it for \"just as I was about to\". So ★ とした is third."
         },
         {
           "id": "q18",
-          "grammarId": "n3-w2-d4-g2",
-          "before": "「時差出勤」",
-          "after": "です。",
-          "pieces": [
-            "出勤すること",
-            "避けて",
-            "混む時間を",
-            "というのは"
-          ],
-          "correctOrder": [
-            3,
-            2,
-            1,
-            0
-          ],
-          "starSlot": 1,
-          "explanation": "「時差出勤」というのは、混む時間を避けて出勤することです: というのは follows the word being defined, and the definition closes with 〜ことです. So ★ is というのは."
-        },
-        {
-          "id": "q19",
-          "grammarId": "n3-w2-d6-g2",
-          "before": "先生に、レポートは来週の金曜日までに",
-          "after": "、まだ半分も書けていない。",
-          "pieces": [
-            "けれど",
-            "ように",
-            "言われた",
-            "出す"
-          ],
-          "correctOrder": [
-            3,
-            1,
-            2,
-            0
-          ],
-          "starSlot": 2,
-          "explanation": "出すように言われたけれど: a reported instruction is dictionary form + ように + 言われる, and けれど leads into the contrast. So ★ is ように."
-        },
-        {
-          "id": "q20",
-          "grammarId": "n3-w3-d2-g1",
-          "before": "この古い建物は、今は",
+          "grammarId": "n3-w2-d1-g2",
+          "before": "この店のケーキは人気があるのに、一日に",
           "after": "そうだ。",
           "pieces": [
-            "として",
-            "使われている",
-            "図書館",
-            "町の"
-          ],
-          "correctOrder": [
-            3,
-            2,
-            0,
-            1
-          ],
-          "starSlot": 3,
-          "explanation": "町の図書館として使われている: として follows the noun that names what the building serves as, right before the verb. So ★ is として."
-        },
-        {
-          "id": "q21",
-          "grammarId": "n3-w3-d6-g3",
-          "before": "電車で知り合いに会っても、話すのが面倒なときは、",
-          "after": "ことがある。",
-          "pieces": [
-            "する",
-            "見ている",
-            "スマホを",
-            "ふりを"
-          ],
-          "correctOrder": [
-            2,
-            1,
-            3,
-            0
-          ],
-          "starSlot": 3,
-          "explanation": "スマホを見ているふりをすることがある: the plain verb 見ている comes before ふりをする. So ★ is ふりを."
-        },
-        {
-          "id": "q22",
-          "grammarId": "n3-w4-d3-g4",
-          "before": "今までいろいろな国を旅行したが、",
-          "after": "はなかった。",
-          "pieces": [
-            "ところ",
-            "美しい",
-            "ほど",
-            "この町"
-          ],
-          "correctOrder": [
-            3,
-            2,
-            1,
-            0
-          ],
-          "starSlot": 2,
-          "explanation": "この町ほど美しいところはなかった: N + ほど, then the quality, then the category noun before はなかった. So ★ is ほど."
-        },
-        {
-          "id": "q23",
-          "grammarId": "n3-w5-d2-g2",
-          "before": "図書館で本を十冊も借りたが、二週間で",
-          "after": "ので、半分返すことにした。",
-          "pieces": [
-            "そうにない",
-            "切れ",
-            "読み",
-            "全部"
-          ],
-          "correctOrder": [
-            3,
-            2,
-            1,
-            0
-          ],
-          "starSlot": 3,
-          "explanation": "全部読み切れそうにない: 切れる attaches to the ます-stem 読み, and そうにない follows its stem. So ★ is 切れ."
-        },
-        {
-          "id": "q24",
-          "grammarId": "n3-w5-d4-g3",
-          "before": "この地方では、毎年",
-          "after": "桜が見ごろになる。",
-          "pieces": [
-            "にかけて",
-            "四月の初め",
-            "から",
-            "三月の終わり"
-          ],
-          "correctOrder": [
-            3,
-            2,
-            1,
-            0
-          ],
-          "starSlot": 4,
-          "explanation": "三月の終わりから四月の初めにかけて: the earlier time takes から and the later one にかけて, a span with loose edges. So ★ is にかけて."
-        },
-        {
-          "id": "q25",
-          "grammarId": "n3-w5-d5-g2",
-          "before": "田中さんに何度電話をかけても出ない。もしかすると、スマホを",
-          "after": "と思い、メールも送ってみた。",
-          "pieces": [
-            "出かけた",
-            "忘れて",
-            "のかもしれない",
-            "家に"
+            "作ら",
+            "だけしか",
+            "ない",
+            "二十個"
           ],
           "correctOrder": [
             3,
@@ -710,18 +618,18 @@
             2
           ],
           "starSlot": 4,
-          "explanation": "スマホを家に忘れて出かけたのかもしれない: もしかすると opens a low-certainty guess, and it must close with かもしれない. So ★ is のかもしれない."
+          "explanation": "二十個だけしか作らない: だけしか follows the number, and the frame must end in a negative verb. So ★ ない closes the four slots."
         },
         {
-          "id": "q26",
-          "grammarId": "n3-w6-d1-g3",
-          "before": "子どものころ、",
-          "after": "と、よく考えていた。",
+          "id": "q19",
+          "grammarId": "n3-w2-d6-g2",
+          "before": "妹に、帰りにコンビニで",
+          "after": "頼まれた。",
           "pieces": [
-            "どこへ行きたいか",
-            "空を飛べる",
-            "もしも",
-            "なら"
+            "ように",
+            "買って",
+            "アイスを",
+            "くる"
           ],
           "correctOrder": [
             2,
@@ -730,38 +638,138 @@
             0
           ],
           "starSlot": 3,
-          "explanation": "もしも空を飛べるなら、どこへ行きたいか: もしも is only an adverb, so the conditional ending なら must follow the verb. So ★ is なら."
+          "explanation": "アイスを買ってくるように頼まれた: ように言う／頼む takes a dictionary form, never a て-form, so くる must stand between 買って and ように. ★ くる is third."
         },
         {
-          "id": "q27",
-          "grammarId": "n3-w6-d2-g3",
-          "before": "今度引っ越したアパートは、",
-          "after": "よくない。",
+          "id": "q20",
+          "grammarId": "n3-w3-d2-g1",
+          "before": "姉は、",
+          "after": "夜は大学で勉強している。",
           "pieces": [
-            "日当たりが",
-            "広いことは",
-            "が",
-            "広い"
+            "として",
+            "ながら",
+            "働き",
+            "看護師"
           ],
           "correctOrder": [
-            1,
+            3,
+            0,
+            2,
+            1
+          ],
+          "starSlot": 2,
+          "explanation": "看護師として働きながら: として follows the noun that names the role. ながら joins 働き, so ★ として is second."
+        },
+        {
+          "id": "q21",
+          "grammarId": "n3-w3-d4-g2",
+          "before": "雨が",
+          "after": "大きな水たまりができる。",
+          "pieces": [
+            "道に",
+            "家の前の",
+            "たびに",
+            "降る"
+          ],
+          "correctOrder": [
             3,
             2,
+            1,
+            0
+          ],
+          "starSlot": 2,
+          "explanation": "雨が降るたびに家の前の道に: たびに follows the dictionary form 降る, and 家の前の must sit right before 道に. So ★ たびに is second."
+        },
+        {
+          "id": "q22",
+          "grammarId": "n3-w3-d5-g1",
+          "before": "煮物は、祖母に",
+          "after": "いちばんおいしい。",
+          "pieces": [
+            "のが",
+            "とおりに",
+            "作る",
+            "習った"
+          ],
+          "correctOrder": [
+            3,
+            1,
+            2,
+            0
+          ],
+          "starSlot": 2,
+          "explanation": "祖母に習ったとおりに作るのが: とおりに follows the past form 習った and describes how you make it. So ★ とおりに is second."
+        },
+        {
+          "id": "q23",
+          "grammarId": "n3-w3-d5-g4",
+          "before": "週末は家族が旅行に出かけたので、",
+          "after": "。",
+          "pieces": [
+            "一人",
+            "私",
+            "家には",
+            "きりだった"
+          ],
+          "correctOrder": [
+            2,
+            1,
+            0,
+            3
+          ],
+          "starSlot": 4,
+          "explanation": "家には私一人きりだった: きり follows a small amount (一人), and きりだった ends the sentence. So ★ きりだった is fourth."
+        },
+        {
+          "id": "q24",
+          "grammarId": "n3-w3-d6-g3",
+          "before": "兄は母に皿洗いを頼まれても、",
+          "after": "読み続けていた。",
+          "pieces": [
+            "マンガを",
+            "して",
+            "ふりを",
+            "聞こえない"
+          ],
+          "correctOrder": [
+            3,
+            2,
+            1,
             0
           ],
           "starSlot": 1,
-          "explanation": "広いことは広いが、日当たりがよくない: the same adjective sits on both sides of ことは, and the real point comes after が. So ★ is 広いことは."
+          "explanation": "聞こえないふりをしてマンガを読み続けていた: a plain verb comes before ふりをする, and マンガを is the object of 読み続けていた. So ★ 聞こえない is first."
         },
         {
-          "id": "q28",
-          "grammarId": "n3-w6-d3-g2",
-          "before": "電話に夢中になっていて、気がついたら鍋から煙が出ていた。もう少しで、",
-          "after": "。",
+          "id": "q25",
+          "grammarId": "n3-w4-d1-g3",
+          "before": "弟は野菜が",
+          "after": "喜んで食べる。",
           "pieces": [
-            "焦がしてしまう",
-            "ところだった",
-            "カレーを",
-            "せっかくの"
+            "トマトだけは",
+            "自分で育てた",
+            "くせに",
+            "嫌いな"
+          ],
+          "correctOrder": [
+            3,
+            2,
+            1,
+            0
+          ],
+          "starSlot": 2,
+          "explanation": "嫌いなくせに: a な-adjective keeps な before くせに, and the contradiction is about a person (弟). 自分で育てた modifies トマト, so ★ くせに is second."
+        },
+        {
+          "id": "q26",
+          "grammarId": "n3-w4-d3-g4",
+          "before": "仕事のあとに飲む",
+          "after": "ものはない。",
+          "pieces": [
+            "ほど",
+            "おいしい",
+            "ビール",
+            "冷たい"
           ],
           "correctOrder": [
             3,
@@ -770,18 +778,38 @@
             1
           ],
           "starSlot": 3,
-          "explanation": "せっかくのカレーを焦がしてしまうところだった: the verb before ところだった stays in the dictionary form, even in a past sentence. So ★ is 焦がしてしまう."
+          "explanation": "冷たいビールほどおいしいものはない: Nほど〜ものはない says nothing beats N. ほど follows the noun, and おいしい modifies もの. So ★ ほど is third."
         },
         {
-          "id": "q29",
-          "grammarId": "n3-w6-d4-g4",
-          "before": "このケーキは、妹が誕生日のために楽しみにとっておいたものだから、私が",
-          "after": "と思った。",
+          "id": "q27",
+          "grammarId": "n3-w5-d2-g2",
+          "before": "セールで洗剤をまとめて買ったが、一年かけても",
+          "after": "ある。",
           "pieces": [
-            "いかない",
-            "しまう",
-            "わけには",
-            "食べて"
+            "たくさん",
+            "切れない",
+            "ほど",
+            "使い"
+          ],
+          "correctOrder": [
+            3,
+            1,
+            2,
+            0
+          ],
+          "starSlot": 2,
+          "explanation": "使い切れないほどたくさんある: 切れない joins the ます-stem 使い, meaning too much to use up. So ★ 切れない is second."
+        },
+        {
+          "id": "q28",
+          "grammarId": "n3-w5-d3-g4",
+          "before": "この映画、長すぎて眠くなってきた。",
+          "after": "。",
+          "pieces": [
+            "かなあ",
+            "終わら",
+            "ない",
+            "早く"
           ],
           "correctOrder": [
             3,
@@ -790,18 +818,18 @@
             0
           ],
           "starSlot": 3,
-          "explanation": "食べてしまうわけにはいかない: the dictionary form しまう comes before わけにはいかない, which says decency forbids it. So ★ is わけには."
+          "explanation": "早く終わらないかなあ is an impatient wish: the ない here is not a negative, and it joins 終わら before かなあ. 早く opens the wish, so ★ ない is third."
         },
         {
-          "id": "q30",
-          "grammarId": "n3-w6-d5-g3",
-          "before": "姉は外国に住んでいるので、",
-          "after": "のが少しさびしい。",
+          "id": "q29",
+          "grammarId": "n3-w6-d2-g3",
+          "before": "今度の数学の先生は、",
+          "after": "、授業が少し退屈だ。",
           "pieces": [
-            "そろうことは",
-            "めったにない",
-            "全員が",
-            "家族"
+            "まじめだ",
+            "が",
+            "ことは",
+            "まじめな"
           ],
           "correctOrder": [
             3,
@@ -809,8 +837,28 @@
             0,
             1
           ],
-          "starSlot": 4,
-          "explanation": "家族全員がそろうことはめったにない: 〜ことは + めったにない says how rarely it happens. So ★ is めったにない."
+          "starSlot": 3,
+          "explanation": "まじめなことはまじめだが: a な-adjective takes な before ことは and だ after it. So ★ まじめだ is third."
+        },
+        {
+          "id": "q30",
+          "grammarId": "n3-w6-d4-g4",
+          "before": "友達が一生懸命作ってくれた料理だから、",
+          "after": "全部食べた。",
+          "pieces": [
+            "と思って",
+            "いかない",
+            "わけには",
+            "残す"
+          ],
+          "correctOrder": [
+            3,
+            2,
+            1,
+            0
+          ],
+          "starSlot": 3,
+          "explanation": "残すわけにはいかないと思って: the dictionary form takes わけには, and いかない completes the frame before と思って. So ★ いかない is third."
         }
       ]
     },
@@ -818,81 +866,94 @@
       "type": "passage",
       "passages": [
         {
-          "passage": "私の家の近くに、六十年以上続いている小さな銭湯がある。家にふろがあるのが当たり前になった今、客の数は昔[31]ずいぶん減ったそうだ。それでも、毎日通ってくる常連客は少なくない。どんなに雨が[32]、休まずにやって来る人もいる。彼らはなぜ、わざわざ銭湯に来るのだろうか。大きなふろでゆっくりしたいからだろうか。[33]、だれかと話したいからだろうか。常連の男性に聞いてみると、「ここに来ないと、一日だれとも話さない日もあるんだ」と話してくれた。[34]、彼にとって銭湯は、ただふろに入るだけの場所ではないのだ。こういう場所は、町のみんなで守って[35]と思う。",
+          "passage": "「フードロス」[31]、まだ食べられるのに捨てられてしまう食べ物のことだ。祖父母が若かったころ[32]、今はコンビニやスーパーで買える食品の種類がずっと多い。[33]、私たちは必要以上に物を買いやすい環境で暮らしているのだ。また、売れ残った食品の扱い方は店[34]違う。閉店前に値段を下げて売り切る店もあれば、そのまま捨ててしまう店もある。私は、なるべく値下げをする店で買い物をするようにしている。[35]、少しでも捨てられる食べ物を減らしたいからだ。",
           "questions": [
             {
               "id": "q31",
               "blank": 31,
-              "grammarId": "n3-w5-d1-g3",
+              "grammarId": "n3-w2-d4-g2",
               "choices": [
-                "に対して",
-                "に比べて",
-                "によって",
-                "にとって"
+                "というのは",
+                "といっても",
+                "というより",
+                "として"
               ],
-              "answerIndex": 1,
-              "explanation": "Today's number of customers is measured against the past: 昔に比べて減った. に対して contrasts two different things, によって means 'depending on', and にとって marks who something matters to."
+              "answerIndex": 0,
+              "explanation": "The sentence defines a word and ends in 〜のことだ, so というのは. といっても concedes, というより corrects a description, and として names a role."
             },
             {
               "id": "q32",
               "blank": 32,
-              "grammarId": "n3-w3-d1-g1",
+              "grammarId": "n3-w5-d1-g3",
               "choices": [
-                "強いのに",
-                "強かったら",
-                "強くても",
-                "強いなら"
+                "に対して",
+                "によって",
+                "にかけて",
+                "に比べて"
               ],
-              "answerIndex": 2,
-              "explanation": "どんなに pairs with ても: どんなに雨が強くても = no matter how hard it rains. のに cannot follow どんなに, and たら / なら set up a plain condition."
+              "answerIndex": 3,
+              "explanation": "Today is measured against our grandparents' youth on one scale (more kinds of food): に比べて. に対して contrasts two different things, によって is means or case, and にかけて needs a span."
             },
             {
               "id": "q33",
               "blank": 33,
-              "grammarId": "n3-w6-d6-g2",
+              "grammarId": "n3-w4-d6-g1",
               "choices": [
-                "それとも",
-                "それと",
+                "だけど",
                 "つまり",
-                "ところで"
+                "ところで",
+                "それとも"
               ],
-              "answerIndex": 0,
-              "explanation": "The writer offers two possible reasons as questions and asks which one: それとも. それと adds an item, つまり restates, and ところで changes the topic."
+              "answerIndex": 1,
+              "explanation": "The sentence draws the conclusion of the one before it: つまり. だけど needs a contrast, ところで changes the topic, and それとも joins questions."
             },
             {
               "id": "q34",
               "blank": 34,
-              "grammarId": "n3-w4-d6-g1",
+              "grammarId": "n3-w2-d2-g4",
               "choices": [
-                "ところが",
-                "なぜなら",
-                "それとも",
-                "つまり"
+                "によると",
+                "に関して",
+                "によって",
+                "として"
               ],
-              "answerIndex": 3,
-              "explanation": "The man's words are restated as a conclusion: つまり, for him the bath is more than a bath. ところが needs a surprising result, なぜなら needs からだ, and それとも asks for a choice."
+              "answerIndex": 2,
+              "explanation": "How leftovers are handled changes depending on the shop: 店によって違う. によると marks a source of information, に関して a topic, and として a role."
             },
             {
               "id": "q35",
               "blank": 35,
-              "grammarId": "n3-w3-d3-g3",
+              "grammarId": "n3-w4-d6-g4",
               "choices": [
-                "いくべきではない",
-                "いかないべきだ",
-                "いくべきだ",
-                "いくわけがない"
+                "なぜなら",
+                "だから",
+                "それとも",
+                "ところが"
               ],
-              "answerIndex": 2,
-              "explanation": "The writer states a principle: 守っていくべきだ. べき never follows the ない-form (✗いかないべきだ), べきではない goes against the whole essay, and わけがない says it is impossible."
+              "answerIndex": 0,
+              "explanation": "The sentence gives the reason for the habit just stated and closes with からだ, so なぜなら. だから introduces a result, ところが a surprise, and それとも a choice."
             }
           ]
         },
         {
-          "passage": "今日は、大学の友達と近くの山に登った。頂上まで行くつもりだった。[36]、昼過ぎから急に雨が強くなってきて、途中で[37]。雨具を持っていなかったので、服も靴もびしょぬれだ。兄に話すと、「山の天気は変わりやすいって、いつも言ってるだろう」と笑われた。兄の話をちゃんと聞いていなかった[38]、こんなことになったのだ。それに、ゆうべは遅くまでゲームをしていた。どうりで、今日は足が重かった[39]。次は早く寝て、雨具も忘れずに持って行こう。今度こそ、頂上からの景色が見られる[40]。",
+          "passage": "先週の木曜日から週末[36]、ひどい風邪で寝込んでいた。熱は一日で下がった。[37]、せきはなかなか止まらなかった。医者には、疲れがたまっていた[38]治りにくいのだろうと言われた。今月は試験とアルバイトが重なって、休む暇もなかったのだから、治りにくい[39]。そのうえ日曜日のアルバイトのこともすっかり忘れていて、店長からの電話がなければ、もう少しで黙って[40]。",
           "questions": [
             {
               "id": "q36",
               "blank": 36,
+              "grammarId": "n3-w5-d4-g3",
+              "choices": [
+                "までに",
+                "ごろに",
+                "にかけて",
+                "によって"
+              ],
+              "answerIndex": 2,
+              "explanation": "An illness spread over a stretch of time: 木曜日から週末にかけて. までに is a deadline, ごろ marks one point and cannot close から, and によって is means or cause."
+            },
+            {
+              "id": "q37",
+              "blank": 37,
               "grammarId": "n3-w5-d6-g1",
               "choices": [
                 "つまり",
@@ -901,20 +962,7 @@
                 "ところで"
               ],
               "answerIndex": 1,
-              "explanation": "The plan (reach the top) and what happened (rain, turning back) point in opposite directions: だけど. つまり restates, それとも offers a choice, and ところで changes the topic."
-            },
-            {
-              "id": "q37",
-              "blank": 37,
-              "grammarId": "n3-w4-d5-g2",
-              "choices": [
-                "引き返したしかなかった",
-                "引き返すわけにはいかなかった",
-                "引き返さないしかなかった",
-                "引き返すしかなかった"
-              ],
-              "answerIndex": 3,
-              "explanation": "In heavy rain, turning back was the only option: 引き返すしかなかった. The verb before しかない stays in the dictionary form, and わけにはいかなかった says the opposite of what happened."
+              "explanation": "The fever went down, but the cough did not stop: a contrast, so だけど. つまり restates, それとも joins questions, and ところで changes the topic."
             },
             {
               "id": "q38",
@@ -923,11 +971,11 @@
               "choices": [
                 "おかげで",
                 "くせに",
-                "せいで",
-                "たびに"
+                "とおりに",
+                "せいで"
               ],
-              "answerIndex": 2,
-              "explanation": "The writer blames their own carelessness for a bad result: 聞いていなかったせいで. おかげで is for good results, くせに is a complaint about someone else, and たびに needs a repeated occasion."
+              "answerIndex": 3,
+              "explanation": "Built-up tiredness is blamed for a bad result (a slow recovery): せいで. おかげで is for good results, くせに needs a person, and とおりに means exactly as."
             },
             {
               "id": "q39",
@@ -935,95 +983,95 @@
               "grammarId": "n3-w6-d4-g1",
               "choices": [
                 "わけだ",
-                "わけがない",
                 "ことだ",
-                "ところだった"
+                "ところだ",
+                "べきだ"
               ],
               "answerIndex": 0,
-              "explanation": "どうりで…わけだ: now that the cause (a late night) is clear, the heavy legs make sense. わけがない denies it, ことだ gives advice, and ところだった means something nearly happened."
+              "explanation": "Now the cause is known, the slow recovery makes sense: no wonder, so わけだ. ことだ gives advice, ところだ is \"about to\", and べきだ is a duty."
             },
             {
               "id": "q40",
               "blank": 40,
-              "grammarId": "n3-w5-d3-g1",
+              "grammarId": "n3-w6-d3-g2",
               "choices": [
-                "べきだ",
-                "わけにはいかない",
-                "といいですよ",
-                "といいなあ"
+                "休んだところだった",
+                "休むところだ",
+                "休むところだった",
+                "休んだところだ"
               ],
-              "answerIndex": 3,
-              "explanation": "The writer wishes for their own next climb: 見られるといいなあ. といいですよ is advice to someone else, べきだ is a duty, and わけにはいかない says it would not be right."
+              "answerIndex": 2,
+              "explanation": "もう少しで〜ところだった means it nearly happened but did not. The verb stays in the dictionary form and the past goes on だった, so 休むところだった."
             }
           ]
         },
         {
-          "passage": "外国の友達に「日本[41]、何を思い浮かべる？」と聞くと、すしやアニメと答える人が多い。しかし、実際に日本で暮らしてみると、驚くことはもっと身近なところにあるようだ。留学生のマリアさんが日本に来て一番驚いたのは、電車だそうだ。[42]、電車が毎日、時刻表どおりに来るからだ。彼女の国では、十分や二十分の遅れは普通らしい。国[43]、「当たり前」はずいぶん違うものだ。私たちが当たり前だと思っていることも、[44]外国の人にはとても珍しいことなのかもしれない。私も外国に行く[45]、自分の国について新しい発見がある。",
+          "passage": "商店街の小さなパン屋が、先月からずっと閉まっている。年配の夫婦が二人で続けてきた店で、主人は体が丈夫なのか、店を休むことは[41]なかった。病気で入院しているのだろうか。[42]、店をやめてしまったのだろうか。近所の誰に[43]、店がどうなったのか知らなかった。[44]、もう二度とあのパンは食べられないのかもしれない。寂しいが、今は店がまた開く日を[45]。",
           "questions": [
             {
               "id": "q41",
               "blank": 41,
-              "grammarId": "n3-w2-d5-g2",
+              "grammarId": "n3-w6-d5-g3",
               "choices": [
-                "というのは",
-                "によって",
-                "というと",
-                "として"
+                "たまに",
+                "めったに",
+                "ときどき",
+                "いつも"
               ],
-              "answerIndex": 2,
-              "explanation": "The question asks what the word 日本 brings to mind: 日本というと. というのは defines a word, によって means 'depending on', and として names a role."
+              "answerIndex": 1,
+              "explanation": "The shop was hardly ever closed: めったに pairs with the negative なかった. たまに, ときどき and いつも do not combine with a negative this way."
             },
             {
               "id": "q42",
               "blank": 42,
-              "grammarId": "n3-w4-d6-g4",
+              "grammarId": "n3-w6-d6-g2",
               "choices": [
-                "なぜなら",
+                "それと",
                 "つまり",
-                "だけど",
+                "なぜなら",
                 "それとも"
               ],
-              "answerIndex": 0,
-              "explanation": "The sentence ends in からだ and gives the reason for what was just said, so なぜなら. つまり restates, だけど contrasts, and それとも offers a choice."
+              "answerIndex": 3,
+              "explanation": "Two guesses, each a question ending in のだろうか: それとも offers the choice. それと only adds an item, つまり restates, and なぜなら gives a reason."
             },
             {
               "id": "q43",
               "blank": 43,
-              "grammarId": "n3-w2-d2-g4",
+              "grammarId": "n3-w3-d1-g1",
               "choices": [
-                "によると",
-                "によって",
-                "に関して",
-                "に比べて"
+                "聞いたのに",
+                "聞いたら",
+                "聞いたので",
+                "聞いても"
               ],
-              "answerIndex": 1,
-              "explanation": "What counts as normal changes with each country: 国によって違う. によると names a source, に関して names a topic, and に比べて needs a baseline to measure against."
+              "answerIndex": 3,
+              "explanation": "誰 without も needs ても to mean \"whoever I asked\": 誰に聞いても. のに, たら and ので cannot follow 誰 here."
             },
             {
               "id": "q44",
               "blank": 44,
               "grammarId": "n3-w5-d5-g2",
               "choices": [
-                "決して",
-                "もしかすると",
+                "必ず",
                 "もしも",
-                "めったに"
+                "もしかすると",
+                "ぜひ"
               ],
-              "answerIndex": 1,
-              "explanation": "The sentence ends in かもしれない, a low-certainty guess, which pairs with もしかすると. 決して and めったに need a negative verb, and もしも needs a conditional ending."
+              "answerIndex": 2,
+              "explanation": "A low-certainty guess ending in かもしれない: もしかすると. 必ず is certain, もしも needs a conditional ending, and ぜひ is for wishes and requests."
             },
             {
               "id": "q45",
               "blank": 45,
-              "grammarId": "n3-w3-d4-g2",
+              "grammarId": "n3-w4-d5-g2",
               "choices": [
-                "ように",
-                "わりに",
-                "たびに",
-                "くせに"
+                "待つしかない",
+                "待たないしかない",
+                "待ったしかない",
+                "待つわけがない"
               ],
-              "answerIndex": 2,
-              "explanation": "Every trip abroad brings a new discovery: 行くたびに. ように, わりに and くせに do not mark a repeated occasion."
+              "answerIndex": 0,
+              "explanation": "With no other option, waiting is all that is left: dictionary form + しかない. しかない never follows a ない- or た-form, and わけがない contradicts 寂しいが."
             }
           ]
         }

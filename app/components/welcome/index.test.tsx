@@ -9,9 +9,9 @@ import { SAMPLES } from "./helpers/samples";
 const EXAM = { date: "2026-12-06", daysLeft: 39 };
 
 const TRIALS: TrialSummary[] = [
-  { id: "n3-1", title: "総合テスト 1", level: "N3", questionCount: 45, patternCount: 38, weeks: [2, 3, 6] },
-  { id: "n3-2", title: "総合テスト 2", level: "N3", questionCount: 45, patternCount: 38, weeks: [2, 5] },
-  { id: "n2-1", title: "総合テスト 1", level: "N2", questionCount: 45, patternCount: 24, weeks: [1, 3] },
+  { id: "n3-1", title: "総合テスト 1", level: "N3", questionCount: 45, patternCount: 44 },
+  { id: "n3-2", title: "総合テスト 2", level: "N3", questionCount: 45, patternCount: 44 },
+  { id: "n2-1", title: "総合テスト 1", level: "N2", questionCount: 45, patternCount: 24 },
 ];
 
 /** Picks the choice named `choice` of the sample question on screen. */
@@ -53,12 +53,12 @@ describe("Welcome", () => {
     expect(within(section).getByRole("link", { name: "N2 総合テスト 1" })).toHaveAttribute("href", "/try/n2-1");
   });
 
-  it("says what each level's tests cover, and the size of each test", async () => {
+  it("gives each level's grammar points, roughly, and the size of each trial test", async () => {
     renderRoute(<Welcome exam={EXAM} trials={TRIALS} />, { url: "/welcome" });
 
     const section = await screen.findByRole("region", { name: "Try a full mock test, no account needed" });
-    expect(section).toHaveTextContent("76 patterns from weeks 2–6");
-    expect(section).toHaveTextContent("24 patterns from weeks 1–3");
+    expect(section).toHaveTextContent("About 90 grammar points");
+    expect(section).toHaveTextContent("About 20 grammar points");
     expect(within(within(section).getByRole("link", { name: "N3 総合テスト 1" }).closest("li")!).getByText("45 questions")).toBeInTheDocument();
   });
 

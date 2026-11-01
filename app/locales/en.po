@@ -64,10 +64,6 @@ msgstr "{left} unanswered"
 msgid "{level} isn't available yet"
 msgstr "{level} isn't available yet"
 
-#: app/components/welcome/TrialTests.tsx:32
-msgid "{patterns} patterns from weeks {first}–{last}"
-msgstr "{patterns} patterns from weeks {first}–{last}"
-
 #: app/components/quiz/CheckSummary.tsx:47
 msgid "{score} correct · {wrong} wrong · {unanswered} unanswered"
 msgstr "{score} correct · {wrong} wrong · {unanswered} unanswered"
@@ -90,7 +86,7 @@ msgstr "{total, plural, one {# card} other {# cards}}"
 
 #: app/components/home/test-list/TestRow.tsx:57
 #: app/components/quiz/index.tsx:63
-#: app/components/welcome/TrialTests.tsx:64
+#: app/components/welcome/TrialTests.tsx:60
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
@@ -158,6 +154,10 @@ msgstr "A chapter shows up here once Claude sends its words, with /jlpt-kanji-qu
 #: app/lib/users.ts:20
 msgid "A username can't contain “@”."
 msgstr "A username can't contain “@”."
+
+#: app/components/welcome/TrialTests.tsx:30
+msgid "About {points} grammar points"
+msgstr "About {points} grammar points"
 
 #: app/components/account/index.tsx:18
 #: app/components/account/index.tsx:21
@@ -894,7 +894,7 @@ msgstr "Something went wrong"
 msgid "Sort: {current}"
 msgstr "Sort: {current}"
 
-#: app/components/welcome/TrialTests.tsx:69
+#: app/components/welcome/TrialTests.tsx:65
 msgid "Start"
 msgstr "Start"
 

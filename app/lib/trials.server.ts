@@ -5,7 +5,8 @@ import type { TrialSummary } from "./views";
 
 /**
  * The mock tests a visitor can take before signing up, at /try/:id: 3 per level in trial-tests/. Each takes every third
- * point of its level's 文法ノート, so each spans every week and day, and the three together cover it all. They are files in the repo, not rows, so every deploy has them, and
+ * point of its level's 文法ノート (or of an even sample, when a level has more points than 3 tests hold), so each spans
+ * every week and day, and no point is in two. They are files in the repo, not rows, so every deploy has them, and
  * nothing a visitor does with them is saved. A file's name is its test's id: n3-1.json is /try/n3-1.
  */
 const files = import.meta.glob("./trial-tests/*.json", { eager: true, import: "default" });
@@ -27,6 +28,5 @@ export function trialSummaries(): TrialSummary[] {
     level: payload.level,
     questionCount: questionCount(payload),
     patternCount: payload.grammarPoints.length,
-    weeks: [...new Set(payload.grammarPoints.map((point) => point.week))].sort((a, b) => a - b),
   }));
 }

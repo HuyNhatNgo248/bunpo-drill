@@ -64,10 +64,6 @@ msgstr "未回答 {left}問"
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
 
-#: app/components/welcome/TrialTests.tsx:32
-msgid "{patterns} patterns from weeks {first}–{last}"
-msgstr "第{first}〜{last}週の{patterns}文型"
-
 #: app/components/quiz/CheckSummary.tsx:47
 msgid "{score} correct · {wrong} wrong · {unanswered} unanswered"
 msgstr "正解 {score} · 不正解 {wrong} · 未回答 {unanswered}"
@@ -90,7 +86,7 @@ msgstr "{total, plural, other {#枚}}"
 
 #: app/components/home/test-list/TestRow.tsx:57
 #: app/components/quiz/index.tsx:63
-#: app/components/welcome/TrialTests.tsx:64
+#: app/components/welcome/TrialTests.tsx:60
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
@@ -158,6 +154,10 @@ msgstr "Claude が /jlpt-kanji-quiz 1章 で単語を送ると、ここに章が
 #: app/lib/users.ts:20
 msgid "A username can't contain “@”."
 msgstr "ユーザー名に「@」は使えません。"
+
+#: app/components/welcome/TrialTests.tsx:30
+msgid "About {points} grammar points"
+msgstr "約{points}文型"
 
 #: app/components/account/index.tsx:18
 #: app/components/account/index.tsx:21
@@ -894,7 +894,7 @@ msgstr "システム障害が発生しました"
 msgid "Sort: {current}"
 msgstr "並び順: {current}"
 
-#: app/components/welcome/TrialTests.tsx:69
+#: app/components/welcome/TrialTests.tsx:65
 msgid "Start"
 msgstr "始める"
 

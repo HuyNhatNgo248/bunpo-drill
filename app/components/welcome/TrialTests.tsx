@@ -4,7 +4,7 @@ import { buttonVariants } from "~/components/ui/button";
 import { LEVELS } from "~/lib/payload";
 import type { TrialSummary } from "~/lib/views";
 
-/** The full mock tests a visitor can take without an account: a list per level, side by side, with what its tests cover. */
+/** The full mock tests a visitor can take without an account: a list per level, side by side. */
 export function TrialTests({ tests }: { tests: TrialSummary[] }) {
   return (
     <section aria-labelledby="trial-tests" className="flex flex-col gap-6 border-t pt-12">
@@ -20,18 +20,14 @@ export function TrialTests({ tests }: { tests: TrialSummary[] }) {
         {LEVELS.map((level) => {
           const own = tests.filter((test) => test.level === level);
           if (own.length === 0) return null;
-          const weeks = own.flatMap((test) => test.weeks);
-          const first = Math.min(...weeks);
-          const last = Math.max(...weeks);
-          const patterns = own.reduce((sum, test) => sum + test.patternCount, 0);
+          // No point is in two of a level's tests, so their counts add up to the points they cover; shown to the nearest 10.
+          const points = Math.round(own.reduce((sum, test) => sum + test.patternCount, 0) / 10) * 10;
           return (
             <div key={level} className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <h3 className="rounded-full border border-indigo/25 bg-indigo/10 px-3 py-0.5 text-sm font-semibold text-indigo">{level}</h3>
                 <p className="text-caption text-muted-foreground">
-                  <Trans>
-                    {patterns} patterns from weeks {first}–{last}
-                  </Trans>
+                  <Trans>About {points} grammar points</Trans>
                 </p>
               </div>
               <ul className="divide-y overflow-hidden rounded-xl border bg-card">
