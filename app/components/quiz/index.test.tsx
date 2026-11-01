@@ -6,6 +6,7 @@ import { buildKanjiQuizView, buildQuizView } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute, type StubRoute } from "#tests/helpers/render";
 import { gradeTest } from "~/lib/grading.server";
+import { questionAnchor } from "~/lib/sections";
 import { Quiz } from ".";
 
 const QUIZ = buildQuizView({ title: "第1週 1日目" });
@@ -46,10 +47,16 @@ async function orderPieces() {
 
 const submitButton = () => screen.getByRole("button", { name: "Submit" });
 
-/** Checks part `no` and confirms the dialog, then waits for the part's score. */
-async function checkPart(no: number, score: string) {
+/** Checks part `no` and confirms the dialog, then waits for its summary. */
+async function confirmCheck(no: number) {
   await userEvent.click(await screen.findByRole("button", { name: `Check Part ${no}` }));
   await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Check" }));
+  return screen.findByRole("alertdialog", { name: `Part ${no} checked` });
+}
+
+/** Checks part `no`, closes its summary, and waits for the part's score. */
+async function checkPart(no: number, score: string) {
+  await userEvent.click(within(await confirmCheck(no)).getByRole("button", { name: "Keep going" }));
   await screen.findByText(score);
 }
 
@@ -163,12 +170,34 @@ describe("Quiz", () => {
       await userEvent.click(screen.getByRole("button", { name: "Check Part 1" }));
       const dialog = screen.getByRole("alertdialog", { name: "Check Part 1?" });
       await userEvent.click(within(dialog).getByRole("button", { name: "Check" }));
+      await userEvent.click(within(await screen.findByRole("alertdialog", { name: "Part 1 checked" })).getByRole("button", { name: "Keep going" }));
 
       expect(await screen.findByText("1 / 1")).toBeInTheDocument();
       expect(screen.getByText(/^Answer: .*かいがあって/)).toBeInTheDocument();
       expect(screen.queryByRole("radiogroup", { name: "Choices for question 1" })).toBeNull();
       expect(screen.queryByRole("button", { name: "Check Part 1" })).toBeNull();
       expect(screen.getByRole("radiogroup", { name: "Choices for question 3" })).toBeInTheDocument();
+    });
+
+    it("sums up the part in a dialog, and a number picked there jumps to its graded answer", async () => {
+      renderQuiz();
+      await pick(1, "までして");
+
+      const summary = await confirmCheck(1);
+
+      expect(summary).toHaveTextContent("0 correct · 1 wrong · 0 unanswered");
+      await userEvent.click(within(summary).getByRole("button", { name: "Question 1 (wrong)" }));
+      expect(screen.queryByRole("alertdialog")).toBeNull();
+      await waitFor(() => expect(document.activeElement).toBe(document.getElementById(questionAnchor(1))));
+    });
+
+    it("counts a blank question as unanswered in the summary", async () => {
+      renderQuiz();
+
+      const summary = await confirmCheck(2);
+
+      expect(summary).toHaveTextContent("0 correct · 0 wrong · 1 unanswered");
+      expect(within(summary).getByRole("button", { name: "Question 2 (unanswered)" })).toBeInTheDocument();
     });
 
     it("says how many questions of the part are unanswered, and checks nothing when the learner goes back", async () => {

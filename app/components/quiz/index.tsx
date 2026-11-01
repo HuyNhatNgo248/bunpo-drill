@@ -1,11 +1,12 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useSubmit } from "react-router";
 import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
 import { homeOf } from "~/lib/links";
 import type { Answers, QuizView, ResultSection } from "~/lib/views";
+import { CheckSummary } from "./CheckSummary";
 import { checkedAnswers, quizProgress } from "./helpers/answers";
 import { useSavedAnswers, useSavedChecks } from "./hooks/useSavedAnswers";
 import { QuestionNav } from "./question-nav";
@@ -20,6 +21,8 @@ import { SubmitBar } from "./SubmitBar";
 export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
   const [answers, setAnswers] = useSavedAnswers(quiz.id);
   const [checks, setChecks] = useSavedChecks(quiz.id);
+  // The part checked last, summed up in a dialog; a part reopened from the saved checks isn't.
+  const [summary, setSummary] = useState<ResultSection>();
   const submit = useSubmit();
   const { answeredIds, answered, left, percent } = quizProgress(quiz, answers);
 
@@ -29,7 +32,10 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
     [setAnswers],
   );
   const onChecked = useCallback(
-    (section: ResultSection) => setChecks((current) => ({ ...current, [section.no]: section })),
+    (section: ResultSection) => {
+      setChecks((current) => ({ ...current, [section.no]: section }));
+      setSummary(section);
+    },
     [setChecks],
   );
   const send = () => submit({ answers }, { method: "post", encType: "application/json" });
@@ -87,6 +93,9 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
           </div>
         </div>
       </main>
+
+      {/* A part is checked once, so its number keys a fresh, open dialog. */}
+      {summary && <CheckSummary key={summary.no} section={summary} />}
     </div>
   );
 }

@@ -63,6 +63,10 @@ msgstr "未回答 {left}問"
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
 
+#: app/components/quiz/CheckSummary.tsx:47
+msgid "{score} correct · {wrong} wrong · {unanswered} unanswered"
+msgstr "正解 {score} · 不正解 {wrong} · 未回答 {unanswered}"
+
 #: app/components/quiz/sentence-order/SlotButton.tsx:47
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}：{text}（タップで外す）"
@@ -80,7 +84,7 @@ msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
 #: app/components/home/test-list/TestRow.tsx:75
-#: app/components/quiz/index.tsx:47
+#: app/components/quiz/index.tsx:53
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
@@ -102,11 +106,11 @@ msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 
 #: app/components/flashcards/index.tsx:66
-#: app/components/quiz/index.tsx:48
+#: app/components/quiz/index.tsx:54
 msgid "← Kanji"
 msgstr "← 漢字"
 
-#: app/components/quiz/index.tsx:48
+#: app/components/quiz/index.tsx:54
 msgid "← Mock tests"
 msgstr "← テスト一覧"
 
@@ -177,13 +181,13 @@ msgstr "答え"
 msgid "Answer: {answer}"
 msgstr "正解：{answer}"
 
-#: app/components/quiz/index.tsx:42
-#: app/components/quiz/index.tsx:52
+#: app/components/quiz/index.tsx:48
+#: app/components/quiz/index.tsx:58
 #: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Answered"
 msgstr "回答済み"
 
-#: app/components/quiz/index.tsx:53
+#: app/components/quiz/index.tsx:59
 msgid "Answered {answered} / {total}"
 msgstr "回答済み {answered} / {total}"
 
@@ -206,7 +210,7 @@ msgid "Back to chapters"
 msgstr "章の一覧に戻る"
 
 #: app/components/flashcards/index.tsx:62
-#: app/components/quiz/index.tsx:37
+#: app/components/quiz/index.tsx:43
 #: app/components/results/Actions.tsx:19
 #: app/components/results/index.tsx:33
 msgid "Back to kanji"
@@ -512,6 +516,10 @@ msgstr "漢字読み"
 msgid "Keep answering"
 msgstr "解答を続ける"
 
+#: app/components/quiz/CheckSummary.tsx:63
+msgid "Keep going"
+msgstr "続ける"
+
 #: app/components/flashcards/CardFace.tsx:80
 msgid "kun"
 msgstr "訓"
@@ -656,6 +664,10 @@ msgstr "ページ送り"
 #: app/components/welcome/SampleQuiz.tsx:62
 msgid "Part {no}"
 msgstr "問題{no}"
+
+#: app/components/quiz/CheckSummary.tsx:46
+msgid "Part {no} checked"
+msgstr "問題{no}の採点結果"
 
 #: app/components/account/PasswordForm.tsx:25
 #: app/components/login/LoginForm.tsx:57

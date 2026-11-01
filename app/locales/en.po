@@ -63,6 +63,10 @@ msgstr "{left} unanswered"
 msgid "{level} isn't available yet"
 msgstr "{level} isn't available yet"
 
+#: app/components/quiz/CheckSummary.tsx:47
+msgid "{score} correct · {wrong} wrong · {unanswered} unanswered"
+msgstr "{score} correct · {wrong} wrong · {unanswered} unanswered"
+
 #: app/components/quiz/sentence-order/SlotButton.tsx:47
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}: {text} (tap to remove)"
@@ -80,7 +84,7 @@ msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
 #: app/components/home/test-list/TestRow.tsx:75
-#: app/components/quiz/index.tsx:47
+#: app/components/quiz/index.tsx:53
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
@@ -102,11 +106,11 @@ msgid "{wrong} wrong · pass line {pass}%"
 msgstr "{wrong} wrong · pass line {pass}%"
 
 #: app/components/flashcards/index.tsx:66
-#: app/components/quiz/index.tsx:48
+#: app/components/quiz/index.tsx:54
 msgid "← Kanji"
 msgstr "← Kanji"
 
-#: app/components/quiz/index.tsx:48
+#: app/components/quiz/index.tsx:54
 msgid "← Mock tests"
 msgstr "← Mock tests"
 
@@ -177,13 +181,13 @@ msgstr "Answer"
 msgid "Answer: {answer}"
 msgstr "Answer: {answer}"
 
-#: app/components/quiz/index.tsx:42
-#: app/components/quiz/index.tsx:52
+#: app/components/quiz/index.tsx:48
+#: app/components/quiz/index.tsx:58
 #: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Answered"
 msgstr "Answered"
 
-#: app/components/quiz/index.tsx:53
+#: app/components/quiz/index.tsx:59
 msgid "Answered {answered} / {total}"
 msgstr "Answered {answered} / {total}"
 
@@ -206,7 +210,7 @@ msgid "Back to chapters"
 msgstr "Back to chapters"
 
 #: app/components/flashcards/index.tsx:62
-#: app/components/quiz/index.tsx:37
+#: app/components/quiz/index.tsx:43
 #: app/components/results/Actions.tsx:19
 #: app/components/results/index.tsx:33
 msgid "Back to kanji"
@@ -512,6 +516,10 @@ msgstr "Kanji reading"
 msgid "Keep answering"
 msgstr "Keep answering"
 
+#: app/components/quiz/CheckSummary.tsx:63
+msgid "Keep going"
+msgstr "Keep going"
+
 #: app/components/flashcards/CardFace.tsx:80
 msgid "kun"
 msgstr "kun"
@@ -656,6 +664,10 @@ msgstr "Pagination"
 #: app/components/welcome/SampleQuiz.tsx:62
 msgid "Part {no}"
 msgstr "Part {no}"
+
+#: app/components/quiz/CheckSummary.tsx:46
+msgid "Part {no} checked"
+msgstr "Part {no} checked"
 
 #: app/components/account/PasswordForm.tsx:25
 #: app/components/login/LoginForm.tsx:57
