@@ -4,7 +4,7 @@ import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     tailwindcss(),
     lingui(),
@@ -19,9 +19,14 @@ export default defineConfig({
   environments: {
     ssr: { build: { rollupOptions: { input: "./server/app.ts" } } },
   },
+  // The server build bundles its dependencies, so it loads only the code it uses (a few lucide icons, not all 4,000):
+  // on the host's 0.1 vCPU that loading was most of the first request after a deploy. libSQL loads a native module,
+  // and server.ts runs Express from node_modules too, so those stay outside. Dev keeps them external: its module
+  // runner can't evaluate CommonJS packages such as React.
+  ssr: command === "build" ? { noExternal: true, external: ["@libsql/client", "libsql", "express"] } : undefined,
   server: {
     port: 3001,
     strictPort: true,
     allowedHosts: ["bunpo.huyngo248-dev.org"],
   },
-});
+}));

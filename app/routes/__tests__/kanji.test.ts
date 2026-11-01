@@ -14,6 +14,13 @@ const USER_ID = 1;
 /** Runs the loader for /kanji with `search`. */
 const load = async (search = "") => loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, `https://bunpo.test/kanji${search}`)));
 
+/** The loader for /kanji with `search`, in a browser whose last tab was `tab` (the tab cookie, e.g. "kanji:N3"). */
+async function loadAfter(tab: string, search = "") {
+  const request = await signedInRequest(USER_ID, `https://bunpo.test/kanji${search}`);
+  request.headers.set("Cookie", `${request.headers.get("Cookie")}; tab=${tab}`);
+  return loader(routeArgs<Parameters<typeof loader>[0]>(request));
+}
+
 beforeEach(async () => {
   await resetDatabase();
   await ensureUser(USER_ID);
@@ -39,6 +46,12 @@ describe("kanji loader", () => {
     await saveChapter(buildKanjiChapter({ level: "N3" }));
 
     expect((await load()).home.level).toBe("N3");
+  });
+
+  it("opens the kanji level last opened in this browser when none is asked for, but not a grammar one", async () => {
+    expect((await loadAfter("kanji:N3")).home.level).toBe("N3");
+    expect((await loadAfter("grammar:N3")).home.level).toBe("N2");
+    expect((await loadAfter("kanji:N3", "?level=N2")).home.level).toBe("N2");
   });
 
   it("gives an empty page for a level without kanji tests, such as N5", async () => {

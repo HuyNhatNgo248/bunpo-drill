@@ -1,9 +1,11 @@
 import { Trans } from "@lingui/react/macro";
+import { useEffect } from "react";
 import { EmptyState } from "~/components/EmptyState";
 import { loadDrawerFigure } from "~/components/helpers/drawerFigure";
 import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
+import { rememberTab } from "~/lib/lastTab";
 import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL, type JlptLevel } from "~/lib/levels";
 import type { KanjiHomeView } from "~/lib/views";
 import { ChapterList } from "./chapter-list";
@@ -18,6 +20,8 @@ const warmOf = (level: JlptLevel) => (level === KANJI_LEVEL ? undefined : () => 
  */
 export function KanjiHome({ home }: { home: KanjiHomeView }) {
   const { level, chapters } = home;
+  // The app opens here again next time, after a sign-in too.
+  useEffect(() => rememberTab({ subject: "kanji", level }), [level]);
   return (
     <div className="min-h-screen">
       <AppHeader account />

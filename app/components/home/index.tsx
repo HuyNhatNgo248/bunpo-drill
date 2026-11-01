@@ -1,9 +1,11 @@
 import { Trans } from "@lingui/react/macro";
+import { useEffect } from "react";
 import { EmptyState } from "~/components/EmptyState";
 import { warmDrawerFigure } from "~/components/helpers/drawerFigure";
 import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
+import { rememberTab } from "~/lib/lastTab";
 import { isTestLevel, JLPT_LEVELS, type JlptLevel } from "~/lib/levels";
 import type { TestSummary } from "~/lib/views";
 import { SortMenu } from "./SortMenu";
@@ -23,6 +25,11 @@ type HomeProps = {
  * any JLPT level; one the app has no tests for yet says it is not available.
  */
 export function Home({ tests, stats, level, latestFirst }: HomeProps) {
+  // The app opens here again next time, after a sign-in too.
+  useEffect(() => {
+    if (level) rememberTab({ subject: "grammar", level });
+  }, [level]);
+
   return (
     <div className="min-h-screen">
       <AppHeader account />

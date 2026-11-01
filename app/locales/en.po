@@ -59,8 +59,8 @@ msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# q
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
-#: app/components/home/index.tsx:47
-#: app/components/kanji/index.tsx:43
+#: app/components/home/index.tsx:54
+#: app/components/kanji/index.tsx:47
 msgid "{level} isn't available yet"
 msgstr "{level} isn't available yet"
 
@@ -146,7 +146,7 @@ msgstr "15 questions"
 msgid "3 passages × 5 questions"
 msgstr "3 passages × 5 questions"
 
-#: app/components/kanji/index.tsx:40
+#: app/components/kanji/index.tsx:44
 msgid "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 msgstr "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 
@@ -491,14 +491,14 @@ msgstr "It's exam day today. Good luck!"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "JLPT grammar practice in the real test's format"
 
-#: app/components/kanji/index.tsx:28
+#: app/components/kanji/index.tsx:32
 #: app/components/results/Actions.tsx:16
 #: app/components/SubjectTabs.tsx:15
-#: app/routes/kanji.tsx:11
+#: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "Kanji"
 
-#: app/components/kanji/index.tsx:44
+#: app/components/kanji/index.tsx:48
 msgid "Kanji for {level} is coming later."
 msgstr "Kanji for {level} is coming later."
 
@@ -558,13 +558,13 @@ msgstr "Mark as reviewed"
 msgid "Missed words"
 msgstr "Missed words"
 
-#: app/components/home/index.tsx:33
+#: app/components/home/index.tsx:40
 #: app/components/results/Actions.tsx:25
-#: app/routes/home.tsx:11
+#: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "Mock tests"
 
-#: app/components/home/index.tsx:48
+#: app/components/home/index.tsx:55
 msgid "Mock tests for {level} are coming later."
 msgstr "Mock tests for {level} are coming later."
 
@@ -577,7 +577,7 @@ msgstr "More words with <0>{0}</0>"
 msgid "New here? <0>Create account</0>"
 msgstr "New here? <0>Create account</0>"
 
-#: app/components/home/index.tsx:52
+#: app/components/home/index.tsx:59
 msgid "New mock tests show up here."
 msgstr "New mock tests show up here."
 
@@ -604,11 +604,11 @@ msgstr "Next question"
 msgid "Nice work"
 msgstr "Nice work"
 
-#: app/components/kanji/index.tsx:39
+#: app/components/kanji/index.tsx:43
 msgid "No {level} chapters yet"
 msgstr "No {level} chapters yet"
 
-#: app/components/home/index.tsx:51
+#: app/components/home/index.tsx:58
 msgid "No mock tests yet"
 msgstr "No mock tests yet"
 

@@ -59,8 +59,8 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
-#: app/components/home/index.tsx:47
-#: app/components/kanji/index.tsx:43
+#: app/components/home/index.tsx:54
+#: app/components/kanji/index.tsx:47
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
 
@@ -146,7 +146,7 @@ msgstr "15問"
 msgid "3 passages × 5 questions"
 msgstr "3文章 × 5問"
 
-#: app/components/kanji/index.tsx:40
+#: app/components/kanji/index.tsx:44
 msgid "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 msgstr "Claude が /jlpt-kanji-quiz 1章 で単語を送ると、ここに章が表示されます。"
 
@@ -491,14 +491,14 @@ msgstr "今日が試験日です。がんばってください。"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "本番形式で練習する、JLPTの文法"
 
-#: app/components/kanji/index.tsx:28
+#: app/components/kanji/index.tsx:32
 #: app/components/results/Actions.tsx:16
 #: app/components/SubjectTabs.tsx:15
-#: app/routes/kanji.tsx:11
+#: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "漢字"
 
-#: app/components/kanji/index.tsx:44
+#: app/components/kanji/index.tsx:48
 msgid "Kanji for {level} is coming later."
 msgstr "{level}の漢字は今後追加される予定です。"
 
@@ -558,13 +558,13 @@ msgstr "復習済みにする"
 msgid "Missed words"
 msgstr "間違えた単語"
 
-#: app/components/home/index.tsx:33
+#: app/components/home/index.tsx:40
 #: app/components/results/Actions.tsx:25
-#: app/routes/home.tsx:11
+#: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "模擬試験"
 
-#: app/components/home/index.tsx:48
+#: app/components/home/index.tsx:55
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
@@ -577,7 +577,7 @@ msgstr "<0>{0}</0>を使うほかの語"
 msgid "New here? <0>Create account</0>"
 msgstr "はじめての方は <0>アカウントを作成</0>"
 
-#: app/components/home/index.tsx:52
+#: app/components/home/index.tsx:59
 msgid "New mock tests show up here."
 msgstr "新しい模擬試験はここに表示されます。"
 
@@ -604,11 +604,11 @@ msgstr "次の問題"
 msgid "Nice work"
 msgstr "おつかれさまでした"
 
-#: app/components/kanji/index.tsx:39
+#: app/components/kanji/index.tsx:43
 msgid "No {level} chapters yet"
 msgstr "{level}の章はまだありません"
 
-#: app/components/home/index.tsx:51
+#: app/components/home/index.tsx:58
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
 

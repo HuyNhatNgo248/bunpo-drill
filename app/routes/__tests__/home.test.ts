@@ -43,6 +43,13 @@ function buildN3Payload() {
   });
 }
 
+/** The home loader for the page at `search`, in a browser whose last tab was `tab` (the tab cookie, e.g. "kanji:N2"). */
+async function loadAfter(tab: string, search = "") {
+  const request = await signedInRequest(USER_ID, `https://bunpo.test/${search}`);
+  request.headers.set("Cookie", `${request.headers.get("Cookie")}; tab=${tab}`);
+  return loader(routeArgs<Parameters<typeof loader>[0]>(request));
+}
+
 /** The home loader for the page at `search`, e.g. "?level=N3". */
 const load = async (search = "") => loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, `https://bunpo.test/${search}`)));
 
@@ -131,6 +138,24 @@ describe("home loader levels", () => {
       await createTest(buildPayload());
 
       expect((await load()).level).toBe("N2");
+    });
+  });
+
+  describe("when the URL names no level, in a browser that opened a tab before", () => {
+    it("shows the grammar level last opened", async () => {
+      await createTest(buildPayload());
+
+      expect((await loadAfter("grammar:N3")).level).toBe("N3");
+    });
+
+    it("opens the kanji tab when that was the last one, at its level", async () => {
+      const thrown = (await thrownBy(() => loadAfter("kanji:N2"))) as Response;
+
+      expect(thrown.headers.get("Location")).toBe("/kanji?level=N2");
+    });
+
+    it("keeps to the level the URL names", async () => {
+      expect((await loadAfter("kanji:N2", "?level=N3")).level).toBe("N3");
     });
   });
 
