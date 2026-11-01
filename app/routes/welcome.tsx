@@ -5,17 +5,21 @@ import { Welcome } from "~/components/welcome";
 import { isSignedIn } from "~/lib/auth.server";
 import { nextJlpt } from "~/lib/jlpt";
 import { localeFromMatches, translate } from "~/lib/i18n";
+import { trialSummaries } from "~/lib/trials.server";
 
 export function meta({ matches }: Route.MetaArgs) {
   return [{ title: `文法ドリル · ${translate(localeFromMatches(matches), msg`JLPT grammar practice in the real test's format`)}` }];
 }
 
-/** Signed-in users have their tests at /, so they go there. The countdown is worked out here, so the server and the page agree on the day. */
+/**
+ * Signed-in users have their tests at /, so they go there. The countdown is worked out here, so the server and the page agree on the day.
+ * The trial tests go without their questions.
+ */
 export async function loader({ request }: Route.LoaderArgs) {
   if (await isSignedIn(request)) throw redirect("/");
-  return { exam: nextJlpt() };
+  return { exam: nextJlpt(), trials: trialSummaries() };
 }
 
 export default function WelcomeRoute({ loaderData }: Route.ComponentProps) {
-  return <Welcome exam={loaderData.exam} />;
+  return <Welcome exam={loaderData.exam} trials={loaderData.trials} />;
 }

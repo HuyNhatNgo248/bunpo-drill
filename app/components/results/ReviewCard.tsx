@@ -8,8 +8,11 @@ import { WordChips } from "~/components/WordChips";
 import { cardsOf } from "~/lib/links";
 import type { ResultsView } from "~/lib/views";
 
-/** What to review: the grammar of the wrong answers, or on a kanji test their words, with the way to their flashcards. */
-export function ReviewCard({ results }: { results: ResultsView }) {
+/**
+ * What to review: the grammar of the wrong answers, or on a kanji test their words, with the way to their flashcards.
+ * On a `trial` test the chips can't be marked reviewed.
+ */
+export function ReviewCard({ results, trial = false }: { results: ResultsView; trial?: boolean }) {
   return (
     <Card className="flex flex-col gap-3.5 p-4 md:gap-4 md:p-6">
       <h2 className="text-base font-semibold md:text-lg">
@@ -18,7 +21,7 @@ export function ReviewCard({ results }: { results: ResultsView }) {
       {results.kind === "kanji" && results.chapter !== null && results.words.length > 0 ? (
         <WordsToStudy results={results} chapter={results.chapter} />
       ) : results.review.length > 0 ? (
-        <GrammarChips testId={results.id} chips={results.review} />
+        <GrammarChips testId={trial ? null : results.id} chips={results.review} />
       ) : (
         <p className="text-subtle-foreground">
           <Trans>Nothing to review. You got every question right.</Trans>

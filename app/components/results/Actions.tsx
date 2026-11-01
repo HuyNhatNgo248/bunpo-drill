@@ -4,8 +4,25 @@ import { Button } from "~/components/ui/button";
 import { homeOf } from "~/lib/links";
 import type { ResultsView } from "~/lib/views";
 
-/** Back to the list (the mock tests, or kanji), or take the test again. */
-export function Actions({ results }: { results: Pick<ResultsView, "id" | "kind" | "level"> }) {
+/** Back to the list (the mock tests, or kanji), or take the test again. A `trial` test: take it again, or sign up. */
+export function Actions({ results, trial = false }: { results: Pick<ResultsView, "id" | "kind" | "level">; trial?: boolean }) {
+  if (trial) {
+    return (
+      <div className="mt-1 grid grid-cols-2 gap-2 md:mt-0 md:flex md:justify-end">
+        {/* The results were never saved, so opening the test again starts it fresh. */}
+        <Button asChild variant="outline" size="lg">
+          <Link to={`/try/${results.id}`}>
+            <Trans>Take it again</Trans>
+          </Link>
+        </Button>
+        <Button asChild size="lg" className="font-semibold md:px-5 md:font-medium">
+          <Link to="/signup">
+            <Trans>Create account</Trans>
+          </Link>
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="mt-1 grid grid-cols-2 gap-2 md:mt-0 md:flex md:justify-end">
       <Button asChild variant="outline" size="lg">

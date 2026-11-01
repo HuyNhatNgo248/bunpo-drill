@@ -121,6 +121,24 @@ describe("account action", () => {
     });
   });
 
+  describe("the delete form", () => {
+    it("deletes the account when the password matches, and signs out to the welcome page", async () => {
+      const response = (await post(userId, { intent: "delete", password: PASSWORD })) as Response;
+
+      expect(response.headers.get("Location")).toBe("/welcome");
+      expect(response.headers.get("Set-Cookie")).toContain("Expires=Thu, 01 Jan 1970 00:00:00 GMT");
+      expect(await getUser(userId)).toBeNull();
+    });
+
+    it("answers 401 for a wrong password, and keeps the account", async () => {
+      expect(await post(userId, { intent: "delete", password: "wrong" })).toMatchObject({
+        data: { form: "delete", error: "Your current password is wrong." },
+        init: { status: 401 },
+      });
+      expect(await getUser(userId)).not.toBeNull();
+    });
+  });
+
   it("throws a 401 for a post with no login cookie", async () => {
     const request = new Request(URL, { method: "POST", body: new URLSearchParams({ intent: "name", name: "Mai" }) });
 

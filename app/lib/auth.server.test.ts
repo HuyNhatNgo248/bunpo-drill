@@ -187,6 +187,11 @@ describe("requireSignIn", () => {
     await expect(check(requestTo("/reset-password?token=x"))).resolves.toBeUndefined();
   });
 
+  it("lets anyone take a trial test, and check its parts", async () => {
+    await expect(check(requestTo("/try/n3-1"))).resolves.toBeUndefined();
+    await expect(check(requestTo("/try/n3-1/check"))).resolves.toBeUndefined();
+  });
+
   describe("an /api request with no cookie", () => {
     it("passes with the API token as a Bearer token", async () => {
       await expect(check(requestTo("/api/tests", { Authorization: `Bearer ${API_TOKEN}` }))).resolves.toBeUndefined();

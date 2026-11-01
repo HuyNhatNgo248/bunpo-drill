@@ -132,6 +132,18 @@ describe("Results", () => {
     expect(await screen.findByText("Nothing to review. You got every question right.")).toBeInTheDocument();
   });
 
+  describe("a trial test", () => {
+    it("offers the test again and sign-up, and nothing to mark reviewed", async () => {
+      renderRoute(<Results results={FAILED} trial />);
+
+      expect(await screen.findByRole("link", { name: "Take it again" })).toHaveAttribute("href", `/try/${FAILED.id}`);
+      for (const link of screen.getAllByRole("link", { name: "Create account" })) expect(link).toHaveAttribute("href", "/signup");
+      await userEvent.click(screen.getByRole("button", { name: /〜かいがある/ }));
+      expect(await screen.findByRole("dialog")).toHaveTextContent("Week");
+      expect(screen.queryByRole("button", { name: "Mark as reviewed" })).toBeNull();
+    });
+  });
+
   describe("a kanji test", () => {
     it("lists the words of the wrong answers, and links to just their flashcards", async () => {
       renderResults(KANJI_FAILED);

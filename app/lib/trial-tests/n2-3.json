@@ -1,0 +1,913 @@
+{
+  "version": 1,
+  "title": "総合テスト 3",
+  "level": "N2",
+  "grammarPoints": [
+    {
+      "id": "n2-w1-d1-g3",
+      "week": 1,
+      "day": 1,
+      "number": 3,
+      "pattern": "〜っぽい",
+      "meaning": "-ish; has an (often unwelcome) tinge of; does too readily"
+    },
+    {
+      "id": "n2-w1-d2-g2",
+      "week": 1,
+      "day": 2,
+      "number": 2,
+      "pattern": "〜ものだから",
+      "meaning": "because, you see (an excuse)"
+    },
+    {
+      "id": "n2-w1-d3-g1",
+      "week": 1,
+      "day": 3,
+      "number": 1,
+      "pattern": "〜はもとより",
+      "meaning": "not to mention (formal)"
+    },
+    {
+      "id": "n2-w1-d3-g4",
+      "week": 1,
+      "day": 3,
+      "number": 4,
+      "pattern": "〜は抜きにして",
+      "meaning": "leaving out; without"
+    },
+    {
+      "id": "n2-w1-d4-g3",
+      "week": 1,
+      "day": 4,
+      "number": 3,
+      "pattern": "〜てかなわない",
+      "meaning": "is more than I can take (a nuisance, not a feeling)"
+    },
+    {
+      "id": "n2-w1-d5-g2",
+      "week": 1,
+      "day": 5,
+      "number": 2,
+      "pattern": "〜ないこともない",
+      "meaning": "it's not altogether impossible (a hedged maybe)"
+    },
+    {
+      "id": "n2-w1-d6-g1",
+      "week": 1,
+      "day": 6,
+      "number": 1,
+      "pattern": "〜ねばならない",
+      "meaning": "must (formal, written)"
+    },
+    {
+      "id": "n2-w1-d6-g4",
+      "week": 1,
+      "day": 6,
+      "number": 4,
+      "pattern": "〜てばかりはいられない",
+      "meaning": "can't just keep doing only that"
+    },
+    {
+      "id": "n2-w2-d1-g3",
+      "week": 2,
+      "day": 1,
+      "number": 3,
+      "pattern": "〜がい",
+      "meaning": "worth doing; the reward of doing it"
+    },
+    {
+      "id": "n2-w2-d2-g2",
+      "week": 2,
+      "day": 2,
+      "number": 2,
+      "pattern": "〜切る",
+      "meaning": "do completely; to the limit (切れない: can't finish)"
+    },
+    {
+      "id": "n2-w2-d3-g1",
+      "week": 2,
+      "day": 3,
+      "number": 1,
+      "pattern": "〜ないうちに",
+      "meaning": "before it changes; while still not"
+    },
+    {
+      "id": "n2-w2-d3-g4",
+      "week": 2,
+      "day": 3,
+      "number": 4,
+      "pattern": "〜に限り",
+      "meaning": "only (for)"
+    },
+    {
+      "id": "n2-w2-d4-g3",
+      "week": 2,
+      "day": 4,
+      "number": 3,
+      "pattern": "〜てこそ",
+      "meaning": "only by doing; only once"
+    },
+    {
+      "id": "n2-w2-d5-g2",
+      "week": 2,
+      "day": 5,
+      "number": 2,
+      "pattern": "〜だとしたら",
+      "meaning": "supposing that"
+    },
+    {
+      "id": "n2-w2-d6-g1",
+      "week": 2,
+      "day": 6,
+      "number": 1,
+      "pattern": "〜とともに",
+      "meaning": "together with; at the same time as"
+    },
+    {
+      "id": "n2-w2-d6-g4",
+      "week": 2,
+      "day": 6,
+      "number": 4,
+      "pattern": "〜にしたがって",
+      "meaning": "as; in accordance with"
+    },
+    {
+      "id": "n2-w3-d1-g3",
+      "week": 3,
+      "day": 1,
+      "number": 3,
+      "pattern": "〜ことに",
+      "meaning": "to my (surprise, regret …)"
+    },
+    {
+      "id": "n2-w3-d2-g2",
+      "week": 3,
+      "day": 2,
+      "number": 2,
+      "pattern": "〜わけではない",
+      "meaning": "it's not that; not necessarily"
+    },
+    {
+      "id": "n2-w3-d3-g1",
+      "week": 3,
+      "day": 3,
+      "number": 1,
+      "pattern": "〜たとたん",
+      "meaning": "the moment; just as"
+    },
+    {
+      "id": "n2-w3-d3-g4",
+      "week": 3,
+      "day": 3,
+      "number": 4,
+      "pattern": "〜かと思ったら",
+      "meaning": "no sooner … than; just when"
+    },
+    {
+      "id": "n2-w3-d4-g3",
+      "week": 3,
+      "day": 4,
+      "number": 3,
+      "pattern": "〜どころではない",
+      "meaning": "out of the question; no time for"
+    },
+    {
+      "id": "n2-w3-d5-g2",
+      "week": 3,
+      "day": 5,
+      "number": 2,
+      "pattern": "〜きり・〜たきり",
+      "meaning": "and nothing since; only"
+    },
+    {
+      "id": "n2-w3-d6-g2",
+      "week": 3,
+      "day": 6,
+      "number": 2,
+      "pattern": "〜反面",
+      "meaning": "on the other hand; while"
+    }
+  ],
+  "sections": [
+    {
+      "type": "fill-blank",
+      "questions": [
+        {
+          "id": "q1",
+          "grammarId": "n2-w1-d1-g3",
+          "prompt": "この部屋のカーテンは色もデザインもかわいすぎて、大人が使うには少し（　　）。",
+          "choices": [
+            "子どもらしい",
+            "子どもがちだ",
+            "子どもっぽい",
+            "子どもげだ"
+          ],
+          "answerIndex": 2,
+          "explanation": "Too cute for an adult is an unwelcome tinge: 子どもっぽい. らしい praises something for being properly what it is, がち marks a habit (忘れがち), and げ goes on adjectives (さびしげ), not on a noun like 子ども."
+        },
+        {
+          "id": "q2",
+          "grammarId": "n2-w1-d2-g2",
+          "prompt": "すみません、うちの子はまだ三歳（　　）、電車の中でじっとしていられないんです。",
+          "choices": [
+            "なものですから",
+            "だものですから",
+            "ものですから",
+            "のものですから"
+          ],
+          "answerIndex": 0,
+          "explanation": "An excuse to someone who may be annoyed, and a noun takes な before ものだから: 三歳なものですから. だ, a bare noun and の are all wrong connections."
+        },
+        {
+          "id": "q3",
+          "grammarId": "n2-w1-d3-g4",
+          "prompt": "この町の夏祭りは、地元のボランティアの協力（　　）とても続けられない。",
+          "choices": [
+            "はともかく",
+            "を除いて",
+            "はもとより",
+            "抜きでは"
+          ],
+          "answerIndex": 3,
+          "explanation": "Without A it cannot happen: 〜抜きでは plus a potential negative (続けられない). はともかく only sets a topic aside, を除いて excludes an item from a list, and はもとより needs a stronger B with も."
+        },
+        {
+          "id": "q4",
+          "grammarId": "n2-w1-d4-g3",
+          "prompt": "西向きの部屋なので、夕方になると日差しが（　　）。",
+          "choices": [
+            "まぶしいでかなわない",
+            "まぶしくてかなわない",
+            "まぶしくかなわない",
+            "まぶしくてはならない"
+          ],
+          "answerIndex": 1,
+          "explanation": "An outside nuisance I can't put up with: an い-adjective drops い and takes くて, まぶしくてかなわない. いで and bare く are wrong connections, and てはならない is a prohibition."
+        },
+        {
+          "id": "q5",
+          "grammarId": "n2-w1-d5-g2",
+          "prompt": "A「来週の土曜日、引っ越しを手伝ってもらえないかな。」B「うーん、午後からなら行け（　　）けど……。」",
+          "choices": [
+            "ないわけがない",
+            "ないこともない",
+            "なくてはならない",
+            "ないうちに"
+          ],
+          "answerIndex": 1,
+          "explanation": "B gives a hesitant, hedged yes: 行けないこともない. わけがない is a strong 'no way', which clashes with うーん, なくてはならない is an obligation, and ないうちに needs an action after it."
+        },
+        {
+          "id": "q6",
+          "grammarId": "n2-w1-d6-g1",
+          "prompt": "社員は、お客様から預かった個人情報を責任を持って管理（　　）。",
+          "choices": [
+            "しねばならない",
+            "せずにはいられない",
+            "してばかりはいられない",
+            "せねばならない"
+          ],
+          "answerIndex": 3,
+          "explanation": "A rule stated formally: する becomes せねばならない, never しねば. ずにはいられない is an urge you can't hold back, and てばかりはいられない says you can't only do it, which doesn't fit a duty."
+        },
+        {
+          "id": "q7",
+          "grammarId": "n2-w1-d6-g4",
+          "prompt": "子どもが生まれたのはうれしいが、これからは出費も増えるので、喜んで（　　）。",
+          "choices": [
+            "ばかりはいられない",
+            "ばかりいる",
+            "もかまわない",
+            "はいけない"
+          ],
+          "answerIndex": 0,
+          "explanation": "The joy goes on but can't be the only thing now: 喜んでばかりはいられない. ばかりいる just describes doing nothing else, もかまわない (it's fine) ignores the worry, and はいけない forbids the joy outright."
+        },
+        {
+          "id": "q8",
+          "grammarId": "n2-w2-d1-g3",
+          "prompt": "林さんは何を教えてもすぐに吸収してくれるので、本当に（　　）後輩だ。",
+          "choices": [
+            "教えかけの",
+            "教えるほどの",
+            "教えがいのある",
+            "教えたかいもない"
+          ],
+          "answerIndex": 2,
+          "explanation": "The junior responds, so teaching feels rewarding: 教えがいのある. かけ means half-done, ほど marks a degree, and かいもない says the effort was wasted, the opposite of this."
+        },
+        {
+          "id": "q9",
+          "grammarId": "n2-w2-d2-g2",
+          "prompt": "祖母が畑でとれたトマトを箱いっぱいに送ってくれたが、家族三人ではとても（　　）。",
+          "choices": [
+            "食べかけない",
+            "食べ抜かない",
+            "食べがいがない",
+            "食べ切れない"
+          ],
+          "answerIndex": 3,
+          "explanation": "More than we can finish: 〜切れない means you can't get through all of it. かける is start and stop, 抜く needs hardship to endure, and 食べがいがない (not worth eating) doesn't follow from too many tomatoes."
+        },
+        {
+          "id": "q10",
+          "grammarId": "n2-w2-d3-g4",
+          "prompt": "このマンションのジムは、住民の方（　　）無料で利用できます。",
+          "choices": [
+            "に限り",
+            "限り",
+            "はもとより",
+            "にしたがって"
+          ],
+          "answerIndex": 0,
+          "explanation": "A rule restricting a group: people take に限り. Bare 限り works only with a time or quantity (本日限り), はもとより needs a B with も, and にしたがって follows a rule or instruction."
+        },
+        {
+          "id": "q11",
+          "grammarId": "n2-w2-d5-g2",
+          "prompt": "この地図が正確（　　）、駅はもうすぐ目の前に見えてくるはずだ。",
+          "choices": [
+            "なとしたら",
+            "だとしても",
+            "だとしたら",
+            "なうちに"
+          ],
+          "answerIndex": 2,
+          "explanation": "Reasoning from an unconfirmed premise to はずだ: 正確だとしたら. A な-adjective keeps だ before としたら, としても concedes (even if), and うちに is a time window."
+        },
+        {
+          "id": "q12",
+          "grammarId": "n2-w2-d6-g1",
+          "prompt": "父は定年を迎える（　　）、長年住んだ東京を離れ、ふるさとの村に戻った。",
+          "choices": [
+            "につれて",
+            "とともに",
+            "にしたがって",
+            "反面"
+          ],
+          "answerIndex": 1,
+          "explanation": "Retiring is a single moment, and とともに handles a one-step change: 迎えるとともに. につれて and にしたがって need gradual change, and 反面 sets two sides of one thing against each other."
+        },
+        {
+          "id": "q13",
+          "grammarId": "n2-w3-d1-g3",
+          "prompt": "（　　）ことに、来週の会議で使う資料のデータがすべて消えてしまった。",
+          "choices": [
+            "困った",
+            "困る",
+            "困って",
+            "困り"
+          ],
+          "answerIndex": 0,
+          "explanation": "The speaker's feeling frames the fact, and a verb before ことに is past: 困ったことに. The dictionary form, the て-form and the stem are all wrong connections."
+        },
+        {
+          "id": "q14",
+          "grammarId": "n2-w3-d3-g1",
+          "prompt": "買った物でいっぱいの紙袋を持ち上げた（　　）、底が破れて中身が床に落ちてしまった。",
+          "choices": [
+            "うちに",
+            "きり",
+            "あげく",
+            "とたん"
+          ],
+          "answerIndex": 3,
+          "explanation": "At the very instant A, something sudden and unwanted: 持ち上げたとたん. うちに doesn't follow a past verb, きり means nothing has happened since, and あげく needs a long, troublesome process first."
+        },
+        {
+          "id": "q15",
+          "grammarId": "n2-w3-d3-g4",
+          "prompt": "息子はさっきまでテレビに夢中になっていた（　　）、急に外へ飛び出していった。",
+          "choices": [
+            "とたん",
+            "かと思ったら",
+            "きり",
+            "うちに"
+          ],
+          "answerIndex": 1,
+          "explanation": "A quick switch the speaker observes in someone else, after a continuing state (V-ていた): かと思ったら. たとたん takes only a single completed moment, and きり and うちに don't follow ていた."
+        }
+      ]
+    },
+    {
+      "type": "sentence-order",
+      "questions": [
+        {
+          "id": "q16",
+          "grammarId": "n2-w1-d1-g3",
+          "before": "昨日の夜から",
+          "after": "、何を食べてもおいしく感じない。",
+          "pieces": [
+            "熱",
+            "っぽい",
+            "せいか",
+            "体が"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            1,
+            2
+          ],
+          "starSlot": 3,
+          "explanation": "体が熱っぽいせいか: っぽい attaches straight to the noun 熱 and makes an い-adjective, which せいか then follows. So ★ is っぽい."
+        },
+        {
+          "id": "q17",
+          "grammarId": "n2-w1-d3-g1",
+          "before": "この絵本は、",
+          "after": "人気がある。",
+          "pieces": [
+            "はもとより",
+            "にも",
+            "子ども",
+            "大人"
+          ],
+          "correctOrder": [
+            2,
+            0,
+            3,
+            1
+          ],
+          "starSlot": 3,
+          "explanation": "子どもはもとより大人にも: A is the expected reader of a picture book and B the surprising one, marked by にも. Reversing them breaks the sense, so ★ is 大人."
+        },
+        {
+          "id": "q18",
+          "grammarId": "n2-w1-d3-g4",
+          "before": "本日は時間が限られていますので、",
+          "after": "からお話しします。",
+          "pieces": [
+            "説明は",
+            "抜きにして",
+            "結論",
+            "細かい"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            1,
+            2
+          ],
+          "starSlot": 2,
+          "explanation": "細かい説明は抜きにして結論から: 抜きにして takes a noun with は, so 説明は sits right before it, and 結論 attaches to から. So ★ is 説明は."
+        },
+        {
+          "id": "q19",
+          "grammarId": "n2-w1-d4-g3",
+          "before": "このアプリは、開くたびに",
+          "after": "かなわない。",
+          "pieces": [
+            "入力",
+            "させられるので",
+            "面倒で",
+            "パスワードを"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            1,
+            2
+          ],
+          "starSlot": 4,
+          "explanation": "入力させられるので面倒でかなわない: a な-adjective links to かなわない with で, after the reason ので. So ★ 面倒で goes in slot 4."
+        },
+        {
+          "id": "q20",
+          "grammarId": "n2-w1-d5-g2",
+          "before": "辛い料理は苦手だが、",
+          "after": "と思う。",
+          "pieces": [
+            "食べられ",
+            "ない",
+            "ないことも",
+            "少しなら"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            2,
+            1
+          ],
+          "starSlot": 3,
+          "explanation": "少しなら食べられないこともない: the potential negative 食べられない splits into 食べられ + ないことも, and the frame closes with ない. So ★ is ないことも."
+        },
+        {
+          "id": "q21",
+          "grammarId": "n2-w1-d6-g4",
+          "before": "新しい市場に挑戦するなら、",
+          "after": "だろう。",
+          "pieces": [
+            "恐れて",
+            "ばかりは",
+            "いられない",
+            "失敗を"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            1,
+            2
+          ],
+          "starSlot": 2,
+          "explanation": "失敗を恐れてばかりはいられない: ばかりは needs a て-form before it and いられない after it. So ★ 恐れて goes in slot 2."
+        },
+        {
+          "id": "q22",
+          "grammarId": "n2-w2-d1-g3",
+          "before": "将来は、",
+          "after": "仕事につきたいと考えている。",
+          "pieces": [
+            "よりも",
+            "ある",
+            "給料",
+            "やりがいの"
+          ],
+          "correctOrder": [
+            2,
+            0,
+            3,
+            1
+          ],
+          "starSlot": 3,
+          "explanation": "給料よりもやりがいのある仕事: がい names the inner reward, set against pay, and やりがいのある modifies 仕事. So ★ やりがいの is slot 3."
+        },
+        {
+          "id": "q23",
+          "grammarId": "n2-w2-d2-g2",
+          "before": "この島では、晴れた夜には",
+          "after": "見える。",
+          "pieces": [
+            "ほどの",
+            "切れない",
+            "星が",
+            "数え"
+          ],
+          "correctOrder": [
+            3,
+            1,
+            0,
+            2
+          ],
+          "starSlot": 2,
+          "explanation": "数え切れないほどの星: 切れない attaches to the stem 数え (too many to count), then ほどの modifies 星. So ★ 切れない is slot 2."
+        },
+        {
+          "id": "q24",
+          "grammarId": "n2-w2-d3-g1",
+          "before": "暗くなると山道は危ないから、",
+          "after": "ほうがいい。",
+          "pieces": [
+            "暮れない",
+            "下りた",
+            "日が",
+            "うちに"
+          ],
+          "correctOrder": [
+            2,
+            0,
+            3,
+            1
+          ],
+          "starSlot": 3,
+          "explanation": "日が暮れないうちに下りた: うちに follows the negative 暮れない to mark the window before dark, and the action comes after. So ★ うちに is slot 3."
+        },
+        {
+          "id": "q25",
+          "grammarId": "n2-w2-d3-g4",
+          "before": "当ホテルでは、",
+          "after": "、朝食を無料でご提供しております。",
+          "pieces": [
+            "限り",
+            "ご宿泊の",
+            "方に",
+            "二泊以上"
+          ],
+          "correctOrder": [
+            3,
+            1,
+            2,
+            0
+          ],
+          "starSlot": 4,
+          "explanation": "二泊以上ご宿泊の方に限り: a group of people takes に before 限り, so 方に comes just before ★ 限り in slot 4."
+        },
+        {
+          "id": "q26",
+          "grammarId": "n2-w2-d4-g3",
+          "before": "外国語は、現地の人と",
+          "after": "つくものだ。",
+          "pieces": [
+            "本当の",
+            "こそ",
+            "力が",
+            "話して"
+          ],
+          "correctOrder": [
+            3,
+            1,
+            0,
+            2
+          ],
+          "starSlot": 2,
+          "explanation": "話してこそ本当の力がつく: こそ follows the て-form to name the precondition, and the positive result comes after. So ★ こそ is slot 2."
+        },
+        {
+          "id": "q27",
+          "grammarId": "n2-w2-d6-g4",
+          "before": "地震が起きたときは、慌てずに",
+          "after": "してください。",
+          "pieces": [
+            "したがって",
+            "避難",
+            "係員の",
+            "指示に"
+          ],
+          "correctOrder": [
+            2,
+            3,
+            0,
+            1
+          ],
+          "starSlot": 1,
+          "explanation": "係員の指示にしたがって避難: an instruction takes に before したがって, and 係員の must modify 指示. So ★ 係員の is slot 1."
+        },
+        {
+          "id": "q28",
+          "grammarId": "n2-w3-d2-g2",
+          "before": "運動が",
+          "after": "どうしても続かない。",
+          "pieces": [
+            "嫌いな",
+            "ないが",
+            "一人だと",
+            "わけでは"
+          ],
+          "correctOrder": [
+            0,
+            3,
+            1,
+            2
+          ],
+          "starSlot": 1,
+          "explanation": "運動が嫌いなわけではないが: a な-adjective takes な before わけではない, and the real reason (一人だと続かない) follows. So ★ 嫌いな is slot 1."
+        },
+        {
+          "id": "q29",
+          "grammarId": "n2-w3-d4-g3",
+          "before": "母が急に入院することになり、",
+          "after": "しまった。",
+          "pieces": [
+            "温泉旅行",
+            "なくなって",
+            "楽しみにしていた",
+            "どころでは"
+          ],
+          "correctOrder": [
+            2,
+            0,
+            3,
+            1
+          ],
+          "starSlot": 3,
+          "explanation": "温泉旅行どころではなくなって: どころでは follows the noun directly, with no の, and the frame ends ではなくなる. So ★ どころでは is slot 3."
+        },
+        {
+          "id": "q30",
+          "grammarId": "n2-w3-d6-g2",
+          "before": "この町は",
+          "after": "、ごみの問題に悩まされている。",
+          "pieces": [
+            "増えて",
+            "反面",
+            "にぎやかになった",
+            "観光客が"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            2,
+            1
+          ],
+          "starSlot": 4,
+          "explanation": "観光客が増えてにぎやかになった反面: 反面 follows a plain past verb, and both sides belong to the same town. So ★ 反面 is slot 4."
+        }
+      ]
+    },
+    {
+      "type": "passage",
+      "passages": [
+        {
+          "passage": "先週の日曜日、駅前で高校時代の友人の健太に偶然会った。健太とは、彼が家族と海外へ引っ越していった[31]、十年近く一度も連絡を取っていなかった。うれしい[32]、彼は今、私の会社のすぐ近くで働いているという。名前を呼んだ[33]、彼は昔と同じ大きな声で「久しぶり！」と叫び、周りの人が驚いて振り返った。本当はゆっくり食事でもしたかったが、その日は母と出かける約束があった[34]、連絡先だけ交換して別れた。夜になってメッセージを送ると、すぐに返事が来た[35]、次の週末に会う約束まであっという間に決まってしまった。",
+          "questions": [
+            {
+              "id": "q31",
+              "blank": 31,
+              "grammarId": "n2-w3-d5-g2",
+              "choices": [
+                "とたん",
+                "きり",
+                "かと思ったら",
+                "反面"
+              ],
+              "answerIndex": 1,
+              "explanation": "V-たきり: the move abroad was the last contact, and nothing since (十年近く…いなかった). とたん needs a sudden event, かと思ったら an observed quick change, and 反面 two sides of one thing."
+            },
+            {
+              "id": "q32",
+              "blank": 32,
+              "grammarId": "n2-w3-d1-g3",
+              "choices": [
+                "ものだから",
+                "反面",
+                "としたら",
+                "ことに"
+              ],
+              "answerIndex": 3,
+              "explanation": "The writer's feeling frames the fact that follows: うれしいことに. ものだから gives an excuse, 反面 needs one subject with two sides, and としたら is a supposition, not a fact."
+            },
+            {
+              "id": "q33",
+              "blank": 33,
+              "grammarId": "n2-w3-d3-g1",
+              "choices": [
+                "とたん",
+                "うちに",
+                "きり",
+                "末に"
+              ],
+              "answerIndex": 0,
+              "explanation": "The instant I called his name, he shouted, a sudden reaction from someone else: 呼んだとたん. うちに doesn't follow a past verb, きり means nothing since, and 末に needs a long process."
+            },
+            {
+              "id": "q34",
+              "blank": 34,
+              "grammarId": "n2-w1-d2-g2",
+              "choices": [
+                "ことに",
+                "としたら",
+                "ものだから",
+                "とたん"
+              ],
+              "answerIndex": 2,
+              "explanation": "The writer explains why they had to leave, with a note of 'I had no choice': 約束があったものだから. ことに needs a feeling word, としたら is hypothetical, and とたん can't introduce your own deliberate action."
+            },
+            {
+              "id": "q35",
+              "blank": 35,
+              "grammarId": "n2-w3-d3-g4",
+              "choices": [
+                "きり",
+                "だとしたら",
+                "うちに",
+                "かと思ったら"
+              ],
+              "answerIndex": 3,
+              "explanation": "A reply came and almost at once a plan was settled, to the writer's surprise: 来たかと思ったら. きり means nothing followed, a verb takes としたら without だ (and this is no supposition), and うちに doesn't follow a past verb."
+            }
+          ]
+        },
+        {
+          "passage": "感染症の流行をきっかけに、在宅勤務を取り入れる会社が増えた。私の勤める会社でも、二年前に新しい制度の導入[36]、社員の半数が自宅で働くようになった。通勤がなくなって時間に余裕ができた[37]、同僚と気軽に話す機会が減り、孤独を感じる人も少なくないという。実際、在宅勤務の期間が長くなる[38]、仕事への意欲が下がったと答える人が増えたという調査結果もある。もしこれが一時的なものではなく、今後も続く傾向[39]、会社は働く場所だけでなく、人と人とのつながりをどう保つかも考え[40]。",
+          "questions": [
+            {
+              "id": "q36",
+              "blank": 36,
+              "grammarId": "n2-w2-d6-g1",
+              "choices": [
+                "とともに",
+                "につれて",
+                "に限り",
+                "はもとより"
+              ],
+              "answerIndex": 0,
+              "explanation": "Bringing in the system is a single event, and とともに handles a one-step change: 導入とともに. につれて needs gradual change, に限り restricts to a group, and はもとより needs a B with も."
+            },
+            {
+              "id": "q37",
+              "blank": 37,
+              "grammarId": "n2-w3-d6-g2",
+              "choices": [
+                "ことに",
+                "きり",
+                "反面",
+                "ものだから"
+              ],
+              "answerIndex": 2,
+              "explanation": "Remote work has two opposite sides, more free time and fewer chats: できた反面. ことに needs a feeling word, きり means nothing since, and ものだから gives an excuse, not a contrast."
+            },
+            {
+              "id": "q38",
+              "blank": 38,
+              "grammarId": "n2-w2-d6-g4",
+              "choices": [
+                "反面",
+                "にしたがって",
+                "としたら",
+                "とたん"
+              ],
+              "answerIndex": 1,
+              "explanation": "As the period grows, the share of unmotivated people grows with it: 長くなるにしたがって. 反面 contrasts two sides, としたら supposes (this is a survey result), and とたん needs a past verb."
+            },
+            {
+              "id": "q39",
+              "blank": 39,
+              "grammarId": "n2-w2-d5-g2",
+              "choices": [
+                "だとしたら",
+                "なとしたら",
+                "なものだから",
+                "に限り"
+              ],
+              "answerIndex": 0,
+              "explanation": "Reasoning from an unconfirmed premise (もし) to what follows: 傾向だとしたら, with だ kept after a noun. なとしたら is a wrong connection, ものだから is an excuse and can't follow もし, and に限り restricts."
+            },
+            {
+              "id": "q40",
+              "blank": 40,
+              "grammarId": "n2-w1-d6-g1",
+              "choices": [
+                "てはならない",
+                "てばかりはいられない",
+                "たきりだ",
+                "ねばならない"
+              ],
+              "answerIndex": 3,
+              "explanation": "A formal, principled conclusion: 考えねばならない (must consider). てはならない forbids it, てばかりはいられない says you can't only do it, and たきりだ means nothing has happened since."
+            }
+          ]
+        },
+        {
+          "passage": "三年前、四十歳を過ぎてからピアノを習い始めた。最初の一年は仕事が忙しく、練習[41]月も多かった。それでもやめずに続けてこられたのは、先生のおかげだ。先生は、楽譜の読み方[42]、指の動かし方や姿勢まで一つ一つ丁寧に教えてくださる。そして毎回、「その日の感覚が消え[43]、家で一度弾いてみてください」とおっしゃる。毎日何時間も練習している[44]、言われたとおりに少しでも弾いておくと、次のレッスンでは確かに上達しているのが分かる。音楽は、自分の手で弾い[45]本当の楽しさが分かるのだと、今は思う。",
+          "questions": [
+            {
+              "id": "q41",
+              "blank": 41,
+              "grammarId": "n2-w3-d4-g3",
+              "choices": [
+                "のどころではない",
+                "どころか",
+                "どころではない",
+                "ばかりはいられない"
+              ],
+              "answerIndex": 2,
+              "explanation": "Work was so busy that practice was out of the question: 練習どころではない, with no の after the noun. どころか needs a stronger B to follow, and ばかりはいられない needs a て-form."
+            },
+            {
+              "id": "q42",
+              "blank": 42,
+              "grammarId": "n2-w1-d3-g1",
+              "choices": [
+                "に限り",
+                "はもとより",
+                "抜きでは",
+                "反面"
+              ],
+              "answerIndex": 1,
+              "explanation": "Reading music is the expected item and posture the extra, marked by まで: 読み方はもとより. に限り restricts (clashing with まで), 抜きでは needs a potential negative, and a noun needs である before 反面."
+            },
+            {
+              "id": "q43",
+              "blank": 43,
+              "grammarId": "n2-w2-d3-g1",
+              "choices": [
+                "たとたん",
+                "たきり",
+                "ないこともなく",
+                "ないうちに"
+              ],
+              "answerIndex": 3,
+              "explanation": "Do it while the window is open, before the feeling fades: 消えないうちに. たとたん can't introduce a request, たきり means nothing since, and ないこともなく is a hedged maybe."
+            },
+            {
+              "id": "q44",
+              "blank": 44,
+              "grammarId": "n2-w3-d2-g2",
+              "choices": [
+                "わけではないが",
+                "ことに",
+                "とたん",
+                "反面"
+              ],
+              "answerIndex": 0,
+              "explanation": "The writer denies an assumption (hours of practice) and gives the real story: 練習しているわけではないが. ことに needs a past feeling word, とたん needs a past verb, and 反面 needs two opposite sides."
+            },
+            {
+              "id": "q45",
+              "blank": 45,
+              "grammarId": "n2-w2-d4-g3",
+              "choices": [
+                "てばかりは",
+                "たきり",
+                "てこそ",
+                "てまで"
+              ],
+              "answerIndex": 2,
+              "explanation": "Playing with your own hands is the precondition for the real joy: 弾いてこそ. てばかりは needs いられない, たきり means nothing since, and てまで means going to extremes."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

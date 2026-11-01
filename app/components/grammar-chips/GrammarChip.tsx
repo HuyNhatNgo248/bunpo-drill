@@ -7,8 +7,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover
 import { circled, dayLabel, weekLabel } from "~/lib/sections";
 import type { ReviewChip } from "~/lib/views";
 
-/** One chip: tapping it opens where the point is in the 文法ノート, and a button to mark it reviewed. */
-export function GrammarChip({ testId, chip }: { testId: string; chip: ReviewChip }) {
+/** One chip: tapping it opens where the point is in the 文法ノート, and a button to mark it reviewed when there is a `testId`. */
+export function GrammarChip({ testId, chip }: { testId: string | null; chip: ReviewChip }) {
   const { t, i18n } = useLingui();
   const fetcher = useFetcher({ key: `review:${testId}:${chip.grammarId}` });
   const pending = fetcher.json as { reviewed: boolean } | undefined;
@@ -58,15 +58,17 @@ export function GrammarChip({ testId, chip }: { testId: string; chip: ReviewChip
           </dt>
           <dd lang="ja" className="font-jp font-medium">{circled(chip.number)}</dd>
         </dl>
-        <Button variant={reviewed ? "outline" : "default"} onClick={toggle} className="w-full">
-          {reviewed ? (
-            <>
-              <Check aria-hidden="true" /> <Trans>Reviewed · Undo</Trans>
-            </>
-          ) : (
-            <Trans>Mark as reviewed</Trans>
-          )}
-        </Button>
+        {testId && (
+          <Button variant={reviewed ? "outline" : "default"} onClick={toggle} className="w-full">
+            {reviewed ? (
+              <>
+                <Check aria-hidden="true" /> <Trans>Reviewed · Undo</Trans>
+              </>
+            ) : (
+              <Trans>Mark as reviewed</Trans>
+            )}
+          </Button>
+        )}
       </PopoverContent>
     </Popover>
   );

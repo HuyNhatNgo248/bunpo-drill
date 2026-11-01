@@ -18,11 +18,12 @@ import { SubmitBar } from "./SubmitBar";
 /**
  * The quiz page. The answer sheet lives here, from the `draft` it was left at, and is saved on the server as it
  * changes until it is submitted. Each part can be checked on the way; the final submit still grades the whole test.
+ * A `trial` test (/try/:id) is for visitors without an account, so its sheet is not saved.
  */
-export function Quiz({ quiz, draft, error }: { quiz: QuizView; draft: QuizDraft; error?: string }) {
+export function Quiz({ quiz, draft, error, trial = false }: { quiz: QuizView; draft: QuizDraft; error?: string; trial?: boolean }) {
   const [answers, setAnswers] = useState(draft.answers);
   const [checks, setChecks] = useState(draft.checks);
-  useAutosave(quiz.id, { answers, checks });
+  useAutosave(trial ? null : quiz.id, { answers, checks });
   // A sheet this browser kept from before drafts were saved on the server goes on, unless the server has one.
   useEffect(() => {
     const local = takeLocalDraft(quiz.id);
@@ -82,7 +83,7 @@ export function Quiz({ quiz, draft, error }: { quiz: QuizView; draft: QuizDraft;
             {quiz.sections.map((section) => (
               <Section
                 key={section.no}
-                testId={quiz.id}
+                checkAction={`${trial ? "/try" : "/tests"}/${quiz.id}/check`}
                 section={section}
                 answers={answers}
                 onAnswer={setAnswer}

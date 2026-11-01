@@ -1,14 +1,11 @@
 import { msg } from "@lingui/core/macro";
 import { data, redirect } from "react-router";
-import { z } from "zod";
 import type { Route } from "./+types/check";
 import { requireUserId } from "~/lib/auth.server";
 import { testNotFound } from "~/lib/errors";
-import { gradeTest, submittedAnswersSchema } from "~/lib/grading.server";
+import { checkSchema, gradeTest } from "~/lib/grading.server";
 import { requestLocale, translate } from "~/lib/i18n";
 import { getTest } from "~/lib/tests.server";
-
-const checkSchema = z.object({ section: z.number().int().min(1).max(3), answers: submittedAnswersSchema });
 
 /**
  * POST /tests/:id/check with {"section", "answers"}: grades one part of a test that is not submitted yet, right

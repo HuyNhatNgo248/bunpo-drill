@@ -2,12 +2,13 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { Form } from "react-router";
 import { AppHeader } from "~/components/layout/header";
 import { Button } from "~/components/ui/button";
+import { DeleteAccountForm } from "./DeleteAccountForm";
 import { EmailForm } from "./EmailForm";
 import { NameForm } from "./NameForm";
 import { PasswordForm } from "./PasswordForm";
 import type { AccountResult } from "./types";
 
-/** The account page: change the username, the email or the password, or log out. `result` goes to the form it is for. */
+/** The account page: change the username, the email or the password, log out, or delete the account. `result` goes to the form it is for. */
 export function Account({ name, email, result }: { name: string; email: string | null; result?: AccountResult }) {
   const { t } = useLingui();
   const resultOf = (form: AccountResult["form"]) => (result?.form === form ? result : undefined);
@@ -27,6 +28,7 @@ export function Account({ name, email, result }: { name: string; email: string |
             <Trans>Sign out</Trans>
           </Button>
         </Form>
+        <DeleteAccountForm result={resultOf("delete")} />
       </main>
     </div>
   );

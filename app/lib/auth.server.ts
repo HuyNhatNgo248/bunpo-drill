@@ -29,7 +29,10 @@ function sessions() {
   return storage;
 }
 
-/** The pages a signed-out visitor can open: the welcome page, signing in or up, and getting back in after a forgotten password. */
+/**
+ * The pages a signed-out visitor can open: the welcome page, signing in or up, and getting back in after a forgotten password.
+ * The trial tests under /try/ too (trials.server.ts).
+ */
 // /login only redirects old links to /signin or /signup. /locale switches the language, which a signed-out visitor needs too.
 const PUBLIC_PAGES = new Set(["/welcome", "/signin", "/signup", "/login", "/forgot-password", "/reset-password", "/locale"]);
 
@@ -40,7 +43,7 @@ const PUBLIC_PAGES = new Set(["/welcome", "/signin", "/signup", "/login", "/forg
  * and the like, which it reports as "/signin".
  */
 export async function requireSignIn(request: Request, url: URL) {
-  if (PUBLIC_PAGES.has(url.pathname) || (await isSignedIn(request))) return;
+  if (PUBLIC_PAGES.has(url.pathname) || url.pathname.startsWith("/try/") || (await isSignedIn(request))) return;
   if (url.pathname.startsWith("/api/")) {
     if (hasApiToken(request)) return;
     throw Response.json({ error: "Not signed in. Send BUNPO_API_TOKEN as a Bearer token." }, { status: 401 });
@@ -83,9 +86,10 @@ export async function signIn(request: Request, userId: number, redirectTo: strin
   return redirect(redirectTo, { headers: { "Set-Cookie": await sessions().commitSession(session) } });
 }
 
-export async function signOut(request: Request) {
+/** Clears the login cookie and goes to `to`: the sign-in page, or the welcome page after deleting the account. */
+export async function signOut(request: Request, to = "/signin") {
   const session = await sessions().getSession(request.headers.get("Cookie"));
-  return redirect("/signin", { headers: { "Set-Cookie": await sessions().destroySession(session) } });
+  return redirect(to, { headers: { "Set-Cookie": await sessions().destroySession(session) } });
 }
 
 /** The pages that sign in or up, which are no place to go back to once signed in. */

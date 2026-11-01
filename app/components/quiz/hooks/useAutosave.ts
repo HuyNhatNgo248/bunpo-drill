@@ -7,15 +7,16 @@ const SAVE_DELAY = 800;
 /**
  * Saves the quiz's draft on the server (POST /tests/:id/draft) a moment after it changes, and at once when the quiz is
  * left or the page is hidden, so the last answer is kept. A save that fails goes again with the next one.
+ * With no `testId` (a trial test), nothing is saved.
  */
-export function useAutosave(testId: string, { answers, checks }: QuizDraft) {
+export function useAutosave(testId: string | null, { answers, checks }: QuizDraft) {
   const pending = useRef<string | null>(null);
   // The draft the page loaded with is saved already.
   const loaded = useRef(true);
 
   const flush = useCallback(() => {
     const body = pending.current;
-    if (body === null) return;
+    if (body === null || testId === null) return;
     pending.current = null;
     // keepalive: the request still goes out while the page is left or closed.
     fetch(`/tests/${testId}/draft`, { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: true })

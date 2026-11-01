@@ -14,9 +14,10 @@ import { SectionReview } from "./section-review";
 /**
  * The results page: the score, the grammar to review, every answer checked, and the way on. The question list
  * shows each number right or wrong and jumps to it: beside the answers on a desktop, in a sheet from a bar pinned
- * to the bottom on a phone or tablet, as in the quiz.
+ * to the bottom on a phone or tablet, as in the quiz. A `trial` test's results are for a visitor without an account,
+ * so they are not kept: nothing can be marked reviewed, and the way on is sign-up.
  */
-export function Results({ results }: { results: ResultsView }) {
+export function Results({ results, trial = false }: { results: ResultsView; trial?: boolean }) {
   const { t } = useLingui();
   const { score, total } = results;
   const wrong = total - score;
@@ -25,6 +26,7 @@ export function Results({ results }: { results: ResultsView }) {
   return (
     <div className="min-h-screen">
       <AppHeader
+        guest={trial}
         mobileTitle={`${results.title} · ${t`Results`}`}
         back={results.kind === "kanji" ? { to: homeOf(results), label: t`Back to kanji` } : undefined}
       />
@@ -38,7 +40,7 @@ export function Results({ results }: { results: ResultsView }) {
           <Trans>Results</Trans>
         </PageTitle>
         <ScoreCard results={results} />
-        <ReviewCard results={results} />
+        <ReviewCard results={results} trial={trial} />
 
         <h2 className="mt-1.5 text-base font-semibold md:mt-2 md:text-lg">
           <Trans>Check your answers</Trans>
@@ -57,7 +59,7 @@ export function Results({ results }: { results: ResultsView }) {
           </div>
         </div>
 
-        <Actions results={results} />
+        <Actions results={results} trial={trial} />
 
         {/* Phone and tablet: a solid bar on the bottom edge, its button across the whole width. */}
         <div className="sticky bottom-0 z-10 -mx-4 border-t bg-card px-4 pt-3 pb-5 md:-mx-6 md:px-6 lg:hidden">

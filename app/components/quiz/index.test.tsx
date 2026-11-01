@@ -24,13 +24,12 @@ const PART_1_CHECKED: QuizDraft = { answers: { q1: 2 }, checks: { 1: gradeTest(b
 let saved: { path: string; body: unknown }[] = [];
 
 /** The server's check of one part: it grades the answers it gets against the payload of QUIZ. */
-const CHECK_ROUTE: StubRoute = {
-  path: "/tests/:id/check",
-  action: async ({ request }) => {
-    const { section, answers } = await request.json();
-    return { section: gradeTest(buildPayload(), answers).sections[section - 1] };
-  },
+const checkAction: StubRoute["action"] = async ({ request }) => {
+  const { section, answers } = await request.json();
+  return { section: gradeTest(buildPayload(), answers).sections[section - 1] };
 };
+
+const CHECK_ROUTE: StubRoute = { path: "/tests/:id/check", action: checkAction };
 
 /** The quiz page, left at `draft`, with the route action that its submit reaches. */
 function renderQuiz({ error, draft = NO_DRAFT }: { error?: string; draft?: QuizDraft } = {}) {
@@ -274,6 +273,21 @@ describe("Quiz", () => {
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: URL, body: { answers: { q1: 2 } } }]));
     });
 
+  });
+
+  describe("a trial test", () => {
+    it("checks its parts at /try/:id/check, and saves nothing, even when left", async () => {
+      const { unmount } = renderRoute(<Quiz quiz={QUIZ} draft={NO_DRAFT} trial />, {
+        url: `/try/${QUIZ.id}`,
+        routes: [{ path: "/try/:id/check", action: checkAction }],
+      });
+      await pick(1, "かいがあって");
+
+      await checkPart(1, "1 / 1");
+      unmount();
+
+      expect(saved).toEqual([]);
+    });
   });
 
   describe("submitting", () => {

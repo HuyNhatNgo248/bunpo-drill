@@ -14,14 +14,15 @@ import { QuestionCard } from "./QuestionCard";
  * Once `checked`, it shows its score and each question graded, as the results do, and its answers are locked.
  */
 export function Section({
-  testId,
+  checkAction,
   section,
   answers,
   onAnswer,
   checked,
   onChecked,
 }: {
-  testId: string;
+  /** Where the part's check is posted: /tests/:id/check, or /try/:id/check. */
+  checkAction: string;
   section: QuizSection;
   answers: Answers;
   onAnswer: (id: string, value: Answers[string]) => void;
@@ -78,7 +79,7 @@ export function Section({
 
       {!checked && (
         <CheckSection
-          testId={testId}
+          action={checkAction}
           no={section.no}
           answers={answersOf(section, answers)}
           unanswered={section.groups.flatMap((group) => group.questions).filter((q) => !isAnswered(q, answers)).length}

@@ -18,6 +18,8 @@ export default [
   route("tests/:id/retake", "routes/helpers/retake.ts"),
   route("tests/:id/check", "routes/helpers/check.ts"),
   route("tests/:id/draft", "routes/helpers/draft.ts"),
+  route("try/:id", "routes/try.tsx"),
+  route("try/:id/check", "routes/helpers/try-check.ts"),
   route("api/tests", "routes/helpers/api.tests.ts"),
   route("api/tests/:id", "routes/helpers/api.tests.$id.ts"),
   route("api/kanji/chapters", "routes/helpers/api.kanji.chapters.ts"),

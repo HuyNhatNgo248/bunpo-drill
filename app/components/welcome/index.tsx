@@ -3,13 +3,18 @@ import { MotionConfig } from "motion/react";
 import { Link } from "react-router";
 import { AppHeader } from "~/components/layout/header";
 import { Button } from "~/components/ui/button";
+import type { TrialSummary } from "~/lib/views";
 import { ExamCountdown } from "./ExamCountdown";
 import { ExamSections } from "./ExamSections";
 import { Footer } from "./Footer";
 import { SampleQuiz } from "./SampleQuiz";
+import { TrialTests } from "./TrialTests";
 
-/** The page a signed-out visitor sees at /: what the app does, a sample question to answer, sign-up, and the days to the next exam. */
-export function Welcome({ exam }: { exam: { date: string; daysLeft: number } }) {
+/**
+ * The page a signed-out visitor sees at /: what the app does, a sample question to answer, full tests to try, sign-up,
+ * and the days to the next exam.
+ */
+export function Welcome({ exam, trials }: { exam: { date: string; daysLeft: number }; trials: TrialSummary[] }) {
   return (
     // Animations follow the visitor's reduced-motion setting.
     <MotionConfig reducedMotion="user">
@@ -62,6 +67,7 @@ export function Welcome({ exam }: { exam: { date: string; daysLeft: number } }) 
             <SampleQuiz />
           </section>
           <ExamSections />
+          <TrialTests tests={trials} />
           <ExamCountdown exam={exam} />
         </main>
         <Footer />

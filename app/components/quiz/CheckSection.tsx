@@ -6,17 +6,17 @@ import { Button } from "~/components/ui/button";
 import type { Answers, ResultSection } from "~/lib/views";
 
 /**
- * The button under a part that grades it on the server (POST /tests/:id/check). It asks first, since a checked
- * part shows its right answers and its own answers can't change after.
+ * The button under a part that grades it on the server (POST to `action`, /tests/:id/check). It asks first, since a
+ * checked part shows its right answers and its own answers can't change after.
  */
 export function CheckSection({
-  testId,
+  action,
   no,
   answers,
   unanswered,
   onChecked,
 }: {
-  testId: string;
+  action: string;
   no: number;
   /** The answers to this part's questions. */
   answers: Answers;
@@ -33,7 +33,7 @@ export function CheckSection({
   }, [result, onChecked]);
 
   const check = () =>
-    fetcher.submit({ section: no, answers }, { method: "post", action: `/tests/${testId}/check`, encType: "application/json" });
+    fetcher.submit({ section: no, answers }, { method: "post", action, encType: "application/json" });
 
   return (
     <div className="flex flex-col items-end gap-2">

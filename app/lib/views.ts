@@ -174,3 +174,13 @@ export type TestSummary = {
   /** The weeks of the 文法ノート it covers, first first. */
   weeks: number[];
 };
+
+/** A trial test as the welcome page shows it: no questions, and how many patterns from which weeks. */
+export type TrialSummary = {
+  id: string;
+  title: string;
+  level: Level;
+  questionCount: number;
+  patternCount: number;
+  weeks: number[];
+};

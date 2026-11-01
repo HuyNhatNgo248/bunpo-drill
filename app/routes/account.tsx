@@ -3,9 +3,9 @@ import { data } from "react-router";
 import type { Route } from "./+types/account";
 import { Account } from "~/components/account";
 import type { AccountResult } from "~/components/account/types";
-import { requireUserId } from "~/lib/auth.server";
+import { requireUserId, signOut } from "~/lib/auth.server";
 import { checkEmail, checkName, checkNewPassword, normalizeEmail } from "~/lib/users";
-import { changePassword, getUser, renameUser, setEmail } from "~/lib/users.server";
+import { changePassword, deleteUser, getUser, renameUser, setEmail } from "~/lib/users.server";
 import { localeFromMatches, requestLocale, translate } from "~/lib/i18n";
 
 export function meta({ matches }: Route.MetaArgs) {
@@ -20,7 +20,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 /**
  * POST /account: intent "name" renames, intent "email" sets the email that password resets go to,
- * intent "password" changes the password (needs the current one).
+ * intent "password" changes the password (needs the current one), intent "delete" deletes the account (needs the
+ * password) and signs out to the welcome page.
  */
 export async function action({ request }: Route.ActionArgs) {
   const id = await requireUserId(request);
@@ -43,6 +44,12 @@ export async function action({ request }: Route.ActionArgs) {
       return data<AccountResult>({ form: "email", error: translate(locale, msg`That email address is already in use.`) }, { status: 409 });
     }
     return data<AccountResult>({ form: "email", saved: translate(locale, msg`Email address saved.`) });
+  }
+  if (form.get("intent") === "delete") {
+    if (!(await deleteUser(id, String(form.get("password") ?? "")))) {
+      return data<AccountResult>({ form: "delete", error: translate(locale, msg`Your current password is wrong.`) }, { status: 401 });
+    }
+    return signOut(request, "/welcome");
   }
   const next = String(form.get("next") ?? "");
   const invalid = checkNewPassword(next);

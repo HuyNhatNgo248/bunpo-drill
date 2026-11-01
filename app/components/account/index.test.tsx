@@ -8,6 +8,8 @@ import type { AccountResult } from "./types";
 
 const NAME = "Huy";
 
+const PASSWORD_TYPED = "my password";
+
 /** The account page, with the actions that its forms post to. */
 function renderAccount(result?: AccountResult, email: string | null = null) {
   const page = recordingAction();
@@ -101,6 +103,36 @@ describe("Account", () => {
 
       expect(cardOf("Password").getByRole("status")).toHaveTextContent("Password changed.");
       expect(cardOf("Username").queryByRole("status")).toBeNull();
+    });
+  });
+
+  describe("the delete form", () => {
+    it("asks first, then sends the password with the intent of the delete form", async () => {
+      const { page } = renderAccount();
+      const card = cardOf("Delete account");
+
+      await userEvent.type(await card.findByLabelText("Password"), PASSWORD_TYPED);
+      await userEvent.click(card.getByRole("button", { name: "Delete account" }));
+      await userEvent.click(within(screen.getByRole("alertdialog", { name: "Delete your account?" })).getByRole("button", { name: "Delete account" }));
+
+      await waitFor(() => expect(page).toEqual([{ method: "POST", path: "/account", body: { intent: "delete", password: PASSWORD_TYPED } }]));
+    });
+
+    it("sends nothing when the learner goes back", async () => {
+      const { page } = renderAccount();
+      const card = cardOf("Delete account");
+
+      await userEvent.type(await card.findByLabelText("Password"), PASSWORD_TYPED);
+      await userEvent.click(card.getByRole("button", { name: "Delete account" }));
+      await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Cancel" }));
+
+      expect(page).toEqual([]);
+    });
+
+    it("shows a wrong password under the delete form", async () => {
+      renderAccount({ form: "delete", error: "Your current password is wrong." });
+
+      expect(await cardOf("Delete account").findByRole("alert")).toHaveTextContent("Your current password is wrong.");
     });
   });
 

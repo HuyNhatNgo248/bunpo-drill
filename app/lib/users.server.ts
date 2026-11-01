@@ -1,8 +1,8 @@
 import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { and, asc, desc, eq, or, sql } from "drizzle-orm";
-import { orm } from "./db.server";
-import { users } from "./schema.server";
+import { orm, write } from "./db.server";
+import { attempts, learnedWords, passwordResets, progress, reviewed, users } from "./schema.server";
 import { parseTab, tabValue, type Tab } from "./lastTab";
 import { normalizeEmail } from "./users";
 
@@ -143,5 +143,27 @@ export async function changePassword(id: number, current: string, next: string):
   const [row] = await db.select({ password: users.password }).from(users).where(eq(users.id, id));
   if (!row || !(await matches(current, row.password))) return false;
   await db.update(users).set({ password: await hashPassword(next) }).where(eq(users.id, id));
+  return true;
+}
+
+/**
+ * Deletes the user and everything that is theirs: results, drafts, review marks, attempts, learned words and reset
+ * links. The tests and kanji chapters are shared, so they stay. False, deleting nothing, when the password is wrong.
+ */
+export async function deleteUser(id: number, password: string): Promise<boolean> {
+  const db = await orm();
+  const [row] = await db.select({ password: users.password }).from(users).where(eq(users.id, id));
+  if (!row || !(await matches(password, row.password))) return false;
+  // Every row that points at the user goes first, or the foreign keys refuse the delete. One batch: all or nothing.
+  await write([
+    db.delete(progress).where(eq(progress.userId, id)),
+    db.delete(reviewed).where(eq(reviewed.userId, id)),
+    db.delete(attempts).where(eq(attempts.userId, id)),
+    db.delete(learnedWords).where(eq(learnedWords.userId, id)),
+    db.delete(passwordResets).where(eq(passwordResets.userId, id)),
+    db.delete(users).where(eq(users.id, id)),
+  ]);
+  // The account's cookies on other devices stop working now, not when their cached version runs out.
+  forgetSessionVersions();
   return true;
 }

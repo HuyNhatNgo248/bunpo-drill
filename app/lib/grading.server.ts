@@ -29,6 +29,9 @@ export const submittedAnswersSchema = z.record(
 /** What the quiz saves while it is taken: its answers and the numbers of its checked parts. */
 export const draftSchema = z.object({ answers: submittedAnswersSchema, checked: z.array(z.number().int().min(1).max(3)).max(3) });
 
+/** What the quiz sends to check one part: the part's number and the answers. */
+export const checkSchema = z.object({ section: z.number().int().min(1).max(3), answers: submittedAnswersSchema });
+
 const numberOf = (id: string) => Number(id.slice(1));
 const label = (options: string[], index: number) => `${index + 1} ${options[index]}`;
 const choiceOf = (answer: Answer | undefined) => (typeof answer === "number" ? answer : null);
