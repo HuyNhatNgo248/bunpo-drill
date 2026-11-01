@@ -15,7 +15,7 @@ import type { Answers } from "./views";
 
 /**
  * Storage in the database from db.server.ts: a `tests` row per test holding the
- * payload, the last submission and its place in the home list, a `reviewed`
+ * payload and the last submission, a `reviewed`
  * row per review chip marked reviewed, and an `attempts` row per submission.
  * Kanji tests are saved here too; the home list, its figures and GET /api/tests show only the grammar ones.
  */
@@ -98,39 +98,38 @@ const listable = (level?: Level) =>
     level && sql`${json(tests.payload)} ->> '$.level' = ${level}`,
   );
 
-// Tests not placed by a drag yet (new ones) come first, newest first; the rest follow their saved place.
-// The id settles ties, so a test is never on two pages.
-const listOrder = [
-  sql`${tests.position} IS NOT NULL`,
-  tests.position,
-  desc(tests.createdAt),
-  tests.id,
-];
+/** Compares titles with their numbers as numbers: 第2週 before 第10週, 1〜3日目 before 3〜6日目. */
+const titleOrder = new Intl.Collator("ja", { numeric: true });
 
-/** The tests in the list's order: every one, or one level's, `limit` of them from `offset`. */
+/**
+ * The tests in the list's order: the ones not taken first, then the taken ones, each by title (`latestFirst`: the
+ * title order reversed, so the latest week comes first); tests with the same title oldest first. Every one, or one
+ * level's.
+ * shortcut: sorts all of a level's tests in memory, as SQLite can't compare the numbers in a title; move the order
+ * into SQL (a week and day column) if a level ever holds thousands of tests.
+ */
 export async function listTests({
   level,
-  limit = -1,
-  offset = 0,
-}: { level?: Level; limit?: number; offset?: number } = {}): Promise<
+  latestFirst = false,
+}: { level?: Level; latestFirst?: boolean } = {}): Promise<
   ListedTest[]
 > {
-  const rows = await (
-    await orm()
-  )
+  const rows = await (await orm())
     .select(listed)
     .from(tests)
     .where(listable(level))
-    .orderBy(...listOrder)
-    // SQLite reads a LIMIT of -1 as no limit.
-    .limit(limit)
-    .offset(offset);
+    .orderBy(tests.createdAt, tests.id);
   return rows
     .map(toListedTest)
-    .filter((test): test is ListedTest => test !== null);
+    .filter((test): test is ListedTest => test !== null)
+    .sort(
+      (a, b) =>
+        Number(a.submission !== null) - Number(b.submission !== null) ||
+        titleOrder.compare(a.payload.title, b.payload.title) * (latestFirst ? -1 : 1),
+    );
 }
 
-/** The figures over all of a level's tests, not one page: how many, how many taken, their average, and the patterns to review. */
+/** The figures over all of a level's tests: how many, how many taken, their average, and the patterns to review. */
 export async function levelStats(level: Level) {
   const db = await orm();
   const score = sql`${tests.submission} ->> '$.score'`;
@@ -219,37 +218,6 @@ export async function createTest(payload: AnyPayload): Promise<StoredTest> {
       payload: JSON.stringify(payload),
     });
   return test;
-}
-
-/**
- * Saves the order of some tests, top first, such as the tests of one page: they swap the places they hold between
- * them, and every other test keeps its place. Ids that aren't tests are dropped.
- * shortcut: places are numbered from 0 over all tests, so the first drag after a new test (unplaced, so first) rewrites
- * every row; give a new test a place above the top one if that gets slow with thousands of tests.
- */
-export async function saveOrder(ids: string[]): Promise<string[]> {
-  const order = [...new Set(ids)].filter((id) => ID.test(id));
-  const db = await orm();
-  const all = await db
-    .select({ id: tests.id, position: tests.position })
-    .from(tests)
-    .orderBy(...listOrder);
-  const known = new Set(all.map((test) => test.id));
-  const moved = order.filter((id) => known.has(id));
-  const moving = new Set(moved);
-  // The tests being ordered take the slots they fill in the list now, in their new order.
-  let next = 0;
-  const placed = all.map((test) =>
-    moving.has(test.id) ? moved[next++]! : test.id,
-  );
-  const was = new Map(all.map((test) => [test.id, test.position]));
-  const [first, ...rest] = placed.flatMap((id, position) =>
-    was.get(id) === position
-      ? []
-      : [db.update(tests).set({ position }).where(eq(tests.id, id))],
-  );
-  if (first) await write([first, ...rest]);
-  return order;
 }
 
 /** Saves a result and its attempt. `unlearn`: the words a kanji test got wrong, whose learned marks go with it. */

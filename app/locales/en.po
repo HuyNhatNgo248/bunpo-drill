@@ -83,7 +83,7 @@ msgstr "{text} (placed)"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
-#: app/components/home/test-list/TestRow.tsx:75
+#: app/components/home/test-list/TestRow.tsx:52
 #: app/components/quiz/index.tsx:53
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
@@ -341,7 +341,7 @@ msgstr "Clear answers"
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:110
+#: app/components/home/test-list/TestRow.tsx:87
 msgid "Continue"
 msgstr "Continue"
 
@@ -419,17 +419,13 @@ msgstr "Flashcards"
 msgid "Forgot your password?"
 msgstr "Forgot your password?"
 
+#: app/components/home/SortMenu.tsx:12
+msgid "From week 1"
+msgstr "From week 1"
+
 #: app/components/welcome/index.tsx:36
 msgid "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 msgstr "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
-
-#: app/components/ui/pagination.tsx:95
-msgid "Go to next page"
-msgstr "Go to next page"
-
-#: app/components/ui/pagination.tsx:76
-msgid "Go to previous page"
-msgstr "Go to previous page"
 
 #: app/components/flashcards/index.tsx:99
 #: app/components/flashcards/SessionDone.tsx:52
@@ -480,7 +476,11 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/index.tsx:21
+msgid "In progress"
+msgstr "In progress"
+
+#: app/components/home/test-list/TestRow.tsx:45
 msgid "In progress {answered} / {total}"
 msgstr "In progress {answered} / {total}"
 
@@ -529,10 +529,14 @@ msgstr "kun"
 msgid "Language: {0}"
 msgstr "Language: {0}"
 
-#: app/components/home/test-list/TestRow.tsx:79
+#: app/components/home/test-list/TestRow.tsx:56
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
+
+#: app/components/home/SortMenu.tsx:13
+msgid "Latest week first"
+msgstr "Latest week first"
 
 #: app/components/flashcards/SessionDone.tsx:66
 msgid "Learned in {chapter}"
@@ -555,19 +559,15 @@ msgstr "Mark as reviewed"
 msgid "Missed words"
 msgstr "Missed words"
 
-#: app/components/home/index.tsx:31
+#: app/components/home/index.tsx:34
 #: app/components/results/Actions.tsx:25
-#: app/routes/home.tsx:11
+#: app/routes/home.tsx:10
 msgid "Mock tests"
 msgstr "Mock tests"
 
 #: app/components/home/LevelUnavailable.tsx:24
 msgid "Mock tests for {level} are coming later."
 msgstr "Mock tests for {level} are coming later."
-
-#: app/components/ui/pagination.tsx:122
-msgid "More pages"
-msgstr "More pages"
 
 #. placeholder {0}: card.headword
 #: app/components/flashcards/CardFace.tsx:125
@@ -592,10 +592,6 @@ msgstr "New mock tests show up here."
 #: app/routes/reset-password.tsx:11
 msgid "New password"
 msgstr "New password"
-
-#: app/components/ui/pagination.tsx:100
-msgid "Next"
-msgstr "Next"
 
 #: app/components/flashcards/index.tsx:107
 msgid "Next card"
@@ -633,6 +629,10 @@ msgstr "None yet. Add one, and you can reset your password if you forget it."
 msgid "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 msgstr "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 
+#: app/components/home/test-list/index.tsx:22
+msgid "Not taken yet"
+msgstr "Not taken yet"
+
 #: app/components/results/ReviewCard.tsx:24
 msgid "Nothing to review. You got every question right."
 msgstr "Nothing to review. You got every question right."
@@ -652,10 +652,6 @@ msgstr "Open the link below and choose a new password. The link works for one ho
 #: app/lib/errors.ts:45
 msgid "Page not found"
 msgstr "Page not found"
-
-#: app/components/ui/pagination.tsx:14
-msgid "Pagination"
-msgstr "Pagination"
 
 #: app/components/quiz/question-nav/QuestionGrid.tsx:58
 #: app/components/quiz/Section.tsx:40
@@ -697,14 +693,6 @@ msgstr "Press a choice to put it in the next empty slot. Press a filled slot to 
 #: app/components/kanji/chapter-list/index.tsx:42
 msgid "Press Space to pick a chapter up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
 msgstr "Press Space to pick a chapter up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
-
-#: app/components/home/test-list/index.tsx:42
-msgid "Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
-msgstr "Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
-
-#: app/components/ui/pagination.tsx:82
-msgid "Previous"
-msgstr "Previous"
 
 #: app/components/flashcards/index.tsx:88
 msgid "Previous card"
@@ -776,7 +764,6 @@ msgstr "Read the passage, think about what it says as a whole, and choose the be
 msgid "Reload"
 msgstr "Reload"
 
-#: app/components/home/test-list/TestRow.tsx:45
 #: app/components/kanji/chapter-list/ChapterRow.tsx:40
 msgid "Reorder “{title}”"
 msgstr "Reorder “{title}”"
@@ -792,7 +779,7 @@ msgstr "Reset your password"
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:100
+#: app/components/home/test-list/TestRow.tsx:77
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
@@ -899,7 +886,10 @@ msgstr "Slot {n}"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: app/components/home/test-list/TestRow.tsx:23
+#: app/components/home/SortMenu.tsx:21
+msgid "Sort: {current}"
+msgstr "Sort: {current}"
+
 #: app/components/kanji/chapter-list/ChapterRow.tsx:22
 msgid "sortable"
 msgstr "sortable"
@@ -908,7 +898,7 @@ msgstr "sortable"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/home/test-list/TestRow.tsx:110
+#: app/components/home/test-list/TestRow.tsx:87
 msgid "Start the test"
 msgstr "Start the test"
 
@@ -929,7 +919,7 @@ msgstr "Submit"
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:95
+#: app/components/home/test-list/TestRow.tsx:72
 #: app/components/results/Actions.tsx:37
 msgid "Take it again"
 msgstr "Take it again"
@@ -939,6 +929,7 @@ msgid "Take the quiz"
 msgstr "Take the quiz"
 
 #: app/components/home/Stats.tsx:15
+#: app/components/home/test-list/index.tsx:23
 msgid "Taken"
 msgstr "Taken"
 

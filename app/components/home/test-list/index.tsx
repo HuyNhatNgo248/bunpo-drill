@@ -1,56 +1,45 @@
 import { useLingui } from "@lingui/react/macro";
-import {
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-} from "@dnd-kit/core";
-import { restrictToParentElement, restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { useFetcher } from "react-router";
+import { useEffect, useState } from "react";
+import { hasSavedAnswers, savedAnsweredCount } from "~/components/quiz/helpers/savedAnswers";
 import type { TestSummary } from "~/lib/views";
-import { REORDER_KEY } from "../helpers/fetchers";
-import { listAnnouncements } from "~/components/helpers/announcements";
 import { TestRow } from "./TestRow";
 
-/** The tests, in the order the user dragged them to. Dropping a test saves the new order. */
+/**
+ * The tests of a page, grouped by what is next for each: the ones left half done, the ones not taken yet, and the
+ * taken ones. The server sends them in title order, the taken ones last, and each group keeps that order.
+ */
 export function TestList({ tests }: { tests: TestSummary[] }) {
-  const { t, i18n } = useLingui();
-  const reorder = useFetcher({ key: REORDER_KEY });
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  const { t } = useLingui();
+  // How far each test left before submitting got: its answers are saved in this browser, so the server cannot know,
+  // and they are read after hydration. Until then such a test shows as not taken.
+  const [answered, setAnswered] = useState<Map<string, number>>(new Map());
+  useEffect(
+    () => setAnswered(new Map(tests.filter((test) => hasSavedAnswers(test.id)).map((test) => [test.id, savedAnsweredCount(test.id)]))),
+    [tests],
   );
-  const onDragEnd = ({ active, over }: DragEndEvent) => {
-    if (!over || active.id === over.id) return;
-    const ids = tests.map((test) => test.id);
-    const order = arrayMove(ids, ids.indexOf(String(active.id)), ids.indexOf(String(over.id)));
-    // flushSync: render the new order in the same frame the drag ends, so the row doesn't jump back first.
-    reorder.submit({ order }, { method: "patch", action: "/api/tests", encType: "application/json", flushSync: true });
-  };
+  const groups = [
+    { key: "in-progress", title: t`In progress`, tests: tests.filter((test) => !test.result && answered.has(test.id)) },
+    { key: "not-taken", title: t`Not taken yet`, tests: tests.filter((test) => !test.result && !answered.has(test.id)) },
+    { key: "taken", title: t`Taken`, tests: tests.filter((test) => test.result) },
+  ];
 
   return (
-    <DndContext
-      id="test-list"
-      sensors={sensors}
-      modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-      accessibility={{
-        announcements: listAnnouncements(tests, i18n),
-        screenReaderInstructions: {
-          draggable: t`Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel.`,
-        },
-      }}
-      onDragEnd={onDragEnd}
-    >
-      <SortableContext items={tests.map((test) => test.id)} strategy={verticalListSortingStrategy}>
-        <ul className="flex flex-col gap-4 md:gap-0 md:overflow-hidden md:rounded-xl md:border md:bg-card">
-          {tests.map((test) => (
-            <TestRow key={test.id} test={test} />
-          ))}
-        </ul>
-      </SortableContext>
-    </DndContext>
+    <div className="flex flex-col gap-5 md:gap-6">
+      {groups.map(
+        (group) =>
+          group.tests.length > 0 && (
+            <section key={group.key} aria-labelledby={`tests-${group.key}`} className="flex flex-col gap-2.5 md:gap-3">
+              <h2 id={`tests-${group.key}`} className="text-caption font-semibold text-muted-foreground">
+                {group.title}
+              </h2>
+              <ul className="flex flex-col gap-4 md:gap-0 md:overflow-hidden md:rounded-xl md:border md:bg-card">
+                {group.tests.map((test) => (
+                  <TestRow key={test.id} test={test} answered={answered.get(test.id) ?? null} />
+                ))}
+              </ul>
+            </section>
+          ),
+      )}
+    </div>
   );
 }

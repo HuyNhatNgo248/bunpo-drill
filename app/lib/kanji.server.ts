@@ -41,7 +41,7 @@ export async function listChapters(level: Level): Promise<KanjiChapter[]> {
 }
 
 /**
- * Orders a level's `chapters`, top first, among the places they hold in the list (like saveOrder for tests). Returns
+ * Orders a level's `chapters`, top first, among the places they hold in the list. Returns
  * the chapters it ordered: the saved ones of `chapters`, each once.
  */
 export async function saveChapterOrder(level: Level, chapters: number[]): Promise<number[]> {

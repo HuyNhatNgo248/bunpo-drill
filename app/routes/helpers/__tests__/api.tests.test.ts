@@ -101,24 +101,6 @@ describe("POST /api/tests", () => {
   });
 });
 
-describe("PATCH /api/tests", () => {
-  it("saves the order and answers with what it saved", async () => {
-    const first = await createTest(buildPayload());
-    const second = await createTest(buildPayload());
-
-    const response = await send("PATCH", { order: [second.id, first.id, "not-an-id"] });
-
-    expect(await response.json()).toEqual({ order: [second.id, first.id] });
-  });
-
-  it("answers 400 for a body without an order", async () => {
-    const response = await send("PATCH", { ids: [] });
-
-    expect(response.status).toBe(400);
-    expect(await response.json()).toEqual({ error: 'Body must be {"order": string[]}.' });
-  });
-});
-
 describe("DELETE /api/tests", () => {
   it("deletes every test and answers with how many it deleted", async () => {
     await createTest(buildPayload());
@@ -134,6 +116,6 @@ describe("another method", () => {
     const response = await send("PUT", {});
 
     expect(response.status).toBe(405);
-    expect(response.headers.get("Allow")).toBe("GET, POST, PATCH, DELETE");
+    expect(response.headers.get("Allow")).toBe("GET, POST, DELETE");
   });
 });

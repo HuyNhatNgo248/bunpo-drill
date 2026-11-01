@@ -13,7 +13,6 @@ import {
   levelStats,
   listTests,
   resetTest,
-  saveOrder,
   saveSubmission,
   setReviewed,
 } from "./tests.server";
@@ -90,29 +89,34 @@ describe("getTest", () => {
 });
 
 describe("listTests", () => {
-  it("lists new tests first, newest first", async () => {
-    await createTestAt("2026-10-25T00:00:00.000Z");
-    await createTestAt("2026-10-27T00:00:00.000Z");
-    await createTestAt("2026-10-26T00:00:00.000Z");
+  it("lists the tests not taken first, then the taken ones, each by title with its numbers read as numbers", async () => {
+    for (const title of ["第10週 1日目", "第2週 3〜6日目", "第2週 1〜3日目"]) await createTest(buildPayload({ title }));
+    const taken = await createTest(buildPayload({ title: "第1週 1日目" }));
+    await saveSubmission(taken.id, buildSubmission());
 
-    expect(await titlesOf()).toEqual(["2026-10-27T00:00:00.000Z", "2026-10-26T00:00:00.000Z", "2026-10-25T00:00:00.000Z"]);
+    expect(await titlesOf()).toEqual(["第2週 1〜3日目", "第2週 3〜6日目", "第10週 1日目", "第1週 1日目"]);
   });
 
-  it("puts the tests in their saved order after the tests that have no place yet", async () => {
-    const oldest = await createTestAt("2026-10-25T00:00:00.000Z");
-    const middle = await createTestAt("2026-10-26T00:00:00.000Z");
-    await createTestAt("2026-10-27T00:00:00.000Z");
-    await saveOrder([oldest.id, middle.id]);
+  it("lists the latest week first with latestFirst, the taken ones still last", async () => {
+    for (const title of ["第1週 1日目", "第10週 1日目", "第2週 1日目"]) await createTest(buildPayload({ title }));
+    const taken = await createTest(buildPayload({ title: "第3週 1日目" }));
+    await saveSubmission(taken.id, buildSubmission());
 
-    expect(await titlesOf()).toEqual(["2026-10-27T00:00:00.000Z", "2026-10-25T00:00:00.000Z", "2026-10-26T00:00:00.000Z"]);
+    expect((await listTests({ latestFirst: true })).map((test) => test.payload.title)).toEqual([
+      "第10週 1日目",
+      "第2週 1日目",
+      "第1週 1日目",
+      "第3週 1日目",
+    ]);
   });
 
-  it("lists `limit` tests from `offset`, for a page", async () => {
-    await createTestAt("2026-10-25T00:00:00.000Z");
-    await createTestAt("2026-10-26T00:00:00.000Z");
-    await createTestAt("2026-10-27T00:00:00.000Z");
+  it("lists tests with the same title oldest first", async () => {
+    vi.setSystemTime(new Date("2026-10-26T00:00:00.000Z"));
+    const older = await createTest(buildPayload({ title: "第2週 1〜3日目" }));
+    vi.setSystemTime(new Date("2026-10-27T00:00:00.000Z"));
+    const newer = await createTest(buildPayload({ title: "第2週 1〜3日目" }));
 
-    expect((await listTests({ limit: 1, offset: 1 })).map((test) => test.payload.title)).toEqual(["2026-10-26T00:00:00.000Z"]);
+    expect((await listTests()).map((test) => test.id)).toEqual([older.id, newer.id]);
   });
 
   it("reads only what the list shows: the question count, and no questions or answers", async () => {
@@ -155,31 +159,6 @@ describe("listTests", () => {
 
     expect(await listTests()).toHaveLength(1);
     expect(await levelStats("N2")).toEqual({ total: 1, taken: 0, average: null, toReview: 0 });
-  });
-});
-
-describe("saveOrder", () => {
-  it("returns the order it saved, without repeats and without values that are not ids", async () => {
-    const first = await createTest(buildPayload());
-    const second = await createTest(buildPayload());
-
-    expect(await saveOrder([second.id, second.id, "not-an-id", first.id])).toEqual([second.id, first.id]);
-  });
-
-  it("orders a page's tests among the places they hold, so the tests on other pages keep theirs", async () => {
-    const a = await createTestAt("2026-10-25T00:00:00.000Z");
-    const b = await createTestAt("2026-10-26T00:00:00.000Z");
-    const c = await createTestAt("2026-10-27T00:00:00.000Z");
-    const d = await createTestAt("2026-10-28T00:00:00.000Z");
-    await saveOrder([a.id, b.id, c.id, d.id]);
-
-    await saveOrder([c.id, b.id]);
-
-    expect(await titlesOf()).toEqual([a, c, b, d].map((test) => test.payload.title));
-  });
-
-  it("saves nothing for an empty order", async () => {
-    expect(await saveOrder([])).toEqual([]);
   });
 });
 

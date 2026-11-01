@@ -83,7 +83,7 @@ msgstr "{text}（配置済み）"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
-#: app/components/home/test-list/TestRow.tsx:75
+#: app/components/home/test-list/TestRow.tsx:52
 #: app/components/quiz/index.tsx:53
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
@@ -341,7 +341,7 @@ msgstr "回答をクリア"
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:110
+#: app/components/home/test-list/TestRow.tsx:87
 msgid "Continue"
 msgstr "続きから"
 
@@ -419,17 +419,13 @@ msgstr "単語カード"
 msgid "Forgot your password?"
 msgstr "パスワードを忘れた場合"
 
+#: app/components/home/SortMenu.tsx:12
+msgid "From week 1"
+msgstr "第1週から"
+
 #: app/components/welcome/index.tsx:36
 msgid "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 msgstr "本番と同じ3つの問題形式の模擬試験で、提出するとすぐに採点されます。間違えた文型はそのまま復習リストに。"
-
-#: app/components/ui/pagination.tsx:95
-msgid "Go to next page"
-msgstr "次のページへ"
-
-#: app/components/ui/pagination.tsx:76
-msgid "Go to previous page"
-msgstr "前のページへ"
 
 #: app/components/flashcards/index.tsx:99
 #: app/components/flashcards/SessionDone.tsx:52
@@ -480,7 +476,11 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/index.tsx:21
+msgid "In progress"
+msgstr "解答中"
+
+#: app/components/home/test-list/TestRow.tsx:45
 msgid "In progress {answered} / {total}"
 msgstr "解答中 {answered} / {total}"
 
@@ -529,10 +529,14 @@ msgstr "訓"
 msgid "Language: {0}"
 msgstr "言語：{0}"
 
-#: app/components/home/test-list/TestRow.tsx:79
+#: app/components/home/test-list/TestRow.tsx:56
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
+
+#: app/components/home/SortMenu.tsx:13
+msgid "Latest week first"
+msgstr "新しい週から"
 
 #: app/components/flashcards/SessionDone.tsx:66
 msgid "Learned in {chapter}"
@@ -555,19 +559,15 @@ msgstr "復習済みにする"
 msgid "Missed words"
 msgstr "間違えた単語"
 
-#: app/components/home/index.tsx:31
+#: app/components/home/index.tsx:34
 #: app/components/results/Actions.tsx:25
-#: app/routes/home.tsx:11
+#: app/routes/home.tsx:10
 msgid "Mock tests"
 msgstr "模擬試験"
 
 #: app/components/home/LevelUnavailable.tsx:24
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
-
-#: app/components/ui/pagination.tsx:122
-msgid "More pages"
-msgstr "ほかのページ"
 
 #. placeholder {0}: card.headword
 #: app/components/flashcards/CardFace.tsx:125
@@ -592,10 +592,6 @@ msgstr "新しい模擬試験はここに表示されます。"
 #: app/routes/reset-password.tsx:11
 msgid "New password"
 msgstr "新しいパスワード"
-
-#: app/components/ui/pagination.tsx:100
-msgid "Next"
-msgstr "次へ"
 
 #: app/components/flashcards/index.tsx:107
 msgid "Next card"
@@ -633,6 +629,10 @@ msgstr "まだありません。登録すると、パスワードを忘れても
 msgid "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 msgstr "日本語能力試験（JLPT）の公式サービスではありません。試験日と申し込みは <0>jlpt.jp</0> へ。"
 
+#: app/components/home/test-list/index.tsx:22
+msgid "Not taken yet"
+msgstr "まだ受けていない"
+
 #: app/components/results/ReviewCard.tsx:24
 msgid "Nothing to review. You got every question right."
 msgstr "復習する文法はありません。全問正解でした。"
@@ -652,10 +652,6 @@ msgstr "下のリンクを開いて、新しいパスワードを決めてくだ
 #: app/lib/errors.ts:45
 msgid "Page not found"
 msgstr "ページが見つかりません"
-
-#: app/components/ui/pagination.tsx:14
-msgid "Pagination"
-msgstr "ページ送り"
 
 #: app/components/quiz/question-nav/QuestionGrid.tsx:58
 #: app/components/quiz/Section.tsx:40
@@ -697,14 +693,6 @@ msgstr "選択肢を押すと次の空欄に入り、埋まった空欄を押す
 #: app/components/kanji/chapter-list/index.tsx:42
 msgid "Press Space to pick a chapter up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
 msgstr "スペースキーで章を持ち上げ、上下の矢印キーで移動し、もう一度スペースキーで置きます。Escキーで取り消せます。"
-
-#: app/components/home/test-list/index.tsx:42
-msgid "Press Space to pick a test up, the up and down arrow keys to move it, and Space again to put it down. Press Escape to cancel."
-msgstr "スペースキーで持ち上げ、上下の矢印キーで移動し、もう一度スペースキーで置きます。Escキーで取り消せます。"
-
-#: app/components/ui/pagination.tsx:82
-msgid "Previous"
-msgstr "前へ"
 
 #: app/components/flashcards/index.tsx:88
 msgid "Previous card"
@@ -776,7 +764,6 @@ msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{fi
 msgid "Reload"
 msgstr "再読み込み"
 
-#: app/components/home/test-list/TestRow.tsx:45
 #: app/components/kanji/chapter-list/ChapterRow.tsx:40
 msgid "Reorder “{title}”"
 msgstr "「{title}」を並べ替え"
@@ -792,7 +779,7 @@ msgstr "パスワードの再設定"
 msgid "Results"
 msgstr "結果"
 
-#: app/components/home/test-list/TestRow.tsx:100
+#: app/components/home/test-list/TestRow.tsx:77
 msgid "Review ({reviewCount})"
 msgstr "復習（{reviewCount}）"
 
@@ -899,7 +886,10 @@ msgstr "空欄{n}"
 msgid "Something went wrong"
 msgstr "システム障害が発生しました"
 
-#: app/components/home/test-list/TestRow.tsx:23
+#: app/components/home/SortMenu.tsx:21
+msgid "Sort: {current}"
+msgstr "並び順: {current}"
+
 #: app/components/kanji/chapter-list/ChapterRow.tsx:22
 msgid "sortable"
 msgstr "並べ替え可能"
@@ -908,7 +898,7 @@ msgstr "並べ替え可能"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/home/test-list/TestRow.tsx:110
+#: app/components/home/test-list/TestRow.tsx:87
 msgid "Start the test"
 msgstr "テストを始める"
 
@@ -929,7 +919,7 @@ msgstr "提出する"
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:95
+#: app/components/home/test-list/TestRow.tsx:72
 #: app/components/results/Actions.tsx:37
 msgid "Take it again"
 msgstr "もう一度受ける"
@@ -939,6 +929,7 @@ msgid "Take the quiz"
 msgstr "クイズを受ける"
 
 #: app/components/home/Stats.tsx:15
+#: app/components/home/test-list/index.tsx:23
 msgid "Taken"
 msgstr "受験済み"
 

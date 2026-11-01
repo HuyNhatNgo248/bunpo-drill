@@ -89,7 +89,6 @@ All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without 
 | --- | --- | --- |
 | `POST` | `/api/tests` | Save a test. 201 → `{ id, url }`; 400 → `{ error, issues: [{ path, message }] }` |
 | `GET` | `/api/tests` | All tests with last score and grammar to review |
-| `PATCH` | `/api/tests` | `{ order: [id, …] }`: set the list order, top first (what dragging on `/` does) |
 | `DELETE` | `/api/tests` | Clear all tests |
 | `PATCH` | `/api/tests/:id` | `{ grammarId, reviewed }`: mark a review chip |
 | `DELETE` | `/api/tests/:id` | Delete one test |
@@ -109,8 +108,7 @@ A libSQL (SQLite) database, set up in `app/lib/db.server.ts`:
 - **`data/bunpo.db`** otherwise, a local file (gitignored; set `DATA_DIR` to move it).
 
 The tables are created on first use. `tests` has a row per test (payload and last submission as
-JSON, plus `position`, the place you dragged it to in the list; new tests have none and show
-first, newest first). `reviewed` has a row per review chip marked reviewed. `attempts` has the score of every
+JSON; its `position` column is unused since the list sorts by title). `reviewed` has a row per review chip marked reviewed. `attempts` has the score of every
 submission, so a retake keeps the earlier ones. `users` has the accounts (passwords as
 salted scrypt hashes, in `app/lib/users.server.ts`). `kanji_chapters` has a row per kanji
 chapter (its words as JSON), and `learned_words` a row per word marked learned; like the tests, they

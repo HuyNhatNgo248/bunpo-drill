@@ -14,9 +14,9 @@ import {
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
-import { createTest, saveOrder, saveSubmission, setReviewed } from "~/lib/tests.server";
+import { createTest, saveSubmission, setReviewed } from "~/lib/tests.server";
 import { thrownBy } from "#tests/helpers/thrown";
-import { loader, meta, PAGE_SIZE } from "../home";
+import { loader, meta } from "../home";
 
 /** Saves a test and a submission of it with `score` out of 3, and the grammar of the wrong answers. */
 async function takeTest(score: number, wrongGrammarIds: string[] = []) {
@@ -90,27 +90,15 @@ describe("home loader", () => {
   });
 });
 
-describe("home loader pages", () => {
-  it("shows a page of the tests, with the figures over all of them", async () => {
-    await takeTest(3);
-    for (let i = 0; i < PAGE_SIZE; i++) await createTest(buildPayload());
+describe("home loader order", () => {
+  it("lists the latest week first with ?sort=latest, and says so", async () => {
+    for (const title of ["第1週 1日目", "第2週 1日目"]) await createTest(buildPayload({ title }));
 
-    const first = await load();
-    const second = await load("?level=N2&page=2");
+    const { tests, latestFirst } = await load("?level=N2&sort=latest");
 
-    expect({ count: first.tests.length, page: first.page, pages: first.pages }).toEqual({ count: PAGE_SIZE, page: 1, pages: 2 });
-    // The taken test is the oldest, so it is the one on page 2.
-    expect(second.tests.map((test) => test.result?.score)).toEqual([3]);
-    expect(first.stats).toEqual({ average: 100, toReview: 0, taken: 1, total: PAGE_SIZE + 1 });
+    expect({ titles: tests.map((test) => test.title), latestFirst }).toEqual({ titles: ["第2週 1日目", "第1週 1日目"], latestFirst: true });
   });
 
-  it("sends a page past the last to the last page", async () => {
-    await createTest(buildPayload());
-
-    const thrown = (await thrownBy(() => load("?level=N2&page=4"))) as Response;
-
-    expect(thrown.headers.get("Location")).toBe("/?level=N2&page=1");
-  });
 });
 
 describe("home loader levels", () => {
@@ -129,24 +117,13 @@ describe("home loader levels", () => {
     beforeEach(() => vi.useFakeTimers({ toFake: ["Date"] }));
     afterEach(() => vi.useRealTimers());
 
-    it("shows the level of the newest test, even when a drag put another level's test on top", async () => {
+    it("shows the level of the newest test", async () => {
       vi.setSystemTime(new Date("2026-10-27T09:00:00.000Z"));
-      const n3 = await createTest(buildN3Payload());
+      await createTest(buildN3Payload());
       vi.setSystemTime(new Date("2026-10-28T09:00:00.000Z"));
-      const n2 = await createTest(buildPayload());
-      await saveOrder([n3.id, n2.id]);
+      await createTest(buildPayload());
 
       expect((await load()).level).toBe("N2");
-    });
-
-    it("keeps showing the same level after a test of it is dragged", async () => {
-      vi.setSystemTime(new Date("2026-10-27T09:00:00.000Z"));
-      await createTest(buildPayload());
-      vi.setSystemTime(new Date("2026-10-28T09:00:00.000Z"));
-      const n3 = await createTest(buildN3Payload());
-      await saveOrder([n3.id]);
-
-      expect((await load()).level).toBe("N3");
     });
   });
 

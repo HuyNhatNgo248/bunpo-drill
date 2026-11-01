@@ -1,4 +1,5 @@
 import { screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { buildTestSummary } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
@@ -24,16 +25,12 @@ function renderHome(
   {
     stats = STATS,
     level = tests.length ? "N2" : null,
-    page = 1,
-    pages = 1,
-  }: { stats?: HomeStats; level?: JlptLevel | null; page?: number; pages?: number } = {},
+    latestFirst = false,
+  }: { stats?: HomeStats; level?: JlptLevel | null; latestFirst?: boolean } = {},
 ) {
   const { action } = recordingAction();
-  renderRoute(<Home tests={tests} stats={stats} level={level} page={page} pages={pages} />, {
-    routes: [
-      { path: "/api/tests", action },
-      { path: "/api/tests/:id", action },
-    ],
+  renderRoute(<Home tests={tests} stats={stats} level={level} latestFirst={latestFirst} />, {
+    routes: [{ path: "/api/tests/:id", action }],
   });
 }
 
@@ -44,26 +41,26 @@ describe("Home", () => {
     expect(await screen.findByRole("heading", { name: "Mock tests" })).toBeInTheDocument();
     expect(screen.getByText("Average score").nextSibling).toHaveTextContent("67%");
     expect(screen.getByText("Grammar to review").nextSibling).toHaveTextContent("1");
-    expect(screen.getByText("Taken").nextSibling).toHaveTextContent("1 / 2");
+    // The figure, not the heading of the taken tests' group.
+    expect(screen.getByText("Taken", { selector: "div" }).nextSibling).toHaveTextContent("1 / 2");
     expect(screen.getAllByRole("listitem")).toHaveLength(2);
-    expect(screen.queryByRole("navigation", { name: "Pagination" })).toBeNull();
   });
 
-  it("counts every test of the level as taken or not, not only the page's, and links to the pages either side", async () => {
-    renderHome([TAKEN, NOT_TAKEN], { stats: { ...STATS, total: 45 }, page: 2, pages: 3 });
+  it("sorts from week 1, and offers the latest week first", async () => {
+    renderHome([TAKEN, NOT_TAKEN]);
 
-    expect((await screen.findByText("Taken")).nextSibling).toHaveTextContent("1 / 45");
-    const nav = screen.getByRole("navigation", { name: "Pagination" });
-    expect(within(nav).getAllByRole("link").map((link) => link.getAttribute("aria-label") ?? link.textContent)).toEqual([
-      "Go to previous page",
-      "1",
-      "2",
-      "3",
-      "Go to next page",
-    ]);
-    expect(within(nav).getByRole("link", { name: "2" })).toHaveAttribute("aria-current", "page");
-    expect(within(nav).getByRole("link", { name: "Go to previous page" })).toHaveAttribute("href", "/?level=N2");
-    expect(within(nav).getByRole("link", { name: "Go to next page" })).toHaveAttribute("href", "/?level=N2&page=3");
+    await userEvent.click(await screen.findByRole("button", { name: "Sort: From week 1" }));
+
+    expect(screen.getByRole("menuitem", { name: "From week 1" })).toHaveAttribute("aria-current", "true");
+    expect(screen.getByRole("menuitem", { name: "Latest week first" })).toHaveAttribute("href", "/?level=N2&sort=latest");
+  });
+
+  it("says when the latest week comes first, and links back to week 1 first", async () => {
+    renderHome([TAKEN, NOT_TAKEN], { latestFirst: true });
+
+    await userEvent.click(await screen.findByRole("button", { name: "Sort: Latest week first" }));
+
+    expect(screen.getByRole("menuitem", { name: "From week 1" })).toHaveAttribute("href", "/?level=N2");
   });
 
   it("shows a dash for the average before any test is taken", async () => {

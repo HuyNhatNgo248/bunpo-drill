@@ -6,21 +6,24 @@ import { isTestLevel, JLPT_LEVELS, type JlptLevel } from "~/lib/payload";
 import type { TestSummary } from "~/lib/views";
 import { EmptyState } from "./EmptyState";
 import { warmDrawerFigure } from "./helpers/drawerFigure";
-import { useVisibleTests } from "./hooks/useVisibleTests";
 import { LevelUnavailable } from "./LevelUnavailable";
-import { PageLinks } from "./PageLinks";
+import { SortMenu } from "./SortMenu";
 import { Stats, type HomeStats } from "./Stats";
 import { TestList } from "./test-list";
 
-type HomeProps = { tests: TestSummary[]; stats: HomeStats; level: JlptLevel | null; page: number; pages: number };
+type HomeProps = {
+  tests: TestSummary[];
+  stats: HomeStats;
+  level: JlptLevel | null;
+  /** The tests come latest week first instead of from week 1. */
+  latestFirst: boolean;
+};
 
 /**
- * The home page for one level: the figures over its tests, then a page of the list. Once there is a test, a tab picks
+ * The home page for one level: the figures over its tests, then all of them, grouped. Once there is a test, a tab picks
  * any JLPT level; one the app has no tests for yet says it is not available.
  */
-export function Home({ tests: saved, stats, level, page, pages }: HomeProps) {
-  const tests = useVisibleTests(saved);
-
+export function Home({ tests, stats, level, latestFirst }: HomeProps) {
   return (
     <div className="min-h-screen">
       <AppHeader account />
@@ -36,8 +39,10 @@ export function Home({ tests: saved, stats, level, page, pages }: HomeProps) {
         {tests.length > 0 ? (
           <>
             <Stats stats={stats} />
-            <TestList tests={tests} />
-            {level && <PageLinks level={level} page={page} pages={pages} />}
+            <div className="flex flex-col gap-2">
+              {level && <SortMenu level={level} latestFirst={latestFirst} />}
+              <TestList tests={tests} />
+            </div>
           </>
         ) : level && !isTestLevel(level) ? (
           <LevelUnavailable level={level} />

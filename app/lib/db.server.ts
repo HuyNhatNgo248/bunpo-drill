@@ -15,7 +15,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS tests (
     id TEXT PRIMARY KEY,
     created_at TEXT NOT NULL,
-    position INTEGER, -- place in the home list, set by dragging; NULL until dragged
+    position INTEGER, -- unused: the home list's drag order, before it sorted by title
     payload TEXT NOT NULL, -- TestPayload JSON
     submission TEXT -- Submission JSON; NULL until taken
   )`,

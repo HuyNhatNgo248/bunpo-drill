@@ -1,4 +1,4 @@
-import { screen, waitFor } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { buildReviewChip, buildTestSummary } from "#mocks/factories/views";
@@ -8,6 +8,8 @@ import type { TestSummary } from "~/lib/views";
 import { TestList } from ".";
 
 const NOT_TAKEN = buildTestSummary({ id: "20261027-aaaaaa", title: "第1週 1日目" });
+
+const LEFT = buildTestSummary({ id: "20261027-cccccc", title: "第2週 1日目" });
 
 const TAKEN = buildTestSummary({
   id: "20261027-bbbbbb",
@@ -23,17 +25,35 @@ function renderList(tests: TestSummary[]) {
   return requests;
 }
 
+/** Saves an answer for `test` in this browser, as a test left before submitting has. */
+const leaveHalfDone = (test: TestSummary) => localStorage.setItem(`bunpo:answers:${test.id}`, JSON.stringify({ q1: 2 }));
+
+const headings = () => screen.getAllByRole("heading", { level: 2 }).map((heading) => heading.textContent);
+
 describe("TestList", () => {
-  it("shows a test that is not taken, with its size, and a start link", async () => {
+  it("groups the tests: the ones in progress, then the ones not taken yet, then the taken ones", async () => {
+    leaveHalfDone(LEFT);
+
+    renderList([NOT_TAKEN, LEFT, TAKEN]);
+
+    const inProgress = await screen.findByRole("region", { name: "In progress" });
+    expect(within(inProgress).getByRole("link", { name: /第2週 1日目/ })).toBeInTheDocument();
+    expect(within(screen.getByRole("region", { name: "Not taken yet" })).getByRole("link", { name: /第1週 1日目/ })).toBeInTheDocument();
+    expect(within(screen.getByRole("region", { name: "Taken" })).getByRole("link", { name: /第3週 1日目/ })).toBeInTheDocument();
+    expect(headings()).toEqual(["In progress", "Not taken yet", "Taken"]);
+  });
+
+  it("shows a test that is not taken, with its size, and a start link, under its group only", async () => {
     renderList([NOT_TAKEN]);
 
     expect(await screen.findByRole("link", { name: /第1週 1日目/ })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
+    expect(headings()).toEqual(["Not taken yet"]);
     expect(screen.getByText(/3 questions/)).toHaveTextContent(/^3 questions$/);
     expect(screen.getByRole("link", { name: "Start the test" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
   });
 
   it("offers to go on with a test that was left before submitting", async () => {
-    localStorage.setItem(`bunpo:answers:${NOT_TAKEN.id}`, JSON.stringify({ q1: 2 }));
+    leaveHalfDone(NOT_TAKEN);
 
     renderList([NOT_TAKEN]);
 
@@ -54,13 +74,6 @@ describe("TestList", () => {
     renderList([{ ...TAKEN, previous: { score: 0, total: 3 } }]);
 
     expect(await screen.findByText(/3 questions/)).toHaveTextContent("3 questions · Last time 0 / 3");
-  });
-
-  it("gives every row a handle to drag, named after its test", async () => {
-    renderList([NOT_TAKEN, TAKEN]);
-
-    expect(await screen.findByRole("button", { name: "Reorder “第1週 1日目”" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Reorder “第3週 1日目”" })).toBeInTheDocument();
   });
 
   describe("a taken test", () => {
