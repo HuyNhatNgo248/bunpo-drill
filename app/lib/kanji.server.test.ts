@@ -12,7 +12,6 @@ import {
   listChapters,
   markLearned,
   saveChapter,
-  saveChapterOrder,
 } from "./kanji.server";
 import { createTest, saveSubmission } from "./tests.server";
 
@@ -76,31 +75,6 @@ describe("listChapters", () => {
     expect((await listChapters("N2")).map((chapter) => chapter.chapter)).toEqual([1, 2]);
   });
 
-  it("lists the chapters dragged into place first, in that order, then the ones sent since", async () => {
-    for (const chapter of [1, 2, 3]) await saveChapter(buildKanjiChapter({ chapter }));
-    await saveChapterOrder("N2", [3, 1]);
-    await saveChapter(buildKanjiChapter({ chapter: 4 }));
-
-    expect((await listChapters("N2")).map((chapter) => chapter.chapter)).toEqual([3, 2, 1, 4]);
-  });
-});
-
-describe("saveChapterOrder", () => {
-  it("orders the chapters given among the places they hold, and answers with the saved ones", async () => {
-    for (const chapter of [1, 2, 3]) await saveChapter(buildKanjiChapter({ chapter }));
-
-    expect(await saveChapterOrder("N2", [2, 1, 9, 2])).toEqual([2, 1]);
-    expect((await listChapters("N2")).map((chapter) => chapter.chapter)).toEqual([2, 1, 3]);
-  });
-
-  it("leaves the other levels' chapters where they are", async () => {
-    await saveChapter(buildKanjiChapter({ chapter: 1 }));
-    await saveChapter(buildKanjiChapter({ level: "N3", chapter: 1 }));
-    await saveChapter(buildKanjiChapter({ level: "N3", chapter: 2 }));
-
-    expect(await saveChapterOrder("N2", [1, 2])).toEqual([1]);
-    expect((await listChapters("N3")).map((chapter) => chapter.chapter)).toEqual([1, 2]);
-  });
 });
 
 describe("chapterLevels", () => {

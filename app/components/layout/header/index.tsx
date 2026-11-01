@@ -9,8 +9,8 @@ import { LanguageSwitch } from "./LanguageSwitch";
 /**
  * Desktop: brand on the left; on the right the language switch, then Account and Sign out when `account`
  * is set, or Sign in and Create account for a signed-out `guest`.
- * Mobile: the language, Account, Sign out and Sign in buttons show only their icons; with a `mobileTitle`,
- * a back chevron and the title replace the brand. The chevron goes to `back`, the mock tests unless given.
+ * Mobile: the language, Account, Sign out and Sign in buttons show only their icons, and Create account hides, as the
+ * welcome page offers it right under the header; with a `mobileTitle`, a back chevron and the title replace the brand. The chevron goes to `back`, the mock tests unless given.
  */
 export function AppHeader({
   account = false,
@@ -33,7 +33,7 @@ export function AppHeader({
       <div className={mobileTitle ? "hidden md:block" : undefined}>
         <div className="mx-auto flex max-w-260 flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-3 md:px-6 md:py-3.5">
           <Brand />
-          <div className="flex items-center gap-1">
+          <div className="ml-auto flex items-center gap-1">
             <LanguageSwitch />
             {account && (
               <nav aria-label={t`Account`} className="flex items-center gap-1">
@@ -68,7 +68,8 @@ export function AppHeader({
                     </span>
                   </Link>
                 </Button>
-                <Button asChild size="sm">
+                {/* Too wide for a phone's row beside the brand, which would wrap the buttons under it. */}
+                <Button asChild size="sm" className="hidden sm:inline-flex">
                   <Link to="/signup">
                     <Trans>Create account</Trans>
                   </Link>

@@ -35,7 +35,7 @@ export function sectionInstruction(
     case "fill-blank":
       return msg`Choose the best answer for （　　） from 1, 2, 3 and 4.`;
     case "sentence-order":
-      return msg`Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it.`;
+      return msg`Choose the best piece for ★ from 1, 2, 3 and 4. Tap a piece to put it in the next slot.`;
     case "passage": {
       const first = blankNums[0];
       const last = blankNums[blankNums.length - 1];

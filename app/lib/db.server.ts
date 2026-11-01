@@ -50,7 +50,7 @@ const SCHEMA = [
     chapter INTEGER NOT NULL,
     payload TEXT NOT NULL, -- KanjiChapter JSON: the chapter's words, for its flashcards
     updated_at TEXT NOT NULL,
-    position INTEGER, -- place in the kanji list, set by dragging; NULL until dragged
+    position INTEGER, -- unused: the kanji list's drag order, before it sorted by chapter
     PRIMARY KEY (level, chapter)
   )`,
   `CREATE TABLE IF NOT EXISTS learned_words (

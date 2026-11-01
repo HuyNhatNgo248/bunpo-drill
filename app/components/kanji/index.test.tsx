@@ -40,13 +40,12 @@ describe("KanjiHome", () => {
     expect(row.getByRole("link", { name: "Quiz" })).toHaveAttribute("href", "/tests/20261031-aaaaaa/results");
   });
 
-  it("opens a chapter's flashcards from anywhere on its row, and gives the row a handle to drag", async () => {
+  it("opens a chapter's flashcards from anywhere on its row", async () => {
     renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
     await screen.findByText("生活-1");
     const row = within(rowOf("生活-1"));
 
     expect(row.getByRole("link", { name: /生活-1/ })).toHaveAttribute("href", "/kanji/N2/1/cards");
-    expect(row.getByRole("button", { name: "Reorder “Chapter 1 生活-1”" })).toBeInTheDocument();
   });
 
   it("says a chapter has no quiz yet, and offers only its flashcards", async () => {
