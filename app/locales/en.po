@@ -47,11 +47,11 @@ msgstr "{gotIt} got it first time"
 msgid "{learned} learned"
 msgstr "{learned} learned"
 
-#: app/components/quiz/SubmitBar.tsx:70
+#: app/components/quiz/SubmitBar.tsx:59
 msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 
-#: app/components/quiz/SubmitBar.tsx:30
+#: app/components/quiz/SubmitBar.tsx:28
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
@@ -161,7 +161,7 @@ msgstr "Account"
 msgid "Again"
 msgstr "Again"
 
-#: app/components/quiz/SubmitBar.tsx:30
+#: app/components/quiz/SubmitBar.tsx:28
 msgid "All answered"
 msgstr "All answered"
 
@@ -187,7 +187,7 @@ msgstr "Answered"
 msgid "Answered {answered} / {total}"
 msgstr "Answered {answered} / {total}"
 
-#: app/components/quiz/SubmitBar.tsx:52
+#: app/components/quiz/SubmitBar.tsx:50
 msgid "Answered {done} / {total}"
 msgstr "Answered {done} / {total}"
 
@@ -317,14 +317,6 @@ msgstr "Choose the best way to write the underlined word in kanji from 1, 2, 3 a
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 
-#: app/components/quiz/SubmitBar.tsx:61
-msgid "Clear"
-msgstr "Clear"
-
-#: app/components/quiz/SubmitBar.tsx:64
-msgid "Clear answers"
-msgstr "Clear answers"
-
 #: app/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "Close"
@@ -345,7 +337,7 @@ msgstr "Correct {score} / {total}"
 msgid "Correct!"
 msgstr "Correct!"
 
-#: app/components/layout/header/index.tsx:73
+#: app/components/layout/header/index.tsx:74
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:44
 #: app/components/welcome/SampleQuiz.tsx:231
@@ -495,7 +487,7 @@ msgid "Kanji reading"
 msgstr "Kanji reading"
 
 #: app/components/quiz/CheckSection.tsx:59
-#: app/components/quiz/SubmitBar.tsx:78
+#: app/components/quiz/SubmitBar.tsx:67
 msgid "Keep answering"
 msgstr "Keep answering"
 
@@ -849,12 +841,12 @@ msgstr "Still learning ({again})"
 msgid "Subject"
 msgstr "Subject"
 
-#: app/components/quiz/SubmitBar.tsx:36
-#: app/components/quiz/SubmitBar.tsx:77
+#: app/components/quiz/SubmitBar.tsx:34
+#: app/components/quiz/SubmitBar.tsx:66
 msgid "Submit"
 msgstr "Submit"
 
-#: app/components/quiz/SubmitBar.tsx:36
+#: app/components/quiz/SubmitBar.tsx:34
 msgid "Submitting…"
 msgstr "Submitting…"
 
@@ -957,7 +949,7 @@ msgstr "Try again"
 msgid "Unanswered"
 msgstr "Unanswered"
 
-#: app/components/quiz/SubmitBar.tsx:76
+#: app/components/quiz/SubmitBar.tsx:65
 msgid "Unanswered questions count as wrong."
 msgstr "Unanswered questions count as wrong."
 

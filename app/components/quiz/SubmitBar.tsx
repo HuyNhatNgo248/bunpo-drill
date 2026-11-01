@@ -1,4 +1,4 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Plural, useLingui } from "@lingui/react/macro";
 import { useNavigation } from "react-router";
 import { ConfirmDialog } from "~/components/ConfirmDialog";
 import { Button } from "~/components/ui/button";
@@ -8,21 +8,19 @@ import { QuestionSheet } from "./question-nav/QuestionSheet";
 
 /**
  * The bar pinned to the bottom: the error of a failed submit, the question list (below desktop),
- * and the clear and submit buttons. Submitting with questions left asks first.
+ * and the submit button. Submitting with questions left asks first.
  */
 export function SubmitBar({
   sections,
   answered,
   left,
   error,
-  onClear,
   onSubmit,
 }: {
   sections: QuizSection[];
   answered: Set<string>;
   left: number;
   error?: string;
-  onClear: () => void;
   onSubmit: () => void;
 }) {
   const { t } = useLingui();
@@ -55,35 +53,25 @@ export function SubmitBar({
       <span role="status" className="hidden text-sm text-subtle-foreground lg:inline">
         {status}
       </span>
-      <div className="grid grid-cols-actions gap-2 md:flex">
-        <Button variant="outline" size="lg" onClick={onClear} className="text-secondary-foreground">
-          <span className="md:hidden">
-            <Trans>Clear</Trans>
-          </span>
-          <span className="hidden md:inline">
-            <Trans>Clear answers</Trans>
-          </span>
-        </Button>
-        {left > 0 ? (
-          <ConfirmDialog
-            title={
-              <Plural
-                value={left}
-                one="# question is unanswered. Submit anyway?"
-                other="# questions are unanswered. Submit anyway?"
-              />
-            }
-            description={t`Unanswered questions count as wrong.`}
-            confirmLabel={t`Submit`}
-            cancelLabel={t`Keep answering`}
-            onConfirm={onSubmit}
-          >
-            {submitButton()}
-          </ConfirmDialog>
-        ) : (
-          submitButton(onSubmit)
-        )}
-      </div>
+      {left > 0 ? (
+        <ConfirmDialog
+          title={
+            <Plural
+              value={left}
+              one="# question is unanswered. Submit anyway?"
+              other="# questions are unanswered. Submit anyway?"
+            />
+          }
+          description={t`Unanswered questions count as wrong.`}
+          confirmLabel={t`Submit`}
+          cancelLabel={t`Keep answering`}
+          onConfirm={onSubmit}
+        >
+          {submitButton()}
+        </ConfirmDialog>
+      ) : (
+        submitButton(onSubmit)
+      )}
     </div>
   );
 }

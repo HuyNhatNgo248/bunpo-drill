@@ -146,7 +146,6 @@
   --grid-template-columns-numbers: repeat(auto-fill, minmax(2.75rem, 1fr)); /* question numbers in the sheet */
   --grid-template-columns-term: auto 1fr; /* a term and its value */
   --grid-template-columns-quiz: 208px minmax(0, 1fr); /* the question list beside the questions */
-  --grid-template-columns-actions: 1fr 2fr; /* the clear and the submit button */
   --grid-template-columns-welcome: minmax(0, 1fr) minmax(0, 460px); /* the pitch beside the sample question */
   --grid-template-rows-dialog-header: auto 1fr; /* a dialog's title and description */
   --grid-template-rows-dialog-header-media: auto auto 1fr; /* with an icon above them */

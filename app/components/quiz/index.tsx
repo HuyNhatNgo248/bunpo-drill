@@ -7,7 +7,7 @@ import { ProgressHeader } from "~/components/ProgressHeader";
 import { homeOf } from "~/lib/links";
 import type { Answers, QuizView, ResultSection } from "~/lib/views";
 import { CheckSummary } from "./CheckSummary";
-import { checkedAnswers, quizProgress } from "./helpers/answers";
+import { quizProgress } from "./helpers/answers";
 import { useSavedAnswers, useSavedChecks } from "./hooks/useSavedAnswers";
 import { QuestionNav } from "./question-nav";
 import { ANSWER_MARKS, answeredMarks } from "./question-nav/QuestionGrid";
@@ -87,7 +87,6 @@ export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
               answered={answeredIds}
               left={left}
               error={error}
-              onClear={() => setAnswers((current) => checkedAnswers(quiz, checks, current))}
               onSubmit={send}
             />
           </div>

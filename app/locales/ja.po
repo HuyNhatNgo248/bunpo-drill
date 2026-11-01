@@ -47,11 +47,11 @@ msgstr "一回で覚えた {gotIt}枚"
 msgid "{learned} learned"
 msgstr "{learned}語 習得"
 
-#: app/components/quiz/SubmitBar.tsx:70
+#: app/components/quiz/SubmitBar.tsx:59
 msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 msgstr "{left, plural, other {未回答が#問あります。提出しますか？}}"
 
-#: app/components/quiz/SubmitBar.tsx:30
+#: app/components/quiz/SubmitBar.tsx:28
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
@@ -161,7 +161,7 @@ msgstr "アカウント"
 msgid "Again"
 msgstr "もう一度"
 
-#: app/components/quiz/SubmitBar.tsx:30
+#: app/components/quiz/SubmitBar.tsx:28
 msgid "All answered"
 msgstr "すべて回答済み"
 
@@ -187,7 +187,7 @@ msgstr "回答済み"
 msgid "Answered {answered} / {total}"
 msgstr "回答済み {answered} / {total}"
 
-#: app/components/quiz/SubmitBar.tsx:52
+#: app/components/quiz/SubmitBar.tsx:50
 msgid "Answered {done} / {total}"
 msgstr "回答済み {done} / {total}"
 
@@ -317,14 +317,6 @@ msgstr "＿＿＿の言葉を漢字で書くとき、最もよいものを1・2�
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "文の（　）に入る、いちばん自然な形を4つから選びます。"
 
-#: app/components/quiz/SubmitBar.tsx:61
-msgid "Clear"
-msgstr "クリア"
-
-#: app/components/quiz/SubmitBar.tsx:64
-msgid "Clear answers"
-msgstr "回答をクリア"
-
 #: app/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "閉じる"
@@ -345,7 +337,7 @@ msgstr "正解 {score} / {total}"
 msgid "Correct!"
 msgstr "正解！"
 
-#: app/components/layout/header/index.tsx:73
+#: app/components/layout/header/index.tsx:74
 #: app/components/login/LoginForm.tsx:73
 #: app/components/welcome/index.tsx:44
 #: app/components/welcome/SampleQuiz.tsx:231
@@ -495,7 +487,7 @@ msgid "Kanji reading"
 msgstr "漢字読み"
 
 #: app/components/quiz/CheckSection.tsx:59
-#: app/components/quiz/SubmitBar.tsx:78
+#: app/components/quiz/SubmitBar.tsx:67
 msgid "Keep answering"
 msgstr "解答を続ける"
 
@@ -849,12 +841,12 @@ msgstr "まだ覚えていない語（{again}）"
 msgid "Subject"
 msgstr "科目"
 
-#: app/components/quiz/SubmitBar.tsx:36
-#: app/components/quiz/SubmitBar.tsx:77
+#: app/components/quiz/SubmitBar.tsx:34
+#: app/components/quiz/SubmitBar.tsx:66
 msgid "Submit"
 msgstr "提出する"
 
-#: app/components/quiz/SubmitBar.tsx:36
+#: app/components/quiz/SubmitBar.tsx:34
 msgid "Submitting…"
 msgstr "提出中…"
 
@@ -957,7 +949,7 @@ msgstr "もう一度"
 msgid "Unanswered"
 msgstr "未回答"
 
-#: app/components/quiz/SubmitBar.tsx:76
+#: app/components/quiz/SubmitBar.tsx:65
 msgid "Unanswered questions count as wrong."
 msgstr "未回答の問題は不正解になります。"
 

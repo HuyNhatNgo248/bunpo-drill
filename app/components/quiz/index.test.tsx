@@ -128,14 +128,6 @@ describe("Quiz", () => {
       expect(await listButton()).toHaveTextContent("All answered");
     });
 
-    it("clears every answer", async () => {
-      renderQuiz();
-      await pick(1, "かいがあって");
-
-      await userEvent.click(screen.getByRole("button", { name: /Clear answers/ }));
-
-      expect(screen.getByText("Answered 0 / 3")).toBeInTheDocument();
-    });
   });
 
   describe("leaving before submitting", () => {
@@ -150,16 +142,6 @@ describe("Quiz", () => {
       expect(within(screen.getByRole("radiogroup", { name: "Choices for question 1" })).getByRole("radio", { name: /かいがあって/ })).toBeChecked();
     });
 
-    it("forgets the answers that were cleared", async () => {
-      const { unmount } = renderRouteOfQuiz();
-      await pick(1, "かいがあって");
-      await userEvent.click(screen.getByRole("button", { name: /Clear answers/ }));
-      unmount();
-
-      renderQuiz();
-
-      expect(await screen.findByText("Answered 0 / 3")).toBeInTheDocument();
-    });
   });
 
   describe("checking a part", () => {
@@ -221,19 +203,17 @@ describe("Quiz", () => {
       expect(screen.queryByRole("radiogroup", { name: "Choices for question 1" })).toBeNull();
     });
 
-    it("keeps the answers of a checked part when the rest are cleared, and sends them with the whole test", async () => {
+    it("sends the answers of a checked part with the whole test", async () => {
       const requests = renderQuiz();
       await pick(1, "かいがあって");
       await checkPart(1, "1 / 1");
-      await pick(3, "かいがあって");
 
-      await userEvent.click(screen.getByRole("button", { name: /Clear answers/ }));
       await userEvent.click(submitButton());
       await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Submit" }));
 
-      expect(screen.getByText("Answered 1 / 3")).toBeInTheDocument();
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: URL, body: { answers: { q1: 2 } } }]));
     });
+
   });
 
   describe("submitting", () => {
