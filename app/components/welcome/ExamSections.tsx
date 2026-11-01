@@ -1,13 +1,13 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useRef } from "react";
 import { Card } from "~/components/ui/card";
 import { SECTION_TITLES, sectionGloss } from "~/lib/sections";
 import { DEMO_STEPS, FormatDemo, useDemoSteps, type GrammarSection } from "./FormatDemo";
 
-const MotionCard = motion.create(Card);
+const MotionCard = m.create(Card);
 
 type Section = { no: number; type: GrammarSection; count: MessageDescriptor; how: MessageDescriptor };
 

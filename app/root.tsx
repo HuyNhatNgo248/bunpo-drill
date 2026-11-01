@@ -8,6 +8,7 @@ import { requireSignIn } from "~/lib/auth.server";
 import { describeError } from "~/lib/errors";
 import { localeFromCookie, localeFromMatches, translate } from "~/lib/i18n";
 import { loadServerCatalogs } from "~/lib/i18n/catalogs.server";
+import interFont from "./fonts/inter-latin.woff2?url";
 import "./tailwind.css";
 
 // Every page and API call needs the login cookie (or, for /api, the quiz skill's token).
@@ -17,18 +18,15 @@ export const middleware: Route.MiddlewareFunction[] = [
   ({ request, url }) => requireSignIn(request, url),
 ];
 
+// Inter is served from here (its @font-face is in tailwind.css). Noto Sans JP is too big to host, so it comes from Google.
 export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Noto+Sans+JP:wght@400..700&display=swap",
-  },
+  { rel: "preload", href: interFont, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
 ];
+
+// Added after the page loads: a <link> in the HTML blocks the first paint, and its ~400 KB of font files slow the page's own downloads on mobile.
+const JP_FONT_CSS = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400..700&display=swap";
+const loadJpFont = `addEventListener("load",()=>document.head.append(Object.assign(document.createElement("link"),{rel:"stylesheet",href:"${JP_FONT_CSS}"})))`;
 
 /** The language of the cookie, for the meta() of every route: meta() cannot read the request. */
 export function loader({ request }: Route.LoaderArgs) {
@@ -46,6 +44,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script dangerouslySetInnerHTML={{ __html: loadJpFont }} />
+        <noscript>
+          <link rel="stylesheet" href={JP_FONT_CSS} />
+        </noscript>
         <Meta />
         <Links />
       </head>

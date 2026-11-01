@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/react/macro";
-import { MotionConfig } from "motion/react";
+import { LazyMotion, MotionConfig } from "motion/react";
 import { Link } from "react-router";
 import { AppHeader } from "~/components/layout/header";
 import { Button } from "~/components/ui/button";
@@ -10,6 +10,8 @@ import { Footer } from "./Footer";
 import { SampleQuiz } from "./SampleQuiz";
 import { TrialTests } from "./TrialTests";
 
+const loadMotionFeatures = () => import("./motionFeatures").then((mod) => mod.default);
+
 /**
  * The page a signed-out visitor sees at /: what the app does, a sample question to answer, full tests to try, sign-up,
  * and the days to the next exam.
@@ -17,6 +19,7 @@ import { TrialTests } from "./TrialTests";
 export function Welcome({ exam, trials }: { exam: { date: string; daysLeft: number }; trials: TrialSummary[] }) {
   return (
     // Animations follow the visitor's reduced-motion setting.
+    <LazyMotion features={loadMotionFeatures} strict>
     <MotionConfig reducedMotion="user">
       {/* A column the height of the screen, so the footer sits at the bottom even when the page is short. */}
       <div className="flex min-h-screen flex-col">
@@ -73,5 +76,6 @@ export function Welcome({ exam, trials }: { exam: { date: string; daysLeft: numb
         <Footer />
       </div>
     </MotionConfig>
+    </LazyMotion>
   );
 }

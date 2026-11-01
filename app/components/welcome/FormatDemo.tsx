@@ -1,4 +1,4 @@
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { m, useInView, useReducedMotion } from "motion/react";
 import { type RefObject, useEffect, useState } from "react";
 import type { SectionType } from "~/lib/payload";
 import { cn } from "~/lib/utils";
@@ -61,14 +61,14 @@ export function FormatDemo({ type, step }: { type: SectionType; step: number }) 
 function Blank({ text, label, filled }: { text: string; label?: string; filled: boolean }) {
   return (
     <span className="relative inline-block border-b border-faint px-0.5 text-center">
-      <motion.span
+      <m.span
         initial={false}
         animate={filled ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
         className="inline-block font-medium text-primary"
       >
         {text}
-      </motion.span>
+      </m.span>
       {label && (
         <span className={cn("absolute inset-0 transition-opacity", filled && "opacity-0")}>（{label}）</span>
       )}
@@ -89,7 +89,7 @@ function OrderDemo({ step }: { step: number }) {
       {order.map((piece, slot) => {
         const star = step >= 2 && slot === 2;
         return (
-          <motion.span
+          <m.span
             key={piece}
             layout
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -100,7 +100,7 @@ function OrderDemo({ step }: { step: number }) {
           >
             {star && "★ "}
             {PIECES[piece]}
-          </motion.span>
+          </m.span>
         );
       })}
       <span>合格した。</span>

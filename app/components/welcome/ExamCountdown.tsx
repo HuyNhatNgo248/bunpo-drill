@@ -1,6 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRightIcon } from "lucide-react";
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react";
+import { animate, m, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
@@ -71,8 +71,8 @@ function CountUp({ to, className }: { to: number; className: string }) {
   }, [inView, reduce, to, count]);
 
   return (
-    <motion.span ref={ref} className={className}>
+    <m.span ref={ref} className={className}>
       {shown}
-    </motion.span>
+    </m.span>
   );
 }

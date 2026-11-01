@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Link } from "react-router";
@@ -10,7 +10,7 @@ import { SECTION_TITLES, sectionGloss } from "~/lib/sections";
 import { cn } from "~/lib/utils";
 import { SAMPLES } from "./helpers/samples";
 
-const MotionCard = motion.create(Card);
+const MotionCard = m.create(Card);
 
 /** The cards in the deck: one per question, then the score. */
 const DECK = SAMPLES.length + 1;
@@ -245,7 +245,7 @@ function Score({ score, onRestart }: { score: number; onRestart: () => void }) {
  */
 function Seal() {
   return (
-    <motion.svg
+    <m.svg
       aria-hidden="true"
       viewBox="0 0 72 74"
       initial={{ opacity: 0, scale: 1.6 }}
@@ -265,6 +265,6 @@ function Seal() {
       <text x="36" y="52" textAnchor="middle" fontSize="17" className="fill-primary stroke-none font-jp font-bold">
         正解
       </text>
-    </motion.svg>
+    </m.svg>
   );
 }
