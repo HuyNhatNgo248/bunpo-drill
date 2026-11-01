@@ -8,7 +8,7 @@ export type RecordedRequest = { method: string; path: string; body: unknown };
  * @example
  * const { action, requests } = recordingAction();
  * // … click the button …
- * await waitFor(() => expect(requests).toEqual([{ method: "DELETE", path: "/api/tests", body: null }]));
+ * await waitFor(() => expect(requests).toEqual([{ method: "POST", path: "/tests/1/retake", body: null }]));
  */
 export function recordingAction() {
   const requests: RecordedRequest[] = [];

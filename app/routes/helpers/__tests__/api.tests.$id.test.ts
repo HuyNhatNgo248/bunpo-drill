@@ -16,22 +16,6 @@ function send(id: string, method: string, body?: unknown) {
 
 beforeEach(resetDatabase);
 
-describe("DELETE /api/tests/:id", () => {
-  it("deletes the test and answers with its id", async () => {
-    const { id } = await createTest(buildPayload());
-
-    expect(await (await send(id, "DELETE")).json()).toEqual({ deleted: id });
-    expect(await getTest(id)).toBeNull();
-  });
-
-  it("answers 404 for a test that does not exist", async () => {
-    const response = await send(UNKNOWN_ID, "DELETE");
-
-    expect(response.status).toBe(404);
-    expect(await response.json()).toEqual({ error: "Test not found." });
-  });
-});
-
 describe("PATCH /api/tests/:id", () => {
   it("marks a review chip and answers with the marks of the test", async () => {
     const { id } = await createTest(buildPayload());
@@ -70,9 +54,9 @@ describe("PATCH /api/tests/:id", () => {
 
 describe("another method", () => {
   it("answers 405 and names the methods it allows", async () => {
-    const response = await send(UNKNOWN_ID, "POST", {});
+    const response = await send(UNKNOWN_ID, "DELETE");
 
     expect(response.status).toBe(405);
-    expect(response.headers.get("Allow")).toBe("PATCH, DELETE");
+    expect(response.headers.get("Allow")).toBe("PATCH");
   });
 });

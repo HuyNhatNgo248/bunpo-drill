@@ -101,21 +101,11 @@ describe("POST /api/tests", () => {
   });
 });
 
-describe("DELETE /api/tests", () => {
-  it("deletes every test and answers with how many it deleted", async () => {
-    await createTest(buildPayload());
-    await createTest(buildPayload());
-
-    expect(await (await send("DELETE")).json()).toEqual({ deleted: 2 });
-    expect(await listTests()).toEqual([]);
-  });
-});
-
 describe("another method", () => {
   it("answers 405 and names the methods it allows", async () => {
-    const response = await send("PUT", {});
+    const response = await send("DELETE");
 
     expect(response.status).toBe(405);
-    expect(response.headers.get("Allow")).toBe("GET, POST, DELETE");
+    expect(response.headers.get("Allow")).toBe("GET, POST");
   });
 });

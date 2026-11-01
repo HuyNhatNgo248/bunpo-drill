@@ -5,7 +5,7 @@ import { chapterWords } from "~/lib/kanji-views.server";
 import type { KanjiTestPayload } from "~/lib/kanji-payload";
 import type { PayloadIssue } from "~/lib/payload";
 import { isKanji, parseAnyPayload } from "~/lib/test-kinds";
-import { createTest, deleteAllTests, listTests } from "~/lib/tests.server";
+import { createTest, listTests } from "~/lib/tests.server";
 
 /** GET /api/tests: every saved test with its last score and the grammar to review. */
 export async function loader(_: Route.LoaderArgs) {
@@ -13,10 +13,7 @@ export async function loader(_: Route.LoaderArgs) {
   return Response.json({ tests: tests.map(toSummary) });
 }
 
-/**
- * POST /api/tests: save a new test (the standard v1 payload, or a kanji test on a chapter already sent).
- * DELETE /api/tests: clear all tests.
- */
+/** POST /api/tests: save a new test (the standard v1 payload, or a kanji test on a chapter already sent). */
 export async function action({ request }: Route.ActionArgs) {
   switch (request.method) {
     case "POST": {
@@ -38,14 +35,10 @@ export async function action({ request }: Route.ActionArgs) {
       const url = new URL(`/tests/${test.id}`, request.url).toString();
       return Response.json({ id: test.id, url }, { status: 201, headers: { Location: url } });
     }
-    case "DELETE": {
-      const deleted = await deleteAllTests();
-      return Response.json({ deleted });
-    }
     default:
       return Response.json(
         { error: "Method not allowed." },
-        { status: 405, headers: { Allow: "GET, POST, DELETE" } },
+        { status: 405, headers: { Allow: "GET, POST" } },
       );
   }
 }

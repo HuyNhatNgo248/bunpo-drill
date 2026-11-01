@@ -314,27 +314,6 @@ export async function setReviewed(
   return getTest(id);
 }
 
-export async function deleteTest(id: string): Promise<boolean> {
-  if (!ID.test(id)) return false;
-  const db = await orm();
-  const [, , deleted] = await write([
-    db.delete(reviewed).where(eq(reviewed.testId, id)),
-    db.delete(attempts).where(eq(attempts.testId, id)),
-    db.delete(tests).where(eq(tests.id, id)),
-  ]);
-  return deleted.rowsAffected > 0;
-}
-
-export async function deleteAllTests(): Promise<number> {
-  const db = await orm();
-  const [, , deleted] = await write([
-    db.delete(reviewed),
-    db.delete(attempts),
-    db.delete(tests),
-  ]);
-  return deleted.rowsAffected;
-}
-
 /** The JSON of a test's marked chips and attempts, as `related` reads them. */
 type Related = { reviewed: string; attempts: string };
 

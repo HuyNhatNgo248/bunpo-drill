@@ -89,9 +89,7 @@ All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without 
 | --- | --- | --- |
 | `POST` | `/api/tests` | Save a test. 201 → `{ id, url }`; 400 → `{ error, issues: [{ path, message }] }` |
 | `GET` | `/api/tests` | All tests with last score and grammar to review |
-| `DELETE` | `/api/tests` | Clear all tests |
 | `PATCH` | `/api/tests/:id` | `{ grammarId, reviewed }`: mark a review chip |
-| `DELETE` | `/api/tests/:id` | Delete one test |
 | `POST` | `/api/kanji/chapters` | Save (or replace) a kanji chapter's words. 201 → `{ level, chapter, words, url }`; 400 → `{ error, issues }` |
 
 `POST /api/tests` takes a kanji test too (`"kind": "kanji"`); `GET /api/tests` and the list on `/`

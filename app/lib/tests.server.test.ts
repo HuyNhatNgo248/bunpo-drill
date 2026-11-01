@@ -7,8 +7,6 @@ import { db } from "./db.server";
 import { learnedIds, markLearned } from "./kanji.server";
 import {
   createTest,
-  deleteAllTests,
-  deleteTest,
   getTest,
   levelStats,
   listTests,
@@ -288,37 +286,5 @@ describe("resetTest", () => {
 
   it("returns false for an id that no test has", async () => {
     expect(await resetTest(UNKNOWN_ID)).toBe(false);
-  });
-});
-
-describe("deleteTest", () => {
-  it("deletes the test, its review marks and its attempts, and returns true", async () => {
-    const { id } = await createTest(buildPayload());
-    await setReviewed(id, GRAMMAR_ID, true);
-    await saveSubmission(id, buildSubmission());
-
-    expect(await deleteTest(id)).toBe(true);
-    expect(await getTest(id)).toBeNull();
-    expect((await (await db()).execute("SELECT * FROM attempts")).rows).toHaveLength(0);
-  });
-
-  it("returns false for an id that no test has", async () => {
-    expect(await deleteTest(UNKNOWN_ID)).toBe(false);
-  });
-
-  it("returns false for a value that is not an id", async () => {
-    expect(await deleteTest("not-an-id")).toBe(false);
-  });
-});
-
-describe("deleteAllTests", () => {
-  it("deletes every test and returns how many it deleted", async () => {
-    const { id } = await createTest(buildPayload());
-    await createTest(buildPayload());
-    await setReviewed(id, GRAMMAR_ID, true);
-    await saveSubmission(id, buildSubmission());
-
-    expect(await deleteAllTests()).toBe(2);
-    expect(await listTests()).toEqual([]);
   });
 });
