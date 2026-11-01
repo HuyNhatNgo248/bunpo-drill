@@ -4,7 +4,7 @@ import { warmDrawerFigure } from "~/components/helpers/drawerFigure";
 import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
-import { isTestLevel, JLPT_LEVELS, type JlptLevel } from "~/lib/payload";
+import { isTestLevel, JLPT_LEVELS, type JlptLevel } from "~/lib/levels";
 import type { TestSummary } from "~/lib/views";
 import { SortMenu } from "./SortMenu";
 import { Stats, type HomeStats } from "./Stats";

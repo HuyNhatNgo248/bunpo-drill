@@ -1,6 +1,6 @@
 import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
-import { desc, eq, or, sql } from "drizzle-orm";
+import { asc, desc, eq, or, sql } from "drizzle-orm";
 import { orm } from "./db.server";
 import { users } from "./schema.server";
 import { normalizeEmail } from "./users";
@@ -56,6 +56,12 @@ export async function verifyUser(login: string, password: string): Promise<numbe
     .orderBy(desc(sql`${users.email} = ${email}`))
     .limit(1);
   return row && (await matches(password, row.password)) ? row.id : null;
+}
+
+/** The oldest account, the app's owner: whose progress the quiz skill's token reads and writes. Null before there is one. */
+export async function ownerId(): Promise<number | null> {
+  const [owner] = await (await orm()).select({ id: users.id }).from(users).orderBy(asc(users.id)).limit(1);
+  return owner?.id ?? null;
 }
 
 export async function getUser(id: number): Promise<User | null> {

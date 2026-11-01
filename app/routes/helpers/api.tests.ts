@@ -1,4 +1,5 @@
 import type { Route } from "./+types/api.tests";
+import { requireUserId } from "~/lib/auth.server";
 import { toSummary } from "~/lib/grading.server";
 import { getChapter } from "~/lib/kanji.server";
 import { chapterWords } from "~/lib/kanji-views.server";
@@ -7,9 +8,9 @@ import type { PayloadIssue } from "~/lib/payload";
 import { isKanji, parseAnyPayload } from "~/lib/test-kinds";
 import { createTest, listTests } from "~/lib/tests.server";
 
-/** GET /api/tests: every saved test with its last score and the grammar to review. */
-export async function loader(_: Route.LoaderArgs) {
-  const tests = await listTests();
+/** GET /api/tests: every saved test with the caller's last score and grammar to review. */
+export async function loader({ request }: Route.LoaderArgs) {
+  const tests = await listTests(await requireUserId(request));
   return Response.json({ tests: tests.map(toSummary) });
 }
 

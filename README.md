@@ -64,7 +64,8 @@ quiz gets wrong loses the mark, so it comes back first.
 ## Sign-in
 
 Accounts, in `app/lib/auth.server.ts` and `app/lib/users.server.ts`. Everyone signs up at
-`/signup` with a username, an email and a password, and sign in at `/signin`. Anyone who finds the site can make an account. All users see the same tests.
+`/signup` with a username, an email and a password, and sign in at `/signin`. Anyone who finds the site can make an account. Tests and kanji chapters are shared; each user's results, drafts,
+review marks and learned words are their own.
 
 A root middleware checks every request: without the login cookie, `/` redirects to `/welcome`, other pages to `/signin`, and
 `/api` answers 401. Signing in sets a cookie signed with `SESSION_SECRET` for 30 days. `/account`
@@ -88,7 +89,7 @@ All need the login cookie or `Authorization: Bearer <BUNPO_API_TOKEN>`; without 
 | Method | Path | Does |
 | --- | --- | --- |
 | `POST` | `/api/tests` | Save a test. 201 → `{ id, url }`; 400 → `{ error, issues: [{ path, message }] }` |
-| `GET` | `/api/tests` | All tests with last score and grammar to review |
+| `GET` | `/api/tests` | All tests with your last score and grammar to review (with the token: the oldest account's) |
 | `PATCH` | `/api/tests/:id` | `{ grammarId, reviewed }`: mark a review chip |
 | `POST` | `/api/kanji/chapters` | Save (or replace) a kanji chapter's words. 201 → `{ level, chapter, words, url }`; 400 → `{ error, issues }` |
 

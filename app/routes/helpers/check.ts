@@ -2,6 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { data, redirect } from "react-router";
 import { z } from "zod";
 import type { Route } from "./+types/check";
+import { requireUserId } from "~/lib/auth.server";
 import { testNotFound } from "~/lib/errors";
 import { gradeTest, submittedAnswersSchema } from "~/lib/grading.server";
 import { requestLocale, translate } from "~/lib/i18n";
@@ -15,7 +16,7 @@ const checkSchema = z.object({ section: z.number().int().min(1).max(3), answers:
  * submit grades the whole test again.
  */
 export async function action({ request, params }: Route.ActionArgs) {
-  const test = await getTest(params.id);
+  const test = await getTest(params.id, await requireUserId(request));
   if (!test) throw testNotFound();
   // Taken already (a second tab): the results show every part.
   if (test.submission) return redirect(`/tests/${test.id}/results`);

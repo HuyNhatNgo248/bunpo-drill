@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/home";
 import { Home } from "~/components/home";
+import { requireUserId } from "~/lib/auth.server";
 import { toSummary } from "~/lib/grading.server";
 import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
 import { levelStats, listTests, newestLevel } from "~/lib/tests.server";
@@ -19,7 +20,8 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!level || !isTestLevel(level)) {
     return { tests: [], stats: { total: 0, taken: 0, average: null, toReview: 0 }, level, latestFirst };
   }
-  const [stats, tests] = await Promise.all([levelStats(level), listTests({ level, latestFirst })]);
+  const userId = await requireUserId(request);
+  const [stats, tests] = await Promise.all([levelStats(level, userId), listTests(userId, { level, latestFirst })]);
   return { tests: tests.map(toSummary), stats, level, latestFirst };
 }
 

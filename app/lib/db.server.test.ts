@@ -3,7 +3,10 @@ import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 /** The tables that the app reads and writes. */
-const TABLES = ["attempts", "kanji_chapters", "learned_words", "password_resets", "reviewed", "tests", "users"];
+const TABLES = ["attempts", "kanji_chapters", "learned_words", "password_resets", "progress", "reviewed", "tests", "users"];
+
+/** The users table from before emails and session versions. */
+const OLD_USERS = "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE COLLATE NOCASE, password TEXT NOT NULL, created_at TEXT NOT NULL)";
 
 /**
  * A fresh copy of db.server.ts. The module keeps one client for the life of the process,
@@ -55,7 +58,7 @@ describe("db", () => {
     vi.stubEnv("DATA_DIR", dir);
     const { createClient } = await import("@libsql/client");
     const old = createClient({ url: `file:${path.join(dir, "bunpo.db")}` });
-    await old.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE COLLATE NOCASE, password TEXT NOT NULL, created_at TEXT NOT NULL)");
+    await old.execute(OLD_USERS);
     await old.execute("INSERT INTO users (name, password, created_at) VALUES ('Huy', 'x', 'now')");
     old.close();
 
@@ -68,12 +71,14 @@ describe("db", () => {
     await expect(client.execute("UPDATE users SET email = 'huy@example.com' WHERE name = 'Mai'")).rejects.toThrow(/UNIQUE/);
   });
 
-  it("turns each result saved before attempts were kept into the first attempt of its test", async () => {
+  it("turns each result saved before attempts were kept into the owner's first attempt of its test", async () => {
     const dir = path.join(process.env.DATA_DIR!, "before-attempts");
     mkdirSync(dir);
     vi.stubEnv("DATA_DIR", dir);
     const { createClient } = await import("@libsql/client");
     const old = createClient({ url: `file:${path.join(dir, "bunpo.db")}` });
+    await old.execute(OLD_USERS);
+    await old.execute("INSERT INTO users (name, password, created_at) VALUES ('Huy', 'x', 'now')");
     await old.execute("CREATE TABLE tests (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, position INTEGER, payload TEXT NOT NULL, submission TEXT)");
     await old.execute(`INSERT INTO tests (id, created_at, payload, submission) VALUES
       ('20261027-aaaaaa', 'now', '{}', '{"submittedAt":"2026-10-27T09:30:00.000Z","score":2,"total":3}'),
@@ -84,10 +89,45 @@ describe("db", () => {
     const client = await (await loadDb())();
     await (await loadDb())(); // Starting again adds no second copy.
 
-    const { rows } = await client.execute("SELECT test_id, submitted_at, score, total FROM attempts");
+    const { rows } = await client.execute("SELECT user_id, test_id, submitted_at, score, total FROM attempts");
     expect(rows.map((row) => ({ ...row }))).toEqual([
-      { test_id: "20261027-aaaaaa", submitted_at: "2026-10-27T09:30:00.000Z", score: 2, total: 3 },
+      { user_id: 1, test_id: "20261027-aaaaaa", submitted_at: "2026-10-27T09:30:00.000Z", score: 2, total: 3 },
     ]);
+  });
+
+  it("gives the progress from before it was each user's to the oldest account, once", async () => {
+    const dir = path.join(process.env.DATA_DIR!, "before-users-progress");
+    mkdirSync(dir);
+    vi.stubEnv("DATA_DIR", dir);
+    const { createClient } = await import("@libsql/client");
+    const old = createClient({ url: `file:${path.join(dir, "bunpo.db")}` });
+    await old.batch([
+      OLD_USERS,
+      "INSERT INTO users (name, password, created_at) VALUES ('Huy', 'x', 'now'), ('Mai', 'x', 'now')",
+      "CREATE TABLE tests (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, position INTEGER, payload TEXT NOT NULL, submission TEXT, draft TEXT)",
+      `INSERT INTO tests (id, created_at, payload, submission, draft) VALUES
+        ('20261027-aaaaaa', 'now', '{}', '{"submittedAt":"2026-10-27T09:30:00.000Z","score":2,"total":3}', NULL),
+        ('20261027-bbbbbb', 'now', '{}', NULL, '{"answers":{"q1":2},"checked":[]}'),
+        ('20261027-cccccc', 'now', '{}', NULL, NULL)`,
+      "CREATE TABLE reviewed (test_id TEXT NOT NULL REFERENCES tests (id), grammar_id TEXT NOT NULL, PRIMARY KEY (test_id, grammar_id))",
+      "INSERT INTO reviewed VALUES ('20261027-aaaaaa', 'n2-w1-d1-g1')",
+      "CREATE TABLE learned_words (word_id TEXT PRIMARY KEY, learned_at TEXT NOT NULL)",
+      "INSERT INTO learned_words VALUES ('n2-c1-招待状', 'now')",
+    ]);
+    old.close();
+
+    const client = await (await loadDb())();
+    await (await loadDb())(); // Starting again moves nothing twice.
+
+    const rowsOf = async (sql: string) => (await client.execute(sql)).rows.map((row) => ({ ...row }));
+    expect(await rowsOf("SELECT user_id, test_id, submission IS NOT NULL AS taken, draft FROM progress ORDER BY test_id")).toEqual([
+      { user_id: 1, test_id: "20261027-aaaaaa", taken: 1, draft: null },
+      { user_id: 1, test_id: "20261027-bbbbbb", taken: 0, draft: '{"answers":{"q1":2},"checked":[]}' },
+    ]);
+    expect(await rowsOf("SELECT count(*) AS n FROM tests WHERE submission IS NOT NULL OR draft IS NOT NULL")).toEqual([{ n: 0 }]);
+    expect(await rowsOf("SELECT user_id, test_id FROM attempts")).toEqual([{ user_id: 1, test_id: "20261027-aaaaaa" }]);
+    expect(await rowsOf("SELECT user_id, grammar_id FROM reviewed")).toEqual([{ user_id: 1, grammar_id: "n2-w1-d1-g1" }]);
+    expect(await rowsOf("SELECT user_id, word_id FROM learned_words")).toEqual([{ user_id: 1, word_id: "n2-c1-招待状" }]);
   });
 
   describe("connecting", () => {

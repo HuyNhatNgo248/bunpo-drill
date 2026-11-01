@@ -30,6 +30,7 @@ export function TestRow({ test }: { test: TestSummary }) {
       {/* Its ::after fills the row under the buttons, so the whole row opens the test but the buttons still work. */}
       <Link
         to={test.result ? `${quizHref}/results` : quizHref}
+        prefetch="intent"
         className="flex min-w-0 flex-1 items-start gap-3 text-foreground no-underline after:absolute after:inset-0 after:-z-10 md:flex-row-title md:items-center md:gap-4"
       >
         <NumberTile value={heading.week} label={<Trans>week</Trans>} />
@@ -89,7 +90,9 @@ export function TestRow({ test }: { test: TestSummary }) {
           </>
         ) : (
           <Button asChild variant={inProgress ? "outline" : "default"} className="col-span-2 md:px-4.5">
-            <Link to={quizHref}>{inProgress ? t`Continue` : t`Start the test`}</Link>
+            <Link to={quizHref} prefetch="intent">
+              {inProgress ? t`Continue` : t`Start the test`}
+            </Link>
           </Button>
         )}
       </div>

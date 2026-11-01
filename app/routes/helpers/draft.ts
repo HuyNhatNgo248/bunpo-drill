@@ -1,4 +1,5 @@
 import type { Route } from "./+types/draft";
+import { requireUserId } from "~/lib/auth.server";
 import { draftSchema } from "~/lib/grading.server";
 import { saveDraft } from "~/lib/tests.server";
 
@@ -9,6 +10,6 @@ import { saveDraft } from "~/lib/tests.server";
 export async function action({ request, params }: Route.ActionArgs) {
   const body = draftSchema.safeParse(await request.json().catch(() => null));
   if (!body.success) return Response.json({ error: 'Body must be {"answers": {…}, "checked": number[]}.' }, { status: 400 });
-  await saveDraft(params.id, body.data);
+  await saveDraft(await requireUserId(request), params.id, body.data);
   return new Response(null, { status: 204 });
 }

@@ -1,7 +1,7 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { createCookieSessionStorage, redirect, type SessionStorage } from "react-router";
 import { requiredEnv } from "./env.server";
-import { getSessionVersion } from "./users.server";
+import { getSessionVersion, ownerId } from "./users.server";
 
 /**
  * Anyone can sign up, then sign in with a name and
@@ -65,9 +65,13 @@ export async function currentUserId(request: Request): Promise<number | null> {
   return (await getSessionVersion(userId)) === (session.get("version") ?? 0) ? userId : null;
 }
 
-/** The signed-in user's id; pages behind the root middleware always have one, /api calls may not. */
+/**
+ * The signed-in user's id; pages behind the root middleware always have one. An /api call with the quiz skill's token
+ * acts as the owner (the oldest account).
+ * shortcut: one token for one account; give each user their own token if anyone else runs the quiz skill.
+ */
 export async function requireUserId(request: Request): Promise<number> {
-  const id = await currentUserId(request);
+  const id = (await currentUserId(request)) ?? (hasApiToken(request) ? await ownerId() : null);
   if (id === null) throw Response.json({ error: "Sign in to do this." }, { status: 401 });
   return id;
 }

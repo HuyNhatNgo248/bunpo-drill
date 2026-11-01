@@ -1,4 +1,4 @@
-import { isTestLevel, type JlptLevel } from "~/lib/payload";
+import { isTestLevel, type JlptLevel } from "~/lib/levels";
 
 /**
  * Hairline's Drawer, the figure of a level that has no tests yet, loaded on first use: the package's React entry

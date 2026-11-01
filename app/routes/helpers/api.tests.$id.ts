@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { Route } from "./+types/api.tests.$id";
+import { requireUserId } from "~/lib/auth.server";
 import { setReviewed } from "~/lib/tests.server";
 
 const reviewedSchema = z.object({ grammarId: z.string().min(1), reviewed: z.boolean() });
@@ -12,7 +13,7 @@ export async function action({ request, params }: Route.ActionArgs) {
       if (!parsed.success) {
         return Response.json({ error: 'Body must be {"grammarId": string, "reviewed": boolean}.' }, { status: 400 });
       }
-      const test = await setReviewed(params.id, parsed.data.grammarId, parsed.data.reviewed);
+      const test = await setReviewed(await requireUserId(request), params.id, parsed.data.grammarId, parsed.data.reviewed);
       return test
         ? Response.json({ reviewed: test.reviewed })
         : Response.json({ error: "Test not found." }, { status: 404 });

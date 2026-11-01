@@ -2,22 +2,29 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { buildKanjiChapter, buildKanjiTestPayload, WORD_ID } from "#mocks/factories/kanji";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
+import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { markLearned, saveChapter } from "~/lib/kanji.server";
 import { createTest, saveSubmission } from "~/lib/tests.server";
 import { loader, meta } from "../kanji";
 
-/** Runs the loader for /kanji with `search`. */
-const load = (search = "") => loader(routeArgs<Parameters<typeof loader>[0]>(new Request(`https://bunpo.test/kanji${search}`)));
+/** The signed-in user, whose progress the routes read and write. */
+const USER_ID = 1;
 
-beforeEach(resetDatabase);
+/** Runs the loader for /kanji with `search`. */
+const load = async (search = "") => loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, `https://bunpo.test/kanji${search}`)));
+
+beforeEach(async () => {
+  await resetDatabase();
+  await ensureUser(USER_ID);
+});
 
 describe("kanji loader", () => {
   it("sums up each chapter of the level, with its newest quiz, and the figures over them", async () => {
     await saveChapter(buildKanjiChapter());
-    await markLearned(WORD_ID);
+    await markLearned(USER_ID, WORD_ID);
     const { id } = await createTest(buildKanjiTestPayload());
-    await saveSubmission(id, buildSubmission({ score: 1, total: 2 }));
+    await saveSubmission(USER_ID, id, buildSubmission({ score: 1, total: 2 }));
 
     expect((await load("?level=N2")).home).toEqual({
       level: "N2",

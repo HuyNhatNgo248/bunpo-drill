@@ -2,16 +2,20 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { buildPayload } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
+import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
 import { createTest, getTest, saveSubmission } from "~/lib/tests.server";
 import { action } from "../check";
 
+/** The signed-in user, whose progress the routes read and write. */
+const USER_ID = 1;
+
 const UNKNOWN_ID = "20261027-000000";
 
 /** The quiz's check of one part: the part and the answers as JSON, the way its fetcher sends them. */
-function check(id: string, body: unknown) {
-  const request = new Request(`https://bunpo.test/tests/${id}/check`, {
+async function check(id: string, body: unknown) {
+  const request = await signedInRequest(USER_ID, `https://bunpo.test/tests/${id}/check`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: typeof body === "string" ? body : JSON.stringify(body),
@@ -19,7 +23,10 @@ function check(id: string, body: unknown) {
   return action(routeArgs<Parameters<typeof action>[0]>(request, { id }));
 }
 
-beforeEach(resetDatabase);
+beforeEach(async () => {
+  await resetDatabase();
+  await ensureUser(USER_ID);
+});
 
 describe("POST /tests/:id/check", () => {
   it("grades the part asked for, with its right answers, and saves nothing", async () => {
@@ -30,7 +37,7 @@ describe("POST /tests/:id/check", () => {
     expect(result).toMatchObject({
       section: { no: 1, type: "fill-blank", correct: 1, total: 1, groups: [{ questions: [{ id: "q1", correct: true }] }] },
     });
-    expect(await getTest(id)).toMatchObject({ submission: null, attempts: [] });
+    expect(await getTest(id, USER_ID)).toMatchObject({ submission: null, attempts: [] });
   });
 
   it("counts an unanswered question of the part as wrong", async () => {
@@ -50,7 +57,7 @@ describe("POST /tests/:id/check", () => {
 
   it("sends a test that is taken already to its results", async () => {
     const { id } = await createTest(buildPayload());
-    await saveSubmission(id, buildSubmission());
+    await saveSubmission(USER_ID, id, buildSubmission());
 
     const response = (await check(id, { section: 1, answers: {} })) as Response;
 

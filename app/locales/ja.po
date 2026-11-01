@@ -47,7 +47,7 @@ msgstr "{daysLeft, plural, other {1日1回の模擬試験なら、試験日ま�
 msgid "{gotIt} got it first time"
 msgstr "一回で覚えた {gotIt}枚"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:45
+#: app/components/kanji/chapter-list/ChapterRow.tsx:46
 msgid "{learned} learned"
 msgstr "{learned}語 習得"
 
@@ -84,7 +84,7 @@ msgstr "{text}（配置済み）"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
-#: app/components/home/test-list/TestRow.tsx:56
+#: app/components/home/test-list/TestRow.tsx:57
 #: app/components/quiz/index.tsx:62
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
@@ -93,7 +93,7 @@ msgstr "{total, plural, other {#問}}"
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, other {この問題には未回答が#問あります。採点しますか？}}"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:43
+#: app/components/kanji/chapter-list/ChapterRow.tsx:44
 msgid "{words, plural, one {# word} other {# words}}"
 msgstr "{words, plural, other {#語}}"
 
@@ -254,7 +254,7 @@ msgstr "終わったカード"
 msgid "Cards done {done} / {total}"
 msgstr "終わったカード {done} / {total}"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:29
+#: app/components/kanji/chapter-list/ChapterRow.tsx:30
 msgid "ch."
 msgstr "章"
 
@@ -336,7 +336,7 @@ msgstr "文の（　）に入る、いちばん自然な形を4つから選び�
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:92
+#: app/components/home/test-list/TestRow.tsx:94
 msgid "Continue"
 msgstr "続きから"
 
@@ -405,8 +405,8 @@ msgstr "エラー {status}"
 
 #: app/components/flashcards/index.tsx:58
 #: app/components/flashcards/index.tsx:70
-#: app/components/kanji/chapter-list/ChapterRow.tsx:62
-#: app/routes/flashcards.tsx:13
+#: app/components/kanji/chapter-list/ChapterRow.tsx:63
+#: app/routes/flashcards.tsx:14
 msgid "Flashcards"
 msgstr "単語カード"
 
@@ -475,7 +475,7 @@ msgstr "心当たりがない場合は、このメールを無視してくださ
 msgid "In progress"
 msgstr "解答中"
 
-#: app/components/home/test-list/TestRow.tsx:49
+#: app/components/home/test-list/TestRow.tsx:50
 msgid "In progress {answered} / {total}"
 msgstr "解答中 {answered} / {total}"
 
@@ -494,7 +494,7 @@ msgstr "本番形式で練習する、JLPTの文法"
 #: app/components/kanji/index.tsx:28
 #: app/components/results/Actions.tsx:16
 #: app/components/SubjectTabs.tsx:15
-#: app/routes/kanji.tsx:10
+#: app/routes/kanji.tsx:11
 msgid "Kanji"
 msgstr "漢字"
 
@@ -528,7 +528,7 @@ msgstr "訓"
 msgid "Language: {0}"
 msgstr "言語：{0}"
 
-#: app/components/home/test-list/TestRow.tsx:60
+#: app/components/home/test-list/TestRow.tsx:61
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
@@ -560,7 +560,7 @@ msgstr "間違えた単語"
 
 #: app/components/home/index.tsx:33
 #: app/components/results/Actions.tsx:25
-#: app/routes/home.tsx:10
+#: app/routes/home.tsx:11
 msgid "Mock tests"
 msgstr "模擬試験"
 
@@ -612,7 +612,7 @@ msgstr "{level}の章はまだありません"
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:49
+#: app/components/kanji/chapter-list/ChapterRow.tsx:50
 msgid "no quiz yet"
 msgstr "クイズはまだありません"
 
@@ -719,7 +719,7 @@ msgstr "問題{num}（不正解）"
 msgid "Question list"
 msgstr "問題一覧"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:68
+#: app/components/kanji/chapter-list/ChapterRow.tsx:69
 msgid "Quiz"
 msgstr "クイズ"
 
@@ -754,11 +754,11 @@ msgstr "パスワードの再設定"
 
 #: app/components/results/index.tsx:28
 #: app/components/results/index.tsx:38
-#: app/routes/results.tsx:11
+#: app/routes/results.tsx:12
 msgid "Results"
 msgstr "結果"
 
-#: app/components/home/test-list/TestRow.tsx:82
+#: app/components/home/test-list/TestRow.tsx:83
 msgid "Review ({reviewCount})"
 msgstr "復習（{reviewCount}）"
 
@@ -873,7 +873,7 @@ msgstr "並び順: {current}"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/home/test-list/TestRow.tsx:92
+#: app/components/home/test-list/TestRow.tsx:94
 msgid "Start the test"
 msgstr "テストを始める"
 
@@ -894,7 +894,7 @@ msgstr "提出する"
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:77
+#: app/components/home/test-list/TestRow.tsx:78
 #: app/components/results/Actions.tsx:37
 msgid "Take it again"
 msgstr "もう一度受ける"
@@ -983,8 +983,8 @@ msgstr "リンクが使えません"
 msgid "This link has expired or was already used. Send the email again."
 msgstr "このリンクは期限切れか、もう使われています。もう一度メールを送ってください。"
 
-#: app/routes/helpers/check.ts:24
-#: app/routes/helpers/check.ts:29
+#: app/routes/helpers/check.ts:25
+#: app/routes/helpers/check.ts:30
 msgid "This part couldn't be checked. Please try again."
 msgstr "採点できませんでした。もう一度お試しください。"
 
@@ -1040,7 +1040,7 @@ msgstr "ユーザー名またはメールアドレス"
 msgid "We send a reset link here when you forget your password."
 msgstr "パスワードを忘れたときに、再設定のリンクを送ります。"
 
-#: app/components/home/test-list/TestRow.tsx:35
+#: app/components/home/test-list/TestRow.tsx:36
 msgid "week"
 msgstr "週"
 
@@ -1088,7 +1088,7 @@ msgstr "正解が表示され、この問題の解答はあとから変更でき
 msgid "Your answer: {yours}"
 msgstr "あなたの解答：{yours}"
 
-#: app/routes/quiz.tsx:30
+#: app/routes/quiz.tsx:32
 msgid "Your answers couldn't be read. Please try again."
 msgstr "回答を読み取れませんでした。もう一度お試しください。"
 

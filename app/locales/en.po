@@ -47,7 +47,7 @@ msgstr "{daysLeft, plural, one {With one mock test a day, you can take # test be
 msgid "{gotIt} got it first time"
 msgstr "{gotIt} got it first time"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:45
+#: app/components/kanji/chapter-list/ChapterRow.tsx:46
 msgid "{learned} learned"
 msgstr "{learned} learned"
 
@@ -84,7 +84,7 @@ msgstr "{text} (placed)"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
-#: app/components/home/test-list/TestRow.tsx:56
+#: app/components/home/test-list/TestRow.tsx:57
 #: app/components/quiz/index.tsx:62
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
@@ -93,7 +93,7 @@ msgstr "{total, plural, one {# question} other {# questions}}"
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:43
+#: app/components/kanji/chapter-list/ChapterRow.tsx:44
 msgid "{words, plural, one {# word} other {# words}}"
 msgstr "{words, plural, one {# word} other {# words}}"
 
@@ -254,7 +254,7 @@ msgstr "Cards done"
 msgid "Cards done {done} / {total}"
 msgstr "Cards done {done} / {total}"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:29
+#: app/components/kanji/chapter-list/ChapterRow.tsx:30
 msgid "ch."
 msgstr "ch."
 
@@ -336,7 +336,7 @@ msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:92
+#: app/components/home/test-list/TestRow.tsx:94
 msgid "Continue"
 msgstr "Continue"
 
@@ -405,8 +405,8 @@ msgstr "Error {status}"
 
 #: app/components/flashcards/index.tsx:58
 #: app/components/flashcards/index.tsx:70
-#: app/components/kanji/chapter-list/ChapterRow.tsx:62
-#: app/routes/flashcards.tsx:13
+#: app/components/kanji/chapter-list/ChapterRow.tsx:63
+#: app/routes/flashcards.tsx:14
 msgid "Flashcards"
 msgstr "Flashcards"
 
@@ -475,7 +475,7 @@ msgstr "If you didn't ask for this, ignore this email. Your password won't chang
 msgid "In progress"
 msgstr "In progress"
 
-#: app/components/home/test-list/TestRow.tsx:49
+#: app/components/home/test-list/TestRow.tsx:50
 msgid "In progress {answered} / {total}"
 msgstr "In progress {answered} / {total}"
 
@@ -494,7 +494,7 @@ msgstr "JLPT grammar practice in the real test's format"
 #: app/components/kanji/index.tsx:28
 #: app/components/results/Actions.tsx:16
 #: app/components/SubjectTabs.tsx:15
-#: app/routes/kanji.tsx:10
+#: app/routes/kanji.tsx:11
 msgid "Kanji"
 msgstr "Kanji"
 
@@ -528,7 +528,7 @@ msgstr "kun"
 msgid "Language: {0}"
 msgstr "Language: {0}"
 
-#: app/components/home/test-list/TestRow.tsx:60
+#: app/components/home/test-list/TestRow.tsx:61
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
@@ -560,7 +560,7 @@ msgstr "Missed words"
 
 #: app/components/home/index.tsx:33
 #: app/components/results/Actions.tsx:25
-#: app/routes/home.tsx:10
+#: app/routes/home.tsx:11
 msgid "Mock tests"
 msgstr "Mock tests"
 
@@ -612,7 +612,7 @@ msgstr "No {level} chapters yet"
 msgid "No mock tests yet"
 msgstr "No mock tests yet"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:49
+#: app/components/kanji/chapter-list/ChapterRow.tsx:50
 msgid "no quiz yet"
 msgstr "no quiz yet"
 
@@ -719,7 +719,7 @@ msgstr "Question {num} (wrong)"
 msgid "Question list"
 msgstr "Question list"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:68
+#: app/components/kanji/chapter-list/ChapterRow.tsx:69
 msgid "Quiz"
 msgstr "Quiz"
 
@@ -754,11 +754,11 @@ msgstr "Reset your password"
 
 #: app/components/results/index.tsx:28
 #: app/components/results/index.tsx:38
-#: app/routes/results.tsx:11
+#: app/routes/results.tsx:12
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:82
+#: app/components/home/test-list/TestRow.tsx:83
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
@@ -873,7 +873,7 @@ msgstr "Sort: {current}"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/home/test-list/TestRow.tsx:92
+#: app/components/home/test-list/TestRow.tsx:94
 msgid "Start the test"
 msgstr "Start the test"
 
@@ -894,7 +894,7 @@ msgstr "Submit"
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:77
+#: app/components/home/test-list/TestRow.tsx:78
 #: app/components/results/Actions.tsx:37
 msgid "Take it again"
 msgstr "Take it again"
@@ -983,8 +983,8 @@ msgstr "This link can't be used"
 msgid "This link has expired or was already used. Send the email again."
 msgstr "This link has expired or was already used. Send the email again."
 
-#: app/routes/helpers/check.ts:24
-#: app/routes/helpers/check.ts:29
+#: app/routes/helpers/check.ts:25
+#: app/routes/helpers/check.ts:30
 msgid "This part couldn't be checked. Please try again."
 msgstr "This part couldn't be checked. Please try again."
 
@@ -1040,7 +1040,7 @@ msgstr "Username or email address"
 msgid "We send a reset link here when you forget your password."
 msgstr "We send a reset link here when you forget your password."
 
-#: app/components/home/test-list/TestRow.tsx:35
+#: app/components/home/test-list/TestRow.tsx:36
 msgid "week"
 msgstr "week"
 
@@ -1088,7 +1088,7 @@ msgstr "You'll see the right answers, and this part's answers can't be changed a
 msgid "Your answer: {yours}"
 msgstr "Your answer: {yours}"
 
-#: app/routes/quiz.tsx:30
+#: app/routes/quiz.tsx:32
 msgid "Your answers couldn't be read. Please try again."
 msgstr "Your answers couldn't be read. Please try again."
 

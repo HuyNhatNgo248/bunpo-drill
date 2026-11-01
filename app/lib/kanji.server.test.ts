@@ -3,6 +3,7 @@ import { buildKanjiChapter, buildKanjiTestPayload, WORD_ID } from "#mocks/factor
 import { buildPayload } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
+import { ensureUser } from "#tests/helpers/session";
 import { db } from "./db.server";
 import {
   chapterLevels,
@@ -17,6 +18,9 @@ import { createTest, saveSubmission } from "./tests.server";
 
 const NOW = new Date("2026-10-31T09:00:00.000Z");
 
+/** The user whose learned marks and results the tests read and write. */
+const USER_ID = 1;
+
 /**
  * Saves a kanji test at the given instant, so a test can control which one is newer. createTest saves any payload, and
  * latestKanjiTests reads only its kind, level and chapter, so the word ids may not match `chapter`.
@@ -30,6 +34,7 @@ beforeEach(async () => {
   vi.useFakeTimers({ toFake: ["Date"] });
   vi.setSystemTime(NOW);
   await resetDatabase();
+  await ensureUser(USER_ID);
 });
 
 afterEach(() => {
@@ -45,12 +50,12 @@ describe("saveChapter", () => {
 
   it("replaces a chapter sent again, and keeps its words' learned marks", async () => {
     await saveChapter(buildKanjiChapter());
-    await markLearned(WORD_ID);
+    await markLearned(USER_ID, WORD_ID);
 
     await saveChapter(buildKanjiChapter({ title: "生活" }));
 
     expect((await getChapter("N2", 1))?.title).toBe("生活");
-    expect(await learnedIds()).toEqual(new Set([WORD_ID]));
+    expect(await learnedIds(USER_ID)).toEqual(new Set([WORD_ID]));
   });
 });
 
@@ -88,10 +93,18 @@ describe("chapterLevels", () => {
 
 describe("markLearned", () => {
   it("marks a word learned, once however often it is marked", async () => {
-    await markLearned(WORD_ID);
-    await markLearned(WORD_ID);
+    await markLearned(USER_ID, WORD_ID);
+    await markLearned(USER_ID, WORD_ID);
 
-    expect(await learnedIds()).toEqual(new Set([WORD_ID]));
+    expect(await learnedIds(USER_ID)).toEqual(new Set([WORD_ID]));
+  });
+
+  it("marks it for that user only", async () => {
+    await ensureUser(2);
+
+    await markLearned(USER_ID, WORD_ID);
+
+    expect(await learnedIds(2)).toEqual(new Set());
   });
 });
 
@@ -100,9 +113,9 @@ describe("latestKanjiTests", () => {
     await createKanjiTestAt("2026-10-30T09:00:00.000Z");
     const newer = await createKanjiTestAt("2026-10-31T09:00:00.000Z");
     const other = await createKanjiTestAt("2026-10-29T09:00:00.000Z", 2);
-    await saveSubmission(newer.id, buildSubmission({ score: 1, total: 2, wrongGrammarIds: [WORD_ID] }));
+    await saveSubmission(USER_ID, newer.id, buildSubmission({ score: 1, total: 2, wrongGrammarIds: [WORD_ID] }));
 
-    expect(await latestKanjiTests("N2")).toEqual(
+    expect(await latestKanjiTests("N2", USER_ID)).toEqual(
       new Map([
         [1, { id: newer.id, result: { score: 1, total: 2 }, wrongIds: [WORD_ID] }],
         [2, { id: other.id, result: null, wrongIds: [] }],
@@ -110,10 +123,18 @@ describe("latestKanjiTests", () => {
     );
   });
 
+  it("gives another user's result on it as not taken", async () => {
+    await ensureUser(2);
+    const { id } = await createKanjiTestAt("2026-10-31T09:00:00.000Z");
+    await saveSubmission(2, id, buildSubmission({ score: 1, total: 2, wrongGrammarIds: [WORD_ID] }));
+
+    expect(await latestKanjiTests("N2", USER_ID)).toEqual(new Map([[1, { id, result: null, wrongIds: [] }]]));
+  });
+
   it("leaves out grammar tests and the tests of other levels", async () => {
     await createTest(buildPayload());
     await createTest(buildKanjiTestPayload({ level: "N3" }));
 
-    expect(await latestKanjiTests("N2")).toEqual(new Map());
+    expect(await latestKanjiTests("N2", USER_ID)).toEqual(new Map());
   });
 });

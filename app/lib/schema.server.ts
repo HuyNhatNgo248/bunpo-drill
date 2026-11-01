@@ -12,24 +12,44 @@ export const tests = sqliteTable("tests", {
   createdAt: text("created_at").notNull(),
   position: integer("position"),
   payload: text("payload").notNull(),
-  submission: text("submission"),
-  draft: text("draft"),
 });
+
+/** A user's place in a test: their last submission and the draft of the next one. No row: not started. */
+export const progress = sqliteTable(
+  "progress",
+  {
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id),
+    testId: text("test_id")
+      .notNull()
+      .references(() => tests.id),
+    submission: text("submission"),
+    draft: text("draft"),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.testId] })],
+);
 
 export const reviewed = sqliteTable(
   "reviewed",
   {
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id),
     testId: text("test_id")
       .notNull()
       .references(() => tests.id),
     grammarId: text("grammar_id").notNull(),
   },
-  (t) => [primaryKey({ columns: [t.testId, t.grammarId] })],
+  (t) => [primaryKey({ columns: [t.userId, t.testId, t.grammarId] })],
 );
 
 export const attempts = sqliteTable(
   "attempts",
   {
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id),
     testId: text("test_id")
       .notNull()
       .references(() => tests.id),
@@ -37,7 +57,7 @@ export const attempts = sqliteTable(
     score: integer("score").notNull(),
     total: integer("total").notNull(),
   },
-  (t) => [primaryKey({ columns: [t.testId, t.submittedAt] })],
+  (t) => [primaryKey({ columns: [t.userId, t.testId, t.submittedAt] })],
 );
 
 export const users = sqliteTable("users", {
@@ -62,10 +82,17 @@ export const kanjiChapters = sqliteTable(
   (t) => [primaryKey({ columns: [t.level, t.chapter] })],
 );
 
-export const learnedWords = sqliteTable("learned_words", {
-  wordId: text("word_id").primaryKey(),
-  learnedAt: text("learned_at").notNull(),
-});
+export const learnedWords = sqliteTable(
+  "learned_words",
+  {
+    userId: integer("user_id")
+      .notNull()
+      .references(() => users.id),
+    wordId: text("word_id").notNull(),
+    learnedAt: text("learned_at").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.wordId] })],
+);
 
 export const passwordResets = sqliteTable("password_resets", {
   tokenHash: text("token_hash").primaryKey(),

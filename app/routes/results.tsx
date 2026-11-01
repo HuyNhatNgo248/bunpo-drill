@@ -2,6 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { redirect } from "react-router";
 import type { Route } from "./+types/results";
 import { Results } from "~/components/results";
+import { requireUserId } from "~/lib/auth.server";
 import { testNotFound } from "~/lib/errors";
 import { toResultsView } from "~/lib/grading.server";
 import { getTest } from "~/lib/tests.server";
@@ -12,8 +13,8 @@ export function meta({ loaderData, matches }: Route.MetaArgs) {
   return [{ title: loaderData ? `${results} · ${loaderData.results.title} · 文法ドリル` : "文法ドリル" }];
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const test = await getTest(params.id);
+export async function loader({ request, params }: Route.LoaderArgs) {
+  const test = await getTest(params.id, await requireUserId(request));
   if (!test) throw testNotFound();
   if (!test.submission) throw redirect(`/tests/${test.id}`);
   return { results: toResultsView(test, test.submission) };

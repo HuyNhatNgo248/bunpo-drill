@@ -4,7 +4,7 @@ import { loadDrawerFigure } from "~/components/helpers/drawerFigure";
 import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
-import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL, type JlptLevel } from "~/lib/payload";
+import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL, type JlptLevel } from "~/lib/levels";
 import type { KanjiHomeView } from "~/lib/views";
 import { ChapterList } from "./chapter-list";
 import { Stats } from "./Stats";

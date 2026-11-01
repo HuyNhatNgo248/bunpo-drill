@@ -36,6 +36,7 @@ export function LevelTabs({
             <Link
               key={level}
               to={`?level=${level}`}
+              prefetch="intent"
               onPointerEnter={warm}
               onPointerDown={warm}
               onFocus={warm}

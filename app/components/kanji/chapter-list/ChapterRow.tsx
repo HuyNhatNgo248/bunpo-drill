@@ -24,6 +24,7 @@ export function ChapterRow({ level, chapter }: { level: Level; chapter: ChapterS
       {/* Its ::after fills the row under the buttons, so the whole row opens the flashcards but the buttons still work. */}
       <Link
         to={cardsOf(level, chapter.chapter)}
+        prefetch="intent"
         className="flex min-w-0 flex-1 items-start gap-3 text-foreground no-underline after:absolute after:inset-0 after:-z-10 md:flex-row-title md:items-center md:gap-4"
       >
         <NumberTile value={String(chapter.chapter)} label={<Trans>ch.</Trans>} />
@@ -57,14 +58,14 @@ export function ChapterRow({ level, chapter }: { level: Level; chapter: ChapterS
 
       <div className="grid w-full grid-cols-2 gap-2 md:flex md:w-auto md:flex-auto md:flex-wrap md:items-center md:justify-end">
         <Button asChild className={cn("md:px-4.5", !quizHref && "col-span-2")}>
-          <Link to={cardsOf(level, chapter.chapter)}>
+          <Link to={cardsOf(level, chapter.chapter)} prefetch="intent">
             <Layers aria-hidden="true" />
             <Trans>Flashcards</Trans>
           </Link>
         </Button>
         {quizHref && (
           <Button asChild variant="outline">
-            <Link to={quizHref}>
+            <Link to={quizHref} prefetch="intent">
               <Trans>Quiz</Trans>
             </Link>
           </Button>

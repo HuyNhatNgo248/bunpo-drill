@@ -28,6 +28,7 @@ export function SubjectTabs({ current, level }: { current: TestKind; level: Jlpt
           <Link
             key={kind}
             to={level ? `${path}?level=${level}` : path}
+            prefetch="intent"
             aria-current={kind === current ? "page" : undefined}
             className={cn(
               "relative flex h-9 items-center justify-center gap-1.5 rounded-md px-4 text-sm font-semibold no-underline outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/40",

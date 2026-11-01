@@ -3,6 +3,7 @@ import { data, useLocation, type ShouldRevalidateFunction } from "react-router";
 import { z } from "zod";
 import type { Route } from "./+types/flashcards";
 import { Flashcards } from "~/components/flashcards";
+import { requireUserId } from "~/lib/auth.server";
 import { chapterNotFound } from "~/lib/errors";
 import { localeFromMatches, translate } from "~/lib/i18n";
 import { getChapter, latestKanjiTests, learnedIds, markLearned } from "~/lib/kanji.server";
@@ -26,7 +27,8 @@ async function chapterOf(params: { level: string; chapter: string }) {
 export async function loader({ request, params }: Route.LoaderArgs) {
   const chapter = await chapterOf(params);
   const words = new URL(request.url).searchParams.get("words");
-  const [learned, latest] = await Promise.all([learnedIds(), latestKanjiTests(chapter.level)]);
+  const userId = await requireUserId(request);
+  const [learned, latest] = await Promise.all([learnedIds(userId), latestKanjiTests(chapter.level, userId)]);
   return { cards: toFlashcards(chapter, learned, latest.get(chapter.chapter), words ? words.split(",") : null) };
 }
 
@@ -37,7 +39,7 @@ export async function action({ request, params }: Route.ActionArgs) {
   if (!body.success || !chapterWords(chapter).some((word) => word.id === body.data.wordId)) {
     return data({ error: "Body must be {\"wordId\"} of a word of this chapter." }, { status: 400 });
   }
-  await markLearned(body.data.wordId);
+  await markLearned(await requireUserId(request), body.data.wordId);
   return { learned: body.data.wordId };
 }
 

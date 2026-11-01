@@ -2,12 +2,12 @@ import { desc, eq, and, sql } from "drizzle-orm";
 import { orm } from "./db.server";
 import { kanjiChapterSchema, type KanjiChapter } from "./kanji-payload";
 import { LEVELS, type Level } from "./payload";
-import { kanjiChapters, learnedWords, tests } from "./schema.server";
+import { kanjiChapters, learnedWords, progress, tests } from "./schema.server";
 
 /**
  * Storage for the kanji side: a `kanji_chapters` row per chapter of 漢字マスター (its words, sent again to update
- * them), a `learned_words` row per word marked learned on a flashcard, and the kanji tests, which
- * live in `tests` with the grammar ones (tests.server.ts).
+ * them), which every user shares, a `learned_words` row per word a user marked learned on a flashcard, and the kanji
+ * tests, which live in `tests` with the grammar ones (tests.server.ts).
  */
 
 /** Saves a chapter, or replaces it when it was sent before. Its words' learned marks stay. */
@@ -43,24 +43,24 @@ export async function chapterLevels(): Promise<Level[]> {
   return LEVELS.filter((level) => rows.some((row) => row.level === level));
 }
 
-/** The ids of every word marked learned. */
-export async function learnedIds(): Promise<Set<string>> {
-  const rows = await (await orm()).select({ wordId: learnedWords.wordId }).from(learnedWords);
+/** The ids of every word `userId` marked learned. */
+export async function learnedIds(userId: number): Promise<Set<string>> {
+  const rows = await (await orm()).select({ wordId: learnedWords.wordId }).from(learnedWords).where(eq(learnedWords.userId, userId));
   return new Set(rows.map((row) => row.wordId));
 }
 
-/** Marks a word learned; marking it twice keeps the first time. */
-export async function markLearned(id: string): Promise<void> {
-  await (await orm()).insert(learnedWords).values({ wordId: id, learnedAt: new Date().toISOString() }).onConflictDoNothing();
+/** Marks a word learned for `userId`; marking it twice keeps the first time. */
+export async function markLearned(userId: number, id: string): Promise<void> {
+  await (await orm()).insert(learnedWords).values({ userId, wordId: id, learnedAt: new Date().toISOString() }).onConflictDoNothing();
 }
 
 /** A chapter's newest kanji test: its score once taken, and the words it got wrong. */
 export type LatestKanjiTest = { id: string; result: { score: number; total: number } | null; wrongIds: string[] };
 
-/** The newest kanji test of each of a level's chapters, by chapter. */
-export async function latestKanjiTests(level: Level): Promise<Map<number, LatestKanjiTest>> {
+/** The newest kanji test of each of a level's chapters, by chapter, with `userId`'s result. */
+export async function latestKanjiTests(level: Level, userId: number): Promise<Map<number, LatestKanjiTest>> {
   const payload = sql`(CASE WHEN json_valid(${tests.payload}) THEN ${tests.payload} END)`;
-  const submission = sql`(CASE WHEN json_valid(${tests.submission}) THEN ${tests.submission} END)`;
+  const submission = sql`(CASE WHEN json_valid(${progress.submission}) THEN ${progress.submission} END)`;
   const rows = await (await orm())
     .select({
       id: tests.id,
@@ -70,6 +70,7 @@ export async function latestKanjiTests(level: Level): Promise<Map<number, Latest
       wrongIds: sql<string | null>`${submission} -> '$.wrongGrammarIds'`,
     })
     .from(tests)
+    .leftJoin(progress, and(eq(progress.testId, tests.id), eq(progress.userId, userId)))
     .where(and(sql`${payload} ->> '$.kind' = 'kanji'`, sql`${payload} ->> '$.level' = ${level}`))
     .orderBy(desc(tests.createdAt), desc(tests.id));
   const latest = new Map<number, LatestKanjiTest>();

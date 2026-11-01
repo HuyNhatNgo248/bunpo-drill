@@ -1,10 +1,14 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { buildChapterWord, buildHeadword, buildKanjiChapter, buildLesson, WORD_ID } from "#mocks/factories/kanji";
 import { resetDatabase } from "#tests/helpers/db";
+import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
 import { learnedIds, markLearned, saveChapter } from "~/lib/kanji.server";
 import { action, loader, meta, shouldRevalidate } from "../flashcards";
+
+/** The signed-in user, whose progress the routes read and write. */
+const USER_ID = 1;
 
 /** 1章 with 招待状 and 招く, both under 招. */
 const CHAPTER = buildKanjiChapter({
@@ -14,23 +18,24 @@ const CHAPTER = buildKanjiChapter({
 const cardsUrl = (level = "N2", chapter = "1", search = "") => `https://bunpo.test/kanji/${level}/${chapter}/cards${search}`;
 
 /** Runs the loader for the cards of `level` `chapter`. */
-const load = (level?: string, chapter?: string, search?: string) =>
-  loader(routeArgs<Parameters<typeof loader>[0]>(new Request(cardsUrl(level, chapter, search)), { level: level ?? "N2", chapter: chapter ?? "1" }));
+const load = async (level?: string, chapter?: string, search?: string) =>
+  loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, cardsUrl(level, chapter, search)), { level: level ?? "N2", chapter: chapter ?? "1" }));
 
 /** Marks a card learned the way the session does: its word id as JSON. */
-function send(body: string) {
-  const request = new Request(cardsUrl(), { method: "POST", headers: { "Content-Type": "application/json" }, body });
+async function send(body: string) {
+  const request = await signedInRequest(USER_ID, cardsUrl(), { method: "POST", headers: { "Content-Type": "application/json" }, body });
   return action(routeArgs<Parameters<typeof action>[0]>(request, { level: "N2", chapter: "1" }));
 }
 
 beforeEach(async () => {
   await resetDatabase();
+  await ensureUser(USER_ID);
   await saveChapter(CHAPTER);
 });
 
 describe("flashcards loader", () => {
   it("gives the chapter's words that are not learned yet, as cards", async () => {
-    await markLearned(WORD_ID);
+    await markLearned(USER_ID, WORD_ID);
 
     const { cards } = await load();
 
@@ -60,14 +65,14 @@ describe("flashcards loader", () => {
 describe("flashcards action", () => {
   it("marks a word of the chapter learned", async () => {
     expect(await send(JSON.stringify({ wordId: WORD_ID }))).toEqual({ learned: WORD_ID });
-    expect(await learnedIds()).toEqual(new Set([WORD_ID]));
+    expect(await learnedIds(USER_ID)).toEqual(new Set([WORD_ID]));
   });
 
   it("answers 400 for a body that is not a word of the chapter, and marks nothing", async () => {
     for (const body of ["not json", JSON.stringify({ wordId: "n2-c2-招待状" })]) {
       expect(await send(body)).toMatchObject({ init: { status: 400 } });
     }
-    expect(await learnedIds()).toEqual(new Set());
+    expect(await learnedIds(USER_ID)).toEqual(new Set());
   });
 });
 

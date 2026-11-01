@@ -1,20 +1,27 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { buildPayload, GRAMMAR_ID } from "#mocks/factories/payload";
 import { resetDatabase } from "#tests/helpers/db";
+import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { routeArgs } from "#tests/helpers/route";
 import { createTest, getTest } from "~/lib/tests.server";
 import { action } from "../api.tests.$id";
+
+/** The signed-in user, whose progress the routes read and write. */
+const USER_ID = 1;
 
 /** A well-formed id that no saved test has. */
 const UNKNOWN_ID = "20261027-000000";
 
 /** Sends `body` as JSON to /api/tests/`id` with `method`. */
-function send(id: string, method: string, body?: unknown) {
+async function send(id: string, method: string, body?: unknown) {
   const init: RequestInit = { method, body: body === undefined ? undefined : JSON.stringify(body) };
-  return action(routeArgs<Parameters<typeof action>[0]>(new Request(`https://bunpo.test/api/tests/${id}`, init), { id }));
+  return action(routeArgs<Parameters<typeof action>[0]>(await signedInRequest(USER_ID, `https://bunpo.test/api/tests/${id}`, init), { id }));
 }
 
-beforeEach(resetDatabase);
+beforeEach(async () => {
+  await resetDatabase();
+  await ensureUser(USER_ID);
+});
 
 describe("PATCH /api/tests/:id", () => {
   it("marks a review chip and answers with the marks of the test", async () => {

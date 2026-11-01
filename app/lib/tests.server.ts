@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { and, count, desc, eq, inArray, isNull, or, sql } from "drizzle-orm";
+import { and, count, desc, eq, inArray, isNull, sql } from "drizzle-orm";
 import { z } from "zod";
 import { orm, write } from "./db.server";
 import {
@@ -9,14 +9,14 @@ import {
   type Level,
   type TestPayload,
 } from "./payload";
-import { attempts, learnedWords, reviewed, tests } from "./schema.server";
+import { attempts, learnedWords, progress, reviewed, tests } from "./schema.server";
 import { readPayload, type AnyPayload } from "./test-kinds";
 import type { Answers } from "./views";
 
 /**
- * Storage in the database from db.server.ts: a `tests` row per test holding the
- * payload, the last submission and the draft of the next one, a `reviewed`
- * row per review chip marked reviewed, and an `attempts` row per submission.
+ * Storage in the database from db.server.ts: a `tests` row per test holding its payload, which every user shares.
+ * What a user did with it is theirs alone: a `progress` row with their last submission and the draft of the next one,
+ * a `reviewed` row per review chip they marked reviewed, and an `attempts` row per submission.
  * Kanji tests are saved here too; the home list, its figures and GET /api/tests show only the grammar ones.
  */
 
@@ -57,15 +57,19 @@ export type ListedTest = Omit<StoredTest, "payload" | "submission" | "draft"> & 
 
 const ID = /^[0-9]{8}-[0-9a-f]{6}$/;
 
-/** A test's marked chips and its attempts, as JSON arrays, read in the same query as the test. */
-const related = {
-  reviewed: sql<string>`(SELECT json_group_array(${reviewed.grammarId}) FROM ${reviewed} WHERE ${reviewed.testId} = ${tests.id})`,
+/** Joins each test to `userId`'s progress on it, when they have some. */
+const progressOf = (userId: number) => and(eq(progress.testId, tests.id), eq(progress.userId, userId));
+
+/** A test's chips that `userId` marked and their attempts, as JSON arrays, read in the same query as the test. */
+const related = (userId: number) => ({
+  reviewed: sql<string>`(SELECT json_group_array(${reviewed.grammarId}) FROM ${reviewed}
+    WHERE ${reviewed.testId} = ${tests.id} AND ${reviewed.userId} = ${userId})`,
   attempts: sql<string>`(SELECT json_group_array(json_object('submittedAt', ${attempts.submittedAt}, 'score', ${attempts.score}, 'total', ${attempts.total}))
-    FROM ${attempts} WHERE ${attempts.testId} = ${tests.id})`,
-};
+    FROM ${attempts} WHERE ${attempts.testId} = ${tests.id} AND ${attempts.userId} = ${userId})`,
+});
 
 // The list reads each payload in SQL down to what it shows, so the questions never leave the database.
-const listed = {
+const listed = (userId: number) => ({
   id: tests.id,
   createdAt: tests.createdAt,
   version: sql<unknown>`${tests.payload} ->> '$.version'`,
@@ -77,10 +81,11 @@ const listed = {
   >`json_array_length(${tests.payload}, '$.sections[0].questions')
     + json_array_length(${tests.payload}, '$.sections[1].questions')
     + (SELECT ifnull(sum(json_array_length(value, '$.questions')), 0) FROM json_each(${tests.payload}, '$.sections[2].passages'))`,
-  submission: sql<string | null>`json_remove(${tests.submission}, '$.answers')`,
-  draft: tests.draft,
-  ...related,
-};
+  // A submission that can't be read shows as not taken.
+  submission: sql<string | null>`json_remove(${json(progress.submission)}, '$.answers')`,
+  draft: progress.draft,
+  ...related(userId),
+});
 
 /** What the list checks of a payload, the way toStoredTest checks all of it: older formats are skipped. */
 const listedSchema = z.object({
@@ -92,8 +97,9 @@ const listedSchema = z.object({
 });
 
 /** A column's JSON, or NULL when it is not JSON: ->> and json_each on a broken row would fail the whole query. */
-const json = (column: typeof tests.payload | typeof tests.submission) =>
-  sql`(CASE WHEN json_valid(${column}) THEN ${column} END)`;
+function json(column: typeof tests.payload | typeof progress.submission) {
+  return sql`(CASE WHEN json_valid(${column}) THEN ${column} END)`;
+}
 
 /** The rows the list can show: grammar tests in the current payload format, and of `level` when there is one. */
 const listable = (level?: Level) =>
@@ -101,7 +107,6 @@ const listable = (level?: Level) =>
     sql`${json(tests.payload)} ->> '$.version' = ${PAYLOAD_VERSION}`,
     // Only a kanji test has a kind; the kanji page lists those by chapter (kanji.server.ts).
     sql`${json(tests.payload)} ->> '$.kind' IS NULL`,
-    or(isNull(tests.submission), sql`json_valid(${tests.submission})`),
     level && sql`${json(tests.payload)} ->> '$.level' = ${level}`,
   );
 
@@ -109,21 +114,20 @@ const listable = (level?: Level) =>
 const titleOrder = new Intl.Collator("ja", { numeric: true });
 
 /**
- * The tests in the list's order: the ones in progress, then the ones not started, then the taken ones, each by title
+ * The tests with `userId`'s progress, in the list's order: the ones in progress, then the ones not started, then the taken ones, each by title
  * (`latestFirst`: the title order reversed, so the latest week comes first); tests with the same title oldest first.
  * Every one, or one level's.
  * shortcut: sorts all of a level's tests in memory, as SQLite can't compare the numbers in a title; move the order
  * into SQL (a week and day column) if a level ever holds thousands of tests.
  */
-export async function listTests({
-  level,
-  latestFirst = false,
-}: { level?: Level; latestFirst?: boolean } = {}): Promise<
-  ListedTest[]
-> {
+export async function listTests(
+  userId: number,
+  { level, latestFirst = false }: { level?: Level; latestFirst?: boolean } = {},
+): Promise<ListedTest[]> {
   const rows = await (await orm())
-    .select(listed)
+    .select(listed(userId))
     .from(tests)
+    .leftJoin(progress, progressOf(userId))
     .where(listable(level))
     .orderBy(tests.createdAt, tests.id);
   return rows
@@ -139,22 +143,24 @@ export async function listTests({
 /** Where a test is: 0 in progress, 1 not started, 2 taken. */
 const stageOf = (test: ListedTest) => (test.submission ? 2 : test.answered !== null ? 0 : 1);
 
-/** The figures over all of a level's tests: how many, how many taken, their average, and the patterns to review. */
-export async function levelStats(level: Level) {
+/** `userId`'s figures over all of a level's tests: how many, how many taken, their average, and the patterns to review. */
+export async function levelStats(level: Level, userId: number) {
   const db = await orm();
-  const score = sql`${tests.submission} ->> '$.score'`;
-  const total = sql`${tests.submission} ->> '$.total'`;
+  const submission = json(progress.submission);
+  const score = sql`${submission} ->> '$.score'`;
+  const total = sql`${submission} ->> '$.total'`;
   const [[counts], [review]] = await Promise.all([
     db
       .select({
         total: count(),
-        taken: count(tests.submission),
+        taken: count(submission),
         // Each score as a whole percent first, as its row shows it; then their average.
         average: sql<
           number | null
         >`avg(CASE WHEN ${total} = 0 THEN 0 ELSE round(100.0 * ${score} / ${total}) END)`,
       })
       .from(tests)
+      .leftJoin(progress, progressOf(userId))
       .where(listable(level)),
     // A pattern counts once however many tests got it wrong, and not at all where its chip is marked reviewed.
     db
@@ -162,13 +168,14 @@ export async function levelStats(level: Level) {
         toReview: sql<number>`count(DISTINCT point.value ->> '$.pattern')`,
       })
       .from(
-        sql`${tests}, json_each(${json(tests.submission)}, '$.wrongGrammarIds') AS wrong, json_each(${json(tests.payload)}, '$.grammarPoints') AS point`,
+        sql`${tests} JOIN ${progress} ON ${progressOf(userId)}, json_each(${submission}, '$.wrongGrammarIds') AS wrong, json_each(${json(tests.payload)}, '$.grammarPoints') AS point`,
       )
       .where(
         and(
           listable(level),
           sql`point.value ->> '$.id' = wrong.value`,
-          sql`NOT EXISTS (SELECT 1 FROM ${reviewed} WHERE ${reviewed.testId} = ${tests.id} AND ${reviewed.grammarId} = wrong.value)`,
+          sql`NOT EXISTS (SELECT 1 FROM ${reviewed}
+            WHERE ${reviewed.userId} = ${userId} AND ${reviewed.testId} = ${tests.id} AND ${reviewed.grammarId} = wrong.value)`,
         ),
       ),
   ]);
@@ -193,7 +200,8 @@ export async function newestLevel(): Promise<Level | null> {
   return LEVELS.find((level) => level === newest?.level) ?? null;
 }
 
-export async function getTest(id: string): Promise<StoredTest | null> {
+/** A test with `userId`'s progress on it. */
+export async function getTest(id: string, userId: number): Promise<StoredTest | null> {
   if (!ID.test(id)) return null;
   const [row] = await (
     await orm()
@@ -202,11 +210,12 @@ export async function getTest(id: string): Promise<StoredTest | null> {
       id: tests.id,
       createdAt: tests.createdAt,
       payload: tests.payload,
-      submission: tests.submission,
-      draft: tests.draft,
-      ...related,
+      submission: progress.submission,
+      draft: progress.draft,
+      ...related(userId),
     })
     .from(tests)
+    .leftJoin(progress, progressOf(userId))
     .where(eq(tests.id, id));
   return row ? toStoredTest(row) : null;
 }
@@ -232,26 +241,44 @@ export async function createTest(payload: AnyPayload): Promise<StoredTest> {
   return test;
 }
 
-/** Saves a result and its attempt. `unlearn`: the words a kanji test got wrong, whose learned marks go with it. */
+/**
+ * Saves `userId`'s result and its attempt, and drops their draft. `unlearn`: the words a kanji test got wrong, whose
+ * learned marks go with it.
+ */
 export async function saveSubmission(
+  userId: number,
   id: string,
   submission: Submission,
   unlearn: string[] = [],
 ) {
   const { submittedAt, score, total } = submission;
+  const text = JSON.stringify(submission);
   const db = await orm();
+  const user = sql<number>`${userId}`.as("user_id");
   await write([
-    db.delete(learnedWords).where(inArray(learnedWords.wordId, unlearn)),
+    db.delete(learnedWords).where(and(eq(learnedWords.userId, userId), inArray(learnedWords.wordId, unlearn))),
+    // Selecting from tests saves nothing for a test that is gone.
     db
-      .update(tests)
-      .set({ submission: JSON.stringify(submission), draft: null })
-      .where(eq(tests.id, id)),
-    // Selecting from tests adds no attempt for a test that is gone; the same submission twice adds one.
+      .insert(progress)
+      .select(
+        db
+          .select({
+            userId: user,
+            testId: tests.id,
+            submission: sql<string>`${text}`.as("submission"),
+            draft: sql<null>`NULL`.as("draft"),
+          })
+          .from(tests)
+          .where(eq(tests.id, id)),
+      )
+      .onConflictDoUpdate({ target: [progress.userId, progress.testId], set: { submission: text, draft: null } }),
+    // The same submission twice adds one attempt.
     db
       .insert(attempts)
       .select(
         db
           .select({
+            userId: user,
             testId: tests.id,
             submittedAt: sql<string>`${submittedAt}`.as("submitted_at"),
             score: sql<number>`${score}`.as("score"),
@@ -265,28 +292,47 @@ export async function saveSubmission(
 }
 
 /**
- * Saves the draft of a test that is not submitted yet; one with no answer and no checked part is dropped. A test that
- * is submitted keeps none, so a save that arrives after the submit changes nothing.
+ * Saves `userId`'s draft of a test they have not submitted yet; one with no answer and no checked part is dropped. A
+ * test that is submitted keeps none, so a save that arrives after the submit changes nothing.
  */
-export async function saveDraft(id: string, draft: Draft): Promise<void> {
+export async function saveDraft(userId: number, id: string, draft: Draft): Promise<void> {
   const answered = Object.values(draft.answers).some((answer) => (Array.isArray(answer) ? answer.some((slot) => slot !== null) : answer !== null));
-  await (await orm())
-    .update(tests)
-    .set({ draft: answered || draft.checked.length ? JSON.stringify(draft) : null })
-    .where(and(eq(tests.id, id), isNull(tests.submission)));
-}
-
-/** Retake: forget the last submission and the reviewed chips. Its score stays in the attempts. False when there is no such test. */
-export async function resetTest(id: string): Promise<boolean> {
+  const text = answered || draft.checked.length ? JSON.stringify(draft) : null;
   const db = await orm();
-  const [reset] = await write([
-    db.update(tests).set({ submission: null, draft: null }).where(eq(tests.id, id)),
-    db.delete(reviewed).where(eq(reviewed.testId, id)),
-  ]);
-  return reset.rowsAffected > 0;
+  // Selecting from tests saves nothing for a test that is gone.
+  await db
+    .insert(progress)
+    .select(
+      db
+        .select({
+          userId: sql<number>`${userId}`.as("user_id"),
+          testId: tests.id,
+          submission: sql<null>`NULL`.as("submission"),
+          draft: sql<string | null>`${text}`.as("draft"),
+        })
+        .from(tests)
+        .where(eq(tests.id, id)),
+    )
+    .onConflictDoUpdate({ target: [progress.userId, progress.testId], set: { draft: text }, setWhere: isNull(progress.submission) });
 }
 
+/**
+ * Retake: forget `userId`'s last submission and reviewed chips. Its score stays in the attempts. False when there is
+ * no such test.
+ */
+export async function resetTest(userId: number, id: string): Promise<boolean> {
+  const db = await orm();
+  const [, , found] = await write([
+    db.delete(progress).where(and(eq(progress.userId, userId), eq(progress.testId, id))),
+    db.delete(reviewed).where(and(eq(reviewed.userId, userId), eq(reviewed.testId, id))),
+    db.select({ id: tests.id }).from(tests).where(eq(tests.id, id)),
+  ]);
+  return found.length > 0;
+}
+
+/** Marks or clears `userId`'s review chip, and returns the test as they see it. */
 export async function setReviewed(
+  userId: number,
   id: string,
   grammarId: string,
   marked: boolean,
@@ -299,6 +345,7 @@ export async function setReviewed(
         .select(
           db
             .select({
+              userId: sql<number>`${userId}`.as("user_id"),
               testId: tests.id,
               grammarId: sql<string>`${grammarId}`.as("grammar_id"),
             })
@@ -309,9 +356,9 @@ export async function setReviewed(
     : db
         .delete(reviewed)
         .where(
-          and(eq(reviewed.testId, id), eq(reviewed.grammarId, grammarId)),
+          and(eq(reviewed.userId, userId), eq(reviewed.testId, id), eq(reviewed.grammarId, grammarId)),
         ));
-  return getTest(id);
+  return getTest(id, userId);
 }
 
 /** The JSON of a test's marked chips and attempts, as `related` reads them. */

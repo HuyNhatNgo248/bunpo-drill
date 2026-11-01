@@ -13,15 +13,19 @@ import {
 } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
+import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { createTest, saveSubmission, setReviewed } from "~/lib/tests.server";
 import { thrownBy } from "#tests/helpers/thrown";
 import { loader, meta } from "../home";
 
+/** The signed-in user, whose progress the routes read and write. */
+const USER_ID = 1;
+
 /** Saves a test and a submission of it with `score` out of 3, and the grammar of the wrong answers. */
 async function takeTest(score: number, wrongGrammarIds: string[] = []) {
   const { id } = await createTest(buildPayload());
-  await saveSubmission(id, buildSubmission({ score, total: 3, wrongGrammarIds }));
+  await saveSubmission(USER_ID, id, buildSubmission({ score, total: 3, wrongGrammarIds }));
   return id;
 }
 
@@ -40,9 +44,12 @@ function buildN3Payload() {
 }
 
 /** The home loader for the page at `search`, e.g. "?level=N3". */
-const load = (search = "") => loader(routeArgs<Parameters<typeof loader>[0]>(new Request(`https://bunpo.test/${search}`)));
+const load = async (search = "") => loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, `https://bunpo.test/${search}`)));
 
-beforeEach(resetDatabase);
+beforeEach(async () => {
+  await resetDatabase();
+  await ensureUser(USER_ID);
+});
 
 describe("home loader", () => {
   it("lists the tests, and works out the figures over the taken ones", async () => {
@@ -72,7 +79,7 @@ describe("home loader", () => {
 
   it("does not count a pattern that is marked reviewed", async () => {
     const id = await takeTest(1, [GRAMMAR_ID]);
-    await setReviewed(id, GRAMMAR_ID, true);
+    await setReviewed(USER_ID, id, GRAMMAR_ID, true);
 
     expect((await load()).stats.toReview).toBe(0);
   });
@@ -84,7 +91,7 @@ describe("home loader", () => {
     const { id } = await createTest(
       buildPayload({ grammarPoints: points, sections: [buildFillBlankSection(), order, buildPassageSection()] }),
     );
-    await saveSubmission(id, buildSubmission({ score: 0, wrongGrammarIds: [GRAMMAR_ID, "n2-w2-d1-g1"] }));
+    await saveSubmission(USER_ID, id, buildSubmission({ score: 0, wrongGrammarIds: [GRAMMAR_ID, "n2-w2-d1-g1"] }));
 
     expect((await load()).stats.toReview).toBe(1);
   });

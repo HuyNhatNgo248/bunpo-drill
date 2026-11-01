@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { LEVELS, type Level } from "./levels";
+
+export { isTestLevel, JLPT_LEVELS, KANJI_LEVEL, LEVELS, type JlptLevel, type Level } from "./levels";
 
 /**
  * The standard mock-test payload, version 1.
@@ -12,19 +15,6 @@ export const PAYLOAD_VERSION = 1;
 
 /** The blank in a 文法形式の判断 prompt: full-width parentheses around two ideographic spaces. */
 export const BLANK = "（　　）";
-
-/** Every JLPT level, easiest first: the home page has a tab for each. */
-export const JLPT_LEVELS = ["N5", "N4", "N3", "N2", "N1"] as const;
-export type JlptLevel = (typeof JLPT_LEVELS)[number];
-
-/** The levels a mock test can be made for so far; the others show that they are not available yet. */
-export const LEVELS = ["N3", "N2"] as const satisfies readonly JlptLevel[];
-export type Level = (typeof LEVELS)[number];
-
-export const isTestLevel = (level: JlptLevel): level is Level => LEVELS.some((l) => l === level);
-
-/** The level of the 漢字マスター book the kanji chapters come from; the kanji page's other levels have none yet. */
-export const KANJI_LEVEL = "N2" satisfies Level;
 
 /** The grammar test's 3 問題, then the kanji test's 2 (kanji-payload.ts). */
 export const SECTION_TYPES = ["fill-blank", "sentence-order", "passage", "kanji-reading", "kanji-writing"] as const;

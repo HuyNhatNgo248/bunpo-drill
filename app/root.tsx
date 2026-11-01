@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react";
 import { useEffect } from "react";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, type ShouldRevalidateFunction } from "react-router";
 
 import type { Route } from "./+types/root";
 import { ErrorPage } from "~/components/error-pages/ErrorPage";
@@ -34,6 +34,9 @@ export const links: Route.LinksFunction = () => [
 export function loader({ request }: Route.LoaderArgs) {
   return { locale: localeFromCookie(request.headers.get("Cookie")) };
 }
+
+/** The language changes only by the language switch, which reloads the whole page, so the cookie is never read again. */
+export const shouldRevalidate: ShouldRevalidateFunction = () => false;
 
 export function Layout({ children }: { children: React.ReactNode }) {
   // entry.server and entry.client wrap the router in the catalog of the cookie's language.

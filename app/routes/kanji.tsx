@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/kanji";
 import { KanjiHome } from "~/components/kanji";
+import { requireUserId } from "~/lib/auth.server";
 import { localeFromMatches, translate } from "~/lib/i18n";
 import { chapterLevels, latestKanjiTests, learnedIds, listChapters } from "~/lib/kanji.server";
 import { toKanjiHome } from "~/lib/kanji-views.server";
@@ -15,7 +16,8 @@ export async function loader({ request }: Route.LoaderArgs) {
   // The level in ?level=, else the hardest that has a chapter, else the level of the book.
   const level = JLPT_LEVELS.find((candidate) => candidate === param) ?? (await chapterLevels()).at(-1) ?? KANJI_LEVEL;
   if (!isTestLevel(level)) return { home: { level, chapters: [], stats: { learned: 0, words: 0, average: null, missed: 0 } } };
-  const [chapters, learned, latest] = await Promise.all([listChapters(level), learnedIds(), latestKanjiTests(level)]);
+  const userId = await requireUserId(request);
+  const [chapters, learned, latest] = await Promise.all([listChapters(level), learnedIds(userId), latestKanjiTests(level, userId)]);
   return { home: toKanjiHome(level, chapters, learned, latest) };
 }
 

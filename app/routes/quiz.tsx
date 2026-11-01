@@ -1,8 +1,9 @@
 import { msg } from "@lingui/core/macro";
-import { data, redirect } from "react-router";
+import { data, redirect, type ShouldRevalidateFunction } from "react-router";
 import { z } from "zod";
 import type { Route } from "./+types/quiz";
 import { Quiz } from "~/components/quiz";
+import { requireUserId } from "~/lib/auth.server";
 import { testNotFound } from "~/lib/errors";
 import { submittedAnswersSchema, toDraftView, toQuizView, toSubmission } from "~/lib/grading.server";
 import { isKanji } from "~/lib/test-kinds";
@@ -13,15 +14,16 @@ export function meta({ loaderData }: Route.MetaArgs) {
   return [{ title: loaderData ? `${loaderData.quiz.title} · 文法ドリル` : "文法ドリル" }];
 }
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const test = await getTest(params.id);
+export async function loader({ request, params }: Route.LoaderArgs) {
+  const test = await getTest(params.id, await requireUserId(request));
   if (!test) throw testNotFound();
   if (test.submission) throw redirect(`/tests/${test.id}/results`);
   return { quiz: toQuizView(test), draft: toDraftView(test) };
 }
 
 export async function action({ request, params }: Route.ActionArgs) {
-  const test = await getTest(params.id);
+  const userId = await requireUserId(request);
+  const test = await getTest(params.id, userId);
   if (!test) throw testNotFound();
   // Taken already (a second tab, a double click): only a retake clears a result.
   if (test.submission) return redirect(`/tests/${test.id}/results`);
@@ -31,9 +33,13 @@ export async function action({ request, params }: Route.ActionArgs) {
   }
   const submission = toSubmission(test.payload, body.data.answers);
   // A kanji test's misses lose their learned mark, so their flashcards come back first.
-  await saveSubmission(test.id, submission, isKanji(test.payload) ? submission.wrongGrammarIds : []);
+  await saveSubmission(userId, test.id, submission, isKanji(test.payload) ? submission.wrongGrammarIds : []);
   return redirect(`/tests/${test.id}/results`);
 }
+
+/** Checking a part changes nothing the quiz loaded (its answers live on the page), so it doesn't load the quiz again. */
+export const shouldRevalidate: ShouldRevalidateFunction = ({ formAction, defaultShouldRevalidate }) =>
+  formAction?.endsWith("/check") ? false : defaultShouldRevalidate;
 
 export default function QuizRoute({ loaderData, actionData }: Route.ComponentProps) {
   // A new test id starts with a clean answer sheet.

@@ -2,23 +2,30 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { buildPayload } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
+import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
 import { createTest, saveSubmission } from "~/lib/tests.server";
 import { loader, meta } from "../results";
 
+/** The signed-in user, whose progress the routes read and write. */
+const USER_ID = 1;
+
 const UNKNOWN_ID = "20261027-000000";
 
 /** Runs the loader for /tests/`id`/results. */
-const load = (id: string) =>
-  loader(routeArgs<Parameters<typeof loader>[0]>(new Request(`https://bunpo.test/tests/${id}/results`), { id }));
+const load = async (id: string) =>
+  loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, `https://bunpo.test/tests/${id}/results`), { id }));
 
-beforeEach(resetDatabase);
+beforeEach(async () => {
+  await resetDatabase();
+  await ensureUser(USER_ID);
+});
 
 describe("results loader", () => {
   it("grades the saved answers of a taken test", async () => {
     const { id } = await createTest(buildPayload());
-    await saveSubmission(id, buildSubmission({ answers: { q1: 2, q2: [1, 0, 2, 3] } }));
+    await saveSubmission(USER_ID, id, buildSubmission({ answers: { q1: 2, q2: [1, 0, 2, 3] } }));
 
     expect((await load(id)).results).toMatchObject({ id, score: 2, total: 3, percent: 67 });
   });
