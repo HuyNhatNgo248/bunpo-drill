@@ -17,7 +17,8 @@ const SCHEMA = [
     created_at TEXT NOT NULL,
     position INTEGER, -- unused: the home list's drag order, before it sorted by title
     payload TEXT NOT NULL, -- TestPayload JSON
-    submission TEXT -- Submission JSON; NULL until taken
+    submission TEXT, -- Submission JSON; NULL until taken
+    draft TEXT -- Draft JSON: the answers and checked parts of a test not submitted yet; NULL when there are none
   )`,
   `CREATE TABLE IF NOT EXISTS reviewed (
     test_id TEXT NOT NULL REFERENCES tests (id),
@@ -65,6 +66,8 @@ async function migrate(client: Client) {
   if (!rows.some((column) => column.name === "email")) await client.execute("ALTER TABLE users ADD COLUMN email TEXT");
   if (!rows.some((column) => column.name === "session_version"))
     await client.execute("ALTER TABLE users ADD COLUMN session_version INTEGER NOT NULL DEFAULT 0");
+  const testColumns = (await client.execute("PRAGMA table_info(tests)")).rows;
+  if (!testColumns.some((column) => column.name === "draft")) await client.execute("ALTER TABLE tests ADD COLUMN draft TEXT");
   const chapterColumns = (await client.execute("PRAGMA table_info(kanji_chapters)")).rows;
   if (!chapterColumns.some((column) => column.name === "position")) await client.execute("ALTER TABLE kanji_chapters ADD COLUMN position INTEGER");
   // Unique, but many users may have none: SQLite lets NULLs repeat in a unique index.

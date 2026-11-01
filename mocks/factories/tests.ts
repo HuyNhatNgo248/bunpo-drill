@@ -18,6 +18,7 @@ export function buildStoredTest(overrides: Partial<StoredTest> = {}): StoredTest
     createdAt: "2026-10-27T09:00:00.000Z",
     payload: buildPayload(),
     submission: null,
+    draft: null,
     reviewed: {},
     attempts: [],
     ...overrides,
@@ -31,9 +32,9 @@ export function buildStoredTest(overrides: Partial<StoredTest> = {}): StoredTest
  * buildListedTest().questionCount; // -> 3
  */
 export function buildListedTest(overrides: Partial<ListedTest> = {}): ListedTest {
-  const { payload, ...test } = buildStoredTest();
+  const { payload, draft, ...test } = buildStoredTest();
   const { title, level, grammarPoints } = buildPayload();
-  return { ...test, payload: { title, level, grammarPoints }, questionCount: 3, ...overrides };
+  return { ...test, payload: { title, level, grammarPoints }, questionCount: 3, answered: null, ...overrides };
 }
 
 /** A submission with no answers: 0 of the 3 questions of `buildPayload()`. */

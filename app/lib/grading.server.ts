@@ -6,6 +6,7 @@ import type { ListedTest, StoredTest, Submission } from "./tests.server";
 import type {
   Answer,
   Answers,
+  QuizDraft,
   QuizSection,
   QuizView,
   ResultGroup,
@@ -24,6 +25,9 @@ export const submittedAnswersSchema = z.record(
   z.string(),
   z.union([choiceIndex, z.array(choiceIndex.nullable()).length(4), z.null()]),
 );
+
+/** What the quiz saves while it is taken: its answers and the numbers of its checked parts. */
+export const draftSchema = z.object({ answers: submittedAnswersSchema, checked: z.array(z.number().int().min(1).max(3)).max(3) });
 
 const numberOf = (id: string) => Number(id.slice(1));
 const label = (options: string[], index: number) => `${index + 1} ${options[index]}`;
@@ -109,6 +113,14 @@ function kanjiQuizSections(payload: KanjiTestPayload): QuizSection[] {
       },
     ],
   }));
+}
+
+/** Where the quiz was left: the draft's answers, and its checked parts graded again from them. */
+export function toDraftView(test: StoredTest): QuizDraft {
+  const answers = test.draft?.answers ?? {};
+  const checked = test.draft?.checked ?? [];
+  const { sections } = gradeTest(test.payload, answers);
+  return { answers, checks: Object.fromEntries(sections.filter((section) => checked.includes(section.no)).map((section) => [section.no, section])) };
 }
 
 /** Grades the answers: each part's questions, the score, and the grammar points (or, on a kanji test, the words) got wrong. */
@@ -280,6 +292,7 @@ export function toSummary(test: ListedTest): TestSummary {
       : null,
     review: submission ? reviewChips(test, submission.wrongGrammarIds) : [],
     previous: previousAttempt(test, submission),
+    answered: test.answered,
   };
 }
 

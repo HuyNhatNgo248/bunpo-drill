@@ -9,13 +9,11 @@ import { Button } from "~/components/ui/button";
 import { Progress } from "~/components/ui/progress";
 import type { TestSummary } from "~/lib/views";
 
-/**
- * One test: its title and last score, and its buttons. Review opens its grammar chips.
- * `answered`: how many questions it has answers saved for, when it was left before submitting.
- */
-export function TestRow({ test, answered }: { test: TestSummary; answered: number | null }) {
+/** One test: its title and last score, how far it got when it is in progress, and its buttons. Review opens its grammar chips. */
+export function TestRow({ test }: { test: TestSummary }) {
   const { t } = useLingui();
   const [open, setOpen] = useState(false);
+  const { answered } = test;
   const inProgress = answered !== null;
   const quizHref = `/tests/${test.id}`;
   const total = test.questionCount;
@@ -31,9 +29,6 @@ export function TestRow({ test, answered }: { test: TestSummary; answered: numbe
         className="flex min-w-0 flex-1 flex-col gap-1 text-foreground no-underline after:absolute after:inset-0 after:-z-10 md:flex-row-title md:gap-2"
       >
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="soft" className="text-2xs md:text-xs">
-            {test.level}
-          </Badge>
           <span className="text-base font-semibold">{test.title}</span>
           {test.result && (
             <Badge variant="outline">

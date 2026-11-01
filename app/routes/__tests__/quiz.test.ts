@@ -6,7 +6,7 @@ import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
 import { buildSubmission } from "#mocks/factories/tests";
-import { createTest, getTest, saveSubmission } from "~/lib/tests.server";
+import { createTest, getTest, saveDraft, saveSubmission } from "~/lib/tests.server";
 import { action, loader, meta } from "../quiz";
 
 const UNKNOWN_ID = "20261027-000000";
@@ -29,6 +29,17 @@ describe("quiz loader", () => {
 
     expect(quiz).toMatchObject({ id, title: "第1週 1日目", questionCount: 3 });
     expect(JSON.stringify(quiz)).not.toContain("answerIndex");
+  });
+
+  it("gives the draft the test was left at, its checked parts graded", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveDraft(id, { answers: { q1: 2, q3: 1 }, checked: [1] });
+
+    const { draft } = await loader(routeArgs<Parameters<typeof loader>[0]>(new Request(quizUrl(id)), { id }));
+
+    expect(draft.answers).toEqual({ q1: 2, q3: 1 });
+    expect(draft.checks).toMatchObject({ 1: { no: 1, correct: 1, total: 1 } });
+    expect(Object.keys(draft.checks)).toEqual(["1"]);
   });
 
   it("opens the results of a test that is taken, since only a retake clears them", async () => {

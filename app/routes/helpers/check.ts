@@ -11,8 +11,8 @@ const checkSchema = z.object({ section: z.number().int().min(1).max(3), answers:
 
 /**
  * POST /tests/:id/check with {"section", "answers"}: grades one part of a test that is not submitted yet, right
- * answers included. Nothing is saved: the quiz keeps its checked parts in the browser, and the final submit
- * grades the whole test again.
+ * answers included. Nothing is saved here: the quiz saves its checked parts with its draft (draft.ts), and the final
+ * submit grades the whole test again.
  */
 export async function action({ request, params }: Route.ActionArgs) {
   const test = await getTest(params.id);

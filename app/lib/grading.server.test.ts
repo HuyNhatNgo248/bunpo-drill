@@ -14,6 +14,7 @@ import {
   gradeTest,
   questionCount,
   submittedAnswersSchema,
+  toDraftView,
   toQuizView,
   toResultsView,
   toSubmission,
@@ -288,6 +289,19 @@ describe("toResultsView", () => {
   });
 });
 
+describe("toDraftView", () => {
+  it("gives the draft's answers, and only its checked parts, graded again from them", () => {
+    const view = toDraftView(buildStoredTest({ draft: { answers: { q1: 2, q3: 0 }, checked: [1] } }));
+
+    expect(view.answers).toEqual({ q1: 2, q3: 0 });
+    expect(view.checks).toEqual({ 1: gradeTest(buildPayload(), { q1: 2 }).sections[0] });
+  });
+
+  it("gives an empty sheet for a test that has no draft", () => {
+    expect(toDraftView(buildStoredTest())).toEqual({ answers: {}, checks: {} });
+  });
+});
+
 describe("toSummary", () => {
   it("sums up a test that is not taken yet", () => {
     expect(toSummary(buildListedTest())).toEqual({
@@ -298,6 +312,7 @@ describe("toSummary", () => {
       result: null,
       review: [],
       previous: null,
+      answered: null,
     });
   });
 

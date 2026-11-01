@@ -1,17 +1,27 @@
 import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { buildPayload } from "#mocks/factories/payload";
 import { buildKanjiQuizView, buildQuizView } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute, type StubRoute } from "#tests/helpers/render";
 import { gradeTest } from "~/lib/grading.server";
 import { questionAnchor } from "~/lib/sections";
+import type { QuizDraft } from "~/lib/views";
 import { Quiz } from ".";
 
 const QUIZ = buildQuizView({ title: "第1週 1日目" });
 
 const URL = `/tests/${QUIZ.id}`;
+
+/** A test not started yet. */
+const NO_DRAFT: QuizDraft = { answers: {}, checks: {} };
+
+/** A test left with q1 answered right and Part 1 checked. */
+const PART_1_CHECKED: QuizDraft = { answers: { q1: 2 }, checks: { 1: gradeTest(buildPayload(), { q1: 2 }).sections[0] } };
+
+/** The drafts the quiz saved on the server (POST /tests/:id/draft), in order. */
+let saved: { path: string; body: unknown }[] = [];
 
 /** The server's check of one part: it grades the answers it gets against the payload of QUIZ. */
 const CHECK_ROUTE: StubRoute = {
@@ -22,15 +32,16 @@ const CHECK_ROUTE: StubRoute = {
   },
 };
 
-/** The quiz page, with the route action that its submit reaches. */
-function renderQuiz(error?: string) {
+/** The quiz page, left at `draft`, with the route action that its submit reaches. */
+function renderQuiz({ error, draft = NO_DRAFT }: { error?: string; draft?: QuizDraft } = {}) {
   const { action, requests } = recordingAction();
-  renderRoute(<Quiz quiz={QUIZ} error={error} />, { url: URL, action, routes: [CHECK_ROUTE] });
-  return requests;
+  const { unmount } = renderRoute(<Quiz quiz={QUIZ} draft={draft} error={error} />, { url: URL, action, routes: [CHECK_ROUTE] });
+  return { requests, unmount };
 }
 
-/** The quiz page alone, for a test that leaves it and opens it again. */
-const renderRouteOfQuiz = () => renderRoute(<Quiz quiz={QUIZ} />, { url: URL, routes: [CHECK_ROUTE] });
+/** Waits for the saves of the draft, which go a moment after the last change. */
+const expectSaved = (bodies: unknown[]) =>
+  waitFor(() => expect(saved).toEqual(bodies.map((body) => ({ path: `${URL}/draft`, body }))), { timeout: 2000 });
 
 /** Picks the choice named `choice` of question `num`. */
 async function pick(num: number, choice: string) {
@@ -60,6 +71,19 @@ async function checkPart(no: number, score: string) {
   await screen.findByText(score);
 }
 
+// The quiz saves its draft with fetch; each test records the saves instead of sending them.
+beforeEach(() => {
+  saved = [];
+  vi.spyOn(globalThis, "fetch").mockImplementation(async (url, init) => {
+    saved.push({ path: String(url), body: JSON.parse(String(init?.body)) });
+    return new Response(null, { status: 204 });
+  });
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("Quiz", () => {
   it("shows each section with its instruction and its questions", async () => {
     renderQuiz();
@@ -80,7 +104,7 @@ describe("Quiz", () => {
 
   describe("a kanji test", () => {
     it("shows its 漢字読み and 表記 parts, each sentence with its word underlined, and links back to kanji", async () => {
-      renderRoute(<Quiz quiz={buildKanjiQuizView()} />, { url: URL });
+      renderRoute(<Quiz quiz={buildKanjiQuizView()} draft={NO_DRAFT} />, { url: URL });
 
       expect(await screen.findByText("漢字読み")).toBeInTheDocument();
       expect(screen.getByText("Choose the best way to write the underlined word in kanji from 1, 2, 3 and 4.")).toBeInTheDocument();
@@ -130,18 +154,49 @@ describe("Quiz", () => {
 
   });
 
-  describe("leaving before submitting", () => {
-    it("keeps the answers, so the test goes on where it was left when it is opened again", async () => {
-      const { unmount } = renderRouteOfQuiz();
+  describe("saving where it is left", () => {
+    it("saves the answers and checked parts on the server a moment after they change", async () => {
+      renderQuiz();
+
       await pick(1, "かいがあって");
+
+      await expectSaved([{ answers: { q1: 2 }, checked: [] }]);
+    });
+
+    it("saves at once when the quiz is left", async () => {
+      const { unmount } = renderQuiz();
+      await pick(1, "かいがあって");
+
       unmount();
+
+      expect(saved).toEqual([{ path: `${URL}/draft`, body: { answers: { q1: 2 }, checked: [] } }]);
+    });
+
+    it("goes on from the draft it was left at, and saves nothing until it changes", async () => {
+      renderQuiz({ draft: { answers: { q1: 2 }, checks: {} } });
+
+      expect(await screen.findByText("Answered 1 / 3")).toBeInTheDocument();
+      expect(within(screen.getByRole("radiogroup", { name: "Choices for question 1" })).getByRole("radio", { name: /かいがあって/ })).toBeChecked();
+      expect(saved).toEqual([]);
+    });
+
+    it("carries over a sheet this browser kept before drafts were saved on the server", async () => {
+      localStorage.setItem(`bunpo:answers:${QUIZ.id}`, JSON.stringify({ q1: 2 }));
 
       renderQuiz();
 
       expect(await screen.findByText("Answered 1 / 3")).toBeInTheDocument();
-      expect(within(screen.getByRole("radiogroup", { name: "Choices for question 1" })).getByRole("radio", { name: /かいがあって/ })).toBeChecked();
+      await expectSaved([{ answers: { q1: 2 }, checked: [] }]);
     });
 
+    it("keeps the server's draft over a sheet this browser kept", async () => {
+      localStorage.setItem(`bunpo:answers:${QUIZ.id}`, JSON.stringify({ q1: 0, q3: 1 }));
+
+      renderQuiz({ draft: { answers: { q1: 2 }, checks: {} } });
+
+      expect(await screen.findByText("Answered 1 / 3")).toBeInTheDocument();
+      expect(localStorage.getItem(`bunpo:answers:${QUIZ.id}`)).toBeNull();
+    });
   });
 
   describe("checking a part", () => {
@@ -191,20 +246,25 @@ describe("Quiz", () => {
       expect(screen.getByRole("button", { name: "Check Part 2" })).toBeInTheDocument();
     });
 
-    it("keeps the checked part when the test is opened again", async () => {
-      const { unmount } = renderRouteOfQuiz();
-      await pick(1, "かいがあって");
-      await checkPart(1, "1 / 1");
-      unmount();
-
+    it("saves the checked part with the answers", async () => {
       renderQuiz();
+      await pick(1, "かいがあって");
+
+      await checkPart(1, "1 / 1");
+
+      await waitFor(() => expect(saved.at(-1)?.body).toEqual({ answers: { q1: 2 }, checked: [1] }), { timeout: 2000 });
+    });
+
+    it("shows a part checked before graded and locked, with no summary", async () => {
+      renderQuiz({ draft: PART_1_CHECKED });
 
       expect(await screen.findByText("1 / 1")).toBeInTheDocument();
       expect(screen.queryByRole("radiogroup", { name: "Choices for question 1" })).toBeNull();
+      expect(screen.queryByRole("alertdialog")).toBeNull();
     });
 
     it("sends the answers of a checked part with the whole test", async () => {
-      const requests = renderQuiz();
+      const { requests } = renderQuiz();
       await pick(1, "かいがあって");
       await checkPart(1, "1 / 1");
 
@@ -218,7 +278,7 @@ describe("Quiz", () => {
 
   describe("submitting", () => {
     it("asks first while questions are left, then sends the answers", async () => {
-      const requests = renderQuiz();
+      const { requests } = renderQuiz();
       await pick(1, "かいがあって");
 
       await userEvent.click(submitButton());
@@ -229,7 +289,7 @@ describe("Quiz", () => {
     });
 
     it("keeps the answers when the learner goes back to the questions", async () => {
-      const requests = renderQuiz();
+      const { requests } = renderQuiz();
       await pick(1, "かいがあって");
 
       await userEvent.click(submitButton());
@@ -240,7 +300,7 @@ describe("Quiz", () => {
     });
 
     it("sends at once when every question is answered", async () => {
-      const requests = renderQuiz();
+      const { requests } = renderQuiz();
       await pick(1, "かいがあって");
       await orderPieces();
       await pick(3, "かいがあって");
@@ -252,7 +312,7 @@ describe("Quiz", () => {
     });
 
     it("shows the error of a submit that failed", async () => {
-      renderQuiz("Your answers couldn't be read. Please try again.");
+      renderQuiz({ error: "Your answers couldn't be read. Please try again." });
 
       expect(await screen.findByRole("alert")).toHaveTextContent("Your answers couldn't be read.");
     });

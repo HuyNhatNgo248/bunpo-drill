@@ -1,8 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { useEffect } from "react";
 import { AppHeader } from "~/components/layout/header";
 import { PageTitle } from "~/components/PageTitle";
-import { forgetAnswers } from "~/components/quiz/helpers/savedAnswers";
 import { QuestionNav } from "~/components/quiz/question-nav";
 import { gradedMarks, RESULT_MARKS } from "~/components/quiz/question-nav/QuestionGrid";
 import { QuestionSheet } from "~/components/quiz/question-nav/QuestionSheet";
@@ -23,8 +21,6 @@ export function Results({ results }: { results: ResultsView }) {
   const { score, total } = results;
   const wrong = total - score;
   const markOf = gradedMarks(results.sections);
-  // The test is submitted, so its saved answer sheet is done with; a retake starts clean.
-  useEffect(() => forgetAnswers(results.id), [results.id]);
 
   return (
     <div className="min-h-screen">

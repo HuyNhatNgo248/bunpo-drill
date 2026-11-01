@@ -9,7 +9,7 @@ import { TestList } from ".";
 
 const NOT_TAKEN = buildTestSummary({ id: "20261027-aaaaaa", title: "第1週 1日目" });
 
-const LEFT = buildTestSummary({ id: "20261027-cccccc", title: "第2週 1日目" });
+const LEFT = buildTestSummary({ id: "20261027-cccccc", title: "第2週 1日目", answered: 1 });
 
 const TAKEN = buildTestSummary({
   id: "20261027-bbbbbb",
@@ -25,15 +25,10 @@ function renderList(tests: TestSummary[]) {
   return requests;
 }
 
-/** Saves an answer for `test` in this browser, as a test left before submitting has. */
-const leaveHalfDone = (test: TestSummary) => localStorage.setItem(`bunpo:answers:${test.id}`, JSON.stringify({ q1: 2 }));
-
 const headings = () => screen.getAllByRole("heading", { level: 2 }).map((heading) => heading.textContent);
 
 describe("TestList", () => {
   it("groups the tests: the ones in progress, then the ones not taken yet, then the taken ones", async () => {
-    leaveHalfDone(LEFT);
-
     renderList([NOT_TAKEN, LEFT, TAKEN]);
 
     const inProgress = await screen.findByRole("region", { name: "In progress" });
@@ -53,12 +48,10 @@ describe("TestList", () => {
   });
 
   it("offers to go on with a test that was left before submitting", async () => {
-    leaveHalfDone(NOT_TAKEN);
+    renderList([LEFT]);
 
-    renderList([NOT_TAKEN]);
-
-    expect(await screen.findByRole("link", { name: "Continue" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
-    expect(screen.getByText(`In progress 1 / ${NOT_TAKEN.questionCount}`)).toBeInTheDocument();
+    expect(await screen.findByRole("link", { name: "Continue" })).toHaveAttribute("href", `/tests/${LEFT.id}`);
+    expect(screen.getByText(`In progress 1 / ${LEFT.questionCount}`)).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Start the test" })).toBeNull();
   });
 

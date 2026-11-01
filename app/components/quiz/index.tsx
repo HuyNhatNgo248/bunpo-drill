@@ -1,26 +1,35 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSubmit } from "react-router";
 import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
 import { homeOf } from "~/lib/links";
-import type { Answers, QuizView, ResultSection } from "~/lib/views";
+import type { Answers, QuizDraft, QuizView, ResultSection } from "~/lib/views";
 import { CheckSummary } from "./CheckSummary";
 import { quizProgress } from "./helpers/answers";
-import { useSavedAnswers, useSavedChecks } from "./hooks/useSavedAnswers";
+import { takeLocalDraft } from "./helpers/localDraft";
+import { useAutosave } from "./hooks/useAutosave";
 import { QuestionNav } from "./question-nav";
 import { ANSWER_MARKS, answeredMarks } from "./question-nav/QuestionGrid";
 import { Section } from "./Section";
 import { SubmitBar } from "./SubmitBar";
 
 /**
- * The quiz page. The answer sheet lives here, saved in the browser, until it is submitted. Each part can be
- * checked on the way; the final submit still grades the whole test.
+ * The quiz page. The answer sheet lives here, from the `draft` it was left at, and is saved on the server as it
+ * changes until it is submitted. Each part can be checked on the way; the final submit still grades the whole test.
  */
-export function Quiz({ quiz, error }: { quiz: QuizView; error?: string }) {
-  const [answers, setAnswers] = useSavedAnswers(quiz.id);
-  const [checks, setChecks] = useSavedChecks(quiz.id);
+export function Quiz({ quiz, draft, error }: { quiz: QuizView; draft: QuizDraft; error?: string }) {
+  const [answers, setAnswers] = useState(draft.answers);
+  const [checks, setChecks] = useState(draft.checks);
+  useAutosave(quiz.id, { answers, checks });
+  // A sheet this browser kept from before drafts were saved on the server goes on, unless the server has one.
+  useEffect(() => {
+    const local = takeLocalDraft(quiz.id);
+    if (!local || Object.keys(draft.answers).length || Object.keys(draft.checks).length) return;
+    setAnswers(local.answers);
+    setChecks(local.checks);
+  }, [quiz.id, draft]);
   // The part checked last, summed up in a dialog; a part reopened from the saved checks isn't.
   const [summary, setSummary] = useState<ResultSection>();
   const submit = useSubmit();

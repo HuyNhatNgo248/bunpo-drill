@@ -108,7 +108,7 @@ A libSQL (SQLite) database, set up in `app/lib/db.server.ts`:
 - **`data/bunpo.db`** otherwise, a local file (gitignored; set `DATA_DIR` to move it).
 
 The tables are created on first use. `tests` has a row per test (payload and last submission as
-JSON; its `position` column is unused since the list sorts by title). `reviewed` has a row per review chip marked reviewed. `attempts` has the score of every
+JSON, plus `draft`, the answers and checked parts of a test under way, saved as they change so it goes on from any device; its `position` column is unused since the list sorts by title). `reviewed` has a row per review chip marked reviewed. `attempts` has the score of every
 submission, so a retake keeps the earlier ones. `users` has the accounts (passwords as
 salted scrypt hashes, in `app/lib/users.server.ts`). `kanji_chapters` has a row per kanji
 chapter (its words as JSON), and `learned_words` a row per word marked learned; like the tests, they

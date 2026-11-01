@@ -24,6 +24,7 @@ export function buildTestSummary(overrides: Partial<TestSummary> = {}): TestSumm
     result: null,
     review: [],
     previous: null,
+    answered: null,
     ...overrides,
   };
 }

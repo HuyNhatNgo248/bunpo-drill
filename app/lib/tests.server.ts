@@ -15,7 +15,7 @@ import type { Answers } from "./views";
 
 /**
  * Storage in the database from db.server.ts: a `tests` row per test holding the
- * payload and the last submission, a `reviewed`
+ * payload, the last submission and the draft of the next one, a `reviewed`
  * row per review chip marked reviewed, and an `attempts` row per submission.
  * Kanji tests are saved here too; the home list, its figures and GET /api/tests show only the grammar ones.
  */
@@ -29,6 +29,9 @@ export type Submission = {
   wrongGrammarIds: string[];
 };
 
+/** The answers and checked parts of a test not submitted yet, saved as they change so the test goes on anywhere. */
+export type Draft = { answers: Answers; checked: number[] };
+
 /** The score of one submission. A retake clears the submission but keeps its attempt. */
 export type Attempt = { submittedAt: string; score: number; total: number };
 
@@ -37,16 +40,19 @@ export type StoredTest = {
   createdAt: string;
   payload: AnyPayload;
   submission: Submission | null;
+  draft: Draft | null;
   reviewed: Record<string, boolean>;
   /** Oldest first. */
   attempts: Attempt[];
 };
 
 /** A test as the list shows it: no questions and no answers, which are most of a test's size. */
-export type ListedTest = Omit<StoredTest, "payload" | "submission"> & {
+export type ListedTest = Omit<StoredTest, "payload" | "submission" | "draft"> & {
   payload: Pick<TestPayload, "title" | "level" | "grammarPoints">;
   questionCount: number;
   submission: Omit<Submission, "answers"> | null;
+  /** How many questions its draft answers; null when it has no draft, so it is not started. */
+  answered: number | null;
 };
 
 const ID = /^[0-9]{8}-[0-9a-f]{6}$/;
@@ -72,6 +78,7 @@ const listed = {
     + json_array_length(${tests.payload}, '$.sections[1].questions')
     + (SELECT ifnull(sum(json_array_length(value, '$.questions')), 0) FROM json_each(${tests.payload}, '$.sections[2].passages'))`,
   submission: sql<string | null>`json_remove(${tests.submission}, '$.answers')`,
+  draft: tests.draft,
   ...related,
 };
 
@@ -102,9 +109,9 @@ const listable = (level?: Level) =>
 const titleOrder = new Intl.Collator("ja", { numeric: true });
 
 /**
- * The tests in the list's order: the ones not taken first, then the taken ones, each by title (`latestFirst`: the
- * title order reversed, so the latest week comes first); tests with the same title oldest first. Every one, or one
- * level's.
+ * The tests in the list's order: the ones in progress, then the ones not started, then the taken ones, each by title
+ * (`latestFirst`: the title order reversed, so the latest week comes first); tests with the same title oldest first.
+ * Every one, or one level's.
  * shortcut: sorts all of a level's tests in memory, as SQLite can't compare the numbers in a title; move the order
  * into SQL (a week and day column) if a level ever holds thousands of tests.
  */
@@ -124,10 +131,13 @@ export async function listTests({
     .filter((test): test is ListedTest => test !== null)
     .sort(
       (a, b) =>
-        Number(a.submission !== null) - Number(b.submission !== null) ||
+        stageOf(a) - stageOf(b) ||
         titleOrder.compare(a.payload.title, b.payload.title) * (latestFirst ? -1 : 1),
     );
 }
+
+/** Where a test is: 0 in progress, 1 not started, 2 taken. */
+const stageOf = (test: ListedTest) => (test.submission ? 2 : test.answered !== null ? 0 : 1);
 
 /** The figures over all of a level's tests: how many, how many taken, their average, and the patterns to review. */
 export async function levelStats(level: Level) {
@@ -193,6 +203,7 @@ export async function getTest(id: string): Promise<StoredTest | null> {
       createdAt: tests.createdAt,
       payload: tests.payload,
       submission: tests.submission,
+      draft: tests.draft,
       ...related,
     })
     .from(tests)
@@ -207,6 +218,7 @@ export async function createTest(payload: AnyPayload): Promise<StoredTest> {
     createdAt: now.toISOString(),
     payload,
     submission: null,
+    draft: null,
     reviewed: {},
     attempts: [],
   };
@@ -232,7 +244,7 @@ export async function saveSubmission(
     db.delete(learnedWords).where(inArray(learnedWords.wordId, unlearn)),
     db
       .update(tests)
-      .set({ submission: JSON.stringify(submission) })
+      .set({ submission: JSON.stringify(submission), draft: null })
       .where(eq(tests.id, id)),
     // Selecting from tests adds no attempt for a test that is gone; the same submission twice adds one.
     db
@@ -252,11 +264,23 @@ export async function saveSubmission(
   ]);
 }
 
+/**
+ * Saves the draft of a test that is not submitted yet; one with no answer and no checked part is dropped. A test that
+ * is submitted keeps none, so a save that arrives after the submit changes nothing.
+ */
+export async function saveDraft(id: string, draft: Draft): Promise<void> {
+  const answered = Object.values(draft.answers).some((answer) => (Array.isArray(answer) ? answer.some((slot) => slot !== null) : answer !== null));
+  await (await orm())
+    .update(tests)
+    .set({ draft: answered || draft.checked.length ? JSON.stringify(draft) : null })
+    .where(and(eq(tests.id, id), isNull(tests.submission)));
+}
+
 /** Retake: forget the last submission and the reviewed chips. Its score stays in the attempts. False when there is no such test. */
 export async function resetTest(id: string): Promise<boolean> {
   const db = await orm();
   const [reset] = await write([
-    db.update(tests).set({ submission: null }).where(eq(tests.id, id)),
+    db.update(tests).set({ submission: null, draft: null }).where(eq(tests.id, id)),
     db.delete(reviewed).where(eq(reviewed.testId, id)),
   ]);
   return reset.rowsAffected > 0;
@@ -320,6 +344,7 @@ function toStoredTest(
     createdAt: string;
     payload: string;
     submission: string | null;
+    draft: string | null;
   } & Related,
 ): StoredTest | null {
   try {
@@ -333,6 +358,7 @@ function toStoredTest(
         row.submission === null
           ? null
           : (JSON.parse(row.submission) as Submission),
+      draft: readDraft(row.draft),
     };
   } catch (error) {
     if (error instanceof SyntaxError) return null;
@@ -351,6 +377,7 @@ function toListedTest(
   } & {
     questionCount: number | null;
     submission: string | null;
+    draft: string | null;
   } & Related,
 ): ListedTest | null {
   const parsed = listedSchema.safeParse({
@@ -364,6 +391,7 @@ function toListedTest(
   });
   if (!parsed.success) return null;
   const { title, level, grammarPoints, questionCount } = parsed.data;
+  const draft = readDraft(row.draft);
   return {
     ...rowBasics(row),
     payload: { title, level, grammarPoints },
@@ -372,8 +400,24 @@ function toListedTest(
       row.submission === null
         ? null
         : (JSON.parse(row.submission) as ListedTest["submission"]),
+    answered: draft && answeredCount(draft.answers),
   };
 }
+
+/** A saved draft, or null for none and for one that can't be read: a broken draft must not hide its test. */
+function readDraft(text: string | null): Draft | null {
+  if (text === null) return null;
+  try {
+    const draft = JSON.parse(text) as Draft | null;
+    return typeof draft?.answers === "object" && draft.answers !== null && Array.isArray(draft.checked) ? draft : null;
+  } catch {
+    return null;
+  }
+}
+
+/** The questions a sheet answers: a picked choice, or a sentence order with all 4 slots filled. */
+const answeredCount = (answers: Answers) =>
+  Object.values(answers).filter((answer) => (Array.isArray(answer) ? answer.every((slot) => slot !== null) : answer !== null)).length;
 
 /** The columns that every read of a test has. */
 function rowBasics(row: { id: string; createdAt: string } & Related) {

@@ -13,6 +13,7 @@ export const tests = sqliteTable("tests", {
   position: integer("position"),
   payload: text("payload").notNull(),
   submission: text("submission"),
+  draft: text("draft"),
 });
 
 export const reviewed = sqliteTable(

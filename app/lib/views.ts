@@ -135,6 +135,12 @@ export type ResultSection = {
   groups: ResultGroup[];
 };
 
+/** The parts checked so far, by part number, graded. Their answers are locked. */
+export type CheckedSections = Record<number, ResultSection>;
+
+/** Where a test that is not submitted yet was left: its answer sheet and its checked parts. */
+export type QuizDraft = { answers: Answers; checks: CheckedSections };
+
 export type ResultsView = {
   id: string;
   title: string;
@@ -163,4 +169,6 @@ export type TestSummary = {
   review: ReviewChip[];
   /** The score of the attempt before `result`, or the last score while a retake is under way. */
   previous: { score: number; total: number } | null;
+  /** How many questions its unsubmitted answer sheet answers; null until it is started. */
+  answered: number | null;
 };

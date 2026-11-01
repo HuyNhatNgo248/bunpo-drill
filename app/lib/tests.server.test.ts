@@ -13,6 +13,7 @@ import {
   levelStats,
   listTests,
   resetTest,
+  saveDraft,
   saveSubmission,
   setReviewed,
 } from "./tests.server";
@@ -57,6 +58,7 @@ describe("createTest", () => {
       createdAt: NOW.toISOString(),
       payload: buildPayload(),
       submission: null,
+      draft: null,
       reviewed: {},
       attempts: [],
     });
@@ -110,6 +112,17 @@ describe("listTests", () => {
     ]);
   });
 
+  it("lists the tests in progress first, with how many questions their draft answers", async () => {
+    const notStarted = await createTest(buildPayload({ title: "第1週 1日目" }));
+    const left = await createTest(buildPayload({ title: "第3週 1日目" }));
+    await saveDraft(left.id, { answers: { q1: 2, q2: [0, 1, null, null] }, checked: [] });
+
+    expect((await listTests()).map((test) => [test.id, test.answered])).toEqual([
+      [left.id, 1],
+      [notStarted.id, null],
+    ]);
+  });
+
   it("lists tests with the same title oldest first", async () => {
     vi.setSystemTime(new Date("2026-10-26T00:00:00.000Z"));
     const older = await createTest(buildPayload({ title: "第2週 1〜3日目" }));
@@ -134,6 +147,7 @@ describe("listTests", () => {
       submission: { submittedAt: buildSubmission().submittedAt, score: 1, total: 3, wrongGrammarIds: [GRAMMAR_ID] },
       reviewed: { [GRAMMAR_ID]: true },
       attempts: [{ submittedAt: buildSubmission().submittedAt, score: 1, total: 3 }],
+      answered: null,
     });
   });
 
@@ -162,14 +176,51 @@ describe("listTests", () => {
   });
 });
 
-describe("saveSubmission", () => {
-  it("saves the submission", async () => {
+describe("saveDraft", () => {
+  it("saves the answers and checked parts, which getTest reads back", async () => {
     const { id } = await createTest(buildPayload());
+
+    await saveDraft(id, { answers: { q1: 2 }, checked: [1] });
+
+    expect((await getTest(id))?.draft).toEqual({ answers: { q1: 2 }, checked: [1] });
+  });
+
+  it("drops a draft with no answer and no checked part", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveDraft(id, { answers: { q1: 2 }, checked: [] });
+
+    await saveDraft(id, { answers: { q2: [null, null, null, null] }, checked: [] });
+
+    expect((await getTest(id))?.draft).toBeNull();
+  });
+
+  it("keeps none for a test that is submitted, so a late save changes nothing", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveSubmission(id, buildSubmission());
+
+    await saveDraft(id, { answers: { q1: 2 }, checked: [] });
+
+    expect((await getTest(id))?.draft).toBeNull();
+  });
+
+  it("reads a draft that can't be read as none, and still lists its test", async () => {
+    const { id } = await createTest(buildPayload());
+    await (await db()).execute({ sql: "UPDATE tests SET draft = '{' WHERE id = ?", args: [id] });
+
+    expect((await getTest(id))?.draft).toBeNull();
+    expect((await listTests()).map((test) => test.answered)).toEqual([null]);
+  });
+});
+
+describe("saveSubmission", () => {
+  it("saves the submission, and drops the draft", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveDraft(id, { answers: { q1: 2 }, checked: [1] });
     const submission = buildSubmission({ answers: { q1: 2 }, score: 1 });
 
     await saveSubmission(id, submission);
 
-    expect((await getTest(id))?.submission).toEqual(submission);
+    expect(await getTest(id)).toMatchObject({ submission, draft: null });
   });
 
   it("keeps the score of every submission as an attempt, oldest first", async () => {
