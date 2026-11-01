@@ -35,7 +35,7 @@ describe("sectionInstruction", () => {
 
   it("asks for the ★ piece, and tells how to place a piece, in a sentence-order section", () => {
     expect(instruction("sentence-order")).toBe(
-      "Choose the best piece for ★ from 1, 2, 3 and 4. Tap a piece to put it in the next slot.",
+      "Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it.",
     );
   });
 

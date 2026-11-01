@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#: app/components/quiz/sentence-order/helpers/announcements.ts:24
+msgid "“{piece}” is over {zone}."
+msgstr "“{piece}” is over {zone}."
+
 #: app/components/grammar-chips/GrammarChip.tsx:36
 msgid "(reviewed)"
 msgstr "(reviewed)"
@@ -63,7 +67,7 @@ msgstr "{level} isn't available yet"
 msgid "{score} correct · {wrong} wrong · {unanswered} unanswered"
 msgstr "{score} correct · {wrong} wrong · {unanswered} unanswered"
 
-#: app/components/quiz/sentence-order/SlotButton.tsx:27
+#: app/components/quiz/sentence-order/SlotButton.tsx:47
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}: {text} (tap to remove)"
 
@@ -71,7 +75,7 @@ msgstr "{slotName}: {text} (tap to remove)"
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, one {# stroke} other {# strokes}}"
 
-#: app/components/quiz/sentence-order/BankPiece.tsx:22
+#: app/components/quiz/sentence-order/BankPiece.tsx:37
 msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
@@ -126,7 +130,7 @@ msgstr "<0>in</0> <1/> <2>{daysLeft, plural, one {day} other {days}}</2>"
 msgid "<0>Practice JLPT grammar</0> <1>in <2>the real test's format</2>.</1>"
 msgstr "<0>Practice JLPT grammar</0> <1>in <2>the real test's format</2>.</1>"
 
-#: app/components/quiz/sentence-order/SlotButton.tsx:21
+#: app/components/quiz/sentence-order/SlotButton.tsx:25
 msgid "★ slot"
 msgstr "★ slot"
 
@@ -230,6 +234,10 @@ msgstr "Blank （{num}） in the passage"
 msgid "Cancel"
 msgstr "Cancel"
 
+#: app/components/quiz/sentence-order/helpers/announcements.ts:33
+msgid "Cancelled moving “{piece}”."
+msgstr "Cancelled moving “{piece}”."
+
 #: app/components/flashcards/ModeTabs.tsx:14
 msgid "Card side"
 msgstr "Card side"
@@ -302,8 +310,8 @@ msgid "Choose the best answer for （　　） from 1, 2, 3 and 4."
 msgstr "Choose the best answer for （　　） from 1, 2, 3 and 4."
 
 #: app/lib/sections.ts:38
-msgid "Choose the best piece for ★ from 1, 2, 3 and 4. Tap a piece to put it in the next slot."
-msgstr "Choose the best piece for ★ from 1, 2, 3 and 4. Tap a piece to put it in the next slot."
+msgid "Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it."
+msgstr "Choose the best piece for ★ from 1, 2, 3 and 4. Drag a piece into a slot, or tap it."
 
 #: app/lib/sections.ts:50
 msgid "Choose the best reading for the underlined word from 1, 2, 3 and 4."
@@ -359,6 +367,11 @@ msgstr "Day"
 #: app/lib/sections.ts:66
 msgid "Day {day}"
 msgstr "Day {day}"
+
+#: app/components/quiz/sentence-order/BankPiece.tsx:27
+#: app/components/quiz/sentence-order/SlotButton.tsx:31
+msgid "draggable"
+msgstr "draggable"
 
 #: app/components/account/EmailForm.tsx:18
 #: app/components/account/EmailForm.tsx:32
@@ -645,13 +658,29 @@ msgstr "Password"
 msgid "Password changed."
 msgstr "Password changed."
 
+#: app/components/quiz/sentence-order/helpers/announcements.ts:19
+msgid "Picked up “{piece}”."
+msgstr "Picked up “{piece}”."
+
 #: app/components/flashcards/CardFace.tsx:47
 msgid "Picture the kanji, then flip the card."
 msgstr "Picture the kanji, then flip the card."
 
+#: app/components/quiz/sentence-order/index.tsx:70
+msgid "Press a choice to put it in the next empty slot. Press a filled slot to send it back to the choices."
+msgstr "Press a choice to put it in the next empty slot. Press a filled slot to send it back to the choices."
+
 #: app/components/flashcards/index.tsx:88
 msgid "Previous card"
 msgstr "Previous card"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:29
+msgid "Put “{piece}” back."
+msgstr "Put “{piece}” back."
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:29
+msgid "Put “{piece}” in {zone}."
+msgstr "Put “{piece}” in {zone}."
 
 #: app/components/welcome/ExamSections.tsx:26
 msgid "Put 4 pieces in order, and choose the one that goes in ★."
@@ -813,7 +842,11 @@ msgstr "Sign up"
 msgid "Signing in…"
 msgstr "Signing in…"
 
-#: app/components/quiz/sentence-order/SlotButton.tsx:21
+#: app/components/quiz/sentence-order/helpers/announcements.ts:14
+msgid "slot {n}"
+msgstr "slot {n}"
+
+#: app/components/quiz/sentence-order/SlotButton.tsx:25
 msgid "Slot {n}"
 msgstr "Slot {n}"
 
@@ -882,9 +915,17 @@ msgstr "That email address is already in use."
 msgid "That username is already taken."
 msgstr "That username is already taken."
 
+#: app/components/quiz/sentence-order/helpers/announcements.ts:14
+msgid "the ★ slot"
+msgstr "the ★ slot"
+
 #: app/components/welcome/SampleQuiz.tsx:198
 msgid "The answer is {n} “{choice}”"
 msgstr "The answer is {n} “{choice}”"
+
+#: app/components/quiz/sentence-order/helpers/announcements.ts:12
+msgid "the choices"
+msgstr "the choices"
 
 #: app/components/welcome/ExamCountdown.tsx:22
 msgid "The next JLPT"
