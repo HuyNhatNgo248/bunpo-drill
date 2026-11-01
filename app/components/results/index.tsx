@@ -34,7 +34,11 @@ export function Results({ results }: { results: ResultsView }) {
       />
 
       <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 pb-8 md:gap-5 md:px-6 md:pt-8 md:pb-16 lg:max-w-260">
-        <PageTitle level={results.level} meta={results.title}>
+        <PageTitle
+          level={results.level}
+          meta={results.title}
+          back={{ to: homeOf(results), label: results.kind === "kanji" ? <Trans>← Kanji</Trans> : <Trans>← Mock tests</Trans> }}
+        >
           <Trans>Results</Trans>
         </PageTitle>
         <ScoreCard results={results} />

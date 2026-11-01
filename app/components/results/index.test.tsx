@@ -158,6 +158,7 @@ describe("Results", () => {
 
       expect(within(reviewOf(1)).getByText("招待状", { selector: "u" })).toBeInTheDocument();
       for (const link of screen.getAllByRole("link", { name: /Back to kanji/ })) expect(link).toHaveAttribute("href", "/kanji?level=N2");
+      expect(screen.getByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2");
     });
   });
 
@@ -210,12 +211,13 @@ describe("Results", () => {
   });
 
   describe("the way on", () => {
-    it("links back to the list, from the header and from the bottom", async () => {
+    it("links back to the list, from the header, the title and the bottom", async () => {
       renderResults(FAILED);
 
       const links = await screen.findAllByRole("link", { name: /Back to the mock tests/ });
       expect(links).toHaveLength(2);
       for (const link of links) expect(link).toHaveAttribute("href", "/");
+      expect(screen.getByRole("link", { name: "← Mock tests" })).toHaveAttribute("href", "/");
     });
 
     it("posts to the retake route to take the test again", async () => {

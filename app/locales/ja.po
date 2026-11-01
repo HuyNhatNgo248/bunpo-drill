@@ -96,7 +96,7 @@ msgstr "{unanswered, plural, other {この問題には未回答が#問ありま�
 msgid "{words, plural, one {# word} other {# words}}"
 msgstr "{words, plural, other {#語}}"
 
-#: app/components/results/index.tsx:68
+#: app/components/results/index.tsx:72
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "不正解 {wrong}問"
@@ -107,10 +107,12 @@ msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 
 #: app/components/flashcards/index.tsx:66
 #: app/components/quiz/index.tsx:54
+#: app/components/results/index.tsx:40
 msgid "← Kanji"
 msgstr "← 漢字"
 
 #: app/components/quiz/index.tsx:54
+#: app/components/results/index.tsx:40
 msgid "← Mock tests"
 msgstr "← テスト一覧"
 
@@ -169,7 +171,7 @@ msgstr "もう一度"
 msgid "All answered"
 msgstr "すべて回答済み"
 
-#: app/components/results/index.tsx:68
+#: app/components/results/index.tsx:72
 msgid "All correct"
 msgstr "全問正解"
 
@@ -285,7 +287,7 @@ msgstr "問題{no}を採点"
 msgid "Check Part {no}?"
 msgstr "問題{no}を採点しますか？"
 
-#: app/components/results/index.tsx:44
+#: app/components/results/index.tsx:48
 msgid "Check your answers"
 msgstr "解答の確認"
 
@@ -337,7 +339,7 @@ msgstr "続きから"
 msgid "Correct"
 msgstr "正解"
 
-#: app/components/results/index.tsx:69
+#: app/components/results/index.tsx:73
 msgid "Correct {score} / {total}"
 msgstr "正解 {score} / {total}"
 
@@ -742,7 +744,7 @@ msgid "Reset your password"
 msgstr "パスワードの再設定"
 
 #: app/components/results/index.tsx:32
-#: app/components/results/index.tsx:38
+#: app/components/results/index.tsx:42
 #: app/routes/results.tsx:11
 msgid "Results"
 msgstr "結果"
