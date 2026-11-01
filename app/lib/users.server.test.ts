@@ -8,7 +8,9 @@ import {
   forgetSessionVersions,
   getSessionVersion,
   getUser,
+  lastTabOf,
   renameUser,
+  saveLastTab,
   setEmail,
   verifyUser,
 } from "./users.server";
@@ -100,6 +102,27 @@ describe("verifyUser", () => {
 describe("getUser", () => {
   it("returns null for an id that has no account", async () => {
     expect(await getUser(999)).toBeNull();
+  });
+});
+
+describe("lastTabOf and saveLastTab", () => {
+  it("keeps the list page each user last opened, and gives null before one is", async () => {
+    const id = (await createUser("huy", PASSWORD))!;
+    const other = (await createUser("ana", PASSWORD))!;
+    expect(await lastTabOf(id)).toBeNull();
+
+    await saveLastTab(id, { subject: "grammar", level: "N3" });
+    await saveLastTab(id, { subject: "kanji", level: "N2" });
+
+    expect(await lastTabOf(id)).toEqual({ subject: "kanji", level: "N2" });
+    expect(await lastTabOf(other)).toBeNull();
+  });
+
+  it("reads a saved value that names no tab as none", async () => {
+    const id = (await createUser("huy", PASSWORD))!;
+    await (await db()).execute({ sql: "UPDATE users SET last_tab = 'reading:N9' WHERE id = ?", args: [id] });
+
+    expect(await lastTabOf(id)).toBeNull();
   });
 });
 

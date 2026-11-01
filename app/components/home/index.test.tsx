@@ -1,6 +1,6 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { buildTestSummary } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute } from "#tests/helpers/render";
@@ -34,17 +34,7 @@ function renderHome(
   });
 }
 
-afterEach(() => {
-  document.cookie = "tab=; Path=/; Max-Age=0";
-});
-
 describe("Home", () => {
-  it("remembers its level in the tab cookie, so the app opens here again", async () => {
-    renderHome([NOT_TAKEN], { level: "N3" });
-
-    await screen.findByRole("heading", { name: "Mock tests" });
-    expect(document.cookie).toContain("tab=grammar:N3");
-  });
 
   it("shows the figures over the tests of the level, then the list", async () => {
     renderHome([TAKEN, NOT_TAKEN]);

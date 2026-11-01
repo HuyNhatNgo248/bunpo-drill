@@ -1,8 +1,9 @@
 import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
-import { asc, desc, eq, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, or, sql } from "drizzle-orm";
 import { orm } from "./db.server";
 import { users } from "./schema.server";
+import { parseTab, tabValue, type Tab } from "./lastTab";
 import { normalizeEmail } from "./users";
 
 /** Accounts: a name, an email for password resets, and a password stored as a salted scrypt hash. */
@@ -67,6 +68,21 @@ export async function ownerId(): Promise<number | null> {
 export async function getUser(id: number): Promise<User | null> {
   const [user] = await (await orm()).select(USER).from(users).where(eq(users.id, id));
   return user ?? null;
+}
+
+/** The list page the user last opened, where the app opens for them on any device; null before they open one. */
+export async function lastTabOf(id: number): Promise<Tab | null> {
+  const [row] = await (await orm()).select({ lastTab: users.lastTab }).from(users).where(eq(users.id, id));
+  return parseTab(row?.lastTab);
+}
+
+/** Saves the list page the user opened; the same one again writes nothing. */
+export async function saveLastTab(id: number, tab: Tab): Promise<void> {
+  const value = tabValue(tab);
+  await (await orm())
+    .update(users)
+    .set({ lastTab: value })
+    .where(and(eq(users.id, id), sql`${users.lastTab} IS NOT ${value}`));
 }
 
 /**

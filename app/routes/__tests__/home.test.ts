@@ -15,7 +15,9 @@ import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
 import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
+import type { Tab } from "~/lib/lastTab";
 import { createTest, saveSubmission, setReviewed } from "~/lib/tests.server";
+import { lastTabOf, saveLastTab } from "~/lib/users.server";
 import { thrownBy } from "#tests/helpers/thrown";
 import { loader, meta } from "../home";
 
@@ -43,11 +45,11 @@ function buildN3Payload() {
   });
 }
 
-/** The home loader for the page at `search`, in a browser whose last tab was `tab` (the tab cookie, e.g. "kanji:N2"). */
-async function loadAfter(tab: string, search = "") {
-  const request = await signedInRequest(USER_ID, `https://bunpo.test/${search}`);
-  request.headers.set("Cookie", `${request.headers.get("Cookie")}; tab=${tab}`);
-  return loader(routeArgs<Parameters<typeof loader>[0]>(request));
+/** The home loader for the page at `search`, for a user whose last tab, on any device, was `tab`. */
+async function loadAfter(tab: Tab, search = "") {
+  await ensureUser(USER_ID);
+  await saveLastTab(USER_ID, tab);
+  return load(search);
 }
 
 /** The home loader for the page at `search`, e.g. "?level=N3". */
@@ -141,22 +143,28 @@ describe("home loader levels", () => {
     });
   });
 
-  describe("when the URL names no level, in a browser that opened a tab before", () => {
+  describe("when the URL names no level, for a user who opened a tab before (on any device)", () => {
     it("shows the grammar level last opened", async () => {
       await createTest(buildPayload());
 
-      expect((await loadAfter("grammar:N3")).level).toBe("N3");
+      expect((await loadAfter({ subject: "grammar", level: "N3" })).level).toBe("N3");
     });
 
     it("opens the kanji tab when that was the last one, at its level", async () => {
-      const thrown = (await thrownBy(() => loadAfter("kanji:N2"))) as Response;
+      const thrown = (await thrownBy(() => loadAfter({ subject: "kanji", level: "N2" }))) as Response;
 
       expect(thrown.headers.get("Location")).toBe("/kanji?level=N2");
     });
 
     it("keeps to the level the URL names", async () => {
-      expect((await loadAfter("kanji:N2", "?level=N3")).level).toBe("N3");
+      expect((await loadAfter({ subject: "kanji", level: "N2" }, "?level=N3")).level).toBe("N3");
     });
+  });
+
+  it("saves the level it shows as the user's last tab", async () => {
+    await load("?level=N1");
+
+    expect(await lastTabOf(USER_ID)).toEqual({ subject: "grammar", level: "N1" });
   });
 
   it("shows a JLPT level in the URL that has no tests, with none, so its tab can say so", async () => {

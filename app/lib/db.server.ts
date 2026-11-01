@@ -49,7 +49,8 @@ const SCHEMA = {
     password TEXT NOT NULL, -- "<salt hex>:<scrypt hash hex>"
     created_at TEXT NOT NULL,
     email TEXT, -- lower case; where a password reset link goes; NULL until the user adds one
-    session_version INTEGER NOT NULL DEFAULT 0 -- in every login cookie; a password reset bumps it, which signs out the other devices
+    session_version INTEGER NOT NULL DEFAULT 0, -- in every login cookie; a password reset bumps it, which signs out the other devices
+    last_tab TEXT -- the list page last opened, e.g. "kanji:N2": the app opens there, on any device; NULL until one is
   )`,
   password_resets: `CREATE TABLE IF NOT EXISTS password_resets (
     token_hash TEXT PRIMARY KEY, -- sha256 of the token in the emailed link; the token itself is never stored
@@ -82,6 +83,7 @@ async function migrate(client: Client) {
   if (!rows.some((column) => column.name === "email")) await client.execute("ALTER TABLE users ADD COLUMN email TEXT");
   if (!rows.some((column) => column.name === "session_version"))
     await client.execute("ALTER TABLE users ADD COLUMN session_version INTEGER NOT NULL DEFAULT 0");
+  if (!rows.some((column) => column.name === "last_tab")) await client.execute("ALTER TABLE users ADD COLUMN last_tab TEXT");
   const testColumns = (await client.execute("PRAGMA table_info(tests)")).rows;
   if (!testColumns.some((column) => column.name === "draft")) await client.execute("ALTER TABLE tests ADD COLUMN draft TEXT");
   const chapterColumns = (await client.execute("PRAGMA table_info(kanji_chapters)")).rows;

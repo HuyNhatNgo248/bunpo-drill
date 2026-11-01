@@ -68,6 +68,7 @@ export const users = sqliteTable("users", {
   createdAt: text("created_at").notNull(),
   email: text("email").unique(),
   sessionVersion: integer("session_version").notNull().default(0),
+  lastTab: text("last_tab"),
 });
 
 export const kanjiChapters = sqliteTable(

@@ -1,5 +1,5 @@
 import { screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { buildChapterSummary } from "#mocks/factories/views";
 import { renderRoute } from "#tests/helpers/render";
 import type { KanjiHomeView } from "~/lib/views";
@@ -17,17 +17,7 @@ const HOME: KanjiHomeView = {
 
 const rowOf = (title: string) => screen.getByText(title).closest("li")!;
 
-afterEach(() => {
-  document.cookie = "tab=; Path=/; Max-Age=0";
-});
-
 describe("KanjiHome", () => {
-  it("remembers its level in the tab cookie, so the app opens here again", async () => {
-    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
-
-    await screen.findByText("生活-1");
-    expect(document.cookie).toContain("tab=kanji:N2");
-  });
 
   it("shows the figures over the level's chapters, then each chapter", async () => {
     renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
