@@ -25,6 +25,7 @@ export function buildTestSummary(overrides: Partial<TestSummary> = {}): TestSumm
     review: [],
     previous: null,
     answered: null,
+    weeks: [1],
     ...overrides,
   };
 }
@@ -41,7 +42,14 @@ export function buildResultsView(overrides: Partial<ResultsView> = {}): ResultsV
 
 /** 1章 生活-1 as the kanji page lists it: 96 words, 24 learned, its quiz not taken yet. */
 export function buildChapterSummary(overrides: Partial<ChapterSummary> = {}): ChapterSummary {
-  return { chapter: 1, title: "生活-1", words: 96, learned: 24, quiz: { id: "20261031-aaaaaa", result: null }, ...overrides };
+  return {
+    chapter: 1,
+    title: "生活-1",
+    words: 96,
+    learned: 24,
+    quiz: { id: "20261031-aaaaaa", result: null },
+    ...overrides,
+  };
 }
 
 /** The card of 招待状, not learned yet, under 招 in the ギフト lesson. */

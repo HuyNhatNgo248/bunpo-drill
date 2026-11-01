@@ -57,10 +57,20 @@ describe("KanjiHome", () => {
     expect(row.queryByRole("link", { name: "Quiz" })).toBeNull();
   });
 
-  it("says a level has no chapters yet, and how to send one", async () => {
-    renderRoute(<KanjiHome home={{ ...HOME, level: "N1", chapters: [] }} />, { url: "/kanji?level=N1" });
+  it("says the book's level has no chapters yet, and how to send one", async () => {
+    renderRoute(<KanjiHome home={{ ...HOME, chapters: [] }} />, { url: "/kanji?level=N2" });
 
-    expect(await screen.findByRole("heading", { name: "No N1 chapters yet" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "No N2 chapters yet" })).toBeInTheDocument();
+  });
+
+  it("says any other level without chapters is not available yet, under its empty trays, N3 included", async () => {
+    for (const level of ["N5", "N3"] as const) {
+      const { unmount } = renderRoute(<KanjiHome home={{ ...HOME, level, chapters: [] }} />, { url: `/kanji?level=${level}` });
+
+      expect(await screen.findByRole("heading", { name: `${level} isn't available yet` })).toBeInTheDocument();
+      expect(screen.getByText(`Kanji for ${level} is coming later.`)).toBeInTheDocument();
+      unmount();
+    }
   });
 
   it("switches to the grammar mock tests at the same level, and between the levels", async () => {

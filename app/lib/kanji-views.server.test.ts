@@ -99,7 +99,13 @@ describe("toKanjiHome", () => {
     const home = toKanjiHome("N2", [CHAPTER, buildKanjiChapter({ chapter: 2 })], new Set([WORD_ID]), latest);
 
     expect(home.chapters).toEqual([
-      { chapter: 1, title: "生活-1", words: 3, learned: 1, quiz: { id: "20261031-aaaaaa", result: { score: 1, total: 2 } } },
+      {
+        chapter: 1,
+        title: "生活-1",
+        words: 3,
+        learned: 1,
+        quiz: { id: "20261031-aaaaaa", result: { score: 1, total: 2 } },
+      },
       { chapter: 2, title: "生活-1", words: 1, learned: 0, quiz: { id: "20261031-bbbbbb", result: { score: 2, total: 2 } } },
     ]);
     expect(home.stats).toEqual({ learned: 1, words: 4, average: 75, missed: 1 });

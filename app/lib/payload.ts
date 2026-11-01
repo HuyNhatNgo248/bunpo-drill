@@ -23,6 +23,9 @@ export type Level = (typeof LEVELS)[number];
 
 export const isTestLevel = (level: JlptLevel): level is Level => LEVELS.some((l) => l === level);
 
+/** The level of the 漢字マスター book the kanji chapters come from; the kanji page's other levels have none yet. */
+export const KANJI_LEVEL = "N2" satisfies Level;
+
 /** The grammar test's 3 問題, then the kanji test's 2 (kanji-payload.ts). */
 export const SECTION_TYPES = ["fill-blank", "sentence-order", "passage", "kanji-reading", "kanji-writing"] as const;
 export type SectionType = (typeof SECTION_TYPES)[number];

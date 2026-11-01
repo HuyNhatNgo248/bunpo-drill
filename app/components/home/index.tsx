@@ -1,12 +1,11 @@
 import { Trans } from "@lingui/react/macro";
+import { EmptyState } from "~/components/EmptyState";
+import { warmDrawerFigure } from "~/components/helpers/drawerFigure";
 import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
 import { isTestLevel, JLPT_LEVELS, type JlptLevel } from "~/lib/payload";
 import type { TestSummary } from "~/lib/views";
-import { EmptyState } from "./EmptyState";
-import { warmDrawerFigure } from "./helpers/drawerFigure";
-import { LevelUnavailable } from "./LevelUnavailable";
 import { SortMenu } from "./SortMenu";
 import { Stats, type HomeStats } from "./Stats";
 import { TestList } from "./test-list";
@@ -45,9 +44,13 @@ export function Home({ tests, stats, level, latestFirst }: HomeProps) {
             </div>
           </>
         ) : level && !isTestLevel(level) ? (
-          <LevelUnavailable level={level} />
+          <EmptyState drawer title={<Trans>{level} isn't available yet</Trans>}>
+            <Trans>Mock tests for {level} are coming later.</Trans>
+          </EmptyState>
         ) : (
-          <EmptyState />
+          <EmptyState title={<Trans>No mock tests yet</Trans>}>
+            <Trans>New mock tests show up here.</Trans>
+          </EmptyState>
         )}
       </main>
     </div>

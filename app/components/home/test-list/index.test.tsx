@@ -38,6 +38,15 @@ describe("TestList", () => {
     expect(headings()).toEqual(["In progress", "Not taken yet", "Taken"]);
   });
 
+  it("shows the week in a tile, and the days as the title", async () => {
+    renderList([{ ...NOT_TAKEN, title: "第2週 1〜6日目", weeks: [2] }]);
+
+    const row = within(await screen.findByRole("listitem"));
+    expect(row.getByText("2")).toBeInTheDocument();
+    expect(row.getByText("1〜6日目")).toBeInTheDocument();
+    expect(row.getByRole("link", { name: /^第2週 1〜6日目/ })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
+  });
+
   it("shows a test that is not taken, with its size, and a start link, under its group only", async () => {
     renderList([NOT_TAKEN]);
 

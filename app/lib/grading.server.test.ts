@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   buildFillBlankQuestion,
   buildFillBlankSection,
+  buildGrammarPoint,
   buildPassage,
   buildPassageSection,
   buildPayload,
@@ -313,7 +314,18 @@ describe("toSummary", () => {
       review: [],
       previous: null,
       answered: null,
+      weeks: [1],
     });
+  });
+
+  it("gives the weeks it covers, each once, first first", () => {
+    const grammarPoints = [
+      buildGrammarPoint({ id: "n2-w5-d1-g1", week: 5, pattern: "〜ものの" }),
+      buildGrammarPoint({ id: "n2-w3-d2-g1", week: 3, day: 2, pattern: "〜ばかりか" }),
+      buildGrammarPoint({ id: "n2-w5-d2-g1", week: 5, day: 2, pattern: "〜ものの" }),
+    ];
+
+    expect(toSummary(buildListedTest({ payload: { ...buildListedTest().payload, grammarPoints } })).weeks).toEqual([3, 5]);
   });
 
   it("gives the last score as a percent, and the chips to review", () => {

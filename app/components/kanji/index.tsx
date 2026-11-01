@@ -1,14 +1,21 @@
 import { Trans } from "@lingui/react/macro";
+import { EmptyState } from "~/components/EmptyState";
+import { loadDrawerFigure } from "~/components/helpers/drawerFigure";
 import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
-import { Card } from "~/components/ui/card";
-import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
+import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL, type JlptLevel } from "~/lib/payload";
 import type { KanjiHomeView } from "~/lib/views";
 import { ChapterList } from "./chapter-list";
 import { Stats } from "./Stats";
 
-/** The kanji page for one level: the figures over its chapters, then each chapter with its flashcards and its quiz. */
+/** A tab starts loading the drawer figure for a level that will show it: one with no chapters, other than the book's. */
+const warmOf = (level: JlptLevel) => (level === KANJI_LEVEL ? undefined : () => void loadDrawerFigure());
+
+/**
+ * The kanji page for one level: the figures over its chapters, then each chapter with its flashcards and its quiz. The
+ * book's level with no chapters yet says how to send one; any other level without chapters is not available yet.
+ */
 export function KanjiHome({ home }: { home: KanjiHomeView }) {
   const { level, chapters } = home;
   return (
@@ -20,7 +27,7 @@ export function KanjiHome({ home }: { home: KanjiHomeView }) {
           <h1 className="text-2xl font-bold tracking-tight md:text-title-lg">
             <Trans>Kanji</Trans>
           </h1>
-          <LevelTabs levels={JLPT_LEVELS} current={level} />
+          <LevelTabs levels={JLPT_LEVELS} current={level} warmOf={warmOf} />
         </div>
 
         {chapters.length > 0 && isTestLevel(level) ? (
@@ -28,15 +35,14 @@ export function KanjiHome({ home }: { home: KanjiHomeView }) {
             <Stats stats={home.stats} />
             <ChapterList level={level} chapters={chapters} />
           </>
+        ) : level === KANJI_LEVEL ? (
+          <EmptyState title={<Trans>No {level} chapters yet</Trans>}>
+            <Trans>A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章.</Trans>
+          </EmptyState>
         ) : (
-          <Card className="flex flex-col items-center gap-2 border-dashed border-input p-7 text-center">
-            <h2 className="text-base font-semibold">
-              <Trans>No {level} chapters yet</Trans>
-            </h2>
-            <p className="max-w-115 text-muted-foreground">
-              <Trans>A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章.</Trans>
-            </p>
-          </Card>
+          <EmptyState drawer title={<Trans>{level} isn't available yet</Trans>}>
+            <Trans>Kanji for {level} is coming later.</Trans>
+          </EmptyState>
         )}
       </main>
     </div>

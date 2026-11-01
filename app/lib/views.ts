@@ -171,4 +171,6 @@ export type TestSummary = {
   previous: { score: number; total: number } | null;
   /** How many questions its unsubmitted answer sheet answers; null until it is started. */
   answered: number | null;
+  /** The weeks of the 文法ノート it covers, first first. */
+  weeks: number[];
 };

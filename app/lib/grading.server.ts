@@ -293,6 +293,7 @@ export function toSummary(test: ListedTest): TestSummary {
     review: submission ? reviewChips(test, submission.wrongGrammarIds) : [],
     previous: previousAttempt(test, submission),
     answered: test.answered,
+    weeks: [...new Set(payload.grammarPoints.map((point) => point.week))].sort((a, b) => a - b),
   };
 }
 
