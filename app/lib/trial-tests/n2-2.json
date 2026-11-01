@@ -631,22 +631,22 @@
         {
           "id": "q19",
           "grammarId": "n2-w7-d4-g1",
-          "before": "この町の夏祭りは、地元の",
-          "after": "によって運営されている。",
+          "before": "この小さな博物館は、江戸時代の台所道具",
+          "after": "展示で知られている。",
           "pieces": [
-            "中心とした",
-            "高校生",
+            "中心に",
             "を",
-            "実行委員会"
+            "して",
+            "集めた"
           ],
           "correctOrder": [
             1,
-            2,
             0,
+            2,
             3
           ],
-          "starSlot": 3,
-          "explanation": "Before a noun, を中心に becomes を中心とした: 高校生を中心とした実行委員会. 中心とした must follow を and modify 実行委員会, so ★ is 中心とした."
+          "starSlot": 2,
+          "explanation": "Nを中心にして + verb: 台所道具を中心にして集めた展示. を must follow the noun, して must follow 中心に, and only the verb 集めた can modify 展示, so ★ is 中心に."
         },
         {
           "id": "q20",
