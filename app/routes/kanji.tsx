@@ -23,10 +23,11 @@ export async function loader({ request }: Route.LoaderArgs) {
   // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
   saveLastTab(userId, { subject: "kanji", level }).catch(console.error);
   if (!isTestLevel(level)) {
-    return { home: { level, chapters: [], stats: { learned: 0, words: 0, average: null, missed: 0 } } };
+    return { home: { level, chapters: [], stats: { learned: 0, words: 0, average: null, missed: 0 } }, level };
   }
   const [chapters, learned, latest] = await Promise.all([listChapters(level), learnedIds(userId), latestKanjiTests(level, userId)]);
-  return { home: toKanjiHome(level, chapters, learned, latest) };
+  // `level` again at the top, where TabsLayout reads it for the subject tabs.
+  return { home: toKanjiHome(level, chapters, learned, latest), level };
 }
 
 export default function KanjiRoute({ loaderData }: Route.ComponentProps) {

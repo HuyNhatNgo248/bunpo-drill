@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { NotebookPen } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useFetcher } from "react-router";
-import { INPUT_CLASS } from "~/components/form/styles";
+import { TEXTAREA_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
 import { Popover, PopoverAnchor, PopoverContent } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
@@ -75,7 +75,13 @@ export function AddNote({ testId }: { testId: string }) {
             </p>
             <label className="flex flex-col gap-1 text-caption text-muted-foreground">
               <Trans>Memo (optional)</Trans>
-              <input name="memo" maxLength={500} placeholder={t`Reading or meaning`} className={INPUT_CLASS} />
+              <textarea
+                name="memo"
+                maxLength={2000}
+                placeholder={t`Reading or meaning`}
+                className={TEXTAREA_CLASS}
+                onKeyDown={(event) => event.key === "Enter" && (event.metaKey || event.ctrlKey) && event.currentTarget.form?.requestSubmit()}
+              />
             </label>
             <div className="flex justify-end gap-2">
               <Button type="button" variant="ghost" size="sm" onClick={close}>

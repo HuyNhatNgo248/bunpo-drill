@@ -59,8 +59,8 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
-#: app/components/home/index.tsx:53
-#: app/components/kanji/index.tsx:49
+#: app/components/home/index.tsx:47
+#: app/components/kanji/index.tsx:43
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
 
@@ -147,7 +147,7 @@ msgstr "15問"
 msgid "3 passages × 5 questions"
 msgstr "3文章 × 5問"
 
-#: app/components/kanji/index.tsx:46
+#: app/components/kanji/index.tsx:40
 msgid "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 msgstr "Claude が /jlpt-kanji-quiz 1章 で単語を送ると、ここに章が表示されます。"
 
@@ -168,11 +168,19 @@ msgstr "約{points}文型"
 msgid "Account"
 msgstr "アカウント"
 
+#: app/components/notes/Memo.tsx:55
+msgid "Add a memo"
+msgstr "メモを追加"
+
+#: app/components/notes/Memo.tsx:51
+msgid "Add a memo to {text}"
+msgstr "{text}にメモを追加"
+
 #: app/components/add-note/index.tsx:68
 msgid "Add to notes"
 msgstr "ノートに追加"
 
-#: app/components/add-note/index.tsx:93
+#: app/components/add-note/index.tsx:99
 msgid "Adding…"
 msgstr "追加しています…"
 
@@ -197,7 +205,7 @@ msgstr "全問"
 msgid "All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like."
 msgstr "3つの問題すべてを、提出するとすぐに採点します。解答は保存されないので、何度でも受けられます。"
 
-#: app/components/add-note/index.tsx:95
+#: app/components/add-note/index.tsx:101
 msgid "Already in your notes."
 msgstr "すでにノートにあります。"
 
@@ -258,7 +266,7 @@ msgstr "テスト一覧に戻る"
 msgid "Blank （{num}） in the passage"
 msgstr "文章中の（{num}）に入るもの"
 
-#: app/components/add-note/index.tsx:82
+#: app/components/add-note/index.tsx:88
 #: app/components/ConfirmDialog.tsx:44
 msgid "Cancel"
 msgstr "キャンセル"
@@ -379,11 +387,11 @@ msgstr "正解 {score} / {total}"
 msgid "Correct!"
 msgstr "正解！"
 
-#: app/components/add-note/index.tsx:97
+#: app/components/add-note/index.tsx:103
 msgid "Couldn't add it. Please try again."
 msgstr "追加できませんでした。もう一度お試しください。"
 
-#: app/components/notes/NoteCard.tsx:75
+#: app/components/notes/NoteCard.tsx:65
 msgid "Couldn't save. Please try again."
 msgstr "保存できませんでした。もう一度お試しください。"
 
@@ -411,7 +419,7 @@ msgstr "日"
 msgid "Day {day}"
 msgstr "{day}日目"
 
-#: app/components/notes/NoteCard.tsx:40
+#: app/components/notes/NoteCard.tsx:47
 msgid "Delete {text}"
 msgstr "{text}を削除"
 
@@ -437,6 +445,10 @@ msgstr "苦手な文法を復習しましたか？"
 #: app/components/quiz/sentence-order/SlotButton.tsx:31
 msgid "draggable"
 msgstr "ドラッグ可能"
+
+#: app/components/notes/NoteCard.tsx:43
+msgid "Edit the memo of {text}"
+msgstr "{text}のメモを編集"
 
 #: app/components/account/EmailForm.tsx:18
 #: app/components/account/EmailForm.tsx:32
@@ -472,7 +484,7 @@ msgstr "単語カード"
 msgid "Forgot your password?"
 msgstr "パスワードを忘れた場合"
 
-#: app/components/notes/NoteCard.tsx:80
+#: app/components/notes/NoteCard.tsx:87
 msgid "From {testTitle}"
 msgstr "出典：{testTitle}"
 
@@ -489,7 +501,7 @@ msgstr "本番と同じ3つの問題形式の模擬試験で、提出すると�
 msgid "Got it"
 msgstr "覚えた"
 
-#: app/components/SubjectTabs.tsx:14
+#: app/components/SubjectTabs.tsx:27
 msgid "Grammar"
 msgstr "文法"
 
@@ -553,14 +565,14 @@ msgstr "今日が試験日です。がんばってください。"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "本番形式で練習する、JLPTの文法"
 
-#: app/components/kanji/index.tsx:33
+#: app/components/kanji/index.tsx:27
 #: app/components/results/Actions.tsx:42
-#: app/components/SubjectTabs.tsx:15
+#: app/components/SubjectTabs.tsx:28
 #: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "漢字"
 
-#: app/components/kanji/index.tsx:50
+#: app/components/kanji/index.tsx:44
 msgid "Kanji for {level} is coming later."
 msgstr "{level}の漢字は今後追加される予定です。"
 
@@ -624,7 +636,7 @@ msgstr "受け直す前に、間違えた文法を復習しましょう。間違
 msgid "Mark as reviewed"
 msgstr "復習済みにする"
 
-#: app/components/notes/NoteCard.tsx:60
+#: app/components/notes/Memo.tsx:28
 msgid "Memo"
 msgstr "メモ"
 
@@ -636,13 +648,13 @@ msgstr "メモ（任意）"
 msgid "Missed words"
 msgstr "間違えた単語"
 
-#: app/components/home/index.tsx:38
+#: app/components/home/index.tsx:32
 #: app/components/results/Actions.tsx:51
 #: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "模擬試験"
 
-#: app/components/home/index.tsx:54
+#: app/components/home/index.tsx:48
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
@@ -655,7 +667,7 @@ msgstr "<0>{0}</0>を使うほかの語"
 msgid "New here? <0>Create account</0>"
 msgstr "はじめての方は <0>アカウントを作成</0>"
 
-#: app/components/home/index.tsx:58
+#: app/components/home/index.tsx:52
 msgid "New mock tests show up here."
 msgstr "新しい模擬試験はここに表示されます。"
 
@@ -682,15 +694,15 @@ msgstr "次の問題"
 msgid "Nice work"
 msgstr "おつかれさまでした"
 
-#: app/components/kanji/index.tsx:45
+#: app/components/kanji/index.tsx:39
 msgid "No {level} chapters yet"
 msgstr "{level}の章はまだありません"
 
-#: app/components/noted-text/NotedWord.tsx:20
+#: app/components/noted-text/NotedWord.tsx:23
 msgid "No memo yet."
 msgstr "メモはまだありません。"
 
-#: app/components/home/index.tsx:57
+#: app/components/home/index.tsx:51
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
 
@@ -718,9 +730,9 @@ msgstr "まだ受けていない"
 msgid "Not yet"
 msgstr "まだ"
 
-#: app/components/notes/index.tsx:16
-#: app/components/SubjectTabs.tsx:16
-#: app/routes/notes.tsx:12
+#: app/components/notes/index.tsx:15
+#: app/components/SubjectTabs.tsx:29
+#: app/routes/notes.tsx:13
 msgid "Notes"
 msgstr "ノート"
 
@@ -736,7 +748,7 @@ msgstr "番号"
 msgid "on"
 msgstr "音"
 
-#: app/components/noted-text/NotedWord.tsx:25
+#: app/components/noted-text/NotedWord.tsx:28
 msgid "Open in notes"
 msgstr "ノートで開く"
 
@@ -844,8 +856,8 @@ msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{fi
 msgid "Read the passage, think about what it says as a whole, and choose the best answer for each of （{first}） to （{last}） from 1, 2, 3 and 4."
 msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{first}）から（{last}）の中に入る最もよいものを、1・2・3・4から一つえらびなさい。"
 
-#: app/components/add-note/index.tsx:78
-#: app/components/notes/NoteCard.tsx:64
+#: app/components/add-note/index.tsx:81
+#: app/components/notes/Memo.tsx:33
 msgid "Reading or meaning"
 msgstr "読み方や意味"
 
@@ -883,7 +895,7 @@ msgstr "例題"
 
 #: app/components/account/EmailForm.tsx:42
 #: app/components/account/NameForm.tsx:39
-#: app/components/add-note/index.tsx:85
+#: app/components/add-note/index.tsx:91
 msgid "Save"
 msgstr "保存"
 
@@ -1001,7 +1013,7 @@ msgstr "テストを始める"
 msgid "Still learning ({again})"
 msgstr "まだ覚えていない語（{again}）"
 
-#: app/components/SubjectTabs.tsx:21
+#: app/components/SubjectTabs.tsx:36
 msgid "Subject"
 msgstr "科目"
 

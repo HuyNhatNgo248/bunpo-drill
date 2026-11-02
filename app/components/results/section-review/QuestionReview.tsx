@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { useLocation } from "react-router";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { NotedText } from "~/components/noted-text";
@@ -13,6 +14,8 @@ import type { ResultQuestion, SentencePiece } from "~/lib/views";
  */
 export function QuestionReview({ question, className }: { question: ResultQuestion; className?: string }) {
   const { t } = useLingui();
+  // Opened from a note's link to this question.
+  const arrived = useLocation().hash === `#${questionAnchor(question.num)}`;
   const yours = question.yours;
   const answer = question.answer;
   return (
@@ -22,6 +25,7 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
       className={cn(
         "flex scroll-mt-4 flex-col gap-2.5 p-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:scroll-mt-6 md:gap-3 md:p-5",
         !question.correct && "border-primary-border bg-primary-soft",
+        arrived && "animate-arrived motion-reduce:animate-none",
         className,
       )}
     >

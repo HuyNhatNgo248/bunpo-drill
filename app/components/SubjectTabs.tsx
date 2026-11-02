@@ -1,20 +1,35 @@
 import { useLingui } from "@lingui/react/macro";
-import { Link, useNavigation } from "react-router";
+import { Link, useLocation, useNavigation } from "react-router";
 import { cn } from "~/lib/utils";
 import type { JlptLevel } from "~/lib/payload";
-import type { TestKind } from "~/lib/views";
+
+/** The pages the tabs switch between. */
+const PATHS = { grammar: "/", kanji: "/kanji", notes: "/notes" } as const;
 
 /**
- * Switches between the grammar mock tests, kanji and the notes, at the level picked on the page (notes have no level).
- * A page that is not Japanese adds the Japanese word to each tab. Like the level tabs, one highlight slides to the subject picked, as soon as it is picked.
+ * True while a tab's page loads, another level of the same one included: the page shown fades, so the click shows at
+ * once.
  */
-export function SubjectTabs({ current, level }: { current: TestKind | "notes"; level: JlptLevel | null }) {
+export function useTabLoading(): boolean {
+  const navigation = useNavigation();
+  return navigation.state === "loading" && Object.values(PATHS).some((path) => path === navigation.location.pathname);
+}
+
+/**
+ * Switches between the grammar mock tests, kanji and the notes, the tab of the page shown being the current one, at
+ * the level picked on the page (notes have none). A page that is not Japanese adds the Japanese word to each tab. Like
+ * the level tabs, one highlight slides to the subject picked, as soon as it is picked; TabsLayout keeps the tabs on
+ * screen while the page changes, so the slide is never cut short.
+ */
+export function SubjectTabs({ level }: { level: JlptLevel | null }) {
   const { t, i18n } = useLingui();
   const tabs = [
-    { kind: "grammar", path: "/", label: t`Grammar`, ja: "文法" },
-    { kind: "kanji", path: "/kanji", label: t`Kanji`, ja: "漢字" },
-    { kind: "notes", path: "/notes", label: t`Notes`, ja: "ノート" },
+    { kind: "grammar", path: PATHS.grammar, label: t`Grammar`, ja: "文法" },
+    { kind: "kanji", path: PATHS.kanji, label: t`Kanji`, ja: "漢字" },
+    { kind: "notes", path: PATHS.notes, label: t`Notes`, ja: "ノート" },
   ] as const;
+  const here = useLocation().pathname;
+  const current = tabs.find((tab) => tab.path === here)?.kind;
   const next = useNavigation().location?.pathname;
   const shown = tabs.find((tab) => tab.path === next)?.kind ?? current;
   return (
@@ -32,16 +47,19 @@ export function SubjectTabs({ current, level }: { current: TestKind | "notes"; l
             prefetch="intent"
             aria-current={kind === current ? "page" : undefined}
             className={cn(
-              "relative flex h-9 items-center justify-center gap-1.5 rounded-md px-2 text-sm md:px-4 font-semibold no-underline outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/40",
-              kind === shown ? "text-primary-soft-foreground" : "text-muted-foreground hover:text-foreground",
+              // Not positioned, so its hover background is under the sliding highlight; only its words are over it.
+              "flex h-9 items-center justify-center rounded-md px-2 text-sm font-semibold no-underline outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/40 md:px-4",
+              kind === shown ? "text-primary-soft-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
-            {label}
-            {i18n.locale !== "ja" && (
-              <span lang="ja" className="font-jp font-medium">
-                {ja}
-              </span>
-            )}
+            <span className="relative flex items-center gap-1.5">
+              {label}
+              {i18n.locale !== "ja" && (
+                <span lang="ja" className="font-jp font-medium">
+                  {ja}
+                </span>
+              )}
+            </span>
           </Link>
         ))}
       </div>

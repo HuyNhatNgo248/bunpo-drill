@@ -165,6 +165,12 @@
   /* A jump lands a passage question 12px below its pinned passage (top-16, or md:top-24). */
   --scroll-margin-passage: calc(var(--passage-h) + 4.75rem);
   --scroll-margin-passage-desktop: calc(var(--passage-h) + 6.75rem);
+
+  /*
+   * A card a link arrives at (a note from its word, a question or passage from its note): a blush a shade deeper than
+   * primary-soft, so it shows on a wrong answer's card too, fading to the card's own colour.
+   */
+  --animate-arrived: arrived 2s ease-out;
 }
 
 /* A test row's title takes the free space, so its buttons wrap below it before the title wraps. */
@@ -196,6 +202,12 @@
   animation: highlighter-draw 0.5s ease-out both;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+}
+
+@keyframes arrived {
+  from {
+    background-color: color-mix(in srgb, var(--color-primary-border) 50%, var(--color-primary-soft));
   }
 }
 

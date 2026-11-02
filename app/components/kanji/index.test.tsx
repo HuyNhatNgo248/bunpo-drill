@@ -74,12 +74,9 @@ describe("KanjiHome", () => {
     }
   });
 
-  it("switches to the grammar mock tests at the same level, and between the levels", async () => {
+  it("switches between the levels", async () => {
     renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
 
-    const subjects = await screen.findByRole("navigation", { name: "Subject" });
-    expect(within(subjects).getByRole("link", { name: /Grammar/ })).toHaveAttribute("href", "/?level=N2");
-    expect(within(subjects).getByRole("link", { name: /Kanji/ })).toHaveAttribute("aria-current", "page");
-    expect(within(screen.getByRole("navigation", { name: "Level" })).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
+    expect(within(await screen.findByRole("navigation", { name: "Level" })).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
   });
 });

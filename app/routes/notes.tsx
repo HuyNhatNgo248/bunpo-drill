@@ -7,13 +7,17 @@ import { requireUserId } from "~/lib/auth.server";
 import { localeFromMatches, translate } from "~/lib/i18n";
 import { addNote, deleteNote, listNotes, memoSchema, newNoteSchema, saveMemo } from "~/lib/notes.server";
 import { getTest } from "~/lib/tests.server";
+import { lastTabOf } from "~/lib/users.server";
 
 export function meta({ matches }: Route.MetaArgs) {
   return [{ title: `${translate(localeFromMatches(matches), msg`Notes`)} · 文法ドリル` }];
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  return { notes: await listNotes(await requireUserId(request)) };
+  const userId = await requireUserId(request);
+  const [notes, last] = await Promise.all([listNotes(userId), lastTabOf(userId)]);
+  // The level last opened, for the tabs: with none, the grammar tab's / would open the last tab instead, kanji included.
+  return { notes, level: last?.level ?? null };
 }
 
 /**

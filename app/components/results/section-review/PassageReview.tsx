@@ -1,3 +1,4 @@
+import { useLocation } from "react-router";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { NotedText } from "~/components/noted-text";
@@ -6,8 +7,11 @@ import type { ResultSegment } from "~/lib/views";
 
 /** The passage with every blank filled in: green if answered right, red if not. */
 export function PassageReview({ segments }: { segments: ResultSegment[] }) {
+  const id = passageAnchor(segments);
+  // Opened from a note's link to this passage.
+  const arrived = useLocation().hash === `#${id}`;
   return (
-    <Card id={passageAnchor(segments)} className="mt-1 scroll-mt-4 p-4 md:scroll-mt-6 md:p-5">
+    <Card id={id} className={cn("mt-1 scroll-mt-4 p-4 md:scroll-mt-6 md:p-5", arrived && "animate-arrived motion-reduce:animate-none")}>
       <p
         lang="ja"
         data-note-sentence={segments.map((segment) => (segment.kind === "text" ? segment.text : `（${segment.num}）${segment.fill}`)).join("")}

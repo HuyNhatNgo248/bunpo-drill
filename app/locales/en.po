@@ -59,8 +59,8 @@ msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# q
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
-#: app/components/home/index.tsx:53
-#: app/components/kanji/index.tsx:49
+#: app/components/home/index.tsx:47
+#: app/components/kanji/index.tsx:43
 msgid "{level} isn't available yet"
 msgstr "{level} isn't available yet"
 
@@ -147,7 +147,7 @@ msgstr "15 questions"
 msgid "3 passages × 5 questions"
 msgstr "3 passages × 5 questions"
 
-#: app/components/kanji/index.tsx:46
+#: app/components/kanji/index.tsx:40
 msgid "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 msgstr "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 
@@ -168,11 +168,19 @@ msgstr "About {points} grammar points"
 msgid "Account"
 msgstr "Account"
 
+#: app/components/notes/Memo.tsx:55
+msgid "Add a memo"
+msgstr "Add a memo"
+
+#: app/components/notes/Memo.tsx:51
+msgid "Add a memo to {text}"
+msgstr "Add a memo to {text}"
+
 #: app/components/add-note/index.tsx:68
 msgid "Add to notes"
 msgstr "Add to notes"
 
-#: app/components/add-note/index.tsx:93
+#: app/components/add-note/index.tsx:99
 msgid "Adding…"
 msgstr "Adding…"
 
@@ -197,7 +205,7 @@ msgstr "All questions"
 msgid "All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like."
 msgstr "All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like."
 
-#: app/components/add-note/index.tsx:95
+#: app/components/add-note/index.tsx:101
 msgid "Already in your notes."
 msgstr "Already in your notes."
 
@@ -258,7 +266,7 @@ msgstr "Back to the mock tests"
 msgid "Blank （{num}） in the passage"
 msgstr "Blank （{num}） in the passage"
 
-#: app/components/add-note/index.tsx:82
+#: app/components/add-note/index.tsx:88
 #: app/components/ConfirmDialog.tsx:44
 msgid "Cancel"
 msgstr "Cancel"
@@ -379,11 +387,11 @@ msgstr "Correct {score} / {total}"
 msgid "Correct!"
 msgstr "Correct!"
 
-#: app/components/add-note/index.tsx:97
+#: app/components/add-note/index.tsx:103
 msgid "Couldn't add it. Please try again."
 msgstr "Couldn't add it. Please try again."
 
-#: app/components/notes/NoteCard.tsx:75
+#: app/components/notes/NoteCard.tsx:65
 msgid "Couldn't save. Please try again."
 msgstr "Couldn't save. Please try again."
 
@@ -411,7 +419,7 @@ msgstr "Day"
 msgid "Day {day}"
 msgstr "Day {day}"
 
-#: app/components/notes/NoteCard.tsx:40
+#: app/components/notes/NoteCard.tsx:47
 msgid "Delete {text}"
 msgstr "Delete {text}"
 
@@ -437,6 +445,10 @@ msgstr "Did you review your weak grammar?"
 #: app/components/quiz/sentence-order/SlotButton.tsx:31
 msgid "draggable"
 msgstr "draggable"
+
+#: app/components/notes/NoteCard.tsx:43
+msgid "Edit the memo of {text}"
+msgstr "Edit the memo of {text}"
 
 #: app/components/account/EmailForm.tsx:18
 #: app/components/account/EmailForm.tsx:32
@@ -472,7 +484,7 @@ msgstr "Flashcards"
 msgid "Forgot your password?"
 msgstr "Forgot your password?"
 
-#: app/components/notes/NoteCard.tsx:80
+#: app/components/notes/NoteCard.tsx:87
 msgid "From {testTitle}"
 msgstr "From {testTitle}"
 
@@ -489,7 +501,7 @@ msgstr "Full mock tests in the same three formats as the real exam, graded as so
 msgid "Got it"
 msgstr "Got it"
 
-#: app/components/SubjectTabs.tsx:14
+#: app/components/SubjectTabs.tsx:27
 msgid "Grammar"
 msgstr "Grammar"
 
@@ -553,14 +565,14 @@ msgstr "It's exam day today. Good luck!"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "JLPT grammar practice in the real test's format"
 
-#: app/components/kanji/index.tsx:33
+#: app/components/kanji/index.tsx:27
 #: app/components/results/Actions.tsx:42
-#: app/components/SubjectTabs.tsx:15
+#: app/components/SubjectTabs.tsx:28
 #: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "Kanji"
 
-#: app/components/kanji/index.tsx:50
+#: app/components/kanji/index.tsx:44
 msgid "Kanji for {level} is coming later."
 msgstr "Kanji for {level} is coming later."
 
@@ -624,7 +636,7 @@ msgstr "Make sure you study the grammar you got wrong first. The quiz asks only 
 msgid "Mark as reviewed"
 msgstr "Mark as reviewed"
 
-#: app/components/notes/NoteCard.tsx:60
+#: app/components/notes/Memo.tsx:28
 msgid "Memo"
 msgstr "Memo"
 
@@ -636,13 +648,13 @@ msgstr "Memo (optional)"
 msgid "Missed words"
 msgstr "Missed words"
 
-#: app/components/home/index.tsx:38
+#: app/components/home/index.tsx:32
 #: app/components/results/Actions.tsx:51
 #: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "Mock tests"
 
-#: app/components/home/index.tsx:54
+#: app/components/home/index.tsx:48
 msgid "Mock tests for {level} are coming later."
 msgstr "Mock tests for {level} are coming later."
 
@@ -655,7 +667,7 @@ msgstr "More words with <0>{0}</0>"
 msgid "New here? <0>Create account</0>"
 msgstr "New here? <0>Create account</0>"
 
-#: app/components/home/index.tsx:58
+#: app/components/home/index.tsx:52
 msgid "New mock tests show up here."
 msgstr "New mock tests show up here."
 
@@ -682,15 +694,15 @@ msgstr "Next question"
 msgid "Nice work"
 msgstr "Nice work"
 
-#: app/components/kanji/index.tsx:45
+#: app/components/kanji/index.tsx:39
 msgid "No {level} chapters yet"
 msgstr "No {level} chapters yet"
 
-#: app/components/noted-text/NotedWord.tsx:20
+#: app/components/noted-text/NotedWord.tsx:23
 msgid "No memo yet."
 msgstr "No memo yet."
 
-#: app/components/home/index.tsx:57
+#: app/components/home/index.tsx:51
 msgid "No mock tests yet"
 msgstr "No mock tests yet"
 
@@ -718,9 +730,9 @@ msgstr "Not taken yet"
 msgid "Not yet"
 msgstr "Not yet"
 
-#: app/components/notes/index.tsx:16
-#: app/components/SubjectTabs.tsx:16
-#: app/routes/notes.tsx:12
+#: app/components/notes/index.tsx:15
+#: app/components/SubjectTabs.tsx:29
+#: app/routes/notes.tsx:13
 msgid "Notes"
 msgstr "Notes"
 
@@ -736,7 +748,7 @@ msgstr "Number"
 msgid "on"
 msgstr "on"
 
-#: app/components/noted-text/NotedWord.tsx:25
+#: app/components/noted-text/NotedWord.tsx:28
 msgid "Open in notes"
 msgstr "Open in notes"
 
@@ -844,8 +856,8 @@ msgstr "Read the passage, think about what it says as a whole, and choose the be
 msgid "Read the passage, think about what it says as a whole, and choose the best answer for each of （{first}） to （{last}） from 1, 2, 3 and 4."
 msgstr "Read the passage, think about what it says as a whole, and choose the best answer for each of （{first}） to （{last}） from 1, 2, 3 and 4."
 
-#: app/components/add-note/index.tsx:78
-#: app/components/notes/NoteCard.tsx:64
+#: app/components/add-note/index.tsx:81
+#: app/components/notes/Memo.tsx:33
 msgid "Reading or meaning"
 msgstr "Reading or meaning"
 
@@ -883,7 +895,7 @@ msgstr "Sample question"
 
 #: app/components/account/EmailForm.tsx:42
 #: app/components/account/NameForm.tsx:39
-#: app/components/add-note/index.tsx:85
+#: app/components/add-note/index.tsx:91
 msgid "Save"
 msgstr "Save"
 
@@ -1001,7 +1013,7 @@ msgstr "Start the test"
 msgid "Still learning ({again})"
 msgstr "Still learning ({again})"
 
-#: app/components/SubjectTabs.tsx:21
+#: app/components/SubjectTabs.tsx:36
 msgid "Subject"
 msgstr "Subject"
 

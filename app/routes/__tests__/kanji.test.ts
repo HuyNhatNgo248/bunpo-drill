@@ -44,7 +44,10 @@ describe("kanji loader", () => {
   it("opens the hardest level that has a chapter when none is asked for and none was opened before", async () => {
     await saveChapter(buildKanjiChapter({ level: "N3" }));
 
-    expect((await load()).home.level).toBe("N3");
+    const data = await load();
+
+    expect(data.home.level).toBe("N3");
+    expect(data.level).toBe("N3");
   });
 
   it("opens N2, the book's level, when no level has a chapter yet", async () => {

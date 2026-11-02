@@ -5,6 +5,7 @@ import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { addNote, listNotes } from "~/lib/notes.server";
 import { createTest } from "~/lib/tests.server";
+import { saveLastTab } from "~/lib/users.server";
 import { action, loader, meta } from "../notes";
 
 /** The signed-in user, whose notes the route reads and writes. */
@@ -33,12 +34,14 @@ beforeEach(async () => {
 });
 
 describe("notes loader", () => {
-  it("gives the user's notes", async () => {
+  it("gives the user's notes, and the level last opened for the tabs", async () => {
     await noted();
+    await saveLastTab(USER_ID, { subject: "kanji", level: "N2" });
 
-    const { notes } = await loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, NOTES_URL)));
+    const { notes, level } = await loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, NOTES_URL)));
 
     expect(notes).toMatchObject([{ text: "考えた末", testTitle: "第1週 1日目" }]);
+    expect(level).toBe("N2");
   });
 });
 

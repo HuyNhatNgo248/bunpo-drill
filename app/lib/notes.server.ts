@@ -9,7 +9,7 @@ import type { NoteView } from "./views";
  * over on the notes page. One note per text: highlighting the same words again keeps the first note.
  */
 
-const memo = z.string().trim().max(500);
+const memo = z.string().trim().max(2000);
 
 /** A note as the test or results page sends it. */
 export const newNoteSchema = z.object({

@@ -42,11 +42,12 @@ export function LevelTabs({
               onFocus={warm}
               aria-current={level === current ? "page" : undefined}
               className={cn(
-                "relative flex h-9 items-center justify-center rounded-md px-4 text-sm font-semibold outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/40",
-                level === shown ? "text-primary-soft-foreground" : "text-muted-foreground hover:text-foreground",
+                // Not positioned, so its hover background is under the sliding highlight; only its words are over it.
+                "flex h-9 items-center justify-center rounded-md px-4 text-sm font-semibold outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/40",
+                level === shown ? "text-primary-soft-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
               )}
             >
-              {level}
+              <span className="relative">{level}</span>
             </Link>
           );
         })}

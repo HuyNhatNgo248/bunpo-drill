@@ -7,7 +7,7 @@ import type { NoteView } from "~/lib/views";
 import { NotedText, NotesProvider } from ".";
 
 const SENTENCE = "社長は何か月も考えた末、海外の工場を閉めることに決めた。";
-const NOTE = buildNoteView({ id: 7, text: "考えた末", memo: "after thinking hard" });
+const NOTE = buildNoteView({ id: 7, text: "考えた末", memo: "after *thinking* hard" });
 
 /** The sentence under the notes given, or under no provider at all. */
 function renderSentence(notes?: NoteView[]) {
@@ -16,13 +16,13 @@ function renderSentence(notes?: NoteView[]) {
 }
 
 describe("NotedText", () => {
-  it("highlights the words of a note, which show its memo and the way to it on the notes page", async () => {
+  it("highlights the words of a note, which show its memo (from Markdown) and the way to it on the notes page", async () => {
     renderSentence([NOTE, buildNoteView({ id: 8, text: "工場", memo: "" })]);
 
     await userEvent.click(await screen.findByRole("button", { name: "考えた末" }));
 
     const note = within(screen.getByRole("dialog"));
-    expect(note.getByText("after thinking hard")).toBeInTheDocument();
+    expect(note.getByText("thinking", { selector: "em" })).toBeInTheDocument();
     expect(note.getByRole("link", { name: "Open in notes" })).toHaveAttribute("href", "/notes#note-7");
     expect(screen.getByRole("button", { name: "工場" })).toBeInTheDocument();
   });

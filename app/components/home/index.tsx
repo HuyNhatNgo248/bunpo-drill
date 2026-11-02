@@ -1,10 +1,8 @@
 import { Trans } from "@lingui/react/macro";
-import { useNavigation } from "react-router";
 import { EmptyState } from "~/components/EmptyState";
 import { warmDrawerFigure } from "~/components/helpers/drawerFigure";
-import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
-import { SubjectTabs } from "~/components/SubjectTabs";
+import { useTabLoading } from "~/components/SubjectTabs";
 import { cn } from "~/lib/utils";
 import { isTestLevel, JLPT_LEVELS, type JlptLevel } from "~/lib/levels";
 import type { TestSummary } from "~/lib/views";
@@ -25,41 +23,36 @@ type HomeProps = {
  * any JLPT level; one the app has no tests for yet says it is not available.
  */
 export function Home({ tests, stats, level, latestFirst }: HomeProps) {
-  // Another level (or order) of this page is loading: the old one fades, so the click shows at once.
-  const navigation = useNavigation();
-  const switching = navigation.state === "loading" && navigation.location.pathname === "/";
+  // Another tab, level or order is loading: this page fades, so the click shows at once.
+  const switching = useTabLoading();
   return (
-    <div className="min-h-screen">
-      <AppHeader account />
-      <main className="mx-auto flex max-w-260 flex-col gap-4 px-4 pt-5 pb-10 md:gap-6 md:px-6 md:pt-10 md:pb-16">
-        <SubjectTabs current="grammar" level={level} />
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-2xl font-bold tracking-tight md:text-title-lg">
-            <Trans>Mock tests</Trans>
-          </h1>
-          {level && <LevelTabs levels={JLPT_LEVELS} current={level} warmOf={warmDrawerFigure} />}
-        </div>
+    <>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-bold tracking-tight md:text-title-lg">
+          <Trans>Mock tests</Trans>
+        </h1>
+        {level && <LevelTabs levels={JLPT_LEVELS} current={level} warmOf={warmDrawerFigure} />}
+      </div>
 
-        <div aria-busy={switching} className={cn("flex flex-col gap-4 transition-opacity duration-200 md:gap-6", switching && "opacity-50")}>
-          {tests.length > 0 ? (
-            <>
-              <Stats stats={stats} />
-              <div className="flex flex-col gap-2">
-                {level && <SortMenu level={level} latestFirst={latestFirst} />}
-                <TestList tests={tests} />
-              </div>
-            </>
-          ) : level && !isTestLevel(level) ? (
-            <EmptyState drawer title={<Trans>{level} isn't available yet</Trans>}>
-              <Trans>Mock tests for {level} are coming later.</Trans>
-            </EmptyState>
-          ) : (
-            <EmptyState title={<Trans>No mock tests yet</Trans>}>
-              <Trans>New mock tests show up here.</Trans>
-            </EmptyState>
-          )}
-        </div>
-      </main>
-    </div>
+      <div aria-busy={switching} className={cn("flex flex-col gap-4 transition-opacity duration-200 md:gap-6", switching && "opacity-50")}>
+        {tests.length > 0 ? (
+          <>
+            <Stats stats={stats} />
+            <div className="flex flex-col gap-2">
+              {level && <SortMenu level={level} latestFirst={latestFirst} />}
+              <TestList tests={tests} />
+            </div>
+          </>
+        ) : level && !isTestLevel(level) ? (
+          <EmptyState drawer title={<Trans>{level} isn't available yet</Trans>}>
+            <Trans>Mock tests for {level} are coming later.</Trans>
+          </EmptyState>
+        ) : (
+          <EmptyState title={<Trans>No mock tests yet</Trans>}>
+            <Trans>New mock tests show up here.</Trans>
+          </EmptyState>
+        )}
+      </div>
+    </>
   );
 }
