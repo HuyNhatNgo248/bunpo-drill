@@ -2,9 +2,10 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { Form, Link } from "react-router";
+import { Link } from "react-router";
 import { GrammarChips } from "~/components/grammar-chips";
 import { NumberTile } from "~/components/NumberTile";
+import { RetakeButton } from "~/components/RetakeButton";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Progress } from "~/components/ui/progress";
@@ -72,12 +73,9 @@ export function TestRow({ test }: { test: TestSummary }) {
       <div className="grid w-full grid-cols-2 gap-2 md:flex md:w-auto md:flex-auto md:flex-wrap md:items-center md:justify-end">
         {test.result ? (
           <>
-            {/* Retake clears the last result and review chips on the server, then opens the quiz. */}
-            <Form method="post" action={`${quizHref}/retake`} className="contents">
-              <Button type="submit" variant="outline" className={cn("md:order-2", test.review.length === 0 && "col-span-2")}>
-                <Trans>Take it again</Trans>
-              </Button>
-            </Form>
+            <RetakeButton testId={test.id} variant="outline" className={cn("md:order-2", test.review.length === 0 && "col-span-2")}>
+              <Trans>Take it again</Trans>
+            </RetakeButton>
             {test.review.length > 0 && (
               <Button variant="outline" aria-expanded={open} onClick={() => setOpen(!open)} className="md:order-1 md:px-3.5">
                 <Trans>Review ({reviewCount})</Trans>

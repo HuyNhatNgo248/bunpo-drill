@@ -3,7 +3,7 @@ import { data, redirect } from "react-router";
 import type { Route } from "./+types/check";
 import { requireUserId } from "~/lib/auth.server";
 import { testNotFound } from "~/lib/errors";
-import { checkSchema, gradeTest } from "~/lib/grading.server";
+import { checkSchema, gradeTest, withoutKept } from "~/lib/grading.server";
 import { requestLocale, translate } from "~/lib/i18n";
 import { getTest } from "~/lib/tests.server";
 
@@ -21,10 +21,11 @@ export async function action({ request, params }: Route.ActionArgs) {
   if (!body.success) {
     return data({ error: translate(requestLocale(request), msg`This part couldn't be checked. Please try again.`) }, { status: 400 });
   }
-  const section = gradeTest(test.payload, body.data.answers).sections[body.data.section - 1];
+  // A retake of the wrong answers sends only those; the kept right ones come from its draft.
+  const section = gradeTest(test.payload, { ...test.draft?.answers, ...body.data.answers }).sections[body.data.section - 1];
   // A kanji test has 2 parts, not 3.
   if (!section) {
     return data({ error: translate(requestLocale(request), msg`This part couldn't be checked. Please try again.`) }, { status: 400 });
   }
-  return { section };
+  return { section: withoutKept(section, test.draft?.kept) };
 }

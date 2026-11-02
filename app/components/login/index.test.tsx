@@ -29,7 +29,7 @@ describe("Login", () => {
       expect(requests).toEqual([
         {
           method: "POST",
-          path: "/signin",
+          path: "/signin?redirectTo=%2Ftests%2F20261027-abc123",
           body: {
             redirectTo: "/tests/20261027-abc123",
             name: "Huy",

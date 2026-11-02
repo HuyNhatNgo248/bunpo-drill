@@ -139,7 +139,12 @@ export type ResultSection = {
 export type CheckedSections = Record<number, ResultSection>;
 
 /** Where a test that is not submitted yet was left: its answer sheet and its checked parts. */
-export type QuizDraft = { answers: Answers; checks: CheckedSections };
+export type QuizDraft = {
+  answers: Answers;
+  checks: CheckedSections;
+  /** A retake of the wrong answers: the questions answered right last time, kept and not shown. */
+  kept?: string[];
+};
 
 export type ResultsView = {
   id: string;

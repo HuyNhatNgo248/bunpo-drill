@@ -30,7 +30,12 @@ export type Submission = {
 };
 
 /** The answers and checked parts of a test not submitted yet, saved as they change so the test goes on anywhere. */
-export type Draft = { answers: Answers; checked: number[] };
+export type Draft = {
+  answers: Answers;
+  checked: number[];
+  /** A retake of the wrong answers: the questions answered right last time, kept and not shown. */
+  kept?: string[];
+};
 
 /** The score of one submission. A retake clears the submission but keeps its attempt. */
 export type Attempt = { submittedAt: string; score: number; total: number };

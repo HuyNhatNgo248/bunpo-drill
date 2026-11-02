@@ -9,7 +9,7 @@ const SAVE_DELAY = 800;
  * left or the page is hidden, so the last answer is kept. A save that fails goes again with the next one.
  * With no `testId` (a trial test), nothing is saved.
  */
-export function useAutosave(testId: string | null, { answers, checks }: QuizDraft) {
+export function useAutosave(testId: string | null, { answers, checks, kept }: QuizDraft) {
   const pending = useRef<string | null>(null);
   // The draft the page loaded with is saved already.
   const loaded = useRef(true);
@@ -33,10 +33,10 @@ export function useAutosave(testId: string | null, { answers, checks }: QuizDraf
       loaded.current = false;
       return;
     }
-    pending.current = JSON.stringify({ answers, checked: Object.keys(checks).map(Number) });
+    pending.current = JSON.stringify({ answers, checked: Object.keys(checks).map(Number), kept });
     const timer = setTimeout(flush, SAVE_DELAY);
     return () => clearTimeout(timer);
-  }, [answers, checks, flush]);
+  }, [answers, checks, kept, flush]);
 
   useEffect(() => {
     // A phone can close a hidden tab without another event; leaving the quiz inside the app unmounts it.

@@ -97,6 +97,8 @@ describe("TestList", () => {
       const requests = renderList([TAKEN]);
 
       await userEvent.click(await screen.findByRole("button", { name: "Take it again" }));
+      expect(requests).toEqual([]);
+      await userEvent.click(screen.getByRole("button", { name: "Yes, retake" }));
 
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${TAKEN.id}/retake`, body: null }]));
     });

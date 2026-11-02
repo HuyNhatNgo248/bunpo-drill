@@ -20,7 +20,7 @@ describe("try loader", () => {
 
     expect(quiz).toMatchObject({ id: ID, title: PAYLOAD.title, level: "N3", questionCount: 45 });
     expect(JSON.stringify(quiz)).not.toContain("answerIndex");
-    expect(draft).toEqual({ answers: {}, checks: {} });
+    expect(draft).toEqual({ answers: {}, checks: {}, kept: [] });
   });
 
   it("throws a 404 for a test that is not a trial test", async () => {

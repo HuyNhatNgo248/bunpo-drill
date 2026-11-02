@@ -23,7 +23,7 @@ import { SubmitBar } from "./SubmitBar";
 export function Quiz({ quiz, draft, error, trial = false }: { quiz: QuizView; draft: QuizDraft; error?: string; trial?: boolean }) {
   const [answers, setAnswers] = useState(draft.answers);
   const [checks, setChecks] = useState(draft.checks);
-  useAutosave(trial ? null : quiz.id, { answers, checks });
+  useAutosave(trial ? null : quiz.id, { answers, checks, kept: draft.kept });
   // A sheet this browser kept from before drafts were saved on the server goes on, unless the server has one.
   useEffect(() => {
     const local = takeLocalDraft(quiz.id);

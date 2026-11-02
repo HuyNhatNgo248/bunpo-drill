@@ -84,7 +84,7 @@ msgstr "{text} (placed)"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
-#: app/components/home/test-list/TestRow.tsx:57
+#: app/components/home/test-list/TestRow.tsx:58
 #: app/components/quiz/index.tsx:63
 #: app/components/welcome/TrialTests.tsx:60
 msgid "{total, plural, one {# question} other {# questions}}"
@@ -223,7 +223,7 @@ msgstr "Back to chapters"
 
 #: app/components/flashcards/index.tsx:62
 #: app/components/quiz/index.tsx:53
-#: app/components/results/Actions.tsx:36
+#: app/components/results/Actions.tsx:45
 #: app/components/results/index.tsx:31
 msgid "Back to kanji"
 msgstr "Back to kanji"
@@ -234,7 +234,7 @@ msgstr "Back to sign in"
 
 #: app/components/error-pages/ErrorPage.tsx:45
 #: app/components/layout/header/index.tsx:29
-#: app/components/results/Actions.tsx:45
+#: app/components/results/Actions.tsx:54
 msgid "Back to the mock tests"
 msgstr "Back to the mock tests"
 
@@ -345,7 +345,7 @@ msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:94
+#: app/components/home/test-list/TestRow.tsx:92
 msgid "Continue"
 msgstr "Continue"
 
@@ -363,7 +363,7 @@ msgstr "Correct!"
 
 #: app/components/layout/header/index.tsx:74
 #: app/components/login/LoginForm.tsx:73
-#: app/components/results/Actions.tsx:20
+#: app/components/results/Actions.tsx:28
 #: app/components/welcome/index.tsx:52
 #: app/components/welcome/SampleQuiz.tsx:231
 msgid "Create account"
@@ -398,6 +398,10 @@ msgstr "Delete your account?"
 #: app/components/account/DeleteAccountForm.tsx:40
 msgid "Deleting…"
 msgstr "Deleting…"
+
+#: app/components/RetakeButton.tsx:16
+msgid "Did you review your weak grammar?"
+msgstr "Did you review your weak grammar?"
 
 #: app/components/quiz/sentence-order/BankPiece.tsx:27
 #: app/components/quiz/sentence-order/SlotButton.tsx:31
@@ -499,7 +503,7 @@ msgstr "If you didn't ask for this, ignore this email. Your password won't chang
 msgid "In progress"
 msgstr "In progress"
 
-#: app/components/home/test-list/TestRow.tsx:50
+#: app/components/home/test-list/TestRow.tsx:51
 msgid "In progress {answered} / {total}"
 msgstr "In progress {answered} / {total}"
 
@@ -516,7 +520,7 @@ msgid "JLPT grammar practice in the real test's format"
 msgstr "JLPT grammar practice in the real test's format"
 
 #: app/components/kanji/index.tsx:33
-#: app/components/results/Actions.tsx:33
+#: app/components/results/Actions.tsx:42
 #: app/components/SubjectTabs.tsx:15
 #: app/routes/kanji.tsx:12
 msgid "Kanji"
@@ -552,7 +556,7 @@ msgstr "kun"
 msgid "Language: {0}"
 msgstr "Language: {0}"
 
-#: app/components/home/test-list/TestRow.tsx:61
+#: app/components/home/test-list/TestRow.tsx:62
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
@@ -574,6 +578,14 @@ msgstr "Level"
 msgid "Like 「〜のに」, a result that goes against what you would expect follows. It was raining, yet the match went ahead."
 msgstr "Like 「〜のに」, a result that goes against what you would expect follows. It was raining, yet the match went ahead."
 
+#: app/components/RetakeButton.tsx:20
+msgid "Make sure you study the grammar you got wrong first."
+msgstr "Make sure you study the grammar you got wrong first."
+
+#: app/components/RetakeButton.tsx:19
+msgid "Make sure you study the grammar you got wrong first. The quiz asks only the ones you got wrong."
+msgstr "Make sure you study the grammar you got wrong first. The quiz asks only the ones you got wrong."
+
 #: app/components/grammar-chips/GrammarChip.tsx:68
 msgid "Mark as reviewed"
 msgstr "Mark as reviewed"
@@ -583,7 +595,7 @@ msgid "Missed words"
 msgstr "Missed words"
 
 #: app/components/home/index.tsx:38
-#: app/components/results/Actions.tsx:42
+#: app/components/results/Actions.tsx:51
 #: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "Mock tests"
@@ -651,6 +663,10 @@ msgstr "Not an official JLPT service. For exam dates and registration, see <0>jl
 #: app/components/home/test-list/index.tsx:13
 msgid "Not taken yet"
 msgstr "Not taken yet"
+
+#: app/components/RetakeButton.tsx:23
+msgid "Not yet"
+msgstr "Not yet"
 
 #: app/components/results/ReviewCard.tsx:27
 msgid "Nothing to review. You got every question right."
@@ -783,7 +799,11 @@ msgstr "Reset your password"
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:83
+#: app/components/results/Actions.tsx:63
+msgid "Retake wrong ones"
+msgstr "Retake wrong ones"
+
+#: app/components/home/test-list/TestRow.tsx:81
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
@@ -902,7 +922,7 @@ msgstr "Start"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/home/test-list/TestRow.tsx:94
+#: app/components/home/test-list/TestRow.tsx:92
 msgid "Start the test"
 msgstr "Start the test"
 
@@ -923,9 +943,9 @@ msgstr "Submit"
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:78
-#: app/components/results/Actions.tsx:15
-#: app/components/results/Actions.tsx:54
+#: app/components/home/test-list/TestRow.tsx:77
+#: app/components/results/Actions.tsx:23
+#: app/components/results/Actions.tsx:67
 msgid "Take it again"
 msgstr "Take it again"
 
@@ -1014,7 +1034,7 @@ msgid "This link has expired or was already used. Send the email again."
 msgstr "This link has expired or was already used. Send the email again."
 
 #: app/routes/helpers/check.ts:22
-#: app/routes/helpers/check.ts:27
+#: app/routes/helpers/check.ts:28
 #: app/routes/helpers/try-check.ts:16
 msgid "This part couldn't be checked. Please try again."
 msgstr "This part couldn't be checked. Please try again."
@@ -1075,7 +1095,7 @@ msgstr "Username or email address"
 msgid "We send a reset link here when you forget your password."
 msgstr "We send a reset link here when you forget your password."
 
-#: app/components/home/test-list/TestRow.tsx:36
+#: app/components/home/test-list/TestRow.tsx:37
 msgid "week"
 msgstr "week"
 
@@ -1110,6 +1130,10 @@ msgstr "Wrong"
 #: app/routes/signin.tsx:27
 msgid "Wrong username (or email) or password."
 msgstr "Wrong username (or email) or password."
+
+#: app/components/RetakeButton.tsx:22
+msgid "Yes, retake"
+msgstr "Yes, retake"
 
 #: app/components/account/NameForm.tsx:21
 msgid "You sign in with it."

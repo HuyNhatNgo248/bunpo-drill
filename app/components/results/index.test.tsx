@@ -228,8 +228,26 @@ describe("Results", () => {
       const requests = renderResults(FAILED);
 
       await userEvent.click(await screen.findByRole("button", { name: "Take it again" }));
+      expect(requests).toEqual([]);
+      await userEvent.click(screen.getByRole("button", { name: "Yes, retake" }));
 
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${FAILED.id}/retake`, body: null }]));
+    });
+
+    it("retakes only the wrong answers, after asking, when some are wrong", async () => {
+      const requests = renderResults(FAILED);
+
+      await userEvent.click(await screen.findByRole("button", { name: "Retake wrong ones" }));
+      await userEvent.click(screen.getByRole("button", { name: "Yes, retake" }));
+
+      await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${FAILED.id}/retake?only=wrong`, body: null }]));
+    });
+
+    it("doesn't offer it when every answer is right", async () => {
+      renderResults(PASSED);
+
+      await screen.findByRole("button", { name: "Take it again" });
+      expect(screen.queryByRole("button", { name: "Retake wrong ones" })).toBeNull();
     });
   });
 });

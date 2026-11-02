@@ -4,6 +4,7 @@ import {
   buildFillBlankSection,
   buildGrammarPoint,
   buildPassage,
+  buildPassageQuestion,
   buildPassageSection,
   buildPayload,
   buildSentenceOrderSection,
@@ -17,6 +18,8 @@ import {
   submittedAnswersSchema,
   toDraftView,
   toQuizView,
+  withoutKept,
+  wrongOnlyDraft,
   toResultsView,
   toSubmission,
   toSummary,
@@ -299,7 +302,52 @@ describe("toDraftView", () => {
   });
 
   it("gives an empty sheet for a test that has no draft", () => {
-    expect(toDraftView(buildStoredTest())).toEqual({ answers: {}, checks: {} });
+    expect(toDraftView(buildStoredTest())).toEqual({ answers: {}, checks: {}, kept: [] });
+  });
+
+  it("leaves the kept questions out of a checked part", () => {
+    const view = toDraftView(buildStoredTest({ draft: { answers: { q1: 2, q2: [1, 0, 2, 3] }, checked: [1, 2], kept: ["q1"] } }));
+
+    expect(view.checks[1]).toMatchObject({ correct: 0, total: 0, groups: [] });
+    expect(view.checks[2]).toMatchObject({ correct: 1, total: 1 });
+    expect(view.kept).toEqual(["q1"]);
+  });
+});
+
+describe("a retake of the wrong answers", () => {
+  // q1 and q3 right, q2 wrong.
+  const LAST: Answers = { q1: 2, q2: [2, 1, 0, 3], q3: 0 };
+
+  it("keeps the right answers", () => {
+    expect(wrongOnlyDraft(PAYLOAD, LAST)).toEqual({ answers: { q1: 2, q3: 0 }, checked: [], kept: ["q1", "q3"] });
+  });
+
+  it("shows only the wrong questions, and a kept passage blank as its answer", () => {
+    const quiz = toQuizView(buildStoredTest({ draft: wrongOnlyDraft(PAYLOAD, LAST) }));
+
+    expect(quiz.questionCount).toBe(1);
+    expect(quiz.sections.map((s) => s.no)).toEqual([2]);
+    expect(quiz.sections[0].groups[0].questions.map((q) => q.id)).toEqual(["q2"]);
+  });
+
+  it("fills a kept blank of a passage that still asks another blank", () => {
+    const passage = buildPassage({
+      passage: "毎日練習した[3]、合格できた。[4]",
+      questions: [buildPassageQuestion(), buildPassageQuestion({ id: "q4", blank: 4 })],
+    });
+    const payload = buildPayload({ sections: [buildFillBlankSection(), buildSentenceOrderSection(), buildPassageSection({ passages: [passage] })] });
+    const quiz = toQuizView(buildStoredTest({ payload, draft: { answers: { q3: 0 }, checked: [], kept: ["q3"] } }));
+
+    expect(quiz.sections[2].groups[0].segments).toEqual([
+      { kind: "text", text: "毎日練習した" },
+      { kind: "text", text: "かいがあって" },
+      { kind: "text", text: "、合格できた。" },
+      { kind: "blank", num: 4, questionId: "q4" },
+    ]);
+  });
+
+  it("leaves the kept questions out of a graded part", () => {
+    expect(withoutKept(gradeTest(PAYLOAD, ALL_RIGHT).sections[2], ["q3"])).toMatchObject({ correct: 0, total: 0, groups: [] });
   });
 });
 

@@ -34,6 +34,21 @@ describe("POST /tests/:id/retake", () => {
     expect(await getTest(id, USER_ID)).toMatchObject({ submission: null, reviewed: {} });
   });
 
+  it("with ?only=wrong, keeps the right answers and asks only the wrong ones", async () => {
+    const { id } = await createTest(buildPayload());
+    // q1 right, q2 wrong, q3 right.
+    await saveSubmission(USER_ID, id, buildSubmission({ answers: { q1: 2, q2: [2, 1, 0, 3], q3: 0 } }));
+
+    const request = await signedInRequest(USER_ID, `${retakeUrl(id)}?only=wrong`, { method: "POST" });
+    const response = await action(routeArgs<Parameters<typeof action>[0]>(request, { id }));
+
+    expect(response.headers.get("Location")).toBe(`/tests/${id}`);
+    expect(await getTest(id, USER_ID)).toMatchObject({
+      submission: null,
+      draft: { answers: { q1: 2, q3: 0 }, checked: [], kept: ["q1", "q3"] },
+    });
+  });
+
   it("throws a 404 for a test that does not exist", async () => {
     const args = routeArgs<Parameters<typeof action>[0]>(await signedInRequest(USER_ID, retakeUrl(UNKNOWN_ID), { method: "POST" }), { id: UNKNOWN_ID });
 

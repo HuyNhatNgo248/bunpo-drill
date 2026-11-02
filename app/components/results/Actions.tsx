@@ -1,11 +1,19 @@
 import { Trans } from "@lingui/react/macro";
-import { Form, Link } from "react-router";
+import { Link } from "react-router";
+import { RetakeButton } from "~/components/RetakeButton";
 import { Button } from "~/components/ui/button";
 import { homeOf } from "~/lib/links";
+import { cn } from "~/lib/utils";
 import type { ResultsView } from "~/lib/views";
 
 /** Back to the list (the mock tests, or kanji), or take the test again. A `trial` test: take it again, or sign up. */
-export function Actions({ results, trial = false }: { results: Pick<ResultsView, "id" | "kind" | "level">; trial?: boolean }) {
+export function Actions({
+  results,
+  trial = false,
+}: {
+  results: Pick<ResultsView, "id" | "kind" | "level" | "score" | "total">;
+  trial?: boolean;
+}) {
   if (trial) {
     return (
       <div className="mt-1 grid grid-cols-2 gap-2 md:mt-0 md:flex md:justify-end">
@@ -23,9 +31,10 @@ export function Actions({ results, trial = false }: { results: Pick<ResultsView,
       </div>
     );
   }
+  const missed = results.score < results.total;
   return (
     <div className="mt-1 grid grid-cols-2 gap-2 md:mt-0 md:flex md:justify-end">
-      <Button asChild variant="outline" size="lg">
+      <Button asChild variant="outline" size="lg" className={cn(missed && "col-span-2")}>
         <Link to={homeOf(results)}>
           {results.kind === "kanji" ? (
             <>
@@ -48,12 +57,15 @@ export function Actions({ results, trial = false }: { results: Pick<ResultsView,
           )}
         </Link>
       </Button>
-      {/* Retake clears this result and the review chips, then opens the quiz. */}
-      <Form method="post" action={`/tests/${results.id}/retake`} className="contents">
-        <Button type="submit" size="lg" className="font-semibold md:px-5 md:font-medium">
-          <Trans>Take it again</Trans>
-        </Button>
-      </Form>
+      {missed && (
+        // The quiz asks only the wrong ones; the right answers are kept, so the score is still out of the whole test.
+        <RetakeButton testId={results.id} wrongOnly variant="outline" size="lg">
+          <Trans>Retake wrong ones</Trans>
+        </RetakeButton>
+      )}
+      <RetakeButton testId={results.id} size="lg" className="font-semibold md:px-5 md:font-medium">
+        <Trans>Take it again</Trans>
+      </RetakeButton>
     </div>
   );
 }

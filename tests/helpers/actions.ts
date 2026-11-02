@@ -1,4 +1,4 @@
-/** One request that a recording action got. */
+/** One request that a recording action got. `path` keeps its query, if any. */
 export type RecordedRequest = { method: string; path: string; body: unknown };
 
 /**
@@ -16,7 +16,8 @@ export function recordingAction() {
     const text = await request.text();
     const json = request.headers.get("Content-Type")?.includes("json");
     const body = !text ? null : json ? JSON.parse(text) : Object.fromEntries(new URLSearchParams(text));
-    requests.push({ method: request.method, path: new URL(request.url).pathname, body });
+    const url = new URL(request.url);
+    requests.push({ method: request.method, path: url.pathname + url.search, body });
     return null;
   };
   return { action, requests };

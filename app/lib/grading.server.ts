@@ -2,12 +2,14 @@ import { z } from "zod";
 import { splitTarget, type KanjiTestPayload } from "./kanji-payload";
 import { BLANK, splitPassage, type PassageQuestion, type TestPayload } from "./payload";
 import { isKanji, type AnyPayload } from "./test-kinds";
-import type { ListedTest, StoredTest, Submission } from "./tests.server";
+import type { Draft, ListedTest, StoredTest, Submission } from "./tests.server";
 import type {
   Answer,
   Answers,
   QuizDraft,
+  QuizGroup,
   QuizSection,
+  QuizSegment,
   QuizView,
   ResultGroup,
   ResultQuestion,
@@ -27,7 +29,11 @@ export const submittedAnswersSchema = z.record(
 );
 
 /** What the quiz saves while it is taken: its answers and the numbers of its checked parts. */
-export const draftSchema = z.object({ answers: submittedAnswersSchema, checked: z.array(z.number().int().min(1).max(3)).max(3) });
+export const draftSchema = z.object({
+  answers: submittedAnswersSchema,
+  checked: z.array(z.number().int().min(1).max(3)).max(3),
+  kept: z.array(z.string()).max(200).optional(),
+});
 
 /** What the quiz sends to check one part: the part's number and the answers. */
 export const checkSchema = z.object({ section: z.number().int().min(1).max(3), answers: submittedAnswersSchema });
@@ -49,10 +55,42 @@ export function questionCount(payload: AnyPayload) {
 /** The quiz as the browser sees it: no answers, no grammar ids and no word ids. */
 export function toQuizView(test: StoredTest): QuizView {
   const { payload } = test;
-  const basics = { id: test.id, title: payload.title, level: payload.level, questionCount: questionCount(payload) };
-  return isKanji(payload)
-    ? { ...basics, kind: "kanji", chapter: payload.chapter, sections: kanjiQuizSections(payload) }
-    : { ...basics, kind: "grammar", chapter: null, sections: grammarQuizSections(payload) };
+  const sections = withoutKeptQuestions(isKanji(payload) ? kanjiQuizSections(payload) : grammarQuizSections(payload), test.draft);
+  const count = sections.reduce((sum, s) => sum + s.groups.reduce((n, g) => n + g.questions.length, 0), 0);
+  const basics = { id: test.id, title: payload.title, level: payload.level, questionCount: count, sections };
+  return isKanji(payload) ? { ...basics, kind: "kanji", chapter: payload.chapter } : { ...basics, kind: "grammar", chapter: null };
+}
+
+/** Leaves out the questions a retake of the wrong answers keeps. A kept passage blank shows its right answer as text. */
+function withoutKeptQuestions(sections: QuizSection[], draft: Draft | null): QuizSection[] {
+  const kept = new Set(draft?.kept);
+  if (!kept.size) return sections;
+  const fill = (group: QuizGroup) =>
+    group.segments?.map((part): QuizSegment => {
+      if (part.kind === "text" || !kept.has(part.questionId)) return part;
+      const question = group.questions.find((q) => q.id === part.questionId);
+      const picked = choiceOf(draft?.answers[part.questionId]);
+      return question?.type === "passage" && picked !== null ? { kind: "text", text: question.choices[picked] } : part;
+    }) ?? null;
+  return sections
+    .map((section) => ({ ...section, groups: dropKept(section.groups.map((group) => ({ ...group, segments: fill(group) })), kept) }))
+    .filter((section) => section.groups.length);
+}
+
+/** The groups without the `kept` questions, and without groups left empty. */
+function dropKept<G extends { questions: { id: string }[] }>(groups: G[], kept: Set<string>): G[] {
+  return groups.map((group) => ({ ...group, questions: group.questions.filter((q) => !kept.has(q.id)) })).filter((group) => group.questions.length);
+}
+
+/** A checked part of a retake of the wrong answers: only the questions it asked. */
+export function withoutKept(section: ResultSection, kept: string[] = []): ResultSection {
+  return kept.length ? resultSection(section.no, section.type, dropKept(section.groups, new Set(kept))) : section;
+}
+
+/** The draft that retakes only the wrong answers of `answers`: the right ones are kept, answered and hidden. */
+export function wrongOnlyDraft(payload: AnyPayload, answers: Answers): Draft {
+  const right = gradeTest(payload, answers).sections.flatMap((s) => s.groups.flatMap((g) => g.questions)).filter((q) => q.correct).map((q) => q.id);
+  return { answers: Object.fromEntries(right.map((id) => [id, answers[id]])), checked: [], kept: right };
 }
 
 function grammarQuizSections(payload: TestPayload): QuizSection[] {
@@ -122,8 +160,10 @@ function kanjiQuizSections(payload: KanjiTestPayload): QuizSection[] {
 export function toDraftView(test: StoredTest): QuizDraft {
   const answers = test.draft?.answers ?? {};
   const checked = test.draft?.checked ?? [];
+  const kept = test.draft?.kept ?? [];
   const { sections } = gradeTest(test.payload, answers);
-  return { answers, checks: Object.fromEntries(sections.filter((section) => checked.includes(section.no)).map((section) => [section.no, section])) };
+  const checks = Object.fromEntries(sections.filter((section) => checked.includes(section.no)).map((section) => [section.no, withoutKept(section, kept)]));
+  return { answers, checks, kept };
 }
 
 /** Grades the answers: each part's questions, the score, and the grammar points (or, on a kanji test, the words) got wrong. */
