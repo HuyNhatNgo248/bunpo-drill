@@ -213,6 +213,8 @@ function gradeGrammar(payload: TestPayload, answers: Answers) {
         before: q.before,
         after: q.after,
         pieces: q.correctOrder.map((piece, slot) => ({ text: q.pieces[piece], star: slot === star })),
+        // An empty slot shows as a blank piece.
+        yours: placed === null ? null : (slots as (number | null)[]).map((piece, slot) => ({ text: piece === null ? "　" : q.pieces[piece], star: slot === star })),
       },
       underlined: null,
       explanation: q.explanation ?? null,

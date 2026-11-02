@@ -54,6 +54,8 @@ export type ReviewChip = {
   reviewed: boolean;
 };
 
+export type SentencePiece = { text: string; star: boolean };
+
 export type ResultQuestion = {
   id: string;
   num: number;
@@ -64,8 +66,8 @@ export type ResultQuestion = {
   answer: string;
   /** fill-blank: the prompt split around the blank. */
   prompt: { before: string; after: string; fill: string } | null;
-  /** sentence-order: the full sentence with pieces in the correct order. */
-  sentence: { before: string; after: string; pieces: { text: string; star: boolean }[] } | null;
+  /** sentence-order: the full sentence with pieces in the correct order, and in the learner's (null when ★ is empty). */
+  sentence: { before: string; after: string; pieces: SentencePiece[]; yours: SentencePiece[] | null } | null;
   /** kanji: the sentence around its underlined word. */
   underlined: Underlined | null;
   /** Why the answer is right, or null for a test made without explanations. */

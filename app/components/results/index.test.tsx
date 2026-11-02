@@ -183,6 +183,13 @@ describe("Results", () => {
       expect(card.getByText("Answer: 3 かいがあって")).toBeInTheDocument();
     });
 
+    it("shows a missed sentence-order question in the learner's order, then the right one", async () => {
+      renderResults(buildResultsView({ sections: gradeTest(buildPayload(), { q2: [0, 1, 3, 2] }).sections }));
+      await screen.findByRole("region", { name: "Part 2" });
+
+      expect(reviewOf(2)).toHaveTextContent("✗Wrong彼は練習した毎日★ あってかいが合格した。✓Correct彼は毎日練習した★ かいがあって合格した。");
+    });
+
     it("says 未回答 for a question left blank", async () => {
       renderResults(FAILED);
       await screen.findByRole("region", { name: "Part 3" });

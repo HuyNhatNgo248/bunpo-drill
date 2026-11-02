@@ -205,7 +205,24 @@ describe("gradeTest", () => {
         { text: "かいが", star: true },
         { text: "あって", star: false },
       ],
+      yours: [
+        { text: "毎日", star: false },
+        { text: "練習した", star: false },
+        { text: "かいが", star: true },
+        { text: "あって", star: false },
+      ],
     });
+  });
+
+  it("shows the learner's order of a sentence-order question, or none when ★ is empty", () => {
+    expect(questionOf({ q2: [2, null, 0, 1] }, "q2").sentence?.yours).toEqual([
+      { text: "かいが", star: false },
+      { text: "　", star: false },
+      { text: "練習した", star: true },
+      { text: "毎日", star: false },
+    ]);
+    expect(questionOf({ q2: [1, 0, null, 3] }, "q2").sentence?.yours).toBeNull();
+    expect(questionOf({}, "q2").sentence?.yours).toBeNull();
   });
 
   it("fills each passage blank and marks it right or wrong", () => {

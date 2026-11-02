@@ -193,7 +193,7 @@ msgstr "All three parts, graded as soon as you submit. Your answers aren't saved
 msgid "Answer"
 msgstr "Answer"
 
-#: app/components/results/section-review/QuestionReview.tsx:75
+#: app/components/results/section-review/QuestionReview.tsx:65
 msgid "Answer: {answer}"
 msgstr "Answer: {answer}"
 
@@ -354,6 +354,7 @@ msgid "Continue"
 msgstr "Continue"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
+#: app/components/results/section-review/QuestionReview.tsx:95
 msgid "Correct"
 msgstr "Correct"
 
@@ -1058,7 +1059,7 @@ msgid "Try again"
 msgstr "Try again"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
-#: app/components/results/section-review/QuestionReview.tsx:70
+#: app/components/results/section-review/QuestionReview.tsx:60
 msgid "Unanswered"
 msgstr "Unanswered"
 
@@ -1130,6 +1131,7 @@ msgid "Writing in kanji"
 msgstr "Writing in kanji"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
+#: app/components/results/section-review/QuestionReview.tsx:95
 msgid "Wrong"
 msgstr "Wrong"
 
@@ -1149,7 +1151,7 @@ msgstr "You sign in with it."
 msgid "You'll see the right answers, and this part's answers can't be changed after."
 msgstr "You'll see the right answers, and this part's answers can't be changed after."
 
-#: app/components/results/section-review/QuestionReview.tsx:67
+#: app/components/results/section-review/QuestionReview.tsx:57
 msgid "Your answer: {yours}"
 msgstr "Your answer: {yours}"
 

@@ -3,10 +3,11 @@ import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { questionAnchor } from "~/lib/sections";
-import type { ResultQuestion } from "~/lib/views";
+import type { ResultQuestion, SentencePiece } from "~/lib/views";
 
 /**
  * One graded question: the sentence with the right answer in place, the learner's answer when wrong, the answer and why.
+ * A missed sentence-order question shows the sentence twice, in the learner's order (✗) and then the right one (✓).
  * It is the question's anchor, which the question list jumps to; `className` sets how far below the top it lands.
  */
 export function QuestionReview({ question, className }: { question: ResultQuestion; className?: string }) {
@@ -40,22 +41,11 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
       )}
 
       {question.sentence && (
-        <div lang="ja" className="flex flex-wrap items-center gap-1 font-jp text-base leading-sentence md:gap-1.5 md:text-lg">
-          <span>{question.sentence.before}</span>
-          {question.sentence.pieces.map((piece, i) => (
-            <span
-              key={i}
-              className={cn(
-                "px-1.5 leading-7.5 md:px-2 md:leading-8",
-                piece.star
-                  ? "rounded-md border border-success-border bg-success-soft font-semibold text-success"
-                  : "border-b-line border-faint",
-              )}
-            >
-              {piece.star ? `★ ${piece.text}` : piece.text}
-            </span>
-          ))}
-          <span>{question.sentence.after}</span>
+        <div className="flex flex-col gap-1.5 md:gap-2">
+          {!question.correct && question.sentence.yours && (
+            <OrderedSentence sentence={question.sentence} pieces={question.sentence.yours} mark="wrong" />
+          )}
+          <OrderedSentence sentence={question.sentence} pieces={question.sentence.pieces} mark={question.correct ? undefined : "right"} />
         </div>
       )}
 
@@ -82,5 +72,46 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
         </p>
       )}
     </Card>
+  );
+}
+
+/** A sentence-order sentence with `pieces` in its slots and the ★ one boxed; a `mark` puts ✗ (red) or ✓ (green) before it. */
+function OrderedSentence({
+  sentence,
+  pieces,
+  mark,
+}: {
+  sentence: { before: string; after: string };
+  pieces: SentencePiece[];
+  mark?: "wrong" | "right";
+}) {
+  const { t } = useLingui();
+  const wrong = mark === "wrong";
+  return (
+    <div lang="ja" className="flex flex-wrap items-center gap-1 font-jp text-base leading-sentence md:gap-1.5 md:text-lg">
+      {mark && (
+        <span className={cn("mr-1 font-semibold", wrong ? "text-primary-soft-foreground" : "text-success")}>
+          <span aria-hidden="true">{wrong ? "✗" : "✓"}</span>
+          <span className="sr-only">{wrong ? t`Wrong` : t`Correct`}</span>
+        </span>
+      )}
+      <span>{sentence.before}</span>
+      {pieces.map((piece, i) => (
+        <span
+          key={i}
+          className={cn(
+            "px-1.5 leading-7.5 md:px-2 md:leading-8",
+            !piece.star
+              ? "border-b-line border-faint"
+              : wrong
+                ? "rounded-md border border-primary-border bg-card font-semibold text-primary-soft-foreground"
+                : "rounded-md border border-success-border bg-success-soft font-semibold text-success",
+          )}
+        >
+          {piece.star ? `★ ${piece.text}` : piece.text}
+        </span>
+      ))}
+      <span>{sentence.after}</span>
+    </div>
   );
 }
