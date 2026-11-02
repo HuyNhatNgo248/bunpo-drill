@@ -5,9 +5,10 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { GrammarChips } from "~/components/grammar-chips";
 import { NumberTile } from "~/components/NumberTile";
-import { RetakeButton } from "~/components/RetakeButton";
+import { RetakeButton, RetakeDialog } from "~/components/RetakeButton";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
 import { Progress } from "~/components/ui/progress";
 import type { TestSummary } from "~/lib/views";
 import { rowHeading } from "./helpers/rowHeading";
@@ -18,11 +19,19 @@ import { rowHeading } from "./helpers/rowHeading";
 export function TestRow({ test }: { test: TestSummary }) {
   const { t } = useLingui();
   const [open, setOpen] = useState(false);
+  // The retake picked from the menu, asked about in its dialog.
+  const [asking, setAsking] = useState(false);
+  const [wrongOnly, setWrongOnly] = useState(false);
+  const ask = (wrong: boolean) => {
+    setWrongOnly(wrong);
+    setAsking(true);
+  };
   const { answered } = test;
   const inProgress = answered !== null;
   const quizHref = `/tests/${test.id}`;
   const total = test.questionCount;
   const reviewCount = test.review.length;
+  const missed = test.result !== null && test.result.score < test.result.total;
   const lastScore = test.previous && `${test.previous.score} / ${test.previous.total}`;
   const heading = rowHeading(test.title, test.weeks);
 
@@ -73,9 +82,32 @@ export function TestRow({ test }: { test: TestSummary }) {
       <div className="grid w-full grid-cols-2 gap-2 md:flex md:w-auto md:flex-auto md:flex-wrap md:items-center md:justify-end">
         {test.result ? (
           <>
-            <RetakeButton testId={test.id} variant="outline" className={cn("md:order-2", test.review.length === 0 && "col-span-2")}>
-              <Trans>Take it again</Trans>
-            </RetakeButton>
+            {missed ? (
+              <>
+                {/* One button for both retakes. Not modal, so the dialog can open as the menu closes. */}
+                <DropdownMenu modal={false}>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="md:order-2">
+                      <Trans>Take it again</Trans>
+                      <ChevronDown aria-hidden="true" className="size-3.5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onSelect={() => ask(false)}>
+                      <Trans>All questions</Trans>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => ask(true)}>
+                      <Trans>Retake wrong ones</Trans>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <RetakeDialog testId={test.id} wrongOnly={wrongOnly} open={asking} onOpenChange={setAsking} />
+              </>
+            ) : (
+              <RetakeButton testId={test.id} variant="outline" className={cn("md:order-2", test.review.length === 0 && "col-span-2")}>
+                <Trans>Take it again</Trans>
+              </RetakeButton>
+            )}
             {test.review.length > 0 && (
               <Button variant="outline" aria-expanded={open} onClick={() => setOpen(!open)} className="md:order-1 md:px-3.5">
                 <Trans>Review ({reviewCount})</Trans>

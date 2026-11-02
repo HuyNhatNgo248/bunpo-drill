@@ -97,10 +97,21 @@ describe("TestList", () => {
       const requests = renderList([TAKEN]);
 
       await userEvent.click(await screen.findByRole("button", { name: "Take it again" }));
+      await userEvent.click(await screen.findByRole("menuitem", { name: "All questions" }));
       expect(requests).toEqual([]);
       await userEvent.click(screen.getByRole("button", { name: "Yes, retake" }));
 
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${TAKEN.id}/retake`, body: null }]));
+    });
+
+    it("retakes only the wrong answers, after asking", async () => {
+      const requests = renderList([TAKEN]);
+
+      await userEvent.click(await screen.findByRole("button", { name: "Take it again" }));
+      await userEvent.click(await screen.findByRole("menuitem", { name: "Retake wrong ones" }));
+      await userEvent.click(screen.getByRole("button", { name: "Yes, retake" }));
+
+      await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${TAKEN.id}/retake?only=wrong`, body: null }]));
     });
 
     it("has no review button when there is nothing to review", async () => {

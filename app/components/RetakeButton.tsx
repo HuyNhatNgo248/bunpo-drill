@@ -3,12 +3,14 @@ import { useSubmit } from "react-router";
 import { ConfirmDialog } from "~/components/ConfirmDialog";
 import { Button } from "~/components/ui/button";
 
-/** Takes a test again, after asking: a retake clears the last answers and keeps only their score. */
-export function RetakeButton({
+type Retake = { testId: string; wrongOnly?: boolean };
+
+/** Asks before a retake, which clears the last answers. Opened by its `children`, or by `open`. */
+export function RetakeDialog({
   testId,
   wrongOnly = false,
-  ...button
-}: { testId: string; wrongOnly?: boolean } & React.ComponentProps<typeof Button>) {
+  ...dialog
+}: Retake & { children?: React.ReactNode; open?: boolean; onOpenChange?: (open: boolean) => void }) {
   const { t } = useLingui();
   const submit = useSubmit();
   return (
@@ -22,8 +24,16 @@ export function RetakeButton({
       confirmLabel={t`Yes, retake`}
       cancelLabel={t`Not yet`}
       onConfirm={() => submit(null, { method: "post", action: `/tests/${testId}/retake${wrongOnly ? "?only=wrong" : ""}` })}
-    >
+      {...dialog}
+    />
+  );
+}
+
+/** Takes a test again, after asking. */
+export function RetakeButton({ testId, wrongOnly, ...button }: Retake & React.ComponentProps<typeof Button>) {
+  return (
+    <RetakeDialog testId={testId} wrongOnly={wrongOnly}>
       <Button {...button} />
-    </ConfirmDialog>
+    </RetakeDialog>
   );
 }

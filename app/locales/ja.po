@@ -84,7 +84,7 @@ msgstr "{text}（配置済み）"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
-#: app/components/home/test-list/TestRow.tsx:58
+#: app/components/home/test-list/TestRow.tsx:67
 #: app/components/quiz/index.tsx:63
 #: app/components/welcome/TrialTests.tsx:60
 msgid "{total, plural, one {# question} other {# questions}}"
@@ -181,6 +181,10 @@ msgstr "すべて回答済み"
 msgid "All correct"
 msgstr "全問正解"
 
+#: app/components/home/test-list/TestRow.tsx:97
+msgid "All questions"
+msgstr "全問"
+
 #: app/components/welcome/TrialTests.tsx:16
 msgid "All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like."
 msgstr "3つの問題すべてを、提出するとすぐに採点します。解答は保存されないので、何度でも受けられます。"
@@ -242,7 +246,7 @@ msgstr "テスト一覧に戻る"
 msgid "Blank （{num}） in the passage"
 msgstr "文章中の（{num}）に入るもの"
 
-#: app/components/ConfirmDialog.tsx:40
+#: app/components/ConfirmDialog.tsx:44
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -345,7 +349,7 @@ msgstr "文の（　）に入る、いちばん自然な形を4つから選び�
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:92
+#: app/components/home/test-list/TestRow.tsx:124
 msgid "Continue"
 msgstr "続きから"
 
@@ -399,7 +403,7 @@ msgstr "アカウントを削除しますか？"
 msgid "Deleting…"
 msgstr "削除中…"
 
-#: app/components/RetakeButton.tsx:16
+#: app/components/RetakeButton.tsx:18
 msgid "Did you review your weak grammar?"
 msgstr "苦手な文法を復習しましたか？"
 
@@ -503,7 +507,7 @@ msgstr "心当たりがない場合は、このメールを無視してくださ
 msgid "In progress"
 msgstr "解答中"
 
-#: app/components/home/test-list/TestRow.tsx:51
+#: app/components/home/test-list/TestRow.tsx:60
 msgid "In progress {answered} / {total}"
 msgstr "解答中 {answered} / {total}"
 
@@ -556,7 +560,7 @@ msgstr "訓"
 msgid "Language: {0}"
 msgstr "言語：{0}"
 
-#: app/components/home/test-list/TestRow.tsx:62
+#: app/components/home/test-list/TestRow.tsx:71
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
@@ -578,11 +582,11 @@ msgstr "レベル"
 msgid "Like 「〜のに」, a result that goes against what you would expect follows. It was raining, yet the match went ahead."
 msgstr "「〜のに」と同じで、予想と違う結果が続きます。雨なのに、試合は行われた。"
 
-#: app/components/RetakeButton.tsx:20
+#: app/components/RetakeButton.tsx:22
 msgid "Make sure you study the grammar you got wrong first."
 msgstr "受け直す前に、間違えた文法を復習しましょう。"
 
-#: app/components/RetakeButton.tsx:19
+#: app/components/RetakeButton.tsx:21
 msgid "Make sure you study the grammar you got wrong first. The quiz asks only the ones you got wrong."
 msgstr "受け直す前に、間違えた文法を復習しましょう。間違えた問題だけが出ます。"
 
@@ -664,7 +668,7 @@ msgstr "日本語能力試験（JLPT）の公式サービスではありませ�
 msgid "Not taken yet"
 msgstr "まだ受けていない"
 
-#: app/components/RetakeButton.tsx:23
+#: app/components/RetakeButton.tsx:25
 msgid "Not yet"
 msgstr "まだ"
 
@@ -799,11 +803,12 @@ msgstr "パスワードの再設定"
 msgid "Results"
 msgstr "結果"
 
+#: app/components/home/test-list/TestRow.tsx:100
 #: app/components/results/Actions.tsx:63
 msgid "Retake wrong ones"
 msgstr "間違えた問題だけ"
 
-#: app/components/home/test-list/TestRow.tsx:81
+#: app/components/home/test-list/TestRow.tsx:113
 msgid "Review ({reviewCount})"
 msgstr "復習（{reviewCount}）"
 
@@ -922,7 +927,7 @@ msgstr "始める"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/home/test-list/TestRow.tsx:92
+#: app/components/home/test-list/TestRow.tsx:124
 msgid "Start the test"
 msgstr "テストを始める"
 
@@ -943,7 +948,8 @@ msgstr "提出する"
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:77
+#: app/components/home/test-list/TestRow.tsx:91
+#: app/components/home/test-list/TestRow.tsx:108
 #: app/components/results/Actions.tsx:23
 #: app/components/results/Actions.tsx:67
 msgid "Take it again"
@@ -1095,7 +1101,7 @@ msgstr "ユーザー名またはメールアドレス"
 msgid "We send a reset link here when you forget your password."
 msgstr "パスワードを忘れたときに、再設定のリンクを送ります。"
 
-#: app/components/home/test-list/TestRow.tsx:37
+#: app/components/home/test-list/TestRow.tsx:46
 msgid "week"
 msgstr "週"
 
@@ -1131,7 +1137,7 @@ msgstr "不正解"
 msgid "Wrong username (or email) or password."
 msgstr "ユーザー名（メールアドレス）かパスワードが違います。"
 
-#: app/components/RetakeButton.tsx:22
+#: app/components/RetakeButton.tsx:24
 msgid "Yes, retake"
 msgstr "はい、受け直す"
 
