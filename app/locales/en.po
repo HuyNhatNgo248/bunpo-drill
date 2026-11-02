@@ -367,7 +367,7 @@ msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 
 #: app/components/home/test-list/index.tsx:30
-#: app/components/home/TestSearch.tsx:44
+#: app/components/home/TestSearch.tsx:45
 msgid "Clear the search"
 msgstr "Clear the search"
 
@@ -922,7 +922,7 @@ msgstr "Say the reading, then flip the card."
 msgid "Score"
 msgstr "Score"
 
-#: app/components/home/TestSearch.tsx:35
+#: app/components/home/TestSearch.tsx:36
 msgid "Search the tests"
 msgstr "Search the tests"
 
@@ -1055,7 +1055,7 @@ msgstr "Take the quiz"
 msgid "Taken"
 msgstr "Taken"
 
-#: app/components/home/TestSearch.tsx:36
+#: app/components/home/TestSearch.tsx:37
 msgid "Test name or grammar"
 msgstr "Test name or grammar"
 

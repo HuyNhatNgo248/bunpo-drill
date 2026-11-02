@@ -367,7 +367,7 @@ msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "文の（　）に入る、いちばん自然な形を4つから選びます。"
 
 #: app/components/home/test-list/index.tsx:30
-#: app/components/home/TestSearch.tsx:44
+#: app/components/home/TestSearch.tsx:45
 msgid "Clear the search"
 msgstr "検索をクリア"
 
@@ -922,7 +922,7 @@ msgstr "読み方を言ってから、カードをめくりましょう。"
 msgid "Score"
 msgstr "得点"
 
-#: app/components/home/TestSearch.tsx:35
+#: app/components/home/TestSearch.tsx:36
 msgid "Search the tests"
 msgstr "テストを検索"
 
@@ -1055,7 +1055,7 @@ msgstr "クイズを受ける"
 msgid "Taken"
 msgstr "受験済み"
 
-#: app/components/home/TestSearch.tsx:36
+#: app/components/home/TestSearch.tsx:37
 msgid "Test name or grammar"
 msgstr "テスト名・文法で検索"
 

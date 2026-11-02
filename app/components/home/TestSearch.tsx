@@ -23,10 +23,10 @@ export function TestSearch({ query, onChange, children }: { query: string; onCha
   }, []);
 
   return (
-    // The border of a text box, darker than the cards' around it, so it reads as one.
-    <div className="flex h-12 items-center rounded-xl border border-input bg-card shadow-piece transition-shadow focus-within:border-primary focus-within:ring-3 focus-within:ring-ring/40">
+    // The border of a text box, a shade darker than the cards' around it, so it reads as one; the rest stays quiet.
+    <div className="flex h-11 items-center rounded-xl border border-input bg-card transition-shadow focus-within:border-primary focus-within:ring-3 focus-within:ring-ring/40">
       {/* A click anywhere on the search half lands in the box. */}
-      <label className="flex min-w-0 flex-1 cursor-text items-center gap-2.5 self-stretch pr-2 pl-3.5 text-subtle-foreground">
+      <label className="flex min-w-0 flex-1 cursor-text items-center gap-2.5 self-stretch pr-2 pl-3.5 text-muted-foreground">
         <Search aria-hidden="true" className="size-4 shrink-0" />
         <input
           ref={input}
@@ -35,7 +35,7 @@ export function TestSearch({ query, onChange, children }: { query: string; onCha
           value={query}
           aria-label={t`Search the tests`}
           placeholder={t`Test name or grammar`}
-          className="h-full min-w-0 flex-1 bg-transparent text-base text-foreground outline-none placeholder:text-subtle-foreground"
+          className="h-full min-w-0 flex-1 bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground md:text-sm"
           onChange={(event) => onChange(event.target.value)}
           onKeyDown={(event) => event.key === "Escape" && onChange("")}
         />

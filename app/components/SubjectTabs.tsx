@@ -17,16 +17,16 @@ export function useTabLoading(): boolean {
 
 /**
  * Switches between the grammar mock tests, kanji and the notes, the tab of the page shown being the current one, at
- * the level picked on the page (notes have none). A page that is not Japanese adds the Japanese word to each tab. Like
+ * the level picked on the page (notes have none). Like
  * the level tabs, one highlight slides to the subject picked, as soon as it is picked; TabsLayout keeps the tabs on
  * screen while the page changes, so the slide is never cut short.
  */
 export function SubjectTabs({ level }: { level: JlptLevel | null }) {
-  const { t, i18n } = useLingui();
+  const { t } = useLingui();
   const tabs = [
-    { kind: "grammar", path: PATHS.grammar, label: t`Grammar`, ja: "文法" },
-    { kind: "kanji", path: PATHS.kanji, label: t`Kanji`, ja: "漢字" },
-    { kind: "notes", path: PATHS.notes, label: t`Notes`, ja: "ノート" },
+    { kind: "grammar", path: PATHS.grammar, label: t`Grammar` },
+    { kind: "kanji", path: PATHS.kanji, label: t`Kanji` },
+    { kind: "notes", path: PATHS.notes, label: t`Notes` },
   ] as const;
   const here = useLocation().pathname;
   const current = tabs.find((tab) => tab.path === here)?.kind;
@@ -40,7 +40,7 @@ export function SubjectTabs({ level }: { level: JlptLevel | null }) {
           className="absolute inset-y-0 left-0 w-1/3 rounded-md bg-primary-soft transition-transform duration-300 ease-out motion-reduce:transition-none"
           style={{ transform: `translateX(${tabs.findIndex((tab) => tab.kind === shown) * 100}%)` }}
         />
-        {tabs.map(({ kind, path, label, ja }) => (
+        {tabs.map(({ kind, path, label }) => (
           <Link
             key={kind}
             to={level && kind !== "notes" ? `${path}?level=${level}` : path}
@@ -52,14 +52,7 @@ export function SubjectTabs({ level }: { level: JlptLevel | null }) {
               kind === shown ? "text-primary-soft-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
-            <span className="relative flex items-center gap-1.5">
-              {label}
-              {i18n.locale !== "ja" && (
-                <span lang="ja" className="font-jp font-medium">
-                  {ja}
-                </span>
-              )}
-            </span>
+            <span className="relative">{label}</span>
           </Link>
         ))}
       </div>
