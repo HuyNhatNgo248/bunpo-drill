@@ -82,6 +82,18 @@ describe("Home", () => {
     expect(screen.getAllByRole("listitem")).toHaveLength(2);
   });
 
+  it("jumps into the search on /, and types / once in it", async () => {
+    renderHome([TAKEN, NOT_TAKEN]);
+    const search = await screen.findByRole("searchbox", { name: "Search the tests" });
+
+    await userEvent.keyboard("/");
+    expect(search).toHaveFocus();
+    expect(search).toHaveValue("");
+
+    await userEvent.keyboard("/");
+    expect(search).toHaveValue("/");
+  });
+
   it("says when no test matches, and clears the search", async () => {
     renderHome([TAKEN, NOT_TAKEN]);
 

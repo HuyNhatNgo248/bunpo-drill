@@ -62,11 +62,10 @@ export function Home({ tests, stats, level, latestFirst }: HomeProps) {
         {tests.length > 0 ? (
           <>
             <Stats stats={stats} />
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2">
-                <TestSearch query={query} onChange={search} />
+            <div className="flex flex-col gap-4 md:gap-5">
+              <TestSearch query={query} onChange={search}>
                 {level && <SortMenu level={level} latestFirst={latestFirst} />}
-              </div>
+              </TestSearch>
               <TestList tests={tests} query={query} onClear={() => search("")} />
             </div>
           </>

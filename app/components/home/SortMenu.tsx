@@ -7,7 +7,7 @@ import type { JlptLevel } from "~/lib/payload";
 
 /**
  * The order of the tests: from week 1, or the latest week first. Each choice is a link to the list in that order, the
- * search kept. On a phone it is only its icon, beside the search.
+ * search kept. It sits at the end of the search bar; on a phone it is only its icon.
  */
 export function SortMenu({ level, latestFirst }: { level: JlptLevel; latestFirst: boolean }) {
   const { t } = useLingui();
@@ -25,7 +25,7 @@ export function SortMenu({ level, latestFirst }: { level: JlptLevel; latestFirst
   const current = orders.find((order) => order.latest === latestFirst)!.label;
 
   return (
-    <div className="ml-auto flex">
+    <div className="flex">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm" aria-label={t`Sort: ${current}`}>

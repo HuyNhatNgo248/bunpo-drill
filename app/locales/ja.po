@@ -59,7 +59,7 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
-#: app/components/home/index.tsx:74
+#: app/components/home/index.tsx:73
 #: app/components/kanji/index.tsx:43
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
@@ -367,7 +367,7 @@ msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "文の（　）に入る、いちばん自然な形を4つから選びます。"
 
 #: app/components/home/test-list/index.tsx:30
-#: app/components/home/TestSearch.tsx:25
+#: app/components/home/TestSearch.tsx:44
 msgid "Clear the search"
 msgstr "検索をクリア"
 
@@ -659,7 +659,7 @@ msgstr "間違えた単語"
 msgid "Mock tests"
 msgstr "模擬試験"
 
-#: app/components/home/index.tsx:75
+#: app/components/home/index.tsx:74
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
@@ -672,7 +672,7 @@ msgstr "<0>{0}</0>を使うほかの語"
 msgid "New here? <0>Create account</0>"
 msgstr "はじめての方は <0>アカウントを作成</0>"
 
-#: app/components/home/index.tsx:79
+#: app/components/home/index.tsx:78
 msgid "New mock tests show up here."
 msgstr "新しい模擬試験はここに表示されます。"
 
@@ -707,7 +707,7 @@ msgstr "{level}の章はまだありません"
 msgid "No memo yet."
 msgstr "メモはまだありません。"
 
-#: app/components/home/index.tsx:78
+#: app/components/home/index.tsx:77
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
 
@@ -922,7 +922,7 @@ msgstr "読み方を言ってから、カードをめくりましょう。"
 msgid "Score"
 msgstr "得点"
 
-#: app/components/home/TestSearch.tsx:16
+#: app/components/home/TestSearch.tsx:35
 msgid "Search the tests"
 msgstr "テストを検索"
 
@@ -1055,7 +1055,7 @@ msgstr "クイズを受ける"
 msgid "Taken"
 msgstr "受験済み"
 
-#: app/components/home/TestSearch.tsx:17
+#: app/components/home/TestSearch.tsx:36
 msgid "Test name or grammar"
 msgstr "テスト名・文法で検索"
 

@@ -59,7 +59,7 @@ msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# q
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
-#: app/components/home/index.tsx:74
+#: app/components/home/index.tsx:73
 #: app/components/kanji/index.tsx:43
 msgid "{level} isn't available yet"
 msgstr "{level} isn't available yet"
@@ -367,7 +367,7 @@ msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 
 #: app/components/home/test-list/index.tsx:30
-#: app/components/home/TestSearch.tsx:25
+#: app/components/home/TestSearch.tsx:44
 msgid "Clear the search"
 msgstr "Clear the search"
 
@@ -659,7 +659,7 @@ msgstr "Missed words"
 msgid "Mock tests"
 msgstr "Mock tests"
 
-#: app/components/home/index.tsx:75
+#: app/components/home/index.tsx:74
 msgid "Mock tests for {level} are coming later."
 msgstr "Mock tests for {level} are coming later."
 
@@ -672,7 +672,7 @@ msgstr "More words with <0>{0}</0>"
 msgid "New here? <0>Create account</0>"
 msgstr "New here? <0>Create account</0>"
 
-#: app/components/home/index.tsx:79
+#: app/components/home/index.tsx:78
 msgid "New mock tests show up here."
 msgstr "New mock tests show up here."
 
@@ -707,7 +707,7 @@ msgstr "No {level} chapters yet"
 msgid "No memo yet."
 msgstr "No memo yet."
 
-#: app/components/home/index.tsx:78
+#: app/components/home/index.tsx:77
 msgid "No mock tests yet"
 msgstr "No mock tests yet"
 
@@ -922,7 +922,7 @@ msgstr "Say the reading, then flip the card."
 msgid "Score"
 msgstr "Score"
 
-#: app/components/home/TestSearch.tsx:16
+#: app/components/home/TestSearch.tsx:35
 msgid "Search the tests"
 msgstr "Search the tests"
 
@@ -1055,7 +1055,7 @@ msgstr "Take the quiz"
 msgid "Taken"
 msgstr "Taken"
 
-#: app/components/home/TestSearch.tsx:17
+#: app/components/home/TestSearch.tsx:36
 msgid "Test name or grammar"
 msgstr "Test name or grammar"
 
