@@ -19,7 +19,7 @@ import type { Tab } from "~/lib/lastTab";
 import { createTest, saveSubmission, setReviewed } from "~/lib/tests.server";
 import { lastTabOf, saveLastTab } from "~/lib/users.server";
 import { thrownBy } from "#tests/helpers/thrown";
-import { loader, meta } from "../home";
+import { loader, meta, shouldRevalidate } from "../home";
 
 /** The signed-in user, whose progress the routes read and write. */
 const USER_ID = 1;
@@ -183,6 +183,21 @@ describe("home loader levels", () => {
 
   it("has no level before any test is saved", async () => {
     expect(await load()).toMatchObject({ tests: [], level: null });
+  });
+});
+
+describe("home shouldRevalidate", () => {
+  it("doesn't load the tests again for a search, and does for anything else", () => {
+    const args = (current: string, next: string, formMethod?: "POST") =>
+      ({ currentUrl: new URL(current, "https://bunpo.test"), nextUrl: new URL(next, "https://bunpo.test"), formMethod, defaultShouldRevalidate: true }) as Parameters<
+        typeof shouldRevalidate
+      >[0];
+
+    expect(shouldRevalidate(args("/?level=N2", "/?level=N2&q=あげく"))).toBe(false);
+    expect(shouldRevalidate(args("/?level=N2&q=あげく", "/?level=N2"))).toBe(false);
+    expect(shouldRevalidate(args("/?level=N2&q=あげく", "/?level=N2&sort=latest&q=あげく"))).toBe(true);
+    expect(shouldRevalidate(args("/?level=N2", "/?level=N2"))).toBe(true);
+    expect(shouldRevalidate(args("/?level=N2", "/?level=N2&q=あげく", "POST"))).toBe(true);
   });
 });
 

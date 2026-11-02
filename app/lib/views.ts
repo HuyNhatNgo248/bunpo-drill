@@ -192,6 +192,8 @@ export type TestSummary = {
   answered: number | null;
   /** The weeks of the 文法ノート it covers, first first. */
   weeks: number[];
+  /** The grammar patterns it tests ("〜あげく"), each once, for the search. */
+  patterns: string[];
 };
 
 /** A trial test as the welcome page shows it: no questions, and how many grammar points it tests. */

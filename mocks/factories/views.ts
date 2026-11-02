@@ -26,6 +26,7 @@ export function buildTestSummary(overrides: Partial<TestSummary> = {}): TestSumm
     previous: null,
     answered: null,
     weeks: [1],
+    patterns: ["〜かいがある"],
     ...overrides,
   };
 }

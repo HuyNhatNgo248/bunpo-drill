@@ -1,5 +1,5 @@
 import { msg } from "@lingui/core/macro";
-import { redirect } from "react-router";
+import { redirect, type ShouldRevalidateFunction } from "react-router";
 import type { Route } from "./+types/home";
 import { Home } from "~/components/home";
 import { requireUserId } from "~/lib/auth.server";
@@ -32,6 +32,17 @@ export async function loader({ request }: Route.LoaderArgs) {
   const [stats, tests] = await Promise.all([levelStats(level, userId), listTests(userId, { level, latestFirst })]);
   return { tests: tests.map(toSummary), stats, level, latestFirst };
 }
+
+/** A search changes only `q`, which the page filters by itself, so the tests aren't loaded again for it. */
+export const shouldRevalidate: ShouldRevalidateFunction = ({ currentUrl, nextUrl, formMethod, defaultShouldRevalidate }) => {
+  const withoutQuery = (url: URL) => {
+    const params = new URLSearchParams(url.search);
+    params.delete("q");
+    return `${url.pathname}?${params}`;
+  };
+  const searched = currentUrl.searchParams.get("q") !== nextUrl.searchParams.get("q");
+  return !formMethod && searched && withoutQuery(currentUrl) === withoutQuery(nextUrl) ? false : defaultShouldRevalidate;
+};
 
 export default function HomeRoute({ loaderData }: Route.ComponentProps) {
   return <Home {...loaderData} />;

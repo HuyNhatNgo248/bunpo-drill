@@ -15,21 +15,23 @@ const TAKEN = buildTestSummary({
   result: { score: 2, total: 3, percent: 67 },
 });
 
-const NOT_TAKEN = buildTestSummary({ id: "20261027-bbbbbb", title: "第2週 1日目" });
+const NOT_TAKEN = buildTestSummary({ id: "20261027-bbbbbb", title: "第2週 1日目", patterns: ["〜あげく", "〜末に"] });
 
 const STATS: HomeStats = { average: 67, toReview: 1, taken: 1, total: 2 };
 
-/** The home page, with the API routes that its fetchers reach. */
+/** The home page at `url`, with the API routes that its fetchers reach. */
 function renderHome(
   tests: TestSummary[],
   {
     stats = STATS,
     level = tests.length ? "N2" : null,
     latestFirst = false,
-  }: { stats?: HomeStats; level?: JlptLevel | null; latestFirst?: boolean } = {},
+    url = "/",
+  }: { stats?: HomeStats; level?: JlptLevel | null; latestFirst?: boolean; url?: string } = {},
 ) {
   const { action } = recordingAction();
   renderRoute(<Home tests={tests} stats={stats} level={level} latestFirst={latestFirst} />, {
+    url,
     routes: [{ path: "/api/tests/:id", action }],
   });
 }
@@ -62,6 +64,43 @@ describe("Home", () => {
     await userEvent.click(await screen.findByRole("button", { name: "Sort: Latest week first" }));
 
     expect(screen.getByRole("menuitem", { name: "From week 1" })).toHaveAttribute("href", "/?level=N2");
+  });
+
+  it("filters the tests by title or grammar as it is typed, naming the grammar a test was found by", async () => {
+    renderHome([TAKEN, NOT_TAKEN]);
+    const search = await screen.findByRole("searchbox", { name: "Search the tests" });
+
+    await userEvent.type(search, "2週");
+    expect(screen.getAllByRole("listitem")).toHaveLength(1);
+    expect(screen.getByRole("listitem")).toHaveTextContent("第2週 1日目");
+
+    await userEvent.clear(search);
+    await userEvent.type(search, "あげく");
+    expect(screen.getByRole("listitem")).toHaveTextContent("「〜あげく」");
+
+    await userEvent.type(search, "{Escape}");
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+  });
+
+  it("says when no test matches, and clears the search", async () => {
+    renderHome([TAKEN, NOT_TAKEN]);
+
+    await userEvent.type(await screen.findByRole("searchbox", { name: "Search the tests" }), "ばかりか");
+    expect(screen.getByRole("heading", { name: "No tests match “ばかりか”" })).toBeInTheDocument();
+
+    // The button under the message; the ✕ in the box does the same.
+    await userEvent.click(screen.getByText("Clear the search"));
+    expect(screen.getByRole("searchbox", { name: "Search the tests" })).toHaveValue("");
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+  });
+
+  it("opens with the search in the address, and keeps it in the sort menu's links", async () => {
+    renderHome([TAKEN, NOT_TAKEN], { url: `/?level=N2&q=${encodeURIComponent("2週")}` });
+
+    expect(await screen.findByRole("searchbox", { name: "Search the tests" })).toHaveValue("2週");
+    expect(screen.getAllByRole("listitem")).toHaveLength(1);
+    await userEvent.click(screen.getByRole("button", { name: "Sort: From week 1" }));
+    expect(screen.getByRole("menuitem", { name: "Latest week first" })).toHaveAttribute("href", `/?level=N2&sort=latest&q=${encodeURIComponent("2週")}`);
   });
 
   it("shows a dash for the average before any test is taken", async () => {

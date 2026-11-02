@@ -380,6 +380,7 @@ describe("toSummary", () => {
       previous: null,
       answered: null,
       weeks: [1],
+      patterns: ["〜かいがある"],
     });
   });
 

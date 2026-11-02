@@ -339,6 +339,7 @@ export function toSummary(test: ListedTest): TestSummary {
     previous: previousAttempt(test, submission),
     answered: test.answered,
     weeks: [...new Set(payload.grammarPoints.map((point) => point.week))].sort((a, b) => a - b),
+    patterns: [...new Set(payload.grammarPoints.map((point) => point.pattern))],
   };
 }
 

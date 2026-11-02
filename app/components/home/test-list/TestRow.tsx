@@ -15,8 +15,9 @@ import { rowHeading } from "./helpers/rowHeading";
 
 /**
  * One test: its week in a tile, its title and last score, how far it got when it is in progress, and its buttons: Start is solid, Continue an outline. Review opens its grammar chips.
+ * Found by a search on its grammar, it names the `matched` patterns.
  */
-export function TestRow({ test }: { test: TestSummary }) {
+export function TestRow({ test, matched = [] }: { test: TestSummary; matched?: string[] }) {
   const { t } = useLingui();
   const [open, setOpen] = useState(false);
   // The retake picked from the menu, asked about in its dialog.
@@ -69,6 +70,12 @@ export function TestRow({ test }: { test: TestSummary }) {
               <span>
                 {" · "}
                 <Trans>Last time {lastScore}</Trans>
+              </span>
+            )}
+            {matched.length > 0 && (
+              <span lang="ja" className="font-jp">
+                {" · "}
+                {matched.map((pattern) => `「${pattern}」`).join("")}
               </span>
             )}
           </div>
