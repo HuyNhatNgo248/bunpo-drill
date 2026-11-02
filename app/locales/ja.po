@@ -59,8 +59,8 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
-#: app/components/home/index.tsx:47
-#: app/components/kanji/index.tsx:43
+#: app/components/home/index.tsx:53
+#: app/components/kanji/index.tsx:49
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
 
@@ -130,7 +130,7 @@ msgstr "{total}問中 <0>{score}</0> 問正解。"
 msgid "<0>in</0> <1/> <2>{daysLeft, plural, one {day} other {days}}</2>"
 msgstr "<0>あと</0><1/><2>日</2>"
 
-#: app/components/welcome/index.tsx:33
+#: app/components/welcome/index.tsx:36
 msgid "<0>Practice JLPT grammar</0> <1>in <2>the real test's format</2>.</1>"
 msgstr "<1><2>本番と同じ形式</2>で、</1><0>JLPTの文法を練習。</0>"
 
@@ -147,7 +147,7 @@ msgstr "15問"
 msgid "3 passages × 5 questions"
 msgstr "3文章 × 5問"
 
-#: app/components/kanji/index.tsx:40
+#: app/components/kanji/index.tsx:46
 msgid "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 msgstr "Claude が /jlpt-kanji-quiz 1章 で単語を送ると、ここに章が表示されます。"
 
@@ -364,7 +364,7 @@ msgstr "正解！"
 #: app/components/layout/header/index.tsx:74
 #: app/components/login/LoginForm.tsx:73
 #: app/components/results/Actions.tsx:20
-#: app/components/welcome/index.tsx:49
+#: app/components/welcome/index.tsx:52
 #: app/components/welcome/SampleQuiz.tsx:231
 msgid "Create account"
 msgstr "アカウントを作成"
@@ -442,7 +442,7 @@ msgstr "パスワードを忘れた場合"
 msgid "From week 1"
 msgstr "第1週から"
 
-#: app/components/welcome/index.tsx:41
+#: app/components/welcome/index.tsx:44
 msgid "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 msgstr "本番と同じ3つの問題形式の模擬試験で、提出するとすぐに採点されます。間違えた文型はそのまま復習リストに。"
 
@@ -463,7 +463,7 @@ msgstr "文法形式の判断"
 msgid "Grammar in a passage"
 msgstr "文章の文法"
 
-#: app/components/welcome/index.tsx:29
+#: app/components/welcome/index.tsx:32
 msgid "Grammar mock tests"
 msgstr "文法の模擬試験"
 
@@ -515,14 +515,14 @@ msgstr "今日が試験日です。がんばってください。"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "本番形式で練習する、JLPTの文法"
 
-#: app/components/kanji/index.tsx:28
+#: app/components/kanji/index.tsx:33
 #: app/components/results/Actions.tsx:33
 #: app/components/SubjectTabs.tsx:15
 #: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "漢字"
 
-#: app/components/kanji/index.tsx:44
+#: app/components/kanji/index.tsx:50
 msgid "Kanji for {level} is coming later."
 msgstr "{level}の漢字は今後追加される予定です。"
 
@@ -582,13 +582,13 @@ msgstr "復習済みにする"
 msgid "Missed words"
 msgstr "間違えた単語"
 
-#: app/components/home/index.tsx:33
+#: app/components/home/index.tsx:38
 #: app/components/results/Actions.tsx:42
 #: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "模擬試験"
 
-#: app/components/home/index.tsx:48
+#: app/components/home/index.tsx:54
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
@@ -601,7 +601,7 @@ msgstr "<0>{0}</0>を使うほかの語"
 msgid "New here? <0>Create account</0>"
 msgstr "はじめての方は <0>アカウントを作成</0>"
 
-#: app/components/home/index.tsx:52
+#: app/components/home/index.tsx:58
 msgid "New mock tests show up here."
 msgstr "新しい模擬試験はここに表示されます。"
 
@@ -628,11 +628,11 @@ msgstr "次の問題"
 msgid "Nice work"
 msgstr "おつかれさまでした"
 
-#: app/components/kanji/index.tsx:39
+#: app/components/kanji/index.tsx:45
 msgid "No {level} chapters yet"
 msgstr "{level}の章はまだありません"
 
-#: app/components/home/index.tsx:51
+#: app/components/home/index.tsx:57
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
 
@@ -859,7 +859,7 @@ msgstr "表に戻す"
 #: app/components/layout/header/index.tsx:67
 #: app/components/login/index.tsx:17
 #: app/components/login/LoginForm.tsx:73
-#: app/components/welcome/index.tsx:54
+#: app/components/welcome/index.tsx:57
 #: app/routes/signin.tsx:10
 msgid "Sign in"
 msgstr "ログイン"
@@ -976,11 +976,11 @@ msgstr "次の日本語能力試験（JLPT）"
 msgid "The page couldn't load. Please try again in a moment."
 msgstr "ページを読み込めませんでした。しばらくしてから、もう一度お試しください。"
 
-#: app/components/welcome/index.tsx:60
+#: app/components/welcome/index.tsx:63
 msgid "The questions below are samples in the real test's format."
 msgstr "下の問題は、実際のテストと同じ形式のサンプルです。"
 
-#: app/components/welcome/index.tsx:63
+#: app/components/welcome/index.tsx:66
 msgid "The questions on the right are samples in the real test's format."
 msgstr "右の問題は、実際のテストと同じ形式のサンプルです。"
 
