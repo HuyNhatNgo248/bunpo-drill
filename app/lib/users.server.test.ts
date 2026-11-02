@@ -37,6 +37,7 @@ const USER_TABLES = {
   reviewed: "INSERT INTO reviewed (user_id, test_id, grammar_id) VALUES (?, ?, 'n3-w1-d1-g1')",
   attempts: "INSERT INTO attempts (user_id, test_id, submitted_at, score, total) VALUES (?, ?, '2026-10-27T00:00:00.000Z', 1, 3)",
   learned_words: "INSERT INTO learned_words (user_id, word_id, learned_at) VALUES (?, 'n2-c1-渡航', '2026-10-27T00:00:00.000Z')",
+  notes: "INSERT INTO notes (user_id, test_id, text, sentence, created_at) VALUES (?, ?, '末', '', '')",
   password_resets: "INSERT INTO password_resets (token_hash, user_id, created_at, expires_at) VALUES ('hash-' || ?, ?, '', '')",
 };
 
@@ -208,8 +209,8 @@ describe("deleteUser", () => {
 
     expect(await getUser(id)).toBeNull();
     expect(await getSessionVersion(id)).toBeNull();
-    expect(Object.values(await rowCounts(id))).toEqual([0, 0, 0, 0, 0]);
-    expect(Object.values(await rowCounts(other))).toEqual([1, 1, 1, 1, 1]);
+    expect(Object.values(await rowCounts(id))).toEqual([0, 0, 0, 0, 0, 0]);
+    expect(Object.values(await rowCounts(other))).toEqual([1, 1, 1, 1, 1, 1]);
     expect(await getTest(test.id, other)).not.toBeNull();
   });
 
@@ -220,7 +221,7 @@ describe("deleteUser", () => {
     expect(await deleteUser(id, "wrong password")).toBe(false);
 
     expect(await getUser(id)).not.toBeNull();
-    expect(Object.values(await rowCounts(id))).toEqual([1, 1, 1, 1, 1]);
+    expect(Object.values(await rowCounts(id))).toEqual([1, 1, 1, 1, 1, 1]);
   });
 
   it("returns false for an id that has no account", async () => {

@@ -1,15 +1,23 @@
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
+import { NotedText } from "~/components/noted-text";
+import { passageAnchor } from "~/lib/sections";
 import type { ResultSegment } from "~/lib/views";
 
 /** The passage with every blank filled in: green if answered right, red if not. */
 export function PassageReview({ segments }: { segments: ResultSegment[] }) {
   return (
-    <Card className="mt-1 p-4 md:p-5">
-      <p lang="ja" className="font-jp text-base leading-passage md:text-prompt">
+    <Card id={passageAnchor(segments)} className="mt-1 scroll-mt-4 p-4 md:scroll-mt-6 md:p-5">
+      <p
+        lang="ja"
+        data-note-sentence={segments.map((segment) => (segment.kind === "text" ? segment.text : `（${segment.num}）${segment.fill}`)).join("")}
+        className="font-jp text-base leading-passage md:text-prompt"
+      >
         {segments.map((segment, i) =>
           segment.kind === "text" ? (
-            <span key={i}>{segment.text}</span>
+            <span key={i}>
+              <NotedText text={segment.text} />
+            </span>
           ) : (
             <span
               key={i}

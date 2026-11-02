@@ -3,7 +3,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 /** The tables that the app reads and writes. */
-const TABLES = ["attempts", "kanji_chapters", "learned_words", "password_resets", "progress", "reviewed", "tests", "users"];
+const TABLES = ["attempts", "kanji_chapters", "learned_words", "notes", "password_resets", "progress", "reviewed", "tests", "users"];
 
 /** The users table from before emails and session versions. */
 const OLD_USERS = "CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE COLLATE NOCASE, password TEXT NOT NULL, created_at TEXT NOT NULL)";
@@ -69,6 +69,22 @@ describe("db", () => {
     await client.execute("UPDATE users SET email = 'huy@example.com'");
     await client.execute("INSERT INTO users (name, password, created_at) VALUES ('Mai', 'x', 'now')");
     await expect(client.execute("UPDATE users SET email = 'huy@example.com' WHERE name = 'Mai'")).rejects.toThrow(/UNIQUE/);
+  });
+
+  it("adds the anchor column to a notes table from before it, keeping the notes", async () => {
+    const dir = path.join(process.env.DATA_DIR!, "old-notes");
+    mkdirSync(dir);
+    vi.stubEnv("DATA_DIR", dir);
+    const { createClient } = await import("@libsql/client");
+    const old = createClient({ url: `file:${path.join(dir, "bunpo.db")}` });
+    await old.execute("CREATE TABLE notes (id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, text TEXT NOT NULL, sentence TEXT NOT NULL, memo TEXT NOT NULL DEFAULT '', test_id TEXT NOT NULL, created_at TEXT NOT NULL, UNIQUE (user_id, text))");
+    await old.execute("INSERT INTO notes (user_id, text, sentence, test_id, created_at) VALUES (1, '相場', '', 't', 'now')");
+    old.close();
+
+    const client = await (await loadDb())();
+
+    const { rows } = await client.execute("SELECT text, anchor FROM notes");
+    expect(rows.map((row) => ({ ...row }))).toEqual([{ text: "相場", anchor: null }]);
   });
 
   it("turns each result saved before attempts were kept into the owner's first attempt of its test", async () => {

@@ -2,7 +2,7 @@ import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { and, asc, desc, eq, or, sql } from "drizzle-orm";
 import { orm, write } from "./db.server";
-import { attempts, learnedWords, passwordResets, progress, reviewed, users } from "./schema.server";
+import { attempts, learnedWords, notes, passwordResets, progress, reviewed, users } from "./schema.server";
 import { parseTab, tabValue, type Tab } from "./lastTab";
 import { normalizeEmail } from "./users";
 
@@ -147,7 +147,7 @@ export async function changePassword(id: number, current: string, next: string):
 }
 
 /**
- * Deletes the user and everything that is theirs: results, drafts, review marks, attempts, learned words and reset
+ * Deletes the user and everything that is theirs: results, drafts, review marks, attempts, learned words, notes and reset
  * links. The tests and kanji chapters are shared, so they stay. False, deleting nothing, when the password is wrong.
  */
 export async function deleteUser(id: number, password: string): Promise<boolean> {
@@ -160,6 +160,7 @@ export async function deleteUser(id: number, password: string): Promise<boolean>
     db.delete(reviewed).where(eq(reviewed.userId, id)),
     db.delete(attempts).where(eq(attempts.userId, id)),
     db.delete(learnedWords).where(eq(learnedWords.userId, id)),
+    db.delete(notes).where(eq(notes.userId, id)),
     db.delete(passwordResets).where(eq(passwordResets.userId, id)),
     db.delete(users).where(eq(users.id, id)),
   ]);

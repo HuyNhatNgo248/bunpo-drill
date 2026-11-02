@@ -63,6 +63,7 @@
   --success-soft: #ebf1df; /* a warm sage on the paper */
   --success-border: #c7dbb3;
   --warning: #a16207; /* score under the pass line */
+  --highlight: #ffe100; /* a highlighter pen's yellow, behind words saved to notes */
   --destructive: #c8351c;
 
   /* Lines */
@@ -111,6 +112,7 @@
   --color-success-soft: var(--success-soft);
   --color-success-border: var(--success-border);
   --color-warning: var(--warning);
+  --color-highlight: var(--highlight);
   --color-destructive: var(--destructive);
 
   --color-border: var(--border);
@@ -168,6 +170,42 @@
 /* A test row's title takes the free space, so its buttons wrap below it before the title wraps. */
 @utility flex-row-title {
   flex: 999 1 380px;
+}
+
+/*
+ * A highlighter pen's stroke behind words saved to notes: two passes, slightly crossed, so its edges are uneven, drawn
+ * left to right as it appears. It is as tall as the words, not the line, and pokes out past them without moving them.
+ */
+@utility highlighter {
+  display: inline-block;
+  line-height: 1.15;
+  margin: 0 -0.18em;
+  padding: 0.12em 0.2em;
+  border-radius: 0.2em 0.35em 0.25em 0.3em;
+  background-color: transparent;
+  background-image:
+    linear-gradient(-2.5deg, transparent 6%, color-mix(in srgb, var(--color-highlight) 55%, transparent) 10% 86%, transparent 90%),
+    linear-gradient(2deg, transparent 12%, color-mix(in srgb, var(--color-highlight) 45%, transparent) 16% 92%, transparent 96%);
+  background-repeat: no-repeat;
+  background-size:
+    calc(100% - 0.12em) 100%,
+    calc(100% - 0.1em) 100%;
+  background-position:
+    0 0,
+    0.1em 0;
+  animation: highlighter-draw 0.5s ease-out both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* From nothing to each pass's own width. */
+@keyframes highlighter-draw {
+  from {
+    background-size:
+      0 100%,
+      0 100%;
+  }
 }
 
 @layer base {

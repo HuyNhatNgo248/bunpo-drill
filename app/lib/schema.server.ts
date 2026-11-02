@@ -95,6 +95,21 @@ export const learnedWords = sqliteTable(
   (t) => [primaryKey({ columns: [t.userId, t.wordId] })],
 );
 
+export const notes = sqliteTable("notes", {
+  id: integer("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+  text: text("text").notNull(),
+  sentence: text("sentence").notNull(),
+  memo: text("memo").notNull().default(""),
+  testId: text("test_id")
+    .notNull()
+    .references(() => tests.id),
+  anchor: text("anchor"),
+  createdAt: text("created_at").notNull(),
+});
+
 export const passwordResets = sqliteTable("password_resets", {
   tokenHash: text("token_hash").primaryKey(),
   userId: integer("user_id")

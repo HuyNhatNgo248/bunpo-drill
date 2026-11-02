@@ -15,7 +15,7 @@ export function DeleteAccountForm({ result }: { result?: AccountResult }) {
   const deleting = useSubmitting("delete");
   const { t } = useLingui();
   const form = useRef<HTMLFormElement>(null);
-  const warning = t`Your results, drafts, review marks and learned words are deleted with it. This can't be undone.`;
+  const warning = t`Your results, drafts, review marks, learned words and notes are deleted with it. This can't be undone.`;
 
   return (
     <Card className="flex flex-col gap-4 p-5 md:p-6">

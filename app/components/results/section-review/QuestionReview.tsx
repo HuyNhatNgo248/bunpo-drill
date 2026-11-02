@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
+import { NotedText } from "~/components/noted-text";
 import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { questionAnchor } from "~/lib/sections";
 import type { ResultQuestion, SentencePiece } from "~/lib/views";
@@ -29,19 +30,32 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
       </span>
 
       {question.prompt && (
-        <p lang="ja" className="font-jp text-prompt leading-sentence md:text-lg">
-          {question.prompt.before}（{question.prompt.fill}）{question.prompt.after}
+        <p
+          lang="ja"
+          data-note-sentence={`${question.prompt.before}（${question.prompt.fill}）${question.prompt.after}`}
+          className="font-jp text-prompt leading-sentence md:text-lg"
+        >
+          <NotedText text={question.prompt.before} />（<NotedText text={question.prompt.fill} />）
+          <NotedText text={question.prompt.after} />
         </p>
       )}
 
       {question.underlined && (
-        <p lang="ja" className="font-jp text-prompt leading-sentence md:text-lg">
+        <p
+          lang="ja"
+          data-note-sentence={question.underlined.before + question.underlined.word + question.underlined.after}
+          className="font-jp text-prompt leading-sentence md:text-lg"
+        >
           <UnderlinedSentence sentence={question.underlined} />
         </p>
       )}
 
       {question.sentence && (
-        <div className="flex flex-col gap-1.5 md:gap-2">
+        // Either order notes the right sentence.
+        <div
+          data-note-sentence={question.sentence.before + question.sentence.pieces.map((piece) => piece.text).join("") + question.sentence.after}
+          className="flex flex-col gap-1.5 md:gap-2"
+        >
           {!question.correct && question.sentence.yours && (
             <OrderedSentence sentence={question.sentence} pieces={question.sentence.yours} mark="wrong" />
           )}
@@ -67,8 +81,8 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
       </div>
 
       {question.explanation && (
-        <p lang="en" className="text-caption leading-relaxed text-secondary-foreground md:text-sm">
-          {question.explanation}
+        <p lang="en" data-note-sentence={question.explanation} className="text-caption leading-relaxed text-secondary-foreground md:text-sm">
+          <NotedText text={question.explanation} />
         </p>
       )}
     </Card>
@@ -95,7 +109,9 @@ function OrderedSentence({
           <span className="sr-only">{wrong ? t`Wrong` : t`Correct`}</span>
         </span>
       )}
-      <span>{sentence.before}</span>
+      <span>
+        <NotedText text={sentence.before} />
+      </span>
       {pieces.map((piece, i) => (
         <span
           key={i}
@@ -108,10 +124,13 @@ function OrderedSentence({
                 : "rounded-md border border-success-border bg-success-soft font-semibold text-success",
           )}
         >
-          {piece.star ? `★ ${piece.text}` : piece.text}
+          {piece.star && "★ "}
+          <NotedText text={piece.text} />
         </span>
       ))}
-      <span>{sentence.after}</span>
+      <span>
+        <NotedText text={sentence.after} />
+      </span>
     </div>
   );
 }

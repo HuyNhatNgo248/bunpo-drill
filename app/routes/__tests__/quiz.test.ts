@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { buildKanjiTestPayload, WORD_ID } from "#mocks/factories/kanji";
 import { buildPayload } from "#mocks/factories/payload";
 import { learnedIds, markLearned } from "~/lib/kanji.server";
+import { addNote } from "~/lib/notes.server";
 import { resetDatabase } from "#tests/helpers/db";
 import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { routeArgs } from "#tests/helpers/route";
@@ -36,6 +37,15 @@ describe("quiz loader", () => {
 
     expect(quiz).toMatchObject({ id, title: "第1週 1日目", questionCount: 3 });
     expect(JSON.stringify(quiz)).not.toContain("answerIndex");
+  });
+
+  it("gives the user's notes, to highlight their words", async () => {
+    const { id } = await createTest(buildPayload());
+    await addNote(USER_ID, { text: "かいがあって", sentence: "", testId: id, memo: "" });
+
+    const { notes } = await loader(routeArgs<Parameters<typeof loader>[0]>(await signedInRequest(USER_ID, quizUrl(id)), { id }));
+
+    expect(notes).toMatchObject([{ text: "かいがあって" }]);
   });
 
   it("gives the draft the test was left at, its checked parts graded", async () => {

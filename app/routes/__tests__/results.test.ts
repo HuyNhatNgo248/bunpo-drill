@@ -5,6 +5,7 @@ import { resetDatabase } from "#tests/helpers/db";
 import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
+import { addNote } from "~/lib/notes.server";
 import { createTest, saveSubmission } from "~/lib/tests.server";
 import { loader, meta } from "../results";
 
@@ -28,6 +29,14 @@ describe("results loader", () => {
     await saveSubmission(USER_ID, id, buildSubmission({ answers: { q1: 2, q2: [1, 0, 2, 3] } }));
 
     expect((await load(id)).results).toMatchObject({ id, score: 2, total: 3, percent: 67 });
+  });
+
+  it("gives the user's notes, to highlight their words", async () => {
+    const { id } = await createTest(buildPayload());
+    await saveSubmission(USER_ID, id, buildSubmission());
+    await addNote(USER_ID, { text: "かいがあって", sentence: "", testId: id, memo: "" });
+
+    expect((await load(id)).notes).toMatchObject([{ text: "かいがあって" }]);
   });
 
   describe("finding the result", () => {

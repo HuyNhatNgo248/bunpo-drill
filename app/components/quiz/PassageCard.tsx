@@ -1,5 +1,7 @@
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
+import { NotedText } from "~/components/noted-text";
+import { passageAnchor } from "~/lib/sections";
 import type { Answers, QuizQuestion, QuizSegment } from "~/lib/views";
 import { trackPassageHeight } from "./helpers/passageHeight";
 
@@ -19,12 +21,23 @@ export function PassageCard({
 }) {
   return (
     <Card
+      id={passageAnchor(segments)}
       ref={trackPassageHeight}
       className="sticky top-16 z-10 mt-1 max-h-passage overflow-y-auto p-4 shadow-raised md:top-24 md:max-h-passage-desktop md:p-6"
     >
-      <p lang="ja" className="font-jp text-base leading-passage md:text-prompt">
+      <p
+        lang="ja"
+        data-note-sentence={segments.map((segment) => (segment.kind === "text" ? segment.text : `（${segment.num}）`)).join("")}
+        className="font-jp text-base leading-passage md:text-prompt"
+      >
         {segments.map((segment, i) => {
-          if (segment.kind === "text") return <span key={i}>{segment.text}</span>;
+          if (segment.kind === "text") {
+            return (
+              <span key={i}>
+                <NotedText text={segment.text} />
+              </span>
+            );
+          }
           const question = questions.find((q) => q.id === segment.questionId);
           const picked = answers[segment.questionId];
           const label =

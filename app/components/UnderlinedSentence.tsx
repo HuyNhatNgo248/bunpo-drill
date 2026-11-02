@@ -1,3 +1,4 @@
+import { NotedText } from "~/components/noted-text";
 import type { Underlined } from "~/lib/views";
 
 /**
@@ -7,13 +8,13 @@ import type { Underlined } from "~/lib/views";
 export function UnderlinedSentence({ sentence: { before, word, after } }: { sentence: Underlined }) {
   return (
     <>
-      {before}
+      <NotedText text={before} />
       <u className="underline decoration-1 underline-offset-6">
         <span className="sr-only">「</span>
-        {word}
+        <NotedText text={word} />
         <span className="sr-only">」</span>
       </u>
-      {after}
+      <NotedText text={after} />
     </>
   );
 }

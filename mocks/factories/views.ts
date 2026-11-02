@@ -1,6 +1,6 @@
 import { toQuizView, toResultsView } from "~/lib/grading.server";
 import { toFlashcards } from "~/lib/kanji-views.server";
-import type { ChapterSummary, FlashCard, FlashcardsView, QuizView, ResultsView, ReviewChip, TestSummary } from "~/lib/views";
+import type { ChapterSummary, FlashCard, FlashcardsView, NoteView, QuizView, ResultsView, ReviewChip, TestSummary } from "~/lib/views";
 import { buildKanjiChapter, buildKanjiTestPayload, WORD_ID } from "./kanji";
 import { GRAMMAR_ID } from "./payload";
 import { buildStoredTest, buildSubmission } from "./tests";
@@ -86,4 +86,18 @@ export function buildKanjiQuizView(overrides: Partial<QuizView> = {}): QuizView 
 /** The results of that kanji test with no answers: 0 of 2, and 招待状 to study. */
 export function buildKanjiResultsView(overrides: Partial<ResultsView> = {}): ResultsView {
   return { ...toResultsView(buildStoredTest({ payload: buildKanjiTestPayload() }), buildSubmission({ total: 2 })), ...overrides };
+}
+
+/** 考えた末, noted from question 14 of 第3週 1〜3日目, with no memo. */
+export function buildNoteView(overrides: Partial<NoteView> = {}): NoteView {
+  return {
+    id: 1,
+    text: "考えた末",
+    sentence: "社長は何か月も考えた末、海外の工場を閉めることに決めた。",
+    memo: "",
+    testId: "20261027-abc123",
+    anchor: "question-14",
+    testTitle: "第3週 1〜3日目",
+    ...overrides,
+  };
 }

@@ -10,6 +10,7 @@ import {
   type DragStartEvent,
 } from "@dnd-kit/core";
 import { getEventCoordinates } from "@dnd-kit/utilities";
+import { NotedText } from "~/components/noted-text";
 import { cn } from "~/lib/utils";
 import { useRef, useState } from "react";
 import { Bank } from "./Bank";
@@ -76,8 +77,14 @@ export function SentenceOrder({
       onDragCancel={() => setDragging(null)}
     >
       <div className="flex flex-col gap-3 md:gap-4">
-        <div lang="ja" className="flex flex-wrap items-end gap-1.5 font-jp text-prompt leading-sentence md:gap-2 md:text-xl">
-          <span>{question.before}</span>
+        <div
+          lang="ja"
+          data-note-sentence={`${question.before}……${question.after}`}
+          className="flex flex-wrap items-end gap-1.5 font-jp text-prompt leading-sentence md:gap-2 md:text-xl"
+        >
+          <span>
+            <NotedText text={question.before} />
+          </span>
           {slots.map((piece, index) => (
             <SlotButton
               key={index}
@@ -91,7 +98,9 @@ export function SentenceOrder({
               }}
             />
           ))}
-          <span>{question.after}</span>
+          <span>
+            <NotedText text={question.after} />
+          </span>
         </div>
         <Bank questionId={question.id}>
           {question.pieces.map((text, piece) => (

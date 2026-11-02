@@ -72,3 +72,9 @@ export function circled(number: number) {
 
 /** Element id of a quiz question card, used by the question list to jump to it. */
 export const questionAnchor = (num: number) => `question-${num}`;
+
+/** Element id of a passage card, by the number of its first blank, so a note's link can go back to it. */
+export function passageAnchor(segments: { kind: string; num?: number }[]): string | undefined {
+  const first = segments.find((segment) => segment.kind === "blank")?.num;
+  return first === undefined ? undefined : `passage-${first}`;
+}
