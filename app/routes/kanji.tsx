@@ -20,13 +20,12 @@ export async function loader({ request }: Route.LoaderArgs) {
   // The level named, else the kanji level the user last opened (on any device), else the hardest that has a chapter,
   // else the level of the book.
   const level = named ?? (last?.subject === "kanji" ? last.level : undefined) ?? levels.at(-1) ?? KANJI_LEVEL;
-  // Saved alongside the page's reads, so it adds no wait.
-  const saved = saveLastTab(userId, { subject: "kanji", level });
+  // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
+  saveLastTab(userId, { subject: "kanji", level }).catch(console.error);
   if (!isTestLevel(level)) {
-    await saved;
     return { home: { level, chapters: [], stats: { learned: 0, words: 0, average: null, missed: 0 } } };
   }
-  const [chapters, learned, latest] = await Promise.all([listChapters(level), learnedIds(userId), latestKanjiTests(level, userId), saved]);
+  const [chapters, learned, latest] = await Promise.all([listChapters(level), learnedIds(userId), latestKanjiTests(level, userId)]);
   return { home: toKanjiHome(level, chapters, learned, latest) };
 }
 

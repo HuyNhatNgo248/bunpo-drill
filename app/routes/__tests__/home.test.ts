@@ -164,7 +164,7 @@ describe("home loader levels", () => {
   it("saves the level it shows as the user's last tab", async () => {
     await load("?level=N1");
 
-    expect(await lastTabOf(USER_ID)).toEqual({ subject: "grammar", level: "N1" });
+    await expect.poll(() => lastTabOf(USER_ID)).toEqual({ subject: "grammar", level: "N1" });
   });
 
   it("shows a JLPT level in the URL that has no tests, with none, so its tab can say so", async () => {

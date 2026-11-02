@@ -24,13 +24,12 @@ export async function loader({ request }: Route.LoaderArgs) {
   // Not the top test's: a test of another level can sort above it.
   const level = named ?? last?.level ?? newest;
   const latestFirst = params.get("sort") === "latest";
-  // Saved alongside the page's reads, so it adds no wait.
-  const saved = level ? saveLastTab(userId, { subject: "grammar", level }) : null;
+  // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
+  if (level) saveLastTab(userId, { subject: "grammar", level }).catch(console.error);
   if (!level || !isTestLevel(level)) {
-    await saved;
     return { tests: [], stats: { total: 0, taken: 0, average: null, toReview: 0 }, level, latestFirst };
   }
-  const [stats, tests] = await Promise.all([levelStats(level, userId), listTests(userId, { level, latestFirst }), saved]);
+  const [stats, tests] = await Promise.all([levelStats(level, userId), listTests(userId, { level, latestFirst })]);
   return { tests: tests.map(toSummary), stats, level, latestFirst };
 }
 

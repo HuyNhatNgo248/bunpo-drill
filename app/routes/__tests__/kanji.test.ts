@@ -60,7 +60,7 @@ describe("kanji loader", () => {
   it("saves the level it shows as the user's last tab", async () => {
     await load("?level=N5");
 
-    expect(await lastTabOf(USER_ID)).toEqual({ subject: "kanji", level: "N5" });
+    await expect.poll(() => lastTabOf(USER_ID)).toEqual({ subject: "kanji", level: "N5" });
   });
 
   it("gives an empty page for a level without kanji tests, such as N5", async () => {

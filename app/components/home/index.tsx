@@ -1,9 +1,11 @@
 import { Trans } from "@lingui/react/macro";
+import { useNavigation } from "react-router";
 import { EmptyState } from "~/components/EmptyState";
 import { warmDrawerFigure } from "~/components/helpers/drawerFigure";
 import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
+import { cn } from "~/lib/utils";
 import { isTestLevel, JLPT_LEVELS, type JlptLevel } from "~/lib/levels";
 import type { TestSummary } from "~/lib/views";
 import { SortMenu } from "./SortMenu";
@@ -23,6 +25,9 @@ type HomeProps = {
  * any JLPT level; one the app has no tests for yet says it is not available.
  */
 export function Home({ tests, stats, level, latestFirst }: HomeProps) {
+  // Another level (or order) of this page is loading: the old one fades, so the click shows at once.
+  const navigation = useNavigation();
+  const switching = navigation.state === "loading" && navigation.location.pathname === "/";
   return (
     <div className="min-h-screen">
       <AppHeader account />
@@ -35,23 +40,25 @@ export function Home({ tests, stats, level, latestFirst }: HomeProps) {
           {level && <LevelTabs levels={JLPT_LEVELS} current={level} warmOf={warmDrawerFigure} />}
         </div>
 
-        {tests.length > 0 ? (
-          <>
-            <Stats stats={stats} />
-            <div className="flex flex-col gap-2">
-              {level && <SortMenu level={level} latestFirst={latestFirst} />}
-              <TestList tests={tests} />
-            </div>
-          </>
-        ) : level && !isTestLevel(level) ? (
-          <EmptyState drawer title={<Trans>{level} isn't available yet</Trans>}>
-            <Trans>Mock tests for {level} are coming later.</Trans>
-          </EmptyState>
-        ) : (
-          <EmptyState title={<Trans>No mock tests yet</Trans>}>
-            <Trans>New mock tests show up here.</Trans>
-          </EmptyState>
-        )}
+        <div aria-busy={switching} className={cn("flex flex-col gap-4 transition-opacity duration-200 md:gap-6", switching && "opacity-50")}>
+          {tests.length > 0 ? (
+            <>
+              <Stats stats={stats} />
+              <div className="flex flex-col gap-2">
+                {level && <SortMenu level={level} latestFirst={latestFirst} />}
+                <TestList tests={tests} />
+              </div>
+            </>
+          ) : level && !isTestLevel(level) ? (
+            <EmptyState drawer title={<Trans>{level} isn't available yet</Trans>}>
+              <Trans>Mock tests for {level} are coming later.</Trans>
+            </EmptyState>
+          ) : (
+            <EmptyState title={<Trans>No mock tests yet</Trans>}>
+              <Trans>New mock tests show up here.</Trans>
+            </EmptyState>
+          )}
+        </div>
       </main>
     </div>
   );

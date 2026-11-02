@@ -1,9 +1,11 @@
 import { Trans } from "@lingui/react/macro";
+import { useNavigation } from "react-router";
 import { EmptyState } from "~/components/EmptyState";
 import { loadDrawerFigure } from "~/components/helpers/drawerFigure";
 import { AppHeader } from "~/components/layout/header";
 import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
+import { cn } from "~/lib/utils";
 import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL, type JlptLevel } from "~/lib/levels";
 import type { KanjiHomeView } from "~/lib/views";
 import { ChapterList } from "./chapter-list";
@@ -18,6 +20,9 @@ const warmOf = (level: JlptLevel) => (level === KANJI_LEVEL ? undefined : () => 
  */
 export function KanjiHome({ home }: { home: KanjiHomeView }) {
   const { level, chapters } = home;
+  // Another level of this page is loading: the old one fades, so the click shows at once.
+  const navigation = useNavigation();
+  const switching = navigation.state === "loading" && navigation.location.pathname === "/kanji";
   return (
     <div className="min-h-screen">
       <AppHeader account />
@@ -30,20 +35,22 @@ export function KanjiHome({ home }: { home: KanjiHomeView }) {
           <LevelTabs levels={JLPT_LEVELS} current={level} warmOf={warmOf} />
         </div>
 
-        {chapters.length > 0 && isTestLevel(level) ? (
-          <>
-            <Stats stats={home.stats} />
-            <ChapterList level={level} chapters={chapters} />
-          </>
-        ) : level === KANJI_LEVEL ? (
-          <EmptyState title={<Trans>No {level} chapters yet</Trans>}>
-            <Trans>A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章.</Trans>
-          </EmptyState>
-        ) : (
-          <EmptyState drawer title={<Trans>{level} isn't available yet</Trans>}>
-            <Trans>Kanji for {level} is coming later.</Trans>
-          </EmptyState>
-        )}
+        <div aria-busy={switching} className={cn("flex flex-col gap-4 transition-opacity duration-200 md:gap-6", switching && "opacity-50")}>
+          {chapters.length > 0 && isTestLevel(level) ? (
+            <>
+              <Stats stats={home.stats} />
+              <ChapterList level={level} chapters={chapters} />
+            </>
+          ) : level === KANJI_LEVEL ? (
+            <EmptyState title={<Trans>No {level} chapters yet</Trans>}>
+              <Trans>A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章.</Trans>
+            </EmptyState>
+          ) : (
+            <EmptyState drawer title={<Trans>{level} isn't available yet</Trans>}>
+              <Trans>Kanji for {level} is coming later.</Trans>
+            </EmptyState>
+          )}
+        </div>
       </main>
     </div>
   );
