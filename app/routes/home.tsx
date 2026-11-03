@@ -6,7 +6,7 @@ import { requireUserId } from "~/lib/auth.server";
 import { toSummary } from "~/lib/grading.server";
 import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
 import { levelStats, listTests, newestLevel } from "~/lib/tests.server";
-import { lastTabOf, saveLastTab } from "~/lib/users.server";
+import { lastTabOf, ownerId, saveLastTab } from "~/lib/users.server";
 import { localeFromMatches, translate } from "~/lib/i18n";
 
 export function meta({ matches }: Route.MetaArgs) {
@@ -27,10 +27,11 @@ export async function loader({ request }: Route.LoaderArgs) {
   // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
   if (level) saveLastTab(userId, { subject: "grammar", level }).catch(console.error);
   if (!level || !isTestLevel(level)) {
-    return { tests: [], stats: { total: 0, taken: 0, average: null, toReview: 0 }, level, latestFirst };
+    return { tests: [], stats: { total: 0, taken: 0, average: null, toReview: 0 }, level, latestFirst, isAdmin: false };
   }
-  const [stats, tests] = await Promise.all([levelStats(level, userId), listTests(userId, { level, latestFirst })]);
-  return { tests: tests.map(toSummary), stats, level, latestFirst };
+  const [stats, tests, owner] = await Promise.all([levelStats(level, userId), listTests(userId, { level, latestFirst }), ownerId()]);
+  // Only shows the delete buttons; DELETE /api/tests/:id checks the admin again.
+  return { tests: tests.map(toSummary), stats, level, latestFirst, isAdmin: userId === owner };
 }
 
 /** A search changes only `q`, which the page filters by itself, so the tests aren't loaded again for it. */

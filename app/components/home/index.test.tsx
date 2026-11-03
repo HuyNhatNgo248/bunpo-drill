@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { buildTestSummary } from "#mocks/factories/views";
@@ -27,13 +27,15 @@ function renderHome(
     level = tests.length ? "N2" : null,
     latestFirst = false,
     url = "/",
-  }: { stats?: HomeStats; level?: JlptLevel | null; latestFirst?: boolean; url?: string } = {},
+    isAdmin = false,
+  }: { stats?: HomeStats; level?: JlptLevel | null; latestFirst?: boolean; url?: string; isAdmin?: boolean } = {},
 ) {
-  const { action } = recordingAction();
-  renderRoute(<Home tests={tests} stats={stats} level={level} latestFirst={latestFirst} />, {
+  const { action, requests } = recordingAction();
+  renderRoute(<Home tests={tests} stats={stats} level={level} latestFirst={latestFirst} isAdmin={isAdmin} />, {
     url,
     routes: [{ path: "/api/tests/:id", action }],
   });
+  return requests;
 }
 
 describe("Home", () => {
@@ -155,5 +157,25 @@ describe("Home", () => {
     renderHome([], { level: "N3" });
 
     expect(await screen.findByRole("heading", { name: "No mock tests yet" })).toBeInTheDocument();
+  });
+
+  describe("deleting a test", () => {
+    it("shows no delete button to a user who is not the admin", async () => {
+      renderHome([TAKEN]);
+
+      await screen.findByRole("heading", { name: "Mock tests" });
+      expect(screen.queryByRole("button", { name: "Delete “第1週 1日目”" })).toBeNull();
+    });
+
+    it("lets the admin delete a test after asking", async () => {
+      const requests = renderHome([TAKEN], { isAdmin: true });
+
+      // A row has two delete buttons, one for mobile and one for desktop.
+      const [deleteButton] = await screen.findAllByRole("button", { name: "Delete “第1週 1日目”" });
+      await userEvent.click(deleteButton);
+      await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Delete" }));
+
+      await waitFor(() => expect(requests).toEqual([{ method: "DELETE", path: `/api/tests/${TAKEN.id}`, body: null }]));
+    });
   });
 });

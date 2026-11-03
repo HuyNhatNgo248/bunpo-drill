@@ -11,13 +11,14 @@ import { Button } from "~/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
 import { Progress } from "~/components/ui/progress";
 import type { TestSummary } from "~/lib/views";
+import { DeleteTest } from "./DeleteTest";
 import { rowHeading } from "./helpers/rowHeading";
 
 /**
  * One test: its week in a tile, its title and last score, how far it got when it is in progress, and its buttons: Start is solid, Continue an outline. Review opens its grammar chips.
  * Found by a search on its grammar, it names the `matched` patterns.
  */
-export function TestRow({ test, matched = [] }: { test: TestSummary; matched?: string[] }) {
+export function TestRow({ test, matched = [], isAdmin = false }: { test: TestSummary; matched?: string[]; isAdmin?: boolean }) {
   const { t } = useLingui();
   const [open, setOpen] = useState(false);
   // The retake picked from the menu, asked about in its dialog.
@@ -86,6 +87,8 @@ export function TestRow({ test, matched = [] }: { test: TestSummary; matched?: s
         </div>
       </Link>
 
+      {isAdmin && <DeleteTest test={test} className="-mt-2 -mr-2 md:hidden" />}
+
       <div className="grid w-full grid-cols-2 gap-2 md:flex md:w-auto md:flex-auto md:flex-wrap md:items-center md:justify-end">
         {test.result ? (
           <>
@@ -132,6 +135,7 @@ export function TestRow({ test, matched = [] }: { test: TestSummary; matched?: s
             </Link>
           </Button>
         )}
+        {isAdmin && <DeleteTest test={test} className="hidden md:order-3 md:inline-flex" outlined />}
       </div>
 
       {open && <GrammarChips testId={test.id} chips={test.review} className="w-full" />}

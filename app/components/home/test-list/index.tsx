@@ -10,7 +10,17 @@ import { TestRow } from "./TestRow";
  * in progress, the ones not taken yet, and the taken ones. The server sends them in that order, each group by title.
  * A test found by its grammar says which; when none match, a message offers to clear the search.
  */
-export function TestList({ tests, query = "", onClear }: { tests: TestSummary[]; query?: string; onClear?: () => void }) {
+export function TestList({
+  tests,
+  query = "",
+  onClear,
+  isAdmin = false,
+}: {
+  tests: TestSummary[];
+  query?: string;
+  onClear?: () => void;
+  isAdmin?: boolean;
+}) {
   const { t } = useLingui();
   const matches = new Map(tests.flatMap((test) => {
     const matched = matchOf(test, query);
@@ -44,7 +54,7 @@ export function TestList({ tests, query = "", onClear }: { tests: TestSummary[];
               </h2>
               <ul className="flex flex-col gap-4 md:gap-0 md:overflow-hidden md:rounded-xl md:border md:bg-card">
                 {group.tests.map((test) => (
-                  <TestRow key={test.id} test={test} matched={matches.get(test.id)} />
+                  <TestRow key={test.id} test={test} matched={matches.get(test.id)} isAdmin={isAdmin} />
                 ))}
               </ul>
             </section>

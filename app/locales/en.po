@@ -59,7 +59,7 @@ msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# q
 msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
-#: app/components/home/index.tsx:73
+#: app/components/home/index.tsx:75
 #: app/components/kanji/index.tsx:43
 msgid "{level} isn't available yet"
 msgstr "{level} isn't available yet"
@@ -84,7 +84,7 @@ msgstr "{text} (placed)"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/TestRow.tsx:69
 #: app/components/quiz/index.tsx:79
 #: app/components/welcome/TrialTests.tsx:60
 msgid "{total, plural, one {# question} other {# questions}}"
@@ -197,7 +197,7 @@ msgstr "All answered"
 msgid "All correct"
 msgstr "All correct"
 
-#: app/components/home/test-list/TestRow.tsx:104
+#: app/components/home/test-list/TestRow.tsx:107
 msgid "All questions"
 msgstr "All questions"
 
@@ -366,7 +366,7 @@ msgstr "Choose the best way to write the underlined word in kanji from 1, 2, 3 a
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 
-#: app/components/home/test-list/index.tsx:30
+#: app/components/home/test-list/index.tsx:40
 #: app/components/home/TestSearch.tsx:45
 msgid "Clear the search"
 msgstr "Clear the search"
@@ -375,7 +375,7 @@ msgstr "Clear the search"
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:131
+#: app/components/home/test-list/TestRow.tsx:134
 msgid "Continue"
 msgstr "Continue"
 
@@ -412,6 +412,7 @@ msgstr "Create account"
 msgid "Creating…"
 msgstr "Creating…"
 
+#: app/components/account/EmailForm.tsx:41
 #: app/components/account/PasswordForm.tsx:29
 msgid "Current password"
 msgstr "Current password"
@@ -423,6 +424,18 @@ msgstr "Day"
 #: app/lib/sections.ts:66
 msgid "Day {day}"
 msgstr "Day {day}"
+
+#: app/components/home/test-list/DeleteTest.tsx:18
+msgid "Delete"
+msgstr "Delete"
+
+#: app/components/home/test-list/DeleteTest.tsx:24
+msgid "Delete “{title}”"
+msgstr "Delete “{title}”"
+
+#: app/components/home/test-list/DeleteTest.tsx:16
+msgid "Delete “{title}”?"
+msgstr "Delete “{title}”?"
 
 #: app/components/notes/NoteCard.tsx:51
 msgid "Delete {text}"
@@ -455,14 +468,14 @@ msgstr "draggable"
 msgid "Edit the memo of {text}"
 msgstr "Edit the memo of {text}"
 
-#: app/components/account/EmailForm.tsx:18
-#: app/components/account/EmailForm.tsx:32
+#: app/components/account/EmailForm.tsx:19
+#: app/components/account/EmailForm.tsx:33
 #: app/components/forgot-password/ForgotPasswordForm.tsx:14
 #: app/components/login/LoginForm.tsx:38
 msgid "Email address"
 msgstr "Email address"
 
-#: app/routes/account.tsx:46
+#: app/routes/account.tsx:50
 msgid "Email address saved."
 msgstr "Email address saved."
 
@@ -550,11 +563,11 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/index.tsx:21
+#: app/components/home/test-list/index.tsx:31
 msgid "In progress"
 msgstr "In progress"
 
-#: app/components/home/test-list/TestRow.tsx:61
+#: app/components/home/test-list/TestRow.tsx:62
 msgid "In progress {answered} / {total}"
 msgstr "In progress {answered} / {total}"
 
@@ -607,7 +620,7 @@ msgstr "kun"
 msgid "Language: {0}"
 msgstr "Language: {0}"
 
-#: app/components/home/test-list/TestRow.tsx:72
+#: app/components/home/test-list/TestRow.tsx:73
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
@@ -653,13 +666,13 @@ msgstr "Memo (optional)"
 msgid "Missed words"
 msgstr "Missed words"
 
-#: app/components/home/index.tsx:56
+#: app/components/home/index.tsx:58
 #: app/components/results/Actions.tsx:51
 #: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "Mock tests"
 
-#: app/components/home/index.tsx:74
+#: app/components/home/index.tsx:76
 msgid "Mock tests for {level} are coming later."
 msgstr "Mock tests for {level} are coming later."
 
@@ -672,7 +685,7 @@ msgstr "More words with <0>{0}</0>"
 msgid "New here? <0>Create account</0>"
 msgstr "New here? <0>Create account</0>"
 
-#: app/components/home/index.tsx:78
+#: app/components/home/index.tsx:80
 msgid "New mock tests show up here."
 msgstr "New mock tests show up here."
 
@@ -707,7 +720,7 @@ msgstr "No {level} chapters yet"
 msgid "No memo yet."
 msgstr "No memo yet."
 
-#: app/components/home/index.tsx:77
+#: app/components/home/index.tsx:79
 msgid "No mock tests yet"
 msgstr "No mock tests yet"
 
@@ -719,11 +732,11 @@ msgstr "No notes yet"
 msgid "no quiz yet"
 msgstr "no quiz yet"
 
-#: app/components/home/test-list/index.tsx:28
+#: app/components/home/test-list/index.tsx:38
 msgid "No tests match “{query}”"
 msgstr "No tests match “{query}”"
 
-#: app/components/account/EmailForm.tsx:23
+#: app/components/account/EmailForm.tsx:24
 msgid "None yet. Add one, and you can reset your password if you forget it."
 msgstr "None yet. Add one, and you can reset your password if you forget it."
 
@@ -731,7 +744,7 @@ msgstr "None yet. Add one, and you can reset your password if you forget it."
 msgid "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 msgstr "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 
-#: app/components/home/test-list/index.tsx:22
+#: app/components/home/test-list/index.tsx:32
 msgid "Not taken yet"
 msgstr "Not taken yet"
 
@@ -787,7 +800,7 @@ msgstr "Part {no} checked"
 msgid "Password"
 msgstr "Password"
 
-#: app/routes/account.tsx:60
+#: app/routes/account.tsx:66
 msgid "Password changed."
 msgstr "Password changed."
 
@@ -885,12 +898,12 @@ msgstr "Reset your password"
 msgid "Results"
 msgstr "Results"
 
-#: app/components/home/test-list/TestRow.tsx:107
+#: app/components/home/test-list/TestRow.tsx:110
 #: app/components/results/Actions.tsx:63
 msgid "Retake wrong ones"
 msgstr "Retake wrong ones"
 
-#: app/components/home/test-list/TestRow.tsx:120
+#: app/components/home/test-list/TestRow.tsx:123
 msgid "Review ({reviewCount})"
 msgstr "Review ({reviewCount})"
 
@@ -902,13 +915,13 @@ msgstr "Reviewed · Undo"
 msgid "Sample question"
 msgstr "Sample question"
 
-#: app/components/account/EmailForm.tsx:42
+#: app/components/account/EmailForm.tsx:44
 #: app/components/account/NameForm.tsx:39
 #: app/components/add-note/index.tsx:91
 msgid "Save"
 msgstr "Save"
 
-#: app/components/account/EmailForm.tsx:42
+#: app/components/account/EmailForm.tsx:44
 #: app/components/account/NameForm.tsx:39
 msgid "Saving…"
 msgstr "Saving…"
@@ -1018,7 +1031,7 @@ msgstr "Start"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/home/test-list/TestRow.tsx:131
+#: app/components/home/test-list/TestRow.tsx:134
 msgid "Start the test"
 msgstr "Start the test"
 
@@ -1039,8 +1052,8 @@ msgstr "Submit"
 msgid "Submitting…"
 msgstr "Submitting…"
 
-#: app/components/home/test-list/TestRow.tsx:98
-#: app/components/home/test-list/TestRow.tsx:115
+#: app/components/home/test-list/TestRow.tsx:101
+#: app/components/home/test-list/TestRow.tsx:118
 #: app/components/results/Actions.tsx:23
 #: app/components/results/Actions.tsx:67
 msgid "Take it again"
@@ -1051,7 +1064,7 @@ msgid "Take the quiz"
 msgstr "Take the quiz"
 
 #: app/components/home/Stats.tsx:15
-#: app/components/home/test-list/index.tsx:23
+#: app/components/home/test-list/index.tsx:33
 msgid "Taken"
 msgstr "Taken"
 
@@ -1067,7 +1080,7 @@ msgstr "Test not found"
 msgid "That email address doesn't look right."
 msgstr "That email address doesn't look right."
 
-#: app/routes/account.tsx:44
+#: app/routes/account.tsx:48
 #: app/routes/signup.tsx:28
 msgid "That email address is already in use."
 msgstr "That email address is already in use."
@@ -1112,6 +1125,10 @@ msgstr "The request couldn't be handled."
 #: app/components/welcome/ExamSections.tsx:41
 msgid "The same three formats as the real exam"
 msgstr "The same three formats as the real exam"
+
+#: app/components/home/test-list/DeleteTest.tsx:17
+msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
+msgstr "The test and every user's results and notes on it will be deleted. This can't be undone."
 
 #: app/components/flashcards/SessionDone.tsx:84
 msgid "These stay unlearned and come first next time."
@@ -1191,12 +1208,12 @@ msgstr "Username changed."
 msgid "Username or email address"
 msgstr "Username or email address"
 
-#: app/components/account/EmailForm.tsx:22
+#: app/components/account/EmailForm.tsx:23
 #: app/components/login/LoginForm.tsx:52
 msgid "We send a reset link here when you forget your password."
 msgstr "We send a reset link here when you forget your password."
 
-#: app/components/home/test-list/TestRow.tsx:47
+#: app/components/home/test-list/TestRow.tsx:48
 msgid "week"
 msgstr "week"
 
@@ -1254,8 +1271,9 @@ msgstr "Your answer: {yours}"
 msgid "Your answers couldn't be read. Please try again."
 msgstr "Your answers couldn't be read. Please try again."
 
-#: app/routes/account.tsx:50
-#: app/routes/account.tsx:58
+#: app/routes/account.tsx:45
+#: app/routes/account.tsx:54
+#: app/routes/account.tsx:62
 msgid "Your current password is wrong."
 msgstr "Your current password is wrong."
 

@@ -9,7 +9,7 @@ import {
   type Level,
   type TestPayload,
 } from "./payload";
-import { attempts, learnedWords, progress, reviewed, tests } from "./schema.server";
+import { attempts, learnedWords, notes, progress, reviewed, tests } from "./schema.server";
 import { readPayload, type AnyPayload } from "./test-kinds";
 import type { Answers } from "./views";
 
@@ -334,6 +334,20 @@ export async function resetTest(userId: number, id: string): Promise<boolean> {
     db.select({ id: tests.id }).from(tests).where(eq(tests.id, id)),
   ]);
   return found.length > 0;
+}
+
+/** Deletes a test and what every user saved on it: progress, review marks, attempts and notes. False when there is no such test. */
+export async function deleteTest(id: string): Promise<boolean> {
+  if (!ID.test(id)) return false;
+  const db = await orm();
+  const [, , , , deleted] = await write([
+    db.delete(progress).where(eq(progress.testId, id)),
+    db.delete(reviewed).where(eq(reviewed.testId, id)),
+    db.delete(attempts).where(eq(attempts.testId, id)),
+    db.delete(notes).where(eq(notes.testId, id)),
+    db.delete(tests).where(eq(tests.id, id)),
+  ]);
+  return deleted.rowsAffected > 0;
 }
 
 /** Marks or clears `userId`'s review chip, and returns the test as they see it. */

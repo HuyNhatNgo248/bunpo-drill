@@ -59,11 +59,36 @@ describe("PATCH /api/tests/:id", () => {
   });
 });
 
+describe("DELETE /api/tests/:id", () => {
+  it("lets the admin delete a test", async () => {
+    const { id } = await createTest(buildPayload());
+
+    const response = await send(id, "DELETE");
+
+    expect(await response.json()).toEqual({ deleted: id });
+    expect(await getTest(id, USER_ID)).toBeNull();
+  });
+
+  it("refuses a user who is not the admin and keeps the test", async () => {
+    const { id } = await createTest(buildPayload());
+    const request = await signedInRequest(2, `https://bunpo.test/api/tests/${id}`, { method: "DELETE" });
+
+    const response = await action(routeArgs<Parameters<typeof action>[0]>(request, { id })).catch((thrown: Response) => thrown);
+
+    expect(response.status).toBe(403);
+    expect(await getTest(id, USER_ID)).not.toBeNull();
+  });
+
+  it("answers 404 for a test that does not exist", async () => {
+    expect((await send(UNKNOWN_ID, "DELETE")).status).toBe(404);
+  });
+});
+
 describe("another method", () => {
   it("answers 405 and names the methods it allows", async () => {
-    const response = await send(UNKNOWN_ID, "DELETE");
+    const response = await send(UNKNOWN_ID, "PUT");
 
     expect(response.status).toBe(405);
-    expect(response.headers.get("Allow")).toBe("PATCH");
+    expect(response.headers.get("Allow")).toBe("PATCH, DELETE");
   });
 });

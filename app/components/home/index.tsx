@@ -19,13 +19,15 @@ type HomeProps = {
   level: JlptLevel | null;
   /** The tests come latest week first instead of from week 1. */
   latestFirst: boolean;
+  /** The admin (the owner account) sees a delete button on each test. */
+  isAdmin?: boolean;
 };
 
 /**
  * The home page for one level: the figures over its tests, then all of them, grouped. Once there is a test, a tab picks
  * any JLPT level; one the app has no tests for yet says it is not available.
  */
-export function Home({ tests, stats, level, latestFirst }: HomeProps) {
+export function Home({ tests, stats, level, latestFirst, isAdmin = false }: HomeProps) {
   // Another tab, level or order is loading: this page fades, so the click shows at once.
   const switching = useTabLoading();
   // The search lives here, so typing (in an IME too) never waits for the address; the address only keeps a copy.
@@ -66,7 +68,7 @@ export function Home({ tests, stats, level, latestFirst }: HomeProps) {
               <TestSearch query={query} onChange={search}>
                 {level && <SortMenu level={level} latestFirst={latestFirst} />}
               </TestSearch>
-              <TestList tests={tests} query={query} onClear={() => search("")} />
+              <TestList tests={tests} query={query} onClear={() => search("")} isAdmin={isAdmin} />
             </div>
           </>
         ) : level && !isTestLevel(level) ? (

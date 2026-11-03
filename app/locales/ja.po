@@ -59,7 +59,7 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
-#: app/components/home/index.tsx:73
+#: app/components/home/index.tsx:75
 #: app/components/kanji/index.tsx:43
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
@@ -84,7 +84,7 @@ msgstr "{text}（配置済み）"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/TestRow.tsx:69
 #: app/components/quiz/index.tsx:79
 #: app/components/welcome/TrialTests.tsx:60
 msgid "{total, plural, one {# question} other {# questions}}"
@@ -197,7 +197,7 @@ msgstr "すべて回答済み"
 msgid "All correct"
 msgstr "全問正解"
 
-#: app/components/home/test-list/TestRow.tsx:104
+#: app/components/home/test-list/TestRow.tsx:107
 msgid "All questions"
 msgstr "全問"
 
@@ -366,7 +366,7 @@ msgstr "＿＿＿の言葉を漢字で書くとき、最もよいものを1・2�
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "文の（　）に入る、いちばん自然な形を4つから選びます。"
 
-#: app/components/home/test-list/index.tsx:30
+#: app/components/home/test-list/index.tsx:40
 #: app/components/home/TestSearch.tsx:45
 msgid "Clear the search"
 msgstr "検索をクリア"
@@ -375,7 +375,7 @@ msgstr "検索をクリア"
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:131
+#: app/components/home/test-list/TestRow.tsx:134
 msgid "Continue"
 msgstr "続きから"
 
@@ -412,6 +412,7 @@ msgstr "アカウントを作成"
 msgid "Creating…"
 msgstr "作成中…"
 
+#: app/components/account/EmailForm.tsx:41
 #: app/components/account/PasswordForm.tsx:29
 msgid "Current password"
 msgstr "現在のパスワード"
@@ -423,6 +424,18 @@ msgstr "日"
 #: app/lib/sections.ts:66
 msgid "Day {day}"
 msgstr "{day}日目"
+
+#: app/components/home/test-list/DeleteTest.tsx:18
+msgid "Delete"
+msgstr "削除"
+
+#: app/components/home/test-list/DeleteTest.tsx:24
+msgid "Delete “{title}”"
+msgstr "「{title}」を削除"
+
+#: app/components/home/test-list/DeleteTest.tsx:16
+msgid "Delete “{title}”?"
+msgstr "「{title}」を削除しますか？"
 
 #: app/components/notes/NoteCard.tsx:51
 msgid "Delete {text}"
@@ -455,14 +468,14 @@ msgstr "ドラッグ可能"
 msgid "Edit the memo of {text}"
 msgstr "{text}のメモを編集"
 
-#: app/components/account/EmailForm.tsx:18
-#: app/components/account/EmailForm.tsx:32
+#: app/components/account/EmailForm.tsx:19
+#: app/components/account/EmailForm.tsx:33
 #: app/components/forgot-password/ForgotPasswordForm.tsx:14
 #: app/components/login/LoginForm.tsx:38
 msgid "Email address"
 msgstr "メールアドレス"
 
-#: app/routes/account.tsx:46
+#: app/routes/account.tsx:50
 msgid "Email address saved."
 msgstr "メールアドレスを保存しました。"
 
@@ -550,11 +563,11 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/index.tsx:21
+#: app/components/home/test-list/index.tsx:31
 msgid "In progress"
 msgstr "解答中"
 
-#: app/components/home/test-list/TestRow.tsx:61
+#: app/components/home/test-list/TestRow.tsx:62
 msgid "In progress {answered} / {total}"
 msgstr "解答中 {answered} / {total}"
 
@@ -607,7 +620,7 @@ msgstr "訓"
 msgid "Language: {0}"
 msgstr "言語：{0}"
 
-#: app/components/home/test-list/TestRow.tsx:72
+#: app/components/home/test-list/TestRow.tsx:73
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
@@ -653,13 +666,13 @@ msgstr "メモ（任意）"
 msgid "Missed words"
 msgstr "間違えた単語"
 
-#: app/components/home/index.tsx:56
+#: app/components/home/index.tsx:58
 #: app/components/results/Actions.tsx:51
 #: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "模擬試験"
 
-#: app/components/home/index.tsx:74
+#: app/components/home/index.tsx:76
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
@@ -672,7 +685,7 @@ msgstr "<0>{0}</0>を使うほかの語"
 msgid "New here? <0>Create account</0>"
 msgstr "はじめての方は <0>アカウントを作成</0>"
 
-#: app/components/home/index.tsx:78
+#: app/components/home/index.tsx:80
 msgid "New mock tests show up here."
 msgstr "新しい模擬試験はここに表示されます。"
 
@@ -707,7 +720,7 @@ msgstr "{level}の章はまだありません"
 msgid "No memo yet."
 msgstr "メモはまだありません。"
 
-#: app/components/home/index.tsx:77
+#: app/components/home/index.tsx:79
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
 
@@ -719,11 +732,11 @@ msgstr "ノートはまだありません"
 msgid "no quiz yet"
 msgstr "クイズはまだありません"
 
-#: app/components/home/test-list/index.tsx:28
+#: app/components/home/test-list/index.tsx:38
 msgid "No tests match “{query}”"
 msgstr "「{query}」に一致するテストはありません"
 
-#: app/components/account/EmailForm.tsx:23
+#: app/components/account/EmailForm.tsx:24
 msgid "None yet. Add one, and you can reset your password if you forget it."
 msgstr "まだありません。登録すると、パスワードを忘れても再設定できます。"
 
@@ -731,7 +744,7 @@ msgstr "まだありません。登録すると、パスワードを忘れても
 msgid "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 msgstr "日本語能力試験（JLPT）の公式サービスではありません。試験日と申し込みは <0>jlpt.jp</0> へ。"
 
-#: app/components/home/test-list/index.tsx:22
+#: app/components/home/test-list/index.tsx:32
 msgid "Not taken yet"
 msgstr "まだ受けていない"
 
@@ -787,7 +800,7 @@ msgstr "問題{no}の採点結果"
 msgid "Password"
 msgstr "パスワード"
 
-#: app/routes/account.tsx:60
+#: app/routes/account.tsx:66
 msgid "Password changed."
 msgstr "パスワードを変更しました。"
 
@@ -885,12 +898,12 @@ msgstr "パスワードの再設定"
 msgid "Results"
 msgstr "結果"
 
-#: app/components/home/test-list/TestRow.tsx:107
+#: app/components/home/test-list/TestRow.tsx:110
 #: app/components/results/Actions.tsx:63
 msgid "Retake wrong ones"
 msgstr "間違えた問題だけ"
 
-#: app/components/home/test-list/TestRow.tsx:120
+#: app/components/home/test-list/TestRow.tsx:123
 msgid "Review ({reviewCount})"
 msgstr "復習（{reviewCount}）"
 
@@ -902,13 +915,13 @@ msgstr "復習済み · 元に戻す"
 msgid "Sample question"
 msgstr "例題"
 
-#: app/components/account/EmailForm.tsx:42
+#: app/components/account/EmailForm.tsx:44
 #: app/components/account/NameForm.tsx:39
 #: app/components/add-note/index.tsx:91
 msgid "Save"
 msgstr "保存"
 
-#: app/components/account/EmailForm.tsx:42
+#: app/components/account/EmailForm.tsx:44
 #: app/components/account/NameForm.tsx:39
 msgid "Saving…"
 msgstr "保存中…"
@@ -1018,7 +1031,7 @@ msgstr "始める"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/home/test-list/TestRow.tsx:131
+#: app/components/home/test-list/TestRow.tsx:134
 msgid "Start the test"
 msgstr "テストを始める"
 
@@ -1039,8 +1052,8 @@ msgstr "提出する"
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:98
-#: app/components/home/test-list/TestRow.tsx:115
+#: app/components/home/test-list/TestRow.tsx:101
+#: app/components/home/test-list/TestRow.tsx:118
 #: app/components/results/Actions.tsx:23
 #: app/components/results/Actions.tsx:67
 msgid "Take it again"
@@ -1051,7 +1064,7 @@ msgid "Take the quiz"
 msgstr "クイズを受ける"
 
 #: app/components/home/Stats.tsx:15
-#: app/components/home/test-list/index.tsx:23
+#: app/components/home/test-list/index.tsx:33
 msgid "Taken"
 msgstr "受験済み"
 
@@ -1067,7 +1080,7 @@ msgstr "テストが見つかりません"
 msgid "That email address doesn't look right."
 msgstr "メールアドレスの形式が正しくありません。"
 
-#: app/routes/account.tsx:44
+#: app/routes/account.tsx:48
 #: app/routes/signup.tsx:28
 msgid "That email address is already in use."
 msgstr "このメールアドレスはもう使われています。"
@@ -1112,6 +1125,10 @@ msgstr "リクエストを処理できませんでした。"
 #: app/components/welcome/ExamSections.tsx:41
 msgid "The same three formats as the real exam"
 msgstr "本番と同じ、3つの問題形式"
+
+#: app/components/home/test-list/DeleteTest.tsx:17
+msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
+msgstr "テストと、全ユーザーの結果とメモが削除されます。この操作は取り消せません。"
 
 #: app/components/flashcards/SessionDone.tsx:84
 msgid "These stay unlearned and come first next time."
@@ -1191,12 +1208,12 @@ msgstr "ユーザー名を変更しました。"
 msgid "Username or email address"
 msgstr "ユーザー名またはメールアドレス"
 
-#: app/components/account/EmailForm.tsx:22
+#: app/components/account/EmailForm.tsx:23
 #: app/components/login/LoginForm.tsx:52
 msgid "We send a reset link here when you forget your password."
 msgstr "パスワードを忘れたときに、再設定のリンクを送ります。"
 
-#: app/components/home/test-list/TestRow.tsx:47
+#: app/components/home/test-list/TestRow.tsx:48
 msgid "week"
 msgstr "週"
 
@@ -1254,8 +1271,9 @@ msgstr "あなたの解答：{yours}"
 msgid "Your answers couldn't be read. Please try again."
 msgstr "回答を読み取れませんでした。もう一度お試しください。"
 
-#: app/routes/account.tsx:50
-#: app/routes/account.tsx:58
+#: app/routes/account.tsx:45
+#: app/routes/account.tsx:54
+#: app/routes/account.tsx:62
 msgid "Your current password is wrong."
 msgstr "現在のパスワードが違います。"
 
