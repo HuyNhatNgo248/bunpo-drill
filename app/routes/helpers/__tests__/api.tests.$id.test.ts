@@ -59,6 +59,39 @@ describe("PATCH /api/tests/:id", () => {
   });
 });
 
+describe("PATCH /api/tests/:id with a title", () => {
+  it("lets the admin rename a test, trimmed, in its title and its payload", async () => {
+    const { id } = await createTest(buildPayload({ title: "第1週 1日目" }));
+
+    const response = await send(id, "PATCH", { title: "  第1週 まとめ " });
+
+    expect(await response.json()).toEqual({ title: "第1週 まとめ" });
+    expect((await getTest(id, USER_ID))?.payload.title).toBe("第1週 まとめ");
+  });
+
+  it("answers 400 for a title that is empty or too long", async () => {
+    const { id } = await createTest(buildPayload());
+
+    expect((await send(id, "PATCH", { title: "   " })).status).toBe(400);
+    expect((await send(id, "PATCH", { title: "あ".repeat(61) })).status).toBe(400);
+    expect((await getTest(id, USER_ID))?.payload.title).toBe(buildPayload().title);
+  });
+
+  it("refuses a user who is not the admin and keeps the title", async () => {
+    const { id } = await createTest(buildPayload());
+    const request = await signedInRequest(2, `https://bunpo.test/api/tests/${id}`, { method: "PATCH", body: JSON.stringify({ title: "x" }) });
+
+    const response = await action(routeArgs<Parameters<typeof action>[0]>(request, { id })).catch((thrown: Response) => thrown);
+
+    expect(response.status).toBe(403);
+    expect((await getTest(id, USER_ID))?.payload.title).toBe(buildPayload().title);
+  });
+
+  it("answers 404 for a test that does not exist", async () => {
+    expect((await send(UNKNOWN_ID, "PATCH", { title: "x" })).status).toBe(404);
+  });
+});
+
 describe("DELETE /api/tests/:id", () => {
   it("lets the admin delete a test", async () => {
     const { id } = await createTest(buildPayload());

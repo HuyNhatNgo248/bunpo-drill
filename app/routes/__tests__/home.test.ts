@@ -106,17 +106,6 @@ describe("home loader", () => {
   });
 });
 
-describe("home loader order", () => {
-  it("lists the latest week first with ?sort=latest, and says so", async () => {
-    for (const title of ["第1週 1日目", "第2週 1日目"]) await createTest(buildPayload({ title }));
-
-    const { tests, latestFirst } = await load("?level=N2&sort=latest");
-
-    expect({ titles: tests.map((test) => test.title), latestFirst }).toEqual({ titles: ["第2週 1日目", "第1週 1日目"], latestFirst: true });
-  });
-
-});
-
 describe("home loader levels", () => {
   it("shows the level in ?level=, with the figures over its tests only", async () => {
     await takeTest(3);
@@ -187,17 +176,17 @@ describe("home loader levels", () => {
 });
 
 describe("home shouldRevalidate", () => {
-  it("doesn't load the tests again for a search, and does for anything else", () => {
+  it("doesn't load the tests again for a week picked, and does for anything else", () => {
     const args = (current: string, next: string, formMethod?: "POST") =>
       ({ currentUrl: new URL(current, "https://bunpo.test"), nextUrl: new URL(next, "https://bunpo.test"), formMethod, defaultShouldRevalidate: true }) as Parameters<
         typeof shouldRevalidate
       >[0];
 
-    expect(shouldRevalidate(args("/?level=N2", "/?level=N2&q=あげく"))).toBe(false);
-    expect(shouldRevalidate(args("/?level=N2&q=あげく", "/?level=N2"))).toBe(false);
-    expect(shouldRevalidate(args("/?level=N2&q=あげく", "/?level=N2&sort=latest&q=あげく"))).toBe(true);
+    expect(shouldRevalidate(args("/?level=N2", "/?level=N2&week=5"))).toBe(false);
+    expect(shouldRevalidate(args("/?level=N2&week=5", "/?level=N2"))).toBe(false);
+    expect(shouldRevalidate(args("/?level=N2&week=5", "/?level=N3&week=5"))).toBe(true);
     expect(shouldRevalidate(args("/?level=N2", "/?level=N2"))).toBe(true);
-    expect(shouldRevalidate(args("/?level=N2", "/?level=N2&q=あげく", "POST"))).toBe(true);
+    expect(shouldRevalidate(args("/?level=N2", "/?level=N2&week=5", "POST"))).toBe(true);
   });
 });
 

@@ -64,7 +64,7 @@ describe("KanjiHome", () => {
     expect(await screen.findByRole("heading", { name: "No N2 chapters yet" })).toBeInTheDocument();
   });
 
-  it("says any other level without chapters is not available yet, under its empty trays, N3 included", async () => {
+  it("says any other level without chapters is not available yet, N3 included", async () => {
     for (const level of ["N5", "N3"] as const) {
       const { unmount } = renderRoute(<KanjiHome home={{ ...HOME, level, chapters: [] }} />, { url: `/kanji?level=${level}` });
 

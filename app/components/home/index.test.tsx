@@ -15,7 +15,7 @@ const TAKEN = buildTestSummary({
   result: { score: 2, total: 3, percent: 67 },
 });
 
-const NOT_TAKEN = buildTestSummary({ id: "20261027-bbbbbb", title: "第2週 1日目", patterns: ["〜あげく", "〜末に"] });
+const NOT_TAKEN = buildTestSummary({ id: "20261027-bbbbbb", title: "第2週 1日目" });
 
 const STATS: HomeStats = { average: 67, toReview: 1, taken: 1, total: 2 };
 
@@ -25,13 +25,12 @@ function renderHome(
   {
     stats = STATS,
     level = tests.length ? "N2" : null,
-    latestFirst = false,
     url = "/",
     isAdmin = false,
-  }: { stats?: HomeStats; level?: JlptLevel | null; latestFirst?: boolean; url?: string; isAdmin?: boolean } = {},
+  }: { stats?: HomeStats; level?: JlptLevel | null; url?: string; isAdmin?: boolean } = {},
 ) {
   const { action, requests } = recordingAction();
-  renderRoute(<Home tests={tests} stats={stats} level={level} latestFirst={latestFirst} isAdmin={isAdmin} />, {
+  renderRoute(<Home tests={tests} stats={stats} level={level} isAdmin={isAdmin} />, {
     url,
     routes: [{ path: "/api/tests/:id", action }],
   });
@@ -49,72 +48,6 @@ describe("Home", () => {
     // The figure, not the heading of the taken tests' group.
     expect(screen.getByText("Taken", { selector: "div" }).nextSibling).toHaveTextContent("1 / 2");
     expect(screen.getAllByRole("listitem")).toHaveLength(2);
-  });
-
-  it("sorts from week 1, and offers the latest week first", async () => {
-    renderHome([TAKEN, NOT_TAKEN]);
-
-    await userEvent.click(await screen.findByRole("button", { name: "Sort: From week 1" }));
-
-    expect(screen.getByRole("menuitem", { name: "From week 1" })).toHaveAttribute("aria-current", "true");
-    expect(screen.getByRole("menuitem", { name: "Latest week first" })).toHaveAttribute("href", "/?level=N2&sort=latest");
-  });
-
-  it("says when the latest week comes first, and links back to week 1 first", async () => {
-    renderHome([TAKEN, NOT_TAKEN], { latestFirst: true });
-
-    await userEvent.click(await screen.findByRole("button", { name: "Sort: Latest week first" }));
-
-    expect(screen.getByRole("menuitem", { name: "From week 1" })).toHaveAttribute("href", "/?level=N2");
-  });
-
-  it("filters the tests by title or grammar as it is typed, naming the grammar a test was found by", async () => {
-    renderHome([TAKEN, NOT_TAKEN]);
-    const search = await screen.findByRole("searchbox", { name: "Search the tests" });
-
-    await userEvent.type(search, "2週");
-    expect(screen.getAllByRole("listitem")).toHaveLength(1);
-    expect(screen.getByRole("listitem")).toHaveTextContent("第2週 1日目");
-
-    await userEvent.clear(search);
-    await userEvent.type(search, "あげく");
-    expect(screen.getByRole("listitem")).toHaveTextContent("「〜あげく」");
-
-    await userEvent.type(search, "{Escape}");
-    expect(screen.getAllByRole("listitem")).toHaveLength(2);
-  });
-
-  it("jumps into the search on /, and types / once in it", async () => {
-    renderHome([TAKEN, NOT_TAKEN]);
-    const search = await screen.findByRole("searchbox", { name: "Search the tests" });
-
-    await userEvent.keyboard("/");
-    expect(search).toHaveFocus();
-    expect(search).toHaveValue("");
-
-    await userEvent.keyboard("/");
-    expect(search).toHaveValue("/");
-  });
-
-  it("says when no test matches, and clears the search", async () => {
-    renderHome([TAKEN, NOT_TAKEN]);
-
-    await userEvent.type(await screen.findByRole("searchbox", { name: "Search the tests" }), "ばかりか");
-    expect(screen.getByRole("heading", { name: "No tests match “ばかりか”" })).toBeInTheDocument();
-
-    // The button under the message; the ✕ in the box does the same.
-    await userEvent.click(screen.getByText("Clear the search"));
-    expect(screen.getByRole("searchbox", { name: "Search the tests" })).toHaveValue("");
-    expect(screen.getAllByRole("listitem")).toHaveLength(2);
-  });
-
-  it("opens with the search in the address, and keeps it in the sort menu's links", async () => {
-    renderHome([TAKEN, NOT_TAKEN], { url: `/?level=N2&q=${encodeURIComponent("2週")}` });
-
-    expect(await screen.findByRole("searchbox", { name: "Search the tests" })).toHaveValue("2週");
-    expect(screen.getAllByRole("listitem")).toHaveLength(1);
-    await userEvent.click(screen.getByRole("button", { name: "Sort: From week 1" }));
-    expect(screen.getByRole("menuitem", { name: "Latest week first" })).toHaveAttribute("href", `/?level=N2&sort=latest&q=${encodeURIComponent("2週")}`);
   });
 
   it("shows a dash for the average before any test is taken", async () => {
@@ -145,7 +78,7 @@ describe("Home", () => {
     expect(screen.queryByRole("navigation", { name: "Level" })).toBeNull();
   });
 
-  it("says a level the app makes no tests for yet is not available, under its empty trays", async () => {
+  it("says a level the app makes no tests for yet is not available", async () => {
     renderHome([], { level: "N1" });
 
     expect(await screen.findByRole("heading", { name: "N1 isn't available yet" })).toBeInTheDocument();
@@ -159,23 +92,38 @@ describe("Home", () => {
     expect(await screen.findByRole("heading", { name: "No mock tests yet" })).toBeInTheDocument();
   });
 
-  describe("deleting a test", () => {
-    it("shows no delete button to a user who is not the admin", async () => {
-      renderHome([TAKEN]);
+  describe("renaming or deleting a test", () => {
+    it("opens no menu for a user who is not the admin", async () => {
+      renderHome([NOT_TAKEN]);
 
-      await screen.findByRole("heading", { name: "Mock tests" });
-      expect(screen.queryByRole("button", { name: "Delete “第1週 1日目”" })).toBeNull();
+      await userEvent.pointer({ keys: "[MouseRight]", target: await screen.findByRole("link", { name: /第2週 1日目/ }) });
+
+      expect(screen.queryByRole("menuitem", { name: "Delete" })).toBeNull();
     });
 
-    it("lets the admin delete a test after asking", async () => {
-      const requests = renderHome([TAKEN], { isAdmin: true });
+    it("lets the admin rename a test from its right-click menu", async () => {
+      const requests = renderHome([NOT_TAKEN], { isAdmin: true });
 
-      // A row has two delete buttons, one for mobile and one for desktop.
-      const [deleteButton] = await screen.findAllByRole("button", { name: "Delete “第1週 1日目”" });
-      await userEvent.click(deleteButton);
+      await userEvent.pointer({ keys: "[MouseRight]", target: await screen.findByRole("link", { name: /第2週 1日目/ }) });
+      await userEvent.click(await screen.findByRole("menuitem", { name: "Rename" }));
+      const name = within(screen.getByRole("dialog", { name: "Rename the test" })).getByRole("textbox", { name: "Test name" });
+      expect(name).toHaveValue("第2週 1日目");
+      await userEvent.clear(name);
+      await userEvent.type(name, "第2週 まとめ");
+      await userEvent.click(screen.getByRole("button", { name: "Save" }));
+
+      await waitFor(() => expect(requests).toEqual([{ method: "PATCH", path: `/api/tests/${NOT_TAKEN.id}`, body: { title: "第2週 まとめ" } }]));
+    });
+
+    it("lets the admin delete a test from its right-click menu, after asking", async () => {
+      const requests = renderHome([NOT_TAKEN], { isAdmin: true });
+
+      await userEvent.pointer({ keys: "[MouseRight]", target: await screen.findByRole("link", { name: /第2週 1日目/ }) });
+      await userEvent.click(await screen.findByRole("menuitem", { name: "Delete" }));
+      expect(requests).toEqual([]);
       await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Delete" }));
 
-      await waitFor(() => expect(requests).toEqual([{ method: "DELETE", path: `/api/tests/${TAKEN.id}`, body: null }]));
+      await waitFor(() => expect(requests).toEqual([{ method: "DELETE", path: `/api/tests/${NOT_TAKEN.id}`, body: null }]));
     });
   });
 });

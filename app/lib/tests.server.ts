@@ -119,15 +119,15 @@ const listable = (level?: Level) =>
 const titleOrder = new Intl.Collator("ja", { numeric: true });
 
 /**
- * The tests with `userId`'s progress, in the list's order: the ones in progress, then the ones not started, then the taken ones, each by title
- * (`latestFirst`: the title order reversed, so the latest week comes first); tests with the same title oldest first.
+ * The tests with `userId`'s progress, in the list's order: by the first week they cover, then by title; tests with the
+ * same title oldest first.
  * Every one, or one level's.
  * shortcut: sorts all of a level's tests in memory, as SQLite can't compare the numbers in a title; move the order
  * into SQL (a week and day column) if a level ever holds thousands of tests.
  */
 export async function listTests(
   userId: number,
-  { level, latestFirst = false }: { level?: Level; latestFirst?: boolean } = {},
+  { level }: { level?: Level } = {},
 ): Promise<ListedTest[]> {
   const rows = await (await orm())
     .select(listed(userId))
@@ -140,13 +140,12 @@ export async function listTests(
     .filter((test): test is ListedTest => test !== null)
     .sort(
       (a, b) =>
-        stageOf(a) - stageOf(b) ||
-        titleOrder.compare(a.payload.title, b.payload.title) * (latestFirst ? -1 : 1),
+        firstWeekOf(a) - firstWeekOf(b) || titleOrder.compare(a.payload.title, b.payload.title),
     );
 }
 
-/** Where a test is: 0 in progress, 1 not started, 2 taken. */
-const stageOf = (test: ListedTest) => (test.submission ? 2 : test.answered !== null ? 0 : 1);
+/** The first week a test covers, which the list groups it under. */
+const firstWeekOf = (test: ListedTest) => Math.min(...test.payload.grammarPoints.map((point) => point.week));
 
 /** `userId`'s figures over all of a level's tests: how many, how many taken, their average, and the patterns to review. */
 export async function levelStats(level: Level, userId: number) {
@@ -348,6 +347,16 @@ export async function deleteTest(id: string): Promise<boolean> {
     db.delete(tests).where(eq(tests.id, id)),
   ]);
   return deleted.rowsAffected > 0;
+}
+
+/** Renames a test, for every user: its title column and the title in its payload. False when there is no such test. */
+export async function renameTest(id: string, title: string): Promise<boolean> {
+  if (!ID.test(id)) return false;
+  const result = await (await orm())
+    .update(tests)
+    .set({ title, payload: sql`json_set(${tests.payload}, '$.title', ${title})` })
+    .where(eq(tests.id, id));
+  return result.rowsAffected > 0;
 }
 
 /** Marks or clears `userId`'s review chip, and returns the test as they see it. */

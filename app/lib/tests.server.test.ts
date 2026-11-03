@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { buildKanjiTestPayload, WORD_ID } from "#mocks/factories/kanji";
-import { buildPayload, GRAMMAR_ID } from "#mocks/factories/payload";
+import { buildGrammarPoint, buildPayload, GRAMMAR_ID } from "#mocks/factories/payload";
 import { buildSubmission } from "#mocks/factories/tests";
 import { resetDatabase } from "#tests/helpers/db";
 import { ensureUser } from "#tests/helpers/session";
@@ -94,35 +94,29 @@ describe("getTest", () => {
 });
 
 describe("listTests", () => {
-  it("lists the tests not taken first, then the taken ones, each by title with its numbers read as numbers", async () => {
+  it("lists the tests by title with its numbers read as numbers, taken or not", async () => {
     for (const title of ["第10週 1日目", "第2週 3〜6日目", "第2週 1〜3日目"]) await createTest(buildPayload({ title }));
     const taken = await createTest(buildPayload({ title: "第1週 1日目" }));
     await saveSubmission(USER_ID, taken.id, buildSubmission());
 
-    expect(await titlesOf()).toEqual(["第2週 1〜3日目", "第2週 3〜6日目", "第10週 1日目", "第1週 1日目"]);
+    expect(await titlesOf()).toEqual(["第1週 1日目", "第2週 1〜3日目", "第2週 3〜6日目", "第10週 1日目"]);
   });
 
-  it("lists the latest week first with latestFirst, the taken ones still last", async () => {
-    for (const title of ["第1週 1日目", "第10週 1日目", "第2週 1日目"]) await createTest(buildPayload({ title }));
-    const taken = await createTest(buildPayload({ title: "第3週 1日目" }));
-    await saveSubmission(USER_ID, taken.id, buildSubmission());
+  it("lists a test by the first week it covers, whatever its title", async () => {
+    await createTest(buildPayload({ title: "まとめ", grammarPoints: [buildGrammarPoint({ week: 3 })] }));
+    await createTest(buildPayload({ title: "第2週 1日目", grammarPoints: [buildGrammarPoint({ week: 2 })] }));
 
-    expect((await listTests(USER_ID, { latestFirst: true })).map((test) => test.payload.title)).toEqual([
-      "第10週 1日目",
-      "第2週 1日目",
-      "第1週 1日目",
-      "第3週 1日目",
-    ]);
+    expect(await titlesOf()).toEqual(["第2週 1日目", "まとめ"]);
   });
 
-  it("lists the tests in progress first, with how many questions their draft answers", async () => {
+  it("lists the tests in progress with how many questions their draft answers", async () => {
     const notStarted = await createTest(buildPayload({ title: "第1週 1日目" }));
     const left = await createTest(buildPayload({ title: "第3週 1日目" }));
     await saveDraft(USER_ID, left.id, { answers: { q1: 2, q2: [0, 1, null, null] }, checked: [] });
 
     expect((await listTests(USER_ID)).map((test) => [test.id, test.answered])).toEqual([
-      [left.id, 1],
       [notStarted.id, null],
+      [left.id, 1],
     ]);
   });
 

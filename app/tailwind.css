@@ -173,6 +173,18 @@
   --animate-arrived: arrived 2s ease-out;
 }
 
+/*
+ * A row of chips that scrolls sideways on a phone (the week carousel): no scrollbar, as a swipe moves it, and its edges
+ * fade over its 1rem side padding, so a chip half out of view fades out instead of being cut.
+ */
+@utility carousel-x {
+  scrollbar-width: none;
+  mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* A test row's title takes the free space, so its buttons wrap below it before the title wraps. */
 @utility flex-row-title {
   flex: 999 1 380px;
@@ -245,13 +257,5 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
-  }
-  /* Hairline figures (@lucasmarkes/hairline) draw in the app's tokens: plates in the card colour they sit on. */
-  [data-hairline] {
-    --hairline-plate: var(--card);
-    --hairline-hi: var(--secondary-foreground);
-    --hairline-edge: var(--faint);
-    --hairline-mid: var(--input);
-    --hairline-lo: var(--border);
   }
 }

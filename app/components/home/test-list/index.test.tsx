@@ -1,124 +1,92 @@
-import { screen, waitFor, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { buildReviewChip, buildTestSummary } from "#mocks/factories/views";
-import { recordingAction } from "#tests/helpers/actions";
+import { buildTestSummary } from "#mocks/factories/views";
 import { renderRoute } from "#tests/helpers/render";
 import type { TestSummary } from "~/lib/views";
 import { TestList } from ".";
 
-const NOT_TAKEN = buildTestSummary({ id: "20261027-aaaaaa", title: "第1週 1日目" });
+const NOT_TAKEN = buildTestSummary({ id: "20261027-aaaaaa", title: "第1週 1日目", weeks: [1] });
 
-const LEFT = buildTestSummary({ id: "20261027-cccccc", title: "第2週 1日目", answered: 1 });
+const LEFT = buildTestSummary({ id: "20261027-cccccc", title: "第1週 2日目", weeks: [1], answered: 1 });
 
-const TAKEN = buildTestSummary({
-  id: "20261027-bbbbbb",
-  title: "第3週 1日目",
-  result: { score: 1, total: 3, percent: 33 },
-  review: [buildReviewChip({ pattern: "〜ばかりか" })],
-});
+const TAKEN = buildTestSummary({ id: "20261027-bbbbbb", title: "第1週 3日目", weeks: [1], result: { score: 1, total: 3, percent: 33 } });
 
-/** The list, with the retake route that a row posts to. */
-function renderList(tests: TestSummary[]) {
-  const { action, requests } = recordingAction();
-  renderRoute(<TestList tests={tests} />, { routes: [{ path: "/tests/:id/retake", action }] });
-  return requests;
-}
+/** One test of `week`, taken or not. */
+const ofWeek = (week: number, taken = false) =>
+  buildTestSummary({
+    id: `20261027-00000${week}`,
+    title: `第${week}週 1日目`,
+    weeks: [week],
+    result: taken ? { score: 3, total: 3, percent: 100 } : null,
+  });
 
-const headings = () => screen.getAllByRole("heading", { level: 2 }).map((heading) => heading.textContent);
+const renderList = (tests: TestSummary[], url = "/") => renderRoute(<TestList tests={tests} />, { url });
+
+const weekShown = () => screen.getByRole("heading", { level: 2 }).textContent;
 
 describe("TestList", () => {
-  it("groups the tests: the ones in progress, then the ones not taken yet, then the taken ones", async () => {
+  it("lists the weeks with how many of their tests are taken, and shows the first with a test left to take", async () => {
+    renderList([ofWeek(1, true), ofWeek(2), ofWeek(3, true)]);
+
+    const weeks = within(await screen.findByRole("navigation", { name: "Weeks" })).getAllByRole("link");
+    expect(weeks.map((week) => week.textContent)).toEqual(["Week 11 / 1", "Week 20 / 1", "Week 31 / 1"]);
+    expect(weeks[1]).toHaveAttribute("aria-current", "true");
+    expect(weekShown()).toBe("Week 2");
+  });
+
+  it("shows the week picked, kept in the address", async () => {
+    renderList([ofWeek(1), ofWeek(2)], "/?level=N2&week=2");
+    expect(await screen.findByRole("heading", { level: 2, name: "Week 2" })).toBeInTheDocument();
+
+    const week1 = screen.getByRole("link", { name: /^Week 1/ });
+    expect(week1).toHaveAttribute("href", "/?level=N2&week=1");
+    await userEvent.click(week1);
+
+    expect(weekShown()).toBe("Week 1");
+  });
+
+  it("splits a week's tests into the ones in progress, not taken and taken", async () => {
     renderList([NOT_TAKEN, LEFT, TAKEN]);
 
-    const inProgress = await screen.findByRole("region", { name: "In progress" });
-    expect(within(inProgress).getByRole("link", { name: /第2週 1日目/ })).toBeInTheDocument();
-    expect(within(screen.getByRole("region", { name: "Not taken yet" })).getByRole("link", { name: /第1週 1日目/ })).toBeInTheDocument();
-    expect(within(screen.getByRole("region", { name: "Taken" })).getByRole("link", { name: /第3週 1日目/ })).toBeInTheDocument();
-    expect(headings()).toEqual(["In progress", "Not taken yet", "Taken"]);
+    expect(within(await screen.findByRole("region", { name: "In progress 1" })).getByRole("link")).toHaveAccessibleName(/^第1週 2日目/);
+    expect(within(screen.getByRole("region", { name: "Not taken 1" })).getByRole("link")).toHaveAccessibleName(/^第1週 1日目/);
+    expect(within(screen.getByRole("region", { name: "Taken 1" })).getByRole("link")).toHaveAccessibleName(/^第1週 3日目/);
   });
 
-  it("shows the week in a tile, and the days as the title", async () => {
-    renderList([{ ...NOT_TAKEN, title: "第2週 1〜6日目", weeks: [2] }]);
+  it("puts a test of several weeks under its first", async () => {
+    renderList([ofWeek(4), ofWeek(5), buildTestSummary({ id: "20261027-ffffff", title: "第5週・第6週", weeks: [5, 6] })], "/?week=5");
+
+    expect(await screen.findByRole("link", { name: /^第5週・第6週/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^第5週 1日目/ })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /^第4週 1日目/ })).toBeNull();
+  });
+
+  it("shows the days as a test's title, and links a test not taken to the quiz, with its size", async () => {
+    renderList([{ ...NOT_TAKEN, title: "第1週 1〜6日目" }]);
 
     const row = within(await screen.findByRole("listitem"));
-    expect(row.getByText("2")).toBeInTheDocument();
     expect(row.getByText("1〜6日目")).toBeInTheDocument();
-    expect(row.getByRole("link", { name: /^第2週 1〜6日目/ })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
+    expect(row.getByRole("link", { name: "第1週 1〜6日目" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
+    expect(row.getByText("3 questions")).toBeInTheDocument();
+    expect(row.getByText("Start")).toBeInTheDocument();
   });
 
-  it("shows a test that is not taken, with its size, and a start link, under its group only", async () => {
-    renderList([NOT_TAKEN]);
-
-    expect(await screen.findByRole("link", { name: /第1週 1日目/ })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
-    expect(headings()).toEqual(["Not taken yet"]);
-    expect(screen.getByText(/3 questions/)).toHaveTextContent(/^3 questions$/);
-    expect(screen.getByRole("link", { name: "Start the test" })).toHaveAttribute("href", `/tests/${NOT_TAKEN.id}`);
-  });
-
-  it("offers to go on with a test that was left before submitting", async () => {
+  it("says how far a test in progress got, to continue it", async () => {
     renderList([LEFT]);
 
-    expect(await screen.findByRole("link", { name: "Continue" })).toHaveAttribute("href", `/tests/${LEFT.id}`);
-    expect(screen.getByText(`In progress 1 / ${LEFT.questionCount}`)).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Start the test" })).toBeNull();
+    const row = within(await screen.findByRole("listitem"));
+    expect(row.getByRole("link")).toHaveAttribute("href", `/tests/${LEFT.id}`);
+    expect(row.getByText(`1 / ${LEFT.questionCount} answered`)).toBeInTheDocument();
+    expect(row.getByText("Continue")).toBeInTheDocument();
   });
 
-  it("links a taken test to its results, with the last score", async () => {
+  it("links a taken test to its results, with its score", async () => {
     renderList([TAKEN]);
 
-    expect(await screen.findByRole("link", { name: /第3週 1日目/ })).toHaveAttribute("href", `/tests/${TAKEN.id}/results`);
-    expect(screen.getByText("1 / 3")).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Start the test" })).toBeNull();
-  });
-
-  it("shows the score of the attempt before", async () => {
-    renderList([{ ...TAKEN, previous: { score: 0, total: 3 } }]);
-
-    expect(await screen.findByText(/3 questions/)).toHaveTextContent("3 questions · Last time 0 / 3");
-  });
-
-  describe("a taken test", () => {
-    it("opens and closes its grammar to review", async () => {
-      renderList([TAKEN]);
-      const review = await screen.findByRole("button", { name: /Review \(1\)/ });
-
-      await userEvent.click(review);
-
-      expect(review).toHaveAttribute("aria-expanded", "true");
-      expect(screen.getByRole("button", { name: /〜ばかりか/ })).toBeInTheDocument();
-
-      await userEvent.click(review);
-
-      expect(screen.queryByRole("button", { name: /〜ばかりか/ })).toBeNull();
-    });
-
-    it("posts to the retake route to take the test again", async () => {
-      const requests = renderList([TAKEN]);
-
-      await userEvent.click(await screen.findByRole("button", { name: "Take it again" }));
-      await userEvent.click(await screen.findByRole("menuitem", { name: "All questions" }));
-      expect(requests).toEqual([]);
-      await userEvent.click(screen.getByRole("button", { name: "Yes, retake" }));
-
-      await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${TAKEN.id}/retake`, body: null }]));
-    });
-
-    it("retakes only the wrong answers, after asking", async () => {
-      const requests = renderList([TAKEN]);
-
-      await userEvent.click(await screen.findByRole("button", { name: "Take it again" }));
-      await userEvent.click(await screen.findByRole("menuitem", { name: "Retake wrong ones" }));
-      await userEvent.click(screen.getByRole("button", { name: "Yes, retake" }));
-
-      await waitFor(() => expect(requests).toEqual([{ method: "POST", path: `/tests/${TAKEN.id}/retake?only=wrong`, body: null }]));
-    });
-
-    it("has no review button when there is nothing to review", async () => {
-      renderList([buildTestSummary({ result: { score: 3, total: 3, percent: 100 } })]);
-      await screen.findByRole("button", { name: "Take it again" });
-
-      expect(screen.queryByRole("button", { name: /Review/ })).toBeNull();
-    });
+    const row = within(await screen.findByRole("listitem"));
+    expect(row.getByRole("link")).toHaveAttribute("href", `/tests/${TAKEN.id}/results`);
+    expect(row.getByText("1 / 3")).toBeInTheDocument();
+    expect(row.getByText("Results")).toBeInTheDocument();
   });
 });

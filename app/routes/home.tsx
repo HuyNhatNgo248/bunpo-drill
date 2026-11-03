@@ -23,26 +23,25 @@ export async function loader({ request }: Route.LoaderArgs) {
   // One level at a time: the one named, with tests or not, else the last one opened, else the level of the newest test.
   // Not the top test's: a test of another level can sort above it.
   const level = named ?? last?.level ?? newest;
-  const latestFirst = params.get("sort") === "latest";
   // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
   if (level) saveLastTab(userId, { subject: "grammar", level }).catch(console.error);
   if (!level || !isTestLevel(level)) {
-    return { tests: [], stats: { total: 0, taken: 0, average: null, toReview: 0 }, level, latestFirst, isAdmin: false };
+    return { tests: [], stats: { total: 0, taken: 0, average: null, toReview: 0 }, level, isAdmin: false };
   }
-  const [stats, tests, owner] = await Promise.all([levelStats(level, userId), listTests(userId, { level, latestFirst }), ownerId()]);
-  // Only shows the delete buttons; DELETE /api/tests/:id checks the admin again.
-  return { tests: tests.map(toSummary), stats, level, latestFirst, isAdmin: userId === owner };
+  const [stats, tests, owner] = await Promise.all([levelStats(level, userId), listTests(userId, { level }), ownerId()]);
+  // Only shows the rename and delete menu; /api/tests/:id checks the admin again.
+  return { tests: tests.map(toSummary), stats, level, isAdmin: userId === owner };
 }
 
-/** A search changes only `q`, which the page filters by itself, so the tests aren't loaded again for it. */
+/** A week picked (`week`) the page shows by itself, so the tests aren't loaded again for it. */
 export const shouldRevalidate: ShouldRevalidateFunction = ({ currentUrl, nextUrl, formMethod, defaultShouldRevalidate }) => {
-  const withoutQuery = (url: URL) => {
+  const withoutWeek = (url: URL) => {
     const params = new URLSearchParams(url.search);
-    params.delete("q");
+    params.delete("week");
     return `${url.pathname}?${params}`;
   };
-  const searched = currentUrl.searchParams.get("q") !== nextUrl.searchParams.get("q");
-  return !formMethod && searched && withoutQuery(currentUrl) === withoutQuery(nextUrl) ? false : defaultShouldRevalidate;
+  const picked = currentUrl.search !== nextUrl.search;
+  return !formMethod && picked && withoutWeek(currentUrl) === withoutWeek(nextUrl) ? false : defaultShouldRevalidate;
 };
 
 export default function HomeRoute({ loaderData }: Route.ComponentProps) {

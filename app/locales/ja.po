@@ -35,6 +35,10 @@ msgstr "{again, plural, other {#枚をもう一度}}"
 msgid "{again} needed again"
 msgstr "もう一度 {again}枚"
 
+#: app/components/home/test-list/TestRow.tsx:40
+msgid "{answered} / {total} answered"
+msgstr "{answered} / {total} 問"
+
 #: app/components/results/ReviewCard.tsx:42
 msgid "{count, plural, one {Study this word as a flashcard} other {Study these # as flashcards}}"
 msgstr "{count, plural, other {この#語を単語カードで覚える}}"
@@ -59,8 +63,8 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
-#: app/components/home/index.tsx:75
-#: app/components/kanji/index.tsx:43
+#: app/components/home/index.tsx:45
+#: app/components/kanji/index.tsx:39
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
 
@@ -76,6 +80,10 @@ msgstr "{slotName}：{text}（タップで外す）"
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, other {#画}}"
 
+#: app/components/home/test-list/index.tsx:48
+msgid "{taken} / {total} taken"
+msgstr "{taken} / {total} 受験済み"
+
 #: app/components/quiz/sentence-order/BankPiece.tsx:37
 msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
@@ -84,7 +92,8 @@ msgstr "{text}（配置済み）"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
-#: app/components/home/test-list/TestRow.tsx:69
+#: app/components/home/test-list/TestRow.tsx:48
+#: app/components/home/test-list/TestRow.tsx:68
 #: app/components/quiz/index.tsx:79
 #: app/components/welcome/TrialTests.tsx:60
 msgid "{total, plural, one {# question} other {# questions}}"
@@ -147,7 +156,7 @@ msgstr "15問"
 msgid "3 passages × 5 questions"
 msgstr "3文章 × 5問"
 
-#: app/components/kanji/index.tsx:40
+#: app/components/kanji/index.tsx:36
 msgid "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 msgstr "Claude が /jlpt-kanji-quiz 1章 で単語を送ると、ここに章が表示されます。"
 
@@ -197,10 +206,6 @@ msgstr "すべて回答済み"
 msgid "All correct"
 msgstr "全問正解"
 
-#: app/components/home/test-list/TestRow.tsx:107
-msgid "All questions"
-msgstr "全問"
-
 #: app/components/welcome/TrialTests.tsx:16
 msgid "All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like."
 msgstr "3つの問題すべてを、提出するとすぐに採点します。解答は保存されないので、何度でも受けられます。"
@@ -237,7 +242,11 @@ msgstr "回答済み {done} / {total}"
 msgid "At least 8 characters"
 msgstr "8文字以上"
 
-#: app/components/home/Stats.tsx:12
+#: app/components/home/Stats.tsx:33
+msgid "Average"
+msgstr "平均"
+
+#: app/components/home/Stats.tsx:15
 msgid "Average score"
 msgstr "平均正答率"
 
@@ -268,6 +277,7 @@ msgstr "文章中の（{num}）に入るもの"
 
 #: app/components/add-note/index.tsx:88
 #: app/components/ConfirmDialog.tsx:44
+#: app/components/home/test-list/TestMenu.tsx:61
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -366,16 +376,11 @@ msgstr "＿＿＿の言葉を漢字で書くとき、最もよいものを1・2�
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "文の（　）に入る、いちばん自然な形を4つから選びます。"
 
-#: app/components/home/test-list/index.tsx:40
-#: app/components/home/TestSearch.tsx:45
-msgid "Clear the search"
-msgstr "検索をクリア"
-
 #: app/components/ui/sheet.tsx:79
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:134
+#: app/components/home/test-list/TestRow.tsx:64
 msgid "Continue"
 msgstr "続きから"
 
@@ -425,15 +430,12 @@ msgstr "日"
 msgid "Day {day}"
 msgstr "{day}日目"
 
-#: app/components/home/test-list/DeleteTest.tsx:18
+#: app/components/home/test-list/TestMenu.tsx:35
+#: app/components/home/test-list/TestMenu.tsx:75
 msgid "Delete"
 msgstr "削除"
 
-#: app/components/home/test-list/DeleteTest.tsx:24
-msgid "Delete “{title}”"
-msgstr "「{title}」を削除"
-
-#: app/components/home/test-list/DeleteTest.tsx:16
+#: app/components/home/test-list/TestMenu.tsx:73
 msgid "Delete “{title}”?"
 msgstr "「{title}」を削除しますか？"
 
@@ -506,10 +508,6 @@ msgstr "パスワードを忘れた場合"
 msgid "From {testTitle}"
 msgstr "出典：{testTitle}"
 
-#: app/components/home/SortMenu.tsx:22
-msgid "From week 1"
-msgstr "第1週から"
-
 #: app/components/welcome/index.tsx:44
 msgid "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 msgstr "本番と同じ3つの問題形式の模擬試験で、提出するとすぐに採点されます。間違えた文型はそのまま復習リストに。"
@@ -535,7 +533,7 @@ msgstr "文章の文法"
 msgid "Grammar mock tests"
 msgstr "文法の模擬試験"
 
-#: app/components/home/Stats.tsx:13
+#: app/components/home/Stats.tsx:16
 msgid "Grammar to review"
 msgstr "要復習の文法"
 
@@ -563,13 +561,9 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/index.tsx:31
+#: app/components/home/test-list/index.tsx:33
 msgid "In progress"
 msgstr "解答中"
-
-#: app/components/home/test-list/TestRow.tsx:62
-msgid "In progress {answered} / {total}"
-msgstr "解答中 {answered} / {total}"
 
 #: app/components/welcome/ExamSections.tsx:44
 msgid "In the same order and format as the grammar part of the JLPT. A full test has 15 questions per part, 45 in all."
@@ -583,14 +577,14 @@ msgstr "今日が試験日です。がんばってください。"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "本番形式で練習する、JLPTの文法"
 
-#: app/components/kanji/index.tsx:27
+#: app/components/kanji/index.tsx:23
 #: app/components/results/Actions.tsx:42
 #: app/components/SubjectTabs.tsx:28
 #: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "漢字"
 
-#: app/components/kanji/index.tsx:44
+#: app/components/kanji/index.tsx:40
 msgid "Kanji for {level} is coming later."
 msgstr "{level}の漢字は今後追加される予定です。"
 
@@ -620,21 +614,16 @@ msgstr "訓"
 msgid "Language: {0}"
 msgstr "言語：{0}"
 
-#: app/components/home/test-list/TestRow.tsx:73
 #: app/components/results/ScoreCard.tsx:43
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
-
-#: app/components/home/SortMenu.tsx:23
-msgid "Latest week first"
-msgstr "新しい週から"
 
 #: app/components/flashcards/SessionDone.tsx:66
 msgid "Learned in {chapter}"
 msgstr "{chapter}の習得"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/LevelTabs.tsx:26
+#: app/components/LevelTabs.tsx:23
 msgid "Level"
 msgstr "レベル"
 
@@ -666,13 +655,13 @@ msgstr "メモ（任意）"
 msgid "Missed words"
 msgstr "間違えた単語"
 
-#: app/components/home/index.tsx:58
+#: app/components/home/index.tsx:31
 #: app/components/results/Actions.tsx:51
 #: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "模擬試験"
 
-#: app/components/home/index.tsx:76
+#: app/components/home/index.tsx:46
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
@@ -685,7 +674,7 @@ msgstr "<0>{0}</0>を使うほかの語"
 msgid "New here? <0>Create account</0>"
 msgstr "はじめての方は <0>アカウントを作成</0>"
 
-#: app/components/home/index.tsx:80
+#: app/components/home/index.tsx:50
 msgid "New mock tests show up here."
 msgstr "新しい模擬試験はここに表示されます。"
 
@@ -712,7 +701,7 @@ msgstr "次の問題"
 msgid "Nice work"
 msgstr "おつかれさまでした"
 
-#: app/components/kanji/index.tsx:39
+#: app/components/kanji/index.tsx:35
 msgid "No {level} chapters yet"
 msgstr "{level}の章はまだありません"
 
@@ -720,7 +709,7 @@ msgstr "{level}の章はまだありません"
 msgid "No memo yet."
 msgstr "メモはまだありません。"
 
-#: app/components/home/index.tsx:79
+#: app/components/home/index.tsx:49
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
 
@@ -732,10 +721,6 @@ msgstr "ノートはまだありません"
 msgid "no quiz yet"
 msgstr "クイズはまだありません"
 
-#: app/components/home/test-list/index.tsx:38
-msgid "No tests match “{query}”"
-msgstr "「{query}」に一致するテストはありません"
-
 #: app/components/account/EmailForm.tsx:24
 msgid "None yet. Add one, and you can reset your password if you forget it."
 msgstr "まだありません。登録すると、パスワードを忘れても再設定できます。"
@@ -744,9 +729,9 @@ msgstr "まだありません。登録すると、パスワードを忘れても
 msgid "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 msgstr "日本語能力試験（JLPT）の公式サービスではありません。試験日と申し込みは <0>jlpt.jp</0> へ。"
 
-#: app/components/home/test-list/index.tsx:32
-msgid "Not taken yet"
-msgstr "まだ受けていない"
+#: app/components/home/test-list/index.tsx:34
+msgid "Not taken"
+msgstr "未受験"
 
 #: app/components/RetakeButton.tsx:25
 msgid "Not yet"
@@ -887,25 +872,29 @@ msgstr "読み方や意味"
 msgid "Reload"
 msgstr "再読み込み"
 
+#: app/components/home/test-list/TestMenu.tsx:31
+msgid "Rename"
+msgstr "名前を変更"
+
+#: app/components/home/test-list/TestMenu.tsx:45
+msgid "Rename the test"
+msgstr "テストの名前を変更"
+
 #: app/components/forgot-password/index.tsx:15
 #: app/routes/forgot-password.tsx:11
 msgid "Reset your password"
 msgstr "パスワードの再設定"
 
+#: app/components/home/test-list/TestRow.tsx:58
 #: app/components/results/index.tsx:34
 #: app/components/results/index.tsx:44
 #: app/routes/results.tsx:13
 msgid "Results"
 msgstr "結果"
 
-#: app/components/home/test-list/TestRow.tsx:110
 #: app/components/results/Actions.tsx:63
 msgid "Retake wrong ones"
 msgstr "間違えた問題だけ"
-
-#: app/components/home/test-list/TestRow.tsx:123
-msgid "Review ({reviewCount})"
-msgstr "復習（{reviewCount}）"
 
 #: app/components/grammar-chips/GrammarChip.tsx:65
 msgid "Reviewed · Undo"
@@ -918,6 +907,7 @@ msgstr "例題"
 #: app/components/account/EmailForm.tsx:44
 #: app/components/account/NameForm.tsx:39
 #: app/components/add-note/index.tsx:91
+#: app/components/home/test-list/TestMenu.tsx:65
 msgid "Save"
 msgstr "保存"
 
@@ -934,10 +924,6 @@ msgstr "読み方を言ってから、カードをめくりましょう。"
 #: app/components/results/ScoreCard.tsx:34
 msgid "Score"
 msgstr "得点"
-
-#: app/components/home/TestSearch.tsx:36
-msgid "Search the tests"
-msgstr "テストを検索"
 
 #: app/components/welcome/SampleQuiz.tsx:201
 msgid "See your score"
@@ -1019,10 +1005,7 @@ msgstr "空欄{n}"
 msgid "Something went wrong"
 msgstr "システム障害が発生しました"
 
-#: app/components/home/SortMenu.tsx:31
-msgid "Sort: {current}"
-msgstr "並び順: {current}"
-
+#: app/components/home/test-list/TestRow.tsx:71
 #: app/components/welcome/TrialTests.tsx:65
 msgid "Start"
 msgstr "始める"
@@ -1030,10 +1013,6 @@ msgstr "始める"
 #: app/components/welcome/ExamCountdown.tsx:50
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
-
-#: app/components/home/test-list/TestRow.tsx:134
-msgid "Start the test"
-msgstr "テストを始める"
 
 #: app/components/flashcards/SessionDone.tsx:80
 msgid "Still learning ({again})"
@@ -1052,8 +1031,6 @@ msgstr "提出する"
 msgid "Submitting…"
 msgstr "提出中…"
 
-#: app/components/home/test-list/TestRow.tsx:101
-#: app/components/home/test-list/TestRow.tsx:118
 #: app/components/results/Actions.tsx:23
 #: app/components/results/Actions.tsx:67
 msgid "Take it again"
@@ -1063,14 +1040,15 @@ msgstr "もう一度受ける"
 msgid "Take the quiz"
 msgstr "クイズを受ける"
 
-#: app/components/home/Stats.tsx:15
-#: app/components/home/test-list/index.tsx:33
+#: app/components/home/Stats.tsx:18
+#: app/components/home/Stats.tsx:35
+#: app/components/home/test-list/index.tsx:35
 msgid "Taken"
 msgstr "受験済み"
 
-#: app/components/home/TestSearch.tsx:37
-msgid "Test name or grammar"
-msgstr "テスト名・文法で検索"
+#: app/components/home/test-list/TestMenu.tsx:57
+msgid "Test name"
+msgstr "テスト名"
 
 #: app/lib/errors.ts:31
 msgid "Test not found"
@@ -1126,7 +1104,7 @@ msgstr "リクエストを処理できませんでした。"
 msgid "The same three formats as the real exam"
 msgstr "本番と同じ、3つの問題形式"
 
-#: app/components/home/test-list/DeleteTest.tsx:17
+#: app/components/home/test-list/TestMenu.tsx:74
 msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
 msgstr "テストと、全ユーザーの結果とメモが削除されます。この操作は取り消せません。"
 
@@ -1160,6 +1138,10 @@ msgstr "採点できませんでした。もう一度お試しください。"
 #: app/lib/errors.ts:32
 msgid "This test doesn't exist, or it may have been deleted."
 msgstr "このテストは存在しないか、削除された可能性があります。"
+
+#: app/components/home/Stats.tsx:34
+msgid "To review"
+msgstr "要復習"
 
 #: app/components/welcome/TrialTests.tsx:13
 msgid "Try a full mock test, no account needed"
@@ -1213,17 +1195,19 @@ msgstr "ユーザー名またはメールアドレス"
 msgid "We send a reset link here when you forget your password."
 msgstr "パスワードを忘れたときに、再設定のリンクを送ります。"
 
-#: app/components/home/test-list/TestRow.tsx:48
-msgid "week"
-msgstr "週"
-
 #: app/components/grammar-chips/GrammarChip.tsx:49
 msgid "Week"
 msgstr "週"
 
+#: app/components/home/test-list/index.tsx:45
+#: app/components/home/test-list/WeekRail.tsx:52
 #: app/lib/sections.ts:60
 msgid "Week {week}"
 msgstr "第{week}週"
+
+#: app/components/home/test-list/WeekRail.tsx:31
+msgid "Weeks"
+msgstr "週"
 
 #: app/components/welcome/SampleQuiz.tsx:226
 msgid "With an account, you can take full 45-question mock tests."

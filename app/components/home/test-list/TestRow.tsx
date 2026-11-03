@@ -1,144 +1,78 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { cn } from "~/lib/utils";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { ChevronRight } from "lucide-react";
 import { Link } from "react-router";
-import { GrammarChips } from "~/components/grammar-chips";
-import { NumberTile } from "~/components/NumberTile";
-import { RetakeButton, RetakeDialog } from "~/components/RetakeButton";
 import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
+import { buttonVariants } from "~/components/ui/button";
 import { Progress } from "~/components/ui/progress";
 import type { TestSummary } from "~/lib/views";
-import { DeleteTest } from "./DeleteTest";
 import { rowHeading } from "./helpers/rowHeading";
+import { TestMenu } from "./TestMenu";
 
 /**
- * One test: its week in a tile, its title and last score, how far it got when it is in progress, and its buttons: Start is solid, Continue an outline. Review opens its grammar chips.
- * Found by a search on its grammar, it names the `matched` patterns.
+ * One test, a row of its week: its title (without the week) and what is next for it. In progress: how far it got, and
+ * Continue. Not taken: its size, and Start. Taken: its score, and its results (where it can be retaken and its grammar
+ * reviewed). The whole row opens it. The admin renames or deletes it from the
+ * menu of a right click on it.
  */
-export function TestRow({ test, matched = [], isAdmin = false }: { test: TestSummary; matched?: string[]; isAdmin?: boolean }) {
+export function TestRow({ test, isAdmin = false }: { test: TestSummary; isAdmin?: boolean }) {
   const { t } = useLingui();
-  const [open, setOpen] = useState(false);
-  // The retake picked from the menu, asked about in its dialog.
-  const [asking, setAsking] = useState(false);
-  const [wrongOnly, setWrongOnly] = useState(false);
-  const ask = (wrong: boolean) => {
-    setWrongOnly(wrong);
-    setAsking(true);
-  };
-  const { answered } = test;
-  const inProgress = answered !== null;
-  const quizHref = `/tests/${test.id}`;
+  const { answered, result } = test;
   const total = test.questionCount;
-  const reviewCount = test.review.length;
-  const missed = test.result !== null && test.result.score < test.result.total;
-  const lastScore = test.previous && `${test.previous.score} / ${test.previous.total}`;
-  const heading = rowHeading(test.title, test.weeks);
+  const inProgress = !result && answered !== null;
 
-  return (
-    <li className="relative isolate flex flex-wrap items-start gap-3 rounded-xl border bg-card p-4 transition-colors hover:bg-muted/60 md:items-center md:gap-4 md:rounded-none md:border-x-0 md:border-t-0 md:p-5 md:last:border-b-0">
-      {/* Its ::after fills the row under the buttons, so the whole row opens the test but the buttons still work. */}
-      <Link
-        to={test.result ? `${quizHref}/results` : quizHref}
-        prefetch="intent"
-        className="flex min-w-0 flex-1 items-start gap-3 text-foreground no-underline after:absolute after:inset-0 after:-z-10 md:flex-row-title md:items-center md:gap-4"
-      >
-        <NumberTile value={heading.week} label={<Trans>week</Trans>} />
-        <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="sr-only">{test.title}</span>
-            <span aria-hidden="true" className="text-base font-semibold">
-              {heading.title}
+  const row = (
+    <li className="relative flex min-h-16 items-center gap-4 px-5 py-3 transition-colors hover:bg-muted/60">
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+        {/* Its ::after covers the row, so the whole row opens the test; the buttons are only its look, under it. */}
+        <Link
+          to={result ? `/tests/${test.id}/results` : `/tests/${test.id}`}
+          prefetch="intent"
+          className="truncate text-base font-semibold text-foreground no-underline after:absolute after:inset-0"
+        >
+          <span className="sr-only">{test.title}</span>
+          <span aria-hidden="true">{rowHeading(test.title, test.weeks).title}</span>
+        </Link>
+        {inProgress && (
+          <span className="flex items-center gap-2.5">
+            {/* The numbers say it; the bar is for the eye. */}
+            <Progress aria-hidden="true" value={(answered / total) * 100} className="h-1.5 max-w-56 *:bg-indigo" />
+            <span className="shrink-0 text-caption tabular-nums text-indigo">
+              <Trans>
+                {answered} / {total} answered
+              </Trans>
             </span>
-            {test.result && (
-              <Badge variant="outline">
-                {test.result.score} / {test.result.total}
-              </Badge>
-            )}
-            {inProgress && !test.result && (
-              <Badge variant="progress" className="tabular-nums">
-                <Trans>
-                  In progress {answered} / {total}
-                </Trans>
-              </Badge>
-            )}
-          </div>
-          <div className="text-caption text-muted-foreground">
-            <Plural value={total} one="# question" other="# questions" />
-            {lastScore && (
-              <span>
-                {" · "}
-                <Trans>Last time {lastScore}</Trans>
-              </span>
-            )}
-            {matched.length > 0 && (
-              <span lang="ja" className="font-jp">
-                {" · "}
-                {matched.map((pattern) => `「${pattern}」`).join("")}
-              </span>
-            )}
-          </div>
-          {inProgress && !test.result && (
-            // The badge says the numbers; the bar is for the eye, so it is not read out.
-            <Progress aria-hidden="true" value={(answered / test.questionCount) * 100} className="mt-1 max-w-48" />
-          )}
-        </div>
-      </Link>
-
-      {isAdmin && <DeleteTest test={test} className="-mt-2 -mr-2 md:hidden" />}
-
-      <div className="grid w-full grid-cols-2 gap-2 md:flex md:w-auto md:flex-auto md:flex-wrap md:items-center md:justify-end">
-        {test.result ? (
-          <>
-            {missed ? (
-              <>
-                {/* One button for both retakes. Not modal, so the dialog can open as the menu closes. */}
-                <DropdownMenu modal={false}>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="md:order-2">
-                      <Trans>Take it again</Trans>
-                      <ChevronDown aria-hidden="true" className="size-3.5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onSelect={() => ask(false)}>
-                      <Trans>All questions</Trans>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => ask(true)}>
-                      <Trans>Retake wrong ones</Trans>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <RetakeDialog testId={test.id} wrongOnly={wrongOnly} open={asking} onOpenChange={setAsking} />
-              </>
-            ) : (
-              <RetakeButton testId={test.id} variant="outline" className={cn("md:order-2", test.review.length === 0 && "col-span-2")}>
-                <Trans>Take it again</Trans>
-              </RetakeButton>
-            )}
-            {test.review.length > 0 && (
-              <Button variant="outline" aria-expanded={open} onClick={() => setOpen(!open)} className="md:order-1 md:px-3.5">
-                <Trans>Review ({reviewCount})</Trans>
-                <ChevronDown
-                  aria-hidden="true"
-                  className={cn("size-3.5 transition-transform duration-150", open && "rotate-180")}
-                />
-              </Button>
-            )}
-          </>
-        ) : (
-          <Button asChild variant={inProgress ? "outline" : "default"} className="col-span-2 md:px-4.5">
-            <Link to={quizHref} prefetch="intent">
-              {inProgress ? t`Continue` : t`Start the test`}
-            </Link>
-          </Button>
+          </span>
         )}
-        {isAdmin && <DeleteTest test={test} className="hidden md:order-3 md:inline-flex" outlined />}
+        {result && (
+          <span className="text-caption text-muted-foreground">
+            <Plural value={total} one="# question" other="# questions" />
+          </span>
+        )}
       </div>
-
-      {open && <GrammarChips testId={test.id} chips={test.review} className="w-full" />}
+      {result ? (
+        <>
+          <Badge variant="outline" className="text-sm font-semibold tabular-nums">
+            {result.score} / {result.total}
+          </Badge>
+          <span className="flex shrink-0 items-center gap-0.5 font-semibold text-indigo">
+            {t`Results`}
+            <ChevronRight aria-hidden="true" className="size-4" />
+          </span>
+        </>
+      ) : inProgress ? (
+        <span className="flex shrink-0 items-center gap-0.5 font-semibold text-indigo">
+          {t`Continue`}
+          <ChevronRight aria-hidden="true" className="size-4" />
+        </span>
+      ) : (
+        <>
+          <span className="shrink-0 text-caption tabular-nums text-muted-foreground">
+            <Plural value={total} one="# question" other="# questions" />
+          </span>
+          <span className={buttonVariants()}>{t`Start`}</span>
+        </>
+      )}
     </li>
   );
+  return isAdmin ? <TestMenu test={test}>{row}</TestMenu> : row;
 }

@@ -7,16 +7,13 @@ import type { JlptLevel } from "~/lib/payload";
  * Switches a page (the mock tests, or kanji) between the JLPT levels. The level is in the URL, so a reload keeps it.
  * One highlight slides to the level picked, as soon as it is picked rather than once its tests have loaded.
  * The tabs share one width, so the highlight moves by whole tabs with a CSS transition.
- * `warmOf` gives a level's tab what to start loading on hover, focus or press, not once its page shows.
  */
 export function LevelTabs({
   levels,
   current,
-  warmOf,
 }: {
   levels: readonly JlptLevel[];
   current: JlptLevel;
-  warmOf?: (level: JlptLevel) => (() => void) | undefined;
 }) {
   const { t } = useLingui();
   const next = new URLSearchParams(useNavigation().location?.search).get("level");
@@ -31,15 +28,11 @@ export function LevelTabs({
           style={{ width: `${100 / levels.length}%`, transform: `translateX(${levels.indexOf(shown) * 100}%)` }}
         />
         {levels.map((level) => {
-          const warm = warmOf?.(level);
           return (
             <Link
               key={level}
               to={`?level=${level}`}
               prefetch="intent"
-              onPointerEnter={warm}
-              onPointerDown={warm}
-              onFocus={warm}
               aria-current={level === current ? "page" : undefined}
               className={cn(
                 // Not positioned, so its hover background is under the sliding highlight; only its words are over it.
