@@ -25,6 +25,12 @@ async function bumpVersion(id: number) {
   await (await db()).execute({ sql: "UPDATE users SET session_version = session_version + 1 WHERE id = ?", args: [id] });
 }
 
+/** The session version of a user, as the database holds it. */
+async function storedVersion(id: number) {
+  const { rows } = await (await db()).execute({ sql: "SELECT session_version FROM users WHERE id = ?", args: [id] });
+  return Number(rows[0].session_version);
+}
+
 /** The password column of a user, as the database holds it. */
 async function storedPassword(id: number) {
   const { rows } = await (await db()).execute({ sql: "SELECT password FROM users WHERE id = ?", args: [id] });
@@ -87,6 +93,17 @@ describe("createUser", () => {
     await createUser("Huy", PASSWORD, "huy@example.com");
 
     expect(await createUser("Mai", PASSWORD, "huy@example.com")).toBeNull();
+  });
+
+  it("gives a new user a new session version, even on a deleted user's id, so the old cookies don't fit", async () => {
+    const first = await createUser("Huy", PASSWORD);
+    const oldVersion = await storedVersion(first!);
+    await deleteUser(first!, PASSWORD);
+
+    const second = await createUser("Mai", PASSWORD);
+
+    expect(second).toBe(first);
+    expect(await storedVersion(second!)).not.toBe(oldVersion);
   });
 
   it("returns null for a name that is taken, whatever its case", async () => {
@@ -185,11 +202,22 @@ describe("changePassword", () => {
     expect(await verifyUser("Huy", PASSWORD)).toBeNull();
   });
 
+  it("bumps the session version, so every device is signed out", async () => {
+    const id = await createUser("Huy", PASSWORD);
+    const before = (await getSessionVersion(id!))!;
+
+    await changePassword(id!, PASSWORD, "a new passphrase");
+
+    expect(await getSessionVersion(id!)).toBe(before + 1);
+  });
+
   it("refuses when the current password is wrong, and keeps the old one", async () => {
     const id = await createUser("Huy", PASSWORD);
+    const before = await storedVersion(id!);
 
     expect(await changePassword(id!, "wrong password", "a new passphrase")).toBe(false);
     expect(await verifyUser("Huy", PASSWORD)).toBe(id);
+    expect(await storedVersion(id!)).toBe(before);
   });
 
   it("returns false for an id that has no account", async () => {
@@ -275,27 +303,27 @@ describe("getSessionVersion", () => {
   it("returns the version of a user, and null for an id that has no account", async () => {
     const id = await createUser("Huy", PASSWORD);
 
-    expect(await getSessionVersion(id!)).toBe(0);
+    expect(await getSessionVersion(id!)).toBe(await storedVersion(id!));
     expect(await getSessionVersion(id! + 1)).toBeNull();
   });
 
   it("keeps a version it read for a minute, then reads it again", async () => {
     vi.useFakeTimers({ toFake: ["Date"] });
     const id = await createUser("Huy", PASSWORD);
-    await getSessionVersion(id!);
+    const first = (await getSessionVersion(id!))!;
     await bumpVersion(id!);
 
-    expect(await getSessionVersion(id!)).toBe(0);
+    expect(await getSessionVersion(id!)).toBe(first);
     vi.advanceTimersByTime(60_000);
-    expect(await getSessionVersion(id!)).toBe(1);
+    expect(await getSessionVersion(id!)).toBe(first + 1);
   });
 
   it("reads the version again once the cache is forgotten", async () => {
     const id = await createUser("Huy", PASSWORD);
-    await getSessionVersion(id!);
+    const first = (await getSessionVersion(id!))!;
     await bumpVersion(id!);
     forgetSessionVersions();
 
-    expect(await getSessionVersion(id!)).toBe(1);
+    expect(await getSessionVersion(id!)).toBe(first + 1);
   });
 });

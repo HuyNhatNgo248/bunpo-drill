@@ -74,10 +74,18 @@ describe("account action", () => {
 
   describe("the email form", () => {
     it("saves the email in lower case", async () => {
-      expect(await post(userId, { intent: "email", email: " Huy@Example.com " })).toMatchObject({
+      expect(await post(userId, { intent: "email", email: " Huy@Example.com ", password: PASSWORD })).toMatchObject({
         data: { form: "email", saved: "Email address saved." },
       });
       expect((await getUser(userId))?.email).toBe("huy@example.com");
+    });
+
+    it("answers 401 for a wrong password, and keeps the old email", async () => {
+      expect(await post(userId, { intent: "email", email: "evil@example.com", password: "wrong" })).toMatchObject({
+        data: { form: "email", error: "Your current password is wrong." },
+        init: { status: 401 },
+      });
+      expect((await getUser(userId))?.email).toBeNull();
     });
 
     it("answers 400 for a value that is not an email", async () => {
@@ -90,7 +98,7 @@ describe("account action", () => {
     it("answers 409 for an email that another account has", async () => {
       await createUser("Mai", PASSWORD, "mai@example.com");
 
-      expect(await post(userId, { intent: "email", email: "mai@example.com" })).toMatchObject({
+      expect(await post(userId, { intent: "email", email: "mai@example.com", password: PASSWORD })).toMatchObject({
         data: { form: "email", error: "That email address is already in use." },
         init: { status: 409 },
       });
@@ -103,6 +111,18 @@ describe("account action", () => {
         data: { form: "password", saved: "Password changed." },
       });
       expect(await verifyUser("Huy", "a new passphrase")).toBe(userId);
+    });
+
+    it("signs out the other devices, and keeps this one signed in", async () => {
+      const otherDevice = await signedInRequest(userId, URL);
+
+      const result = (await post(userId, { intent: "password", current: PASSWORD, next: "a new passphrase" })) as {
+        init: ResponseInit;
+      };
+      const thisDevice = new Request(URL, { headers: { Cookie: new Headers(result.init.headers).get("Set-Cookie")!.split(";")[0] } });
+
+      expect(await thrownBy(() => loader(routeArgs<Parameters<typeof loader>[0]>(otherDevice)))).toMatchObject({ status: 401 });
+      expect(await loader(routeArgs<Parameters<typeof loader>[0]>(thisDevice))).toMatchObject({ user: { id: userId } });
     });
 
     it("answers 400 for a new password that is too short", async () => {

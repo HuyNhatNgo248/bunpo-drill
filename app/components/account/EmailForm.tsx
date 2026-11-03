@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Form } from "react-router";
+import { PasswordField } from "~/components/form/PasswordField";
 import { INPUT_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
@@ -37,6 +38,7 @@ export function EmailForm({ email, result }: { email: string | null; result?: Ac
           aria-invalid={result?.error ? true : undefined}
           className={INPUT_CLASS}
         />
+        <PasswordField label={t`Current password`} name="password" required autoComplete="current-password" className={INPUT_CLASS} />
         <Status result={result} />
         <Button type="submit" disabled={saving} className="self-end">
           {saving ? t`Saving…` : t`Save`}

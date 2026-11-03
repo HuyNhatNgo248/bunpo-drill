@@ -5,6 +5,7 @@ import { buildSubmission } from "#mocks/factories/tests";
 import { API_TOKEN } from "#tests/helpers/env";
 import { resetDatabase } from "#tests/helpers/db";
 import { ensureUser, signedInRequest } from "#tests/helpers/session";
+import { thrownBy } from "#tests/helpers/thrown";
 import { routeArgs } from "#tests/helpers/route";
 import { saveChapter } from "~/lib/kanji.server";
 import { createTest, getTest, listTests, saveSubmission } from "~/lib/tests.server";
@@ -72,6 +73,25 @@ describe("POST /api/tests", () => {
     expect(body).toEqual({ id: expect.stringMatching(/^\d{8}-[0-9a-f]{6}$/), url: `https://bunpo.test/tests/${body.id}` });
     expect(response.headers.get("Location")).toBe(body.url);
     expect(await listTests(USER_ID)).toHaveLength(1);
+  });
+
+  describe("who may save one", () => {
+    it("lets the quiz skill's token save one", async () => {
+      const request = new Request(URL, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${API_TOKEN}` },
+        body: JSON.stringify(buildPayload()),
+      });
+
+      expect((await action(routeArgs<ActionArgs>(request))).status).toBe(201);
+    });
+
+    it("answers 403 to a signed-in user who is not the owner, and saves nothing", async () => {
+      const request = await signedInRequest(2, URL, { method: "POST", body: JSON.stringify(buildPayload()) });
+
+      expect(await thrownBy(() => action(routeArgs<ActionArgs>(request)))).toMatchObject({ status: 403 });
+      expect(await listTests(USER_ID)).toEqual([]);
+    });
   });
 
   describe("reading the body", () => {

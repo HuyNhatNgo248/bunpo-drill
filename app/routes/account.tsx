@@ -3,9 +3,9 @@ import { data } from "react-router";
 import type { Route } from "./+types/account";
 import { Account } from "~/components/account";
 import type { AccountResult } from "~/components/account/types";
-import { requireUserId, signOut } from "~/lib/auth.server";
+import { loginCookie, requireUserId, signOut } from "~/lib/auth.server";
 import { checkEmail, checkName, checkNewPassword, normalizeEmail } from "~/lib/users";
-import { changePassword, deleteUser, getUser, renameUser, setEmail } from "~/lib/users.server";
+import { changePassword, deleteUser, getUser, passwordMatches, renameUser, setEmail } from "~/lib/users.server";
 import { localeFromMatches, requestLocale, translate } from "~/lib/i18n";
 
 export function meta({ matches }: Route.MetaArgs) {
@@ -19,8 +19,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 /**
- * POST /account: intent "name" renames, intent "email" sets the email that password resets go to,
- * intent "password" changes the password (needs the current one), intent "delete" deletes the account (needs the
+ * POST /account: intent "name" renames, intent "email" sets the email that password resets go to (needs the password),
+ * intent "password" changes the password (needs the current one) and signs out the other devices, intent "delete" deletes the account (needs the
  * password) and signs out to the welcome page.
  */
 export async function action({ request }: Route.ActionArgs) {
@@ -40,6 +40,10 @@ export async function action({ request }: Route.ActionArgs) {
     const email = normalizeEmail(String(form.get("email") ?? ""));
     const invalid = checkEmail(email);
     if (invalid) return data<AccountResult>({ form: "email", error: translate(locale, invalid) }, { status: 400 });
+    // The email is where reset links go, so changing it takes the password, like a password change does.
+    if (!(await passwordMatches(id, String(form.get("password") ?? "")))) {
+      return data<AccountResult>({ form: "email", error: translate(locale, msg`Your current password is wrong.`) }, { status: 401 });
+    }
     if (!(await setEmail(id, email))) {
       return data<AccountResult>({ form: "email", error: translate(locale, msg`That email address is already in use.`) }, { status: 409 });
     }
@@ -57,7 +61,11 @@ export async function action({ request }: Route.ActionArgs) {
   if (!(await changePassword(id, String(form.get("current") ?? ""), next))) {
     return data<AccountResult>({ form: "password", error: translate(locale, msg`Your current password is wrong.`) }, { status: 401 });
   }
-  return data<AccountResult>({ form: "password", saved: translate(locale, msg`Password changed.`) });
+  // The change signed out every device; this one stays signed in.
+  return data<AccountResult>(
+    { form: "password", saved: translate(locale, msg`Password changed.`) },
+    { headers: { "Set-Cookie": await loginCookie(request, id) } },
+  );
 }
 
 export default function AccountRoute({ loaderData, actionData }: Route.ComponentProps) {

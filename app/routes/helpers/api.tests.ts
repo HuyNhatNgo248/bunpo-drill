@@ -1,5 +1,5 @@
 import type { Route } from "./+types/api.tests";
-import { requireUserId } from "~/lib/auth.server";
+import { requireAdmin, requireUserId } from "~/lib/auth.server";
 import { toSummary } from "~/lib/grading.server";
 import { getChapter } from "~/lib/kanji.server";
 import { chapterWords } from "~/lib/kanji-views.server";
@@ -18,6 +18,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 export async function action({ request }: Route.ActionArgs) {
   switch (request.method) {
     case "POST": {
+      await requireAdmin(request);
       let body: unknown;
       try {
         body = await request.json();

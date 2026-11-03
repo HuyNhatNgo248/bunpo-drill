@@ -1,7 +1,10 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { buildKanjiChapter } from "#mocks/factories/kanji";
+import { API_TOKEN } from "#tests/helpers/env";
 import { resetDatabase } from "#tests/helpers/db";
 import { routeArgs } from "#tests/helpers/route";
+import { ensureUser, signedInRequest } from "#tests/helpers/session";
+import { thrownBy } from "#tests/helpers/thrown";
 import { getChapter } from "~/lib/kanji.server";
 import { action } from "../api.kanji.chapters";
 
@@ -9,9 +12,9 @@ const URL = "https://bunpo.test/api/kanji/chapters";
 
 type ActionArgs = Parameters<typeof action>[0];
 
-/** Sends `body` to the action with `method`. A string body goes as it is, anything else as JSON. */
+/** Sends `body` to the action with `method`, as the quiz skill does. A string body goes as it is, anything else as JSON. */
 function send(method: string, body?: unknown) {
-  const init: RequestInit = { method };
+  const init: RequestInit = { method, headers: { Authorization: `Bearer ${API_TOKEN}` } };
   if (body !== undefined) init.body = typeof body === "string" ? body : JSON.stringify(body);
   return action(routeArgs<ActionArgs>(new Request(URL, init)));
 }
@@ -26,6 +29,28 @@ describe("POST /api/kanji/chapters", () => {
     expect(await response.json()).toEqual({ level: "N2", chapter: 1, words: 1, url: "https://bunpo.test/kanji/N2/1/cards" });
     expect(response.headers.get("Location")).toBe("https://bunpo.test/kanji/N2/1/cards");
     expect(await getChapter("N2", 1)).toEqual(buildKanjiChapter());
+  });
+
+  describe("who may send one", () => {
+    it("lets the owner, the oldest account, send one with their login cookie", async () => {
+      const request = await signedInRequest(1, URL, { method: "POST", body: JSON.stringify(buildKanjiChapter()) });
+
+      expect((await action(routeArgs<ActionArgs>(request))).status).toBe(201);
+    });
+
+    it("answers 403 to any other signed-in user, and saves nothing", async () => {
+      await ensureUser(1);
+      const request = await signedInRequest(2, URL, { method: "POST", body: JSON.stringify(buildKanjiChapter()) });
+
+      expect(await thrownBy(() => action(routeArgs<ActionArgs>(request)))).toMatchObject({ status: 403 });
+      expect(await getChapter("N2", 1)).toBeNull();
+    });
+
+    it("answers 401 with no cookie and no token", async () => {
+      const request = new Request(URL, { method: "POST", body: JSON.stringify(buildKanjiChapter()) });
+
+      expect(await thrownBy(() => action(routeArgs<ActionArgs>(request)))).toMatchObject({ status: 401 });
+    });
   });
 
   describe("reading the body", () => {

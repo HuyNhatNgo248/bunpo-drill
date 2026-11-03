@@ -46,7 +46,8 @@ describe("Account", () => {
   it("sends the current and the new password with the intent of the password form", async () => {
     const { page } = renderAccount();
 
-    await userEvent.type(await screen.findByLabelText("Current password"), "old password");
+    await screen.findByRole("heading", { name: "Password" });
+    await userEvent.type(cardOf("Password").getByLabelText("Current password"), "old password");
     await userEvent.type(screen.getByLabelText("New password"), "new password");
     await userEvent.click(screen.getByRole("button", { name: "Change password" }));
 
@@ -73,9 +74,14 @@ describe("Account", () => {
       const { page } = renderAccount();
 
       await userEvent.type(await screen.findByRole("textbox", { name: "Email address" }), "huy@example.com");
+      await userEvent.type(cardOf("Email address").getByLabelText("Current password"), "my password");
       await userEvent.click(cardOf("Email address").getByRole("button", { name: "Save" }));
 
-      await waitFor(() => expect(page).toEqual([{ method: "POST", path: "/account", body: { intent: "email", email: "huy@example.com" } }]));
+      await waitFor(() =>
+        expect(page).toEqual([
+          { method: "POST", path: "/account", body: { intent: "email", email: "huy@example.com", password: "my password" } },
+        ]),
+      );
     });
 
     it("shows the answer under the email form", async () => {

@@ -79,11 +79,24 @@ export async function requireUserId(request: Request): Promise<number> {
   return id;
 }
 
-export async function signIn(request: Request, userId: number, redirectTo: string) {
+/** Tests and kanji chapters are shared by every user, so only the owner (or the quiz skill's token) may write them. */
+export async function requireAdmin(request: Request): Promise<void> {
+  if (hasApiToken(request)) return;
+  const id = await currentUserId(request);
+  if (id === null) throw Response.json({ error: "Sign in to do this." }, { status: 401 });
+  if (id !== (await ownerId())) throw Response.json({ error: "Only the admin can do this." }, { status: 403 });
+}
+
+/** A Set-Cookie value that signs this device in as the user, at their current session version. */
+export async function loginCookie(request: Request, userId: number): Promise<string> {
   const session = await sessions().getSession(request.headers.get("Cookie"));
   session.set("userId", userId);
   session.set("version", (await getSessionVersion(userId)) ?? 0);
-  return redirect(redirectTo, { headers: { "Set-Cookie": await sessions().commitSession(session) } });
+  return sessions().commitSession(session);
+}
+
+export async function signIn(request: Request, userId: number, redirectTo: string) {
+  return redirect(redirectTo, { headers: { "Set-Cookie": await loginCookie(request, userId) } });
 }
 
 /** Clears the login cookie and goes to `to`: the sign-in page, or the welcome page after deleting the account. */

@@ -1,4 +1,5 @@
 import type { Route } from "./+types/api.kanji.chapters";
+import { requireAdmin } from "~/lib/auth.server";
 import { saveChapter } from "~/lib/kanji.server";
 import { chapterWords } from "~/lib/kanji-views.server";
 import { kanjiChapterSchema } from "~/lib/kanji-payload";
@@ -12,6 +13,7 @@ export async function action({ request }: Route.ActionArgs) {
   if (request.method !== "POST") {
     return Response.json({ error: "Method not allowed." }, { status: 405, headers: { Allow: "POST" } });
   }
+  await requireAdmin(request);
   let body: unknown;
   try {
     body = await request.json();

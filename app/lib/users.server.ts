@@ -1,4 +1,4 @@
-import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
+import { randomBytes, randomInt, scrypt, timingSafeEqual } from "node:crypto";
 import { promisify } from "node:util";
 import { and, asc, desc, eq, or, sql } from "drizzle-orm";
 import { orm, write } from "./db.server";
@@ -38,7 +38,8 @@ function isUniqueViolation(error: unknown): boolean {
 export async function createUser(name: string, password: string, email: string | null = null): Promise<number | null> {
   const [row] = await (await orm())
     .insert(users)
-    .values({ name, password: await hashPassword(password), email, createdAt: new Date().toISOString() })
+    // A random session version: SQLite can give a deleted user's id to the next sign-up, and the old cookies must not fit it.
+    .values({ name, password: await hashPassword(password), email, sessionVersion: randomInt(2 ** 31), createdAt: new Date().toISOString() })
     .onConflictDoNothing()
     .returning({ id: users.id });
   return row?.id ?? null;
@@ -137,12 +138,23 @@ async function updateUnique(id: number, set: { name: string } | { email: string 
   }
 }
 
-/** Sets a new password when the current one matches. */
+/** Whether the password is this user's. False when there is no such user. */
+export async function passwordMatches(id: number, password: string): Promise<boolean> {
+  const [row] = await (await orm()).select({ password: users.password }).from(users).where(eq(users.id, id));
+  return !!row && (await matches(password, row.password));
+}
+
+/**
+ * Sets a new password when the current one matches, and signs out every device, as a reset does.
+ * The caller signs the current device back in (loginCookie).
+ */
 export async function changePassword(id: number, current: string, next: string): Promise<boolean> {
-  const db = await orm();
-  const [row] = await db.select({ password: users.password }).from(users).where(eq(users.id, id));
-  if (!row || !(await matches(current, row.password))) return false;
-  await db.update(users).set({ password: await hashPassword(next) }).where(eq(users.id, id));
+  if (!(await passwordMatches(id, current))) return false;
+  await (await orm())
+    .update(users)
+    .set({ password: await hashPassword(next), sessionVersion: sql`${users.sessionVersion} + 1` })
+    .where(eq(users.id, id));
+  forgetSessionVersions();
   return true;
 }
 
@@ -151,9 +163,8 @@ export async function changePassword(id: number, current: string, next: string):
  * links. The tests and kanji chapters are shared, so they stay. False, deleting nothing, when the password is wrong.
  */
 export async function deleteUser(id: number, password: string): Promise<boolean> {
+  if (!(await passwordMatches(id, password))) return false;
   const db = await orm();
-  const [row] = await db.select({ password: users.password }).from(users).where(eq(users.id, id));
-  if (!row || !(await matches(password, row.password))) return false;
   // Every row that points at the user goes first, or the foreign keys refuse the delete. One batch: all or nothing.
   await write([
     db.delete(progress).where(eq(progress.userId, id)),
