@@ -7,7 +7,7 @@ import { QuestionNav } from "~/components/quiz/question-nav";
 import { gradedMarks, RESULT_MARKS } from "~/components/quiz/question-nav/QuestionGrid";
 import { QuestionSheet } from "~/components/quiz/question-nav/QuestionSheet";
 import { homeOf } from "~/lib/links";
-import type { NoteView, ResultsView } from "~/lib/views";
+import type { NoteMark, ResultsView } from "~/lib/views";
 import { Actions } from "./Actions";
 import { ReviewCard } from "./ReviewCard";
 import { ScoreCard } from "./ScoreCard";
@@ -20,7 +20,7 @@ import { SectionReview } from "./section-review";
  * so they are not kept: nothing can be marked reviewed or noted, and the way on is sign-up. Words of the user's `notes`
  * are highlighted.
  */
-export function Results({ results, notes = [], trial = false }: { results: ResultsView; notes?: NoteView[]; trial?: boolean }) {
+export function Results({ results, notes = [], trial = false }: { results: ResultsView; notes?: NoteMark[]; trial?: boolean }) {
   const { t } = useLingui();
   const { score, total } = results;
   const wrong = total - score;

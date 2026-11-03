@@ -1,8 +1,8 @@
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { orm } from "./db.server";
 import { notes, tests } from "./schema.server";
-import type { NoteView } from "./views";
+import type { NoteMark, NoteView } from "./views";
 
 /**
  * Each user's notes: words they highlighted in a test, with the sentence around them and a memo of their own, to look
@@ -38,12 +38,17 @@ export async function listNotes(userId: number): Promise<NoteView[]> {
       memo: notes.memo,
       testId: notes.testId,
       anchor: notes.anchor,
-      testTitle: sql<string>`json_extract(${tests.payload}, '$.title')`,
+      testTitle: tests.title,
     })
     .from(notes)
     .innerJoin(tests, eq(tests.id, notes.testId))
     .where(eq(notes.userId, userId))
     .orderBy(desc(notes.createdAt), desc(notes.id));
+}
+
+/** The user's notes as a test or results page highlights them; no join, so no test is read. */
+export async function listNoteMarks(userId: number): Promise<NoteMark[]> {
+  return (await orm()).select({ id: notes.id, text: notes.text, memo: notes.memo }).from(notes).where(eq(notes.userId, userId));
 }
 
 /** Saves a note from a test that exists; false when the user has a note on the same text already. */

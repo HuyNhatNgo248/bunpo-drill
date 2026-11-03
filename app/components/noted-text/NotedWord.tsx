@@ -3,13 +3,13 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 import { Markdown } from "~/components/Markdown";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
-import type { NoteView } from "~/lib/views";
+import type { NoteMark } from "~/lib/views";
 
 /**
  * A word of the user's notes, highlighted in a sentence; a click shows its memo (drawn from its Markdown) and the way to
  * it on the notes page.
  */
-export function NotedWord({ note }: { note: NoteView }) {
+export function NotedWord({ note }: { note: NoteMark }) {
   const { t } = useLingui();
   return (
     <Popover>

@@ -19,6 +19,7 @@ const SCHEMA = {
     created_at TEXT NOT NULL,
     position INTEGER, -- unused: the home list's drag order, before it sorted by title
     payload TEXT NOT NULL, -- TestPayload JSON
+    title TEXT NOT NULL DEFAULT '', -- the payload's title, so the notes page needn't read each payload
     submission TEXT, -- unused: moved to progress when progress became each user's
     draft TEXT -- unused: as submission
   )`,
@@ -97,6 +98,14 @@ async function migrate(client: Client) {
   if (!rows.some((column) => column.name === "last_tab")) await client.execute("ALTER TABLE users ADD COLUMN last_tab TEXT");
   const testColumns = (await client.execute("PRAGMA table_info(tests)")).rows;
   if (!testColumns.some((column) => column.name === "draft")) await client.execute("ALTER TABLE tests ADD COLUMN draft TEXT");
+  if (!testColumns.some((column) => column.name === "title"))
+    await client.batch(
+      [
+        "ALTER TABLE tests ADD COLUMN title TEXT NOT NULL DEFAULT ''",
+        "UPDATE tests SET title = coalesce(json_extract(payload, '$.title'), '') WHERE json_valid(payload)",
+      ],
+      "write",
+    );
   const noteColumns = (await client.execute("PRAGMA table_info(notes)")).rows;
   if (!noteColumns.some((column) => column.name === "anchor")) await client.execute("ALTER TABLE notes ADD COLUMN anchor TEXT");
   const chapterColumns = (await client.execute("PRAGMA table_info(kanji_chapters)")).rows;

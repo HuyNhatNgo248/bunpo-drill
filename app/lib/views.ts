@@ -86,6 +86,9 @@ export type NoteView = {
   testTitle: string;
 };
 
+/** A note as a test highlights it: its words and memo. */
+export type NoteMark = Pick<NoteView, "id" | "text" | "memo">;
+
 /** A word a kanji test got wrong, to study as a flashcard. */
 export type WordChip = { wordId: string; word: string; reading: string };
 

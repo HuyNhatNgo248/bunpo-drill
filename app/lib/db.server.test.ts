@@ -87,6 +87,22 @@ describe("db", () => {
     expect(rows.map((row) => ({ ...row }))).toEqual([{ text: "相場", anchor: null }]);
   });
 
+  it("adds the title column to a tests table from before it, filled from each payload", async () => {
+    const dir = path.join(process.env.DATA_DIR!, "old-titles");
+    mkdirSync(dir);
+    vi.stubEnv("DATA_DIR", dir);
+    const { createClient } = await import("@libsql/client");
+    const old = createClient({ url: `file:${path.join(dir, "bunpo.db")}` });
+    await old.execute("CREATE TABLE tests (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, position INTEGER, payload TEXT NOT NULL, submission TEXT, draft TEXT)");
+    await old.execute(`INSERT INTO tests (id, created_at, payload) VALUES ('a', 'now', '{"title":"第1週"}'), ('b', 'now', 'not json')`);
+    old.close();
+
+    const client = await (await loadDb())();
+
+    const { rows } = await client.execute("SELECT id, title FROM tests ORDER BY id");
+    expect(rows.map((row) => ({ ...row }))).toEqual([{ id: "a", title: "第1週" }, { id: "b", title: "" }]);
+  });
+
   it("turns each result saved before attempts were kept into the owner's first attempt of its test", async () => {
     const dir = path.join(process.env.DATA_DIR!, "before-attempts");
     mkdirSync(dir);

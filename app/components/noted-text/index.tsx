@@ -1,15 +1,15 @@
 import { createContext, useContext, useMemo, type ReactNode } from "react";
-import type { NoteView } from "~/lib/views";
+import type { NoteMark } from "~/lib/views";
 import { NotedWord } from "./NotedWord";
 
-type Marks = { pattern: RegExp; byText: Map<string, NoteView> } | null;
+type Marks = { pattern: RegExp; byText: Map<string, NoteMark> } | null;
 
 const NotesContext = createContext<Marks>(null);
 
 const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** Gives the user's notes to each NotedText inside, which highlights their words. */
-export function NotesProvider({ notes, children }: { notes: NoteView[]; children: ReactNode }) {
+export function NotesProvider({ notes, children }: { notes: NoteMark[]; children: ReactNode }) {
   const marks = useMemo(() => {
     if (notes.length === 0) return null;
     // Longest first, so a note on 考えた末 wins over one on 末.

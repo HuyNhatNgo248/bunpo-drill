@@ -242,6 +242,7 @@ export async function createTest(payload: AnyPayload): Promise<StoredTest> {
       id: test.id,
       createdAt: test.createdAt,
       payload: JSON.stringify(payload),
+      title: payload.title,
     });
   return test;
 }

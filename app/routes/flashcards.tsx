@@ -15,20 +15,27 @@ export function meta({ matches, loaderData }: Route.MetaArgs) {
   return [{ title: loaderData ? `${loaderData.cards.title} · ${name} · 文法ドリル` : `${name} · 文法ドリル` }];
 }
 
+/** The level of /kanji/:level/…, or a 404. */
+function levelOf(params: { level: string }) {
+  const level = LEVELS.find((candidate) => candidate === params.level);
+  if (!level) throw chapterNotFound();
+  return level;
+}
+
 /** The chapter of /kanji/:level/:chapter/cards, or a 404 when its words haven't been sent. */
 async function chapterOf(params: { level: string; chapter: string }) {
-  const level = LEVELS.find((candidate) => candidate === params.level);
+  const level = levelOf(params);
   const number = Number(params.chapter);
-  const chapter = level && Number.isInteger(number) ? await getChapter(level, number) : null;
+  const chapter = Number.isInteger(number) ? await getChapter(level, number) : null;
   if (!chapter) throw chapterNotFound();
   return chapter;
 }
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-  const chapter = await chapterOf(params);
+  const level = levelOf(params);
   const words = new URL(request.url).searchParams.get("words");
   const userId = await requireUserId(request);
-  const [learned, latest] = await Promise.all([learnedIds(userId), latestKanjiTests(chapter.level, userId)]);
+  const [chapter, learned, latest] = await Promise.all([chapterOf(params), learnedIds(userId), latestKanjiTests(level, userId)]);
   return { cards: toFlashcards(chapter, learned, latest.get(chapter.chapter), words ? words.split(",") : null) };
 }
 

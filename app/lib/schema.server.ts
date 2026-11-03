@@ -12,6 +12,7 @@ export const tests = sqliteTable("tests", {
   createdAt: text("created_at").notNull(),
   position: integer("position"),
   payload: text("payload").notNull(),
+  title: text("title").notNull().default(""),
 });
 
 /** A user's place in a test: their last submission and the draft of the next one. No row: not started. */

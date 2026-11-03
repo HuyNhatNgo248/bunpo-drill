@@ -7,7 +7,7 @@ import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
 import { homeOf } from "~/lib/links";
-import type { Answers, NoteView, QuizDraft, QuizView, ResultSection } from "~/lib/views";
+import type { Answers, NoteMark, QuizDraft, QuizView, ResultSection } from "~/lib/views";
 import { CheckSummary } from "./CheckSummary";
 import { quizProgress } from "./helpers/answers";
 import { takeLocalDraft } from "./helpers/localDraft";
@@ -32,7 +32,7 @@ export function Quiz({
 }: {
   quiz: QuizView;
   draft: QuizDraft;
-  notes?: NoteView[];
+  notes?: NoteMark[];
   error?: string;
   trial?: boolean;
 }) {

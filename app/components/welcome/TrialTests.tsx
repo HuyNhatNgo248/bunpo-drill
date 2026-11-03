@@ -1,7 +1,7 @@
 import { Plural, Trans } from "@lingui/react/macro";
 import { Link } from "react-router";
 import { buttonVariants } from "~/components/ui/button";
-import { LEVELS } from "~/lib/payload";
+import { LEVELS } from "~/lib/levels";
 import type { TrialSummary } from "~/lib/views";
 
 /** The full mock tests a visitor can take without an account: a list per level, side by side. */

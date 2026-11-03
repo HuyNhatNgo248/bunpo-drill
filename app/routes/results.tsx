@@ -5,7 +5,7 @@ import { Results } from "~/components/results";
 import { requireUserId } from "~/lib/auth.server";
 import { testNotFound } from "~/lib/errors";
 import { toResultsView } from "~/lib/grading.server";
-import { listNotes } from "~/lib/notes.server";
+import { listNoteMarks } from "~/lib/notes.server";
 import { getTest } from "~/lib/tests.server";
 import { localeFromMatches, translate } from "~/lib/i18n";
 
@@ -16,7 +16,7 @@ export function meta({ loaderData, matches }: Route.MetaArgs) {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const userId = await requireUserId(request);
-  const [test, notes] = await Promise.all([getTest(params.id, userId), listNotes(userId)]);
+  const [test, notes] = await Promise.all([getTest(params.id, userId), listNoteMarks(userId)]);
   if (!test) throw testNotFound();
   if (!test.submission) throw redirect(`/tests/${test.id}`);
   return { results: toResultsView(test, test.submission), notes };
