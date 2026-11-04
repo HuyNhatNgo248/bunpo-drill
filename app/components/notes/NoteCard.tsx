@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { cn } from "~/lib/utils";
 import type { NoteView } from "~/lib/views";
+import { MarkedSentence } from "./MarkedSentence";
 import { Memo } from "./Memo";
 
 /**
@@ -19,7 +20,6 @@ export function NoteCard({ note }: { note: NoteView }) {
   const fetcher = useFetcher<{ error?: string }>();
   const [editing, setEditing] = useState(false);
   const target = useLocation().hash === `#note-${note.id}`;
-  const at = note.sentence.indexOf(note.text);
   const text = note.text;
   const testTitle = note.testTitle;
   const send = (body: { id: number; memo?: string }, method: "patch" | "delete") =>
@@ -72,15 +72,7 @@ export function NoteCard({ note }: { note: NoteView }) {
 
       {note.sentence && (
         <p lang="ja" className="font-jp text-body-sm text-secondary-foreground">
-          {at < 0 ? (
-            note.sentence
-          ) : (
-            <>
-              {note.sentence.slice(0, at)}
-              <mark className="highlighter text-inherit">{text}</mark>
-              {note.sentence.slice(at + text.length)}
-            </>
-          )}
+          <MarkedSentence sentence={note.sentence} text={text} />
         </p>
       )}
 

@@ -1,13 +1,12 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Check, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
-import { Button } from "~/components/ui/button";
 import { homeOf } from "~/lib/links";
 import { chapterLabel } from "~/lib/sections";
 import type { FlashcardsView } from "~/lib/views";
+import { CardControls } from "./CardControls";
 import { CardFace } from "./CardFace";
 import { useSession } from "./hooks/useSession";
 import { ModeTabs, type CardMode } from "./ModeTabs";
@@ -27,30 +26,12 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
   const home = homeOf({ kind: "kanji", level: view.level });
   const percent = total === 0 ? 100 : (done / total) * 100;
   const position = `${Math.min(session.position, total)} / ${total}`;
-  const { prev, next, flip } = session;
   const modeTabs = <ModeTabs mode={mode} onChange={setMode} />;
   const counts = (
     <Trans>
       {session.firstTry} got it · {session.missed.length} again
     </Trans>
   );
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      // With a modifier, the keys are the browser's (Alt+← goes back a page).
-      if (!current || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      // Space on a focused button or link presses it, as anywhere else; ↑ and ↓ flip whatever has focus.
-      const onControl = event.target instanceof Element && event.target.closest("button, a, input, select, textarea");
-      if (event.key === "ArrowLeft") prev?.();
-      else if (event.key === "ArrowRight") next?.();
-      else if (event.key === "ArrowUp" || event.key === "ArrowDown" || (event.key === " " && !onControl)) {
-        event.preventDefault(); // instead of scrolling the page
-        flip();
-      }
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [current, prev, next, flip]);
 
   return (
     <div className="min-h-screen">
@@ -84,30 +65,7 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
               <span className="text-caption text-muted-foreground">{counts}</span>
             </div>
             <CardFace key={current.wordId} card={current} mode={mode} flipped={session.flipped} onFlip={session.flip} />
-            <div className="flex justify-center gap-2">
-              <Button variant="outline" size="lg" onClick={session.prev} disabled={!session.prev} aria-label={t`Previous card`} className="aspect-square px-0">
-                <ChevronLeft aria-hidden="true" />
-              </Button>
-              {session.flipped ? (
-                <div className="grid flex-1 grid-cols-2 gap-2 md:flex-none">
-                  <Button variant="outline" size="lg" onClick={session.again} className="font-semibold">
-                    <RotateCcw aria-hidden="true" />
-                    <Trans>Again</Trans>
-                  </Button>
-                  <Button size="lg" onClick={session.gotIt} className="font-semibold">
-                    <Check aria-hidden="true" />
-                    <Trans>Got it</Trans>
-                  </Button>
-                </div>
-              ) : (
-                <Button size="lg" onClick={session.flip} className="flex-1 font-semibold md:flex-none md:px-8">
-                  <Trans>Show answer</Trans>
-                </Button>
-              )}
-              <Button variant="outline" size="lg" onClick={session.next} disabled={!session.next} aria-label={t`Next card`} className="aspect-square px-0">
-                <ChevronRight aria-hidden="true" />
-              </Button>
-            </div>
+            <CardControls session={session} />
           </>
         ) : (
           <SessionDone

@@ -1,10 +1,12 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { useRef } from "react";
+import { Button } from "~/components/ui/button";
 import { TEXTAREA_CLASS } from "~/components/form/styles";
 import { Markdown } from "~/components/Markdown";
 
 /**
  * A note's memo: drawn from its Markdown, or "Add a memo" when there is none, or, while `editing`, a text box. Leaving
- * the box closes it with what it holds, ⌘/Ctrl+Enter too, and Escape closes it as it was.
+ * the box closes it with what it holds, Done and ⌘/Ctrl+Enter too, and Escape closes it as it was.
  */
 export function Memo({
   memo,
@@ -20,11 +22,13 @@ export function Memo({
   onClose: (memo: string) => void;
 }) {
   const { t } = useLingui();
+  const box = useRef<HTMLTextAreaElement>(null);
 
   if (editing) {
     return (
       <>
         <textarea
+          ref={box}
           aria-label={t`Memo`}
           // Opened by a click on Edit, to type in.
           autoFocus
@@ -38,6 +42,17 @@ export function Memo({
           }}
           onBlur={(event) => onClose(event.currentTarget.value.trim())}
         />
+        {/* Shows the box saves; on a phone there is no ⌘+Enter. Keeps the focus on press, so the blur saves once. */}
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="self-end"
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => box.current?.blur()}
+        >
+          <Trans>Done</Trans>
+        </Button>
       </>
     );
   }

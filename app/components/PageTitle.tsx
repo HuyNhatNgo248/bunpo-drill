@@ -12,7 +12,7 @@ export function PageTitle({
   back,
   children,
 }: {
-  level: string;
+  level?: string;
   meta: ReactNode;
   back?: { to: string; label: ReactNode };
   children: ReactNode;
@@ -20,7 +20,7 @@ export function PageTitle({
   return (
     <div className="hidden flex-col gap-2 md:flex">
       <div className="flex flex-wrap items-center gap-2 text-caption text-muted-foreground">
-        <Badge>{level}</Badge>
+        {level && <Badge>{level}</Badge>}
         <span>{meta}</span>
         {back && (
           <Link to={back.to} className="ml-auto text-subtle-foreground no-underline hover:text-foreground">
