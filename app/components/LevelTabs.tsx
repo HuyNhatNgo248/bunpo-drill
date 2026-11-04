@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { Link, useNavigation } from "react-router";
+import { TabHighlight } from "~/components/TabHighlight";
 import { cn } from "~/lib/utils";
 import type { JlptLevel } from "~/lib/payload";
 
@@ -22,11 +23,7 @@ export function LevelTabs({
     // A phone's row is too narrow for the title and five tabs, so the tabs wrap under it and fill the width.
     <nav aria-label={t`Level`} className="w-full rounded-lg border bg-card p-1 md:w-auto">
       <div className="relative grid auto-cols-fr grid-flow-col">
-        <span
-          aria-hidden="true"
-          className="absolute inset-y-0 left-0 rounded-md bg-primary-soft transition-transform duration-300 ease-out motion-reduce:transition-none"
-          style={{ width: `${100 / levels.length}%`, transform: `translateX(${levels.indexOf(shown) * 100}%)` }}
-        />
+        <TabHighlight index={levels.indexOf(shown)} count={levels.length} />
         {levels.map((level) => {
           return (
             <Link

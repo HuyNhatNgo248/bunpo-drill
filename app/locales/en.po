@@ -517,7 +517,7 @@ msgstr "Full mock tests in the same three formats as the real exam, graded as so
 msgid "Got it"
 msgstr "Got it"
 
-#: app/components/SubjectTabs.tsx:27
+#: app/components/SubjectTabs.tsx:28
 msgid "Grammar"
 msgstr "Grammar"
 
@@ -579,7 +579,7 @@ msgstr "JLPT grammar practice in the real test's format"
 
 #: app/components/kanji/index.tsx:23
 #: app/components/results/Actions.tsx:42
-#: app/components/SubjectTabs.tsx:28
+#: app/components/SubjectTabs.tsx:29
 #: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "Kanji"
@@ -623,7 +623,7 @@ msgid "Learned in {chapter}"
 msgstr "Learned in {chapter}"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/LevelTabs.tsx:23
+#: app/components/LevelTabs.tsx:24
 msgid "Level"
 msgstr "Level"
 
@@ -738,7 +738,7 @@ msgid "Not yet"
 msgstr "Not yet"
 
 #: app/components/notes/index.tsx:15
-#: app/components/SubjectTabs.tsx:29
+#: app/components/SubjectTabs.tsx:30
 #: app/routes/notes.tsx:13
 msgid "Notes"
 msgstr "Notes"
@@ -1018,7 +1018,7 @@ msgstr "Start practicing today"
 msgid "Still learning ({again})"
 msgstr "Still learning ({again})"
 
-#: app/components/SubjectTabs.tsx:36
+#: app/components/SubjectTabs.tsx:37
 msgid "Subject"
 msgstr "Subject"
 
@@ -1200,12 +1200,12 @@ msgid "Week"
 msgstr "Week"
 
 #: app/components/home/test-list/index.tsx:45
-#: app/components/home/test-list/WeekRail.tsx:52
+#: app/components/home/test-list/WeekRail.tsx:66
 #: app/lib/sections.ts:60
 msgid "Week {week}"
 msgstr "Week {week}"
 
-#: app/components/home/test-list/WeekRail.tsx:31
+#: app/components/home/test-list/WeekRail.tsx:35
 msgid "Weeks"
 msgstr "Weeks"
 

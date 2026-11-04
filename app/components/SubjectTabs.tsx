@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { Link, useLocation, useNavigation } from "react-router";
+import { TabHighlight } from "~/components/TabHighlight";
 import { cn } from "~/lib/utils";
 import type { JlptLevel } from "~/lib/payload";
 
@@ -35,11 +36,7 @@ export function SubjectTabs({ level }: { level: JlptLevel | null }) {
   return (
     <nav aria-label={t`Subject`} className="w-full rounded-lg border bg-card p-1 md:w-96">
       <div className="relative grid grid-cols-3">
-        <span
-          aria-hidden="true"
-          className="absolute inset-y-0 left-0 w-1/3 rounded-md bg-primary-soft transition-transform duration-300 ease-out motion-reduce:transition-none"
-          style={{ transform: `translateX(${tabs.findIndex((tab) => tab.kind === shown) * 100}%)` }}
-        />
+        <TabHighlight index={tabs.findIndex((tab) => tab.kind === shown)} count={tabs.length} />
         {tabs.map(({ kind, path, label }) => (
           <Link
             key={kind}

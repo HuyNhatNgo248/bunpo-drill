@@ -517,7 +517,7 @@ msgstr "本番と同じ3つの問題形式の模擬試験で、提出すると�
 msgid "Got it"
 msgstr "覚えた"
 
-#: app/components/SubjectTabs.tsx:27
+#: app/components/SubjectTabs.tsx:28
 msgid "Grammar"
 msgstr "文法"
 
@@ -579,7 +579,7 @@ msgstr "本番形式で練習する、JLPTの文法"
 
 #: app/components/kanji/index.tsx:23
 #: app/components/results/Actions.tsx:42
-#: app/components/SubjectTabs.tsx:28
+#: app/components/SubjectTabs.tsx:29
 #: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "漢字"
@@ -623,7 +623,7 @@ msgid "Learned in {chapter}"
 msgstr "{chapter}の習得"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/LevelTabs.tsx:23
+#: app/components/LevelTabs.tsx:24
 msgid "Level"
 msgstr "レベル"
 
@@ -738,7 +738,7 @@ msgid "Not yet"
 msgstr "まだ"
 
 #: app/components/notes/index.tsx:15
-#: app/components/SubjectTabs.tsx:29
+#: app/components/SubjectTabs.tsx:30
 #: app/routes/notes.tsx:13
 msgid "Notes"
 msgstr "ノート"
@@ -1018,7 +1018,7 @@ msgstr "今日から練習を始める"
 msgid "Still learning ({again})"
 msgstr "まだ覚えていない語（{again}）"
 
-#: app/components/SubjectTabs.tsx:36
+#: app/components/SubjectTabs.tsx:37
 msgid "Subject"
 msgstr "科目"
 
@@ -1200,12 +1200,12 @@ msgid "Week"
 msgstr "週"
 
 #: app/components/home/test-list/index.tsx:45
-#: app/components/home/test-list/WeekRail.tsx:52
+#: app/components/home/test-list/WeekRail.tsx:66
 #: app/lib/sections.ts:60
 msgid "Week {week}"
 msgstr "第{week}週"
 
-#: app/components/home/test-list/WeekRail.tsx:31
+#: app/components/home/test-list/WeekRail.tsx:35
 msgid "Weeks"
 msgstr "週"
 
