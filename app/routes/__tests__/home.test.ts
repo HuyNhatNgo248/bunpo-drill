@@ -18,7 +18,6 @@ import { metaArgs, routeArgs } from "#tests/helpers/route";
 import type { Tab } from "~/lib/lastTab";
 import { createTest, saveSubmission, setReviewed } from "~/lib/tests.server";
 import { lastTabOf, saveLastTab } from "~/lib/users.server";
-import { thrownBy } from "#tests/helpers/thrown";
 import { loader, meta, shouldRevalidate } from "../home";
 
 /** The signed-in user, whose progress the routes read and write. */
@@ -139,10 +138,8 @@ describe("home loader levels", () => {
       expect((await loadAfter({ subject: "grammar", level: "N3" })).level).toBe("N3");
     });
 
-    it("opens the kanji tab when that was the last one, at its level", async () => {
-      const thrown = (await thrownBy(() => loadAfter({ subject: "kanji", level: "N2" }))) as Response;
-
-      expect(thrown.headers.get("Location")).toBe("/kanji?level=N2");
+    it("stays on grammar when kanji was the last tab, at its level", async () => {
+      expect((await loadAfter({ subject: "kanji", level: "N2" })).level).toBe("N2");
     });
 
     it("keeps to the level the URL names", async () => {

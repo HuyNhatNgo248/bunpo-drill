@@ -93,7 +93,7 @@ msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
 #: app/components/home/test-list/TestRow.tsx:48
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/TestRow.tsx:70
 #: app/components/quiz/index.tsx:79
 #: app/components/welcome/TrialTests.tsx:60
 msgid "{total, plural, one {# question} other {# questions}}"
@@ -1005,7 +1005,7 @@ msgstr "Slot {n}"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: app/components/home/test-list/TestRow.tsx:71
+#: app/components/home/test-list/TestRow.tsx:72
 #: app/components/welcome/TrialTests.tsx:65
 msgid "Start"
 msgstr "Start"

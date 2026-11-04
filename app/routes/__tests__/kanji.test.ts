@@ -54,9 +54,9 @@ describe("kanji loader", () => {
     expect((await load()).home.level).toBe("N2");
   });
 
-  it("opens the kanji level the user last opened when none is asked for, but not a grammar one", async () => {
+  it("opens the level the user last opened when none is asked for, grammar or kanji", async () => {
     expect((await loadAfter({ subject: "kanji", level: "N3" })).home.level).toBe("N3");
-    expect((await loadAfter({ subject: "grammar", level: "N3" })).home.level).toBe("N2");
+    expect((await loadAfter({ subject: "grammar", level: "N3" })).home.level).toBe("N3");
     expect((await loadAfter({ subject: "kanji", level: "N3" }, "?level=N2")).home.level).toBe("N2");
   });
 

@@ -44,7 +44,7 @@ export function SubjectTabs({ level }: { level: JlptLevel | null }) {
           <Link
             key={kind}
             to={level && kind !== "notes" ? `${path}?level=${level}` : path}
-            prefetch="intent"
+            // No prefetch: the loader saves the last tab, so a hover would save a tab never opened.
             aria-current={kind === current ? "page" : undefined}
             className={cn(
               // Not positioned, so its hover background is under the sliding highlight; only its words are over it.

@@ -32,7 +32,7 @@ export function LevelTabs({
             <Link
               key={level}
               to={`?level=${level}`}
-              prefetch="intent"
+              // No prefetch: the loader saves the last tab, so a hover would save a tab never opened.
               aria-current={level === current ? "page" : undefined}
               className={cn(
                 // Not positioned, so its hover background is under the sliding highlight; only its words are over it.

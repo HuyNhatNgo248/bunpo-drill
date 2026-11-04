@@ -1,5 +1,5 @@
 import { msg } from "@lingui/core/macro";
-import { redirect, type ShouldRevalidateFunction } from "react-router";
+import type { ShouldRevalidateFunction } from "react-router";
 import type { Route } from "./+types/home";
 import { Home } from "~/components/home";
 import { requireUserId } from "~/lib/auth.server";
@@ -17,9 +17,8 @@ export async function loader({ request }: Route.LoaderArgs) {
   const params = new URL(request.url).searchParams;
   const userId = await requireUserId(request);
   const named = JLPT_LEVELS.find((candidate) => candidate === params.get("level"));
-  // Opened with no level (the app's address, or a sign-in): the tab the user last opened, on any device.
+  // Opened with no level (the app's address, or a sign-in): the level the user last opened, grammar or kanji, on any device.
   const [last, newest] = named ? [null, null] : await Promise.all([lastTabOf(userId), newestLevel()]);
-  if (last?.subject === "kanji") throw redirect(`/kanji?level=${last.level}`);
   // One level at a time: the one named, with tests or not, else the last one opened, else the level of the newest test.
   // Not the top test's: a test of another level can sort above it.
   const level = named ?? last?.level ?? newest;

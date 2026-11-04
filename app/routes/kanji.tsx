@@ -17,9 +17,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   const userId = await requireUserId(request);
   const named = JLPT_LEVELS.find((candidate) => candidate === param);
   const [last, levels] = named ? [null, []] : await Promise.all([lastTabOf(userId), chapterLevels()]);
-  // The level named, else the kanji level the user last opened (on any device), else the hardest that has a chapter,
-  // else the level of the book.
-  const level = named ?? (last?.subject === "kanji" ? last.level : undefined) ?? levels.at(-1) ?? KANJI_LEVEL;
+  // The level named, else the level the user last opened, grammar or kanji (on any device), else the hardest that has a
+  // chapter, else the level of the book.
+  const level = named ?? last?.level ?? levels.at(-1) ?? KANJI_LEVEL;
   // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
   saveLastTab(userId, { subject: "kanji", level }).catch(console.error);
   if (!isTestLevel(level)) {
