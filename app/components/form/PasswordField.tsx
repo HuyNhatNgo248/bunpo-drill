@@ -2,6 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Eye, EyeOff } from "lucide-react";
 import { useId, useState } from "react";
+import { INPUT_CLASS } from "./styles";
 
 /**
  * A labelled password input with an eye button that shows or hides what's typed.
@@ -22,7 +23,7 @@ export function PasswordField({
         {label}
       </label>
       <div className="relative flex">
-        <input {...props} id={id} type={shown ? "text" : "password"} className={cn(className, "w-full pr-11")} />
+        <input {...props} id={id} type={shown ? "text" : "password"} className={cn(INPUT_CLASS, className, "w-full pr-11")} />
         <button
           type="button"
           onClick={() => setShown(!shown)}

@@ -2,15 +2,13 @@ import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/kanji";
 import { KanjiHome } from "~/components/kanji";
 import { requireUserId } from "~/lib/auth.server";
-import { localeFromMatches, translate } from "~/lib/i18n";
+import { titleMeta } from "~/lib/i18n";
 import { chapterLevels, latestKanjiTests, learnedIds, listChapters } from "~/lib/kanji.server";
 import { toKanjiHome } from "~/lib/kanji-views.server";
 import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL } from "~/lib/payload";
 import { lastTabOf, saveLastTab } from "~/lib/users.server";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`Kanji`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`Kanji`);
 
 export async function loader({ request }: Route.LoaderArgs) {
   const param = new URL(request.url).searchParams.get("level");

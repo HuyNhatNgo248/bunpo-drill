@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Form, useNavigation } from "react-router";
 import { PasswordField } from "~/components/form/PasswordField";
+import { Status } from "~/components/form/Status";
 import { INPUT_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
 
@@ -62,13 +63,8 @@ export function LoginForm({ signup, redirectTo, error }: { signup: boolean; redi
         autoComplete={signup ? "new-password" : "current-password"}
         aria-invalid={invalid}
         aria-describedby={describedBy}
-        className={INPUT_CLASS}
       />
-      {error && (
-        <p id="login-error" role="alert" className="text-caption text-primary-soft-foreground">
-          {error}
-        </p>
-      )}
+      <Status id="login-error" error={error} />
       <Button type="submit" disabled={pending}>
         {signup ? (pending ? t`Creating…` : t`Create account`) : pending ? t`Signing in…` : t`Sign in`}
       </Button>

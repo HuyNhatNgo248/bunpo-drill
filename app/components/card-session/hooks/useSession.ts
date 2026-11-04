@@ -26,6 +26,7 @@ export function useSession<C extends { wordId: string; learned?: boolean }>(card
   };
 
   const total = session.done.length + session.queue.length;
+  const done = session.done.length;
   return {
     current,
     flipped: session.flipped,
@@ -36,9 +37,11 @@ export function useSession<C extends { wordId: string; learned?: boolean }>(card
     gotIt,
     studyAgain: () => dispatch({ type: "restart", wordIds: session.missed }),
     total,
-    done: session.done.length,
-    /** Where the card on the table is in the deck: the cards done, then its place among the rest. */
-    position: session.done.length + session.index + 1,
+    done,
+    /** The cards done, as a share of the bar. */
+    percent: total === 0 ? 100 : (done / total) * 100,
+    /** Where the card on the table is in the deck, as "4 / 20": the cards done, then its place among the rest. */
+    position: `${Math.min(done + session.index + 1, total)} / ${total}`,
     /** Got it the first time, in this round. */
     firstTry: session.done.filter((id) => !session.missed.includes(id)).length,
     missed: cardsOf(session.missed),

@@ -6,11 +6,9 @@ import type { AccountResult } from "~/components/account/types";
 import { loginCookie, requireUserId, signOut } from "~/lib/auth.server";
 import { checkEmail, checkName, checkNewPassword, normalizeEmail } from "~/lib/users";
 import { changePassword, deleteUser, getUser, passwordMatches, renameUser, setEmail } from "~/lib/users.server";
-import { localeFromMatches, requestLocale, translate } from "~/lib/i18n";
+import { requestLocale, titleMeta, translate } from "~/lib/i18n";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`Account`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`Account`);
 
 export async function loader({ request }: Route.LoaderArgs) {
   const user = await getUser(await requireUserId(request));

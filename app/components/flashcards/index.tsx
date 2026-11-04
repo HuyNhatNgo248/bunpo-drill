@@ -1,14 +1,14 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useState } from "react";
+import { CardControls } from "~/components/card-session/CardControls";
+import { useSession } from "~/components/card-session/hooks/useSession";
 import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
 import { homeOf } from "~/lib/links";
 import { chapterLabel } from "~/lib/sections";
 import type { FlashcardsView } from "~/lib/views";
-import { CardControls } from "./CardControls";
 import { CardFace } from "./CardFace";
-import { useSession } from "./hooks/useSession";
 import { ModeTabs, type CardMode } from "./ModeTabs";
 import { SessionDone } from "./SessionDone";
 
@@ -21,11 +21,9 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
   const { t, i18n } = useLingui();
   const [mode, setMode] = useState<CardMode>("kanji-reading");
   const session = useSession(view.cards);
-  const { current, total, done } = session;
+  const { current, total, done, percent, position } = session;
   const name = `${chapterLabel(i18n, view.chapter)} ${view.title}`;
   const home = homeOf({ kind: "kanji", level: view.level });
-  const percent = total === 0 ? 100 : (done / total) * 100;
-  const position = `${Math.min(session.position, total)} / ${total}`;
   const modeTabs = <ModeTabs mode={mode} onChange={setMode} />;
   const counts = (
     <Trans>

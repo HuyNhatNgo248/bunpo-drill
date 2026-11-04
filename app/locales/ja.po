@@ -17,23 +17,22 @@ msgstr "（復習済み）"
 
 #. placeholder {0}: session.firstTry
 #. placeholder {1}: session.missed.length
-#: app/components/flashcards/index.tsx:31
+#: app/components/flashcards/index.tsx:29
 msgid "{0} got it · {1} again"
 msgstr "覚えた {0} · もう一度 {1}"
 
 #. placeholder {0}: card.lesson.title
 #. placeholder {1}: card.lesson.page
-#: app/components/flashcards/CardFace.tsx:21
+#: app/components/flashcards/CardFace.tsx:18
 msgid "{0} p.{1}"
 msgstr "{0} p.{1}"
 
-#: app/components/flashcards/SessionDone.tsx:92
-#: app/components/note-cards/index.tsx:73
+#: app/components/flashcards/SessionDone.tsx:82
+#: app/components/note-cards/index.tsx:63
 msgid "{again, plural, one {Study it again} other {Study the # again}}"
 msgstr "{again, plural, other {#枚をもう一度}}"
 
-#: app/components/flashcards/SessionDone.tsx:46
-#: app/components/note-cards/index.tsx:67
+#: app/components/card-session/SessionSummary.tsx:15
 msgid "{again} needed again"
 msgstr "もう一度 {again}枚"
 
@@ -49,8 +48,7 @@ msgstr "{count, plural, other {この#語を単語カードで覚える}}"
 msgid "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
 msgstr "{daysLeft, plural, other {1日1回の模擬試験なら、試験日までに#回解けます。}}"
 
-#: app/components/flashcards/SessionDone.tsx:44
-#: app/components/note-cards/index.tsx:65
+#: app/components/card-session/SessionSummary.tsx:13
 msgid "{gotIt} got it first time"
 msgstr "一回で覚えた {gotIt}枚"
 
@@ -79,7 +77,7 @@ msgstr "正解 {score} · 不正解 {wrong} · 未回答 {unanswered}"
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}：{text}（タップで外す）"
 
-#: app/components/flashcards/CardFace.tsx:94
+#: app/components/flashcards/CardFace.tsx:84
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, other {#画}}"
 
@@ -91,8 +89,7 @@ msgstr "{taken} / {total} 受験済み"
 msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
 
-#: app/components/flashcards/SessionDone.tsx:42
-#: app/components/note-cards/index.tsx:63
+#: app/components/card-session/SessionSummary.tsx:11
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
@@ -103,7 +100,7 @@ msgstr "{total, plural, other {#枚}}"
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
-#: app/components/quiz/CheckSection.tsx:48
+#: app/components/quiz/CheckSection.tsx:45
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, other {この問題には未回答が#問あります。採点しますか？}}"
 
@@ -120,7 +117,7 @@ msgstr "不正解 {wrong}問"
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 
-#: app/components/flashcards/index.tsx:47
+#: app/components/flashcards/index.tsx:45
 #: app/components/quiz/index.tsx:80
 #: app/components/results/index.tsx:42
 msgid "← Kanji"
@@ -131,7 +128,7 @@ msgstr "← 漢字"
 msgid "← Mock tests"
 msgstr "← テスト一覧"
 
-#: app/components/note-cards/index.tsx:42
+#: app/components/note-cards/index.tsx:41
 msgid "← Notes"
 msgstr "← ノート"
 
@@ -181,7 +178,7 @@ msgstr "約{points}文型"
 #: app/components/layout/header/index.tsx:39
 #: app/components/layout/header/index.tsx:45
 #: app/components/layout/header/index.tsx:61
-#: app/routes/account.tsx:12
+#: app/routes/account.tsx:11
 msgid "Account"
 msgstr "アカウント"
 
@@ -201,8 +198,8 @@ msgstr "ノートに追加"
 msgid "Adding…"
 msgstr "追加しています…"
 
-#: app/components/flashcards/CardControls.tsx:41
-#: app/components/flashcards/SessionDone.tsx:58
+#: app/components/card-session/CardControls.tsx:41
+#: app/components/flashcards/SessionDone.tsx:48
 msgid "Again"
 msgstr "もう一度"
 
@@ -222,8 +219,7 @@ msgstr "3つの問題すべてを、提出するとすぐに採点します。�
 msgid "Already in your notes."
 msgstr "すでにノートにあります。"
 
-#: app/components/flashcards/CardFace.tsx:56
-#: app/components/note-cards/index.tsx:123
+#: app/components/card-session/FlipCard.tsx:46
 msgid "Answer"
 msgstr "答え"
 
@@ -245,8 +241,8 @@ msgstr "回答済み {answered} / {total}"
 msgid "Answered {done} / {total}"
 msgstr "回答済み {done} / {total}"
 
-#: app/components/account/PasswordForm.tsx:32
-#: app/components/login/LoginForm.tsx:58
+#: app/components/account/PasswordForm.tsx:26
+#: app/components/login/LoginForm.tsx:59
 #: app/components/reset-password/ResetPasswordForm.tsx:16
 msgid "At least 8 characters"
 msgstr "8文字以上"
@@ -259,19 +255,19 @@ msgstr "平均"
 msgid "Average score"
 msgstr "平均正答率"
 
-#: app/components/flashcards/SessionDone.tsx:111
+#: app/components/flashcards/SessionDone.tsx:101
 msgid "Back to chapters"
 msgstr "章の一覧に戻る"
 
-#: app/components/flashcards/index.tsx:43
+#: app/components/flashcards/index.tsx:41
 #: app/components/quiz/index.tsx:68
 #: app/components/results/Actions.tsx:45
 #: app/components/results/index.tsx:35
 msgid "Back to kanji"
 msgstr "漢字に戻る"
 
-#: app/components/note-cards/index.tsx:38
-#: app/components/note-cards/index.tsx:78
+#: app/components/note-cards/index.tsx:37
+#: app/components/note-cards/index.tsx:68
 msgid "Back to notes"
 msgstr "ノートに戻る"
 
@@ -303,15 +299,15 @@ msgstr "「{piece}」の移動を取り消しました。"
 msgid "Card side"
 msgstr "カードの面"
 
-#: app/components/flashcards/index.tsx:42
-#: app/components/flashcards/index.tsx:53
-#: app/components/note-cards/index.tsx:37
-#: app/components/note-cards/index.tsx:45
+#: app/components/flashcards/index.tsx:40
+#: app/components/flashcards/index.tsx:51
+#: app/components/note-cards/index.tsx:36
+#: app/components/note-cards/index.tsx:44
 msgid "Cards done"
 msgstr "終わったカード"
 
-#: app/components/flashcards/index.tsx:54
-#: app/components/note-cards/index.tsx:46
+#: app/components/flashcards/index.tsx:52
+#: app/components/note-cards/index.tsx:45
 msgid "Cards done {done} / {total}"
 msgstr "終わったカード {done} / {total}"
 
@@ -319,13 +315,13 @@ msgstr "終わったカード {done} / {total}"
 msgid "ch."
 msgstr "章"
 
-#: app/components/account/PasswordForm.tsx:41
-#: app/components/reset-password/ResetPasswordForm.tsx:32
+#: app/components/account/PasswordForm.tsx:29
+#: app/components/reset-password/ResetPasswordForm.tsx:27
 msgid "Change password"
 msgstr "パスワードを変更"
 
-#: app/components/account/PasswordForm.tsx:41
-#: app/components/reset-password/ResetPasswordForm.tsx:32
+#: app/components/account/PasswordForm.tsx:29
+#: app/components/reset-password/ResetPasswordForm.tsx:27
 msgid "Changing…"
 msgstr "変更中…"
 
@@ -341,15 +337,15 @@ msgstr "章が見つかりません"
 msgid "Chapters"
 msgstr "章"
 
-#: app/components/quiz/CheckSection.tsx:58
+#: app/components/quiz/CheckSection.tsx:55
 msgid "Check"
 msgstr "採点する"
 
-#: app/components/quiz/CheckSection.tsx:63
+#: app/components/quiz/CheckSection.tsx:60
 msgid "Check Part {no}"
 msgstr "問題{no}を採点"
 
-#: app/components/quiz/CheckSection.tsx:54
+#: app/components/quiz/CheckSection.tsx:51
 msgid "Check Part {no}?"
 msgstr "問題{no}を採点しますか？"
 
@@ -357,7 +353,7 @@ msgstr "問題{no}を採点しますか？"
 msgid "Check your answers"
 msgstr "解答の確認"
 
-#: app/components/quiz/CheckSection.tsx:63
+#: app/components/quiz/CheckSection.tsx:60
 msgid "Checking…"
 msgstr "採点中…"
 
@@ -418,24 +414,24 @@ msgstr "正解！"
 msgid "Couldn't add it. Please try again."
 msgstr "追加できませんでした。もう一度お試しください。"
 
-#: app/components/notes/NoteCard.tsx:69
+#: app/components/notes/NoteCard.tsx:68
 msgid "Couldn't save. Please try again."
 msgstr "保存できませんでした。もう一度お試しください。"
 
 #: app/components/layout/header/index.tsx:74
-#: app/components/login/LoginForm.tsx:73
+#: app/components/login/LoginForm.tsx:69
 #: app/components/results/Actions.tsx:28
 #: app/components/welcome/index.tsx:52
 #: app/components/welcome/SampleQuiz.tsx:231
 msgid "Create account"
 msgstr "アカウントを作成"
 
-#: app/components/login/LoginForm.tsx:73
+#: app/components/login/LoginForm.tsx:69
 msgid "Creating…"
 msgstr "作成中…"
 
-#: app/components/account/EmailForm.tsx:41
-#: app/components/account/PasswordForm.tsx:29
+#: app/components/account/EmailForm.tsx:38
+#: app/components/account/PasswordForm.tsx:25
 msgid "Current password"
 msgstr "現在のパスワード"
 
@@ -456,21 +452,21 @@ msgstr "削除"
 msgid "Delete “{title}”?"
 msgstr "「{title}」を削除しますか？"
 
-#: app/components/notes/NoteCard.tsx:51
+#: app/components/notes/NoteCard.tsx:52
 msgid "Delete {text}"
 msgstr "{text}を削除"
 
-#: app/components/account/DeleteAccountForm.tsx:24
-#: app/components/account/DeleteAccountForm.tsx:36
-#: app/components/account/DeleteAccountForm.tsx:40
+#: app/components/account/DeleteAccountForm.tsx:20
+#: app/components/account/DeleteAccountForm.tsx:29
+#: app/components/account/DeleteAccountForm.tsx:33
 msgid "Delete account"
 msgstr "アカウントを削除"
 
-#: app/components/account/DeleteAccountForm.tsx:34
+#: app/components/account/DeleteAccountForm.tsx:27
 msgid "Delete your account?"
 msgstr "アカウントを削除しますか？"
 
-#: app/components/account/DeleteAccountForm.tsx:40
+#: app/components/account/DeleteAccountForm.tsx:33
 msgid "Deleting…"
 msgstr "削除中…"
 
@@ -487,18 +483,18 @@ msgstr "完了"
 msgid "draggable"
 msgstr "ドラッグ可能"
 
-#: app/components/notes/NoteCard.tsx:47
+#: app/components/notes/NoteCard.tsx:48
 msgid "Edit the memo of {text}"
 msgstr "{text}のメモを編集"
 
-#: app/components/account/EmailForm.tsx:19
-#: app/components/account/EmailForm.tsx:33
-#: app/components/forgot-password/ForgotPasswordForm.tsx:14
-#: app/components/login/LoginForm.tsx:38
+#: app/components/account/EmailForm.tsx:17
+#: app/components/account/EmailForm.tsx:30
+#: app/components/forgot-password/ForgotPasswordForm.tsx:15
+#: app/components/login/LoginForm.tsx:39
 msgid "Email address"
 msgstr "メールアドレス"
 
-#: app/routes/account.tsx:50
+#: app/routes/account.tsx:48
 msgid "Email address saved."
 msgstr "メールアドレスを保存しました。"
 
@@ -514,8 +510,8 @@ msgstr "ユーザー名またはメールアドレスと、パスワードを入
 msgid "Error {status}"
 msgstr "エラー {status}"
 
-#: app/components/flashcards/index.tsx:39
-#: app/components/flashcards/index.tsx:51
+#: app/components/flashcards/index.tsx:37
+#: app/components/flashcards/index.tsx:49
 #: app/components/kanji/chapter-list/ChapterRow.tsx:63
 #: app/routes/flashcards.tsx:14
 msgid "Flashcards"
@@ -525,8 +521,8 @@ msgstr "単語カード"
 msgid "Forgot your password?"
 msgstr "パスワードを忘れた場合"
 
-#: app/components/note-cards/index.tsx:132
-#: app/components/notes/NoteCard.tsx:83
+#: app/components/note-cards/index.tsx:115
+#: app/components/notes/NoteCard.tsx:80
 msgid "From {testTitle}"
 msgstr "出典：{testTitle}"
 
@@ -534,12 +530,12 @@ msgstr "出典：{testTitle}"
 msgid "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 msgstr "本番と同じ3つの問題形式の模擬試験で、提出するとすぐに採点されます。間違えた文型はそのまま復習リストに。"
 
-#: app/components/flashcards/CardControls.tsx:45
-#: app/components/flashcards/SessionDone.tsx:52
+#: app/components/card-session/CardControls.tsx:45
+#: app/components/flashcards/SessionDone.tsx:42
 msgid "Got it"
 msgstr "覚えた"
 
-#: app/components/SubjectTabs.tsx:28
+#: app/components/SubjectTabs.tsx:27
 msgid "Grammar"
 msgstr "文法"
 
@@ -571,7 +567,7 @@ msgstr "アカウントをお持ちの方は <0>ログイン</0>"
 msgid "Hi {name},"
 msgstr "{name}さん"
 
-#: app/components/form/PasswordField.tsx:29
+#: app/components/form/PasswordField.tsx:30
 msgid "Hide {label}"
 msgstr "{label}を隠す"
 
@@ -601,8 +597,8 @@ msgstr "本番形式で練習する、JLPTの文法"
 
 #: app/components/kanji/index.tsx:23
 #: app/components/results/Actions.tsx:42
-#: app/components/SubjectTabs.tsx:29
-#: app/routes/kanji.tsx:12
+#: app/components/SubjectTabs.tsx:28
+#: app/routes/kanji.tsx:11
 msgid "Kanji"
 msgstr "漢字"
 
@@ -610,7 +606,7 @@ msgstr "漢字"
 msgid "Kanji for {level} is coming later."
 msgstr "{level}の漢字は今後追加される予定です。"
 
-#: app/components/flashcards/CardFace.tsx:70
+#: app/components/flashcards/CardFace.tsx:60
 msgid "Kanji in this word"
 msgstr "この語の漢字"
 
@@ -618,7 +614,7 @@ msgstr "この語の漢字"
 msgid "Kanji reading"
 msgstr "漢字読み"
 
-#: app/components/quiz/CheckSection.tsx:59
+#: app/components/quiz/CheckSection.tsx:56
 #: app/components/quiz/SubmitBar.tsx:67
 msgid "Keep answering"
 msgstr "解答を続ける"
@@ -627,7 +623,7 @@ msgstr "解答を続ける"
 msgid "Keep going"
 msgstr "続ける"
 
-#: app/components/flashcards/CardFace.tsx:80
+#: app/components/flashcards/CardFace.tsx:70
 msgid "kun"
 msgstr "訓"
 
@@ -640,12 +636,12 @@ msgstr "言語：{0}"
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
 
-#: app/components/flashcards/SessionDone.tsx:66
+#: app/components/flashcards/SessionDone.tsx:56
 msgid "Learned in {chapter}"
 msgstr "{chapter}の習得"
 
 #: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/LevelTabs.tsx:24
+#: app/components/LevelTabs.tsx:23
 msgid "Level"
 msgstr "レベル"
 
@@ -679,7 +675,7 @@ msgstr "間違えた単語"
 
 #: app/components/home/index.tsx:31
 #: app/components/results/Actions.tsx:51
-#: app/routes/home.tsx:13
+#: app/routes/home.tsx:12
 msgid "Mock tests"
 msgstr "模擬試験"
 
@@ -688,7 +684,7 @@ msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
 #. placeholder {0}: card.headword
-#: app/components/flashcards/CardFace.tsx:125
+#: app/components/flashcards/CardFace.tsx:115
 msgid "More words with <0>{0}</0>"
 msgstr "<0>{0}</0>を使うほかの語"
 
@@ -700,18 +696,18 @@ msgstr "はじめての方は <0>アカウントを作成</0>"
 msgid "New mock tests show up here."
 msgstr "新しい模擬試験はここに表示されます。"
 
-#: app/components/account/PasswordForm.tsx:31
+#: app/components/account/PasswordForm.tsx:26
 #: app/components/reset-password/index.tsx:21
 #: app/components/reset-password/ResetPasswordForm.tsx:15
-#: app/routes/reset-password.tsx:11
+#: app/routes/reset-password.tsx:10
 msgid "New password"
 msgstr "新しいパスワード"
 
-#: app/components/flashcards/CardControls.tsx:53
+#: app/components/card-session/CardControls.tsx:53
 msgid "Next card"
 msgstr "次のカード"
 
-#: app/components/flashcards/SessionDone.tsx:98
+#: app/components/flashcards/SessionDone.tsx:88
 msgid "Next cards"
 msgstr "次のカード"
 
@@ -743,7 +739,7 @@ msgstr "ノートはまだありません"
 msgid "no quiz yet"
 msgstr "クイズはまだありません"
 
-#: app/components/account/EmailForm.tsx:24
+#: app/components/account/EmailForm.tsx:21
 msgid "None yet. Add one, and you can reset your password if you forget it."
 msgstr "まだありません。登録すると、パスワードを忘れても再設定できます。"
 
@@ -759,15 +755,15 @@ msgstr "未受験"
 msgid "Not yet"
 msgstr "まだ"
 
-#: app/components/note-cards/index.tsx:34
-#: app/components/note-cards/index.tsx:43
-#: app/routes/note-cards.tsx:10
+#: app/components/note-cards/index.tsx:33
+#: app/components/note-cards/index.tsx:42
+#: app/routes/note-cards.tsx:9
 msgid "Note cards"
 msgstr "ノートカード"
 
 #: app/components/notes/index.tsx:18
-#: app/components/SubjectTabs.tsx:30
-#: app/routes/notes.tsx:13
+#: app/components/SubjectTabs.tsx:29
+#: app/routes/notes.tsx:12
 msgid "Notes"
 msgstr "ノート"
 
@@ -779,7 +775,7 @@ msgstr "復習する文法はありません。全問正解でした。"
 msgid "Number"
 msgstr "番号"
 
-#: app/components/flashcards/CardFace.tsx:86
+#: app/components/flashcards/CardFace.tsx:76
 msgid "on"
 msgstr "音"
 
@@ -796,7 +792,7 @@ msgid "Page not found"
 msgstr "ページが見つかりません"
 
 #: app/components/quiz/question-nav/QuestionGrid.tsx:58
-#: app/components/quiz/Section.tsx:41
+#: app/components/quiz/Section.tsx:40
 #: app/components/results/section-review/index.tsx:17
 #: app/components/welcome/ExamSections.tsx:76
 #: app/components/welcome/SampleQuiz.tsx:62
@@ -807,13 +803,13 @@ msgstr "問題{no}"
 msgid "Part {no} checked"
 msgstr "問題{no}の採点結果"
 
-#: app/components/account/DeleteAccountForm.tsx:30
-#: app/components/account/PasswordForm.tsx:25
-#: app/components/login/LoginForm.tsx:57
+#: app/components/account/DeleteAccountForm.tsx:23
+#: app/components/account/PasswordForm.tsx:22
+#: app/components/login/LoginForm.tsx:58
 msgid "Password"
 msgstr "パスワード"
 
-#: app/routes/account.tsx:66
+#: app/routes/account.tsx:64
 msgid "Password changed."
 msgstr "パスワードを変更しました。"
 
@@ -821,7 +817,7 @@ msgstr "パスワードを変更しました。"
 msgid "Picked up “{piece}”."
 msgstr "「{piece}」を持ち上げました。"
 
-#: app/components/flashcards/CardFace.tsx:47
+#: app/components/flashcards/CardFace.tsx:39
 msgid "Picture the kanji, then flip the card."
 msgstr "漢字を思い浮かべてから、カードをめくりましょう。"
 
@@ -829,7 +825,7 @@ msgstr "漢字を思い浮かべてから、カードをめくりましょう。
 msgid "Press a choice to put it in the next empty slot. Press a filled slot to send it back to the choices."
 msgstr "選択肢を押すと次の空欄に入り、埋まった空欄を押すと選択肢に戻ります。"
 
-#: app/components/flashcards/CardControls.tsx:34
+#: app/components/card-session/CardControls.tsx:34
 msgid "Previous card"
 msgstr "前のカード"
 
@@ -896,7 +892,7 @@ msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{fi
 msgid "Reading or meaning"
 msgstr "読み方や意味"
 
-#: app/components/note-cards/index.tsx:114
+#: app/components/note-cards/index.tsx:104
 msgid "Recall your memo, then flip the card."
 msgstr "メモを思い出してから、カードをめくりましょう。"
 
@@ -913,7 +909,7 @@ msgid "Rename the test"
 msgstr "テストの名前を変更"
 
 #: app/components/forgot-password/index.tsx:15
-#: app/routes/forgot-password.tsx:11
+#: app/routes/forgot-password.tsx:10
 msgid "Reset your password"
 msgstr "パスワードの再設定"
 
@@ -936,19 +932,19 @@ msgstr "復習済み · 元に戻す"
 msgid "Sample question"
 msgstr "例題"
 
-#: app/components/account/EmailForm.tsx:44
-#: app/components/account/NameForm.tsx:39
+#: app/components/account/EmailForm.tsx:41
+#: app/components/account/NameForm.tsx:31
 #: app/components/add-note/index.tsx:91
 #: app/components/home/test-list/TestMenu.tsx:65
 msgid "Save"
 msgstr "保存"
 
-#: app/components/account/EmailForm.tsx:44
-#: app/components/account/NameForm.tsx:39
+#: app/components/account/EmailForm.tsx:41
+#: app/components/account/NameForm.tsx:31
 msgid "Saving…"
 msgstr "保存中…"
 
-#: app/components/flashcards/CardFace.tsx:47
+#: app/components/flashcards/CardFace.tsx:39
 msgid "Say the reading, then flip the card."
 msgstr "読み方を言ってから、カードをめくりましょう。"
 
@@ -970,11 +966,11 @@ msgstr "テストや結果の中で単語やフレーズを選び、「ノート
 msgid "Send the email again"
 msgstr "もう一度メールを送る"
 
-#: app/components/forgot-password/ForgotPasswordForm.tsx:34
+#: app/components/forgot-password/ForgotPasswordForm.tsx:31
 msgid "Send the link"
 msgstr "リンクを送る"
 
-#: app/components/forgot-password/ForgotPasswordForm.tsx:34
+#: app/components/forgot-password/ForgotPasswordForm.tsx:31
 msgid "Sending…"
 msgstr "送信中…"
 
@@ -983,33 +979,31 @@ msgid "Sentence order"
 msgstr "文の組み立て"
 
 #. placeholder {0}: card.headword
-#: app/components/flashcards/CardFace.tsx:105
+#: app/components/flashcards/CardFace.tsx:95
 msgid "Sentences with <0>{0}</0>"
 msgstr "<0>{0}</0>の例文"
 
-#: app/components/flashcards/SessionDone.tsx:39
-#: app/components/note-cards/index.tsx:60
+#: app/components/card-session/SessionSummary.tsx:8
 msgid "Session done"
 msgstr "セッション終了"
 
-#: app/components/form/PasswordField.tsx:29
+#: app/components/form/PasswordField.tsx:30
 msgid "Show {label}"
 msgstr "{label}を表示"
 
-#: app/components/flashcards/CardControls.tsx:50
+#: app/components/card-session/CardControls.tsx:50
 msgid "Show answer"
 msgstr "答えを見る"
 
-#: app/components/flashcards/CardFace.tsx:137
-#: app/components/note-cards/index.tsx:138
+#: app/components/card-session/FlipCard.tsx:56
 msgid "Show the question"
 msgstr "表に戻す"
 
 #: app/components/layout/header/index.tsx:67
 #: app/components/login/index.tsx:17
-#: app/components/login/LoginForm.tsx:73
+#: app/components/login/LoginForm.tsx:69
 #: app/components/welcome/index.tsx:57
-#: app/routes/signin.tsx:10
+#: app/routes/signin.tsx:9
 msgid "Sign in"
 msgstr "ログイン"
 
@@ -1019,11 +1013,11 @@ msgid "Sign out"
 msgstr "ログアウト"
 
 #: app/components/login/index.tsx:17
-#: app/routes/signup.tsx:11
+#: app/routes/signup.tsx:10
 msgid "Sign up"
 msgstr "アカウント作成"
 
-#: app/components/login/LoginForm.tsx:73
+#: app/components/login/LoginForm.tsx:69
 msgid "Signing in…"
 msgstr "ログイン中…"
 
@@ -1048,7 +1042,7 @@ msgstr "始める"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/flashcards/SessionDone.tsx:80
+#: app/components/flashcards/SessionDone.tsx:70
 msgid "Still learning ({again})"
 msgstr "まだ覚えていない語（{again}）"
 
@@ -1056,7 +1050,7 @@ msgstr "まだ覚えていない語（{again}）"
 msgid "Study as flashcards"
 msgstr "カードで復習"
 
-#: app/components/SubjectTabs.tsx:37
+#: app/components/SubjectTabs.tsx:35
 msgid "Subject"
 msgstr "科目"
 
@@ -1074,7 +1068,7 @@ msgstr "提出中…"
 msgid "Take it again"
 msgstr "もう一度受ける"
 
-#: app/components/flashcards/SessionDone.tsx:104
+#: app/components/flashcards/SessionDone.tsx:94
 msgid "Take the quiz"
 msgstr "クイズを受ける"
 
@@ -1096,13 +1090,13 @@ msgstr "テストが見つかりません"
 msgid "That email address doesn't look right."
 msgstr "メールアドレスの形式が正しくありません。"
 
-#: app/routes/account.tsx:48
-#: app/routes/signup.tsx:28
+#: app/routes/account.tsx:46
+#: app/routes/signup.tsx:26
 msgid "That email address is already in use."
 msgstr "このメールアドレスはもう使われています。"
 
-#: app/routes/account.tsx:35
-#: app/routes/signup.tsx:30
+#: app/routes/account.tsx:33
+#: app/routes/signup.tsx:28
 msgid "That username is already taken."
 msgstr "このユーザー名はもう使われています。"
 
@@ -1146,7 +1140,7 @@ msgstr "本番と同じ、3つの問題形式"
 msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
 msgstr "テストと、全ユーザーの結果とメモが削除されます。この操作は取り消せません。"
 
-#: app/components/flashcards/SessionDone.tsx:84
+#: app/components/flashcards/SessionDone.tsx:74
 msgid "These stay unlearned and come first next time."
 msgstr "未習得のまま、次回最初に出ます。"
 
@@ -1163,7 +1157,7 @@ msgid "This link can't be used"
 msgstr "リンクが使えません"
 
 #: app/components/reset-password/index.tsx:13
-#: app/routes/reset-password.tsx:29
+#: app/routes/reset-password.tsx:27
 msgid "This link has expired or was already used. Send the email again."
 msgstr "このリンクは期限切れか、もう使われています。もう一度メールを送ってください。"
 
@@ -1214,22 +1208,22 @@ msgstr "理由があっても、その結果になるとは言えないときの
 msgid "Used when effort led to a good result. 「練習したかいがあって」 = the practice was worth it."
 msgstr "努力した結果が、よい形で出たときに使います。「練習したかいがあって」＝練習した価値があった。"
 
-#: app/components/account/NameForm.tsx:18
-#: app/components/account/NameForm.tsx:29
-#: app/components/login/LoginForm.tsx:21
+#: app/components/account/NameForm.tsx:15
+#: app/components/account/NameForm.tsx:21
+#: app/components/login/LoginForm.tsx:22
 msgid "Username"
 msgstr "ユーザー名"
 
-#: app/routes/account.tsx:37
+#: app/routes/account.tsx:35
 msgid "Username changed."
 msgstr "ユーザー名を変更しました。"
 
-#: app/components/login/LoginForm.tsx:21
+#: app/components/login/LoginForm.tsx:22
 msgid "Username or email address"
 msgstr "ユーザー名またはメールアドレス"
 
-#: app/components/account/EmailForm.tsx:23
-#: app/components/login/LoginForm.tsx:52
+#: app/components/account/EmailForm.tsx:20
+#: app/components/login/LoginForm.tsx:53
 msgid "We send a reset link here when you forget your password."
 msgstr "パスワードを忘れたときに、再設定のリンクを送ります。"
 
@@ -1268,7 +1262,7 @@ msgstr "表記"
 msgid "Wrong"
 msgstr "不正解"
 
-#: app/routes/signin.tsx:27
+#: app/routes/signin.tsx:25
 msgid "Wrong username (or email) or password."
 msgstr "ユーザー名（メールアドレス）かパスワードが違います。"
 
@@ -1276,11 +1270,11 @@ msgstr "ユーザー名（メールアドレス）かパスワードが違いま
 msgid "Yes, retake"
 msgstr "はい、受け直す"
 
-#: app/components/account/NameForm.tsx:21
+#: app/components/account/NameForm.tsx:15
 msgid "You sign in with it."
 msgstr "ログインに使います。"
 
-#: app/components/quiz/CheckSection.tsx:57
+#: app/components/quiz/CheckSection.tsx:54
 msgid "You'll see the right answers, and this part's answers can't be changed after."
 msgstr "正解が表示され、この問題の解答はあとから変更できなくなります。"
 
@@ -1293,13 +1287,13 @@ msgstr "あなたの解答：{yours}"
 msgid "Your answers couldn't be read. Please try again."
 msgstr "回答を読み取れませんでした。もう一度お試しください。"
 
-#: app/routes/account.tsx:45
-#: app/routes/account.tsx:54
-#: app/routes/account.tsx:62
+#: app/routes/account.tsx:43
+#: app/routes/account.tsx:52
+#: app/routes/account.tsx:60
 msgid "Your current password is wrong."
 msgstr "現在のパスワードが違います。"
 
-#: app/components/account/DeleteAccountForm.tsx:18
+#: app/components/account/DeleteAccountForm.tsx:17
 msgid "Your results, drafts, review marks, learned words and notes are deleted with it. This can't be undone."
 msgstr "結果、途中の解答、復習済みの印、覚えた単語、ノートもすべて削除されます。元に戻すことはできません。"
 

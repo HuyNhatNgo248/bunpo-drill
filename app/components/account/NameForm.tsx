@@ -1,10 +1,10 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import { Form } from "react-router";
+import { Status } from "~/components/form/Status";
 import { INPUT_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
-import { Card } from "~/components/ui/card";
+import { FormCard } from "./FormCard";
 import { useSubmitting } from "./hooks/useSubmitting";
-import { Status } from "./Status";
 import type { AccountResult } from "./types";
 
 /** Changes the user's name, which is also the login name. */
@@ -12,15 +12,7 @@ export function NameForm({ name, result }: { name: string; result?: AccountResul
   const saving = useSubmitting("name");
   const { t } = useLingui();
   return (
-    <Card className="flex flex-col gap-4 p-5 md:p-6">
-      <div className="flex flex-col gap-1">
-        <h2 className="text-base font-semibold">
-          <Trans>Username</Trans>
-        </h2>
-        <p className="text-caption text-muted-foreground">
-          <Trans>You sign in with it.</Trans>
-        </p>
-      </div>
+    <FormCard title={t`Username`} description={t`You sign in with it.`}>
       {/* key: after a save, the field shows the saved name. */}
       <Form key={name} method="post" className="flex flex-col gap-3">
         <input type="hidden" name="intent" value="name" />
@@ -34,11 +26,11 @@ export function NameForm({ name, result }: { name: string; result?: AccountResul
           aria-invalid={result?.error ? true : undefined}
           className={INPUT_CLASS}
         />
-        <Status result={result} />
+        <Status error={result?.error} saved={result?.saved} />
         <Button type="submit" disabled={saving} className="self-end">
           {saving ? t`Saving…` : t`Save`}
         </Button>
       </Form>
-    </Card>
+    </FormCard>
   );
 }

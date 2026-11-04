@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useFetcher, useLocation } from "react-router";
+import { Status } from "~/components/form/Status";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { cn } from "~/lib/utils";
@@ -64,11 +65,7 @@ export function NoteCard({ note }: { note: NoteView }) {
           setEditing(false);
         }}
       />
-      {fetcher.data?.error && (
-        <p role="alert" className="text-caption text-primary-soft-foreground">
-          <Trans>Couldn't save. Please try again.</Trans>
-        </p>
-      )}
+      <Status error={fetcher.data?.error && t`Couldn't save. Please try again.`} />
 
       {note.sentence && (
         <p lang="ja" className="font-jp text-body-sm text-secondary-foreground">

@@ -3,12 +3,10 @@ import { useLocation } from "react-router";
 import type { Route } from "./+types/note-cards";
 import { NoteCards } from "~/components/note-cards";
 import { requireUserId } from "~/lib/auth.server";
-import { localeFromMatches, translate } from "~/lib/i18n";
+import { titleMeta } from "~/lib/i18n";
 import { listNotes } from "~/lib/notes.server";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`Note cards`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`Note cards`);
 
 /** The notes with a memo: a note without one has nothing on the back of its card. */
 export async function loader({ request }: Route.LoaderArgs) {

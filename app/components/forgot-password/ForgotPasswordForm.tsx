@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Form, useNavigation } from "react-router";
+import { Status } from "~/components/form/Status";
 import { INPUT_CLASS } from "~/components/form/styles";
 import { Button } from "~/components/ui/button";
 
@@ -25,11 +26,7 @@ export function ForgotPasswordForm({ error }: { error?: string }) {
           className={INPUT_CLASS}
         />
       </label>
-      {error && (
-        <p id="forgot-error" role="alert" className="text-caption text-primary-soft-foreground">
-          {error}
-        </p>
-      )}
+      <Status id="forgot-error" error={error} />
       <Button type="submit" disabled={sending}>
         {sending ? t`Sending…` : t`Send the link`}
       </Button>

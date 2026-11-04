@@ -5,11 +5,9 @@ import { Login } from "~/components/login";
 import { isSignedIn, safeRedirect, signIn } from "~/lib/auth.server";
 import { createUser, findUserByEmail } from "~/lib/users.server";
 import { checkEmail, checkName, checkNewPassword, normalizeEmail } from "~/lib/users";
-import { localeFromMatches, requestLocale, translate } from "~/lib/i18n";
+import { requestLocale, titleMeta, translate } from "~/lib/i18n";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`Sign up`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`Sign up`);
 
 export async function loader({ request, url }: Route.LoaderArgs) {
   if (await isSignedIn(request)) throw redirect(safeRedirect(url.searchParams.get("redirectTo")));

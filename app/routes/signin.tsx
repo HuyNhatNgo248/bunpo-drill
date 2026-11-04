@@ -4,11 +4,9 @@ import type { Route } from "./+types/signin";
 import { Login } from "~/components/login";
 import { isSignedIn, safeRedirect, signIn } from "~/lib/auth.server";
 import { verifyUser } from "~/lib/users.server";
-import { localeFromMatches, requestLocale, translate } from "~/lib/i18n";
+import { requestLocale, titleMeta, translate } from "~/lib/i18n";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`Sign in`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`Sign in`);
 
 export async function loader({ request, url }: Route.LoaderArgs) {
   if (await isSignedIn(request)) throw redirect(safeRedirect(url.searchParams.get("redirectTo")));

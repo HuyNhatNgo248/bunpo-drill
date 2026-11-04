@@ -25,14 +25,19 @@ export function SectionReview({ section }: { section: ResultSection }) {
         </span>
       </div>
 
-      {section.groups.map((group, g) => (
-        <Fragment key={g}>
-          {group.segments && <PassageReview segments={group.segments} />}
-          {group.questions.map((question) => (
-            <QuestionReview key={question.id} question={question} />
-          ))}
-        </Fragment>
-      ))}
+      <ReviewGroups section={section} />
     </section>
   );
+}
+
+/** A graded part's passages and questions. Each question card is its question's anchor; `questionClassName` goes on it. */
+export function ReviewGroups({ section, questionClassName }: { section: ResultSection; questionClassName?: string }) {
+  return section.groups.map((group, g) => (
+    <Fragment key={g}>
+      {group.segments && <PassageReview segments={group.segments} />}
+      {group.questions.map((question) => (
+        <QuestionReview key={question.id} question={question} className={questionClassName} />
+      ))}
+    </Fragment>
+  ));
 }

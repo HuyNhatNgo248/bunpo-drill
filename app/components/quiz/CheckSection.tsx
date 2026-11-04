@@ -2,6 +2,7 @@ import { Plural, useLingui } from "@lingui/react/macro";
 import { useEffect } from "react";
 import { useFetcher } from "react-router";
 import { ConfirmDialog } from "~/components/ConfirmDialog";
+import { Status } from "~/components/form/Status";
 import { Button } from "~/components/ui/button";
 import type { Answers, ResultSection } from "~/lib/views";
 
@@ -37,11 +38,7 @@ export function CheckSection({
 
   return (
     <div className="flex flex-col items-end gap-2">
-      {result && "error" in result && (
-        <span role="alert" className="text-caption text-primary-soft-foreground">
-          {result.error}
-        </span>
-      )}
+      <Status error={result && "error" in result ? result.error : undefined} />
       <ConfirmDialog
         title={
           unanswered > 0 ? (

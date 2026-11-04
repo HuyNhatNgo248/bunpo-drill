@@ -7,11 +7,9 @@ import { toSummary } from "~/lib/grading.server";
 import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
 import { levelStats, listTests, newestLevel } from "~/lib/tests.server";
 import { lastTabOf, ownerId, saveLastTab } from "~/lib/users.server";
-import { localeFromMatches, translate } from "~/lib/i18n";
+import { titleMeta } from "~/lib/i18n";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`Mock tests`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`Mock tests`);
 
 export async function loader({ request }: Route.LoaderArgs) {
   const params = new URL(request.url).searchParams;

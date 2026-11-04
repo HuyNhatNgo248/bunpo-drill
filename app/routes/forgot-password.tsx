@@ -5,11 +5,9 @@ import { ForgotPassword } from "~/components/forgot-password";
 import { createPasswordReset, sendPasswordResetMail } from "~/lib/password-reset.server";
 import { checkEmail, normalizeEmail } from "~/lib/users";
 import { findUserByEmail } from "~/lib/users.server";
-import { localeFromMatches, requestLocale, translate } from "~/lib/i18n";
+import { requestLocale, titleMeta, translate } from "~/lib/i18n";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`Reset your password`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`Reset your password`);
 
 /** POST /forgot-password with an email: send a reset link when an account has that email. */
 export async function action({ request }: Route.ActionArgs) {

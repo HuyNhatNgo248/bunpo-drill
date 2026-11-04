@@ -4,14 +4,12 @@ import { z } from "zod";
 import type { Route } from "./+types/notes";
 import { Notes } from "~/components/notes";
 import { requireUserId } from "~/lib/auth.server";
-import { localeFromMatches, translate } from "~/lib/i18n";
+import { titleMeta } from "~/lib/i18n";
 import { addNote, deleteNote, listNotes, memoSchema, newNoteSchema, saveMemo } from "~/lib/notes.server";
 import { getTest } from "~/lib/tests.server";
 import { lastTabOf } from "~/lib/users.server";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`Notes`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`Notes`);
 
 export async function loader({ request }: Route.LoaderArgs) {
   const userId = await requireUserId(request);

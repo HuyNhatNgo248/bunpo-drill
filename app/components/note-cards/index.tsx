@@ -1,7 +1,9 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "react-router";
-import { CardControls } from "~/components/flashcards/CardControls";
-import { useSession } from "~/components/flashcards/hooks/useSession";
+import { CardControls } from "~/components/card-session/CardControls";
+import { FlipCard } from "~/components/card-session/FlipCard";
+import { useSession } from "~/components/card-session/hooks/useSession";
+import { SessionSummary } from "~/components/card-session/SessionSummary";
 import { Markdown } from "~/components/Markdown";
 import { MarkedSentence } from "~/components/notes/MarkedSentence";
 import { PageTitle } from "~/components/PageTitle";
@@ -22,11 +24,8 @@ export function NoteCards({ notes }: { notes: NoteView[] }) {
     notes.map((note) => ({ ...note, wordId: String(note.id) })),
     false,
   );
-  const { current, total, done } = session;
-  const percent = total === 0 ? 100 : (done / total) * 100;
-  const position = `${Math.min(session.position, total)} / ${total}`;
+  const { current, total, done, percent, position } = session;
   const again = session.missed.length;
-  const gotIt = session.firstTry;
 
   return (
     <div className="min-h-screen">
@@ -55,17 +54,8 @@ export function NoteCards({ notes }: { notes: NoteView[] }) {
           </>
         ) : (
           <>
-            <Card className="flex flex-col gap-0.5 p-4 md:p-6">
-              <h2 className="text-xl font-bold tracking-tight">
-                <Trans>Session done</Trans>
-              </h2>
-              <p className="text-caption text-muted-foreground">
-                <Plural value={total} one="# card" other="# cards" />
-                {" · "}
-                <Trans>{gotIt} got it first time</Trans>
-                {" · "}
-                <Trans>{again} needed again</Trans>
-              </p>
+            <Card className="p-4 md:p-6">
+              <SessionSummary total={total} gotIt={session.firstTry} again={again} />
             </Card>
             <div className="flex flex-col gap-2">
               {again > 0 && (
@@ -101,42 +91,30 @@ function NoteFace({ note, flipped, onFlip }: { note: NoteView; flipped: boolean;
     </span>
   );
 
-  if (!flipped) {
-    return (
-      <button
-        type="button"
-        onClick={onFlip}
-        className="flex h-112 flex-col items-center justify-center gap-4 rounded-xl border bg-card p-4 text-center shadow-raised outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:h-120 md:p-6"
-      >
-        {words}
-        {sentence}
-        <span className="mt-2 text-caption text-muted-foreground">
-          <Trans>Recall your memo, then flip the card.</Trans>
-        </span>
-      </button>
-    );
-  }
-
   return (
-    // A tap anywhere on the back turns the card face up again, and still lets a long memo scroll.
-    <Card
-      aria-label={t`Answer`}
-      onClick={onFlip}
-      className="relative flex h-112 cursor-pointer flex-col items-center gap-4 overflow-y-auto p-4 text-center shadow-raised md:h-120 md:p-6"
-    >
-      {words}
-      <div className="w-full border-t pt-3.5 text-left">
-        <Markdown text={note.memo} />
-      </div>
-      {sentence}
-      <span className="mt-auto text-caption text-subtle-foreground">{t`From ${testTitle}`}</span>
-      {/* For the keyboard and screen readers; its click reaches the card's. Shown only when it has focus. */}
-      <button
-        type="button"
-        className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-3 focus-visible:right-3 focus-visible:rounded-md focus-visible:bg-card focus-visible:px-2 focus-visible:py-1 focus-visible:text-caption focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
-      >
-        {t`Show the question`}
-      </button>
-    </Card>
+    <FlipCard
+      flipped={flipped}
+      onFlip={onFlip}
+      className="items-center text-center"
+      front={
+        <span className="flex flex-1 flex-col items-center justify-center gap-4">
+          {words}
+          {sentence}
+          <span className="mt-2 text-caption text-muted-foreground">
+            <Trans>Recall your memo, then flip the card.</Trans>
+          </span>
+        </span>
+      }
+      back={
+        <>
+          {words}
+          <div className="w-full border-t pt-3.5 text-left">
+            <Markdown text={note.memo} />
+          </div>
+          {sentence}
+          <span className="mt-auto text-caption text-subtle-foreground">{t`From ${testTitle}`}</span>
+        </>
+      }
+    />
   );
 }

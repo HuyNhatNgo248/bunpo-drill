@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { Form, useNavigation } from "react-router";
 import { PasswordField } from "~/components/form/PasswordField";
-import { INPUT_CLASS } from "~/components/form/styles";
+import { Status } from "~/components/form/Status";
 import { Button } from "~/components/ui/button";
 
 /** The new password, sent with the token of the link. The error of the last try shows above the button. */
@@ -21,13 +21,8 @@ export function ResetPasswordForm({ token, error }: { token: string; error?: str
         autoComplete="new-password"
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? "reset-error" : undefined}
-        className={INPUT_CLASS}
       />
-      {error && (
-        <p id="reset-error" role="alert" className="text-caption text-primary-soft-foreground">
-          {error}
-        </p>
-      )}
+      <Status id="reset-error" error={error} />
       <Button type="submit" disabled={saving}>
         {saving ? t`Changing…` : t`Change password`}
       </Button>

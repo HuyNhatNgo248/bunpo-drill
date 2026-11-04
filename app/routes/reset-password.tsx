@@ -5,11 +5,9 @@ import { ResetPassword } from "~/components/reset-password";
 import { signIn } from "~/lib/auth.server";
 import { isPasswordResetValid, resetPassword } from "~/lib/password-reset.server";
 import { checkNewPassword } from "~/lib/users";
-import { localeFromMatches, requestLocale, translate } from "~/lib/i18n";
+import { requestLocale, titleMeta, translate } from "~/lib/i18n";
 
-export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `${translate(localeFromMatches(matches), msg`New password`)} · 文法ドリル` }];
-}
+export const meta = titleMeta(msg`New password`);
 
 /** GET /reset-password?token=…: the link from the email. */
 export async function loader({ url }: Route.LoaderArgs) {

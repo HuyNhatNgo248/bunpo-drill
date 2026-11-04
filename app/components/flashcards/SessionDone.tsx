@@ -1,5 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Link } from "react-router";
+import { SessionSummary } from "~/components/card-session/SessionSummary";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
@@ -34,18 +35,7 @@ export function SessionDone({
   return (
     <>
       <Card className="flex flex-col gap-3.5 p-4 md:p-6">
-        <div className="flex flex-col gap-0.5">
-          <h2 className="text-xl font-bold tracking-tight">
-            <Trans>Session done</Trans>
-          </h2>
-          <p className="text-caption text-muted-foreground">
-            <Plural value={total} one="# card" other="# cards" />
-            {" · "}
-            <Trans>{gotIt} got it first time</Trans>
-            {" · "}
-            <Trans>{again} needed again</Trans>
-          </p>
-        </div>
+        <SessionSummary total={total} gotIt={gotIt} again={again} />
         <div className="grid grid-cols-2 gap-2">
           <div className="flex flex-col gap-0.5 rounded-box border border-success-border bg-success-soft px-3.5 py-2.5 text-success">
             <span className="text-xs">

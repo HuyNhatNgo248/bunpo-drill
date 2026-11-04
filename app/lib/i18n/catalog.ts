@@ -1,7 +1,7 @@
 import { i18n, type I18n, type MessageDescriptor, type Messages } from "@lingui/core";
 import { messages as en } from "../../locales/en.po";
 import { messages as ja } from "../../locales/ja.po";
-import type { Locale } from "./locale";
+import { localeFromMatches, type Locale } from "./locale";
 
 /**
  * Both catalogs ship in the bundle (a few KB each), so the page hydrates without first waiting for its
@@ -36,6 +36,18 @@ export function translate(locale: Locale, descriptor: MessageDescriptor): string
     return serverI18n(locale)._(descriptor);
   }
   return i18n._(descriptor);
+}
+
+/**
+ * The `meta()` of a page titled `title · 文法ドリル`, in the language the root loader read.
+ *
+ * @example
+ * export const meta = titleMeta(msg`Account`); // -> [{ title: "Account · 文法ドリル" }]
+ */
+export function titleMeta(title: MessageDescriptor) {
+  return ({ matches }: { matches: Parameters<typeof localeFromMatches>[0] }) => [
+    { title: `${translate(localeFromMatches(matches), title)} · 文法ドリル` },
+  ];
 }
 
 /** Activates the catalog of `locale` on the client singleton. The language switch reloads the page, so this runs once. */
