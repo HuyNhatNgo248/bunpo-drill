@@ -1,9 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useSearchParams } from "react-router";
+import { Rail } from "~/components/Rail";
+import { Badge } from "~/components/ui/badge";
 import type { TestSummary } from "~/lib/views";
 import { reviewList } from "./helpers/reviewList";
 import { TestRow } from "./TestRow";
-import { WeekRail } from "./WeekRail";
 import { WeekReview } from "./WeekReview";
 
 /** The tests split into runs of the same first week. The server sorts by it, so each week is one run. */
@@ -42,7 +43,17 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
 
   return (
     <div className="flex flex-col gap-5 md:flex-row md:items-start md:gap-6">
-      <WeekRail weeks={weeks} current={week} />
+      <Rail
+        label={t`Weeks`}
+        param="week"
+        current={week}
+        items={weeks.map(({ week, tests }) => ({
+          value: week,
+          label: <Trans>Week {week}</Trans>,
+          done: tests.filter((test) => test.result).length,
+          total: tests.length,
+        }))}
+      />
       <section aria-labelledby="tests-week" className="flex min-w-0 flex-1 flex-col gap-6">
         <div className="flex items-baseline justify-between gap-3">
           <h2 id="tests-week" className="text-xl font-bold md:text-2xl">
@@ -59,8 +70,8 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
           (group) =>
             group.tests.length > 0 && (
               <section key={group.key} aria-labelledby={`tests-${group.key}`} className="flex flex-col gap-2.5">
-                <h3 id={`tests-${group.key}`} className="text-caption font-semibold text-subtle-foreground">
-                  {group.title} <span className="font-medium text-muted-foreground tabular-nums">{group.tests.length}</span>
+                <h3 id={`tests-${group.key}`} className="flex items-center gap-2 text-caption font-semibold text-subtle-foreground">
+                  {group.title} <Badge variant="count">{group.tests.length}</Badge>
                 </h3>
                 <ul className="divide-y overflow-hidden rounded-xl border bg-card">
                   {group.tests.map((test) => (

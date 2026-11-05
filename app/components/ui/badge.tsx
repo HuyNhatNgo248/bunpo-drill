@@ -16,6 +16,8 @@ const badgeVariants = cva(
         outline: "rounded-full border-border px-2.5 py-px text-secondary-foreground",
         /** A test left before submitting, e.g. "解答中 2 / 3". */
         progress: "rounded-full border-indigo/25 bg-indigo/10 px-2.5 py-px text-indigo",
+        /** How many rows a list heading has, e.g. "レッスン 5". */
+        count: "rounded-full bg-muted px-2 py-px font-semibold text-muted-foreground tabular-nums",
       },
     },
     defaultVariants: {

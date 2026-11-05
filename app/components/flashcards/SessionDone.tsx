@@ -1,4 +1,4 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Plural, Trans } from "@lingui/react/macro";
 import { Link } from "react-router";
 import { SessionSummary } from "~/components/card-session/SessionSummary";
 import { Button } from "~/components/ui/button";
@@ -6,12 +6,12 @@ import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
 import { WordChips } from "~/components/WordChips";
 import { cardsOf, homeOf } from "~/lib/links";
-import { chapterLabel } from "~/lib/sections";
+import { chapterTitle } from "~/lib/sections";
 import type { FlashCard, FlashcardsView } from "~/lib/views";
 
 /**
- * The end of a session: how many cards were got right the first time and how many needed Again, the chapter's learned
- * words now, the cards still being learned, and the ways on.
+ * The end of a session: how many cards were got right the first time and how many needed Again, the learned words of
+ * the chapter (of the lesson, on one) now, the cards still being learned, and the ways on.
  */
 export function SessionDone({
   view,
@@ -28,9 +28,8 @@ export function SessionDone({
   learned: number;
   onStudyAgain: () => void;
 }) {
-  const { i18n } = useLingui();
   const again = missed.length;
-  const chapter = chapterLabel(i18n, view.chapter);
+  const chapter = view.lesson?.title ?? chapterTitle(view.title);
   const quizHref = view.quiz && (view.quiz.result ? `/tests/${view.quiz.id}/results` : `/tests/${view.quiz.id}`);
   return (
     <>
@@ -84,7 +83,7 @@ export function SessionDone({
         )}
         <div className="grid grid-cols-2 gap-2">
           <Button asChild variant="outline" size="lg" className={quizHref ? undefined : "col-span-2"}>
-            <Link to={cardsOf(view.level, view.chapter)}>
+            <Link to={cardsOf(view.level, view.chapter, { page: view.lesson?.page })}>
               <Trans>Next cards</Trans>
             </Link>
           </Button>
@@ -97,8 +96,8 @@ export function SessionDone({
           )}
         </div>
         <Button asChild variant="ghost" size="lg">
-          <Link to={homeOf({ kind: "kanji", level: view.level })}>
-            <Trans>Back to chapters</Trans>
+          <Link to={homeOf({ kind: "kanji", ...view })}>
+            <Trans>Back to topics</Trans>
           </Link>
         </Button>
       </div>

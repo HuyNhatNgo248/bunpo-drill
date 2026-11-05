@@ -59,9 +59,6 @@ const CIRCLED = ["①", "②", "③", "④"];
 export const weekLabel = (i18n: I18n, week: number) =>
   i18n._(msg`Week ${week}`);
 
-/** 1章 in Japanese, "Chapter 1" in English: the chapters of 漢字マスター. */
-export const chapterLabel = (i18n: I18n, chapter: number) => i18n._(msg`Chapter ${chapter}`);
-
 /** 3日目 in Japanese, "Day 3" in English. */
 export const dayLabel = (i18n: I18n, day: number) => i18n._(msg`Day ${day}`);
 
@@ -69,6 +66,10 @@ export const dayLabel = (i18n: I18n, day: number) => i18n._(msg`Day ${day}`);
 export function circled(number: number) {
   return CIRCLED[number - 1] ?? String(number);
 }
+
+/** "生活-1（p.20–24）" → "生活 ①": a chapter's title without its pages, and the book's part number (-1, -2) circled. */
+export const chapterTitle = (title: string) =>
+  title.split("（")[0].replace(/-(\d+)$/, (_, part) => ` ${circled(Number(part))}`);
 
 /** Element id of a quiz question card, used by the question list to jump to it. */
 export const questionAnchor = (num: number) => `question-${num}`;

@@ -161,8 +161,8 @@ describe("Results", () => {
       await screen.findByRole("region", { name: "Part 1" });
 
       expect(within(reviewOf(1)).getByText("招待状", { selector: "u" })).toBeInTheDocument();
-      for (const link of screen.getAllByRole("link", { name: /Back to kanji/ })) expect(link).toHaveAttribute("href", "/kanji?level=N2");
-      expect(screen.getByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2");
+      for (const link of screen.getAllByRole("link", { name: /Back to kanji/ })) expect(link).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
+      expect(screen.getByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
     });
   });
 

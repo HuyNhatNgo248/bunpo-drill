@@ -1,5 +1,4 @@
 import { msg } from "@lingui/core/macro";
-import type { ShouldRevalidateFunction } from "react-router";
 import type { Route } from "./+types/home";
 import { Home } from "~/components/home";
 import type { TabsHandle } from "~/components/layout/TabsLayout";
@@ -9,6 +8,7 @@ import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
 import { listTests, newestLevel } from "~/lib/tests.server";
 import { lastTabOf, ownerId, saveLastTab } from "~/lib/users.server";
 import { titleMeta } from "~/lib/i18n";
+import { revalidateUnlessPicked } from "~/lib/utils";
 
 export const meta = titleMeta(msg`Mock tests`);
 
@@ -34,15 +34,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 /** A week picked (`week`) the page shows by itself, so the tests aren't loaded again for it. */
-export const shouldRevalidate: ShouldRevalidateFunction = ({ currentUrl, nextUrl, formMethod, defaultShouldRevalidate }) => {
-  const withoutWeek = (url: URL) => {
-    const params = new URLSearchParams(url.search);
-    params.delete("week");
-    return `${url.pathname}?${params}`;
-  };
-  const picked = currentUrl.search !== nextUrl.search;
-  return !formMethod && picked && withoutWeek(currentUrl) === withoutWeek(nextUrl) ? false : defaultShouldRevalidate;
-};
+export const shouldRevalidate = revalidateUnlessPicked("week");
 
 export default function HomeRoute({ loaderData }: Route.ComponentProps) {
   return <Home {...loaderData} />;

@@ -27,7 +27,7 @@ msgstr "{0} got it · {1} again"
 msgid "{0} p.{1}"
 msgstr "{0} p.{1}"
 
-#: app/components/flashcards/SessionDone.tsx:82
+#: app/components/flashcards/SessionDone.tsx:81
 #: app/components/note-cards/index.tsx:63
 msgid "{again, plural, one {Study it again} other {Study the # again}}"
 msgstr "{again, plural, one {Study it again} other {Study the # again}}"
@@ -52,7 +52,11 @@ msgstr "{daysLeft, plural, one {With one mock test a day, you can take # test be
 msgid "{gotIt} got it first time"
 msgstr "{gotIt} got it first time"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:46
+#: app/components/kanji/chapter-list/index.tsx:49
+msgid "{learned} / {words} learned"
+msgstr "{learned} / {words} learned"
+
+#: app/components/kanji/chapter-list/LessonRow.tsx:42
 msgid "{learned} learned"
 msgstr "{learned} learned"
 
@@ -65,7 +69,7 @@ msgid "{left} unanswered"
 msgstr "{left} unanswered"
 
 #: app/components/home/index.tsx:34
-#: app/components/kanji/index.tsx:36
+#: app/components/kanji/index.tsx:32
 msgid "{level} isn't available yet"
 msgstr "{level} isn't available yet"
 
@@ -81,7 +85,7 @@ msgstr "{slotName}: {text} (tap to remove)"
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, one {# stroke} other {# strokes}}"
 
-#: app/components/home/test-list/index.tsx:52
+#: app/components/home/test-list/index.tsx:63
 msgid "{taken} / {total} taken"
 msgstr "{taken} / {total} taken"
 
@@ -100,15 +104,19 @@ msgstr "{total, plural, one {# card} other {# cards}}"
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
-#: app/components/flashcards/index.tsx:62
+#: app/components/flashcards/index.tsx:67
 msgid "{total} cards per session · {left} of {words} words in this chapter still to learn"
 msgstr "{total} cards per session · {left} of {words} words in this chapter still to learn"
+
+#: app/components/flashcards/index.tsx:63
+msgid "{total} cards per session · {left} of {words} words in this lesson still to learn"
+msgstr "{total} cards per session · {left} of {words} words in this lesson still to learn"
 
 #: app/components/quiz/CheckSection.tsx:45
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:44
+#: app/components/kanji/chapter-list/LessonRow.tsx:40
 msgid "{words, plural, one {# word} other {# words}}"
 msgstr "{words, plural, one {# word} other {# words}}"
 
@@ -165,7 +173,7 @@ msgstr "15 questions"
 msgid "3 passages × 5 questions"
 msgstr "3 passages × 5 questions"
 
-#: app/components/kanji/index.tsx:33
+#: app/components/kanji/index.tsx:29
 msgid "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 msgstr "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 
@@ -203,7 +211,7 @@ msgid "Adding…"
 msgstr "Adding…"
 
 #: app/components/card-session/CardControls.tsx:41
-#: app/components/flashcards/SessionDone.tsx:48
+#: app/components/flashcards/SessionDone.tsx:47
 msgid "Again"
 msgstr "Again"
 
@@ -251,10 +259,6 @@ msgstr "Answered {done} / {total}"
 msgid "At least 8 characters"
 msgstr "At least 8 characters"
 
-#: app/components/flashcards/SessionDone.tsx:101
-msgid "Back to chapters"
-msgstr "Back to chapters"
-
 #: app/components/flashcards/index.tsx:43
 #: app/components/quiz/index.tsx:68
 #: app/components/results/Actions.tsx:45
@@ -276,6 +280,10 @@ msgstr "Back to sign in"
 #: app/components/results/Actions.tsx:54
 msgid "Back to the mock tests"
 msgstr "Back to the mock tests"
+
+#: app/components/flashcards/SessionDone.tsx:100
+msgid "Back to topics"
+msgstr "Back to topics"
 
 #: app/components/quiz/QuestionCard.tsx:45
 msgid "Blank （{num}） in the passage"
@@ -307,10 +315,6 @@ msgstr "Cards done"
 msgid "Cards done {done} / {total}"
 msgstr "Cards done {done} / {total}"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:30
-msgid "ch."
-msgstr "ch."
-
 #: app/components/account/PasswordForm.tsx:29
 #: app/components/reset-password/ResetPasswordForm.tsx:27
 msgid "Change password"
@@ -321,17 +325,9 @@ msgstr "Change password"
 msgid "Changing…"
 msgstr "Changing…"
 
-#: app/lib/sections.ts:63
-msgid "Chapter {chapter}"
-msgstr "Chapter {chapter}"
-
 #: app/lib/errors.ts:40
 msgid "Chapter not found"
 msgstr "Chapter not found"
-
-#: app/components/kanji/chapter-list/index.tsx:10
-msgid "Chapters"
-msgstr "Chapters"
 
 #: app/components/quiz/CheckSection.tsx:55
 msgid "Check"
@@ -435,7 +431,7 @@ msgstr "Current password"
 msgid "Day"
 msgstr "Day"
 
-#: app/lib/sections.ts:66
+#: app/lib/sections.ts:63
 msgid "Day {day}"
 msgstr "Day {day}"
 
@@ -508,7 +504,7 @@ msgstr "Error {status}"
 
 #: app/components/flashcards/index.tsx:39
 #: app/components/flashcards/index.tsx:51
-#: app/components/kanji/chapter-list/ChapterRow.tsx:63
+#: app/components/kanji/chapter-list/LessonRow.tsx:47
 #: app/routes/flashcards.tsx:14
 msgid "Flashcards"
 msgstr "Flashcards"
@@ -517,7 +513,7 @@ msgstr "Flashcards"
 msgid "Forgot your password?"
 msgstr "Forgot your password?"
 
-#: app/components/note-cards/index.tsx:115
+#: app/components/note-cards/index.tsx:118
 #: app/components/notes/NoteCard.tsx:80
 msgid "From {testTitle}"
 msgstr "From {testTitle}"
@@ -527,7 +523,7 @@ msgid "Full mock tests in the same three formats as the real exam, graded as soo
 msgstr "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 
 #: app/components/card-session/CardControls.tsx:45
-#: app/components/flashcards/SessionDone.tsx:42
+#: app/components/flashcards/SessionDone.tsx:41
 msgid "Got it"
 msgstr "Got it"
 
@@ -547,7 +543,7 @@ msgstr "Grammar in a passage"
 msgid "Grammar mock tests"
 msgstr "Grammar mock tests"
 
-#: app/components/home/test-list/WeekReview.tsx:16
+#: app/components/home/test-list/WeekReview.tsx:17
 msgid "Grammar to review"
 msgstr "Grammar to review"
 
@@ -575,7 +571,7 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/index.tsx:36
+#: app/components/home/test-list/index.tsx:37
 msgid "In progress"
 msgstr "In progress"
 
@@ -591,14 +587,14 @@ msgstr "It's exam day today. Good luck!"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "JLPT grammar practice in the real test's format"
 
-#: app/components/kanji/index.tsx:22
+#: app/components/kanji/index.tsx:21
 #: app/components/results/Actions.tsx:42
 #: app/components/SubjectTabs.tsx:28
-#: app/routes/kanji.tsx:12
+#: app/routes/kanji.tsx:13
 msgid "Kanji"
 msgstr "Kanji"
 
-#: app/components/kanji/index.tsx:37
+#: app/components/kanji/index.tsx:33
 msgid "Kanji for {level} is coming later."
 msgstr "Kanji for {level} is coming later."
 
@@ -632,9 +628,13 @@ msgstr "Language: {0}"
 msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
 
-#: app/components/flashcards/SessionDone.tsx:56
+#: app/components/flashcards/SessionDone.tsx:55
 msgid "Learned in {chapter}"
 msgstr "Learned in {chapter}"
+
+#: app/components/kanji/chapter-list/index.tsx:62
+msgid "Lessons"
+msgstr "Lessons"
 
 #: app/components/grammar-chips/GrammarChip.tsx:58
 #: app/components/LevelTabs.tsx:24
@@ -664,10 +664,6 @@ msgstr "Memo"
 #: app/components/add-note/index.tsx:77
 msgid "Memo (optional)"
 msgstr "Memo (optional)"
-
-#: app/components/kanji/Stats.tsx:20
-msgid "Missed words"
-msgstr "Missed words"
 
 #: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:51
@@ -703,7 +699,7 @@ msgstr "New password"
 msgid "Next card"
 msgstr "Next card"
 
-#: app/components/flashcards/SessionDone.tsx:88
+#: app/components/flashcards/SessionDone.tsx:87
 msgid "Next cards"
 msgstr "Next cards"
 
@@ -715,7 +711,7 @@ msgstr "Next question"
 msgid "Nice work"
 msgstr "Nice work"
 
-#: app/components/kanji/index.tsx:32
+#: app/components/kanji/index.tsx:28
 msgid "No {level} chapters yet"
 msgstr "No {level} chapters yet"
 
@@ -731,7 +727,7 @@ msgstr "No mock tests yet"
 msgid "No notes yet"
 msgstr "No notes yet"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:50
+#: app/components/kanji/chapter-list/index.tsx:55
 msgid "no quiz yet"
 msgstr "no quiz yet"
 
@@ -743,7 +739,7 @@ msgstr "None yet. Add one, and you can reset your password if you forget it."
 msgid "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 msgstr "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 
-#: app/components/home/test-list/index.tsx:37
+#: app/components/home/test-list/index.tsx:38
 msgid "Not taken"
 msgstr "Not taken"
 
@@ -859,13 +855,9 @@ msgstr "Question {num} (wrong)"
 msgid "Question list"
 msgstr "Question list"
 
-#: app/components/kanji/chapter-list/ChapterRow.tsx:69
+#: app/components/kanji/chapter-list/QuizRow.tsx:22
 msgid "Quiz"
 msgstr "Quiz"
-
-#: app/components/kanji/Stats.tsx:19
-msgid "Quiz average"
-msgstr "Quiz average"
 
 #: app/components/welcome/ExamSections.tsx:32
 msgid "Read a passage, and fill each blank with the words that fit its flow."
@@ -910,6 +902,7 @@ msgid "Reset your password"
 msgstr "Reset your password"
 
 #: app/components/home/test-list/TestRow.tsx:58
+#: app/components/kanji/chapter-list/QuizRow.tsx:30
 #: app/components/results/index.tsx:34
 #: app/components/results/index.tsx:44
 #: app/routes/results.tsx:13
@@ -1030,6 +1023,7 @@ msgid "Something went wrong"
 msgstr "Something went wrong"
 
 #: app/components/home/test-list/TestRow.tsx:72
+#: app/components/kanji/chapter-list/QuizRow.tsx:35
 #: app/components/welcome/TrialTests.tsx:65
 msgid "Start"
 msgstr "Start"
@@ -1038,7 +1032,7 @@ msgstr "Start"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/flashcards/SessionDone.tsx:70
+#: app/components/flashcards/SessionDone.tsx:69
 msgid "Still learning ({again})"
 msgstr "Still learning ({again})"
 
@@ -1064,11 +1058,11 @@ msgstr "Submitting…"
 msgid "Take it again"
 msgstr "Take it again"
 
-#: app/components/flashcards/SessionDone.tsx:94
+#: app/components/flashcards/SessionDone.tsx:93
 msgid "Take the quiz"
 msgstr "Take the quiz"
 
-#: app/components/home/test-list/index.tsx:38
+#: app/components/home/test-list/index.tsx:39
 msgid "Taken"
 msgstr "Taken"
 
@@ -1134,7 +1128,7 @@ msgstr "The same three formats as the real exam"
 msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
 msgstr "The test and every user's results and notes on it will be deleted. This can't be undone."
 
-#: app/components/flashcards/SessionDone.tsx:74
+#: app/components/flashcards/SessionDone.tsx:73
 msgid "These stay unlearned and come first next time."
 msgstr "These stay unlearned and come first next time."
 
@@ -1164,6 +1158,10 @@ msgstr "This part couldn't be checked. Please try again."
 #: app/lib/errors.ts:32
 msgid "This test doesn't exist, or it may have been deleted."
 msgstr "This test doesn't exist, or it may have been deleted."
+
+#: app/components/kanji/chapter-list/index.tsx:27
+msgid "Topics"
+msgstr "Topics"
 
 #: app/components/welcome/TrialTests.tsx:13
 msgid "Try a full mock test, no account needed"
@@ -1221,23 +1219,19 @@ msgstr "We send a reset link here when you forget your password."
 msgid "Week"
 msgstr "Week"
 
-#: app/components/home/test-list/index.tsx:49
-#: app/components/home/test-list/WeekRail.tsx:66
+#: app/components/home/test-list/index.tsx:52
+#: app/components/home/test-list/index.tsx:60
 #: app/lib/sections.ts:60
 msgid "Week {week}"
 msgstr "Week {week}"
 
-#: app/components/home/test-list/WeekRail.tsx:35
+#: app/components/home/test-list/index.tsx:47
 msgid "Weeks"
 msgstr "Weeks"
 
 #: app/components/welcome/SampleQuiz.tsx:226
 msgid "With an account, you can take full 45-question mock tests."
 msgstr "With an account, you can take full 45-question mock tests."
-
-#: app/components/kanji/Stats.tsx:11
-msgid "Words learned"
-msgstr "Words learned"
 
 #: app/components/results/ReviewCard.tsx:19
 msgid "Words to study"

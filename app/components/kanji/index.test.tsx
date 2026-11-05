@@ -1,61 +1,74 @@
 import { screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { buildChapterSummary } from "#mocks/factories/views";
 import { renderRoute } from "#tests/helpers/render";
 import type { KanjiHomeView } from "~/lib/views";
 import { KanjiHome } from ".";
 
-/** 1章 with its quiz taken, and 2章 with no quiz yet. */
+/** 生活 ① with every word learned and its quiz taken, and 町 with a word left and no quiz yet. */
 const HOME: KanjiHomeView = {
   level: "N2",
   chapters: [
-    buildChapterSummary({ quiz: { id: "20261031-aaaaaa", result: { score: 8, total: 10 } } }),
-    buildChapterSummary({ chapter: 2, title: "町", words: 88, learned: 0, quiz: null }),
+    buildChapterSummary({
+      words: 50,
+      learned: 50,
+      lessons: [{ title: "ギフト", page: 20, words: 50, learned: 50 }],
+      quiz: { id: "20261031-aaaaaa", result: { score: 8, total: 10 } },
+    }),
+    buildChapterSummary({ chapter: 2, title: "町", quiz: null }),
   ],
-  stats: { learned: 24, words: 184, average: 80, missed: 3 },
 };
 
-const rowOf = (title: string) => screen.getByText(title).closest("li")!;
+const chapterShown = () => screen.getByRole("heading", { level: 2 }).textContent;
+
+const rowOf = (title: string) => within(screen.getByText(title).closest("li")!);
 
 describe("KanjiHome", () => {
+  it("lists the topics in order with their learned words, and shows the first with a word left to learn", async () => {
+    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji?level=N2" });
 
-  it("shows the figures over the level's chapters, then each chapter", async () => {
-    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
-
-    expect(await screen.findByRole("heading", { name: "Kanji" })).toBeInTheDocument();
-    expect(screen.getByText("Words learned").nextSibling).toHaveTextContent("24 / 184");
-    expect(screen.getByText("Quiz average").nextSibling).toHaveTextContent("80%");
-    expect(screen.getByText("Missed words").nextSibling).toHaveTextContent("3");
-    expect(within(screen.getByRole("list", { name: "Chapters" })).getAllByRole("listitem")).toHaveLength(2);
+    expect(await screen.findByRole("heading", { level: 1, name: "Kanji" })).toBeInTheDocument();
+    const chapters = within(screen.getByRole("navigation", { name: "Topics" })).getAllByRole("link");
+    expect(chapters.map((chapter) => chapter.textContent)).toEqual(["1生活 ①50 / 50", "2町24 / 96"]);
+    expect(chapters[1]).toHaveAttribute("aria-current", "true");
+    expect(chapterShown()).toBe("町");
+    expect(screen.getByText("24 / 96 learned · no quiz yet")).toBeInTheDocument();
   });
 
-  it("gives a chapter its learned words, its quiz score, and links to its flashcards and its results", async () => {
-    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
-    await screen.findByText("生活-1");
-    const row = within(rowOf("生活-1"));
+  it("shows the topic picked, kept in the address", async () => {
+    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji?level=N2&chapter=2" });
 
-    expect(row.getByText("Chapter 1")).toBeInTheDocument();
-    expect(row.getByText("8 / 10")).toBeInTheDocument();
-    expect(row.getByText("96 words · 24 learned")).toBeInTheDocument();
-    expect(row.getByRole("link", { name: "Flashcards" })).toHaveAttribute("href", "/kanji/N2/1/cards");
-    expect(row.getByRole("link", { name: "Quiz" })).toHaveAttribute("href", "/tests/20261031-aaaaaa/results");
+    const chapter1 = await screen.findByRole("link", { name: /生活 ①/ });
+    expect(chapter1).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
+    await userEvent.click(chapter1);
+
+    expect(chapterShown()).toBe("生活 ①");
   });
 
-  it("opens a chapter's flashcards from anywhere on its row", async () => {
-    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
-    await screen.findByText("生活-1");
-    const row = within(rowOf("生活-1"));
+  it("splits the topic into its lessons in the book's order, each opening its own flashcards", async () => {
+    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji?level=N2&chapter=2" });
 
-    expect(row.getByRole("link", { name: /生活-1/ })).toHaveAttribute("href", "/kanji/N2/1/cards");
+    const lessons = within(await screen.findByRole("region", { name: "Lessons 2" })).getAllByRole("link");
+    expect(lessons.map((lesson) => lesson.textContent)).toEqual(["ギフト", "料理"]);
+    expect(lessons[1]).toHaveAttribute("href", "/kanji/N2/2/cards?page=21");
+    expect(rowOf("ギフト").getByText("50 words · 24 learned")).toBeInTheDocument();
   });
 
-  it("says a chapter has no quiz yet, and offers only its flashcards", async () => {
-    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
-    await screen.findByText("町");
-    const row = within(rowOf("町"));
+  it("gives the topic's quiz its score, and links to its results", async () => {
+    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji?level=N2&chapter=1" });
 
-    expect(row.getByText("88 words · 0 learned · no quiz yet")).toBeInTheDocument();
-    expect(row.queryByRole("link", { name: "Quiz" })).toBeNull();
+    const quiz = await screen.findByRole("link", { name: "Quiz" });
+    expect(quiz).toHaveAttribute("href", "/tests/20261031-aaaaaa/results");
+    expect(quiz.parentElement).toHaveTextContent("8 / 10");
+  });
+
+  it("links a quiz not taken yet to the quiz", async () => {
+    const home = { ...HOME, chapters: [buildChapterSummary()] };
+    renderRoute(<KanjiHome home={home} />, { url: "/kanji?level=N2" });
+
+    expect(await screen.findByRole("link", { name: "Quiz" })).toHaveAttribute("href", "/tests/20261031-aaaaaa");
+    expect(screen.getByText("Start")).toBeInTheDocument();
   });
 
   it("says the book's level has no chapters yet, and how to send one", async () => {

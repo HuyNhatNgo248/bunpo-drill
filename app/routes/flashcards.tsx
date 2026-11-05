@@ -12,7 +12,7 @@ import { LEVELS } from "~/lib/payload";
 
 export function meta({ matches, loaderData }: Route.MetaArgs) {
   const name = translate(localeFromMatches(matches), msg`Flashcards`);
-  return [{ title: loaderData ? `${loaderData.cards.title} · ${name} · 文法ドリル` : `${name} · 文法ドリル` }];
+  return [{ title: loaderData ? `${loaderData.cards.lesson?.title ?? loaderData.cards.title} · ${name} · 文法ドリル` : `${name} · 文法ドリル` }];
 }
 
 /** The level of /kanji/:level/…, or a 404. */
@@ -33,10 +33,16 @@ async function chapterOf(params: { level: string; chapter: string }) {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const level = levelOf(params);
-  const words = new URL(request.url).searchParams.get("words");
+  const search = new URL(request.url).searchParams;
+  const words = search.get("words");
   const userId = await requireUserId(request);
   const [chapter, learned, latest] = await Promise.all([chapterOf(params), learnedIds(userId), latestKanjiTests(level, userId)]);
-  return { cards: toFlashcards(chapter, learned, latest.get(chapter.chapter), words ? words.split(",") : null) };
+  // ?page=21: the lesson on that page of the book, or a 404 for a page that is none of the chapter's.
+  const page = search.get("page");
+  const lesson = page === null ? null : chapter.lessons.find((candidate) => candidate.page === Number(page));
+  if (lesson === undefined) throw chapterNotFound();
+  const cards = toFlashcards(chapter, learned, latest.get(chapter.chapter), words ? words.split(",") : null, lesson && { title: lesson.title, page: lesson.page });
+  return { cards };
 }
 
 /** POST {"wordId"}: a card got right the first time is learned. */

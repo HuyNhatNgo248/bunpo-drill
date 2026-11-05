@@ -92,12 +92,14 @@ export type NoteMark = Pick<NoteView, "id" | "text" | "memo">;
 /** A word a kanji test got wrong, to study as a flashcard. */
 export type WordChip = { wordId: string; word: string; reading: string };
 
-/** A chapter as the kanji page lists it: how many of its words are learned, and its newest quiz. */
+/** A chapter as the kanji page lists it: how many of its words are learned, its lessons, and its newest quiz. */
 export type ChapterSummary = {
   chapter: number;
   title: string;
   words: number;
   learned: number;
+  /** One per page of the book, in its order, with how many of their words are learned. */
+  lessons: { title: string; page: number; words: number; learned: number }[];
   /** null until Claude makes a quiz on the chapter; `result` null until it is taken. */
   quiz: { id: string; result: { score: number; total: number } | null } | null;
 };
@@ -118,24 +120,24 @@ export type FlashCard = {
   examples: { sentence: Underlined; meaning: string }[];
 };
 
-/** A flashcard session on one chapter. */
+/** A flashcard session on one chapter, or on one lesson of it. */
 export type FlashcardsView = {
   level: Level;
   chapter: number;
   title: string;
+  /** The lesson the session is on; null for the whole chapter. */
+  lesson: FlashCard["lesson"] | null;
   cards: FlashCard[];
-  /** The chapter's words, and how many of them were learned before the session. */
+  /** The words of the chapter (of the lesson, on one), and how many of them were learned before the session. */
   words: number;
   learned: number;
   quiz: ChapterSummary["quiz"];
 };
 
-/** The kanji page of one level: its figures, then its chapters. */
+/** The kanji page of one level: its chapters. */
 export type KanjiHomeView = {
   level: JlptLevel;
   chapters: ChapterSummary[];
-  /** `average`: of the chapters' newest quizzes that are taken. `missed`: their wrong words not learned since. */
-  stats: { learned: number; words: number; average: number | null; missed: number };
 };
 
 export type ResultSegment =

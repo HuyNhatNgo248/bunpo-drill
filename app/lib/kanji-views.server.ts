@@ -24,11 +24,19 @@ export function chapterWords(chapter: KanjiChapter): BookWord[] {
 export const SESSION_SIZE = 20;
 
 /**
- * The cards of a flashcard session on a chapter: the words of `wordIds` (a quiz's misses) when given, else the first
- * words not learned yet, in the book's order. When every word is learned, a random handful, to review.
+ * The cards of a flashcard session on a chapter, or on its `lesson` when given: the words of `wordIds` (a quiz's misses)
+ * when given, else the first words not learned yet, in the book's order. When every word is learned, a random handful,
+ * to review.
  */
-export function toFlashcards(chapter: KanjiChapter, learned: Set<string>, latest: LatestKanjiTest | undefined, wordIds: string[] | null): FlashcardsView {
-  const words = chapterWords(chapter);
+export function toFlashcards(
+  chapter: KanjiChapter,
+  learned: Set<string>,
+  latest: LatestKanjiTest | undefined,
+  wordIds: string[] | null,
+  lesson: FlashcardsView["lesson"] = null,
+): FlashcardsView {
+  const all = chapterWords(chapter);
+  const words = lesson ? all.filter((word) => word.lesson.page === lesson.page) : all;
   const unlearned = words.filter((word) => !learned.has(word.id));
   const picked = wordIds
     ? words.filter((word) => wordIds.includes(word.id))
@@ -44,6 +52,7 @@ export function toFlashcards(chapter: KanjiChapter, learned: Set<string>, latest
     level: chapter.level,
     chapter: chapter.chapter,
     title: chapter.title,
+    lesson,
     words: words.length,
     learned: words.length - unlearned.length,
     quiz: latest ? { id: latest.id, result: latest.result } : null,
@@ -56,7 +65,7 @@ export function toFlashcards(chapter: KanjiChapter, learned: Set<string>, latest
       lesson: word.lesson,
       kanji: [...new Set(word.word.match(/\p{Script=Han}/gu) ?? [])].flatMap((char) => readings.get(char) ?? []),
       headword: word.headword,
-      related: words
+      related: all
         .filter((other) => other.headword === word.headword && other.id !== word.id)
         .map(({ word: related, reading }) => ({ word: related, reading })),
       examples: (examples.get(word.headword) ?? []).map(({ sentence, meaning }) => ({ sentence: splitTarget(sentence), meaning })),
@@ -74,34 +83,30 @@ function shuffled<T>(items: T[]): T[] {
   return copy;
 }
 
-/** The kanji page of a level: each chapter's learned words and newest quiz, and the figures over them. */
+/** The kanji page of a level: each chapter's learned words, by lesson too, and its newest quiz. */
 export function toKanjiHome(
   level: Level,
   chapters: KanjiChapter[],
   learned: Set<string>,
   latest: Map<number, LatestKanjiTest>,
 ): KanjiHomeView {
-  const summaries = chapters.map((chapter): ChapterSummary => {
-    const words = chapterWords(chapter);
-    const quiz = latest.get(chapter.chapter);
-    return {
-      chapter: chapter.chapter,
-      title: chapter.title,
-      words: words.length,
-      learned: words.filter((word) => learned.has(word.id)).length,
-      quiz: quiz ? { id: quiz.id, result: quiz.result } : null,
-    };
-  });
-  const quizzes = chapters.flatMap((chapter) => latest.get(chapter.chapter) ?? []);
-  const percents = quizzes.flatMap(({ result }) => (result && result.total > 0 ? [(100 * result.score) / result.total] : []));
+  const learnedOf = (words: BookWord[]) => words.filter((word) => learned.has(word.id)).length;
   return {
     level,
-    chapters: summaries,
-    stats: {
-      learned: summaries.reduce((sum, chapter) => sum + chapter.learned, 0),
-      words: summaries.reduce((sum, chapter) => sum + chapter.words, 0),
-      average: percents.length ? Math.round(percents.reduce((sum, percent) => sum + percent, 0) / percents.length) : null,
-      missed: new Set(quizzes.flatMap((quiz) => quiz.wrongIds).filter((id) => !learned.has(id))).size,
-    },
+    chapters: chapters.map((chapter): ChapterSummary => {
+      const words = chapterWords(chapter);
+      const quiz = latest.get(chapter.chapter);
+      return {
+        chapter: chapter.chapter,
+        title: chapter.title,
+        words: words.length,
+        learned: learnedOf(words),
+        lessons: chapter.lessons.map(({ title, page }) => {
+          const ofLesson = words.filter((word) => word.lesson.page === page);
+          return { title, page, words: ofLesson.length, learned: learnedOf(ofLesson) };
+        }),
+        quiz: quiz ? { id: quiz.id, result: quiz.result } : null,
+      };
+    }),
   };
 }

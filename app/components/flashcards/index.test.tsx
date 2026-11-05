@@ -42,6 +42,19 @@ describe("Flashcards", () => {
     expect(await screen.findByText("2 cards per session · 150 of 156 words in this chapter still to learn")).toBeInTheDocument();
   });
 
+  it("names the lesson of a session on one, counts its words, and keeps it for the next cards", async () => {
+    renderRoute(<Flashcards view={{ ...VIEW, lesson: { title: "料理", page: 21 }, words: 27, learned: 2 }} />, {
+      url: "/kanji/N2/1/cards?page=21",
+      action: recordingAction().action,
+    });
+
+    expect(await screen.findByRole("heading", { name: /料理/ })).toBeInTheDocument();
+    expect(screen.getByText("2 cards per session · 25 of 27 words in this lesson still to learn")).toBeInTheDocument();
+    await rate("Got it");
+    await rate("Got it");
+    expect(await screen.findByRole("link", { name: "Next cards" })).toHaveAttribute("href", "/kanji/N2/1/cards?page=21");
+  });
+
   it("shows a word on the front, and its reading, meaning and kanji readings on the back", async () => {
     renderCards();
 
@@ -199,7 +212,7 @@ describe("Flashcards", () => {
       await rate("Got it");
 
       expect(await screen.findByRole("link", { name: "Next cards" })).toHaveAttribute("href", "/kanji/N2/1/cards");
-      expect(screen.getByRole("link", { name: "Back to chapters" })).toHaveAttribute("href", "/kanji?level=N2");
+      expect(screen.getByRole("link", { name: "Back to topics" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
       expect(screen.queryByRole("heading", { name: /Still learning/ })).toBeNull();
     });
   });
@@ -207,7 +220,7 @@ describe("Flashcards", () => {
   it("links back to kanji", async () => {
     renderCards();
 
-    expect(await screen.findByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2");
-    expect(screen.getByRole("link", { name: "Back to kanji" })).toHaveAttribute("href", "/kanji?level=N2");
+    expect(await screen.findByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
+    expect(screen.getByRole("link", { name: "Back to kanji" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
   });
 });

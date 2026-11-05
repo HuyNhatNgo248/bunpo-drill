@@ -8,6 +8,7 @@ import { chapterLevels, latestKanjiTests, learnedIds, listChapters } from "~/lib
 import { toKanjiHome } from "~/lib/kanji-views.server";
 import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL } from "~/lib/payload";
 import { lastTabOf, saveLastTab } from "~/lib/users.server";
+import { revalidateUnlessPicked } from "~/lib/utils";
 
 export const meta = titleMeta(msg`Kanji`);
 
@@ -24,12 +25,15 @@ export async function loader({ request }: Route.LoaderArgs) {
   // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
   saveLastTab(userId, { subject: "kanji", level }).catch(console.error);
   if (!isTestLevel(level)) {
-    return { home: { level, chapters: [], stats: { learned: 0, words: 0, average: null, missed: 0 } }, level };
+    return { home: { level, chapters: [] }, level };
   }
   const [chapters, learned, latest] = await Promise.all([listChapters(level), learnedIds(userId), latestKanjiTests(level, userId)]);
   // `level` again at the top, where TabsLayout reads it for the subject tabs.
   return { home: toKanjiHome(level, chapters, learned, latest), level };
 }
+
+/** A chapter picked (`chapter`) the page shows by itself, so the chapters aren't loaded again for it. */
+export const shouldRevalidate = revalidateUnlessPicked("chapter");
 
 export default function KanjiRoute({ loaderData }: Route.ComponentProps) {
   return <KanjiHome home={loaderData.home} />;

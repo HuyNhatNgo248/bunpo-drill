@@ -54,8 +54,8 @@ export async function markLearned(userId: number, id: string): Promise<void> {
   await (await orm()).insert(learnedWords).values({ userId, wordId: id, learnedAt: new Date().toISOString() }).onConflictDoNothing();
 }
 
-/** A chapter's newest kanji test: its score once taken, and the words it got wrong. */
-export type LatestKanjiTest = { id: string; result: { score: number; total: number } | null; wrongIds: string[] };
+/** A chapter's newest kanji test: its score once taken. */
+export type LatestKanjiTest = { id: string; result: { score: number; total: number } | null };
 
 /** The newest kanji test of each of a level's chapters, by chapter, with `userId`'s result. */
 export async function latestKanjiTests(level: Level, userId: number): Promise<Map<number, LatestKanjiTest>> {
@@ -67,7 +67,6 @@ export async function latestKanjiTests(level: Level, userId: number): Promise<Ma
       chapter: sql<number>`${payload} ->> '$.chapter'`,
       score: sql<number | null>`${submission} ->> '$.score'`,
       total: sql<number | null>`${submission} ->> '$.total'`,
-      wrongIds: sql<string | null>`${submission} -> '$.wrongGrammarIds'`,
     })
     .from(tests)
     .leftJoin(progress, and(eq(progress.testId, tests.id), eq(progress.userId, userId)))
@@ -79,7 +78,6 @@ export async function latestKanjiTests(level: Level, userId: number): Promise<Ma
     latest.set(row.chapter, {
       id: row.id,
       result: row.score === null || row.total === null ? null : { score: row.score, total: row.total },
-      wrongIds: row.wrongIds === null ? [] : (JSON.parse(row.wrongIds) as string[]),
     });
   }
   return latest;

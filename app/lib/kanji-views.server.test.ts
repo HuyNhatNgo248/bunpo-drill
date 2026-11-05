@@ -81,8 +81,15 @@ describe("toFlashcards", () => {
     expect(toFlashcards(CHAPTER, all, undefined, null).cards.map((card) => card.wordId).sort()).toEqual([...all].sort());
   });
 
+  it("gives only a lesson's words when asked for one, counted by the lesson, with other words from the whole chapter", () => {
+    const view = toFlashcards(CHAPTER, new Set(), undefined, null, { title: "待つ", page: 21 });
+
+    expect(view).toMatchObject({ lesson: { title: "待つ", page: 21 }, words: 1, learned: 0 });
+    expect(view.cards.map((card) => card.word)).toEqual(["待合室"]);
+  });
+
   it("gives the chapter's newest quiz", () => {
-    expect(toFlashcards(CHAPTER, new Set(), { id: "20261031-aaaaaa", result: null, wrongIds: [] }, null).quiz).toEqual({
+    expect(toFlashcards(CHAPTER, new Set(), { id: "20261031-aaaaaa", result: null }, null).quiz).toEqual({
       id: "20261031-aaaaaa",
       result: null,
     });
@@ -90,28 +97,27 @@ describe("toFlashcards", () => {
 });
 
 describe("toKanjiHome", () => {
-  it("sums up each chapter, and the figures over the newest quizzes", () => {
-    const latest = new Map([
-      [1, { id: "20261031-aaaaaa", result: { score: 1, total: 2 }, wrongIds: [WORD_ID, "n2-c1-招く"] }],
-      [2, { id: "20261031-bbbbbb", result: { score: 2, total: 2 }, wrongIds: [] }],
-    ]);
+  it("sums up each chapter and each of its lessons, with the chapter's newest quiz", () => {
+    const latest = new Map([[1, { id: "20261031-aaaaaa", result: { score: 1, total: 2 } }]]);
 
     const home = toKanjiHome("N2", [CHAPTER, buildKanjiChapter({ chapter: 2 })], new Set([WORD_ID]), latest);
 
-    expect(home.chapters).toEqual([
-      {
-        chapter: 1,
-        title: "生活-1",
-        words: 3,
-        learned: 1,
-        quiz: { id: "20261031-aaaaaa", result: { score: 1, total: 2 } },
-      },
-      { chapter: 2, title: "生活-1", words: 1, learned: 0, quiz: { id: "20261031-bbbbbb", result: { score: 2, total: 2 } } },
-    ]);
-    expect(home.stats).toEqual({ learned: 1, words: 4, average: 75, missed: 1 });
-  });
-
-  it("gives no average before a quiz is taken", () => {
-    expect(toKanjiHome("N2", [CHAPTER], new Set(), new Map()).stats).toEqual({ learned: 0, words: 3, average: null, missed: 0 });
+    expect(home).toEqual({
+      level: "N2",
+      chapters: [
+        {
+          chapter: 1,
+          title: "生活-1",
+          words: 3,
+          learned: 1,
+          lessons: [
+            { title: "ギフト", page: 20, words: 2, learned: 1 },
+            { title: "待つ", page: 21, words: 1, learned: 0 },
+          ],
+          quiz: { id: "20261031-aaaaaa", result: { score: 1, total: 2 } },
+        },
+        { chapter: 2, title: "生活-1", words: 1, learned: 0, lessons: [{ title: "ギフト", page: 20, words: 1, learned: 0 }], quiz: null },
+      ],
+    });
   });
 });

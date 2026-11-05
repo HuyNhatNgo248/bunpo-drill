@@ -109,7 +109,7 @@ describe("Quiz", () => {
       expect(screen.getByText("Choose the best way to write the underlined word in kanji from 1, 2, 3 and 4.")).toBeInTheDocument();
       expect(screen.getByText("招待状", { selector: "u" })).toBeInTheDocument();
       expect(screen.getByText("しょうたいじょう", { selector: "u" })).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2");
+      expect(screen.getByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
     });
   });
 

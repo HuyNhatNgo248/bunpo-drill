@@ -41,13 +41,17 @@ export function buildResultsView(overrides: Partial<ResultsView> = {}): ResultsV
   return { ...toResultsView(buildStoredTest(), buildSubmission()), ...overrides };
 }
 
-/** 1章 生活-1 as the kanji page lists it: 96 words, 24 learned, its quiz not taken yet. */
+/** 1章 生活-1 as the kanji page lists it: 96 words, 24 learned, in two lessons (ギフト, 料理), its quiz not taken yet. */
 export function buildChapterSummary(overrides: Partial<ChapterSummary> = {}): ChapterSummary {
   return {
     chapter: 1,
     title: "生活-1",
     words: 96,
     learned: 24,
+    lessons: [
+      { title: "ギフト", page: 20, words: 50, learned: 24 },
+      { title: "料理", page: 21, words: 46, learned: 0 },
+    ],
     quiz: { id: "20261031-aaaaaa", result: null },
     ...overrides,
   };

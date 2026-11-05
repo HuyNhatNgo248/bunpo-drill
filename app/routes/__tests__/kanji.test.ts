@@ -8,7 +8,7 @@ import { markLearned, saveChapter } from "~/lib/kanji.server";
 import type { Tab } from "~/lib/lastTab";
 import { createTest, saveSubmission } from "~/lib/tests.server";
 import { lastTabOf, saveLastTab } from "~/lib/users.server";
-import { loader, meta } from "../kanji";
+import { loader, meta, shouldRevalidate } from "../kanji";
 
 /** The signed-in user, whose progress the routes read and write. */
 const USER_ID = 1;
@@ -28,7 +28,7 @@ beforeEach(async () => {
 });
 
 describe("kanji loader", () => {
-  it("sums up each chapter of the level, with its newest quiz, and the figures over them", async () => {
+  it("sums up each chapter of the level and its lessons, with its newest quiz", async () => {
     await saveChapter(buildKanjiChapter());
     await markLearned(USER_ID, WORD_ID);
     const { id } = await createTest(buildKanjiTestPayload());
@@ -36,8 +36,16 @@ describe("kanji loader", () => {
 
     expect((await load("?level=N2")).home).toEqual({
       level: "N2",
-      chapters: [{ chapter: 1, title: "生活-1", words: 1, learned: 1, quiz: { id, result: { score: 1, total: 2 } } }],
-      stats: { learned: 1, words: 1, average: 50, missed: 0 },
+      chapters: [
+        {
+          chapter: 1,
+          title: "生活-1",
+          words: 1,
+          learned: 1,
+          lessons: [{ title: "ギフト", page: 20, words: 1, learned: 1 }],
+          quiz: { id, result: { score: 1, total: 2 } },
+        },
+      ],
     });
   });
 
@@ -69,7 +77,19 @@ describe("kanji loader", () => {
   it("gives an empty page for a level without kanji tests, such as N5", async () => {
     await saveChapter(buildKanjiChapter());
 
-    expect((await load("?level=N5")).home).toEqual({ level: "N5", chapters: [], stats: { learned: 0, words: 0, average: null, missed: 0 } });
+    expect((await load("?level=N5")).home).toEqual({ level: "N5", chapters: [] });
+  });
+});
+
+describe("kanji shouldRevalidate", () => {
+  it("doesn't load the chapters again for a chapter picked, and does for anything else", () => {
+    const args = (current: string, next: string) =>
+      ({ currentUrl: new URL(current, "https://bunpo.test"), nextUrl: new URL(next, "https://bunpo.test"), defaultShouldRevalidate: true }) as Parameters<
+        typeof shouldRevalidate
+      >[0];
+
+    expect(shouldRevalidate(args("/kanji?level=N2", "/kanji?level=N2&chapter=3"))).toBe(false);
+    expect(shouldRevalidate(args("/kanji?level=N2&chapter=3", "/kanji?level=N3&chapter=3"))).toBe(true);
   });
 });
 

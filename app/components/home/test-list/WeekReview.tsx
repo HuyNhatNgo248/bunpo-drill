@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { GrammarChip } from "~/components/grammar-chips/GrammarChip";
+import { Badge } from "~/components/ui/badge";
 import type { ReviewItem } from "./helpers/reviewList";
 
 /**
@@ -12,8 +13,8 @@ export function WeekReview({ items }: { items: ReviewItem[] }) {
   const left = items.filter((item) => !item.chip.reviewed).length;
   return (
     <section aria-labelledby="tests-review" className="flex flex-col gap-2.5">
-      <h3 id="tests-review" className="text-caption font-semibold text-subtle-foreground">
-        {t`Grammar to review`} <span className="font-medium text-muted-foreground tabular-nums">{left}</span>
+      <h3 id="tests-review" className="flex items-center gap-2 text-caption font-semibold text-subtle-foreground">
+        {t`Grammar to review`} <Badge variant="count">{left}</Badge>
       </h3>
       <div className="flex flex-wrap gap-2">
         {items.map((item) => (

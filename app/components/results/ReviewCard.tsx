@@ -37,7 +37,7 @@ function WordsToStudy({ results, chapter }: { results: ResultsView; chapter: num
     <>
       <WordChips words={results.words} />
       <Button asChild className="font-semibold md:self-start md:font-medium">
-        <Link to={cardsOf(results.level, chapter, results.words.map((word) => word.wordId))}>
+        <Link to={cardsOf(results.level, chapter, { words: results.words.map((word) => word.wordId) })}>
           <Layers aria-hidden="true" />
           <Plural value={count} one="Study this word as a flashcard" other="Study these # as flashcards" />
         </Link>

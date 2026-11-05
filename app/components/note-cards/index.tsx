@@ -108,8 +108,11 @@ function NoteFace({ note, flipped, onFlip }: { note: NoteView; flipped: boolean;
       back={
         <>
           {words}
-          <div className="w-full border-t pt-3.5 text-left">
-            <Markdown text={note.memo} />
+          {/* Centred as a block, like the rest of the card; its lines (a list, say) still start on the left. */}
+          <div className="w-full border-t pt-3.5">
+            <div className="mx-auto w-fit text-left">
+              <Markdown text={note.memo} />
+            </div>
           </div>
           {sentence}
           <span className="mt-auto text-caption text-subtle-foreground">{t`From ${testTitle}`}</span>

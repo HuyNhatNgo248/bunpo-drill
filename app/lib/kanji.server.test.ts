@@ -109,7 +109,7 @@ describe("markLearned", () => {
 });
 
 describe("latestKanjiTests", () => {
-  it("gives each chapter's newest kanji test, with its score and the words it got wrong", async () => {
+  it("gives each chapter's newest kanji test, with its score", async () => {
     await createKanjiTestAt("2026-10-30T09:00:00.000Z");
     const newer = await createKanjiTestAt("2026-10-31T09:00:00.000Z");
     const other = await createKanjiTestAt("2026-10-29T09:00:00.000Z", 2);
@@ -117,8 +117,8 @@ describe("latestKanjiTests", () => {
 
     expect(await latestKanjiTests("N2", USER_ID)).toEqual(
       new Map([
-        [1, { id: newer.id, result: { score: 1, total: 2 }, wrongIds: [WORD_ID] }],
-        [2, { id: other.id, result: null, wrongIds: [] }],
+        [1, { id: newer.id, result: { score: 1, total: 2 } }],
+        [2, { id: other.id, result: null }],
       ]),
     );
   });
@@ -128,7 +128,7 @@ describe("latestKanjiTests", () => {
     const { id } = await createKanjiTestAt("2026-10-31T09:00:00.000Z");
     await saveSubmission(2, id, buildSubmission({ score: 1, total: 2, wrongGrammarIds: [WORD_ID] }));
 
-    expect(await latestKanjiTests("N2", USER_ID)).toEqual(new Map([[1, { id, result: null, wrongIds: [] }]]));
+    expect(await latestKanjiTests("N2", USER_ID)).toEqual(new Map([[1, { id, result: null }]]));
   });
 
   it("leaves out grammar tests and the tests of other levels", async () => {

@@ -49,6 +49,16 @@ describe("flashcards loader", () => {
     expect(cards.cards.map((card) => card.word)).toEqual(["招待状"]);
   });
 
+  it("gives only the words of the lesson on ?page=, and a 404 for a page that is none of the chapter's", async () => {
+    await saveChapter({ ...CHAPTER, lessons: [...CHAPTER.lessons, buildLesson({ title: "料理", page: 21, kanji: [buildHeadword({ char: "待", words: [buildChapterWord({ word: "待つ", reading: "まつ", meaning: "to wait" })] })] })] });
+
+    const { cards } = await load("N2", "1", "?page=21");
+
+    expect(cards).toMatchObject({ lesson: { title: "料理", page: 21 }, words: 1 });
+    expect(cards.cards.map((card) => card.word)).toEqual(["待つ"]);
+    expect(await thrownBy(() => load("N2", "1", "?page=99"))).toMatchObject({ init: { status: 404 } });
+  });
+
   describe("finding the chapter", () => {
     it("throws a 404 for a chapter that is not saved, or a level or chapter that is not one", async () => {
       for (const [level, chapter] of [

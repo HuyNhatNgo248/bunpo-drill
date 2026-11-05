@@ -1,4 +1,5 @@
 import { createCn } from "cn/config";
+import type { ShouldRevalidateFunction } from "react-router";
 
 /**
  * Merges class names, the last of two conflicting Tailwind classes winning. It knows the theme's own
@@ -16,3 +17,19 @@ export const cn = createCn({
     classGroups: { "border-w": [{ border: ["line"] }], "border-w-b": [{ "border-b": ["line"] }] },
   },
 });
+
+/**
+ * A route's shouldRevalidate for a page that shows the `param` picked by itself (a week, a chapter): picking one doesn't
+ * load the page again; any other change of the address, or a form sent, does.
+ */
+export const revalidateUnlessPicked =
+  (param: string): ShouldRevalidateFunction =>
+  ({ currentUrl, nextUrl, formMethod, defaultShouldRevalidate }) => {
+    const without = (url: URL) => {
+      const params = new URLSearchParams(url.search);
+      params.delete(param);
+      return `${url.pathname}?${params}`;
+    };
+    const picked = currentUrl.search !== nextUrl.search;
+    return !formMethod && picked && without(currentUrl) === without(nextUrl) ? false : defaultShouldRevalidate;
+  };

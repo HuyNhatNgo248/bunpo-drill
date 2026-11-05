@@ -1,7 +1,7 @@
 import { i18n } from "@lingui/core";
 import { describe, expect, it } from "vitest";
 import { getServerI18n } from "~/lib/i18n/catalogs.server";
-import { circled, questionAnchor, SECTION_TITLES, sectionGloss, sectionInstruction } from "./sections";
+import { chapterTitle, circled, questionAnchor, SECTION_TITLES, sectionGloss, sectionInstruction } from "./sections";
 
 /** An instruction in English, the language of the tests. */
 const instruction = (...args: Parameters<typeof sectionInstruction>) => i18n._(sectionInstruction(...args));
@@ -82,6 +82,17 @@ describe("circled", () => {
   it("writes a number with no circled form as plain digits", () => {
     expect(circled(5)).toBe("5");
     expect(circled(0)).toBe("0");
+  });
+});
+
+describe("chapterTitle", () => {
+  it("drops the pages and circles the book's part number", () => {
+    expect(chapterTitle("生活-1（p.20–24）")).toBe("生活 ①");
+    expect(chapterTitle("社会-2")).toBe("社会 ②");
+  });
+
+  it("leaves a title without a part number as it is, but for its pages", () => {
+    expect(chapterTitle("ミステリー（p.80–84）")).toBe("ミステリー");
   });
 });
 

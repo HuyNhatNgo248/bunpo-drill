@@ -6,24 +6,24 @@ import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
 import { homeOf } from "~/lib/links";
-import { chapterLabel } from "~/lib/sections";
+import { chapterTitle } from "~/lib/sections";
 import type { FlashcardsView } from "~/lib/views";
 import { CardFace } from "./CardFace";
 import { ModeTabs, type CardMode } from "./ModeTabs";
 import { SessionDone } from "./SessionDone";
 
 /**
- * A flashcard session on one chapter: one card at a time, flipped by a tap, Show answer, Space or ↑ ↓, then Again (it
+ * A flashcard session on one chapter, or one lesson of it: one card at a time, flipped by a tap, Show answer, Space or ↑ ↓, then Again (it
  * comes back a few cards later) or Got it; ‹ and › (or ← and →) step through the cards without rating them. The counts
  * and the bar follow the cards done; the end shows how it went and the way on.
  */
 export function Flashcards({ view }: { view: FlashcardsView }) {
-  const { t, i18n } = useLingui();
+  const { t } = useLingui();
   const [mode, setMode] = useState<CardMode>("kanji-reading");
   const session = useSession(view.cards);
   const { current, total, done, percent, position } = session;
-  const name = `${chapterLabel(i18n, view.chapter)} ${view.title}`;
-  const home = homeOf({ kind: "kanji", level: view.level });
+  const name = view.lesson?.title ?? chapterTitle(view.title);
+  const home = homeOf({ kind: "kanji", ...view });
   const modeTabs = <ModeTabs mode={mode} onChange={setMode} />;
   const counts = (
     <Trans>
@@ -59,9 +59,15 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
         {/* A session is only a slice of the chapter; say so, or a 150-word chapter looks like 20. */}
         {words > total && (
           <p className="text-caption text-muted-foreground">
-            <Trans>
-              {total} cards per session · {left} of {words} words in this chapter still to learn
-            </Trans>
+            {view.lesson ? (
+              <Trans>
+                {total} cards per session · {left} of {words} words in this lesson still to learn
+              </Trans>
+            ) : (
+              <Trans>
+                {total} cards per session · {left} of {words} words in this chapter still to learn
+              </Trans>
+            )}
           </p>
         )}
 

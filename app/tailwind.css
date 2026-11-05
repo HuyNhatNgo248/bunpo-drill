@@ -154,7 +154,6 @@
   --max-height-passage: 35dvh; /* a pinned passage on a phone; taller ones scroll inside */
   --max-height-passage-desktop: 40dvh;
 
-  --grid-template-columns-stats: repeat(auto-fit, minmax(180px, 1fr)); /* the figures on the home page */
   --grid-template-columns-numbers: repeat(auto-fill, minmax(2.75rem, 1fr)); /* question numbers in the sheet */
   --grid-template-columns-term: auto 1fr; /* a term and its value */
   --grid-template-columns-quiz: 208px minmax(0, 1fr); /* the question list beside the questions */
