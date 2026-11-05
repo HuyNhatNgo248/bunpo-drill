@@ -52,7 +52,7 @@ describe("Flashcards", () => {
     expect(screen.getByText("Set 1 of 2 · 25 of 27 words in this lesson still to learn")).toBeInTheDocument();
     await rate("Got it");
     await rate("Got it");
-    expect(await screen.findByRole("link", { name: "Next cards" })).toHaveAttribute("href", expect.stringMatching(/^\/kanji\/N2\/1\/cards\?page=21&seen=/));
+    expect(await screen.findByRole("link", { name: "Next set" })).toHaveAttribute("href", expect.stringMatching(/^\/kanji\/N2\/1\/cards\?page=21&seen=/));
   });
 
   it("shows a word on the front, and its reading, meaning and kanji readings on the back", async () => {
@@ -76,7 +76,7 @@ describe("Flashcards", () => {
     renderCards();
 
     // The switch is in the progress card on a desktop and in a row of its own on a phone: both are on the page.
-    await userEvent.click((await screen.findAllByRole("button", { name: "表記" }))[0]!);
+    await userEvent.click((await screen.findAllByRole("button", { name: /表記/ }))[0]!);
 
     const front = screen.getByRole("button", { name: /しょうたいじょう/ });
     expect(front).toHaveTextContent("invitation card");
@@ -119,7 +119,7 @@ describe("Flashcards", () => {
     await userEvent.click(screen.getByRole("button", { name: "Previous card" }));
 
     expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
-    expect(screen.getByText("0 got it · 0 again")).toBeInTheDocument();
+    expect(screen.getByText("0 to repeat")).toBeInTheDocument();
   });
 
   it("steps through the cards with the arrow keys", async () => {
@@ -174,13 +174,38 @@ describe("Flashcards", () => {
       await waitFor(() => expect(requests).toEqual([{ method: "POST", path: "/kanji/N2/1/cards", body: { wordId: INVITE_ID } }]));
     });
 
+    it("takes back the last rating with Undo, and sets a card marked learned back to not learned", async () => {
+      const requests = renderCards();
+
+      await rate("Got it");
+      await userEvent.click(await screen.findByRole("button", { name: "Undo" }));
+
+      // Back on the card it was, with its answer showing, to rate again.
+      expect(await screen.findByRole("region", { name: "Answer" })).toHaveTextContent("招待状");
+      expect(screen.getByText("Undone")).toBeInTheDocument();
+      await waitFor(() =>
+        expect(requests.map((request) => request.body)).toEqual([{ wordId: VIEW.cards[0]?.wordId }, { wordId: VIEW.cards[0]?.wordId, learned: false }]),
+      );
+    });
+
+    it("rates with the 1 and 2 keys once the answer is shown", async () => {
+      renderCards();
+      await userEvent.keyboard("2");
+      expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
+
+      await userEvent.keyboard(" 1");
+
+      expect(await screen.findByRole("button", { name: /招く/ })).toBeInTheDocument();
+      expect(screen.getByText("1 to repeat")).toBeInTheDocument();
+    });
+
     it("brings a card answered Again back, and counts the session on the way", async () => {
       renderCards();
 
       await rate("Again");
 
       expect(await screen.findByRole("button", { name: /招く/ })).toBeInTheDocument();
-      expect(screen.getByText("0 got it · 1 again")).toBeInTheDocument();
+      expect(screen.getByText("1 to repeat")).toBeInTheDocument();
 
       await rate("Got it");
 
@@ -211,7 +236,7 @@ describe("Flashcards", () => {
       await rate("Got it");
       await rate("Got it");
 
-      expect(await screen.findByRole("link", { name: "Next cards" })).toHaveAttribute(
+      expect(await screen.findByRole("link", { name: "Next set" })).toHaveAttribute(
         "href",
         `/kanji/N2/1/cards?seen=${encodeURIComponent(`${VIEW.cards[0]?.wordId},${INVITE_ID}`)}`,
       );
@@ -226,7 +251,7 @@ describe("Flashcards", () => {
 
       expect(await screen.findByText(/That was the last set/)).toBeInTheDocument();
       expect(screen.getByRole("link", { name: "Review again" })).toHaveAttribute("href", "/kanji/N2/1/cards?review=1");
-      expect(screen.queryByRole("link", { name: "Next cards" })).toBeNull();
+      expect(screen.queryByRole("link", { name: "Next set" })).toBeNull();
     });
 
     it("opens on the finished screen, not a card, when every word is learned", async () => {
@@ -235,6 +260,26 @@ describe("Flashcards", () => {
       expect(await screen.findByRole("heading", { name: "All words learned" })).toBeInTheDocument();
       expect(screen.getByRole("link", { name: "Review again" })).toBeInTheDocument();
     });
+  });
+
+  it("keeps the side picked for the next visit", async () => {
+    renderCards();
+    await userEvent.click((await screen.findAllByRole("button", { name: /表記/ }))[0]!);
+
+    expect(localStorage.getItem("flashcard-mode")).toBe("kanji-writing");
+    localStorage.removeItem("flashcard-mode");
+  });
+
+  it("offers to set a learned card back to not learned, on its back", async () => {
+    const requests = recordingAction();
+    renderRoute(<Flashcards view={{ ...VIEW, cards: [buildFlashCard({ learned: true })], learned: 1 }} />, { url: "/kanji/N2/1/cards", action: requests.action });
+    await userEvent.click(await screen.findByRole("button", { name: "Show answer" }));
+
+    await userEvent.click(screen.getByRole("button", { name: "Mark as not learned" }));
+
+    await waitFor(() => expect(requests.requests.map((request) => request.body)).toEqual([{ wordId: VIEW.cards[0]?.wordId, learned: false }]));
+    expect(screen.queryByRole("button", { name: "Mark as not learned" })).toBeNull();
+    expect(screen.getByRole("region", { name: "Answer" })).toBeInTheDocument();
   });
 
   it("links back to kanji", async () => {

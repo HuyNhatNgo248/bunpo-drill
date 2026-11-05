@@ -72,7 +72,7 @@ For each passage, in this order:
 3. Print the passage as normal text (blockquote, underlines as <u>…</u> or ①②, (注) under it).
 4. Ask with AskUserQuestion, all of that passage's questions in one call (up to 4):
    - `header`: `短文1 問1` style.
-   - `question`: the question, then the 4 choices on their own numbered lines (they're
+   - `question`: the whole passage first (the dialog hides text printed above it), then the question, then the 4 choices on their own numbered lines (they're
      full sentences, too long for option labels).
    - `options`: `label` = `1`…`4`, `description` = `選択肢1`…, `multiSelect`: false.
    - "Other" with a number 1–4 counts as that choice; anything else is no answer.

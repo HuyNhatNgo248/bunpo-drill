@@ -1,6 +1,7 @@
-import { Plural, Trans } from "@lingui/react/macro";
-import { Link } from "react-router";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Link, useSubmit } from "react-router";
 import { SessionSummary } from "~/components/card-session/SessionSummary";
+import { ConfirmDialog } from "~/components/ConfirmDialog";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
@@ -28,6 +29,8 @@ export function SessionDone({
   learned: number;
   onStudyAgain: () => void;
 }) {
+  const { t } = useLingui();
+  const submit = useSubmit();
   const again = missed.length;
   const chapter = view.lesson?.title ?? chapterTitle(view.title);
   // Nothing left to learn: no more new sets, only a review.
@@ -84,7 +87,7 @@ export function SessionDone({
           </h2>
           <WordChips words={missed} />
           <p className="text-caption text-muted-foreground">
-            <Trans>These stay unlearned and come back after the new cards.</Trans>
+            <Trans>Not learned yet. Study them again now, or they come back after the new cards.</Trans>
           </p>
         </Card>
       )}
@@ -96,7 +99,7 @@ export function SessionDone({
           </Button>
         )}
         <div className="grid grid-cols-2 gap-2">
-          <Button asChild variant="outline" size="lg" className={quizHref ? undefined : "col-span-2"}>
+          <Button asChild variant={again > 0 ? "outline" : "default"} size="lg" className={quizHref ? undefined : "col-span-2"}>
             <Link
               to={
                 complete
@@ -104,7 +107,7 @@ export function SessionDone({
                   : cardsOf(view.level, view.chapter, { page: view.lesson?.page, seen })
               }
             >
-              {complete ? <Trans>Review again</Trans> : <Trans>Next cards</Trans>}
+              {complete ? <Trans>Review again</Trans> : <Trans>Next set</Trans>}
             </Link>
           </Button>
           {quizHref && (
@@ -115,6 +118,18 @@ export function SessionDone({
             </Button>
           )}
         </div>
+        {learned > 0 && (
+          <ConfirmDialog
+            title={<Trans>Reset progress?</Trans>}
+            description={view.lesson ? t`Every word of ${chapter} becomes not learned again.` : t`Every word of ${chapter} becomes not learned again, in every lesson.`}
+            confirmLabel={t`Reset`}
+            onConfirm={() => submit({ reset: true, ...(view.lesson && { page: view.lesson.page }) }, { method: "post", encType: "application/json" })}
+          >
+            <Button variant="ghost" size="lg">
+              <Trans>Reset progress</Trans>
+            </Button>
+          </ConfirmDialog>
+        )}
         <Button asChild variant="ghost" size="lg">
           <Link to={homeOf({ kind: "kanji", ...view })}>
             <Trans>Back to topics</Trans>

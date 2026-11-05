@@ -1,6 +1,9 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Volume2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { FlipCard } from "~/components/card-session/FlipCard";
 import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
 import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { WordChips } from "~/components/WordChips";
 import type { FlashCard } from "~/lib/views";
@@ -11,8 +14,35 @@ import type { CardMode } from "./ModeTabs";
  * (表記). Its back shows the word, its reading and meaning, the readings of its kanji, sentences with its kanji, and the
  * other words the book gives under the same kanji.
  */
-export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mode: CardMode; flipped: boolean; onFlip: () => void }) {
+export function CardFace({
+  card,
+  mode,
+  flipped,
+  onFlip,
+  onForget,
+}: {
+  card: FlashCard;
+  mode: CardMode;
+  flipped: boolean;
+  onFlip: () => void;
+  /** Sets a learned card back to not learned; none on a card that isn't learned. */
+  onForget?: () => void;
+}) {
   const { t } = useLingui();
+  // After mount, so the server and the first paint agree; a browser with no speech has no button.
+  const [canSpeak, setCanSpeak] = useState(false);
+  useEffect(() => setCanSpeak("speechSynthesis" in window), []);
+  const speak = () => {
+    const say = new SpeechSynthesisUtterance(card.reading);
+    say.lang = "ja-JP";
+    speechSynthesis.cancel();
+    speechSynthesis.speak(say);
+  };
+  // The back turns over on a tap; these buttons must not.
+  const own = (action: () => void) => (event: React.MouseEvent) => {
+    event.stopPropagation();
+    action();
+  };
   const lesson = (
     <span className="flex items-center gap-2 self-start">
       <Badge variant="soft" lang="ja" className="font-jp">
@@ -53,10 +83,22 @@ export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mod
         <span lang="ja" className="font-jp text-4xl font-semibold tracking-wider">
           {card.word}
         </span>
-        <span lang="ja" className="font-jp text-2xl font-semibold text-indigo">
-          {card.reading}
+        <span className="flex items-center gap-1.5">
+          <span lang="ja" className="font-jp text-2xl font-semibold text-indigo">
+            {card.reading}
+          </span>
+          {canSpeak && (
+            <Button type="button" variant="ghost" size="icon" onClick={own(speak)} aria-label={t`Hear the reading`} className="size-9 md:size-9">
+              <Volume2 aria-hidden="true" />
+            </Button>
+          )}
         </span>
         <span className="text-body-sm text-subtle-foreground">{card.meaning}</span>
+        {onForget && (
+          <Button type="button" variant="ghost" size="sm" onClick={own(onForget)} className="mt-1">
+            <Trans>Mark as not learned</Trans>
+          </Button>
+        )}
       </div>
 
       <div className="flex flex-col gap-2.5 border-t pt-3.5">

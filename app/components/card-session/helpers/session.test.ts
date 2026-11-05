@@ -54,6 +54,12 @@ describe("sessionReducer", () => {
     expect(after([], { type: "again" }, { type: "gotIt" }, { type: "next" }, { type: "prev" })).toEqual(startSession([]));
   });
 
+  it("goes back to a session it is given, for undo", () => {
+    const before = after(["a", "b"]);
+
+    expect(after(["a", "b"], { type: "gotIt" }, { type: "restore", session: before })).toEqual(before);
+  });
+
   it("starts again on the cards given, with nothing missed or done", () => {
     expect(after(["a", "b"], { type: "again" }, { type: "restart", wordIds: ["a"] })).toEqual(startSession(["a"]));
   });

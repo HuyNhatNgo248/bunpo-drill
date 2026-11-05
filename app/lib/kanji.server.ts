@@ -1,4 +1,4 @@
-import { desc, eq, and, sql } from "drizzle-orm";
+import { desc, eq, and, inArray, sql } from "drizzle-orm";
 import { orm } from "./db.server";
 import { kanjiChapterSchema, type KanjiChapter } from "./kanji-payload";
 import { LEVELS, type Level } from "./payload";
@@ -52,6 +52,11 @@ export async function learnedIds(userId: number): Promise<Set<string>> {
 /** Marks a word learned for `userId`; marking it twice keeps the first time. */
 export async function markLearned(userId: number, id: string): Promise<void> {
   await (await orm()).insert(learnedWords).values({ userId, wordId: id, learnedAt: new Date().toISOString() }).onConflictDoNothing();
+}
+
+/** Takes words off `userId`'s learned list: an undone Got it, or a reset. */
+export async function markUnlearned(userId: number, ids: string[]): Promise<void> {
+  if (ids.length) await (await orm()).delete(learnedWords).where(and(eq(learnedWords.userId, userId), inArray(learnedWords.wordId, ids)));
 }
 
 /** A chapter's newest kanji test: its score once taken. */

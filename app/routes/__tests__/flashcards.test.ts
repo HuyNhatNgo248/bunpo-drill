@@ -78,6 +78,19 @@ describe("flashcards action", () => {
     expect(await learnedIds(USER_ID)).toEqual(new Set([WORD_ID]));
   });
 
+  it("sets a word back to not learned, and resets the words of a chapter, redirecting to its cards", async () => {
+    await markLearned(USER_ID, WORD_ID);
+
+    expect(await send(JSON.stringify({ wordId: WORD_ID, learned: false }))).toEqual({ unlearned: WORD_ID });
+    expect(await learnedIds(USER_ID)).toEqual(new Set());
+
+    await markLearned(USER_ID, WORD_ID);
+    const reset = await send(JSON.stringify({ reset: true }));
+    expect(reset).toBeInstanceOf(Response);
+    expect((reset as Response).headers.get("Location")).toBe("/kanji/N2/1/cards");
+    expect(await learnedIds(USER_ID)).toEqual(new Set());
+  });
+
   it("answers 400 for a body that is not a word of the chapter, and marks nothing", async () => {
     for (const body of ["not json", JSON.stringify({ wordId: "n2-c2-招待状" })]) {
       expect(await send(body)).toMatchObject({ init: { status: 400 } });

@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardControls } from "~/components/card-session/CardControls";
 import { useSession } from "~/components/card-session/hooks/useSession";
 import { PageTitle } from "~/components/PageTitle";
@@ -9,7 +9,7 @@ import { homeOf } from "~/lib/links";
 import { chapterTitle } from "~/lib/sections";
 import type { FlashcardsView } from "~/lib/views";
 import { CardFace } from "./CardFace";
-import { ModeTabs, type CardMode } from "./ModeTabs";
+import { ModeTabs, saveMode, savedMode, type CardMode } from "./ModeTabs";
 import { SessionDone } from "./SessionDone";
 
 /**
@@ -20,14 +20,22 @@ import { SessionDone } from "./SessionDone";
 export function Flashcards({ view }: { view: FlashcardsView }) {
   const { t } = useLingui();
   const [mode, setMode] = useState<CardMode>("kanji-reading");
+  // The side picked last time, read after mount so the server and the first paint agree.
+  useEffect(() => setMode(savedMode()), []);
   const session = useSession(view.cards);
   const { current, total, done, percent, position } = session;
   const name = view.lesson?.title ?? chapterTitle(view.title);
   const home = homeOf({ kind: "kanji", ...view });
-  const modeTabs = <ModeTabs mode={mode} onChange={setMode} />;
+  const modeTabs = <ModeTabs
+      mode={mode}
+      onChange={(next) => {
+        setMode(next);
+        saveMode(next);
+      }}
+    />;
   const counts = (
     <Trans>
-      {session.firstTry} got it · {session.missed.length} again
+      {session.missed.length} to repeat
     </Trans>
   );
   const { words } = view;
@@ -52,12 +60,14 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
           </span>{" "}
           · <Trans>Flashcards</Trans>
         </PageTitle>
-        <ProgressCard percent={percent} label={t`Cards done`} aside={current && modeTabs}>
-          <Trans>
-            Cards done {done} / {total}
-          </Trans>
-          {current && <span className="font-normal text-muted-foreground"> · {counts}</span>}
-        </ProgressCard>
+        {total > 0 && (
+          <ProgressCard percent={percent} label={t`Cards done`} aside={current && modeTabs}>
+            <Trans>
+              Cards done {done} / {total}
+            </Trans>
+            {current && <span className="font-normal text-muted-foreground"> · {counts}</span>}
+          </ProgressCard>
+        )}
         {/* A session is only a slice of the chapter; say which, or a 150-word chapter looks like 20. */}
         {current && words > view.size && (
           <p className="text-caption text-muted-foreground">
@@ -80,7 +90,7 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
               {modeTabs}
               <span className="text-caption text-muted-foreground">{counts}</span>
             </div>
-            <CardFace key={current.wordId} card={current} mode={mode} flipped={session.flipped} onFlip={session.flip} />
+            <CardFace key={current.wordId} card={current} mode={mode} flipped={session.flipped} onFlip={session.flip} onForget={session.forget} />
             <CardControls session={session} />
           </>
         ) : (
@@ -89,7 +99,7 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
             total={total}
             gotIt={session.firstTry}
             missed={session.missed}
-            learned={view.learned + session.newlyLearned}
+            learned={view.learned + session.learnedChange}
             onStudyAgain={session.studyAgain}
           />
         )}

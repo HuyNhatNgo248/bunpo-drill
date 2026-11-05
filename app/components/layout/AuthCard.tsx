@@ -2,11 +2,11 @@ import { AppHeader } from "~/components/layout/header";
 import { Card } from "~/components/ui/card";
 
 /** The page around the sign-in forms: one card with a title, a line on what to do, and the form. */
-export function AuthCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
+export function AuthCard({ title, description, children, footer }: { title: string; description: string; children: React.ReactNode; footer?: React.ReactNode }) {
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <AppHeader />
-      <main className="flex justify-center px-4 pt-6 pb-16 md:pt-16">
+      <main className="flex flex-1 items-start justify-center px-4 pt-6 pb-16 md:pt-16">
         <Card className="flex w-full max-w-95 flex-col gap-5 p-6">
           <div className="flex flex-col gap-1">
             <h1 className="text-xl font-bold tracking-tight">{title}</h1>
@@ -15,6 +15,7 @@ export function AuthCard({ title, description, children }: { title: string; desc
           {children}
         </Card>
       </main>
+      {footer}
     </div>
   );
 }

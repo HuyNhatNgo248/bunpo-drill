@@ -1,13 +1,14 @@
 import { msg } from "@lingui/core/macro";
-import { data, useLocation, type ShouldRevalidateFunction } from "react-router";
+import { data, redirect, useLocation, type ShouldRevalidateFunction } from "react-router";
 import { z } from "zod";
 import type { Route } from "./+types/flashcards";
 import { Flashcards } from "~/components/flashcards";
 import { requireUserId } from "~/lib/auth.server";
 import { chapterNotFound } from "~/lib/errors";
 import { localeFromMatches, translate } from "~/lib/i18n";
-import { getChapter, latestKanjiTests, learnedIds, markLearned } from "~/lib/kanji.server";
+import { getChapter, latestKanjiTests, learnedIds, markLearned, markUnlearned } from "~/lib/kanji.server";
 import { chapterWords, toFlashcards } from "~/lib/kanji-views.server";
+import { cardsOf } from "~/lib/links";
 import { LEVELS } from "~/lib/payload";
 
 export function meta({ matches, loaderData }: Route.MetaArgs) {
@@ -48,14 +49,35 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   return { cards };
 }
 
-/** POST {"wordId"}: a card got right the first time is learned. */
+const BODY = z.union([
+  z.object({ wordId: z.string(), learned: z.boolean().default(true) }),
+  z.object({ reset: z.literal(true), page: z.number().optional() }),
+]);
+
+/**
+ * POST {"wordId"}: a card got right the first time is learned; {"wordId", "learned": false} takes it back (an undo, or
+ * "not learned" on a card). {"reset": true, "page"?}: every word of the chapter (or of the lesson on `page`) is unlearned,
+ * and the session starts over.
+ */
 export async function action({ request, params }: Route.ActionArgs) {
   const chapter = await chapterOf(params);
-  const body = z.object({ wordId: z.string() }).safeParse(await request.json().catch(() => null));
-  if (!body.success || !chapterWords(chapter).some((word) => word.id === body.data.wordId)) {
-    return data({ error: "Body must be {\"wordId\"} of a word of this chapter." }, { status: 400 });
+  const body = BODY.safeParse(await request.json().catch(() => null));
+  const words = chapterWords(chapter);
+  const unknown = body.success && "wordId" in body.data && !words.some((word) => word.id === (body.data as { wordId: string }).wordId);
+  if (!body.success || unknown) {
+    return data({ error: "Body must be {\"wordId\"} of a word of this chapter, or {\"reset\": true}." }, { status: 400 });
   }
-  await markLearned(await requireUserId(request), body.data.wordId);
+  const userId = await requireUserId(request);
+  if ("reset" in body.data) {
+    const { page } = body.data;
+    await markUnlearned(userId, words.filter((word) => page === undefined || word.lesson.page === page).map((word) => word.id));
+    return redirect(cardsOf(chapter.level, chapter.chapter, { page }));
+  }
+  if (!body.data.learned) {
+    await markUnlearned(userId, [body.data.wordId]);
+    return { unlearned: body.data.wordId };
+  }
+  await markLearned(userId, body.data.wordId);
   return { learned: body.data.wordId };
 }
 

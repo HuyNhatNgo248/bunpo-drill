@@ -19,6 +19,13 @@ function renderDeck() {
 }
 
 describe("NoteCards", () => {
+  it("says there are no cards, instead of an empty session, when no note has a memo", async () => {
+    renderRoute(<NoteCards notes={[]} />, { url: "/notes/cards", action: recordingAction().action });
+
+    expect(await screen.findByText("No notes with a memo yet")).toBeInTheDocument();
+    expect(screen.queryByText("Session done")).toBeNull();
+  });
+
   it("shows the words on the front and the memo on the back", async () => {
     renderDeck();
 

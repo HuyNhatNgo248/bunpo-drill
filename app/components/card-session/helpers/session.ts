@@ -19,7 +19,8 @@ export type SessionAction =
   | { type: "next" }
   | { type: "again" }
   | { type: "gotIt" }
-  | { type: "restart"; wordIds: string[] };
+  | { type: "restart"; wordIds: string[] }
+  | { type: "restore"; session: Session };
 
 /** How many cards come before a card answered Again, when there are that many left. */
 export const AGAIN_GAP = 3;
@@ -57,5 +58,7 @@ export function sessionReducer(session: Session, action: SessionAction): Session
       return { ...session, queue: rest, index: following, flipped: false, done: [...session.done, current] };
     case "restart":
       return startSession(action.wordIds);
+    case "restore":
+      return action.session;
   }
 }

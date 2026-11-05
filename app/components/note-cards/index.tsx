@@ -5,6 +5,7 @@ import { FlipCard } from "~/components/card-session/FlipCard";
 import { useSession } from "~/components/card-session/hooks/useSession";
 import { SessionSummary } from "~/components/card-session/SessionSummary";
 import { Markdown } from "~/components/Markdown";
+import { EmptyState } from "~/components/EmptyState";
 import { MarkedSentence } from "~/components/notes/MarkedSentence";
 import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
@@ -41,13 +42,19 @@ export function NoteCards({ notes }: { notes: NoteView[] }) {
         <PageTitle meta={position} back={{ to: "/notes", label: <Trans>← Notes</Trans> }}>
           <Trans>Note cards</Trans>
         </PageTitle>
-        <ProgressCard percent={percent} label={t`Cards done`}>
-          <Trans>
-            Cards done {done} / {total}
-          </Trans>
-        </ProgressCard>
+        {notes.length > 0 && (
+          <ProgressCard percent={percent} label={t`Cards done`}>
+            <Trans>
+              Cards done {done} / {total}
+            </Trans>
+          </ProgressCard>
+        )}
 
-        {current ? (
+        {notes.length === 0 ? (
+          <EmptyState title={<Trans>No notes with a memo yet</Trans>}>
+            <Trans>Add a memo to a note, and it shows up here as a card.</Trans>
+          </EmptyState>
+        ) : current ? (
           <>
             <NoteFace key={current.wordId} note={current} flipped={session.flipped} onFlip={session.flip} />
             <CardControls session={session} />
