@@ -25,21 +25,21 @@ export function NoteCards({ notes }: { notes: NoteView[] }) {
     notes.map((note) => ({ ...note, wordId: String(note.id) })),
     false,
   );
-  const { current, total, done, percent, position } = session;
+  const { current, total, done, percent, count } = session;
   const again = session.missed.length;
 
   return (
     <div className="min-h-screen">
       <ProgressHeader
         title={t`Note cards`}
-        count={position}
+        count={count}
         percent={percent}
         label={t`Cards done`}
         back={{ to: "/notes", label: t`Back to notes` }}
       />
 
       <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 pb-8 md:gap-5 md:px-6 md:pt-8 md:pb-16">
-        <PageTitle meta={position} back={{ to: "/notes", label: <Trans>← Notes</Trans> }}>
+        <PageTitle meta={count} back={{ to: "/notes", label: <Trans>← Notes</Trans> }}>
           <Trans>Note cards</Trans>
         </PageTitle>
         {notes.length > 0 && (

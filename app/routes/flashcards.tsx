@@ -9,11 +9,12 @@ import { localeFromMatches, translate } from "~/lib/i18n";
 import { getChapter, latestKanjiTests, learnedIds, markLearned, markUnlearned } from "~/lib/kanji.server";
 import { chapterWords, toFlashcards } from "~/lib/kanji-views.server";
 import { cardsOf } from "~/lib/links";
+import { chapterTitle } from "~/lib/sections";
 import { LEVELS } from "~/lib/payload";
 
 export function meta({ matches, loaderData }: Route.MetaArgs) {
   const name = translate(localeFromMatches(matches), msg`Flashcards`);
-  return [{ title: loaderData ? `${loaderData.cards.lesson?.title ?? loaderData.cards.title} · ${name} · 文法ドリル` : `${name} · 文法ドリル` }];
+  return [{ title: loaderData ? `${loaderData.cards.lesson?.title ?? chapterTitle(loaderData.cards.title)} · ${name} · 文法ドリル` : `${name} · 文法ドリル` }];
 }
 
 /** The level of /kanji/:level/…, or a 404. */
@@ -81,9 +82,12 @@ export async function action({ request, params }: Route.ActionArgs) {
   return { learned: body.data.wordId };
 }
 
-/** A card marked learned changes nothing the session shows, so its POST doesn't load the cards again. */
-export const shouldRevalidate: ShouldRevalidateFunction = ({ formMethod, defaultShouldRevalidate }) =>
-  formMethod === "POST" ? false : defaultShouldRevalidate;
+/**
+ * A card marked learned (or not) changes nothing the session shows, so its POST doesn't load the cards again; a reset
+ * does, through its redirect, which still carries the POST.
+ */
+export const shouldRevalidate: ShouldRevalidateFunction = ({ formMethod, json, defaultShouldRevalidate }) =>
+  formMethod === "POST" && (json as { wordId?: string } | undefined)?.wordId ? false : defaultShouldRevalidate;
 
 export default function FlashcardsRoute({ loaderData }: Route.ComponentProps) {
   // Each visit is a new session, "Next 20 cards" on the same URL included.

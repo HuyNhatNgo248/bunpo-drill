@@ -56,6 +56,8 @@ export function toFlashcards(
     chapter: chapter.chapter,
     title: chapter.title,
     lesson,
+    source: wordIds ? "picked" : review ? "review" : "new",
+    nextLesson: lesson ? nextLessonOf(chapter, lesson.page) : null,
     size: SESSION_SIZE,
     words: words.length,
     learned: words.length - unlearned.length,
@@ -76,6 +78,12 @@ export function toFlashcards(
       examples: (examples.get(word.headword) ?? []).map(({ sentence, meaning }) => ({ sentence: splitTarget(sentence), meaning })),
     })),
   };
+}
+
+/** The lesson after the one on `page`, in the book's order; null after the last. */
+function nextLessonOf(chapter: KanjiChapter, page: number): FlashcardsView["nextLesson"] {
+  const next = chapter.lessons.find((each) => each.page > page);
+  return next ? { title: next.title, page: next.page } : null;
 }
 
 /** A copy of `items` in random order (Fisher–Yates). */

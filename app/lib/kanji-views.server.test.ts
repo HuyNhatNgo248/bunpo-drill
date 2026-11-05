@@ -96,7 +96,8 @@ describe("toFlashcards", () => {
   it("gives only a lesson's words when asked for one, counted by the lesson, with other words from the whole chapter", () => {
     const view = toFlashcards(CHAPTER, new Set(), undefined, null, { title: "待つ", page: 21 });
 
-    expect(view).toMatchObject({ lesson: { title: "待つ", page: 21 }, words: 1, learned: 0 });
+    expect(view).toMatchObject({ lesson: { title: "待つ", page: 21 }, nextLesson: null, words: 1, learned: 0 });
+    expect(toFlashcards(CHAPTER, new Set(), undefined, null, { title: "ギフト", page: 20 }).nextLesson).toEqual({ title: "待つ", page: 21 });
     expect(view.cards.map((card) => card.word)).toEqual(["待合室"]);
   });
 

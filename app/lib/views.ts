@@ -130,6 +130,10 @@ export type FlashcardsView = {
   /** The lesson the session is on; null for the whole chapter. */
   lesson: FlashCard["lesson"] | null;
   cards: FlashCard[];
+  /** New words to learn, learned ones to review (`?review`), or the words asked for (a quiz's misses, `?words`). */
+  source: "new" | "review" | "picked";
+  /** The lesson after this one, for a session on a lesson; null on a chapter or the last lesson. */
+  nextLesson: FlashCard["lesson"] | null;
   /** How many cards a full session has. */
   size: number;
   /** The words of the chapter (of the lesson, on one), and how many of them were learned before the session. */

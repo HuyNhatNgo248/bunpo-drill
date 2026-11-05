@@ -44,7 +44,9 @@ export function LessonRow({
         </span>
       </div>
       <span className="flex shrink-0 items-center gap-0.5 font-semibold text-indigo">
-        <span className="sr-only md:not-sr-only">{t`Flashcards`}</span>
+        {/* A phone row is narrow: the short word. */}
+        <span className="md:hidden">{t`Cards`}</span>
+        <span className="hidden md:inline">{t`Flashcards`}</span>
         <ChevronRight aria-hidden="true" className="size-4" />
       </span>
     </li>

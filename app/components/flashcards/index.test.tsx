@@ -39,7 +39,7 @@ describe("Flashcards", () => {
   it("says the session is a slice of a bigger chapter, and how many words are left", async () => {
     renderRoute(<Flashcards view={{ ...VIEW, words: 156, learned: 6 }} />, { url: "/kanji/N2/1/cards", action: recordingAction().action });
 
-    expect(await screen.findByText("Set 1 of 8 · 150 of 156 words in this chapter still to learn")).toBeInTheDocument();
+    expect(await screen.findByText("150 of 156 words in this chapter still to learn · 8 sets to go")).toBeInTheDocument();
   });
 
   it("names the lesson of a session on one, counts its words, and keeps it for the next cards", async () => {
@@ -49,7 +49,7 @@ describe("Flashcards", () => {
     });
 
     expect(await screen.findByRole("heading", { name: /料理/ })).toBeInTheDocument();
-    expect(screen.getByText("Set 1 of 2 · 25 of 27 words in this lesson still to learn")).toBeInTheDocument();
+    expect(screen.getByText("25 of 27 words in this lesson still to learn · 2 sets to go")).toBeInTheDocument();
     await rate("Got it");
     await rate("Got it");
     expect(await screen.findByRole("link", { name: "Next set" })).toHaveAttribute("href", expect.stringMatching(/^\/kanji\/N2\/1\/cards\?page=21&seen=/));
@@ -113,13 +113,13 @@ describe("Flashcards", () => {
     await userEvent.click(screen.getByRole("button", { name: "Next card" }));
 
     expect(await screen.findByRole("button", { name: /招く/ })).toBeInTheDocument();
-    expect(screen.getAllByText("2 / 2")).toHaveLength(2); // the phone header and the desktop heading
+    expect(screen.getAllByText("0 / 2")).toHaveLength(1); // the phone header: cards done, not the place in the deck
     expect(screen.getByRole("button", { name: "Next card" })).toBeDisabled();
 
     await userEvent.click(screen.getByRole("button", { name: "Previous card" }));
 
     expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
-    expect(screen.getByText("0 to repeat")).toBeInTheDocument();
+    expect(screen.queryByText(/to repeat/)).toBeNull();
   });
 
   it("steps through the cards with the arrow keys", async () => {
@@ -240,7 +240,8 @@ describe("Flashcards", () => {
         "href",
         `/kanji/N2/1/cards?seen=${encodeURIComponent(`${VIEW.cards[0]?.wordId},${INVITE_ID}`)}`,
       );
-      expect(screen.getByRole("link", { name: "Back to topics" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
+      // The phone header's back link and the end screen's.
+      for (const link of screen.getAllByRole("link", { name: "Back to lessons" })) expect(link).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
       expect(screen.queryByRole("heading", { name: /Still learning/ })).toBeNull();
     });
 
@@ -270,22 +271,50 @@ describe("Flashcards", () => {
     localStorage.removeItem("flashcard-mode");
   });
 
-  it("offers to set a learned card back to not learned, on its back", async () => {
-    const requests = recordingAction();
-    renderRoute(<Flashcards view={{ ...VIEW, cards: [buildFlashCard({ learned: true })], learned: 1 }} />, { url: "/kanji/N2/1/cards", action: requests.action });
-    await userEvent.click(await screen.findByRole("button", { name: "Show answer" }));
+  describe("a review of learned words", () => {
+    const REVIEW = { ...VIEW, source: "review" as const, learned: 2, cards: VIEW.cards.map((card) => ({ ...card, learned: true })) };
 
-    await userEvent.click(screen.getByRole("button", { name: "Mark as not learned" }));
+    it("sets a card answered Again back to not learned, and says so", async () => {
+      const { action, requests } = recordingAction();
+      renderRoute(<Flashcards view={REVIEW} />, { url: "/kanji/N2/1/cards?review=1", action });
 
-    await waitFor(() => expect(requests.requests.map((request) => request.body)).toEqual([{ wordId: VIEW.cards[0]?.wordId, learned: false }]));
-    expect(screen.queryByRole("button", { name: "Mark as not learned" })).toBeNull();
-    expect(screen.getByRole("region", { name: "Answer" })).toBeInTheDocument();
+      await rate("Again");
+
+      expect(screen.getByText("Back on your list to learn")).toBeInTheDocument();
+      await waitFor(() => expect(requests.map((request) => request.body)).toEqual([{ wordId: VIEW.cards[0]?.wordId, learned: false }]));
+    });
+
+    it("sends nothing for Got it on a learned card, so Undo can't unlearn it", async () => {
+      const { action, requests } = recordingAction();
+      renderRoute(<Flashcards view={REVIEW} />, { url: "/kanji/N2/1/cards?review=1", action });
+
+      await rate("Got it");
+      expect(screen.getByText("Got it", { selector: "p" })).toBeInTheDocument();
+      await userEvent.click(screen.getByRole("button", { name: "Undo" }));
+
+      expect(await screen.findByText("Undone")).toBeInTheDocument();
+      expect(requests).toEqual([]);
+    });
   });
 
-  it("links back to kanji", async () => {
+  it("leads on to the next lesson once a lesson is learned, and offers a reset only then", async () => {
+    renderRoute(
+      <Flashcards view={{ ...VIEW, lesson: { title: "料理", page: 21 }, nextLesson: { title: "旅行", page: 25 }, words: 2 }} />,
+      { url: "/kanji/N2/1/cards?page=21", action: recordingAction().action },
+    );
+    expect(screen.queryByRole("button", { name: "Reset progress" })).toBeNull();
+
+    await rate("Got it");
+    await rate("Got it");
+
+    expect(await screen.findByRole("link", { name: "Next lesson: 旅行" })).toHaveAttribute("href", "/kanji/N2/1/cards?page=25");
+    expect(screen.getByRole("button", { name: "Reset progress" })).toBeInTheDocument();
+  });
+
+  it("links back to the lessons", async () => {
     renderCards();
 
-    expect(await screen.findByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
-    expect(screen.getByRole("link", { name: "Back to kanji" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
+    expect(await screen.findByRole("link", { name: "← Lessons" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
+    expect(screen.getByRole("link", { name: "Back to lessons" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
   });
 });

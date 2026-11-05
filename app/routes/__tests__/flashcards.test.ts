@@ -101,16 +101,22 @@ describe("flashcards action", () => {
 
 describe("flashcards shouldRevalidate", () => {
   it("keeps the session's cards after a card is marked learned, and loads them again on a visit", () => {
-    const args = (formMethod?: "POST") => ({ formMethod, defaultShouldRevalidate: true }) as Parameters<typeof shouldRevalidate>[0];
+    const args = (formMethod?: "POST", json?: object) => ({ formMethod, json, defaultShouldRevalidate: true }) as Parameters<typeof shouldRevalidate>[0];
 
-    expect([shouldRevalidate(args("POST")), shouldRevalidate(args())]).toEqual([false, true]);
+    expect([shouldRevalidate(args("POST", { wordId: WORD_ID })), shouldRevalidate(args())]).toEqual([false, true]);
+  });
+
+  it("loads the cards again after a reset", () => {
+    const args = { formMethod: "POST", json: { reset: true }, defaultShouldRevalidate: true } as unknown as Parameters<typeof shouldRevalidate>[0];
+
+    expect(shouldRevalidate(args)).toBe(true);
   });
 });
 
 describe("flashcards meta", () => {
   it("names the page after the chapter", () => {
     expect(meta(metaArgs<Parameters<typeof meta>[0]>({ loaderData: { cards: { title: "生活-1" } } }))).toEqual([
-      { title: "生活-1 · Flashcards · 文法ドリル" },
+      { title: "生活 ① · Flashcards · 文法ドリル" },
     ]);
   });
 });
