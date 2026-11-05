@@ -58,6 +58,13 @@ describe("kanjiChapterSchema", () => {
         { path: "lessons.0.kanji.0.words.0.word", message: "Add 状 to otherKanji." },
       ]);
     });
+
+    it("does not ask for readings of the repeat mark 々", () => {
+      const doudou = buildHeadword({ char: "堂", words: [buildChapterWord({ word: "堂々", reading: "どうどう" })], examples: [] });
+      const chapter = buildKanjiChapter({ lessons: [buildLesson({ kanji: [doudou] })], otherKanji: [] });
+
+      expect(kanjiChapterSchema.parse(chapter)).toEqual(chapter);
+    });
   });
 
   describe("rule 3: the example sentences", () => {

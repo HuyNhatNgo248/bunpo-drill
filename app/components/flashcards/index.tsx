@@ -30,6 +30,8 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
       {session.firstTry} got it · {session.missed.length} again
     </Trans>
   );
+  const { words } = view;
+  const left = words - view.learned;
 
   return (
     <div className="min-h-screen">
@@ -54,6 +56,14 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
           </Trans>
           {current && <span className="font-normal text-muted-foreground"> · {counts}</span>}
         </ProgressCard>
+        {/* A session is only a slice of the chapter; say so, or a 150-word chapter looks like 20. */}
+        {words > total && (
+          <p className="text-caption text-muted-foreground">
+            <Trans>
+              {total} cards per session · {left} of {words} words in this chapter still to learn
+            </Trans>
+          </p>
+        )}
 
         {current ? (
           <>

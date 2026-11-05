@@ -100,6 +100,10 @@ msgstr "{total, plural, other {#枚}}"
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
+#: app/components/flashcards/index.tsx:62
+msgid "{total} cards per session · {left} of {words} words in this chapter still to learn"
+msgstr "1回 {total} 枚ずつ · この章の未習得の単語 {left} / {words}"
+
 #: app/components/quiz/CheckSection.tsx:45
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, other {この問題には未回答が#問あります。採点しますか？}}"
@@ -117,7 +121,7 @@ msgstr "不正解 {wrong}問"
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 
-#: app/components/flashcards/index.tsx:45
+#: app/components/flashcards/index.tsx:47
 #: app/components/quiz/index.tsx:80
 #: app/components/results/index.tsx:42
 msgid "← Kanji"
@@ -251,7 +255,7 @@ msgstr "8文字以上"
 msgid "Back to chapters"
 msgstr "章の一覧に戻る"
 
-#: app/components/flashcards/index.tsx:41
+#: app/components/flashcards/index.tsx:43
 #: app/components/quiz/index.tsx:68
 #: app/components/results/Actions.tsx:45
 #: app/components/results/index.tsx:35
@@ -291,14 +295,14 @@ msgstr "「{piece}」の移動を取り消しました。"
 msgid "Card side"
 msgstr "カードの面"
 
-#: app/components/flashcards/index.tsx:40
-#: app/components/flashcards/index.tsx:51
+#: app/components/flashcards/index.tsx:42
+#: app/components/flashcards/index.tsx:53
 #: app/components/note-cards/index.tsx:36
 #: app/components/note-cards/index.tsx:44
 msgid "Cards done"
 msgstr "終わったカード"
 
-#: app/components/flashcards/index.tsx:52
+#: app/components/flashcards/index.tsx:54
 #: app/components/note-cards/index.tsx:45
 msgid "Cards done {done} / {total}"
 msgstr "終わったカード {done} / {total}"
@@ -502,8 +506,8 @@ msgstr "ユーザー名またはメールアドレスと、パスワードを入
 msgid "Error {status}"
 msgstr "エラー {status}"
 
-#: app/components/flashcards/index.tsx:37
-#: app/components/flashcards/index.tsx:49
+#: app/components/flashcards/index.tsx:39
+#: app/components/flashcards/index.tsx:51
 #: app/components/kanji/chapter-list/ChapterRow.tsx:63
 #: app/routes/flashcards.tsx:14
 msgid "Flashcards"

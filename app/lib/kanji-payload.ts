@@ -17,7 +17,8 @@ const WORD_ID = /^n[1-5]-c[1-9][0-9]*-.+$/;
 const TARGET = /【([^【】]*)】/g;
 
 /** The kanji of a word, in order, repeats included: 贈答品 → 贈, 答, 品. */
-const kanjiOf = (text: string) => text.match(/\p{Script=Han}/gu) ?? [];
+// 々 counts as Han in Unicode, but it only repeats the kanji before it.
+const kanjiOf = (text: string) => text.match(/(?!々)\p{Script=Han}/gu) ?? [];
 
 /**
  * A word's id, the same in a chapter and in the tests on it: the level, the chapter and the word.

@@ -36,6 +36,12 @@ async function rate(rating: "Again" | "Got it") {
 }
 
 describe("Flashcards", () => {
+  it("says the session is a slice of a bigger chapter, and how many words are left", async () => {
+    renderRoute(<Flashcards view={{ ...VIEW, words: 156, learned: 6 }} />, { url: "/kanji/N2/1/cards", action: recordingAction().action });
+
+    expect(await screen.findByText("2 cards per session · 150 of 156 words in this chapter still to learn")).toBeInTheDocument();
+  });
+
   it("shows a word on the front, and its reading, meaning and kanji readings on the back", async () => {
     renderCards();
 
