@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Check } from "lucide-react";
 import { Link, useNavigation, useSearchParams } from "react-router";
-import { TabHighlight } from "~/components/TabHighlight";
 import { Progress } from "~/components/ui/progress";
 import { cn } from "~/lib/utils";
 
@@ -11,7 +10,7 @@ export type RailItem = { value: number; label: React.ReactNode; done: number; to
 /**
  * The weeks or chapters to pick from, the one shown tinted in ink: a column beside it on a computer, each with how much
  * of it is done; a carousel of plain pills above it on a phone, a ✓ on one all done, which snaps to a pill and keeps
- * the one shown in its middle. On a computer one highlight slides to the one picked, as soon as it is picked. Each is a
+ * the one shown in its middle. Each is a
  * link that sets `param` and keeps the rest of the address, so the one picked is still there on the way back. The page
  * stays where it is, so the one picked stays in view.
  */
@@ -49,14 +48,8 @@ export function Rail({
       aria-label={label}
       className="relative -mx-4 flex carousel-x snap-x snap-mandatory scroll-px-4 gap-2 overflow-x-auto scroll-smooth px-4 motion-reduce:scroll-auto md:mx-0 md:mask-none md:block md:w-56 md:shrink-0 md:overflow-visible md:rounded-xl md:border md:bg-card md:p-2"
     >
-      {/* A box only on a computer, for the highlight; on a phone the pills sit straight in the carousel. */}
-      <div className="contents md:relative md:flex md:flex-col">
-        <TabHighlight
-          vertical
-          index={items.findIndex(({ value }) => value === shown)}
-          count={items.length}
-          className="hidden rounded-lg bg-foreground/8 md:block"
-        />
+      {/* A column only on a computer; on a phone the pills sit straight in the carousel. */}
+      <div className="contents md:flex md:flex-col">
         {items.map(({ value, label, done, total }) => {
           const isShown = value === shown;
           return (
@@ -70,7 +63,7 @@ export function Rail({
               className={cn(
                 "flex shrink-0 snap-center items-center gap-1 rounded-full border px-3.5 py-1.5 text-foreground no-underline transition-colors md:flex-col md:items-stretch md:gap-1.5 md:rounded-lg md:border-transparent md:px-3 md:py-2.5",
                 isShown
-                  ? "border-foreground/35 bg-foreground/8 md:bg-transparent"
+                  ? "border-foreground/35 bg-foreground/8"
                   : "bg-card hover:bg-muted/60 md:bg-transparent",
               )}
             >
