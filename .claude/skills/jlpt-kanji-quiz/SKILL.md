@@ -17,8 +17,9 @@ Arguments: $ARGUMENTS
 - **Chapters**: `1章`, `1〜3章`, `基本編` (1–10), `挑戦編` (11–19). Skip 19章 (地名) unless
   asked. If nothing is given, ask once which chapters.
 - **cards only** ("just the flashcards", "send the words"): steps 2–3, no test.
-- **Count**: per test, 5 漢字読み + 5 表記 (q1–q10), as in the exam. "10 per part" → 10 + 10;
-  "20 questions" → 10 + 10. At most 30 per part. One test per chapter, never one test over
+- **Count**: per test, one question on every kanji of the chapter (about 15 漢字読み + 15 表記),
+  so the test covers the whole chapter. "10 per part" → 10 + 10; "20 questions" → 10 + 10.
+  At most 30 per part. One test per chapter, never one test over
   several chapters: the app shows each chapter's newest test on its row.
 
 ## 2. The chapter's notes
