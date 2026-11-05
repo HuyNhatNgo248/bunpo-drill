@@ -377,7 +377,7 @@ msgstr "Choices for question {num}"
 msgid "Choose a new password. Changing it signs you in."
 msgstr "Choose a new password. Changing it signs you in."
 
-#: app/components/login/index.tsx:20
+#: app/components/login/index.tsx:22
 msgid "Choose a username, an email address and a password."
 msgstr "Choose a username, an email address and a password."
 
@@ -522,7 +522,7 @@ msgstr "Email address saved."
 msgid "Enter your account's email address. We'll send a link to choose a new password."
 msgstr "Enter your account's email address. We'll send a link to choose a new password."
 
-#: app/components/login/index.tsx:21
+#: app/components/login/index.tsx:23
 msgid "Enter your username or email address, and your password."
 msgstr "Enter your username or email address, and your password."
 
@@ -549,7 +549,7 @@ msgstr "Flashcards"
 msgid "flip"
 msgstr "flip"
 
-#: app/components/login/index.tsx:29
+#: app/components/login/index.tsx:31
 msgid "Forgot your password?"
 msgstr "Forgot your password?"
 
@@ -592,7 +592,7 @@ msgstr "Grammar to review"
 msgid "Grammar worth reviewing"
 msgstr "Grammar worth reviewing"
 
-#: app/components/login/index.tsx:34
+#: app/components/login/index.tsx:36
 msgid "Have an account? <0>Sign in</0>"
 msgstr "Have an account? <0>Sign in</0>"
 
@@ -737,7 +737,7 @@ msgstr "Mock tests for {level} are coming later."
 msgid "More words with <0>{0}</0>"
 msgstr "More words with <0>{0}</0>"
 
-#: app/components/login/index.tsx:41
+#: app/components/login/index.tsx:43
 msgid "New here? <0>Create account</0>"
 msgstr "New here? <0>Create account</0>"
 
@@ -1094,7 +1094,7 @@ msgid "Show the question"
 msgstr "Show the question"
 
 #: app/components/layout/header/index.tsx:67
-#: app/components/login/index.tsx:17
+#: app/components/login/index.tsx:19
 #: app/components/login/LoginForm.tsx:69
 #: app/components/welcome/index.tsx:57
 #: app/routes/signin.tsx:9
@@ -1106,7 +1106,7 @@ msgstr "Sign in"
 msgid "Sign out"
 msgstr "Sign out"
 
-#: app/components/login/index.tsx:17
+#: app/components/login/index.tsx:19
 #: app/routes/signup.tsx:10
 msgid "Sign up"
 msgstr "Sign up"

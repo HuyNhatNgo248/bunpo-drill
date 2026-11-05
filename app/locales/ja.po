@@ -377,7 +377,7 @@ msgstr "問題 {num} の選択肢"
 msgid "Choose a new password. Changing it signs you in."
 msgstr "新しいパスワードを決めてください。変更すると、そのままログインします。"
 
-#: app/components/login/index.tsx:20
+#: app/components/login/index.tsx:22
 msgid "Choose a username, an email address and a password."
 msgstr "ユーザー名とメールアドレス、パスワードを決めてください。"
 
@@ -522,7 +522,7 @@ msgstr "メールアドレスを保存しました。"
 msgid "Enter your account's email address. We'll send a link to choose a new password."
 msgstr "アカウントのメールアドレスを入力してください。新しいパスワードを決めるリンクを送ります。"
 
-#: app/components/login/index.tsx:21
+#: app/components/login/index.tsx:23
 msgid "Enter your username or email address, and your password."
 msgstr "ユーザー名またはメールアドレスと、パスワードを入力してください。"
 
@@ -549,7 +549,7 @@ msgstr "単語カード"
 msgid "flip"
 msgstr "めくる"
 
-#: app/components/login/index.tsx:29
+#: app/components/login/index.tsx:31
 msgid "Forgot your password?"
 msgstr "パスワードを忘れた場合"
 
@@ -592,7 +592,7 @@ msgstr "要復習の文法"
 msgid "Grammar worth reviewing"
 msgstr "復習におすすめの文法"
 
-#: app/components/login/index.tsx:34
+#: app/components/login/index.tsx:36
 msgid "Have an account? <0>Sign in</0>"
 msgstr "アカウントをお持ちの方は <0>ログイン</0>"
 
@@ -737,7 +737,7 @@ msgstr "{level}の模擬試験は今後追加される予定です。"
 msgid "More words with <0>{0}</0>"
 msgstr "<0>{0}</0>を使うほかの語"
 
-#: app/components/login/index.tsx:41
+#: app/components/login/index.tsx:43
 msgid "New here? <0>Create account</0>"
 msgstr "はじめての方は <0>アカウントを作成</0>"
 
@@ -1094,7 +1094,7 @@ msgid "Show the question"
 msgstr "表に戻す"
 
 #: app/components/layout/header/index.tsx:67
-#: app/components/login/index.tsx:17
+#: app/components/login/index.tsx:19
 #: app/components/login/LoginForm.tsx:69
 #: app/components/welcome/index.tsx:57
 #: app/routes/signin.tsx:9
@@ -1106,7 +1106,7 @@ msgstr "ログイン"
 msgid "Sign out"
 msgstr "ログアウト"
 
-#: app/components/login/index.tsx:17
+#: app/components/login/index.tsx:19
 #: app/routes/signup.tsx:10
 msgid "Sign up"
 msgstr "アカウント作成"

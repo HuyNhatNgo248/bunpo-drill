@@ -3,6 +3,7 @@ import { LevelTabs } from "~/components/LevelTabs";
 import { SubjectTabs } from "~/components/SubjectTabs";
 import { JLPT_LEVELS, type JlptLevel } from "~/lib/levels";
 import { AppHeader } from "./header";
+import { QuoteFooter } from "./QuoteFooter";
 
 /** What a page under the tabs says about itself: `levels` when it is shown one JLPT level at a time. */
 export type TabsHandle = { levels?: boolean };
@@ -17,9 +18,9 @@ export function TabsLayout() {
   const level = (page?.loaderData as { level?: JlptLevel | null } | undefined)?.level ?? null;
   const levels = (page?.handle as TabsHandle | undefined)?.levels;
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <AppHeader account />
-      <main className="mx-auto flex max-w-260 flex-col gap-4 px-4 pt-3 pb-10 md:gap-6 md:px-6 md:pt-6 md:pb-16">
+      <main className="mx-auto flex w-full max-w-260 flex-1 flex-col gap-4 px-4 pt-3 pb-10 md:gap-6 md:px-6 md:pt-6 md:pb-16">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between md:border-b">
           {/* The underline of the tab shown sits on the rule. */}
           <SubjectTabs level={level} className="border-b md:-mb-px md:border-b-0" />
@@ -27,6 +28,7 @@ export function TabsLayout() {
         </div>
         <Outlet />
       </main>
+      <QuoteFooter />
     </div>
   );
 }
