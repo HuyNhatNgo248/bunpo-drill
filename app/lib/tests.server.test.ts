@@ -9,7 +9,6 @@ import { learnedIds, markLearned } from "./kanji.server";
 import {
   createTest,
   getTest,
-  levelStats,
   listTests,
   resetTest,
   saveDraft,
@@ -163,13 +162,12 @@ describe("listTests", () => {
     expect(await listTests(USER_ID)).toHaveLength(1);
   });
 
-  it("leaves out kanji tests, which the kanji page lists by chapter, and keeps them out of the level's figures", async () => {
+  it("leaves out kanji tests, which the kanji page lists by chapter", async () => {
     await createTest(buildPayload());
     const kanji = await createTest(buildKanjiTestPayload());
     await saveSubmission(USER_ID, kanji.id, buildSubmission({ score: 0, total: 2 }));
 
     expect(await listTests(USER_ID)).toHaveLength(1);
-    expect(await levelStats("N2", USER_ID)).toEqual({ total: 1, taken: 0, average: null, toReview: 0 });
   });
 });
 
@@ -293,7 +291,7 @@ describe("each user's progress", () => {
 
   beforeEach(() => ensureUser(OTHER_ID));
 
-  it("shares the tests, but not the results, drafts, review marks, attempts or figures", async () => {
+  it("shares the tests, but not the results, drafts, review marks or attempts", async () => {
     const taken = await createTest(buildPayload({ title: "第1週 1日目" }));
     const started = await createTest(buildPayload({ title: "第2週 1日目" }));
     await saveSubmission(USER_ID, taken.id, buildSubmission({ wrongGrammarIds: [GRAMMAR_ID] }));
@@ -305,7 +303,6 @@ describe("each user's progress", () => {
       ["第1週 1日目", null, null],
       ["第2週 1日目", null, null],
     ]);
-    expect(await levelStats("N2", OTHER_ID)).toEqual({ total: 2, taken: 0, average: null, toReview: 0 });
   });
 
   it("lets another user start, take and retake a test one user has taken, and leaves that user's result as it was", async () => {

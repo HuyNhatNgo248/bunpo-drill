@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/kanji";
 import { KanjiHome } from "~/components/kanji";
+import type { TabsHandle } from "~/components/layout/TabsLayout";
 import { requireUserId } from "~/lib/auth.server";
 import { titleMeta } from "~/lib/i18n";
 import { chapterLevels, latestKanjiTests, learnedIds, listChapters } from "~/lib/kanji.server";
@@ -9,6 +10,8 @@ import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL } from "~/lib/payload";
 import { lastTabOf, saveLastTab } from "~/lib/users.server";
 
 export const meta = titleMeta(msg`Kanji`);
+
+export const handle: TabsHandle = { levels: true };
 
 export async function loader({ request }: Route.LoaderArgs) {
   const param = new URL(request.url).searchParams.get("level");

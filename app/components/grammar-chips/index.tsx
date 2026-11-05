@@ -10,7 +10,7 @@ export function GrammarChips({ testId, chips, className }: { testId: string | nu
   return (
     <div className={cn("flex flex-wrap gap-2", className)}>
       {chips.map((chip) => (
-        <GrammarChip key={chip.grammarId} testId={testId} chip={chip} />
+        <GrammarChip key={chip.grammarId} chip={chip} targets={testId ? [{ testId, grammarId: chip.grammarId }] : []} />
       ))}
     </div>
   );

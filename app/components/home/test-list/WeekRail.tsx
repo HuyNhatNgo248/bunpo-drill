@@ -77,7 +77,7 @@ export function WeekRail({ weeks, current }: { weeks: { week: number; tests: Tes
                 value={(taken / tests.length) * 100}
                 className={cn(
                   "hidden md:flex",
-                  isShown ? "bg-foreground/15 *:bg-foreground" : "*:bg-subtle-foreground",
+                  isShown ? "bg-foreground/10 *:bg-subtle-foreground" : "*:bg-faint",
                 )}
               />
             </Link>

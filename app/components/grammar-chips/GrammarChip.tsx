@@ -1,23 +1,36 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { cn } from "~/lib/utils";
 import { Check } from "lucide-react";
-import { useFetcher } from "react-router";
+import { useFetchers, useSubmit } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { circled, dayLabel, weekLabel } from "~/lib/sections";
 import type { ReviewChip } from "~/lib/views";
 
-/** One chip: tapping it opens where the point is in the 文法ノート, and a button to mark it reviewed when there is a `testId`. */
-export function GrammarChip({ testId, chip }: { testId: string | null; chip: ReviewChip }) {
+/** A test that got a grammar point wrong, by the point's id in that test. */
+export type ReviewTarget = { testId: string; grammarId: string };
+
+const keyOf = ({ testId, grammarId }: ReviewTarget) => `review:${testId}:${grammarId}`;
+
+/**
+ * One chip: tapping it opens where the point is in the 文法ノート, and a button that marks it reviewed in each of
+ * `targets` (one test on its results, every test that got it wrong on the home page); with none, no button.
+ */
+export function GrammarChip({ chip, targets }: { chip: ReviewChip; targets: ReviewTarget[] }) {
   const { t, i18n } = useLingui();
-  const fetcher = useFetcher({ key: `review:${testId}:${chip.grammarId}` });
-  const pending = fetcher.json as { reviewed: boolean } | undefined;
+  const submit = useSubmit();
+  const keys = targets.map(keyOf);
+  const pending = useFetchers().find((fetcher) => keys.includes(fetcher.key))?.json as { reviewed: boolean } | undefined;
   const reviewed = pending ? pending.reviewed : chip.reviewed;
-  const toggle = () =>
-    fetcher.submit(
-      { grammarId: chip.grammarId, reviewed: !reviewed },
-      { method: "patch", action: `/api/tests/${testId}`, encType: "application/json" },
-    );
+  const toggle = () => {
+    // A fetcher per test, so the marks don't cancel one another.
+    for (const target of targets) {
+      void submit(
+        { grammarId: target.grammarId, reviewed: !reviewed },
+        { method: "patch", action: `/api/tests/${target.testId}`, encType: "application/json", navigate: false, fetcherKey: keyOf(target) },
+      );
+    }
+  };
 
   return (
     <Popover>
@@ -58,15 +71,14 @@ export function GrammarChip({ testId, chip }: { testId: string | null; chip: Rev
           </dt>
           <dd lang="ja" className="font-jp font-medium">{circled(chip.number)}</dd>
         </dl>
-        {testId && (
-          <Button variant={reviewed ? "outline" : "default"} onClick={toggle} className="w-full">
-            {reviewed ? (
-              <>
-                <Check aria-hidden="true" /> <Trans>Reviewed · Undo</Trans>
-              </>
-            ) : (
-              <Trans>Mark as reviewed</Trans>
-            )}
+        {targets.length > 0 && (
+          <Button
+            variant="outline"
+            onClick={toggle}
+            className={cn("w-full", reviewed && "border-success-border bg-success-soft text-success hover:bg-success-soft")}
+          >
+            <Check aria-hidden="true" />
+            {reviewed ? <Trans>Reviewed · Undo</Trans> : <Trans>Mark as reviewed</Trans>}
           </Button>
         )}
       </PopoverContent>

@@ -16,7 +16,7 @@ import { resetDatabase } from "#tests/helpers/db";
 import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
 import type { Tab } from "~/lib/lastTab";
-import { createTest, saveSubmission, setReviewed } from "~/lib/tests.server";
+import { createTest, saveSubmission } from "~/lib/tests.server";
 import { lastTabOf, saveLastTab } from "~/lib/users.server";
 import { loader, meta, shouldRevalidate } from "../home";
 
@@ -60,60 +60,26 @@ beforeEach(async () => {
 });
 
 describe("home loader", () => {
-  it("lists the tests, and works out the figures over the taken ones", async () => {
+  it("lists the tests, with the grammar each one got wrong", async () => {
     await takeTest(3);
     await takeTest(1, [GRAMMAR_ID]);
     await createTest(buildPayload());
 
-    const { tests, stats } = await load();
+    const { tests } = await load();
 
     expect(tests).toHaveLength(3);
-    // 100% and 33% give 66.5%, which rounds to 67%.
-    expect(stats).toEqual({ average: 67, toReview: 1, taken: 2, total: 3 });
-  });
-
-  it("gives no average before any test is taken", async () => {
-    await createTest(buildPayload());
-
-    expect((await load()).stats).toEqual({ average: null, toReview: 0, taken: 0, total: 1 });
-  });
-
-  it("counts a grammar pattern to review once, however many tests got it wrong", async () => {
-    await takeTest(1, [GRAMMAR_ID]);
-    await takeTest(2, [GRAMMAR_ID]);
-
-    expect((await load()).stats.toReview).toBe(1);
-  });
-
-  it("does not count a pattern that is marked reviewed", async () => {
-    const id = await takeTest(1, [GRAMMAR_ID]);
-    await setReviewed(USER_ID, id, GRAMMAR_ID, true);
-
-    expect((await load()).stats.toReview).toBe(0);
-  });
-
-  it("counts the patterns, not the grammar ids, so the same pattern in two weeks counts once", async () => {
-    // Both points have the pattern 〜かいがある. q2 tests the second one, so the payload stays valid.
-    const points = [buildGrammarPoint(), buildGrammarPoint({ id: "n2-w2-d1-g1", week: 2 })];
-    const order = buildSentenceOrderSection({ questions: [buildSentenceOrderQuestion({ grammarId: "n2-w2-d1-g1" })] });
-    const { id } = await createTest(
-      buildPayload({ grammarPoints: points, sections: [buildFillBlankSection(), order, buildPassageSection()] }),
-    );
-    await saveSubmission(USER_ID, id, buildSubmission({ score: 0, wrongGrammarIds: [GRAMMAR_ID, "n2-w2-d1-g1"] }));
-
-    expect((await load()).stats.toReview).toBe(1);
+    expect(tests.map((test) => test.review.map((chip) => chip.grammarId))).toEqual([[], [GRAMMAR_ID], []]);
   });
 });
 
 describe("home loader levels", () => {
-  it("shows the level in ?level=, with the figures over its tests only", async () => {
+  it("shows the level in ?level=, with its tests only", async () => {
     await takeTest(3);
     await createTest(buildN3Payload());
 
-    const { tests, stats, level } = await load("?level=N3");
+    const { tests, level } = await load("?level=N3");
 
     expect(tests.map((test) => test.level)).toEqual(["N3"]);
-    expect(stats).toEqual({ average: null, toReview: 0, taken: 0, total: 1 });
     expect(level).toBe("N3");
   });
 

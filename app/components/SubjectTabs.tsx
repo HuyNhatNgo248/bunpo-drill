@@ -17,11 +17,11 @@ export function useTabLoading(): boolean {
 
 /**
  * Switches between the grammar mock tests, kanji and the notes, the tab of the page shown being the current one, at
- * the level picked on the page (notes have none). Like
- * the level tabs, one highlight slides to the subject picked, as soon as it is picked; TabsLayout keeps the tabs on
+ * the level picked on the page (notes have none). One highlight slides to the subject picked, as soon as it is
+ * picked; TabsLayout keeps the tabs on
  * screen while the page changes, so the slide is never cut short.
  */
-export function SubjectTabs({ level }: { level: JlptLevel | null }) {
+export function SubjectTabs({ level, className }: { level: JlptLevel | null; className?: string }) {
   const { t } = useLingui();
   const tabs = [
     { key: "grammar", path: PATHS.grammar, label: t`Grammar` },
@@ -32,5 +32,5 @@ export function SubjectTabs({ level }: { level: JlptLevel | null }) {
   const current = tabs.find((tab) => tab.path === here)?.key;
   const next = useNavigation().location?.pathname;
   const shown = tabs.find((tab) => tab.path === next)?.key ?? current;
-  return <NavTabs label={t`Subject`} tabs={tabs} current={current} shown={shown} className="md:w-96" />;
+  return <NavTabs label={t`Subject`} tabs={tabs} current={current} shown={shown} variant="underline" className={className} />;
 }

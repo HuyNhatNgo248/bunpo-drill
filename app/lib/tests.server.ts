@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { and, count, desc, eq, inArray, isNull, sql } from "drizzle-orm";
+import { and, desc, eq, inArray, isNull, sql } from "drizzle-orm";
 import { z } from "zod";
 import { orm, write } from "./db.server";
 import {
@@ -146,50 +146,6 @@ export async function listTests(
 
 /** The first week a test covers, which the list groups it under. */
 const firstWeekOf = (test: ListedTest) => Math.min(...test.payload.grammarPoints.map((point) => point.week));
-
-/** `userId`'s figures over all of a level's tests: how many, how many taken, their average, and the patterns to review. */
-export async function levelStats(level: Level, userId: number) {
-  const db = await orm();
-  const submission = json(progress.submission);
-  const score = sql`${submission} ->> '$.score'`;
-  const total = sql`${submission} ->> '$.total'`;
-  const [[counts], [review]] = await Promise.all([
-    db
-      .select({
-        total: count(),
-        taken: count(submission),
-        // Each score as a whole percent first, as its row shows it; then their average.
-        average: sql<
-          number | null
-        >`avg(CASE WHEN ${total} = 0 THEN 0 ELSE round(100.0 * ${score} / ${total}) END)`,
-      })
-      .from(tests)
-      .leftJoin(progress, progressOf(userId))
-      .where(listable(level)),
-    // A pattern counts once however many tests got it wrong, and not at all where its chip is marked reviewed.
-    db
-      .select({
-        toReview: sql<number>`count(DISTINCT point.value ->> '$.pattern')`,
-      })
-      .from(
-        sql`${tests} JOIN ${progress} ON ${progressOf(userId)}, json_each(${submission}, '$.wrongGrammarIds') AS wrong, json_each(${json(tests.payload)}, '$.grammarPoints') AS point`,
-      )
-      .where(
-        and(
-          listable(level),
-          sql`point.value ->> '$.id' = wrong.value`,
-          sql`NOT EXISTS (SELECT 1 FROM ${reviewed}
-            WHERE ${reviewed.userId} = ${userId} AND ${reviewed.testId} = ${tests.id} AND ${reviewed.grammarId} = wrong.value)`,
-        ),
-      ),
-  ]);
-  const { average, ...rest } = counts!;
-  return {
-    ...rest,
-    average: average === null ? null : Math.round(average),
-    toReview: review!.toReview,
-  };
-}
 
 /** The level of the newest test the list can show, or null before there is one. */
 export async function newestLevel(): Promise<Level | null> {

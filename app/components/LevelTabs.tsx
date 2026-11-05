@@ -10,21 +10,23 @@ import type { JlptLevel } from "~/lib/payload";
 export function LevelTabs({
   levels,
   current,
+  className,
 }: {
   levels: readonly JlptLevel[];
   current: JlptLevel;
+  className?: string;
 }) {
   const { t } = useLingui();
   const next = new URLSearchParams(useNavigation().location?.search).get("level");
   const shown = levels.find((level) => level === next) ?? current;
   return (
-    // A phone's row is too narrow for the title and five tabs, so the tabs wrap under it and fill the width.
     <NavTabs
       label={t`Level`}
       tabs={levels.map((level) => ({ key: level, to: `?level=${level}`, label: level }))}
       current={current}
       shown={shown}
-      className="md:w-auto"
+      variant="tint"
+      className={className}
     />
   );
 }

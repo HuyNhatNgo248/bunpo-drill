@@ -2,14 +2,17 @@ import { msg } from "@lingui/core/macro";
 import type { ShouldRevalidateFunction } from "react-router";
 import type { Route } from "./+types/home";
 import { Home } from "~/components/home";
+import type { TabsHandle } from "~/components/layout/TabsLayout";
 import { requireUserId } from "~/lib/auth.server";
 import { toSummary } from "~/lib/grading.server";
 import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
-import { levelStats, listTests, newestLevel } from "~/lib/tests.server";
+import { listTests, newestLevel } from "~/lib/tests.server";
 import { lastTabOf, ownerId, saveLastTab } from "~/lib/users.server";
 import { titleMeta } from "~/lib/i18n";
 
 export const meta = titleMeta(msg`Mock tests`);
+
+export const handle: TabsHandle = { levels: true };
 
 export async function loader({ request }: Route.LoaderArgs) {
   const params = new URL(request.url).searchParams;
@@ -23,11 +26,11 @@ export async function loader({ request }: Route.LoaderArgs) {
   // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
   if (level) saveLastTab(userId, { subject: "grammar", level }).catch(console.error);
   if (!level || !isTestLevel(level)) {
-    return { tests: [], stats: { total: 0, taken: 0, average: null, toReview: 0 }, level, isAdmin: false };
+    return { tests: [], level, isAdmin: false };
   }
-  const [stats, tests, owner] = await Promise.all([levelStats(level, userId), listTests(userId, { level }), ownerId()]);
+  const [tests, owner] = await Promise.all([listTests(userId, { level }), ownerId()]);
   // Only shows the rename and delete menu; /api/tests/:id checks the admin again.
-  return { tests: tests.map(toSummary), stats, level, isAdmin: userId === owner };
+  return { tests: tests.map(toSummary), level, isAdmin: userId === owner };
 }
 
 /** A week picked (`week`) the page shows by itself, so the tests aren't loaded again for it. */

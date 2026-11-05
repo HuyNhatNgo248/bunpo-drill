@@ -11,7 +11,7 @@ msgstr ""
 msgid "“{piece}” is over {zone}."
 msgstr "「{piece}」は{zone}の上にあります。"
 
-#: app/components/grammar-chips/GrammarChip.tsx:36
+#: app/components/grammar-chips/GrammarChip.tsx:49
 msgid "(reviewed)"
 msgstr "（復習済み）"
 
@@ -64,8 +64,8 @@ msgstr "{left, plural, other {未回答が#問あります。提出しますか�
 msgid "{left} unanswered"
 msgstr "未回答 {left}問"
 
-#: app/components/home/index.tsx:45
-#: app/components/kanji/index.tsx:39
+#: app/components/home/index.tsx:34
+#: app/components/kanji/index.tsx:36
 msgid "{level} isn't available yet"
 msgstr "{level}はまだ準備中です"
 
@@ -81,7 +81,7 @@ msgstr "{slotName}：{text}（タップで外す）"
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, other {#画}}"
 
-#: app/components/home/test-list/index.tsx:48
+#: app/components/home/test-list/index.tsx:52
 msgid "{taken} / {total} taken"
 msgstr "{taken} / {total} 受験済み"
 
@@ -161,7 +161,7 @@ msgstr "15問"
 msgid "3 passages × 5 questions"
 msgstr "3文章 × 5問"
 
-#: app/components/kanji/index.tsx:36
+#: app/components/kanji/index.tsx:33
 msgid "A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz 1章."
 msgstr "Claude が /jlpt-kanji-quiz 1章 で単語を送ると、ここに章が表示されます。"
 
@@ -246,14 +246,6 @@ msgstr "回答済み {done} / {total}"
 #: app/components/reset-password/ResetPasswordForm.tsx:16
 msgid "At least 8 characters"
 msgstr "8文字以上"
-
-#: app/components/home/Stats.tsx:33
-msgid "Average"
-msgstr "平均"
-
-#: app/components/home/Stats.tsx:15
-msgid "Average score"
-msgstr "平均正答率"
 
 #: app/components/flashcards/SessionDone.tsx:101
 msgid "Back to chapters"
@@ -435,7 +427,7 @@ msgstr "作成中…"
 msgid "Current password"
 msgstr "現在のパスワード"
 
-#: app/components/grammar-chips/GrammarChip.tsx:53
+#: app/components/grammar-chips/GrammarChip.tsx:66
 msgid "Day"
 msgstr "日"
 
@@ -551,7 +543,7 @@ msgstr "文章の文法"
 msgid "Grammar mock tests"
 msgstr "文法の模擬試験"
 
-#: app/components/home/Stats.tsx:16
+#: app/components/home/test-list/WeekReview.tsx:16
 msgid "Grammar to review"
 msgstr "要復習の文法"
 
@@ -579,7 +571,7 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/index.tsx:33
+#: app/components/home/test-list/index.tsx:36
 msgid "In progress"
 msgstr "解答中"
 
@@ -595,14 +587,14 @@ msgstr "今日が試験日です。がんばってください。"
 msgid "JLPT grammar practice in the real test's format"
 msgstr "本番形式で練習する、JLPTの文法"
 
-#: app/components/kanji/index.tsx:23
+#: app/components/kanji/index.tsx:22
 #: app/components/results/Actions.tsx:42
 #: app/components/SubjectTabs.tsx:28
-#: app/routes/kanji.tsx:11
+#: app/routes/kanji.tsx:12
 msgid "Kanji"
 msgstr "漢字"
 
-#: app/components/kanji/index.tsx:40
+#: app/components/kanji/index.tsx:37
 msgid "Kanji for {level} is coming later."
 msgstr "{level}の漢字は今後追加される予定です。"
 
@@ -640,8 +632,8 @@ msgstr "前回 {lastScore}"
 msgid "Learned in {chapter}"
 msgstr "{chapter}の習得"
 
-#: app/components/grammar-chips/GrammarChip.tsx:45
-#: app/components/LevelTabs.tsx:23
+#: app/components/grammar-chips/GrammarChip.tsx:58
+#: app/components/LevelTabs.tsx:24
 msgid "Level"
 msgstr "レベル"
 
@@ -657,7 +649,7 @@ msgstr "受け直す前に、間違えた文法を復習しましょう。"
 msgid "Make sure you study the grammar you got wrong first. The quiz asks only the ones you got wrong."
 msgstr "受け直す前に、間違えた文法を復習しましょう。間違えた問題だけが出ます。"
 
-#: app/components/grammar-chips/GrammarChip.tsx:68
+#: app/components/grammar-chips/GrammarChip.tsx:81
 msgid "Mark as reviewed"
 msgstr "復習済みにする"
 
@@ -673,13 +665,13 @@ msgstr "メモ（任意）"
 msgid "Missed words"
 msgstr "間違えた単語"
 
-#: app/components/home/index.tsx:31
+#: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:51
-#: app/routes/home.tsx:12
+#: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "模擬試験"
 
-#: app/components/home/index.tsx:46
+#: app/components/home/index.tsx:35
 msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
@@ -692,7 +684,7 @@ msgstr "<0>{0}</0>を使うほかの語"
 msgid "New here? <0>Create account</0>"
 msgstr "はじめての方は <0>アカウントを作成</0>"
 
-#: app/components/home/index.tsx:50
+#: app/components/home/index.tsx:39
 msgid "New mock tests show up here."
 msgstr "新しい模擬試験はここに表示されます。"
 
@@ -719,7 +711,7 @@ msgstr "次の問題"
 msgid "Nice work"
 msgstr "おつかれさまでした"
 
-#: app/components/kanji/index.tsx:35
+#: app/components/kanji/index.tsx:32
 msgid "No {level} chapters yet"
 msgstr "{level}の章はまだありません"
 
@@ -727,7 +719,7 @@ msgstr "{level}の章はまだありません"
 msgid "No memo yet."
 msgstr "メモはまだありません。"
 
-#: app/components/home/index.tsx:49
+#: app/components/home/index.tsx:38
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
 
@@ -747,7 +739,7 @@ msgstr "まだありません。登録すると、パスワードを忘れても
 msgid "Not an official JLPT service. For exam dates and registration, see <0>jlpt.jp</0>."
 msgstr "日本語能力試験（JLPT）の公式サービスではありません。試験日と申し込みは <0>jlpt.jp</0> へ。"
 
-#: app/components/home/test-list/index.tsx:34
+#: app/components/home/test-list/index.tsx:37
 msgid "Not taken"
 msgstr "未受験"
 
@@ -771,7 +763,7 @@ msgstr "ノート"
 msgid "Nothing to review. You got every question right."
 msgstr "復習する文法はありません。全問正解でした。"
 
-#: app/components/grammar-chips/GrammarChip.tsx:57
+#: app/components/grammar-chips/GrammarChip.tsx:70
 msgid "Number"
 msgstr "番号"
 
@@ -924,7 +916,7 @@ msgstr "結果"
 msgid "Retake wrong ones"
 msgstr "間違えた問題だけ"
 
-#: app/components/grammar-chips/GrammarChip.tsx:65
+#: app/components/grammar-chips/GrammarChip.tsx:81
 msgid "Reviewed · Undo"
 msgstr "復習済み · 元に戻す"
 
@@ -1072,9 +1064,7 @@ msgstr "もう一度受ける"
 msgid "Take the quiz"
 msgstr "クイズを受ける"
 
-#: app/components/home/Stats.tsx:18
-#: app/components/home/Stats.tsx:35
-#: app/components/home/test-list/index.tsx:35
+#: app/components/home/test-list/index.tsx:38
 msgid "Taken"
 msgstr "受験済み"
 
@@ -1171,10 +1161,6 @@ msgstr "採点できませんでした。もう一度お試しください。"
 msgid "This test doesn't exist, or it may have been deleted."
 msgstr "このテストは存在しないか、削除された可能性があります。"
 
-#: app/components/home/Stats.tsx:34
-msgid "To review"
-msgstr "要復習"
-
 #: app/components/welcome/TrialTests.tsx:13
 msgid "Try a full mock test, no account needed"
 msgstr "アカウントなしで模擬試験を体験"
@@ -1227,11 +1213,11 @@ msgstr "ユーザー名またはメールアドレス"
 msgid "We send a reset link here when you forget your password."
 msgstr "パスワードを忘れたときに、再設定のリンクを送ります。"
 
-#: app/components/grammar-chips/GrammarChip.tsx:49
+#: app/components/grammar-chips/GrammarChip.tsx:62
 msgid "Week"
 msgstr "週"
 
-#: app/components/home/test-list/index.tsx:45
+#: app/components/home/test-list/index.tsx:49
 #: app/components/home/test-list/WeekRail.tsx:66
 #: app/lib/sections.ts:60
 msgid "Week {week}"

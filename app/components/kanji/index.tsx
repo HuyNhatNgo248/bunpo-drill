@@ -1,9 +1,8 @@
 import { Trans } from "@lingui/react/macro";
 import { EmptyState } from "~/components/EmptyState";
-import { LevelTabs } from "~/components/LevelTabs";
 import { useTabLoading } from "~/components/SubjectTabs";
 import { cn } from "~/lib/utils";
-import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL } from "~/lib/levels";
+import { isTestLevel, KANJI_LEVEL } from "~/lib/levels";
 import type { KanjiHomeView } from "~/lib/views";
 import { ChapterList } from "./chapter-list";
 import { Stats } from "./Stats";
@@ -18,12 +17,10 @@ export function KanjiHome({ home }: { home: KanjiHomeView }) {
   const switching = useTabLoading();
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold tracking-tight md:text-title-lg">
-          <Trans>Kanji</Trans>
-        </h1>
-        <LevelTabs levels={JLPT_LEVELS} current={level} />
-      </div>
+      {/* The 漢字 tab says it on screen; the heading stays for screen readers. */}
+      <h1 className="sr-only">
+        <Trans>Kanji</Trans>
+      </h1>
 
       <div aria-busy={switching} className={cn("flex flex-col gap-4 transition-opacity duration-200 md:gap-6", switching && "opacity-50")}>
         {chapters.length > 0 && isTestLevel(level) ? (

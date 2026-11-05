@@ -1,8 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useSearchParams } from "react-router";
 import type { TestSummary } from "~/lib/views";
+import { reviewList } from "./helpers/reviewList";
 import { TestRow } from "./TestRow";
 import { WeekRail } from "./WeekRail";
+import { WeekReview } from "./WeekReview";
 
 /** The tests split into runs of the same first week. The server sorts by it, so each week is one run. */
 function byWeek(tests: TestSummary[]) {
@@ -16,8 +18,9 @@ function byWeek(tests: TestSummary[]) {
 }
 
 /**
- * A level's `tests` (at least one), one week at a time: the weeks to pick from, then the week picked, its tests split
- * into the ones in progress, the ones not taken and the taken ones. The week is in the address (`week`); without one, or
+ * A level's `tests` (at least one), one week at a time: the weeks to pick from, then the week picked: the grammar of
+ * its part of the 文法ノート that any test got wrong, then its tests split into the ones in progress, the ones not taken
+ * and the taken ones. The week is in the address (`week`); without one, or
  * one with no tests, it is the first with a test left to take. The server sends the tests in order.
  */
 export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isAdmin?: boolean }) {
@@ -35,6 +38,7 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
     { key: "taken", title: t`Taken`, tests: shown.tests.filter((test) => test.result) },
   ];
   const taken = groups[2].tests.length;
+  const review = reviewList(tests).filter((item) => item.chip.week === week);
 
   return (
     <div className="flex flex-col gap-5 md:flex-row md:items-start md:gap-6">
@@ -50,6 +54,7 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
             </Trans>
           </span>
         </div>
+        {review.length > 0 && <WeekReview items={review} />}
         {groups.map(
           (group) =>
             group.tests.length > 0 && (

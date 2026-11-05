@@ -6,11 +6,13 @@ import { describe, expect, it } from "vitest";
 import type { JlptLevel } from "~/lib/levels";
 import { TabsLayout } from "./TabsLayout";
 
-/** The layout at `path`, over a page whose loader gives `level`, as the grammar, kanji and notes loaders do. */
-function renderLayout(path: string, level: JlptLevel | null) {
-  const Stub = createRoutesStub([
-    { Component: TabsLayout, HydrateFallback: () => null, children: [{ path, Component: () => <p>The page</p>, loader: () => ({ level }) }] },
-  ]);
+/**
+ * The layout at `path`, over a page whose loader gives `level`, as the grammar, kanji and notes loaders do; `levels` as
+ * the grammar and kanji pages say they have levels.
+ */
+function renderLayout(path: string, level: JlptLevel | null, levels = false) {
+  const page = { path, Component: () => <p>The page</p>, loader: () => ({ level }), handle: { levels } };
+  const Stub = createRoutesStub([{ Component: TabsLayout, HydrateFallback: () => null, children: [page] }]);
   render(
     <I18nProvider i18n={i18n}>
       <Stub initialEntries={[path]} />
@@ -46,5 +48,27 @@ describe("TabsLayout", () => {
     expect(await screen.findByText("The page")).toBeInTheDocument();
     expect(tabs().getByRole("link", { name: /Grammar/ })).toHaveAttribute("aria-current", "page");
     expect(tabs().getByRole("link", { name: /Kanji/ })).toHaveAttribute("href", "/kanji");
+  });
+
+  it("links to every JLPT level on a page of levels, easiest first, and marks the one shown", async () => {
+    renderLayout("/kanji", "N2", true);
+
+    const nav = within(await screen.findByRole("navigation", { name: "Level" }));
+    expect(nav.getAllByRole("link").map((link) => link.textContent)).toEqual(["N5", "N4", "N3", "N2", "N1"]);
+    expect(nav.getByRole("link", { name: "N5" })).toHaveAttribute("href", "/kanji?level=N5");
+    expect(nav.getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
+  });
+
+  it("has no level links on the notes", async () => {
+    renderLayout("/notes", "N2");
+    expect(await screen.findByText("The page")).toBeInTheDocument();
+    expect(screen.queryByRole("navigation", { name: "Level" })).toBeNull();
+  });
+
+  it("has no level links before the grammar page has a level", async () => {
+    renderLayout("/", null, true);
+
+    expect(await screen.findByText("The page")).toBeInTheDocument();
+    expect(screen.queryByRole("navigation", { name: "Level" })).toBeNull();
   });
 });

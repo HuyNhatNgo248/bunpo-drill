@@ -73,10 +73,4 @@ describe("KanjiHome", () => {
       unmount();
     }
   });
-
-  it("switches between the levels", async () => {
-    renderRoute(<KanjiHome home={HOME} />, { url: "/kanji" });
-
-    expect(within(await screen.findByRole("navigation", { name: "Level" })).getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
-  });
 });
