@@ -30,12 +30,26 @@ export function SessionDone({
 }) {
   const again = missed.length;
   const chapter = view.lesson?.title ?? chapterTitle(view.title);
+  // Nothing left to learn: no more new sets, only a review.
+  const complete = learned >= view.words;
+  const seen = view.cards.map((card) => card.wordId);
   const quizHref = view.quiz && (view.quiz.result ? `/tests/${view.quiz.id}/results` : `/tests/${view.quiz.id}`);
   return (
     <>
       <Card className="flex flex-col gap-3.5 p-4 md:p-6">
-        <SessionSummary total={total} gotIt={gotIt} again={again} />
-        <div className="grid grid-cols-2 gap-2">
+        {total > 0 ? (
+          <SessionSummary total={total} gotIt={gotIt} again={again} />
+        ) : (
+          <h2 className="text-xl font-bold tracking-tight">
+            <Trans>All words learned</Trans>
+          </h2>
+        )}
+        {complete && total > 0 && (
+          <p className="text-body-sm font-semibold text-success">
+            <Trans>That was the last set. Every word of {chapter} is learned.</Trans>
+          </p>
+        )}
+        <div className={total > 0 ? "grid grid-cols-2 gap-2" : "hidden"}>
           <div className="flex flex-col gap-0.5 rounded-box border border-success-border bg-success-soft px-3.5 py-2.5 text-success">
             <span className="text-xs">
               <Trans>Got it</Trans>
@@ -70,7 +84,7 @@ export function SessionDone({
           </h2>
           <WordChips words={missed} />
           <p className="text-caption text-muted-foreground">
-            <Trans>These stay unlearned and come first next time.</Trans>
+            <Trans>These stay unlearned and come back after the new cards.</Trans>
           </p>
         </Card>
       )}
@@ -83,8 +97,14 @@ export function SessionDone({
         )}
         <div className="grid grid-cols-2 gap-2">
           <Button asChild variant="outline" size="lg" className={quizHref ? undefined : "col-span-2"}>
-            <Link to={cardsOf(view.level, view.chapter, { page: view.lesson?.page })}>
-              <Trans>Next cards</Trans>
+            <Link
+              to={
+                complete
+                  ? cardsOf(view.level, view.chapter, { page: view.lesson?.page, review: true })
+                  : cardsOf(view.level, view.chapter, { page: view.lesson?.page, seen })
+              }
+            >
+              {complete ? <Trans>Review again</Trans> : <Trans>Next cards</Trans>}
             </Link>
           </Button>
           {quizHref && (

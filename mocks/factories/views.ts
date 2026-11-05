@@ -65,6 +65,7 @@ export function buildFlashCard(overrides: Partial<FlashCard> = {}): FlashCard {
     reading: "しょうたいじょう",
     meaning: "invitation card",
     learned: false,
+    repeat: false,
     lesson: { title: "ギフト", page: 20 },
     kanji: [
       { char: "招", kun: ["まね-く"], on: ["ショウ"], strokes: 8 },

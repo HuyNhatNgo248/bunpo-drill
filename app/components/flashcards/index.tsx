@@ -32,6 +32,8 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
   );
   const { words } = view;
   const left = words - view.learned;
+  const setNo = Math.floor(view.learned / view.size) + 1;
+  const sets = Math.ceil(words / view.size);
 
   return (
     <div className="min-h-screen">
@@ -56,16 +58,16 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
           </Trans>
           {current && <span className="font-normal text-muted-foreground"> · {counts}</span>}
         </ProgressCard>
-        {/* A session is only a slice of the chapter; say so, or a 150-word chapter looks like 20. */}
-        {words > total && (
+        {/* A session is only a slice of the chapter; say which, or a 150-word chapter looks like 20. */}
+        {current && words > view.size && (
           <p className="text-caption text-muted-foreground">
             {view.lesson ? (
               <Trans>
-                {total} cards per session · {left} of {words} words in this lesson still to learn
+                Set {setNo} of {sets} · {left} of {words} words in this lesson still to learn
               </Trans>
             ) : (
               <Trans>
-                {total} cards per session · {left} of {words} words in this chapter still to learn
+                Set {setNo} of {sets} · {left} of {words} words in this chapter still to learn
               </Trans>
             )}
           </p>

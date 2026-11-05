@@ -14,9 +14,13 @@ import type { CardMode } from "./ModeTabs";
 export function CardFace({ card, mode, flipped, onFlip }: { card: FlashCard; mode: CardMode; flipped: boolean; onFlip: () => void }) {
   const { t } = useLingui();
   const lesson = (
-    <Badge variant="soft" lang="ja" className="self-start font-jp">
-      {t`${card.lesson.title} p.${card.lesson.page}`}
-    </Badge>
+    <span className="flex items-center gap-2 self-start">
+      <Badge variant="soft" lang="ja" className="font-jp">
+        {t`${card.lesson.title} p.${card.lesson.page}`}
+      </Badge>
+      {/* Missed in the last set, so it is not new. */}
+      {card.repeat && <Badge variant="outline">{t`Review`}</Badge>}
+    </span>
   );
 
   const front = (

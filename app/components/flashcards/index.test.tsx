@@ -39,7 +39,7 @@ describe("Flashcards", () => {
   it("says the session is a slice of a bigger chapter, and how many words are left", async () => {
     renderRoute(<Flashcards view={{ ...VIEW, words: 156, learned: 6 }} />, { url: "/kanji/N2/1/cards", action: recordingAction().action });
 
-    expect(await screen.findByText("2 cards per session · 150 of 156 words in this chapter still to learn")).toBeInTheDocument();
+    expect(await screen.findByText("Set 1 of 8 · 150 of 156 words in this chapter still to learn")).toBeInTheDocument();
   });
 
   it("names the lesson of a session on one, counts its words, and keeps it for the next cards", async () => {
@@ -49,10 +49,10 @@ describe("Flashcards", () => {
     });
 
     expect(await screen.findByRole("heading", { name: /料理/ })).toBeInTheDocument();
-    expect(screen.getByText("2 cards per session · 25 of 27 words in this lesson still to learn")).toBeInTheDocument();
+    expect(screen.getByText("Set 1 of 2 · 25 of 27 words in this lesson still to learn")).toBeInTheDocument();
     await rate("Got it");
     await rate("Got it");
-    expect(await screen.findByRole("link", { name: "Next cards" })).toHaveAttribute("href", "/kanji/N2/1/cards?page=21");
+    expect(await screen.findByRole("link", { name: "Next cards" })).toHaveAttribute("href", expect.stringMatching(/^\/kanji\/N2\/1\/cards\?page=21&seen=/));
   });
 
   it("shows a word on the front, and its reading, meaning and kanji readings on the back", async () => {
@@ -206,14 +206,34 @@ describe("Flashcards", () => {
       expect(await screen.findByRole("button", { name: /招待状/ })).toBeInTheDocument();
     });
 
-    it("links to the next cards and back to the chapters", async () => {
+    it("links to the next cards, leaving out the ones just seen, and back to the chapters", async () => {
+      renderRoute(<Flashcards view={{ ...VIEW, words: 5 }} />, { url: "/kanji/N2/1/cards", action: recordingAction().action });
+      await rate("Got it");
+      await rate("Got it");
+
+      expect(await screen.findByRole("link", { name: "Next cards" })).toHaveAttribute(
+        "href",
+        `/kanji/N2/1/cards?seen=${encodeURIComponent(`${VIEW.cards[0]?.wordId},${INVITE_ID}`)}`,
+      );
+      expect(screen.getByRole("link", { name: "Back to topics" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
+      expect(screen.queryByRole("heading", { name: /Still learning/ })).toBeNull();
+    });
+
+    it("says the chapter is done on the last set, and offers a review instead of next cards", async () => {
       renderCards();
       await rate("Got it");
       await rate("Got it");
 
-      expect(await screen.findByRole("link", { name: "Next cards" })).toHaveAttribute("href", "/kanji/N2/1/cards");
-      expect(screen.getByRole("link", { name: "Back to topics" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
-      expect(screen.queryByRole("heading", { name: /Still learning/ })).toBeNull();
+      expect(await screen.findByText(/That was the last set/)).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "Review again" })).toHaveAttribute("href", "/kanji/N2/1/cards?review=1");
+      expect(screen.queryByRole("link", { name: "Next cards" })).toBeNull();
+    });
+
+    it("opens on the finished screen, not a card, when every word is learned", async () => {
+      renderRoute(<Flashcards view={{ ...VIEW, cards: [], learned: 2 }} />, { url: "/kanji/N2/1/cards", action: recordingAction().action });
+
+      expect(await screen.findByRole("heading", { name: "All words learned" })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "Review again" })).toBeInTheDocument();
     });
   });
 

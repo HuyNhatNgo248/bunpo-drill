@@ -111,6 +111,8 @@ export type FlashCard = {
   reading: string;
   meaning: string;
   learned: boolean;
+  /** Seen in the session before this one and not learned yet. */
+  repeat: boolean;
   lesson: { title: string; page: number };
   /** Every kanji of the word, in order; `strokes` only for the chapter's own kanji, which the book counts. */
   kanji: { char: string; kun: string[]; on: string[]; strokes: number | null }[];
@@ -128,6 +130,8 @@ export type FlashcardsView = {
   /** The lesson the session is on; null for the whole chapter. */
   lesson: FlashCard["lesson"] | null;
   cards: FlashCard[];
+  /** How many cards a full session has. */
+  size: number;
   /** The words of the chapter (of the lesson, on one), and how many of them were learned before the session. */
   words: number;
   learned: number;

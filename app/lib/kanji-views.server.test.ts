@@ -48,6 +48,7 @@ describe("toFlashcards", () => {
       reading: "まちあいしつ",
       meaning: "waiting room",
       learned: false,
+      repeat: false,
       lesson: { title: "待つ", page: 21 },
       kanji: [
         { char: "待", kun: ["ま-つ"], on: ["タイ"], strokes: 8 },
@@ -75,10 +76,21 @@ describe("toFlashcards", () => {
     expect(toFlashcards(big, new Set(), undefined, null).cards).toHaveLength(SESSION_SIZE);
   });
 
-  it("reviews the learned words once every word is learned", () => {
+  it("gives no cards once every word is learned, unless asked to review them", () => {
     const all = new Set(chapterWords(CHAPTER).map((word) => word.id));
 
-    expect(toFlashcards(CHAPTER, all, undefined, null).cards.map((card) => card.wordId).sort()).toEqual([...all].sort());
+    expect(toFlashcards(CHAPTER, all, undefined, null).cards).toEqual([]);
+    expect(toFlashcards(CHAPTER, all, undefined, null, null, { review: true }).cards.map((card) => card.wordId).sort()).toEqual([...all].sort());
+  });
+
+  it("puts the words of the session just seen after the new ones, marked as repeats", () => {
+    const view = toFlashcards(CHAPTER, new Set(), undefined, null, null, { seen: ["n2-c1-招く"] });
+
+    expect(view.cards.map((card) => [card.wordId, card.repeat])).toEqual([
+      [WORD_ID, false],
+      ["n2-c1-待合室", false],
+      ["n2-c1-招く", true],
+    ]);
   });
 
   it("gives only a lesson's words when asked for one, counted by the lesson, with other words from the whole chapter", () => {

@@ -25,8 +25,8 @@ export const SESSION_SIZE = 20;
 
 /**
  * The cards of a flashcard session on a chapter, or on its `lesson` when given: the words of `wordIds` (a quiz's misses)
- * when given, else the first words not learned yet, in the book's order. When every word is learned, a random handful,
- * to review.
+ * when given, else the first words not learned yet, in the book's order, those of the `seen` session last. With `review`,
+ * a random handful of the learned words. When every word is learned and it isn't a review, there are no cards.
  */
 export function toFlashcards(
   chapter: KanjiChapter,
@@ -34,15 +34,18 @@ export function toFlashcards(
   latest: LatestKanjiTest | undefined,
   wordIds: string[] | null,
   lesson: FlashcardsView["lesson"] = null,
+  { seen = [], review = false }: { seen?: string[]; review?: boolean } = {},
 ): FlashcardsView {
   const all = chapterWords(chapter);
   const words = lesson ? all.filter((word) => word.lesson.page === lesson.page) : all;
   const unlearned = words.filter((word) => !learned.has(word.id));
+  const seenIds = new Set(seen);
   const picked = wordIds
     ? words.filter((word) => wordIds.includes(word.id))
-    : unlearned.length
-      ? unlearned.slice(0, SESSION_SIZE)
-      : shuffled(words).slice(0, SESSION_SIZE);
+    : review
+      ? shuffled(words).slice(0, SESSION_SIZE)
+      : // New words first; the ones just missed come back only once they run out.
+        [...unlearned.filter((word) => !seenIds.has(word.id)), ...unlearned.filter((word) => seenIds.has(word.id))].slice(0, SESSION_SIZE);
   const readings = new Map<string, FlashCard["kanji"][number]>([
     ...chapter.otherKanji.map(({ char, kun, on }) => [char, { char, kun, on, strokes: null }] as const),
     ...chapter.lessons.flatMap((lesson) => lesson.kanji.map(({ char, kun, on, strokes }) => [char, { char, kun, on, strokes }] as const)),
@@ -53,6 +56,7 @@ export function toFlashcards(
     chapter: chapter.chapter,
     title: chapter.title,
     lesson,
+    size: SESSION_SIZE,
     words: words.length,
     learned: words.length - unlearned.length,
     quiz: latest ? { id: latest.id, result: latest.result } : null,
@@ -62,6 +66,7 @@ export function toFlashcards(
       reading: word.reading,
       meaning: word.meaning,
       learned: learned.has(word.id),
+      repeat: seenIds.has(word.id),
       lesson: word.lesson,
       kanji: [...new Set(word.word.match(/\p{Script=Han}/gu) ?? [])].flatMap((char) => readings.get(char) ?? []),
       headword: word.headword,

@@ -31,7 +31,7 @@ export function CardControls({ session }: { session: ReturnType<typeof useSessio
 
   return (
     <div className="flex justify-center gap-2">
-      <Button variant="outline" size="lg" onClick={prev} disabled={!prev} aria-label={t`Previous card`} className="aspect-square px-0">
+      <Button variant="ghost" size="lg" onClick={prev} disabled={!prev} aria-label={t`Previous card`} className="aspect-square px-0">
         <ChevronLeft aria-hidden="true" />
       </Button>
       {session.flipped ? (
@@ -50,7 +50,7 @@ export function CardControls({ session }: { session: ReturnType<typeof useSessio
           <Trans>Show answer</Trans>
         </Button>
       )}
-      <Button variant="outline" size="lg" onClick={next} disabled={!next} aria-label={t`Next card`} className="aspect-square px-0">
+      <Button variant="ghost" size="lg" onClick={next} disabled={!next} aria-label={t`Next card`} className="aspect-square px-0">
         <ChevronRight aria-hidden="true" />
       </Button>
     </div>

@@ -23,11 +23,11 @@ msgstr "{0} got it · {1} again"
 
 #. placeholder {0}: card.lesson.title
 #. placeholder {1}: card.lesson.page
-#: app/components/flashcards/CardFace.tsx:18
+#: app/components/flashcards/CardFace.tsx:19
 msgid "{0} p.{1}"
 msgstr "{0} p.{1}"
 
-#: app/components/flashcards/SessionDone.tsx:81
+#: app/components/flashcards/SessionDone.tsx:95
 #: app/components/note-cards/index.tsx:63
 msgid "{again, plural, one {Study it again} other {Study the # again}}"
 msgstr "{again, plural, one {Study it again} other {Study the # again}}"
@@ -81,7 +81,7 @@ msgstr "{score} correct · {wrong} wrong · {unanswered} unanswered"
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}: {text} (tap to remove)"
 
-#: app/components/flashcards/CardFace.tsx:84
+#: app/components/flashcards/CardFace.tsx:88
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, one {# stroke} other {# strokes}}"
 
@@ -104,14 +104,6 @@ msgstr "{total, plural, one {# card} other {# cards}}"
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
-#: app/components/flashcards/index.tsx:67
-msgid "{total} cards per session · {left} of {words} words in this chapter still to learn"
-msgstr "{total} cards per session · {left} of {words} words in this chapter still to learn"
-
-#: app/components/flashcards/index.tsx:63
-msgid "{total} cards per session · {left} of {words} words in this lesson still to learn"
-msgstr "{total} cards per session · {left} of {words} words in this lesson still to learn"
-
 #: app/components/quiz/CheckSection.tsx:45
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
@@ -129,7 +121,7 @@ msgstr "{wrong} wrong"
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "{wrong} wrong · pass line {pass}%"
 
-#: app/components/flashcards/index.tsx:47
+#: app/components/flashcards/index.tsx:49
 #: app/components/quiz/index.tsx:80
 #: app/components/results/index.tsx:42
 msgid "← Kanji"
@@ -211,7 +203,7 @@ msgid "Adding…"
 msgstr "Adding…"
 
 #: app/components/card-session/CardControls.tsx:41
-#: app/components/flashcards/SessionDone.tsx:47
+#: app/components/flashcards/SessionDone.tsx:61
 msgid "Again"
 msgstr "Again"
 
@@ -226,6 +218,10 @@ msgstr "All correct"
 #: app/components/welcome/TrialTests.tsx:16
 msgid "All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like."
 msgstr "All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like."
+
+#: app/components/flashcards/SessionDone.tsx:44
+msgid "All words learned"
+msgstr "All words learned"
 
 #: app/components/add-note/index.tsx:101
 msgid "Already in your notes."
@@ -259,7 +255,7 @@ msgstr "Answered {done} / {total}"
 msgid "At least 8 characters"
 msgstr "At least 8 characters"
 
-#: app/components/flashcards/index.tsx:43
+#: app/components/flashcards/index.tsx:45
 #: app/components/quiz/index.tsx:68
 #: app/components/results/Actions.tsx:45
 #: app/components/results/index.tsx:35
@@ -281,7 +277,7 @@ msgstr "Back to sign in"
 msgid "Back to the mock tests"
 msgstr "Back to the mock tests"
 
-#: app/components/flashcards/SessionDone.tsx:100
+#: app/components/flashcards/SessionDone.tsx:120
 msgid "Back to topics"
 msgstr "Back to topics"
 
@@ -303,14 +299,14 @@ msgstr "Cancelled moving “{piece}”."
 msgid "Card side"
 msgstr "Card side"
 
-#: app/components/flashcards/index.tsx:42
-#: app/components/flashcards/index.tsx:53
+#: app/components/flashcards/index.tsx:44
+#: app/components/flashcards/index.tsx:55
 #: app/components/note-cards/index.tsx:36
 #: app/components/note-cards/index.tsx:44
 msgid "Cards done"
 msgstr "Cards done"
 
-#: app/components/flashcards/index.tsx:54
+#: app/components/flashcards/index.tsx:56
 #: app/components/note-cards/index.tsx:45
 msgid "Cards done {done} / {total}"
 msgstr "Cards done {done} / {total}"
@@ -502,8 +498,8 @@ msgstr "Enter your username or email address, and your password."
 msgid "Error {status}"
 msgstr "Error {status}"
 
-#: app/components/flashcards/index.tsx:39
-#: app/components/flashcards/index.tsx:51
+#: app/components/flashcards/index.tsx:41
+#: app/components/flashcards/index.tsx:53
 #: app/components/kanji/chapter-list/LessonRow.tsx:47
 #: app/routes/flashcards.tsx:14
 msgid "Flashcards"
@@ -523,7 +519,7 @@ msgid "Full mock tests in the same three formats as the real exam, graded as soo
 msgstr "Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get wrong go straight to a review list."
 
 #: app/components/card-session/CardControls.tsx:45
-#: app/components/flashcards/SessionDone.tsx:41
+#: app/components/flashcards/SessionDone.tsx:55
 msgid "Got it"
 msgstr "Got it"
 
@@ -598,7 +594,7 @@ msgstr "Kanji"
 msgid "Kanji for {level} is coming later."
 msgstr "Kanji for {level} is coming later."
 
-#: app/components/flashcards/CardFace.tsx:60
+#: app/components/flashcards/CardFace.tsx:64
 msgid "Kanji in this word"
 msgstr "Kanji in this word"
 
@@ -615,7 +611,7 @@ msgstr "Keep answering"
 msgid "Keep going"
 msgstr "Keep going"
 
-#: app/components/flashcards/CardFace.tsx:70
+#: app/components/flashcards/CardFace.tsx:74
 msgid "kun"
 msgstr "kun"
 
@@ -628,7 +624,7 @@ msgstr "Language: {0}"
 msgid "Last time {lastScore}"
 msgstr "Last time {lastScore}"
 
-#: app/components/flashcards/SessionDone.tsx:55
+#: app/components/flashcards/SessionDone.tsx:69
 msgid "Learned in {chapter}"
 msgstr "Learned in {chapter}"
 
@@ -676,7 +672,7 @@ msgid "Mock tests for {level} are coming later."
 msgstr "Mock tests for {level} are coming later."
 
 #. placeholder {0}: card.headword
-#: app/components/flashcards/CardFace.tsx:115
+#: app/components/flashcards/CardFace.tsx:119
 msgid "More words with <0>{0}</0>"
 msgstr "More words with <0>{0}</0>"
 
@@ -699,7 +695,7 @@ msgstr "New password"
 msgid "Next card"
 msgstr "Next card"
 
-#: app/components/flashcards/SessionDone.tsx:87
+#: app/components/flashcards/SessionDone.tsx:107
 msgid "Next cards"
 msgstr "Next cards"
 
@@ -767,7 +763,7 @@ msgstr "Nothing to review. You got every question right."
 msgid "Number"
 msgstr "Number"
 
-#: app/components/flashcards/CardFace.tsx:76
+#: app/components/flashcards/CardFace.tsx:80
 msgid "on"
 msgstr "on"
 
@@ -809,7 +805,7 @@ msgstr "Password changed."
 msgid "Picked up “{piece}”."
 msgstr "Picked up “{piece}”."
 
-#: app/components/flashcards/CardFace.tsx:39
+#: app/components/flashcards/CardFace.tsx:43
 msgid "Picture the kanji, then flip the card."
 msgstr "Picture the kanji, then flip the card."
 
@@ -913,6 +909,14 @@ msgstr "Results"
 msgid "Retake wrong ones"
 msgstr "Retake wrong ones"
 
+#: app/components/flashcards/CardFace.tsx:22
+msgid "Review"
+msgstr "Review"
+
+#: app/components/flashcards/SessionDone.tsx:107
+msgid "Review again"
+msgstr "Review again"
+
 #: app/components/grammar-chips/GrammarChip.tsx:81
 msgid "Reviewed · Undo"
 msgstr "Reviewed · Undo"
@@ -933,7 +937,7 @@ msgstr "Save"
 msgid "Saving…"
 msgstr "Saving…"
 
-#: app/components/flashcards/CardFace.tsx:39
+#: app/components/flashcards/CardFace.tsx:43
 msgid "Say the reading, then flip the card."
 msgstr "Say the reading, then flip the card."
 
@@ -968,13 +972,21 @@ msgid "Sentence order"
 msgstr "Sentence order"
 
 #. placeholder {0}: card.headword
-#: app/components/flashcards/CardFace.tsx:95
+#: app/components/flashcards/CardFace.tsx:99
 msgid "Sentences with <0>{0}</0>"
 msgstr "Sentences with <0>{0}</0>"
 
 #: app/components/card-session/SessionSummary.tsx:8
 msgid "Session done"
 msgstr "Session done"
+
+#: app/components/flashcards/index.tsx:69
+msgid "Set {setNo} of {sets} · {left} of {words} words in this chapter still to learn"
+msgstr "Set {setNo} of {sets} · {left} of {words} words in this chapter still to learn"
+
+#: app/components/flashcards/index.tsx:65
+msgid "Set {setNo} of {sets} · {left} of {words} words in this lesson still to learn"
+msgstr "Set {setNo} of {sets} · {left} of {words} words in this lesson still to learn"
 
 #: app/components/form/PasswordField.tsx:30
 msgid "Show {label}"
@@ -1032,7 +1044,7 @@ msgstr "Start"
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
-#: app/components/flashcards/SessionDone.tsx:69
+#: app/components/flashcards/SessionDone.tsx:83
 msgid "Still learning ({again})"
 msgstr "Still learning ({again})"
 
@@ -1058,7 +1070,7 @@ msgstr "Submitting…"
 msgid "Take it again"
 msgstr "Take it again"
 
-#: app/components/flashcards/SessionDone.tsx:93
+#: app/components/flashcards/SessionDone.tsx:113
 msgid "Take the quiz"
 msgstr "Take the quiz"
 
@@ -1087,6 +1099,10 @@ msgstr "That email address is already in use."
 #: app/routes/signup.tsx:28
 msgid "That username is already taken."
 msgstr "That username is already taken."
+
+#: app/components/flashcards/SessionDone.tsx:49
+msgid "That was the last set. Every word of {chapter} is learned."
+msgstr "That was the last set. Every word of {chapter} is learned."
 
 #: app/components/quiz/sentence-order/helpers/announcements.ts:14
 msgid "the ★ slot"
@@ -1128,9 +1144,9 @@ msgstr "The same three formats as the real exam"
 msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
 msgstr "The test and every user's results and notes on it will be deleted. This can't be undone."
 
-#: app/components/flashcards/SessionDone.tsx:73
-msgid "These stay unlearned and come first next time."
-msgstr "These stay unlearned and come first next time."
+#: app/components/flashcards/SessionDone.tsx:87
+msgid "These stay unlearned and come back after the new cards."
+msgstr "These stay unlearned and come back after the new cards."
 
 #: app/components/results/ReviewCard.tsx:46
 msgid "They're marked as not learned, so they also come first in this chapter's flashcards."

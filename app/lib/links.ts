@@ -11,16 +11,28 @@ export const homeOf = ({ kind, level, chapter }: { kind: TestKind; level: Level;
   kind === "kanji" ? `/kanji?level=${level}${chapter ? `&chapter=${chapter}` : ""}` : "/";
 
 /**
- * A chapter's flashcards: the words not learned yet, of the lesson on `page` when given, or only `words`.
+ * A chapter's flashcards: the words not learned yet, of the lesson on `page` when given, or only `words`; the cards of
+ * `seen` come last, and `review` is a random handful of the learned ones.
  *
  * @example
  * cardsOf("N2", 1, { words: ["n2-c1-渡航"] }); // -> "/kanji/N2/1/cards?words=n2-c1-%E6%B8%A1%E8%88%AA"
  * cardsOf("N2", 1, { page: 21 }); // -> "/kanji/N2/1/cards?page=21"
  */
-export function cardsOf(level: Level, chapter: number, { words = [], page }: { words?: string[]; page?: number } = {}): string {
+export function cardsOf(
+  level: Level,
+  chapter: number,
+  {
+    words = [],
+    page,
+    seen = [],
+    review = false,
+  }: { words?: string[]; page?: number; seen?: string[]; review?: boolean } = {},
+): string {
   const search = new URLSearchParams();
   if (words.length) search.set("words", words.join(","));
   if (page) search.set("page", String(page));
+  if (seen.length) search.set("seen", seen.join(","));
+  if (review) search.set("review", "1");
   const path = `/kanji/${level}/${chapter}/cards`;
   return search.size ? `${path}?${search}` : path;
 }

@@ -23,11 +23,11 @@ msgstr "覚えた {0} · もう一度 {1}"
 
 #. placeholder {0}: card.lesson.title
 #. placeholder {1}: card.lesson.page
-#: app/components/flashcards/CardFace.tsx:18
+#: app/components/flashcards/CardFace.tsx:19
 msgid "{0} p.{1}"
 msgstr "{0} p.{1}"
 
-#: app/components/flashcards/SessionDone.tsx:81
+#: app/components/flashcards/SessionDone.tsx:95
 #: app/components/note-cards/index.tsx:63
 msgid "{again, plural, one {Study it again} other {Study the # again}}"
 msgstr "{again, plural, other {#枚をもう一度}}"
@@ -81,7 +81,7 @@ msgstr "正解 {score} · 不正解 {wrong} · 未回答 {unanswered}"
 msgid "{slotName}: {text} (tap to remove)"
 msgstr "{slotName}：{text}（タップで外す）"
 
-#: app/components/flashcards/CardFace.tsx:84
+#: app/components/flashcards/CardFace.tsx:88
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, other {#画}}"
 
@@ -104,14 +104,6 @@ msgstr "{total, plural, other {#枚}}"
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
-#: app/components/flashcards/index.tsx:67
-msgid "{total} cards per session · {left} of {words} words in this chapter still to learn"
-msgstr "1回 {total} 枚ずつ · この章の未習得の単語 {left} / {words}"
-
-#: app/components/flashcards/index.tsx:63
-msgid "{total} cards per session · {left} of {words} words in this lesson still to learn"
-msgstr "1回 {total} 枚ずつ · このレッスンの未習得の単語 {left} / {words}"
-
 #: app/components/quiz/CheckSection.tsx:45
 msgid "{unanswered, plural, one {# question in this part is unanswered. Check anyway?} other {# questions in this part are unanswered. Check anyway?}}"
 msgstr "{unanswered, plural, other {この問題には未回答が#問あります。採点しますか？}}"
@@ -129,7 +121,7 @@ msgstr "不正解 {wrong}問"
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 
-#: app/components/flashcards/index.tsx:47
+#: app/components/flashcards/index.tsx:49
 #: app/components/quiz/index.tsx:80
 #: app/components/results/index.tsx:42
 msgid "← Kanji"
@@ -211,7 +203,7 @@ msgid "Adding…"
 msgstr "追加しています…"
 
 #: app/components/card-session/CardControls.tsx:41
-#: app/components/flashcards/SessionDone.tsx:47
+#: app/components/flashcards/SessionDone.tsx:61
 msgid "Again"
 msgstr "もう一度"
 
@@ -226,6 +218,10 @@ msgstr "全問正解"
 #: app/components/welcome/TrialTests.tsx:16
 msgid "All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like."
 msgstr "3つの問題すべてを、提出するとすぐに採点します。解答は保存されないので、何度でも受けられます。"
+
+#: app/components/flashcards/SessionDone.tsx:44
+msgid "All words learned"
+msgstr "すべての単語を覚えました"
 
 #: app/components/add-note/index.tsx:101
 msgid "Already in your notes."
@@ -259,7 +255,7 @@ msgstr "回答済み {done} / {total}"
 msgid "At least 8 characters"
 msgstr "8文字以上"
 
-#: app/components/flashcards/index.tsx:43
+#: app/components/flashcards/index.tsx:45
 #: app/components/quiz/index.tsx:68
 #: app/components/results/Actions.tsx:45
 #: app/components/results/index.tsx:35
@@ -281,7 +277,7 @@ msgstr "ログインに戻る"
 msgid "Back to the mock tests"
 msgstr "テスト一覧に戻る"
 
-#: app/components/flashcards/SessionDone.tsx:100
+#: app/components/flashcards/SessionDone.tsx:120
 msgid "Back to topics"
 msgstr "トピックの一覧に戻る"
 
@@ -303,14 +299,14 @@ msgstr "「{piece}」の移動を取り消しました。"
 msgid "Card side"
 msgstr "カードの面"
 
-#: app/components/flashcards/index.tsx:42
-#: app/components/flashcards/index.tsx:53
+#: app/components/flashcards/index.tsx:44
+#: app/components/flashcards/index.tsx:55
 #: app/components/note-cards/index.tsx:36
 #: app/components/note-cards/index.tsx:44
 msgid "Cards done"
 msgstr "終わったカード"
 
-#: app/components/flashcards/index.tsx:54
+#: app/components/flashcards/index.tsx:56
 #: app/components/note-cards/index.tsx:45
 msgid "Cards done {done} / {total}"
 msgstr "終わったカード {done} / {total}"
@@ -502,8 +498,8 @@ msgstr "ユーザー名またはメールアドレスと、パスワードを入
 msgid "Error {status}"
 msgstr "エラー {status}"
 
-#: app/components/flashcards/index.tsx:39
-#: app/components/flashcards/index.tsx:51
+#: app/components/flashcards/index.tsx:41
+#: app/components/flashcards/index.tsx:53
 #: app/components/kanji/chapter-list/LessonRow.tsx:47
 #: app/routes/flashcards.tsx:14
 msgid "Flashcards"
@@ -523,7 +519,7 @@ msgid "Full mock tests in the same three formats as the real exam, graded as soo
 msgstr "本番と同じ3つの問題形式の模擬試験で、提出するとすぐに採点されます。間違えた文型はそのまま復習リストに。"
 
 #: app/components/card-session/CardControls.tsx:45
-#: app/components/flashcards/SessionDone.tsx:41
+#: app/components/flashcards/SessionDone.tsx:55
 msgid "Got it"
 msgstr "覚えた"
 
@@ -598,7 +594,7 @@ msgstr "漢字"
 msgid "Kanji for {level} is coming later."
 msgstr "{level}の漢字は今後追加される予定です。"
 
-#: app/components/flashcards/CardFace.tsx:60
+#: app/components/flashcards/CardFace.tsx:64
 msgid "Kanji in this word"
 msgstr "この語の漢字"
 
@@ -615,7 +611,7 @@ msgstr "解答を続ける"
 msgid "Keep going"
 msgstr "続ける"
 
-#: app/components/flashcards/CardFace.tsx:70
+#: app/components/flashcards/CardFace.tsx:74
 msgid "kun"
 msgstr "訓"
 
@@ -628,7 +624,7 @@ msgstr "言語：{0}"
 msgid "Last time {lastScore}"
 msgstr "前回 {lastScore}"
 
-#: app/components/flashcards/SessionDone.tsx:55
+#: app/components/flashcards/SessionDone.tsx:69
 msgid "Learned in {chapter}"
 msgstr "{chapter}の習得"
 
@@ -676,7 +672,7 @@ msgid "Mock tests for {level} are coming later."
 msgstr "{level}の模擬試験は今後追加される予定です。"
 
 #. placeholder {0}: card.headword
-#: app/components/flashcards/CardFace.tsx:115
+#: app/components/flashcards/CardFace.tsx:119
 msgid "More words with <0>{0}</0>"
 msgstr "<0>{0}</0>を使うほかの語"
 
@@ -699,7 +695,7 @@ msgstr "新しいパスワード"
 msgid "Next card"
 msgstr "次のカード"
 
-#: app/components/flashcards/SessionDone.tsx:87
+#: app/components/flashcards/SessionDone.tsx:107
 msgid "Next cards"
 msgstr "次のカード"
 
@@ -767,7 +763,7 @@ msgstr "復習する文法はありません。全問正解でした。"
 msgid "Number"
 msgstr "番号"
 
-#: app/components/flashcards/CardFace.tsx:76
+#: app/components/flashcards/CardFace.tsx:80
 msgid "on"
 msgstr "音"
 
@@ -809,7 +805,7 @@ msgstr "パスワードを変更しました。"
 msgid "Picked up “{piece}”."
 msgstr "「{piece}」を持ち上げました。"
 
-#: app/components/flashcards/CardFace.tsx:39
+#: app/components/flashcards/CardFace.tsx:43
 msgid "Picture the kanji, then flip the card."
 msgstr "漢字を思い浮かべてから、カードをめくりましょう。"
 
@@ -913,6 +909,14 @@ msgstr "結果"
 msgid "Retake wrong ones"
 msgstr "間違えた問題だけ"
 
+#: app/components/flashcards/CardFace.tsx:22
+msgid "Review"
+msgstr "復習"
+
+#: app/components/flashcards/SessionDone.tsx:107
+msgid "Review again"
+msgstr "もう一度復習する"
+
 #: app/components/grammar-chips/GrammarChip.tsx:81
 msgid "Reviewed · Undo"
 msgstr "復習済み · 元に戻す"
@@ -933,7 +937,7 @@ msgstr "保存"
 msgid "Saving…"
 msgstr "保存中…"
 
-#: app/components/flashcards/CardFace.tsx:39
+#: app/components/flashcards/CardFace.tsx:43
 msgid "Say the reading, then flip the card."
 msgstr "読み方を言ってから、カードをめくりましょう。"
 
@@ -968,13 +972,21 @@ msgid "Sentence order"
 msgstr "文の組み立て"
 
 #. placeholder {0}: card.headword
-#: app/components/flashcards/CardFace.tsx:95
+#: app/components/flashcards/CardFace.tsx:99
 msgid "Sentences with <0>{0}</0>"
 msgstr "<0>{0}</0>の例文"
 
 #: app/components/card-session/SessionSummary.tsx:8
 msgid "Session done"
 msgstr "セッション終了"
+
+#: app/components/flashcards/index.tsx:69
+msgid "Set {setNo} of {sets} · {left} of {words} words in this chapter still to learn"
+msgstr "セット {setNo} / {sets} · この章であと {left} 語（全 {words} 語）"
+
+#: app/components/flashcards/index.tsx:65
+msgid "Set {setNo} of {sets} · {left} of {words} words in this lesson still to learn"
+msgstr "セット {setNo} / {sets} · このレッスンであと {left} 語（全 {words} 語）"
 
 #: app/components/form/PasswordField.tsx:30
 msgid "Show {label}"
@@ -1032,7 +1044,7 @@ msgstr "始める"
 msgid "Start practicing today"
 msgstr "今日から練習を始める"
 
-#: app/components/flashcards/SessionDone.tsx:69
+#: app/components/flashcards/SessionDone.tsx:83
 msgid "Still learning ({again})"
 msgstr "まだ覚えていない語（{again}）"
 
@@ -1058,7 +1070,7 @@ msgstr "提出中…"
 msgid "Take it again"
 msgstr "もう一度受ける"
 
-#: app/components/flashcards/SessionDone.tsx:93
+#: app/components/flashcards/SessionDone.tsx:113
 msgid "Take the quiz"
 msgstr "クイズを受ける"
 
@@ -1087,6 +1099,10 @@ msgstr "このメールアドレスはもう使われています。"
 #: app/routes/signup.tsx:28
 msgid "That username is already taken."
 msgstr "このユーザー名はもう使われています。"
+
+#: app/components/flashcards/SessionDone.tsx:49
+msgid "That was the last set. Every word of {chapter} is learned."
+msgstr "これが最後のセットです。{chapter} の単語をすべて覚えました。"
 
 #: app/components/quiz/sentence-order/helpers/announcements.ts:14
 msgid "the ★ slot"
@@ -1128,9 +1144,9 @@ msgstr "本番と同じ、3つの問題形式"
 msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
 msgstr "テストと、全ユーザーの結果とメモが削除されます。この操作は取り消せません。"
 
-#: app/components/flashcards/SessionDone.tsx:73
-msgid "These stay unlearned and come first next time."
-msgstr "未習得のまま、次回最初に出ます。"
+#: app/components/flashcards/SessionDone.tsx:87
+msgid "These stay unlearned and come back after the new cards."
+msgstr "これらは未習のままで、新しいカードのあとにまた出ます。"
 
 #: app/components/results/ReviewCard.tsx:46
 msgid "They're marked as not learned, so they also come first in this chapter's flashcards."

@@ -41,7 +41,10 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   const page = search.get("page");
   const lesson = page === null ? null : chapter.lessons.find((candidate) => candidate.page === Number(page));
   if (lesson === undefined) throw chapterNotFound();
-  const cards = toFlashcards(chapter, learned, latest.get(chapter.chapter), words ? words.split(",") : null, lesson && { title: lesson.title, page: lesson.page });
+  const cards = toFlashcards(chapter, learned, latest.get(chapter.chapter), words ? words.split(",") : null, lesson && { title: lesson.title, page: lesson.page }, {
+    seen: search.get("seen")?.split(",") ?? [],
+    review: search.has("review"),
+  });
   return { cards };
 }
 
