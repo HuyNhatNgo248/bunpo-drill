@@ -1,4 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Timer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useSubmit } from "react-router";
 import { AddNote } from "~/components/add-note";
@@ -7,11 +8,13 @@ import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
 import { homeOf } from "~/lib/links";
+import { clock, cn } from "~/lib/utils";
 import type { Answers, NoteMark, QuizDraft, QuizView, ResultSection } from "~/lib/views";
 import { CheckSummary } from "./CheckSummary";
 import { quizProgress } from "./helpers/answers";
 import { takeLocalDraft } from "./helpers/localDraft";
 import { useAutosave } from "./hooks/useAutosave";
+import { useReadingTimer } from "./hooks/useReadingTimer";
 import { QuestionNav } from "./question-nav";
 import { ANSWER_MARKS, answeredMarks } from "./question-nav/QuestionGrid";
 import { Section } from "./Section";
@@ -38,7 +41,10 @@ export function Quiz({
 }) {
   const [answers, setAnswers] = useState(draft.answers);
   const [checks, setChecks] = useState(draft.checks);
-  useAutosave(trial ? null : quiz.id, { answers, checks, kept: draft.kept });
+  // A reading set times each passage; its times are kept by passage index, kept passages of a retake included.
+  const passages = quiz.sections.flatMap((section) => section.groups.flatMap((group) => (group.reading ? [group.reading] : [])));
+  const timer = useReadingTimer(Math.max(0, ...passages.map((passage) => passage.index + 1)), draft.times);
+  useAutosave(trial ? null : quiz.id, { answers, checks, kept: draft.kept }, passages.length ? timer.ref : undefined);
   // A sheet this browser kept from before drafts were saved on the server goes on, unless the server has one.
   useEffect(() => {
     const local = takeLocalDraft(quiz.id);
@@ -63,25 +69,60 @@ export function Quiz({
     },
     [setChecks],
   );
-  const send = () => submit({ answers }, { method: "post", encType: "application/json" });
+  const send = () =>
+    submit(passages.length ? { answers, times: timer.ref.current } : { answers }, { method: "post", encType: "application/json" });
   const { t } = useLingui();
-  const back = quiz.kind === "kanji" ? { to: homeOf(quiz), label: t`Back to kanji` } : undefined;
+  const back =
+    quiz.kind === "kanji"
+      ? { to: homeOf(quiz), label: t`Back to kanji` }
+      : quiz.kind === "reading"
+        ? { to: homeOf(quiz), label: t`Back to reading` }
+        : undefined;
   const total = quiz.questionCount;
+  const spent = passages.reduce((sum, passage) => sum + (timer.times[passage.index] ?? 0), 0);
+  const target = passages.reduce((sum, passage) => sum + passage.targetSeconds, 0);
+  const time = clock(spent);
+  const goal = clock(target);
+  const timeLabel = t`Time ${time}, target ${goal}`;
 
   return (
     <NotesProvider notes={notes}>
       <div className="min-h-screen">
-        <ProgressHeader title={quiz.title} count={`${answered} / ${total}`} percent={percent} label={t`Answered`} back={back} />
+        <ProgressHeader
+          title={quiz.title}
+          count={passages.length ? `${answered} / ${total} · ${time}` : `${answered} / ${total}`}
+          percent={percent}
+          label={t`Answered`}
+          back={back}
+        />
 
         <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 md:gap-5 md:px-6 md:pt-8 md:pb-12 lg:max-w-260">
           <PageTitle
             level={quiz.level}
             meta={<Plural value={total} one="# question" other="# questions" />}
-            back={{ to: homeOf(quiz), label: quiz.kind === "kanji" ? <Trans>← Kanji</Trans> : <Trans>← Mock tests</Trans> }}
+            back={{
+              to: homeOf(quiz),
+              label: quiz.kind === "kanji" ? <Trans>← Kanji</Trans> : quiz.kind === "reading" ? <Trans>← Reading</Trans> : <Trans>← Mock tests</Trans>,
+            }}
           >
             {quiz.title}
           </PageTitle>
-          <ProgressCard percent={percent} label={t`Answered`}>
+          <ProgressCard
+            percent={percent}
+            label={t`Answered`}
+            aside={
+              passages.length > 0 && (
+                <span role="timer" aria-label={timeLabel} className="flex items-center gap-2.5 border-l pl-5">
+                  <Timer aria-hidden="true" className="size-4.5 text-subtle-foreground" />
+                  <span className="flex flex-col leading-tight">
+                    <span className={cn("text-prompt font-semibold tabular-nums", spent > target && "text-warning")}>
+                      {time} <span className="text-caption font-normal text-muted-foreground">/ {goal}</span>
+                    </span>
+                  </span>
+                </span>
+              )
+            }
+          >
             <Trans>
               Answered {answered} / {total}
             </Trans>
@@ -105,6 +146,7 @@ export function Quiz({
                   onAnswer={setAnswer}
                   checked={checks[section.no]}
                   onChecked={onChecked}
+                  times={timer.times}
                 />
               ))}
 

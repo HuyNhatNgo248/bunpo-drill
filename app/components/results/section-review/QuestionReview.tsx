@@ -1,10 +1,12 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useLocation } from "react-router";
 import { cn } from "~/lib/utils";
+import { Badge } from "~/components/ui/badge";
 import { Card } from "~/components/ui/card";
 import { NotedText } from "~/components/noted-text";
+import { ReadingRuns } from "~/components/reading-passage";
 import { UnderlinedSentence } from "~/components/UnderlinedSentence";
-import { questionAnchor } from "~/lib/sections";
+import { questionAnchor, TRAP_LABELS } from "~/lib/sections";
 import type { ResultQuestion, SentencePiece } from "~/lib/views";
 
 /**
@@ -13,7 +15,7 @@ import type { ResultQuestion, SentencePiece } from "~/lib/views";
  * It is the question's anchor, which the question list jumps to; `className` sets how far below the top it lands.
  */
 export function QuestionReview({ question, className }: { question: ResultQuestion; className?: string }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   // Opened from a note's link to this question.
   const arrived = useLocation().hash === `#${questionAnchor(question.num)}`;
   const yours = question.yours;
@@ -29,9 +31,34 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
         className,
       )}
     >
-      <span className="flex size-6.5 items-center justify-center rounded-lg border bg-card text-xs font-semibold text-secondary-foreground md:size-7 md:text-caption">
-        {question.num}
-      </span>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="flex size-6.5 items-center justify-center rounded-lg border bg-card text-xs font-semibold text-secondary-foreground md:size-7 md:text-caption">
+          {question.num}
+        </span>
+        {/* A reading question says what it asked for, and on a miss which trap the choice picked set. */}
+        {question.reading && (
+          <>
+            <Badge variant="outline" lang="ja" className="bg-card font-jp">
+              {question.reading.kind}
+            </Badge>
+            {!question.correct && question.reading.trap && (
+              <Badge variant="outline" className="bg-card">
+                {i18n._(TRAP_LABELS[question.reading.trap])}
+              </Badge>
+            )}
+          </>
+        )}
+      </div>
+
+      {question.reading && (
+        <p
+          lang="ja"
+          data-note-sentence={question.reading.prompt.map((run) => run.text).join("")}
+          className="font-jp text-prompt leading-sentence md:text-lg"
+        >
+          <ReadingRuns runs={question.reading.prompt} />
+        </p>
+      )}
 
       {question.prompt && (
         <p

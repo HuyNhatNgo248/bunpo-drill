@@ -1,7 +1,17 @@
 import { z } from "zod";
 import { splitTarget, type KanjiTestPayload } from "./kanji-payload";
 import { BLANK, splitPassage, type PassageQuestion, type TestPayload } from "./payload";
-import { isKanji, type AnyPayload } from "./test-kinds";
+import {
+  passagesOf,
+  plainText,
+  readingGroupOf,
+  TARGET_SECONDS,
+  underlineRuns,
+  type ReadingPassage,
+  type ReadingTestPayload,
+  type ReadingType,
+} from "./reading-payload";
+import { isKanji, isReading, type AnyPayload } from "./test-kinds";
 import type { Draft, ListedTest, StoredTest, Submission } from "./tests.server";
 import type {
   Answer,
@@ -11,6 +21,8 @@ import type {
   QuizSection,
   QuizSegment,
   QuizView,
+  ReadingPassageView,
+  ReadingRun,
   ResultGroup,
   ResultQuestion,
   ResultSection,
@@ -31,12 +43,16 @@ export const submittedAnswersSchema = z.record(
 /** What the quiz saves while it is taken: its answers and the numbers of its checked parts. */
 export const draftSchema = z.object({
   answers: submittedAnswersSchema,
-  checked: z.array(z.number().int().min(1).max(3)).max(3),
+  checked: z.array(z.number().int().min(1).max(5)).max(5),
   kept: z.array(z.string()).max(200).optional(),
+  times: z.array(z.number().int().min(0)).max(30).optional(),
 });
 
 /** What the quiz sends to check one part: the part's number and the answers. */
-export const checkSchema = z.object({ section: z.number().int().min(1).max(3), answers: submittedAnswersSchema });
+export const checkSchema = z.object({ section: z.number().int().min(1).max(5), answers: submittedAnswersSchema });
+
+/** The longest a passage is timed, in seconds: a set left open overnight doesn't count its night. */
+const MAX_SECONDS = 3 * 60 * 60;
 
 const numberOf = (id: string) => Number(id.slice(1));
 const label = (options: string[], index: number) => `${index + 1} ${options[index]}`;
@@ -44,6 +60,7 @@ const choiceOf = (answer: Answer | undefined) => (typeof answer === "number" ? a
 
 export function questionCount(payload: AnyPayload) {
   if (isKanji(payload)) return payload.sections.reduce((sum, section) => sum + section.questions.length, 0);
+  if (isReading(payload)) return passagesOf(payload).reduce((sum, { passage }) => sum + passage.questions.length, 0);
   const [fill, order, passage] = payload.sections;
   return (
     fill.questions.length +
@@ -55,10 +72,12 @@ export function questionCount(payload: AnyPayload) {
 /** The quiz as the browser sees it: no answers, no grammar ids and no word ids. */
 export function toQuizView(test: StoredTest): QuizView {
   const { payload } = test;
-  const sections = withoutKeptQuestions(isKanji(payload) ? kanjiQuizSections(payload) : grammarQuizSections(payload), test.draft);
+  const all = isKanji(payload) ? kanjiQuizSections(payload) : isReading(payload) ? readingQuizSections(payload) : grammarQuizSections(payload);
+  const sections = withoutKeptQuestions(all, test.draft);
   const count = sections.reduce((sum, s) => sum + s.groups.reduce((n, g) => n + g.questions.length, 0), 0);
   const basics = { id: test.id, title: payload.title, level: payload.level, questionCount: count, sections };
-  return isKanji(payload) ? { ...basics, kind: "kanji", chapter: payload.chapter } : { ...basics, kind: "grammar", chapter: null };
+  if (isKanji(payload)) return { ...basics, kind: "kanji", chapter: payload.chapter };
+  return isReading(payload) ? { ...basics, kind: "reading", chapter: readingGroupOf(payload) } : { ...basics, kind: "grammar", chapter: null };
 }
 
 /** Leaves out the questions a retake of the wrong answers keeps. A kept passage blank shows its right answer as text. */
@@ -102,6 +121,7 @@ function grammarQuizSections(payload: TestPayload): QuizSection[] {
       groups: [
         {
           segments: null,
+          reading: null,
           questions: fill.questions.map(({ id, prompt, choices }) => ({
             type: "fill-blank",
             id,
@@ -118,6 +138,7 @@ function grammarQuizSections(payload: TestPayload): QuizSection[] {
       groups: [
         {
           segments: null,
+          reading: null,
           questions: order.questions.map(({ id, before, after, starSlot, pieces }) => ({
             type: "sentence-order",
             id,
@@ -137,6 +158,7 @@ function grammarQuizSections(payload: TestPayload): QuizSection[] {
         segments: splitPassage(p.passage).map((part) =>
           part.kind === "text" ? part : { kind: "blank", num: part.num, questionId: `q${part.num}` },
         ),
+        reading: null,
         questions: p.questions.map(({ id, choices }) => ({ type: "passage", id, num: numberOf(id), choices })),
       })),
     },
@@ -150,25 +172,106 @@ function kanjiQuizSections(payload: KanjiTestPayload): QuizSection[] {
     groups: [
       {
         segments: null,
+        reading: null,
         questions: questions.map(({ id, prompt, choices }) => ({ type, id, num: numberOf(id), prompt: splitTarget(prompt), choices })),
       },
     ],
   }));
 }
 
+/** A reading set's 問題, a group per passage. The quiz is sent no evidence, so no run is marked as one. */
+function readingQuizSections(payload: ReadingTestPayload): QuizSection[] {
+  let index = 0;
+  return payload.sections.map(({ type, passages }, i) => ({
+    no: i + 1,
+    type,
+    groups: passages.map((passage, p) => ({
+      segments: null,
+      reading: passageView(passage, type, { index: index++, num: p + 1 }),
+      questions: passage.questions.map(({ id, prompt, choices }) => ({ type, id, num: numberOf(id), prompt: runsOf(prompt), choices, passage: p + 1 })),
+    })),
+  }));
+}
+
+/** A passage as its card shows it; on the results, with its `evidence` marked, its tip and its time. */
+function passageView(
+  passage: ReadingPassage,
+  type: ReadingType,
+  { index, num, evidence = [], seconds = null, results = false }: { index: number; num: number; evidence?: string[]; seconds?: number | null; results?: boolean },
+): ReadingPassageView {
+  return {
+    index,
+    num,
+    lead: passage.lead ?? null,
+    blocks: passage.blocks.map((block) =>
+      block.kind === "text"
+        ? { kind: "text", label: block.label ?? null, paragraphs: paragraphsOf(runsOf(block.text, evidence)) }
+        : { kind: "table", head: block.head, rows: block.rows.map((row) => row.map((cell) => runsOf(cell, evidence))) },
+    ),
+    notes: passage.notes,
+    targetSeconds: TARGET_SECONDS[type],
+    tip: results ? (passage.tip ?? null) : null,
+    seconds,
+  };
+}
+
+/**
+ * A text marked with <u>…</u> as runs, the parts that are one of `evidence` marked too.
+ *
+ * @example
+ * runsOf("<u>私は</u>歩く。", ["歩く。"]); // -> [{ text: "私は", underline: true, evidence: false }, { text: "歩く。", underline: false, evidence: true }]
+ */
+export function runsOf(text: string, evidence: string[] = []): ReadingRun[] {
+  const plain = plainText(text);
+  const underline = underlineRuns(text).flatMap((run) => [...run.text].map(() => run.underline));
+  const chars = [...plain];
+  // Evidence is found in the plain text by its index, so a run of chars, not of code units, is marked.
+  const marked = chars.map(() => false);
+  for (const part of evidence) {
+    const at = plain.indexOf(part);
+    if (at < 0) continue;
+    const start = [...plain.slice(0, at)].length;
+    for (let i = start; i < start + [...part].length; i++) marked[i] = true;
+  }
+  const runs: ReadingRun[] = [];
+  chars.forEach((char, i) => {
+    const last = runs.at(-1);
+    if (last && last.underline === underline[i] && last.evidence === marked[i]) last.text += char;
+    else runs.push({ text: char, underline: underline[i]!, evidence: marked[i]! });
+  });
+  return runs;
+}
+
+/** Runs split into paragraphs at each line break. */
+function paragraphsOf(runs: ReadingRun[]): ReadingRun[][] {
+  const paragraphs: ReadingRun[][] = [[]];
+  for (const run of runs) {
+    run.text.split("\n").forEach((text, i) => {
+      if (i > 0) paragraphs.push([]);
+      if (text) paragraphs.at(-1)!.push({ ...run, text });
+    });
+  }
+  return paragraphs.filter((paragraph) => paragraph.length);
+}
+
 /** Where the quiz was left: the draft's answers, and its checked parts graded again from them. */
 export function toDraftView(test: StoredTest): QuizDraft {
+  const times = test.draft?.times;
   const answers = test.draft?.answers ?? {};
   const checked = test.draft?.checked ?? [];
   const kept = test.draft?.kept ?? [];
   const { sections } = gradeTest(test.payload, answers);
   const checks = Object.fromEntries(sections.filter((section) => checked.includes(section.no)).map((section) => [section.no, withoutKept(section, kept)]));
-  return { answers, checks, kept };
+  return { answers, checks, kept, ...(times && { times }) };
 }
 
-/** Grades the answers: each part's questions, the score, and the grammar points (or, on a kanji test, the words) got wrong. */
-export function gradeTest(payload: AnyPayload, answers: Answers) {
-  return isKanji(payload) ? gradeKanji(payload, answers) : gradeGrammar(payload, answers);
+/**
+ * Grades the answers: each part's questions, the score, and what was got wrong: the grammar points, the words of a
+ * kanji test, or the questions of a reading set. A reading set's passages show the `times` they took.
+ */
+export function gradeTest(payload: AnyPayload, answers: Answers, times?: number[]) {
+  if (isKanji(payload)) return gradeKanji(payload, answers);
+  return isReading(payload) ? gradeReading(payload, answers, times) : gradeGrammar(payload, answers);
 }
 
 function gradeGrammar(payload: TestPayload, answers: Answers) {
@@ -192,6 +295,7 @@ function gradeGrammar(payload: TestPayload, answers: Answers) {
       prompt: { before, after, fill: q.choices[q.answerIndex] },
       sentence: null,
       underlined: null,
+      reading: null,
       explanation: q.explanation ?? null,
     };
   });
@@ -217,6 +321,7 @@ function gradeGrammar(payload: TestPayload, answers: Answers) {
         yours: placed === null ? null : (slots as (number | null)[]).map((piece, slot) => ({ text: piece === null ? "　" : q.pieces[piece], star: slot === star })),
       },
       underlined: null,
+      reading: null,
       explanation: q.explanation ?? null,
     };
   });
@@ -233,6 +338,7 @@ function gradeGrammar(payload: TestPayload, answers: Answers) {
       prompt: null,
       sentence: null,
       underlined: null,
+      reading: null,
       explanation: q.explanation ?? null,
     };
   };
@@ -241,6 +347,7 @@ function gradeGrammar(payload: TestPayload, answers: Answers) {
     const questions = p.questions.map(gradePassageQuestion);
     return {
       questions,
+      reading: null,
       segments: splitPassage(p.passage).map((part) => {
         if (part.kind === "text") return part;
         const question = p.questions.find((q) => q.blank === part.num)!;
@@ -252,8 +359,8 @@ function gradeGrammar(payload: TestPayload, answers: Answers) {
 
   return graded(
     [
-      resultSection(1, "fill-blank", [{ segments: null, questions: fillQuestions }]),
-      resultSection(2, "sentence-order", [{ segments: null, questions: orderQuestions }]),
+      resultSection(1, "fill-blank", [{ segments: null, reading: null, questions: fillQuestions }]),
+      resultSection(2, "sentence-order", [{ segments: null, reading: null, questions: orderQuestions }]),
       resultSection(3, "passage", passageGroups),
     ],
     wrong,
@@ -266,6 +373,7 @@ function gradeKanji(payload: KanjiTestPayload, answers: Answers) {
     resultSection(i + 1, type, [
       {
         segments: null,
+        reading: null,
         questions: questions.map((q): ResultQuestion => {
           const picked = choiceOf(answers[q.id]);
           const correct = picked === q.answerIndex;
@@ -280,11 +388,55 @@ function gradeKanji(payload: KanjiTestPayload, answers: Answers) {
             prompt: null,
             sentence: null,
             underlined: splitTarget(q.prompt),
+            reading: null,
             explanation: q.explanation ?? null,
           };
         }),
       },
     ]),
+  );
+  return graded(sections, wrong);
+}
+
+function gradeReading(payload: ReadingTestPayload, answers: Answers, times: number[] = []) {
+  const wrong: string[] = [];
+  let index = 0;
+  const sections = payload.sections.map(({ type, passages }, i) =>
+    resultSection(
+      i + 1,
+      type,
+      passages.map((passage, p) => {
+        const at = index++;
+        return {
+          segments: null,
+          reading: passageView(passage, type, {
+            index: at,
+            num: p + 1,
+            evidence: passage.questions.map((q) => q.evidence),
+            seconds: times[at] ?? null,
+            results: true,
+          }),
+          questions: passage.questions.map((q): ResultQuestion => {
+            const picked = choiceOf(answers[q.id]);
+            const correct = picked === q.answerIndex;
+            if (!correct) wrong.push(q.id);
+            return {
+              id: q.id,
+              num: numberOf(q.id),
+              type,
+              correct,
+              yours: picked === null ? null : label(q.choices, picked),
+              answer: label(q.choices, q.answerIndex),
+              prompt: null,
+              sentence: null,
+              underlined: null,
+              reading: { prompt: runsOf(q.prompt), kind: q.kind, trap: picked === null ? null : (q.traps[picked] ?? null) },
+              explanation: q.explanation,
+            };
+          }),
+        };
+      }),
+    ),
   );
   return graded(sections, wrong);
 }
@@ -300,16 +452,20 @@ function graded(sections: ResultSection[], wrong: string[]) {
   return { sections, score, total, wrongGrammarIds: wrong };
 }
 
-export function toSubmission(payload: AnyPayload, submitted: Answers): Submission {
+export function toSubmission(payload: AnyPayload, submitted: Answers, times: number[] = []): Submission {
   const ids = new Set(Object.keys(submitted).filter((id) => /^q[1-9][0-9]*$/.test(id) && numberOf(id) <= questionCount(payload)));
   const answers = Object.fromEntries(Object.entries(submitted).filter(([id]) => ids.has(id)));
   const { score, total, wrongGrammarIds } = gradeTest(payload, answers);
-  return { submittedAt: new Date().toISOString(), answers, score, total, wrongGrammarIds };
+  const submission = { submittedAt: new Date().toISOString(), answers, score, total, wrongGrammarIds };
+  if (!isReading(payload)) return submission;
+  // One time per passage, each a whole number of seconds within the cap.
+  const passages = passagesOf(payload).length;
+  return { ...submission, times: Array.from({ length: passages }, (_, i) => Math.min(Math.max(Math.round(times[i] ?? 0), 0), MAX_SECONDS)) };
 }
 
 export function toResultsView(test: StoredTest, submission: Submission): ResultsView {
   const { payload } = test;
-  const { sections, score, total, wrongGrammarIds } = gradeTest(payload, submission.answers);
+  const { sections, score, total, wrongGrammarIds } = gradeTest(payload, submission.answers, submission.times);
   const basics = {
     id: test.id,
     title: payload.title,
@@ -320,9 +476,9 @@ export function toResultsView(test: StoredTest, submission: Submission): Results
     sections,
     previous: previousAttempt(test, submission),
   };
-  return isKanji(payload)
-    ? { ...basics, kind: "kanji", chapter: payload.chapter, review: [], words: wordChips(payload, wrongGrammarIds) }
-    : { ...basics, kind: "grammar", chapter: null, review: reviewChips({ payload, reviewed: test.reviewed }, wrongGrammarIds), words: [] };
+  if (isKanji(payload)) return { ...basics, kind: "kanji", chapter: payload.chapter, review: [], words: wordChips(payload, wrongGrammarIds) };
+  if (isReading(payload)) return { ...basics, kind: "reading", chapter: readingGroupOf(payload), review: [], words: [] };
+  return { ...basics, kind: "grammar", chapter: null, review: reviewChips({ payload, reviewed: test.reviewed }, wrongGrammarIds), words: [] };
 }
 
 export function toSummary(test: ListedTest): TestSummary {

@@ -2,7 +2,7 @@ import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { buildPayload } from "#mocks/factories/payload";
-import { buildKanjiQuizView, buildQuizView } from "#mocks/factories/views";
+import { buildKanjiQuizView, buildQuizView, buildReadingQuizView } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute, type StubRoute } from "#tests/helpers/render";
 import { gradeTest } from "~/lib/grading.server";
@@ -110,6 +110,40 @@ describe("Quiz", () => {
       expect(screen.getByText("招待状", { selector: "u" })).toBeInTheDocument();
       expect(screen.getByText("しょうたいじょう", { selector: "u" })).toBeInTheDocument();
       expect(screen.getByRole("link", { name: "← Kanji" })).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
+    });
+  });
+
+  describe("a reading set", () => {
+    const READING = buildReadingQuizView();
+
+    it("shows its passage with its underline and （注）, its question, and how long the passage has taken", async () => {
+      renderRoute(<Quiz quiz={READING} draft={{ ...NO_DRAFT, times: [65] }} />, { url: URL });
+
+      expect(await screen.findByText("内容理解（短文）")).toBeInTheDocument();
+      expect(screen.getAllByText("あえてアプリを閉じて歩く").map((text) => text.className)).toEqual([expect.stringContaining("underline"), expect.stringContaining("underline")]);
+      expect(screen.getByText("（注）余地：")).toBeInTheDocument();
+      expect(screen.getByText("1:05 on it · target 2:00")).toBeInTheDocument();
+      expect(screen.getByRole("timer", { name: "Time 1:05, target 2:00" })).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: "← Reading" })).toHaveAttribute("href", "/reading?level=N2&group=1");
+    });
+
+    it("sends the time of each passage with the answers", async () => {
+      const { action, requests } = recordingAction();
+      renderRoute(<Quiz quiz={READING} draft={{ ...NO_DRAFT, times: [65] }} />, { url: URL, action });
+      await pick(1, "思いがけない発見");
+
+      await userEvent.click(submitButton());
+
+      await waitFor(() => expect(requests[0]?.body).toEqual({ answers: { q1: 2 }, times: [65] }));
+    });
+
+    it("saves its time when it is left, before any answer", async () => {
+      const { unmount } = renderRoute(<Quiz quiz={READING} draft={{ ...NO_DRAFT, times: [65] }} />, { url: URL });
+      await screen.findByText("内容理解（短文）");
+
+      unmount();
+
+      expect(saved).toEqual([{ path: `${URL}/draft`, body: { answers: {}, checked: [], times: [65] } }]);
     });
   });
 

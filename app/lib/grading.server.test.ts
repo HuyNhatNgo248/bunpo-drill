@@ -11,10 +11,12 @@ import {
   GRAMMAR_ID,
 } from "#mocks/factories/payload";
 import { buildKanjiTestPayload, WORD_ID } from "#mocks/factories/kanji";
+import { buildReadingPayload } from "#mocks/factories/reading";
 import { buildListedTest, buildStoredTest, buildSubmission } from "#mocks/factories/tests";
 import {
   gradeTest,
   questionCount,
+  runsOf,
   submittedAnswersSchema,
   toDraftView,
   toQuizView,
@@ -417,5 +419,74 @@ describe("toSummary", () => {
 
   it("gives the last score while a retake is under way", () => {
     expect(toSummary(buildListedTest({ attempts: [EARLIER, LATER] })).previous).toEqual({ score: 2, total: 3 });
+  });
+});
+
+describe("a reading set", () => {
+  const test = buildStoredTest({ payload: buildReadingPayload() });
+
+  it("sends the quiz its passage with the underline, and never the answer, the traps or the evidence", () => {
+    const quiz = toQuizView(test);
+    const group = quiz.sections[0]!.groups[0]!;
+
+    expect(quiz).toMatchObject({ kind: "reading", chapter: 1, questionCount: 1 });
+    expect(group.reading).toMatchObject({ index: 0, num: 1, targetSeconds: 120, tip: null, seconds: null, notes: [{ word: "余地", gloss: "何かをする余裕" }] });
+    expect(group.reading!.blocks[0]).toEqual({
+      kind: "text",
+      label: null,
+      paragraphs: [
+        [
+          { text: "道に迷うことはなくなった。しかし、私は", underline: false, evidence: false },
+          { text: "あえてアプリを閉じて歩く", underline: true, evidence: false },
+          { text: "。", underline: false, evidence: false },
+        ],
+        [{ text: "思いがけない店に出会う経験は、迷う余地があってこそ生まれる。", underline: false, evidence: false }],
+      ],
+    });
+    expect(JSON.stringify(quiz)).not.toMatch(/answerIndex|traps|evidence":true|opposite|The last sentence/);
+  });
+
+  it("grades it with the evidence marked, the trap of a wrong pick, and the time each passage took", () => {
+    const submission = toSubmission(test.payload, { q1: 0 }, [133.4, 99]);
+    const results = toResultsView(test, submission);
+    const group = results.sections[0]!.groups[0]!;
+
+    expect(submission).toMatchObject({ score: 0, total: 1, wrongGrammarIds: ["q1"], times: [133] });
+    expect(results).toMatchObject({ kind: "reading", chapter: 1, review: [], words: [] });
+    expect(group.reading).toMatchObject({ seconds: 133, tip: "The writer's view is in the last sentence." });
+    expect(group.reading!.blocks[0]).toMatchObject({ paragraphs: [expect.anything(), [{ text: "思いがけない店に出会う経験は、迷う余地があってこそ生まれる。", evidence: true }]] });
+    expect(group.questions[0]!.reading).toEqual({
+      prompt: [
+        { text: "あえてアプリを閉じて歩く", underline: true, evidence: false },
+        { text: "とあるが、なぜか。", underline: false, evidence: false },
+      ],
+      kind: "理由",
+      trap: "opposite",
+    });
+  });
+
+  it("names no trap for a right or empty answer, and counts a passage left untimed as 0 seconds", () => {
+    const submission = toSubmission(test.payload, { q1: 2 });
+    const question = toResultsView(test, submission).sections[0]!.groups[0]!.questions[0]!;
+
+    expect(submission.times).toEqual([0]);
+    expect(question).toMatchObject({ correct: true, reading: { trap: null } });
+    expect(toResultsView(test, toSubmission(test.payload, {})).sections[0]!.groups[0]!.questions[0]!.reading!.trap).toBeNull();
+  });
+
+  it("keeps the times of a draft for the quiz to go on counting", () => {
+    expect(toDraftView(buildStoredTest({ payload: buildReadingPayload(), draft: { answers: {}, checked: [], times: [42] } }))).toMatchObject({ times: [42] });
+  });
+});
+
+describe("runsOf", () => {
+  it("marks the evidence across an underline's edge", () => {
+    expect(runsOf("私は<u>歩く</u>。", ["は歩"])).toEqual([
+      { text: "私", underline: false, evidence: false },
+      { text: "は", underline: false, evidence: true },
+      { text: "歩", underline: true, evidence: true },
+      { text: "く", underline: true, evidence: false },
+      { text: "。", underline: false, evidence: false },
+    ]);
   });
 });

@@ -29,11 +29,13 @@ export async function action({ request, params }: Route.ActionArgs) {
   if (!test) throw testNotFound();
   // Taken already (a second tab, a double click): only a retake clears a result.
   if (test.submission) return redirect(`/tests/${test.id}/results`);
-  const body = z.object({ answers: submittedAnswersSchema }).safeParse(await request.json().catch(() => null));
+  const body = z
+    .object({ answers: submittedAnswersSchema, times: z.array(z.number().min(0)).max(30).optional() })
+    .safeParse(await request.json().catch(() => null));
   if (!body.success) {
     return data({ error: translate(requestLocale(request), msg`Your answers couldn't be read. Please try again.`) }, { status: 400 });
   }
-  const submission = toSubmission(test.payload, body.data.answers);
+  const submission = toSubmission(test.payload, body.data.answers, body.data.times);
   // A kanji test's misses lose their learned mark, so their flashcards come back first.
   await saveSubmission(userId, test.id, submission, isKanji(test.payload) ? submission.wrongGrammarIds : []);
   return redirect(`/tests/${test.id}/results`);

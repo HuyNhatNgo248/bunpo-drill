@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { AddNote } from "~/components/add-note";
 import { NotesProvider } from "~/components/noted-text";
 import { AppHeader } from "~/components/layout/header";
+import { QuoteFooter } from "~/components/layout/QuoteFooter";
 import { PageTitle } from "~/components/PageTitle";
 import { QuestionNav } from "~/components/quiz/question-nav";
 import { gradedMarks, RESULT_MARKS } from "~/components/quiz/question-nav/QuestionGrid";
@@ -11,6 +12,7 @@ import type { NoteMark, ResultsView } from "~/lib/views";
 import { Actions } from "./Actions";
 import { ReviewCard } from "./ReviewCard";
 import { ScoreCard } from "./ScoreCard";
+import { TimeCard } from "./TimeCard";
 import { SectionReview } from "./section-review";
 
 /**
@@ -28,22 +30,32 @@ export function Results({ results, notes = [], trial = false }: { results: Resul
 
   return (
     <NotesProvider notes={notes}>
-      <div className="min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <AppHeader
           guest={trial}
           mobileTitle={`${results.title} · ${t`Results`}`}
-          back={results.kind === "kanji" ? { to: homeOf(results), label: t`Back to kanji` } : undefined}
+          back={
+            results.kind === "kanji"
+              ? { to: homeOf(results), label: t`Back to kanji` }
+              : results.kind === "reading"
+                ? { to: homeOf(results), label: t`Back to reading` }
+                : undefined
+          }
         />
 
-        <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 pb-8 md:gap-5 md:px-6 md:pt-8 md:pb-16 lg:max-w-260">
+        <main className="mx-auto flex w-full flex-1 max-w-205 flex-col gap-3.5 px-4 pt-4 pb-8 md:gap-5 md:px-6 md:pt-8 md:pb-16 lg:max-w-260">
           <PageTitle
             level={results.level}
             meta={results.title}
-            back={{ to: homeOf(results), label: results.kind === "kanji" ? <Trans>← Kanji</Trans> : <Trans>← Mock tests</Trans> }}
+            back={{
+              to: homeOf(results),
+              label: results.kind === "kanji" ? <Trans>← Kanji</Trans> : results.kind === "reading" ? <Trans>← Reading</Trans> : <Trans>← Mock tests</Trans>,
+            }}
           >
             <Trans>Results</Trans>
           </PageTitle>
           <ScoreCard results={results} />
+          {results.kind === "reading" && <TimeCard results={results} />}
           <ReviewCard results={results} trial={trial} />
 
           <h2 className="mt-1.5 text-base font-semibold md:mt-2 md:text-lg">
@@ -77,6 +89,7 @@ export function Results({ results, notes = [], trial = false }: { results: Resul
             />
           </div>
         </main>
+        <QuoteFooter />
         {!trial && <AddNote testId={results.id} />}
       </div>
     </NotesProvider>

@@ -1,0 +1,292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "number",
+      "const": 1
+    },
+    "kind": {
+      "type": "string",
+      "const": "reading"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "The set's name: \"短文 4\", \"中文 2\", \"総合 1\"."
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "N3",
+        "N2"
+      ]
+    },
+    "sections": {
+      "minItems": 1,
+      "maxItems": 5,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "reading-short",
+              "reading-mid",
+              "reading-integrated",
+              "reading-claim",
+              "reading-info"
+            ]
+          },
+          "passages": {
+            "minItems": 1,
+            "maxItems": 5,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "lead": {
+                  "description": "The exam's line above a practical text: \"以下は、ある会社が取引先に送ったメールの内容である。\".",
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 120
+                },
+                "blocks": {
+                  "minItems": 1,
+                  "maxItems": 6,
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "const": "text"
+                          },
+                          "label": {
+                            "description": "\"A\" or \"B\" for the two texts of 統合理解; none otherwise.",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4
+                          },
+                          "text": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 2000,
+                            "description": "Plain text; mark an underlined part <u>…</u>, as the exam underlines it (①② go inside: <u>①そうなると</u>). Paragraphs are separated by \\n."
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "text"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "const": "table"
+                          },
+                          "head": {
+                            "minItems": 1,
+                            "maxItems": 8,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "description": "The column headings."
+                          },
+                          "rows": {
+                            "minItems": 1,
+                            "maxItems": 20,
+                            "type": "array",
+                            "items": {
+                              "minItems": 1,
+                              "maxItems": 8,
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "maxLength": 200
+                              }
+                            },
+                            "description": "Each row has one cell per heading."
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "head",
+                          "rows"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
+                  "description": "The passage: one text block; 2 for 統合理解 (A and B); for 情報検索 a table, and text blocks for its notes and ※ footnotes."
+                },
+                "notes": {
+                  "maxItems": 6,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "word": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 20,
+                        "description": "A word above N2 as the passage writes it: \"醍醐味\"."
+                      },
+                      "gloss": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 60,
+                        "description": "Its meaning in easy Japanese: \"本当のおもしろさ\"."
+                      }
+                    },
+                    "required": [
+                      "word",
+                      "gloss"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "The （注） under the passage, in the order the words appear."
+                },
+                "tip": {
+                  "description": "One line in English on how to read this passage faster: where its answers are. The results show it when the passage took too long.",
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "questions": {
+                  "minItems": 1,
+                  "maxItems": 4,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "pattern": "^q[1-9][0-9]*$",
+                        "description": "Sequential across the whole test in section order: \"q1\", \"q2\", … with no gaps."
+                      },
+                      "prompt": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 300,
+                        "description": "The question, in the exam's words. Copy the underlined part it asks about inside <u>…</u>: \"<u>あえてアプリを閉じて歩く</u>とあるが、なぜか。\"."
+                      },
+                      "choices": {
+                        "minItems": 4,
+                        "maxItems": 4,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "description": "Exactly 4 different options, shown to the learner as 1–4."
+                      },
+                      "answerIndex": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 3,
+                        "description": "0-based index of the correct option in choices."
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "理由",
+                          "指示語",
+                          "主張",
+                          "詳細",
+                          "比較",
+                          "条件"
+                        ],
+                        "description": "What the question asks for: 理由 (why), 指示語 (what a word points to), 主張 (the writer's view), 詳細 (a detail), 比較 (A and B compared), 条件 (conditions)."
+                      },
+                      "traps": {
+                        "minItems": 4,
+                        "maxItems": 4,
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "changed-detail",
+                                "opposite",
+                                "not-in-text",
+                                "true-not-answer",
+                                "over-general",
+                                "missed-condition"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "description": "The trap of each choice, in choice order: null for the right one, and for each wrong one how it is built."
+                      },
+                      "evidence": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 300,
+                        "description": "The sentence (or table cell) that decides the answer, copied exactly from the passage without <u> tags. The results highlight it."
+                      },
+                      "explanation": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "description": "In English, one to three sentences: why the answer is right, pointing at the evidence, and which trap each other choice sets."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "prompt",
+                      "choices",
+                      "answerIndex",
+                      "kind",
+                      "traps",
+                      "evidence",
+                      "explanation"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "blocks",
+                "notes",
+                "questions"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "type",
+          "passages"
+        ],
+        "additionalProperties": false
+      },
+      "description": "One section per reading type, each type at most once, in the exam's order (短文, 中文, 統合理解, 主張理解, 情報検索)."
+    }
+  },
+  "required": [
+    "version",
+    "kind",
+    "title",
+    "level",
+    "sections"
+  ],
+  "additionalProperties": false,
+  "title": "Reading test payload",
+  "description": "Body of POST /api/tests for a reading set, version 1.\nRules the server also enforces:\n1. Sections are of different types, in the exam's order.\n2. Question ids run \"q1\", \"q2\", … in order with no gaps; the 4 choices are all different.\n3. traps is null at answerIndex and a trap at every other choice.\n4. evidence appears exactly once in the passage's texts and table cells (without <u> tags).\n5. Every <u> is closed, not nested and not empty; every （注） word appears in the passage.\n6. 統合理解 has two text blocks labelled A and B; 情報検索 has a table.\nStandard sizes: 短文 2 passages × 1 question (target 2 min each), 中文 1–2 × 3 (6 min), 統合理解 1 × 2 (6 min), 主張理解 1 × 3 (10 min), 情報検索 1 × 2 (6 min).",
+  "$id": "https://bunpo-drill.local/schema/reading-test.v1.json"
+}

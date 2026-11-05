@@ -9,7 +9,6 @@ import { Progress } from "~/components/ui/progress";
 import { WordChips } from "~/components/WordChips";
 import { cardsOf, homeOf } from "~/lib/links";
 import { chapterTitle } from "~/lib/sections";
-import { cn } from "~/lib/utils";
 import type { FlashCard, FlashcardsView } from "~/lib/views";
 
 /**
@@ -42,47 +41,68 @@ export function SessionDone({
   const fresh = view.words - learned - missed.length;
   const seen = view.cards.map((card) => card.wordId);
   const { level, chapter: number, lesson, nextLesson } = view;
-  const quiz = view.quiz && (view.quiz.result ? { to: `/tests/${view.quiz.id}/results`, label: t`Quiz results` } : { to: `/tests/${view.quiz.id}`, label: t`Take the quiz` });
+  const quiz =
+    view.quiz &&
+    (view.quiz.result ? { to: `/tests/${view.quiz.id}/results`, label: t`Quiz results` } : { to: `/tests/${view.quiz.id}`, label: t`Take the quiz` });
 
   // The first is the way on, in colour; the rest are outlined.
   const ways = [
     again > 0 && { key: "again", onClick: onStudyAgain, label: <Plural value={again} one="Study it again" other="Study the # again" /> },
     !complete && fresh > 0 && { key: "next", to: cardsOf(level, number, { page: lesson?.page, seen }), label: <Trans>Next set</Trans> },
-    complete && nextLesson && {
-      key: "lesson",
-      to: cardsOf(level, number, { page: nextLesson.page }),
-      label: (
-        <Trans>
-          Next lesson: <span lang="ja" className="font-jp">{nextLesson.title}</span>
-        </Trans>
-      ),
-    },
+    complete &&
+      nextLesson && {
+        key: "lesson",
+        to: cardsOf(level, number, { page: nextLesson.page }),
+        label: (
+          <Trans>
+            Next lesson: <span lang="ja" className="font-jp">{nextLesson.title}</span>
+          </Trans>
+        ),
+      },
     complete && { key: "review", to: cardsOf(level, number, { page: lesson?.page, review: true }), label: <Trans>Review again</Trans> },
     quiz && { key: "quiz", to: quiz.to, label: quiz.label },
   ].filter((way) => way !== false && way !== null);
 
   const [main, ...rest] = ways;
-  const button = (way: (typeof ways)[number], variant: "default" | "outline") =>
-    "onClick" in way ? (
-      <Button key={way.key} variant={variant} size="lg" onClick={way.onClick} className={variant === "default" ? "font-semibold" : undefined}>
+  const button = (way: (typeof ways)[number], variant: "default" | "outline") => {
+    const className = variant === "default" ? "font-semibold md:px-6" : undefined;
+    return "onClick" in way ? (
+      <Button key={way.key} variant={variant} onClick={way.onClick} className={className}>
         {way.label}
       </Button>
     ) : (
-      <Button key={way.key} asChild variant={variant} size="lg" className={variant === "default" ? "font-semibold" : undefined}>
+      <Button key={way.key} asChild variant={variant} className={className}>
         <Link to={way.to}>{way.label}</Link>
       </Button>
     );
+  };
 
   return (
     <>
       <Card className="flex flex-col gap-3.5 p-4 md:p-6">
-        {total > 0 ? (
-          <SessionSummary total={total} gotIt={gotIt} again={again} />
-        ) : (
-          <h2 className="text-xl font-bold tracking-tight">
-            <Trans>All words learned</Trans>
-          </h2>
-        )}
+        <div className="flex items-start justify-between gap-3">
+          {total > 0 ? (
+            <SessionSummary total={total} gotIt={gotIt} again={again} />
+          ) : (
+            <h2 className="text-xl font-bold tracking-tight">
+              <Trans>All words learned</Trans>
+            </h2>
+          )}
+          {/* Quiet, in the corner: a reset undoes the work, so it isn't one of the ways on. */}
+          {complete && learned > 0 && (
+            <ConfirmDialog
+              title={<Trans>Reset progress?</Trans>}
+              description={lesson ? t`Every word of ${chapter} becomes not learned again.` : t`Every word of ${chapter} becomes not learned again, in every lesson.`}
+              confirmLabel={t`Reset`}
+              onConfirm={() => submit({ reset: true, ...(lesson && { page: lesson.page }) }, { method: "post", encType: "application/json" })}
+            >
+              <Button variant="ghost" size="sm" className="-mt-1 -mr-2 shrink-0 text-muted-foreground">
+                <RotateCcw aria-hidden="true" />
+                <Trans>Reset progress</Trans>
+              </Button>
+            </ConfirmDialog>
+          )}
+        </div>
         {complete && total > 0 && view.source !== "review" && (
           <p className="text-body-sm font-semibold text-success">
             <Trans>That was the last set. Every word of {chapter} is learned.</Trans>
@@ -118,33 +138,17 @@ export function SessionDone({
         </Card>
       )}
 
-      {/* The way on in colour, full width; the others side by side under it; leaving and resetting quiet, at the bottom. */}
-      <div className="flex flex-col gap-2">
+      {/* A dialog's footer: back at the left, the ways on at the right, the one in colour last. On a phone they stack,
+          the one in colour on top, back at the bottom. */}
+      <div className="flex flex-col-reverse gap-2 md:flex-row md:items-center">
+        <Button asChild variant="ghost" className="md:mr-auto md:-ml-3">
+          <Link to={homeOf({ kind: "kanji", ...view })}>
+            <ChevronLeft aria-hidden="true" />
+            <Trans>Back to lessons</Trans>
+          </Link>
+        </Button>
+        {rest.map((way) => button(way, "outline"))}
         {main && button(main, "default")}
-        {rest.length > 0 && (
-          <div className={cn("grid gap-2", rest.length > 1 && "sm:grid-cols-2")}>{rest.map((way) => button(way, "outline"))}</div>
-        )}
-        <div className="mt-1 flex items-center justify-between gap-2">
-          <Button asChild variant="ghost" size="sm">
-            <Link to={homeOf({ kind: "kanji", ...view })}>
-              <ChevronLeft aria-hidden="true" />
-              <Trans>Back to lessons</Trans>
-            </Link>
-          </Button>
-          {complete && learned > 0 && (
-            <ConfirmDialog
-              title={<Trans>Reset progress?</Trans>}
-              description={lesson ? t`Every word of ${chapter} becomes not learned again.` : t`Every word of ${chapter} becomes not learned again, in every lesson.`}
-              confirmLabel={t`Reset`}
-              onConfirm={() => submit({ reset: true, ...(lesson && { page: lesson.page }) }, { method: "post", encType: "application/json" })}
-            >
-              <Button variant="ghost" size="sm" className="text-muted-foreground">
-                <RotateCcw aria-hidden="true" />
-                <Trans>Reset progress</Trans>
-              </Button>
-            </ConfirmDialog>
-          )}
-        </div>
       </div>
     </>
   );

@@ -1,8 +1,9 @@
-import { toQuizView, toResultsView } from "~/lib/grading.server";
+import { toQuizView, toResultsView, toSubmission } from "~/lib/grading.server";
 import { toFlashcards } from "~/lib/kanji-views.server";
 import type { ChapterSummary, FlashCard, FlashcardsView, NoteView, QuizView, ResultsView, ReviewChip, TestSummary } from "~/lib/views";
 import { buildKanjiChapter, buildKanjiTestPayload, WORD_ID } from "./kanji";
 import { GRAMMAR_ID } from "./payload";
+import { buildReadingPayload } from "./reading";
 import { buildStoredTest, buildSubmission } from "./tests";
 
 /**
@@ -106,4 +107,15 @@ export function buildNoteView(overrides: Partial<NoteView> = {}): NoteView {
     testTitle: "第3週 1〜3日目",
     ...overrides,
   };
+}
+
+/** The quiz of 短文 1 (`buildReadingPayload()`): one passage, one question. */
+export function buildReadingQuizView(overrides: Partial<QuizView> = {}): QuizView {
+  return { ...toQuizView(buildStoredTest({ payload: buildReadingPayload() })), ...overrides };
+}
+
+/** The results of 短文 1 answered 1 (wrong: the opposite trap), its passage read in 2:13 against 2:00. */
+export function buildReadingResultsView(overrides: Partial<ResultsView> = {}): ResultsView {
+  const test = buildStoredTest({ payload: buildReadingPayload() });
+  return { ...toResultsView(test, toSubmission(test.payload, { q1: 0 }, [133])), ...overrides };
 }

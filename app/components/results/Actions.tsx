@@ -6,7 +6,7 @@ import { homeOf } from "~/lib/links";
 import { cn } from "~/lib/utils";
 import type { ResultsView } from "~/lib/views";
 
-/** Back to the list (the mock tests, or kanji), or take the test again. A `trial` test: take it again, or sign up. */
+/** Back to the list (the mock tests, kanji or reading), or take the test again. A `trial` test: take it again, or sign up. */
 export function Actions({
   results,
   trial = false,
@@ -43,6 +43,15 @@ export function Actions({
               </span>
               <span className="hidden md:inline">
                 <Trans>Back to kanji</Trans>
+              </span>
+            </>
+          ) : results.kind === "reading" ? (
+            <>
+              <span className="md:hidden">
+                <Trans>Reading</Trans>
+              </span>
+              <span className="hidden md:inline">
+                <Trans>Back to reading</Trans>
               </span>
             </>
           ) : (

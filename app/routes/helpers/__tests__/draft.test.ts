@@ -44,7 +44,7 @@ describe("POST /tests/:id/draft", () => {
     it("answers 400 for a body that is not a draft, and saves nothing", async () => {
       const { id } = await createTest(buildPayload());
 
-      for (const body of ["{", { answers: { q1: 9 }, checked: [] }, { answers: {}, checked: [4] }, { answers: {} }]) {
+      for (const body of ["{", { answers: { q1: 9 }, checked: [] }, { answers: {}, checked: [6] }, { answers: {} }]) {
         const response = await save(id, body);
         expect(response.status).toBe(400);
         expect(await response.json()).toEqual({ error: 'Body must be {"answers": {…}, "checked": number[]}.' });

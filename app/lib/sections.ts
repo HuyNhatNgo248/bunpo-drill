@@ -1,6 +1,7 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import type { SectionType } from "./payload";
+import type { ReadingType, Trap } from "./reading-payload";
 
 export const PASS_PERCENT = 80;
 
@@ -11,6 +12,31 @@ export const SECTION_TITLES: Record<SectionType, string> = {
   passage: "文章の文法",
   "kanji-reading": "漢字読み",
   "kanji-writing": "表記",
+  "reading-short": "内容理解（短文）",
+  "reading-mid": "内容理解（中文）",
+  "reading-integrated": "統合理解",
+  "reading-claim": "主張理解（長文）",
+  "reading-info": "情報検索",
+};
+
+/** The reading page's groups, by the short names the exam's 問題 go by, in Japanese in every language. */
+export const READING_GROUP_TITLES: Record<ReadingType | "mixed", string> = {
+  "reading-short": "短文",
+  "reading-mid": "中文",
+  "reading-integrated": "統合理解",
+  "reading-claim": "主張理解",
+  "reading-info": "情報検索",
+  mixed: "総合",
+};
+
+/** How a wrong reading choice was built, as the results name it under a missed question. */
+export const TRAP_LABELS: Record<Trap, MessageDescriptor> = {
+  "changed-detail": msg`Trap: one detail changed`,
+  opposite: msg`Trap: the opposite of the text`,
+  "not-in-text": msg`Trap: not in the text`,
+  "true-not-answer": msg`Trap: true, but not the answer`,
+  "over-general": msg`Trap: goes too far`,
+  "missed-condition": msg`Trap: misses a condition`,
 };
 
 /** What each official name means, shown beside it on a page that is not Japanese. */
@@ -20,6 +46,11 @@ export const SECTION_GLOSSES: Record<SectionType, MessageDescriptor> = {
   passage: msg`Grammar in a passage`,
   "kanji-reading": msg`Kanji reading`,
   "kanji-writing": msg`Writing in kanji`,
+  "reading-short": msg`Short passages`,
+  "reading-mid": msg`Mid-length passages`,
+  "reading-integrated": msg`Two texts compared`,
+  "reading-claim": msg`The writer's argument`,
+  "reading-info": msg`Finding information`,
 };
 
 /** The English meaning of a 問題's name, or null on a Japanese page, where the name speaks for itself. */
@@ -50,6 +81,14 @@ export function sectionInstruction(
       return msg`Choose the best reading for the underlined word from 1, 2, 3 and 4.`;
     case "kanji-writing":
       return msg`Choose the best way to write the underlined word in kanji from 1, 2, 3 and 4.`;
+    case "reading-short":
+    case "reading-mid":
+    case "reading-claim":
+      return msg`Read each passage, then choose the best answer to each question from 1, 2, 3 and 4.`;
+    case "reading-integrated":
+      return msg`Read texts A and B, then choose the best answer to each question from 1, 2, 3 and 4.`;
+    case "reading-info":
+      return msg`Read the information, then choose the best answer to each question from 1, 2, 3 and 4.`;
   }
 }
 

@@ -33,3 +33,11 @@ export const revalidateUnlessPicked =
     const picked = currentUrl.search !== nextUrl.search;
     return !formMethod && picked && without(currentUrl) === without(nextUrl) ? false : defaultShouldRevalidate;
   };
+
+/**
+ * Seconds as a clock reads them, minutes and seconds.
+ *
+ * @example
+ * clock(227); // -> "3:47"
+ */
+export const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;

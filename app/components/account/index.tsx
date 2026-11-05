@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Form } from "react-router";
 import { AppHeader } from "~/components/layout/header";
+import { QuoteFooter } from "~/components/layout/QuoteFooter";
 import { Button } from "~/components/ui/button";
 import { DeleteAccountForm } from "./DeleteAccountForm";
 import { EmailForm } from "./EmailForm";
@@ -14,9 +15,9 @@ export function Account({ name, email, result }: { name: string; email: string |
   const resultOf = (form: AccountResult["form"]) => (result?.form === form ? result : undefined);
 
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <AppHeader mobileTitle={t`Account`} />
-      <main className="mx-auto flex max-w-130 flex-col gap-3.5 px-4 pt-4 pb-10 md:gap-5 md:px-6 md:pt-10 md:pb-16">
+      <main className="mx-auto flex w-full flex-1 max-w-130 flex-col gap-3.5 px-4 pt-4 pb-10 md:gap-5 md:px-6 md:pt-10 md:pb-16">
         <h1 className="hidden text-title font-bold tracking-tight md:block">
           <Trans>Account</Trans>
         </h1>
@@ -30,6 +31,7 @@ export function Account({ name, email, result }: { name: string; email: string |
         </Form>
         <DeleteAccountForm result={resultOf("delete")} />
       </main>
+      <QuoteFooter />
     </div>
   );
 }

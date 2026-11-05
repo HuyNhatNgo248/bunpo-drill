@@ -7,6 +7,7 @@ import { CheckSection } from "./CheckSection";
 import { answersOf, isAnswered } from "./helpers/answers";
 import { PassageCard } from "./PassageCard";
 import { QuestionCard } from "./QuestionCard";
+import { ReadingPassageCard } from "./ReadingPassageCard";
 
 /**
  * One 問題: its title and instruction, then its questions (and passages) and the button that checks it.
@@ -19,6 +20,7 @@ export function Section({
   onAnswer,
   checked,
   onChecked,
+  times = [],
 }: {
   /** Where the part's check is posted: /tests/:id/check, or /try/:id/check. */
   checkAction: string;
@@ -27,6 +29,8 @@ export function Section({
   onAnswer: (id: string, value: Answers[string]) => void;
   checked: ResultSection | undefined;
   onChecked: (section: ResultSection) => void;
+  /** A reading set's seconds on each passage, by its index. */
+  times?: number[];
 }) {
   const { i18n } = useLingui();
   const no = section.no;
@@ -66,7 +70,16 @@ export function Section({
             onAnswer={onAnswer}
           />
         ));
-        // Its own box, so the passage only stays pinned while its own questions scroll by.
+        // Its own box, so the passage only stays pinned while its own questions scroll by. A reading passage's box is
+        // what its timer looks for.
+        if (group.reading) {
+          return (
+            <div key={g} data-passage-index={group.reading.index} className="flex flex-col gap-3">
+              <ReadingPassageCard passage={group.reading} seconds={times[group.reading.index] ?? 0} />
+              {cards}
+            </div>
+          );
+        }
         return group.segments ? (
           <div key={g} className="flex flex-col gap-3">
             <PassageCard segments={group.segments} questions={group.questions} answers={answers} />

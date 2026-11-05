@@ -9,7 +9,7 @@ import {
   buildSentenceOrderSection,
 } from "#mocks/factories/payload";
 import { WORD_ID } from "#mocks/factories/kanji";
-import { buildKanjiResultsView, buildResultsView, buildReviewChip } from "#mocks/factories/views";
+import { buildKanjiResultsView, buildReadingResultsView, buildResultsView, buildReviewChip } from "#mocks/factories/views";
 import { recordingAction } from "#tests/helpers/actions";
 import { renderRoute } from "#tests/helpers/render";
 import { gradeTest } from "~/lib/grading.server";
@@ -256,5 +256,28 @@ describe("Results", () => {
       await screen.findByRole("button", { name: "Take it again" });
       expect(screen.queryByRole("button", { name: "Retake wrong ones" })).toBeNull();
     });
+  });
+});
+
+describe("Results of a reading set", () => {
+  it("shows the time against the target, and the tip of a passage that took too long", async () => {
+    renderRoute(<Results results={buildReadingResultsView()} />, { url: "/tests/20261027-abc123/results" });
+
+    // The whole set, then its one passage.
+    expect(await screen.findAllByText("2:13")).toHaveLength(2);
+    expect(screen.getByText("0:13 over")).toBeInTheDocument();
+    expect(screen.getByText("Target 2:00")).toBeInTheDocument();
+    expect(screen.getByText("The writer's view is in the last sentence.")).toBeInTheDocument();
+  });
+
+  it("marks where each answer is in the passage, and names the kind of question and the trap picked", async () => {
+    renderRoute(<Results results={buildReadingResultsView()} />, { url: "/tests/20261027-abc123/results" });
+
+    expect(await screen.findByText("Where the answer is")).toBeInTheDocument();
+    expect(screen.getByText("思いがけない店に出会う経験は、迷う余地があってこそ生まれる。").className).toContain("bg-success-soft");
+    expect(screen.getAllByText("理由").length).toBeGreaterThan(0);
+    expect(screen.getByText("Trap: the opposite of the text")).toBeInTheDocument();
+    expect(within(screen.getByRole("heading", { name: "Question kinds to work on" }).parentElement!).getByText("1 missed")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "← Reading" })).toHaveAttribute("href", "/reading?level=N2&group=1");
   });
 });

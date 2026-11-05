@@ -17,7 +17,7 @@ import type { Answers } from "./views";
  * Storage in the database from db.server.ts: a `tests` row per test holding its payload, which every user shares.
  * What a user did with it is theirs alone: a `progress` row with their last submission and the draft of the next one,
  * a `reviewed` row per review chip they marked reviewed, and an `attempts` row per submission.
- * Kanji tests are saved here too; the home list, its figures and GET /api/tests show only the grammar ones.
+ * Kanji tests and reading sets are saved here too; the home list, its figures and GET /api/tests show only the grammar ones.
  */
 
 export type Submission = {
@@ -25,8 +25,10 @@ export type Submission = {
   answers: Answers;
   score: number;
   total: number;
-  /** The grammar points answered wrong; on a kanji test, the words (kept under this name so saved results still read). */
+  /** The grammar points answered wrong; on a kanji test the words, on a reading set the questions (kept under this name so saved results still read). */
   wrongGrammarIds: string[];
+  /** A reading set: the seconds spent on each passage, by its place in the set. */
+  times?: number[];
 };
 
 /** The answers and checked parts of a test not submitted yet, saved as they change so the test goes on anywhere. */
@@ -35,6 +37,8 @@ export type Draft = {
   checked: number[];
   /** A retake of the wrong answers: the questions answered right last time, kept and not shown. */
   kept?: string[];
+  /** A reading set: the seconds spent on each passage so far. */
+  times?: number[];
 };
 
 /** The score of one submission. A retake clears the submission but keeps its attempt. */
@@ -258,7 +262,9 @@ export async function saveSubmission(
  */
 export async function saveDraft(userId: number, id: string, draft: Draft): Promise<void> {
   const answered = Object.values(draft.answers).some((answer) => (Array.isArray(answer) ? answer.some((slot) => slot !== null) : answer !== null));
-  const text = answered || draft.checked.length ? JSON.stringify(draft) : null;
+  // A reading set's time counts from the first second, before any answer.
+  const timed = draft.times?.some((seconds) => seconds > 0);
+  const text = answered || draft.checked.length || timed ? JSON.stringify(draft) : null;
   const db = await orm();
   // Selecting from tests saves nothing for a test that is gone.
   await db
@@ -416,7 +422,7 @@ function toListedTest(
 }
 
 /** A saved draft, or null for none and for one that can't be read: a broken draft must not hide its test. */
-function readDraft(text: string | null): Draft | null {
+export function readDraft(text: string | null): Draft | null {
   if (text === null) return null;
   try {
     const draft = JSON.parse(text) as Draft | null;
@@ -427,7 +433,7 @@ function readDraft(text: string | null): Draft | null {
 }
 
 /** The questions a sheet answers: a picked choice, or a sentence order with all 4 slots filled. */
-const answeredCount = (answers: Answers) =>
+export const answeredCount = (answers: Answers) =>
   Object.values(answers).filter((answer) => (Array.isArray(answer) ? answer.every((slot) => slot !== null) : answer !== null)).length;
 
 /** The columns that every read of a test has. */

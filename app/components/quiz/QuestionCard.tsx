@@ -3,6 +3,7 @@ import { memo } from "react";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
 import { NotedText } from "~/components/noted-text";
+import { ReadingRuns } from "~/components/reading-passage";
 import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { questionAnchor } from "~/lib/sections";
 import type { Answers, QuizQuestion } from "~/lib/views";
@@ -31,7 +32,7 @@ export const QuestionCard = memo(function QuestionCard({
       className={cn(
         "flex flex-col gap-3 p-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/40 md:gap-4 md:p-5",
         // A jump lands a passage question 12px below the pinned passage (top-16 / md:top-24).
-        question.type === "passage"
+        question.type === "passage" || isReading(question)
           ? "scroll-mt-passage md:scroll-mt-passage-desktop"
           : "scroll-mt-20 md:scroll-mt-24",
       )}
@@ -45,7 +46,14 @@ export const QuestionCard = memo(function QuestionCard({
             <Trans>Blank （{num}） in the passage</Trans>
           </span>
         )}
+        {isReading(question) && <PassageLabel num={question.passage} />}
       </div>
+
+      {isReading(question) && (
+        <p lang="ja" data-note-sentence={question.prompt.map((run) => run.text).join("")} className="font-jp text-lg leading-sentence md:text-xl">
+          <ReadingRuns runs={question.prompt} />
+        </p>
+      )}
 
       {question.type === "fill-blank" && (
         <p lang="ja" data-note-sentence={question.prompt} className="font-jp text-lg leading-sentence md:text-xl">
@@ -71,8 +79,20 @@ export const QuestionCard = memo(function QuestionCard({
           choices={question.choices}
           picked={typeof answer === "number" ? answer : null}
           onPick={answerThis}
+          stacked={isReading(question)}
         />
       )}
     </Card>
   );
 });
+
+/** A question on a reading passage, whose choices are whole sentences. Told by its field, so no schema is loaded here. */
+const isReading = (question: QuizQuestion): question is Extract<QuizQuestion, { passage: number }> => "passage" in question;
+
+function PassageLabel({ num }: { num: number }) {
+  return (
+    <span className="text-xs text-muted-foreground md:text-caption">
+      <Trans>Passage （{num}）</Trans>
+    </span>
+  );
+}

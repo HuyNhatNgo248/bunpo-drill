@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { SECTION_TITLES, sectionGloss } from "~/lib/sections";
 import type { ResultSection } from "~/lib/views";
 import { PassageReview } from "./PassageReview";
+import { ReadingPassageReview } from "./ReadingPassageReview";
 import { QuestionReview } from "./QuestionReview";
 
 /** One 問題 graded: its title, its score, and each question (and passage) with the right answers. */
@@ -35,6 +36,7 @@ export function ReviewGroups({ section, questionClassName }: { section: ResultSe
   return section.groups.map((group, g) => (
     <Fragment key={g}>
       {group.segments && <PassageReview segments={group.segments} />}
+      {group.reading && <ReadingPassageReview passage={group.reading} />}
       {group.questions.map((question) => (
         <QuestionReview key={question.id} question={question} className={questionClassName} />
       ))}

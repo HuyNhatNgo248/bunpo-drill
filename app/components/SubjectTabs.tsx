@@ -4,7 +4,7 @@ import { NavTabs } from "~/components/NavTabs";
 import type { JlptLevel } from "~/lib/payload";
 
 /** The pages the tabs switch between. */
-const PATHS = { grammar: "/", kanji: "/kanji", notes: "/notes" } as const;
+const PATHS = { grammar: "/", kanji: "/kanji", reading: "/reading", notes: "/notes" } as const;
 
 /**
  * True while a tab's page loads, another level of the same one included: the page shown fades, so the click shows at
@@ -16,7 +16,7 @@ export function useTabLoading(): boolean {
 }
 
 /**
- * Switches between the grammar mock tests, kanji and the notes, the tab of the page shown being the current one, at
+ * Switches between the grammar mock tests, kanji, reading and the notes, the tab of the page shown being the current one, at
  * the level picked on the page (notes have none). One highlight slides to the subject picked, as soon as it is
  * picked; TabsLayout keeps the tabs on
  * screen while the page changes, so the slide is never cut short.
@@ -26,6 +26,7 @@ export function SubjectTabs({ level, className }: { level: JlptLevel | null; cla
   const tabs = [
     { key: "grammar", path: PATHS.grammar, label: t`Grammar` },
     { key: "kanji", path: PATHS.kanji, label: t`Kanji` },
+    { key: "reading", path: PATHS.reading, label: t`Reading` },
     { key: "notes", path: PATHS.notes, label: t`Notes` },
   ].map((tab) => ({ ...tab, to: level && tab.key !== "notes" ? `${tab.path}?level=${level}` : tab.path }));
   const here = useLocation().pathname;
