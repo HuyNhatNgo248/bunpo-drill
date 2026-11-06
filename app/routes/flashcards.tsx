@@ -14,7 +14,7 @@ import { LEVELS } from "~/lib/payload";
 
 export function meta({ matches, loaderData }: Route.MetaArgs) {
   const name = translate(localeFromMatches(matches), msg`Flashcards`);
-  return [{ title: loaderData ? `${loaderData.cards.lesson?.title ?? chapterTitle(loaderData.cards.title)} · ${name} · 文法ドリル` : `${name} · 文法ドリル` }];
+  return [{ title: loaderData ? `${chapterTitle(loaderData.cards.lesson?.title ?? loaderData.cards.title)} · ${name} · 文法ドリル` : `${name} · 文法ドリル` }];
 }
 
 /** The level of /kanji/:level/…, or a 404. */

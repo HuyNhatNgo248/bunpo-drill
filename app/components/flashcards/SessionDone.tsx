@@ -34,7 +34,7 @@ export function SessionDone({
   const { t } = useLingui();
   const submit = useSubmit();
   const again = missed.length;
-  const chapter = view.lesson?.title ?? chapterTitle(view.title);
+  const chapter = chapterTitle(view.lesson?.title ?? view.title);
   // Nothing left to learn: no more new sets, only a review.
   const complete = learned >= view.words;
   // Words not learned yet that this session didn't miss: what a next set would bring.

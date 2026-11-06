@@ -1,8 +1,8 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { ChevronRight } from "lucide-react";
 import { Link } from "react-router";
 import { Badge } from "~/components/ui/badge";
 import { buttonVariants } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
 import { Progress } from "~/components/ui/progress";
 import type { TestSummary } from "~/lib/views";
 import { rowHeading } from "./helpers/rowHeading";
@@ -35,7 +35,7 @@ export function TestRow({ test, isAdmin = false }: { test: TestSummary; isAdmin?
         {inProgress && (
           <span className="flex items-center gap-2.5">
             {/* The numbers say it; the bar is for the eye. */}
-            <Progress aria-hidden="true" value={(answered / total) * 100} className="h-1.5 max-w-56 *:bg-indigo" />
+            <Progress aria-hidden="true" value={(answered / total) * 100} className="h-1.5 max-w-56" />
             <span className="shrink-0 text-caption tabular-nums text-indigo">
               <Trans>
                 {answered} / {total} answered
@@ -54,15 +54,13 @@ export function TestRow({ test, isAdmin = false }: { test: TestSummary; isAdmin?
           <Badge variant="outline" className="text-sm font-semibold tabular-nums">
             {result.score} / {result.total}
           </Badge>
-          <span className="flex shrink-0 items-center gap-0.5 font-semibold text-indigo">
+          <span className={cn(buttonVariants({ variant: "outline" }))}>
             {t`Results`}
-            <ChevronRight aria-hidden="true" className="size-4" />
           </span>
         </>
       ) : inProgress ? (
-        <span className="flex shrink-0 items-center gap-0.5 font-semibold text-indigo">
+        <span className={cn(buttonVariants({ variant: "outline" }))}>
           {t`Continue`}
-          <ChevronRight aria-hidden="true" className="size-4" />
         </span>
       ) : (
         <>

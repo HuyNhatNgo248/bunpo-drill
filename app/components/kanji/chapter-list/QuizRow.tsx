@@ -1,8 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
-import { ChevronRight } from "lucide-react";
 import { Link } from "react-router";
 import { Badge } from "~/components/ui/badge";
 import { buttonVariants } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
 import type { ChapterSummary } from "~/lib/views";
 
 /**
@@ -26,9 +26,8 @@ export function QuizRow({ quiz }: { quiz: NonNullable<ChapterSummary["quiz"]> })
           <Badge variant="outline" className="text-sm font-semibold tabular-nums">
             {result.score} / {result.total}
           </Badge>
-          <span className="flex shrink-0 items-center gap-0.5 font-semibold text-indigo">
+          <span className={cn(buttonVariants({ variant: "outline" }))}>
             {t`Results`}
-            <ChevronRight aria-hidden="true" className="size-4" />
           </span>
         </>
       ) : (

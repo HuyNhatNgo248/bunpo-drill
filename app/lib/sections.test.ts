@@ -95,6 +95,7 @@ describe("chapterTitle", () => {
   it("drops the pages and circles the book's part number", () => {
     expect(chapterTitle("生活-1（p.20–24）")).toBe("生活 ①");
     expect(chapterTitle("社会-2")).toBe("社会 ②");
+    expect(chapterTitle("カレンダー2")).toBe("カレンダー ②");
   });
 
   it("leaves a title without a part number as it is, but for its pages", () => {

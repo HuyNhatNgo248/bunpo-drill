@@ -1,8 +1,10 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { ChevronRight } from "lucide-react";
 import { Link } from "react-router";
+import { buttonVariants } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
 import { Progress } from "~/components/ui/progress";
 import { cardsOf } from "~/lib/links";
+import { chapterTitle } from "~/lib/sections";
 import type { Level } from "~/lib/payload";
 import type { ChapterSummary } from "~/lib/views";
 
@@ -31,7 +33,7 @@ export function LessonRow({
           lang="ja"
           className="truncate font-jp text-base font-semibold text-foreground no-underline after:absolute after:inset-0"
         >
-          {title}
+          {chapterTitle(title)}
         </Link>
         <span className="flex items-center gap-2.5">
           {/* The numbers say it; the bar is for the eye. */}
@@ -43,11 +45,10 @@ export function LessonRow({
           </span>
         </span>
       </div>
-      <span className="flex shrink-0 items-center gap-0.5 font-semibold text-indigo">
+      <span className={cn(buttonVariants({ variant: "outline" }))}>
         {/* A phone row is narrow: the short word. */}
         <span className="md:hidden">{t`Cards`}</span>
         <span className="hidden md:inline">{t`Flashcards`}</span>
-        <ChevronRight aria-hidden="true" className="size-4" />
       </span>
     </li>
   );

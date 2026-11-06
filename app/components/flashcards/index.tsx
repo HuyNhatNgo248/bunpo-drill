@@ -24,7 +24,7 @@ export function Flashcards({ view }: { view: FlashcardsView }) {
   useEffect(() => setMode(savedMode()), []);
   const session = useSession(view.cards);
   const { current, total, done, percent, count } = session;
-  const name = view.lesson?.title ?? chapterTitle(view.title);
+  const name = chapterTitle(view.lesson?.title ?? view.title);
   const home = homeOf({ kind: "kanji", ...view });
   const modeTabs = (
     <ModeTabs

@@ -110,9 +110,9 @@ export function circled(number: number) {
   return CIRCLED[number - 1] ?? String(number);
 }
 
-/** "生活-1（p.20–24）" → "生活 ①": a chapter's title without its pages, and the book's part number (-1, -2) circled. */
+/** "生活-1（p.20–24）" → "生活 ①": a chapter or lesson title without its pages, and the book's part number (-1 or 1) circled. */
 export const chapterTitle = (title: string) =>
-  title.split("（")[0].replace(/-(\d+)$/, (_, part) => ` ${circled(Number(part))}`);
+  title.split("（")[0].replace(/-?(\d+)$/, (_, part) => ` ${circled(Number(part))}`);
 
 /** Element id of a quiz question card, used by the question list to jump to it. */
 export const questionAnchor = (num: number) => `question-${num}`;
