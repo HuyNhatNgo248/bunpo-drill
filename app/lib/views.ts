@@ -56,7 +56,7 @@ export type QuizSection = {
 export type QuizView = {
   id: string;
   title: string;
-  level: Level;
+  level: JlptLevel;
   kind: TestKind;
   /** A kanji test's chapter, or a reading set's group on the reading page (readingGroupOf); null for grammar. */
   chapter: number | null;
@@ -205,7 +205,7 @@ export type QuizDraft = {
 export type ResultsView = {
   id: string;
   title: string;
-  level: Level;
+  level: JlptLevel;
   kind: TestKind;
   /** A kanji test's chapter, or a reading set's group on the reading page; null for grammar. */
   chapter: number | null;

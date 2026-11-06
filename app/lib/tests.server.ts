@@ -88,7 +88,7 @@ const listed = (userId: number) => ({
   questionCount: sql<
     number | null
   >`json_array_length(${tests.payload}, '$.sections[0].questions')
-    + json_array_length(${tests.payload}, '$.sections[1].questions')
+    + ifnull(json_array_length(${tests.payload}, '$.sections[1].questions'), 0)
     + (SELECT ifnull(sum(json_array_length(value, '$.questions')), 0) FROM json_each(${tests.payload}, '$.sections[2].passages'))`,
   // A submission that can't be read shows as not taken.
   submission: sql<string | null>`json_remove(${json(progress.submission)}, '$.answers')`,

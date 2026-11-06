@@ -11,7 +11,7 @@ import type { ChapterWord, KanjiChapter, KanjiQuestion, KanjiTestPayload } from 
 type Headword = KanjiChapter["lessons"][number]["kanji"][number];
 type Lesson = KanjiChapter["lessons"][number];
 type ReadingSection = KanjiTestPayload["sections"][0];
-type WritingSection = KanjiTestPayload["sections"][1];
+type WritingSection = Exclude<KanjiTestPayload["sections"][1], undefined>;
 
 /** The id of 招待状 in N2 1章: the word every built question tests. */
 export const WORD_ID = "n2-c1-招待状";

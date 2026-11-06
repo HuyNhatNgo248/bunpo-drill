@@ -1,33 +1,54 @@
 ---
 name: jlpt-reading-quiz
-description: Make a JLPT N2 reading set (短文, 中文, 統合理解, 主張理解, 情報検索, or a mix) in the real exam format and send it to the 文法ドリル app, which times each passage, grades it, highlights the sentence that proves each answer and names the trap of each wrong pick. Use when the user asks for reading (読解) practice, a reading set or a reading mock test in the app. For practice right here in the terminal, use jlpt-reading-quiz-terminal.
-argument-hint: "[type: 短文 | 中文 | 統合 | 長文 | 情報検索 | 総合 | フル] [count, e.g. 3 sets]"
+description: Make a JLPT reading set for any level, N5 to N1 (短文, 中文, 長文, 統合理解, 主張理解, 情報検索, or a mix, as that level's exam has them), in the real exam format, and send it to the 文法ドリル app, which times each passage, grades it, highlights the sentence that proves each answer and names the trap of each wrong pick. Use when the user asks for reading (読解) practice, a reading set or a reading mock test in the app. For practice right here in the terminal, use jlpt-reading-quiz-terminal.
+argument-hint: "[level: N5–N1, default N2] [type: 短文 | 中文 | 長文 | 統合 | 主張 | 情報検索 | 総合 | フル] [count, e.g. 3 sets]"
 ---
 
-# JLPT N2 reading quiz (app)
+# JLPT reading quiz (app)
 
-Write original N2 reading passages like the real test, with every question's answer, the
-sentence that proves it and the trap of every wrong choice, and send each set to the app.
-The app times the user on each passage and shows the review.
+Write original reading passages like the real test of the level asked for, with every
+question's answer, the sentence that proves it and the trap of every wrong choice, and send
+each set to the app. The app times the user on each passage and shows the review.
 
 ## 1. Learn the format first
 
-Read `~/.claude/skills/jlpt-reading-quiz-terminal/reading-format.md`. Every passage and
-question must look like the official sample it records, and pass its checklist.
+Read `~/.claude/skills/jlpt-reading-quiz-terminal/reading-format.md`. It records the
+official N2 sample in detail: the writing style, the question kinds, the wrong-choice traps
+and the checklist. Those apply at every level. Every passage must pass its checklist, with
+the exceptions per level below.
+
+Each level's exam has different 問題 and lengths. This is from the JLPT guide; re-check
+the official samples on jlpt.jp (N1R.pdf … N5R.pdf) if anything looks off:
+
+| Level | 問題 (passages × questions, length) | Language |
+|---|---|---|
+| N5 | 短文 3 × 1 (~80字) · 中文 1 × 2 (~250字) · 情報検索 1 × 1 (~250字) | です・ます, everyday topics, simple kanji |
+| N4 | 短文 4 × 1 (100–200字) · 中文 1 × 3–4 (~450字) · 情報検索 1 × 2 (~400字) | everyday topics, plain or polite |
+| N3 | 短文 4 × 1 (150–200字) · 中文 2 × 3 (~350字) · 長文 1 × 4 (~550字) · 情報検索 1 × 2 (~600字) | short essays, letters, notices |
+| N2 | 短文 5 × 1 (~220字) · 中文 3 × 3 (~550字) · 統合理解 1 pair × 2 (~300字 each) · 主張理解 1 × 3 (~850字) · 情報検索 1 × 2 | see reading-format.md |
+| N1 | 短文 4 × 1 (~200字) · 中文 3 × 3 (~500字) · 長文 1 × 4 (~1000字) · 統合理解 1 pair × 2–3 · 主張理解 1 × 4 (~1000字) · 情報検索 1 × 2 | abstract essays, reviews, more N1 words |
+
+- **N5 and N4:** gloss fewer words, and put the writer's view near the end without heavy
+  hedging. No 統合, 長文 or 主張 at these levels.
+- **N3:** has 長文 (内容理解), but no 統合 or 主張.
+- **"長文":** at N3 and N1 this means 内容理解（長文） (`@long`). At N2 there is no
+  内容理解（長文）, so "長文" means 主張理解 (`@claim`).
+- **Only the level's types:** the server rejects a type the level's exam doesn't have.
 
 ## 2. Read the request
 
 Arguments: $ARGUMENTS
 
+The level is the one named (N5–N1). If none is named, use N2. A set holds **5 passages**:
+
 | The user asks for | One set holds |
 |---|---|
-| a type: `短文` | 2 passages × 1 question |
-| `中文` | 1 passage × 3 questions (2 passages if they ask for a longer set) |
-| `統合` | 1 pair A/B × 2 questions |
-| `長文` (主張理解) | 1 passage × 3 questions |
-| `情報検索` | 1 flyer or table × 2 questions |
-| nothing, or `総合` | the daily set: 2 短文, 1 中文, and 1 of 統合 / 長文 / 情報検索 |
-| `フル` | the whole section: 5 短文, 3 中文, 1 統合, 1 長文, 1 情報検索 (21 questions) |
+| a type (`短文`, `中文`, `長文`, `統合`, `主張`, `情報検索`) | 5 passages of that type, each with the level's question count from the table above |
+| nothing, or `総合` | one passage of each type the level has |
+| `フル` | the level's whole exam section, as in the table above |
+
+Fewer passages only when the user asks ("2 passages"). Targets per passage are set by the
+app: 短文 2 min, 中文 6, 長文 10, 統合理解 6, 主張理解 10, 情報検索 6.
 
 A count ("3 sets") makes that many sets, each with new topics. Without one, make 1.
 
@@ -38,7 +59,7 @@ used recently, and to lean the questions toward the kinds the user misses (理�
 the app keeps the results.
 
 **Title.** Use the type and a number: `短文 3`, `中文 1`, `総合 2`. A set of several types is
-`総合 N`. Number each set after the ones of its type sent earlier in this conversation, or
+`総合 N`. Numbers count per level, since the Reading tab lists each level on its own. Number each set after the ones of its type sent earlier in this conversation, or
 that the user names. Otherwise start at 1. The Reading tab sorts by these numbers.
 
 ## 3. Write the passages
@@ -94,9 +115,9 @@ The contract is `test.schema.json` next to this file. It's generated from the ap
 }
 ```
 
-- **Sections.** Use `reading-short` 短文, `reading-mid` 中文, `reading-integrated` 統合理解,
-  `reading-claim` 主張理解 and `reading-info` 情報検索. Have one section per type, in that
-  order.
+- **Sections.** Use `reading-short` 短文, `reading-mid` 中文, `reading-long` 長文,
+  `reading-integrated` 統合理解, `reading-claim` 主張理解 and `reading-info` 情報検索. Have one
+  section per type, in that order, and only the types the level has.
 - **Blocks.** A passage is a list of blocks:
   - **Essays, emails and notices:** 1 text block. Separate paragraphs with `\n`. An email's
     greeting and sign-off go on their own lines.
@@ -106,8 +127,9 @@ The contract is `test.schema.json` next to this file. It's generated from the ap
 - **Lead.** `lead` is the exam's line above a practical text:
   "以下は、ある会社が取引先に送ったメールの内容である。". An essay has none.
 - **Underlines.** Mark them `<u>…</u>`, with ①② inside: `<u>①そうなると</u>`. The prompt
-  repeats the underlined part inside `<u>…</u>`.
-- **Notes.** `notes` are the （注）, words above N2 in the order they appear. Each word must be
+  repeats the underlined part inside `<u>…</u>`. An evidence sentence that crosses an
+  underline keeps the ① or ② that's inside it.
+- **Notes.** `notes` are the （注）, words above the level in the order they appear. Each word must be
   in the passage.
 - **Kinds.** `kind` is one of 理由, 指示語, 主張, 詳細, 比較, 条件.
 - **Traps.** `traps` gives one per choice, in order: `null` for the right one, and for each
@@ -122,6 +144,51 @@ The contract is `test.schema.json` next to this file. It's generated from the ap
   the user went over the target time.
 - **Question ids** run q1, q2, … across the whole set, and start again at q1 in each new set.
   Spread the answers over 1–4.
+
+### The short format (use it for every set)
+
+Writing the JSON by hand is slow and easy to break. Write sets in this text format instead,
+several sets per file, and let `build.py` (next to this file) turn them into the JSON, check
+them and send them:
+
+```text
+### 短文 2
+@short
+L: 以下は、ある会社が取引先に送ったメールの内容である。
+P: 一つの段落。<u>下線部</u>はこう書く。
+P: 次の段落。
+N: 咀嚼 = よく考えて理解すること
+T: One English line on where this passage's answers are.
+Q: <u>下線部</u>とあるが、なぜか。
+1: 間違いの選択肢 ~ op
+2*: 正解の選択肢
+3: 間違いの選択肢 ~ cd
+4: 間違いの選択肢 ~ ni
+K: 理由
+E: 本文から正確に写した根拠の文。
+X: One or two English sentences: why 2 is right, what is wrong with the others.
+```
+
+- `LEVEL: N3`, right after the `###` line, sets the set's level. Without it, the level is N2.
+- `@short` `@mid` `@long` `@int` `@claim` `@info` start a passage of that type. A 総合 set has
+  passages of several types, and the script puts them in the exam's order.
+- **Text lines:**
+  - **`P:`** one paragraph.
+  - **`A:` / `B:`** the two texts of 統合理解.
+  - **`TH:` / `TR:`** a table's heading and rows, cells split by `|`.
+  - **`F:`** a line of notes or ※ footnotes, shown under the table.
+- `*` marks the answer. Each wrong choice ends with `~` and its trap: `cd` changed detail,
+  `op` opposite, `ni` not in the text, `tn` true but not the answer, `og` over-general,
+  `mc` missed condition.
+- Question ids are numbered by the script, from q1 in each set.
+
+```sh
+python3 .claude/skills/jlpt-reading-quiz/build.py --dry sets.txt   # check only
+python3 .claude/skills/jlpt-reading-quiz/build.py sets.txt         # check and send
+```
+
+The script reports any evidence that isn't found exactly once, any underline that isn't in
+the passage, and any question missing its answer or traps. Fix those and run it again.
 
 ## 5. Send it
 

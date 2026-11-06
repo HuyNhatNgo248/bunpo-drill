@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { answerIndex, choices, LEVELS, questionId, READING_TYPES } from "./payload";
+import { answerIndex, choices, JLPT_LEVELS, questionId, READING_TYPES, type JlptLevel } from "./payload";
 
 export { READING_TYPES };
 
 /**
- * The reading format, version 1, which Claude POSTs with the jlpt-reading-quiz skill: a set of passages in the N2
- * reading 問題 (短文, 中文, 統合理解, 主張理解, 情報検索), each question with the sentence that proves its answer and
- * the trap of every wrong choice, so the results can show both.
+ * The reading format, version 1, which Claude POSTs with the jlpt-reading-quiz skill: a set of passages in the reading
+ * 問題 of a JLPT level (短文, 中文, 長文, 統合理解, 主張理解, 情報検索), each question with the sentence that proves its
+ * answer and the trap of every wrong choice, so the results can show both.
  *
  * Like kanji-payload.ts, this file is the single source of truth: the API checks every POST with this schema, and
  * `pnpm schema` writes the skill's test.schema.json from it.
@@ -19,9 +19,19 @@ export type ReadingType = (typeof READING_TYPES)[number];
 export const TARGET_SECONDS: Record<ReadingType, number> = {
   "reading-short": 120,
   "reading-mid": 360,
+  "reading-long": 600,
   "reading-integrated": 360,
   "reading-claim": 600,
   "reading-info": 360,
+};
+
+/** The reading 問題 each level's exam has, in its order. */
+export const LEVEL_TYPES: Record<JlptLevel, readonly ReadingType[]> = {
+  N5: ["reading-short", "reading-mid", "reading-info"],
+  N4: ["reading-short", "reading-mid", "reading-info"],
+  N3: ["reading-short", "reading-mid", "reading-long", "reading-info"],
+  N2: ["reading-short", "reading-mid", "reading-integrated", "reading-claim", "reading-info"],
+  N1: ["reading-short", "reading-mid", "reading-long", "reading-integrated", "reading-claim", "reading-info"],
 };
 
 /** What a question asks for. */
@@ -146,12 +156,12 @@ const readingObject = z.strictObject({
   version: z.literal(READING_VERSION),
   kind: z.literal("reading"),
   title: z.string().min(1).max(60).describe('The set\'s name: "短文 4", "中文 2", "総合 1".'),
-  level: z.enum(LEVELS),
+  level: z.enum(JLPT_LEVELS),
   sections: z
     .array(sectionSchema)
     .min(1)
-    .max(5)
-    .describe("One section per reading type, each type at most once, in the exam's order (短文, 中文, 統合理解, 主張理解, 情報検索)."),
+    .max(6)
+    .describe("One section per reading type, each type at most once, in the exam's order (短文, 中文, 長文, 統合理解, 主張理解, 情報検索), and only the types the level's exam has."),
 });
 
 export const readingTestPayloadSchema = readingObject.superRefine(checkReading).meta({
@@ -159,13 +169,13 @@ export const readingTestPayloadSchema = readingObject.superRefine(checkReading).
   description: [
     "Body of POST /api/tests for a reading set, version 1.",
     "Rules the server also enforces:",
-    "1. Sections are of different types, in the exam's order.",
+    "1. Sections are of different types, in the exam's order, and only the level's: N5/N4 短文 中文 情報検索; N3 adds 長文; N2 短文 中文 統合理解 主張理解 情報検索; N1 all six.",
     '2. Question ids run "q1", "q2", … in order with no gaps; the 4 choices are all different.',
     "3. traps is null at answerIndex and a trap at every other choice.",
     "4. evidence appears exactly once in the passage's texts and table cells (without <u> tags).",
     "5. Every <u> is closed, not nested and not empty; every （注） word appears in the passage.",
     "6. 統合理解 has two text blocks labelled A and B; 情報検索 has a table.",
-    "Standard sizes: 短文 2 passages × 1 question (target 2 min each), 中文 1–2 × 3 (6 min), 統合理解 1 × 2 (6 min), 主張理解 1 × 3 (10 min), 情報検索 1 × 2 (6 min).",
+    "A set usually has 5 passages of one type. Targets per passage: 短文 2 min, 中文 6, 長文 10, 統合理解 6, 主張理解 10, 情報検索 6.",
   ].join("\n"),
 });
 
@@ -187,7 +197,10 @@ type RawReading = z.infer<typeof readingObject>;
 function checkReading(payload: RawReading, ctx: z.RefinementCtx) {
   const issue = (path: (string | number)[], message: string) => ctx.addIssue({ code: "custom", path, message });
   const order = payload.sections.map((section) => READING_TYPES.indexOf(section.type));
-  if (order.some((at, i) => i > 0 && at <= order[i - 1]!)) issue(["sections"], "One section per type, in the exam's order: 短文, 中文, 統合理解, 主張理解, 情報検索.");
+  if (order.some((at, i) => i > 0 && at <= order[i - 1]!)) issue(["sections"], "One section per type, in the exam's order: 短文, 中文, 長文, 統合理解, 主張理解, 情報検索.");
+  payload.sections.forEach((section, s) => {
+    if (!LEVEL_TYPES[payload.level].includes(section.type)) issue(["sections", s, "type"], `${payload.level}'s exam has no ${section.type}.`);
+  });
 
   let num = 0;
   payload.sections.forEach((section, s) =>
@@ -228,7 +241,7 @@ function checkReading(payload: RawReading, ctx: z.RefinementCtx) {
   );
 }
 
-/** The group of the reading page a set is listed under: its type's number (1 短文 … 5 情報検索), or 6 for 総合. */
+/** The group of the reading page a set is listed under: its type's number (1 短文 … 6 情報検索), or 7 for 総合. */
 export const readingGroupOf = (payload: Pick<ReadingTestPayload, "sections">): number =>
   payload.sections.length === 1 ? READING_TYPES.indexOf(payload.sections[0]!.type) + 1 : READING_TYPES.length + 1;
 

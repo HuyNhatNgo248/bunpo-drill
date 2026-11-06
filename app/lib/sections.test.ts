@@ -16,6 +16,7 @@ describe("SECTION_TITLES", () => {
       "kanji-writing": "表記",
       "reading-short": "内容理解（短文）",
       "reading-mid": "内容理解（中文）",
+      "reading-long": "内容理解（長文）",
       "reading-integrated": "統合理解",
       "reading-claim": "主張理解（長文）",
       "reading-info": "情報検索",

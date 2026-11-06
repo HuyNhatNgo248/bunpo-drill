@@ -3,15 +3,11 @@ import { TabHighlight } from "~/components/TabHighlight";
 import { cn } from "~/lib/utils";
 
 const VARIANTS = {
-  /** Text tabs, the one shown underlined in the app's red: the subjects, which name the page. */
-  underline: {
-    highlight: "bg-transparent after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary",
-    tab: "h-11 rounded-md px-4 text-base md:h-12 md:px-5 md:text-prompt",
-  },
-  /** Small tabs, the one shown on a faint ink tint, as the week list marks its week: the levels. */
-  tint: {
-    highlight: "rounded-md bg-foreground/8",
-    tab: "h-9 rounded-md px-3 text-caption md:h-8",
+  /** A segmented control: the tabs in a sunken box, the one shown raised on a paper card. The subjects. */
+  segment: {
+    box: "rounded-xl border bg-muted p-1",
+    highlight: "rounded-lg bg-card shadow-piece",
+    tab: "h-8.5 rounded-lg px-6 text-base",
   },
 };
 
@@ -37,7 +33,7 @@ export function NavTabs({
 }) {
   const style = VARIANTS[variant];
   return (
-    <nav aria-label={label} className={className}>
+    <nav aria-label={label} className={cn(style.box, className)}>
       <div className="relative grid auto-cols-fr grid-flow-col">
         <TabHighlight index={tabs.findIndex((tab) => tab.key === shown)} count={tabs.length} className={style.highlight} />
         {tabs.map((tab) => (

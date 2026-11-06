@@ -1,3 +1,4 @@
+import userEvent from "@testing-library/user-event";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { render, screen, within } from "@testing-library/react";
@@ -29,9 +30,13 @@ describe("TabsLayout", () => {
 
     expect(await screen.findByText("The page")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Sign out" })).toBeInTheDocument();
-    expect(tabs().getByRole("link", { name: /Notes/ })).toHaveAttribute("aria-current", "page");
+    // The notes are a link of their own, beside the subjects; on a phone they are in the tab bar with them.
+    expect(screen.getAllByRole("link", { name: /Notes/ }).map((link) => link.getAttribute("aria-current"))).toEqual(["page", "page"]);
     expect(tabs().getByRole("link", { name: /Grammar/ })).toHaveAttribute("href", "/?level=N2");
     expect(tabs().getByRole("link", { name: /Kanji/ })).toHaveAttribute("href", "/kanji?level=N2");
+    const bar = within(screen.getByRole("navigation", { name: "Sections" }));
+    expect(bar.getAllByRole("link").map((link) => link.textContent)).toEqual(["Grammar", "Kanji", "Reading", "Notes"]);
+    expect(bar.getByRole("link", { name: /Reading/ })).toHaveAttribute("href", "/reading?level=N2");
   });
 
   it("marks the kanji tab on the kanji page", async () => {
@@ -50,25 +55,26 @@ describe("TabsLayout", () => {
     expect(tabs().getByRole("link", { name: /Kanji/ })).toHaveAttribute("href", "/kanji");
   });
 
-  it("links to every JLPT level on a page of levels, easiest first, and marks the one shown", async () => {
+  it("shows the level on a page of levels, and a menu of every JLPT level, easiest first, the one shown marked", async () => {
     renderLayout("/kanji", "N2", true);
 
-    const nav = within(await screen.findByRole("navigation", { name: "Level" }));
-    expect(nav.getAllByRole("link").map((link) => link.textContent)).toEqual(["N5", "N4", "N3", "N2", "N1"]);
-    expect(nav.getByRole("link", { name: "N5" })).toHaveAttribute("href", "/kanji?level=N5");
-    expect(nav.getByRole("link", { name: "N2" })).toHaveAttribute("aria-current", "page");
+    await userEvent.click(await screen.findByRole("button", { name: "Level: N2" }));
+
+    const menu = within(await screen.findByRole("menu", { name: "Level: N2" }));
+    expect(menu.getAllByRole("menuitem").map((item) => item.textContent)).toEqual(["N5", "N4", "N3", "N2", "N1"]);
+    expect(menu.getByRole("menuitem", { name: "N5" })).toHaveAttribute("href", "/kanji?level=N5");
+    expect(menu.getByRole("menuitem", { name: "N2" })).toHaveAttribute("aria-current", "page");
   });
 
-  it("has no level links on the notes", async () => {
+  it("keeps the level switch on the notes, greyed, so the tabs don't move", async () => {
     renderLayout("/notes", "N2");
-    expect(await screen.findByText("The page")).toBeInTheDocument();
-    expect(screen.queryByRole("navigation", { name: "Level" })).toBeNull();
+    expect(await screen.findByRole("button", { name: "Level: N2" })).toBeDisabled();
   });
 
   it("has no level links before the grammar page has a level", async () => {
     renderLayout("/", null, true);
 
     expect(await screen.findByText("The page")).toBeInTheDocument();
-    expect(screen.queryByRole("navigation", { name: "Level" })).toBeNull();
+    expect(screen.queryByRole("button", { name: /^Level/ })).toBeNull();
   });
 });

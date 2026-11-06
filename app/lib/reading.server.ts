@@ -1,8 +1,7 @@
 import { and, eq, sql } from "drizzle-orm";
 import { orm } from "./db.server";
 import { questionCount } from "./grading.server";
-import type { Level } from "./payload";
-import { passagesOf, READING_TYPES, readingGroupOf, readingTestPayloadSchema, TARGET_SECONDS, type QuestionKind, type ReadingTestPayload } from "./reading-payload";
+import { LEVEL_TYPES, passagesOf, READING_TYPES, readingGroupOf, readingTestPayloadSchema, TARGET_SECONDS, type QuestionKind, type ReadingTestPayload } from "./reading-payload";
 import { progress, tests } from "./schema.server";
 import { answeredCount, readDraft, type Draft, type Submission } from "./tests.server";
 import type { JlptLevel } from "./levels";
@@ -21,7 +20,7 @@ export type ReadingSetRow = { id: string; payload: ReadingTestPayload; submissio
  * shortcut: reads every set's whole payload to sum up its misses and times; read only those fields in SQL if a level
  * ever holds hundreds of sets.
  */
-export async function listReadingSets(level: Level, userId: number): Promise<ReadingSetRow[]> {
+export async function listReadingSets(level: JlptLevel, userId: number): Promise<ReadingSetRow[]> {
   const payload = sql`(CASE WHEN json_valid(${tests.payload}) THEN ${tests.payload} END)`;
   const rows = await (await orm())
     .select({ id: tests.id, payload: tests.payload, submission: progress.submission, draft: progress.draft })
@@ -49,13 +48,14 @@ function parseJson(text: string | null): unknown {
 /** Compares titles with their numbers as numbers: 短文 2 before 短文 10. */
 const titleOrder = new Intl.Collator("ja", { numeric: true });
 
-/** The groups of the reading page: one per reading type, then 総合, each with its sets, its misses and its pace. */
+/** The groups of the reading page: one per reading type of the level, then 総合, each with its sets, its misses and its pace. */
 export function toReadingHome(level: JlptLevel, sets: ReadingSetRow[]): ReadingHomeView {
-  const types = [...READING_TYPES, "mixed" as const];
+  // Only the 問題 the level's exam has, numbered as readingGroupOf numbers them.
+  const types = [...LEVEL_TYPES[level], "mixed" as const];
   return {
     level,
-    groups: types.map((type, i): ReadingGroup => {
-      const value = i + 1;
+    groups: types.map((type): ReadingGroup => {
+      const value = type === "mixed" ? READING_TYPES.length + 1 : READING_TYPES.indexOf(type) + 1;
       const own = sets.filter((set) => readingGroupOf(set.payload) === value).sort((a, b) => titleOrder.compare(a.payload.title, b.payload.title));
       return { value, type, sets: own.map(toSetSummary), missed: missedKinds(own), pace: paceOf(own) };
     }),

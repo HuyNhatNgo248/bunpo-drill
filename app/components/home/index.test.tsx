@@ -48,15 +48,8 @@ describe("Home", () => {
     expect(await screen.findByRole("heading", { name: "No mock tests yet" })).toBeInTheDocument();
   });
 
-  it("says a level the app makes no tests for yet is not available", async () => {
+  it("says a level has no tests yet, N1 included", async () => {
     renderHome([], { level: "N1" });
-
-    expect(await screen.findByRole("heading", { name: "N1 isn't available yet" })).toBeInTheDocument();
-    expect(screen.getByText("Mock tests for N1 are coming later.")).toBeInTheDocument();
-  });
-
-  it("keeps the usual empty state for a level that can have tests but has none", async () => {
-    renderHome([], { level: "N3" });
 
     expect(await screen.findByRole("heading", { name: "No mock tests yet" })).toBeInTheDocument();
   });

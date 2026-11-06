@@ -14,6 +14,7 @@ export const SECTION_TITLES: Record<SectionType, string> = {
   "kanji-writing": "表記",
   "reading-short": "内容理解（短文）",
   "reading-mid": "内容理解（中文）",
+  "reading-long": "内容理解（長文）",
   "reading-integrated": "統合理解",
   "reading-claim": "主張理解（長文）",
   "reading-info": "情報検索",
@@ -23,6 +24,7 @@ export const SECTION_TITLES: Record<SectionType, string> = {
 export const READING_GROUP_TITLES: Record<ReadingType | "mixed", string> = {
   "reading-short": "短文",
   "reading-mid": "中文",
+  "reading-long": "長文",
   "reading-integrated": "統合理解",
   "reading-claim": "主張理解",
   "reading-info": "情報検索",
@@ -48,6 +50,7 @@ export const SECTION_GLOSSES: Record<SectionType, MessageDescriptor> = {
   "kanji-writing": msg`Writing in kanji`,
   "reading-short": msg`Short passages`,
   "reading-mid": msg`Mid-length passages`,
+  "reading-long": msg`Long passages`,
   "reading-integrated": msg`Two texts compared`,
   "reading-claim": msg`The writer's argument`,
   "reading-info": msg`Finding information`,
@@ -83,6 +86,7 @@ export function sectionInstruction(
       return msg`Choose the best way to write the underlined word in kanji from 1, 2, 3 and 4.`;
     case "reading-short":
     case "reading-mid":
+    case "reading-long":
     case "reading-claim":
       return msg`Read each passage, then choose the best answer to each question from 1, 2, 3 and 4.`;
     case "reading-integrated":

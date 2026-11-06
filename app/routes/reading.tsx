@@ -4,9 +4,9 @@ import type { TabsHandle } from "~/components/layout/TabsLayout";
 import { ReadingHome } from "~/components/reading";
 import { requireUserId } from "~/lib/auth.server";
 import { titleMeta } from "~/lib/i18n";
-import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
+import { JLPT_LEVELS } from "~/lib/payload";
 import { listReadingSets, toReadingHome } from "~/lib/reading.server";
-import { lastTabOf, saveLastTab } from "~/lib/users.server";
+import { lastTabOf, ownerId, saveLastTab } from "~/lib/users.server";
 import { revalidateUnlessPicked } from "~/lib/utils";
 
 export const meta = titleMeta(msg`Reading`);
@@ -21,14 +21,14 @@ export async function loader({ request }: Route.LoaderArgs) {
   const level = named ?? (await lastTabOf(userId))?.level ?? "N2";
   // Not awaited: a missed save only costs the next visit its tab.
   saveLastTab(userId, { subject: "reading", level }).catch(console.error);
-  const sets = isTestLevel(level) ? await listReadingSets(level, userId) : [];
-  // `level` again at the top, where TabsLayout reads it for the subject tabs.
-  return { home: toReadingHome(level, sets), level };
+  const [sets, owner] = await Promise.all([listReadingSets(level, userId), ownerId()]);
+  // `level` again at the top, where TabsLayout reads it for the subject tabs. The admin can rename and delete sets.
+  return { home: toReadingHome(level, sets), level, isAdmin: userId === owner };
 }
 
 /** A group picked (`group`) the page shows by itself, so the sets aren't loaded again for it. */
 export const shouldRevalidate = revalidateUnlessPicked("group");
 
 export default function ReadingRoute({ loaderData }: Route.ComponentProps) {
-  return <ReadingHome home={loaderData.home} />;
+  return <ReadingHome home={loaderData.home} isAdmin={loaderData.isAdmin} />;
 }

@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { EmptyState } from "~/components/EmptyState";
 import { useTabLoading } from "~/components/SubjectTabs";
 import { cn } from "~/lib/utils";
-import { isTestLevel, type JlptLevel } from "~/lib/levels";
+import type { JlptLevel } from "~/lib/levels";
 import type { TestSummary } from "~/lib/views";
 import { TestList } from "./test-list";
 
@@ -30,10 +30,6 @@ export function Home({ tests, level, isAdmin = false }: HomeProps) {
       <div aria-busy={switching} className={cn("flex flex-col gap-4 transition-opacity duration-200 md:gap-6", switching && "opacity-50")}>
         {tests.length > 0 ? (
           <TestList tests={tests} isAdmin={isAdmin} />
-        ) : level && !isTestLevel(level) ? (
-          <EmptyState title={<Trans>{level} isn't available yet</Trans>}>
-            <Trans>Mock tests for {level} are coming later.</Trans>
-          </EmptyState>
         ) : (
           <EmptyState title={<Trans>No mock tests yet</Trans>}>
             <Trans>New mock tests show up here.</Trans>

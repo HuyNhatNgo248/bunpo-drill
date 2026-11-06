@@ -1,4 +1,4 @@
-import type { Level } from "./payload";
+import type { JlptLevel } from "./payload";
 import type { TestKind } from "./views";
 
 /**
@@ -9,7 +9,7 @@ import type { TestKind } from "./views";
  * homeOf({ kind: "kanji", level: "N2", chapter: 3 }); // -> "/kanji?level=N2&chapter=3"
  * homeOf({ kind: "reading", level: "N2", chapter: 1 }); // -> "/reading?level=N2&group=1"
  */
-export const homeOf = ({ kind, level, chapter }: { kind: TestKind; level: Level; chapter?: number | null }): string => {
+export const homeOf = ({ kind, level, chapter }: { kind: TestKind; level: JlptLevel; chapter?: number | null }): string => {
   if (kind === "grammar") return "/";
   const [path, param] = kind === "kanji" ? ["/kanji", "chapter"] : ["/reading", "group"];
   return `${path}?level=${level}${chapter ? `&${param}=${chapter}` : ""}`;
@@ -24,7 +24,7 @@ export const homeOf = ({ kind, level, chapter }: { kind: TestKind; level: Level;
  * cardsOf("N2", 1, { page: 21 }); // -> "/kanji/N2/1/cards?page=21"
  */
 export function cardsOf(
-  level: Level,
+  level: JlptLevel,
   chapter: number,
   {
     words = [],

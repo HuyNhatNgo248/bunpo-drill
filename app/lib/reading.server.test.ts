@@ -26,21 +26,22 @@ function row(id: string, payload = buildReadingPayload(), answers?: Record<strin
 }
 
 describe("toReadingHome", () => {
-  it("lists a set under its type, and one of several types under 総合, titles in number order", () => {
+  it("lists the level's types, a set under its type and one of several types under 総合, titles in number order", () => {
     const mixed = buildReadingPayload({ title: "総合 1", sections: [buildReadingSetSection(), MID.sections[0]!] });
     // q3 for the 中文 part, after 短文's q1.
     mixed.sections[1] = { ...MID.sections[0]!, passages: [{ ...MID.sections[0]!.passages[0]!, questions: [buildReadingQuestion({ id: "q2" }), buildReadingQuestion({ id: "q3" })] }] };
     const home = toReadingHome("N2", [row("a", buildReadingPayload({ title: "短文 10" })), row("b"), row("c", mixed)]);
 
-    expect(home.groups.map((group) => [group.type, group.sets.map((set) => set.title)])).toEqual([
-      ["reading-short", ["短文 1", "短文 10"]],
-      ["reading-mid", []],
-      ["reading-integrated", []],
-      ["reading-claim", []],
-      ["reading-info", []],
-      ["mixed", ["総合 1"]],
+    expect(home.groups.map((group) => [group.value, group.type, group.sets.map((set) => set.title)])).toEqual([
+      [1, "reading-short", ["短文 1", "短文 10"]],
+      [2, "reading-mid", []],
+      [4, "reading-integrated", []],
+      [5, "reading-claim", []],
+      [6, "reading-info", []],
+      [7, "mixed", ["総合 1"]],
     ]);
-    expect(home.groups[5]).toMatchObject({ value: 6, sets: [{ questionCount: 3, targetSeconds: 120 + 360 }] });
+    expect(home.groups[5]).toMatchObject({ sets: [{ questionCount: 3, targetSeconds: 120 + 360 }] });
+    expect(toReadingHome("N5", []).groups.map((group) => group.type)).toEqual(["reading-short", "reading-mid", "reading-info", "mixed"]);
   });
 
   it("sums up the taken sets: their score and time, the kinds they missed most, and the pace a passage", () => {

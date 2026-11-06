@@ -1,6 +1,7 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router";
+import { TestMenu } from "~/components/home/test-list/TestMenu";
 import { Badge } from "~/components/ui/badge";
 import { buttonVariants } from "~/components/ui/button";
 import { Progress } from "~/components/ui/progress";
@@ -9,9 +10,10 @@ import type { ReadingSetSummary } from "~/lib/views";
 
 /**
  * One reading set, a row like a mock test's. Not taken: its size and its time, and Start. In progress: how far it got,
- * and Continue. Taken: its time against its target, its score, and its results. The whole row opens it.
+ * and Continue. Taken: its time against its target, its score, and its results. The whole row opens it. The admin
+ * renames or deletes it from the menu of a right click on it, as on a mock test's row.
  */
-export function SetRow({ set }: { set: ReadingSetSummary }) {
+export function SetRow({ set, isAdmin = false }: { set: ReadingSetSummary; isAdmin?: boolean }) {
   const { t } = useLingui();
   const { answered, result, seconds, targetSeconds } = set;
   const total = set.questionCount;
@@ -19,7 +21,7 @@ export function SetRow({ set }: { set: ReadingSetSummary }) {
   const goal = clock(targetSeconds);
   const time = seconds === null ? null : clock(seconds);
   const inProgress = !result && answered !== null;
-  return (
+  const row = (
     <li className="relative flex min-h-16 items-center gap-4 px-5 py-3 transition-colors hover:bg-muted/60">
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         {/* Its ::after covers the row, so the whole row opens the set; the buttons are only its look, under it. */}
@@ -81,4 +83,5 @@ export function SetRow({ set }: { set: ReadingSetSummary }) {
       )}
     </li>
   );
+  return isAdmin ? <TestMenu test={set}>{row}</TestMenu> : row;
 }

@@ -10,10 +10,10 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogT
 import type { TestSummary } from "~/lib/views";
 
 /**
- * The admin's menu of one test, on a right click (a long press on touch) on its row, the `children`: rename it, in a
+ * The admin's menu of one test (a grammar test or a reading set), on a right click (a long press on touch) on its row, the `children`: rename it, in a
  * dialog with its title, or delete it, after asking. Both change the test for every user.
  */
-export function TestMenu({ test, children }: { test: TestSummary; children: React.ReactNode }) {
+export function TestMenu({ test, children }: { test: Pick<TestSummary, "id" | "title">; children: React.ReactNode }) {
   const { t } = useLingui();
   const fetcher = useFetcher();
   const [open, setOpen] = useState<"rename" | "delete" | null>(null);

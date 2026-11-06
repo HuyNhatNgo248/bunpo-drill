@@ -19,13 +19,16 @@
     "level": {
       "type": "string",
       "enum": [
+        "N5",
+        "N4",
         "N3",
-        "N2"
+        "N2",
+        "N1"
       ]
     },
     "sections": {
       "minItems": 1,
-      "maxItems": 5,
+      "maxItems": 6,
       "type": "array",
       "items": {
         "type": "object",
@@ -35,6 +38,7 @@
             "enum": [
               "reading-short",
               "reading-mid",
+              "reading-long",
               "reading-integrated",
               "reading-claim",
               "reading-info"
@@ -275,7 +279,7 @@
         ],
         "additionalProperties": false
       },
-      "description": "One section per reading type, each type at most once, in the exam's order (短文, 中文, 統合理解, 主張理解, 情報検索)."
+      "description": "One section per reading type, each type at most once, in the exam's order (短文, 中文, 長文, 統合理解, 主張理解, 情報検索), and only the types the level's exam has."
     }
   },
   "required": [
@@ -287,6 +291,6 @@
   ],
   "additionalProperties": false,
   "title": "Reading test payload",
-  "description": "Body of POST /api/tests for a reading set, version 1.\nRules the server also enforces:\n1. Sections are of different types, in the exam's order.\n2. Question ids run \"q1\", \"q2\", … in order with no gaps; the 4 choices are all different.\n3. traps is null at answerIndex and a trap at every other choice.\n4. evidence appears exactly once in the passage's texts and table cells (without <u> tags).\n5. Every <u> is closed, not nested and not empty; every （注） word appears in the passage.\n6. 統合理解 has two text blocks labelled A and B; 情報検索 has a table.\nStandard sizes: 短文 2 passages × 1 question (target 2 min each), 中文 1–2 × 3 (6 min), 統合理解 1 × 2 (6 min), 主張理解 1 × 3 (10 min), 情報検索 1 × 2 (6 min).",
+  "description": "Body of POST /api/tests for a reading set, version 1.\nRules the server also enforces:\n1. Sections are of different types, in the exam's order, and only the level's: N5/N4 短文 中文 情報検索; N3 adds 長文; N2 短文 中文 統合理解 主張理解 情報検索; N1 all six.\n2. Question ids run \"q1\", \"q2\", … in order with no gaps; the 4 choices are all different.\n3. traps is null at answerIndex and a trap at every other choice.\n4. evidence appears exactly once in the passage's texts and table cells (without <u> tags).\n5. Every <u> is closed, not nested and not empty; every （注） word appears in the passage.\n6. 統合理解 has two text blocks labelled A and B; 情報検索 has a table.\nA set usually has 5 passages of one type. Targets per passage: 短文 2 min, 中文 6, 長文 10, 統合理解 6, 主張理解 10, 情報検索 6.",
   "$id": "https://bunpo-drill.local/schema/reading-test.v1.json"
 }

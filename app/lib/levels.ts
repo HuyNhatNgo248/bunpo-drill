@@ -7,11 +7,11 @@
 export const JLPT_LEVELS = ["N5", "N4", "N3", "N2", "N1"] as const;
 export type JlptLevel = (typeof JLPT_LEVELS)[number];
 
-/** The levels a mock test can be made for so far; the others show that they are not available yet. */
-export const LEVELS = ["N3", "N2"] as const satisfies readonly JlptLevel[];
+/** The levels a test or a kanji chapter can be sent for: every level, so a level shows its content once some is sent. */
+export const LEVELS = JLPT_LEVELS;
 export type Level = (typeof LEVELS)[number];
 
 export const isTestLevel = (level: JlptLevel): level is Level => LEVELS.some((l) => l === level);
 
-/** The level of the 漢字マスター book the kanji chapters come from; the kanji page's other levels have none yet. */
+/** The kanji page's level when none is named and none was opened before. */
 export const KANJI_LEVEL = "N2" satisfies Level;

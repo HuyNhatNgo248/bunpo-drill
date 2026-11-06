@@ -13,7 +13,7 @@ import { SetRow } from "./SetRow";
  * sets to do and its sets done. The group is in the address (`group`); without one, or one that isn't there, it is the
  * first with a set not taken yet.
  */
-export function GroupList({ groups }: { groups: ReadingGroup[] }) {
+export function GroupList({ groups, isAdmin = false }: { groups: ReadingGroup[]; isAdmin?: boolean }) {
   const { t } = useLingui();
   const [params] = useSearchParams();
   const picked = Number(params.get("group"));
@@ -84,8 +84,8 @@ export function GroupList({ groups }: { groups: ReadingGroup[] }) {
             <Trans>A set shows up here once Claude sends one, with /jlpt-reading-quiz {title}.</Trans>
           </EmptyState>
         )}
-        <SetGroup id="reading-to-do" title={t`To do`} sets={toDo} />
-        <SetGroup id="reading-done" title={t`Done`} sets={done} />
+        <SetGroup id="reading-to-do" title={t`To do`} sets={toDo} isAdmin={isAdmin} />
+        <SetGroup id="reading-done" title={t`Done`} sets={done} isAdmin={isAdmin} />
       </section>
     </div>
   );
@@ -107,7 +107,7 @@ function Pace({ seconds, target }: { seconds: number; target: number }) {
   );
 }
 
-function SetGroup({ id, title, sets }: { id: string; title: string; sets: ReadingGroup["sets"] }) {
+function SetGroup({ id, title, sets, isAdmin }: { id: string; title: string; sets: ReadingGroup["sets"]; isAdmin: boolean }) {
   if (!sets.length) return null;
   return (
     <section aria-labelledby={id} className="flex flex-col gap-2.5">
@@ -116,7 +116,7 @@ function SetGroup({ id, title, sets }: { id: string; title: string; sets: Readin
       </h3>
       <ul className="divide-y overflow-hidden rounded-xl border bg-card">
         {sets.map((set) => (
-          <SetRow key={set.id} set={set} />
+          <SetRow key={set.id} set={set} isAdmin={isAdmin} />
         ))}
       </ul>
     </section>

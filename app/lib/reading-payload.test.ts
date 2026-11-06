@@ -54,7 +54,7 @@ describe("readingTestPayloadSchema", () => {
 
     expect(readingTestPayloadSchema.safeParse(buildReadingPayload({ sections: [short, mid] })).success).toBe(true);
     expect(messagesOf(buildReadingPayload({ sections: [mid, short] }))).toContain(
-      "sections: One section per type, in the exam's order: 短文, 中文, 統合理解, 主張理解, 情報検索.",
+      "sections: One section per type, in the exam's order: 短文, 中文, 長文, 統合理解, 主張理解, 情報検索.",
     );
   });
 
@@ -65,6 +65,17 @@ describe("readingTestPayloadSchema", () => {
     expect(messagesOf(buildReadingPayload({ sections: [integrated, info] }))).toEqual([
       "sections.0.passages.0.blocks: 統合理解 has two text blocks, labelled A and B.",
       "sections.1.passages.0.blocks: 情報検索 needs a table.",
+    ]);
+  });
+
+  it("takes only the reading 問題 the level's exam has", () => {
+    const long = buildReadingSetSection({ type: "reading-long" });
+
+    expect(readingTestPayloadSchema.safeParse(buildReadingPayload({ level: "N3", sections: [long] })).success).toBe(true);
+    expect(readingTestPayloadSchema.safeParse(buildReadingPayload({ level: "N5" })).success).toBe(true);
+    expect(messagesOf(buildReadingPayload({ level: "N2", sections: [long] }))).toEqual(["sections.0.type: N2's exam has no reading-long."]);
+    expect(messagesOf(buildReadingPayload({ level: "N4", sections: [buildReadingSetSection({ type: "reading-claim" })] }))).toEqual([
+      "sections.0.type: N4's exam has no reading-claim.",
     ]);
   });
 
@@ -94,7 +105,7 @@ describe("readingGroupOf", () => {
 
     expect(readingGroupOf({ sections: [buildReadingSetSection()] })).toBe(1);
     expect(readingGroupOf({ sections: [mid] })).toBe(2);
-    expect(readingGroupOf({ sections: [buildReadingSetSection(), mid] })).toBe(6);
+    expect(readingGroupOf({ sections: [buildReadingSetSection(), mid] })).toBe(7);
   });
 });
 

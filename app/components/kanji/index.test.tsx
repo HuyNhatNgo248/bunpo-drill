@@ -77,12 +77,12 @@ describe("KanjiHome", () => {
     expect(await screen.findByRole("heading", { name: "No N2 chapters yet" })).toBeInTheDocument();
   });
 
-  it("says any other level without chapters is not available yet, N3 included", async () => {
-    for (const level of ["N5", "N3"] as const) {
+  it("says any level without chapters has none yet, and how to send one", async () => {
+    for (const level of ["N5", "N1"] as const) {
       const { unmount } = renderRoute(<KanjiHome home={{ ...HOME, level, chapters: [] }} />, { url: `/kanji?level=${level}` });
 
-      expect(await screen.findByRole("heading", { name: `${level} isn't available yet` })).toBeInTheDocument();
-      expect(screen.getByText(`Kanji for ${level} is coming later.`)).toBeInTheDocument();
+      expect(await screen.findByRole("heading", { name: `No ${level} chapters yet` })).toBeInTheDocument();
+      expect(screen.getByText(`A chapter shows up here once Claude sends its words, with /jlpt-kanji-quiz ${level} 1章.`)).toBeInTheDocument();
       unmount();
     }
   });

@@ -119,6 +119,9 @@ const kanjiQuestionSchema = z.strictObject({
   explanation,
 });
 
+const readingSection = z.strictObject({ type: z.literal("kanji-reading"), questions: z.array(kanjiQuestionSchema).min(1).max(30) });
+const writingSection = z.strictObject({ type: z.literal("kanji-writing"), questions: z.array(kanjiQuestionSchema).min(1).max(30) });
+
 const testObject = z.strictObject({
   version: z.literal(KANJI_VERSION),
   kind: z.literal("kanji"),
@@ -137,11 +140,11 @@ const testObject = z.strictObject({
     .max(60)
     .describe("The chapter words this test covers, as the chapter writes them."),
   sections: z
-    .tuple([
-      z.strictObject({ type: z.literal("kanji-reading"), questions: z.array(kanjiQuestionSchema).min(1).max(30) }),
-      z.strictObject({ type: z.literal("kanji-writing"), questions: z.array(kanjiQuestionSchema).min(1).max(30) }),
+    .union([
+      z.tuple([readingSection, writingSection]),
+      z.tuple([readingSection]),
     ])
-    .describe("Always these 2 sections, in this order: 漢字読み, then 表記."),
+    .describe("漢字読み, then 表記, as in the exam from N5 to N2. N1 has no 表記 in the exam, so an N1 test has 漢字読み only."),
 });
 
 export const kanjiTestPayloadSchema = testObject

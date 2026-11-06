@@ -16,8 +16,8 @@ export const PAYLOAD_VERSION = 1;
 /** The blank in a 文法形式の判断 prompt: full-width parentheses around two ideographic spaces. */
 export const BLANK = "（　　）";
 
-/** The reading 問題 in the exam's order, 問題10 to 問題14 of N2 (reading-payload.ts). */
-export const READING_TYPES = ["reading-short", "reading-mid", "reading-integrated", "reading-claim", "reading-info"] as const;
+/** The reading 問題 in the exam's order, every level's together (reading-payload.ts says which level has which). */
+export const READING_TYPES = ["reading-short", "reading-mid", "reading-long", "reading-integrated", "reading-claim", "reading-info"] as const;
 
 /** The grammar test's 3 問題, then the kanji test's 2 (kanji-payload.ts), then the reading ones. */
 export const SECTION_TYPES = ["fill-blank", "sentence-order", "passage", "kanji-reading", "kanji-writing", ...READING_TYPES] as const;
