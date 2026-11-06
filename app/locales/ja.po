@@ -44,7 +44,7 @@ msgstr "{answered} / {total} 問"
 msgid "{count, plural, one {Study this word as a flashcard} other {Study these # as flashcards}}"
 msgstr "{count, plural, other {この#語を単語カードで覚える}}"
 
-#: app/components/reading/GroupList.tsx:74
+#: app/components/reading/GroupList.tsx:75
 #: app/components/results/ReviewCard.tsx:80
 msgid "{count} missed"
 msgstr "{count}問ミス"
@@ -109,7 +109,7 @@ msgstr "{slotName}：{text}（タップで外す）"
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, other {#画}}"
 
-#: app/components/reading/GroupList.tsx:55
+#: app/components/reading/GroupList.tsx:56
 msgid "{taken} / {total} done"
 msgstr "{taken} / {total} 完了"
 
@@ -121,7 +121,7 @@ msgstr "{taken} / {total} 受験済み"
 msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
 
-#: app/components/reading/GroupList.tsx:102
+#: app/components/reading/GroupList.tsx:104
 msgid "{time} a passage"
 msgstr "1文章あたり {time}"
 
@@ -219,7 +219,7 @@ msgstr "Claude が /jlpt-kanji-quiz {level} 1章 で単語を送ると、ここ�
 msgid "A set shows up here once Claude sends one, with /jlpt-reading-quiz {level} 短文."
 msgstr "Claude が /jlpt-reading-quiz {level} 短文 でセットを送ると、ここに表示されます。"
 
-#: app/components/reading/GroupList.tsx:84
+#: app/components/reading/GroupList.tsx:85
 msgid "A set shows up here once Claude sends one, with /jlpt-reading-quiz {title}."
 msgstr "Claude が /jlpt-reading-quiz {title} でセットを送ると、ここに表示されます。"
 
@@ -548,7 +548,7 @@ msgid "Did you review your weak grammar?"
 msgstr "苦手な文法を復習しましたか？"
 
 #: app/components/notes/Memo.tsx:54
-#: app/components/reading/GroupList.tsx:88
+#: app/components/reading/GroupList.tsx:90
 msgid "Done"
 msgstr "完了"
 
@@ -626,7 +626,7 @@ msgstr "本番と同じ3つの問題形式の模擬試験で、提出すると�
 msgid "Got it"
 msgstr "覚えた"
 
-#: app/components/SubjectTabs.tsx:27
+#: app/components/SubjectTabs.tsx:25
 msgid "Grammar"
 msgstr "文法"
 
@@ -675,6 +675,7 @@ msgid "If you didn't ask for this, ignore this email. Your password won't change
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
 #: app/components/home/test-list/index.tsx:37
+#: app/components/reading/GroupList.tsx:88
 msgid "In progress"
 msgstr "解答中"
 
@@ -692,8 +693,8 @@ msgstr "本番形式で練習する、JLPTの文法"
 
 #: app/components/kanji/index.tsx:21
 #: app/components/results/Actions.tsx:42
-#: app/components/SubjectTabs.tsx:28
-#: app/routes/kanji.tsx:13
+#: app/components/SubjectTabs.tsx:26
+#: app/routes/kanji.tsx:14
 msgid "Kanji"
 msgstr "漢字"
 
@@ -797,7 +798,7 @@ msgstr "前回まちがえた"
 
 #: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:60
-#: app/routes/home.tsx:13
+#: app/routes/home.tsx:14
 msgid "Mock tests"
 msgstr "模擬試験"
 
@@ -854,7 +855,7 @@ msgstr "{level}の章はまだありません"
 msgid "No {level} reading sets yet"
 msgstr "{level}の読解セットはまだありません"
 
-#: app/components/reading/GroupList.tsx:83
+#: app/components/reading/GroupList.tsx:84
 msgid "No {title} sets yet"
 msgstr "{title}のセットはまだありません"
 
@@ -905,8 +906,8 @@ msgid "Note cards"
 msgstr "ノートカード"
 
 #: app/components/notes/index.tsx:18
-#: app/components/SubjectTabs.tsx:30
-#: app/routes/notes.tsx:12
+#: app/components/SubjectTabs.tsx:28
+#: app/routes/notes.tsx:13
 msgid "Notes"
 msgstr "ノート"
 
@@ -1012,7 +1013,7 @@ msgstr "問題{num}（未回答）"
 msgid "Question {num} (wrong)"
 msgstr "問題{num}（不正解）"
 
-#: app/components/reading/GroupList.tsx:65
+#: app/components/reading/GroupList.tsx:66
 #: app/components/results/ReviewCard.tsx:23
 msgid "Question kinds to work on"
 msgstr "苦手な問題の種類"
@@ -1061,8 +1062,8 @@ msgstr "つぎの文章を読んで、文章全体の内容を考えて、（{fi
 
 #: app/components/reading/index.tsx:21
 #: app/components/results/Actions.tsx:51
-#: app/components/SubjectTabs.tsx:29
-#: app/routes/reading.tsx:12
+#: app/components/SubjectTabs.tsx:27
+#: app/routes/reading.tsx:13
 msgid "Reading"
 msgstr "読解"
 
@@ -1075,7 +1076,7 @@ msgstr "読み → 単語"
 msgid "Reading or meaning"
 msgstr "読み方や意味"
 
-#: app/components/reading/GroupList.tsx:34
+#: app/components/reading/GroupList.tsx:35
 msgid "Reading types"
 msgstr "問題の種類"
 
@@ -1265,7 +1266,7 @@ msgstr "まだ覚えていない語（{again}）"
 msgid "Study as flashcards"
 msgstr "カードで復習"
 
-#: app/components/SubjectTabs.tsx:47
+#: app/components/SubjectTabs.tsx:45
 msgid "Subject"
 msgstr "科目"
 
@@ -1291,7 +1292,7 @@ msgstr "クイズを受ける"
 msgid "Taken"
 msgstr "受験済み"
 
-#: app/components/reading/GroupList.tsx:105
+#: app/components/reading/GroupList.tsx:107
 #: app/components/reading/SetRow.tsx:55
 msgid "target {goal}"
 msgstr "目標 {goal}"
@@ -1409,7 +1410,7 @@ msgstr "時間"
 msgid "Time {time}, target {goal}"
 msgstr "時間 {time}、目標 {goal}"
 
-#: app/components/reading/GroupList.tsx:87
+#: app/components/reading/GroupList.tsx:89
 msgid "To do"
 msgstr "未完了"
 

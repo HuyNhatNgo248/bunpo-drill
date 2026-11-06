@@ -10,7 +10,7 @@ import { SetRow } from "./SetRow";
 
 /**
  * The groups to pick from, like the kanji chapters, then the group picked: what its taken sets missed most, then its
- * sets to do and its sets done. The group is in the address (`group`); without one, or one that isn't there, it is the
+ * sets in progress, its sets to do and its sets done. The group is in the address (`group`); without one, or one that isn't there, it is the
  * first with a set not taken yet.
  */
 export function GroupList({ groups, isAdmin = false }: { groups: ReadingGroup[]; isAdmin?: boolean }) {
@@ -25,7 +25,8 @@ export function GroupList({ groups, isAdmin = false }: { groups: ReadingGroup[];
   const title = READING_GROUP_TITLES[shown.type];
   const taken = shown.sets.filter((set) => set.result).length;
   const total = shown.sets.length;
-  const toDo = shown.sets.filter((set) => !set.result);
+  const inProgress = shown.sets.filter((set) => !set.result && set.answered !== null);
+  const toDo = shown.sets.filter((set) => !set.result && set.answered === null);
   const done = shown.sets.filter((set) => set.result);
 
   return (
@@ -84,6 +85,7 @@ export function GroupList({ groups, isAdmin = false }: { groups: ReadingGroup[];
             <Trans>A set shows up here once Claude sends one, with /jlpt-reading-quiz {title}.</Trans>
           </EmptyState>
         )}
+        <SetGroup id="reading-in-progress" title={t`In progress`} sets={inProgress} isAdmin={isAdmin} />
         <SetGroup id="reading-to-do" title={t`To do`} sets={toDo} isAdmin={isAdmin} />
         <SetGroup id="reading-done" title={t`Done`} sets={done} isAdmin={isAdmin} />
       </section>

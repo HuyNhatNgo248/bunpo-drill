@@ -41,11 +41,12 @@ describe("ReadingHome", () => {
     expect(screen.getByText(/1 \/ 3 done/)).toHaveTextContent("1 / 3 done · 5:52 a passage, target 2:00");
   });
 
-  it("shows the kinds missed, then the sets to do and the sets done, each opening its quiz or results", async () => {
+  it("shows the kinds missed, then the sets in progress, to do and done, each opening its quiz or results", async () => {
     renderRoute(<ReadingHome home={HOME} />, { url: "/reading?level=N2&group=1" });
 
     expect(within(await screen.findByRole("region", { name: "Question kinds to work on 1" })).getByText("1 missed")).toBeInTheDocument();
-    expect(within(screen.getByRole("region", { name: "To do 2" })).getAllByRole("link").map((link) => link.textContent)).toEqual(["短文 2", "短文 3"]);
+    expect(within(screen.getByRole("region", { name: "In progress 1" })).getByRole("link")).toHaveTextContent("短文 2");
+    expect(within(screen.getByRole("region", { name: "To do 1" })).getByRole("link")).toHaveTextContent("短文 3");
     expect(rowOf("短文 2").getByText("1 / 2 answered")).toBeInTheDocument();
     expect(rowOf("短文 3").getByText("Start")).toBeInTheDocument();
     expect(rowOf("短文 1").getByText(/^2 questions/)).toHaveTextContent("2 questions · 11:43, target 4:00");
