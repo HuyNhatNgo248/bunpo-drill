@@ -40,8 +40,9 @@ export function NavTabs({
           <Link
             key={tab.key}
             to={tab.to}
-            // No prefetch: the loader saves the last tab, so a hover would save a tab never opened.
             aria-current={tab.key === current ? "page" : undefined}
+            // The page shown again would load it again, for nothing.
+            onClick={(event) => tab.key === current && event.preventDefault()}
             className={cn(
               "flex items-center justify-center font-semibold whitespace-nowrap no-underline outline-none transition-colors duration-300 focus-visible:ring-3 focus-visible:ring-ring/40",
               style.tab,

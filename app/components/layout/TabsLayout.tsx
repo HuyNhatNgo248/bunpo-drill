@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { Outlet, useMatches } from "react-router";
 import { LevelSwitch } from "~/components/LevelSwitch";
 import { BottomTabs, NotesLink, SubjectTabs } from "~/components/SubjectTabs";
+import { tabValue } from "~/lib/lastTab";
 import { JLPT_LEVELS, type JlptLevel } from "~/lib/levels";
 import { AppHeader } from "./header";
 import { QuoteFooter } from "./QuoteFooter";
+import { PATHS, usePrefetchTabs } from "./tabCache";
 
 /** What a page under the tabs says about itself: `levels` when it is shown one JLPT level at a time. */
 export type TabsHandle = { levels?: boolean };
@@ -18,6 +21,12 @@ export function TabsLayout() {
   const page = useMatches().at(-1);
   const level = (page?.loaderData as { level?: JlptLevel | null } | undefined)?.level ?? null;
   const levels = (page?.handle as TabsHandle | undefined)?.levels;
+  const subject = (["grammar", "kanji", "reading"] as const).find((key) => PATHS[key] === page?.pathname);
+  useEffect(() => {
+    // Saved from the page shown, not its loader, so a tab link's prefetch saves nothing. A missed save only costs the next visit its tab.
+    if (subject && level) fetch("/last-tab", { method: "POST", body: tabValue({ subject, level }) }).catch(() => {});
+  }, [subject, level]);
+  usePrefetchTabs(level);
   return (
     // On a phone the tab bar is fixed to the foot of the screen, so the page leaves room for it.
     <div className="flex min-h-screen flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">

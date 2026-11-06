@@ -2,6 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { data } from "react-router";
 import { z } from "zod";
 import type { Route } from "./+types/notes";
+import { tabClientLoader, useRefreshStale } from "~/components/layout/tabCache";
 import { Notes } from "~/components/notes";
 import { requireUserId } from "~/lib/auth.server";
 import { titleMeta } from "~/lib/i18n";
@@ -17,6 +18,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   // The level last opened, for the tabs: with none, the grammar tab's / would open the last tab instead, kanji included.
   return { notes, level: last?.level ?? null };
 }
+
+/** Switching from another tab shows its last data at once (tabCache.ts). */
+export const clientLoader = (args: Route.ClientLoaderArgs) => tabClientLoader(args);
 
 /**
  * POST {"text", "sentence", "testId", "anchor"?, "memo"?} adds a note, from a test or its results; PATCH {"id", "memo"} sets a
@@ -45,5 +49,6 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function NotesRoute({ loaderData }: Route.ComponentProps) {
+  useRefreshStale(loaderData);
   return <Notes notes={loaderData.notes} />;
 }

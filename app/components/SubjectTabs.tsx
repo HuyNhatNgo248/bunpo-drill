@@ -2,11 +2,9 @@ import { useLingui } from "@lingui/react/macro";
 import { BookOpenText, ClipboardCheck, NotebookPen, PenLine } from "lucide-react";
 import { Link, useLocation, useNavigation } from "react-router";
 import { NavTabs } from "~/components/NavTabs";
+import { PATHS, tabHref } from "~/components/layout/tabCache";
 import type { JlptLevel } from "~/lib/payload";
 import { cn } from "~/lib/utils";
-
-/** The pages the tabs switch between. */
-const PATHS = { grammar: "/", kanji: "/kanji", reading: "/reading", notes: "/notes" } as const;
 
 /**
  * True while a tab's page loads, another level of the same one included: the page shown fades, so the click shows at
@@ -28,7 +26,7 @@ function useSubjects(level: JlptLevel | null) {
     { key: "kanji", path: PATHS.kanji, label: t`Kanji`, Icon: PenLine },
     { key: "reading", path: PATHS.reading, label: t`Reading`, Icon: BookOpenText },
     { key: "notes", path: PATHS.notes, label: t`Notes`, Icon: NotebookPen },
-  ].map((tab) => ({ ...tab, to: level && tab.key !== "notes" ? `${tab.path}?level=${level}` : tab.path }));
+  ].map((tab) => ({ ...tab, to: tabHref(tab.path, level) }));
   const here = useLocation().pathname;
   const current = tabs.find((tab) => tab.path === here)?.key;
   const next = useNavigation().location?.pathname;
@@ -55,6 +53,8 @@ export function NotesLink({ className }: { className?: string }) {
     <Link
       to={notes.to}
       aria-current={current === "notes" ? "page" : undefined}
+      // The page shown again would load it again, for nothing.
+      onClick={(event) => current === "notes" && event.preventDefault()}
       className={cn(
         "flex h-11 items-center gap-2 rounded-lg px-3 text-base font-semibold no-underline outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/40",
         shown === "notes" ? "bg-muted text-foreground" : "text-muted-foreground hover:text-foreground",
@@ -82,6 +82,7 @@ export function BottomTabs({ level, className }: { level: JlptLevel | null; clas
             key={key}
             to={to}
             aria-current={key === current ? "page" : undefined}
+            onClick={(event) => key === current && event.preventDefault()}
             className={cn(
               "flex h-16 flex-col items-center justify-center gap-1 text-xs font-semibold no-underline outline-none focus-visible:ring-3 focus-visible:ring-ring/40",
               key === shown ? "text-primary" : "text-muted-foreground",

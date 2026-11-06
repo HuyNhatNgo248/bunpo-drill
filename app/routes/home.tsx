@@ -2,11 +2,12 @@ import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/home";
 import { Home } from "~/components/home";
 import type { TabsHandle } from "~/components/layout/TabsLayout";
+import { tabClientLoader, useRefreshStale } from "~/components/layout/tabCache";
 import { requireUserId } from "~/lib/auth.server";
 import { toSummary } from "~/lib/grading.server";
 import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
 import { listTests, newestLevel } from "~/lib/tests.server";
-import { lastTabOf, ownerId, saveLastTab } from "~/lib/users.server";
+import { lastTabOf, ownerId } from "~/lib/users.server";
 import { titleMeta } from "~/lib/i18n";
 import { revalidateUnlessPicked } from "~/lib/utils";
 
@@ -23,8 +24,6 @@ export async function loader({ request }: Route.LoaderArgs) {
   // One level at a time: the one named, with tests or not, else the last one opened, else the level of the newest test.
   // Not the top test's: a test of another level can sort above it.
   const level = named ?? last?.level ?? newest;
-  // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
-  if (level) saveLastTab(userId, { subject: "grammar", level }).catch(console.error);
   if (!level || !isTestLevel(level)) {
     return { tests: [], level, isAdmin: false };
   }
@@ -33,9 +32,13 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { tests: tests.map(toSummary), level, isAdmin: userId === owner };
 }
 
+/** Switching from another tab shows its last data at once (tabCache.ts). */
+export const clientLoader = (args: Route.ClientLoaderArgs) => tabClientLoader(args);
+
 /** A week picked (`week`) the page shows by itself, so the tests aren't loaded again for it. */
 export const shouldRevalidate = revalidateUnlessPicked("week");
 
 export default function HomeRoute({ loaderData }: Route.ComponentProps) {
+  useRefreshStale(loaderData);
   return <Home {...loaderData} />;
 }

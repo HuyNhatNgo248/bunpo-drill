@@ -7,7 +7,7 @@ import { metaArgs, routeArgs } from "#tests/helpers/route";
 import { markLearned, saveChapter } from "~/lib/kanji.server";
 import type { Tab } from "~/lib/lastTab";
 import { createTest, saveSubmission } from "~/lib/tests.server";
-import { lastTabOf, saveLastTab } from "~/lib/users.server";
+import { saveLastTab } from "~/lib/users.server";
 import { loader, meta, shouldRevalidate } from "../kanji";
 
 /** The signed-in user, whose progress the routes read and write. */
@@ -66,12 +66,6 @@ describe("kanji loader", () => {
     expect((await loadAfter({ subject: "kanji", level: "N3" })).home.level).toBe("N3");
     expect((await loadAfter({ subject: "grammar", level: "N3" })).home.level).toBe("N3");
     expect((await loadAfter({ subject: "kanji", level: "N3" }, "?level=N2")).home.level).toBe("N2");
-  });
-
-  it("saves the level it shows as the user's last tab", async () => {
-    await load("?level=N5");
-
-    await expect.poll(() => lastTabOf(USER_ID)).toEqual({ subject: "kanji", level: "N5" });
   });
 
   it("gives an empty page for a level without kanji tests, such as N5", async () => {

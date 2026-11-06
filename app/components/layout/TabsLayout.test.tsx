@@ -5,6 +5,7 @@ import { render, screen, within } from "@testing-library/react";
 import { createRoutesStub } from "react-router";
 import { describe, expect, it } from "vitest";
 import type { JlptLevel } from "~/lib/levels";
+import { PATHS } from "./tabCache";
 import { TabsLayout } from "./TabsLayout";
 
 /**
@@ -13,7 +14,11 @@ import { TabsLayout } from "./TabsLayout";
  */
 function renderLayout(path: string, level: JlptLevel | null, levels = false) {
   const page = { path, Component: () => <p>The page</p>, loader: () => ({ level }), handle: { levels } };
-  const Stub = createRoutesStub([{ Component: TabsLayout, HydrateFallback: () => null, children: [page] }]);
+  // The other tabs, which the layout loads in the background.
+  const others = Object.values(PATHS)
+    .filter((other) => other !== path)
+    .map((other) => (other === PATHS.grammar ? { index: true, loader: () => ({}) } : { path: other, loader: () => ({}) }));
+  const Stub = createRoutesStub([{ Component: TabsLayout, HydrateFallback: () => null, children: [page, ...others] }]);
   render(
     <I18nProvider i18n={i18n}>
       <Stub initialEntries={[path]} />

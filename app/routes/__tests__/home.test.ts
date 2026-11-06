@@ -17,7 +17,7 @@ import { ensureUser, signedInRequest } from "#tests/helpers/session";
 import { metaArgs, routeArgs } from "#tests/helpers/route";
 import type { Tab } from "~/lib/lastTab";
 import { createTest, saveSubmission } from "~/lib/tests.server";
-import { lastTabOf, saveLastTab } from "~/lib/users.server";
+import { saveLastTab } from "~/lib/users.server";
 import { loader, meta, shouldRevalidate } from "../home";
 
 /** The signed-in user, whose progress the routes read and write. */
@@ -111,12 +111,6 @@ describe("home loader levels", () => {
     it("keeps to the level the URL names", async () => {
       expect((await loadAfter({ subject: "kanji", level: "N2" }, "?level=N3")).level).toBe("N3");
     });
-  });
-
-  it("saves the level it shows as the user's last tab", async () => {
-    await load("?level=N1");
-
-    await expect.poll(() => lastTabOf(USER_ID)).toEqual({ subject: "grammar", level: "N1" });
   });
 
   it("shows a JLPT level in the URL that has no tests, with none, so its tab can say so", async () => {

@@ -60,6 +60,8 @@ export function Rail({
               replace
               preventScrollReset
               aria-current={value === current ? "true" : undefined}
+              // The one shown again would load the page again, for nothing.
+              onClick={(event) => value === current && event.preventDefault()}
               className={cn(
                 "flex shrink-0 snap-center items-center gap-1 rounded-full border px-3.5 py-1.5 text-foreground no-underline transition-colors md:flex-col md:items-stretch md:gap-1.5 md:rounded-lg md:border-transparent md:px-3 md:py-2.5",
                 isShown

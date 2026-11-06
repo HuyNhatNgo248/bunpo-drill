@@ -2,12 +2,13 @@ import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/kanji";
 import { KanjiHome } from "~/components/kanji";
 import type { TabsHandle } from "~/components/layout/TabsLayout";
+import { tabClientLoader, useRefreshStale } from "~/components/layout/tabCache";
 import { requireUserId } from "~/lib/auth.server";
 import { titleMeta } from "~/lib/i18n";
 import { chapterLevels, latestKanjiTests, learnedIds, listChapters } from "~/lib/kanji.server";
 import { toKanjiHome } from "~/lib/kanji-views.server";
 import { isTestLevel, JLPT_LEVELS, KANJI_LEVEL } from "~/lib/payload";
-import { lastTabOf, saveLastTab } from "~/lib/users.server";
+import { lastTabOf } from "~/lib/users.server";
 import { revalidateUnlessPicked } from "~/lib/utils";
 
 export const meta = titleMeta(msg`Kanji`);
@@ -22,8 +23,6 @@ export async function loader({ request }: Route.LoaderArgs) {
   // The level named, else the level the user last opened, grammar or kanji (on any device), else the hardest that has a
   // chapter, else the level of the book.
   const level = named ?? last?.level ?? levels.at(-1) ?? KANJI_LEVEL;
-  // Not awaited: the write is the slowest query, and a missed save only costs the next visit its tab.
-  saveLastTab(userId, { subject: "kanji", level }).catch(console.error);
   if (!isTestLevel(level)) {
     return { home: { level, chapters: [] }, level };
   }
@@ -32,9 +31,13 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { home: toKanjiHome(level, chapters, learned, latest), level };
 }
 
+/** Switching from another tab shows its last data at once (tabCache.ts). */
+export const clientLoader = (args: Route.ClientLoaderArgs) => tabClientLoader(args);
+
 /** A chapter picked (`chapter`) the page shows by itself, so the chapters aren't loaded again for it. */
 export const shouldRevalidate = revalidateUnlessPicked("chapter");
 
 export default function KanjiRoute({ loaderData }: Route.ComponentProps) {
+  useRefreshStale(loaderData);
   return <KanjiHome home={loaderData.home} />;
 }
