@@ -14,7 +14,9 @@ describe("welcome loader", () => {
     expect(await loader(routeArgs<Parameters<typeof loader>[0]>(new Request(URL)))).toEqual({
       exam: { date: expect.stringMatching(/^\d{4}-(07|12)-0[1-7]$/), daysLeft: expect.any(Number) },
       trials: expect.arrayContaining([
-        { id: "n3-1", title: "総合テスト 1", level: "N3", questionCount: 45, patternCount: expect.any(Number) },
+        { id: "n3-1", kind: "grammar", title: "総合テスト 1", level: "N3", questionCount: 45 },
+        expect.objectContaining({ id: "kanji-n3-1", kind: "kanji", level: "N3" }),
+        expect.objectContaining({ id: "reading-n2-1", kind: "reading", level: "N2" }),
       ]),
     });
   });

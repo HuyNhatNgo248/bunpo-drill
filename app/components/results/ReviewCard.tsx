@@ -11,7 +11,7 @@ import type { ResultsView } from "~/lib/views";
 /**
  * What to review: the grammar of the wrong answers, on a kanji test their words, with the way to their flashcards, or
  * on a reading set the kinds of question it missed.
- * On a `trial` test the chips can't be marked reviewed.
+ * On a `trial` test the chips can't be marked reviewed, and a kanji test's words have no way to their flashcards.
  */
 export function ReviewCard({ results, trial = false }: { results: ResultsView; trial?: boolean }) {
   return (
@@ -26,9 +26,14 @@ export function ReviewCard({ results, trial = false }: { results: ResultsView; t
         )}
       </h2>
       {results.kind === "reading" && missedKinds(results).length > 0 ? (
-        <MissedKinds kinds={missedKinds(results)} />
+        <MissedKinds kinds={missedKinds(results)} trial={trial} />
       ) : results.kind === "kanji" && results.chapter !== null && results.words.length > 0 ? (
-        <WordsToStudy results={results} chapter={results.chapter} />
+        trial ? (
+          // The flashcards need an account.
+          <WordChips words={results.words} />
+        ) : (
+          <WordsToStudy results={results} chapter={results.chapter} />
+        )
       ) : results.review.length > 0 ? (
         <GrammarChips testId={trial ? null : results.id} chips={results.review} />
       ) : (
@@ -67,7 +72,7 @@ function missedKinds(results: ResultsView) {
   return [...counts].map(([kind, count]) => ({ kind, count })).sort((a, b) => b.count - a.count);
 }
 
-function MissedKinds({ kinds }: { kinds: { kind: string; count: number }[] }) {
+function MissedKinds({ kinds, trial }: { kinds: { kind: string; count: number }[]; trial: boolean }) {
   return (
     <>
       <ul className="flex flex-wrap gap-2">
@@ -82,9 +87,11 @@ function MissedKinds({ kinds }: { kinds: { kind: string; count: number }[] }) {
           </li>
         ))}
       </ul>
-      <p className="text-caption text-muted-foreground">
-        <Trans>The reading page sums them up over every set of this type.</Trans>
-      </p>
+      {!trial && (
+        <p className="text-caption text-muted-foreground">
+          <Trans>The reading page sums them up over every set of this type.</Trans>
+        </p>
+      )}
     </>
   );
 }

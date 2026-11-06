@@ -1,0 +1,831 @@
+{
+  "version": 1,
+  "kind": "kanji",
+  "title": "総合 1",
+  "level": "N2",
+  "chapter": 1,
+  "words": [
+    {
+      "id": "n2-c1-渡航",
+      "word": "渡航",
+      "reading": "とこう"
+    },
+    {
+      "id": "n2-c1-込める",
+      "word": "込める",
+      "reading": "こめる"
+    },
+    {
+      "id": "n2-c1-容姿",
+      "word": "容姿",
+      "reading": "ようし"
+    },
+    {
+      "id": "n2-c1-異変",
+      "word": "異変",
+      "reading": "いへん"
+    },
+    {
+      "id": "n2-c1-募金",
+      "word": "募金",
+      "reading": "ぼきん"
+    },
+    {
+      "id": "n2-c1-運営",
+      "word": "運営",
+      "reading": "うんえい"
+    },
+    {
+      "id": "n2-c1-恐縮",
+      "word": "恐縮",
+      "reading": "きょうしゅく"
+    },
+    {
+      "id": "n2-c1-持参",
+      "word": "持参",
+      "reading": "じさん"
+    },
+    {
+      "id": "n2-c1-人影",
+      "word": "人影",
+      "reading": "ひとかげ"
+    },
+    {
+      "id": "n2-c1-貧困",
+      "word": "貧困",
+      "reading": "ひんこん"
+    },
+    {
+      "id": "n2-c1-狭小住宅",
+      "word": "狭小住宅",
+      "reading": "きょうしょうじゅうたく"
+    },
+    {
+      "id": "n2-c1-横柄",
+      "word": "横柄",
+      "reading": "おうへい"
+    },
+    {
+      "id": "n2-c1-脚光",
+      "word": "脚光",
+      "reading": "きゃっこう"
+    },
+    {
+      "id": "n2-c1-口紅",
+      "word": "口紅",
+      "reading": "くちべに"
+    },
+    {
+      "id": "n2-c1-極楽",
+      "word": "極楽",
+      "reading": "ごくらく"
+    },
+    {
+      "id": "n2-c1-超音波",
+      "word": "超音波",
+      "reading": "ちょうおんぱ"
+    },
+    {
+      "id": "n2-c1-帰省",
+      "word": "帰省",
+      "reading": "きせい"
+    },
+    {
+      "id": "n2-c1-弾力性",
+      "word": "弾力性",
+      "reading": "だんりょくせい"
+    },
+    {
+      "id": "n2-c1-高崎市",
+      "word": "高崎市",
+      "reading": "たかさきし"
+    },
+    {
+      "id": "n2-c1-家賃",
+      "word": "家賃",
+      "reading": "やちん"
+    },
+    {
+      "id": "n2-c1-後戻り",
+      "word": "後戻り",
+      "reading": "あともどり"
+    },
+    {
+      "id": "n2-c1-劇場",
+      "word": "劇場",
+      "reading": "げきじょう"
+    },
+    {
+      "id": "n2-c1-届ける",
+      "word": "届ける",
+      "reading": "とどける"
+    },
+    {
+      "id": "n2-c1-手帳",
+      "word": "手帳",
+      "reading": "てちょう"
+    },
+    {
+      "id": "n2-c1-展示",
+      "word": "展示",
+      "reading": "てんじ"
+    },
+    {
+      "id": "n2-c1-筋肉",
+      "word": "筋肉",
+      "reading": "きんにく"
+    },
+    {
+      "id": "n2-c1-比較",
+      "word": "比較",
+      "reading": "ひかく"
+    },
+    {
+      "id": "n2-c1-除去",
+      "word": "除去",
+      "reading": "じょきょ"
+    },
+    {
+      "id": "n2-c1-中毒",
+      "word": "中毒",
+      "reading": "ちゅうどく"
+    },
+    {
+      "id": "n2-c1-一致",
+      "word": "一致",
+      "reading": "いっち"
+    },
+    {
+      "id": "n2-c1-全壊",
+      "word": "全壊",
+      "reading": "ぜんかい"
+    },
+    {
+      "id": "n2-c1-警備",
+      "word": "警備",
+      "reading": "けいび"
+    },
+    {
+      "id": "n2-c1-寮",
+      "word": "寮",
+      "reading": "りょう"
+    },
+    {
+      "id": "n2-c1-傘",
+      "word": "傘",
+      "reading": "かさ"
+    },
+    {
+      "id": "n2-c1-視線",
+      "word": "視線",
+      "reading": "しせん"
+    },
+    {
+      "id": "n2-c1-飾る",
+      "word": "飾る",
+      "reading": "かざる"
+    },
+    {
+      "id": "n2-c1-凍結",
+      "word": "凍結",
+      "reading": "とうけつ"
+    },
+    {
+      "id": "n2-c1-更新",
+      "word": "更新",
+      "reading": "こうしん"
+    },
+    {
+      "id": "n2-c1-似顔絵",
+      "word": "似顔絵",
+      "reading": "にがおえ"
+    },
+    {
+      "id": "n2-c1-領土",
+      "word": "領土",
+      "reading": "りょうど"
+    },
+    {
+      "id": "n2-c1-丁目",
+      "word": "丁目",
+      "reading": "ちょうめ"
+    },
+    {
+      "id": "n2-c1-免許証",
+      "word": "免許証",
+      "reading": "めんきょしょう"
+    },
+    {
+      "id": "n2-c1-到着",
+      "word": "到着",
+      "reading": "とうちゃく"
+    },
+    {
+      "id": "n2-c1-城下町",
+      "word": "城下町",
+      "reading": "じょうかまち"
+    },
+    {
+      "id": "n2-c1-胃腸薬",
+      "word": "胃腸薬",
+      "reading": "いちょうやく"
+    }
+  ],
+  "sections": [
+    {
+      "type": "kanji-reading",
+      "questions": [
+        {
+          "id": "q1",
+          "wordId": "n2-c1-渡航",
+          "prompt": "来月から、海外への【渡航】には新しい手続きが必要になる。",
+          "choices": [
+            "どこう",
+            "とうこう",
+            "とこう",
+            "どうこう"
+          ],
+          "answerIndex": 2,
+          "explanation": "渡航 is とこう: 渡 is a short, unvoiced ト. The others add voicing or a long vowel."
+        },
+        {
+          "id": "q2",
+          "wordId": "n2-c1-込める",
+          "prompt": "感謝の気持ちを【込めて】、恩師に手紙を書いた。",
+          "choices": [
+            "しめて",
+            "つめて",
+            "ためて",
+            "こめて"
+          ],
+          "answerIndex": 3,
+          "explanation": "込める is こめる (to put feeling into). The others are other 〜める verbs: 締める, 詰める, 貯める."
+        },
+        {
+          "id": "q3",
+          "wordId": "n2-c1-容姿",
+          "prompt": "彼女は【容姿】だけでなく、性格もすばらしい。",
+          "choices": [
+            "ようし",
+            "ようじ",
+            "よし",
+            "よじ"
+          ],
+          "answerIndex": 0,
+          "explanation": "容姿 is ようし: a long ヨウ and an unvoiced シ. A long-vowel × voicing grid."
+        },
+        {
+          "id": "q4",
+          "wordId": "n2-c1-異変",
+          "prompt": "山に住む動物たちの様子に、【異変】が起きている。",
+          "choices": [
+            "いっぺん",
+            "いべん",
+            "いへん",
+            "いっべん"
+          ],
+          "answerIndex": 2,
+          "explanation": "異変 is いへん: no small っ and an unvoiced へ. いっぺん is 一変, a different word."
+        },
+        {
+          "id": "q5",
+          "wordId": "n2-c1-募金",
+          "prompt": "集まった【募金】は、すべて病院に寄付された。",
+          "choices": [
+            "ぼぎん",
+            "ほきん",
+            "ぼきん",
+            "ほぎん"
+          ],
+          "answerIndex": 2,
+          "explanation": "募金 is ぼきん: 募 is voiced ボ and 金 stays unvoiced キン. A voicing × voicing grid."
+        },
+        {
+          "id": "q6",
+          "wordId": "n2-c1-運営",
+          "prompt": "サイトの【運営】には、毎月お金がかかる。",
+          "choices": [
+            "うんえ",
+            "うえい",
+            "うんえい",
+            "うえ"
+          ],
+          "answerIndex": 2,
+          "explanation": "運営 is うんえい: ウン keeps its ん, and 営 is a long エイ. A ん × long-vowel grid."
+        },
+        {
+          "id": "q7",
+          "wordId": "n2-c1-恐縮",
+          "prompt": "お忙しいところ、ご連絡して【恐縮】です。",
+          "choices": [
+            "きょうしゅく",
+            "きょしゅく",
+            "きょうじゅく",
+            "きょじゅく"
+          ],
+          "answerIndex": 0,
+          "explanation": "恐縮 is きょうしゅく: a long キョウ and an unvoiced シュク. A long-vowel × voicing grid."
+        },
+        {
+          "id": "q8",
+          "wordId": "n2-c1-持参",
+          "prompt": "会議には、各自ノートパソコンを【持参】すること。",
+          "choices": [
+            "じさん",
+            "ちざん",
+            "じざん",
+            "ちさん"
+          ],
+          "answerIndex": 0,
+          "explanation": "持参 is じさん: 持 is ジ and 参 stays unvoiced サン. A じ/ち × voicing grid."
+        },
+        {
+          "id": "q9",
+          "wordId": "n2-c1-人影",
+          "prompt": "夜の公園には、【人影】がまったくなかった。",
+          "choices": [
+            "じんえい",
+            "ひとえい",
+            "ひとかげ",
+            "じんかげ"
+          ],
+          "answerIndex": 2,
+          "explanation": "人影 is ひとかげ, both kun readings. ジン and エイ are the on readings."
+        },
+        {
+          "id": "q10",
+          "wordId": "n2-c1-貧困",
+          "prompt": "世界には、【貧困】に苦しむ子どもがたくさんいる。",
+          "choices": [
+            "びんこん",
+            "ひんごん",
+            "びんごん",
+            "ひんこん"
+          ],
+          "answerIndex": 3,
+          "explanation": "貧困 is ひんこん: 貧 is ヒン here (ビン is for 貧乏), and 困 stays unvoiced コン."
+        },
+        {
+          "id": "q11",
+          "wordId": "n2-c1-狭小住宅",
+          "prompt": "都会では、【狭小住宅】に住む家族も多い。",
+          "choices": [
+            "きょしょうじゅうたく",
+            "きょうしょじゅうたく",
+            "きょしょじゅうたく",
+            "きょうしょうじゅうたく"
+          ],
+          "answerIndex": 3,
+          "explanation": "狭小住宅 is きょうしょうじゅうたく: both 狭 (キョウ) and 小 (ショウ) are long."
+        },
+        {
+          "id": "q12",
+          "wordId": "n2-c1-横柄",
+          "prompt": "客に対して【横柄】な態度をとってはいけない。",
+          "choices": [
+            "よこがら",
+            "おうがら",
+            "よこへい",
+            "おうへい"
+          ],
+          "answerIndex": 3,
+          "explanation": "横柄 is おうへい, both on readings. よこ and がら are the kun readings of 横 and 柄."
+        },
+        {
+          "id": "q13",
+          "wordId": "n2-c1-脚光",
+          "prompt": "その若い作家は、一冊の本で【脚光】を浴びた。",
+          "choices": [
+            "きゃっこう",
+            "きゃくこう",
+            "きゃこう",
+            "きゃっこ"
+          ],
+          "answerIndex": 0,
+          "explanation": "脚光 is きゃっこう: キャク shrinks to きゃっ, and 光 is a long コウ."
+        },
+        {
+          "id": "q14",
+          "wordId": "n2-c1-口紅",
+          "prompt": "姉は、赤い【口紅】をつけて出かけた。",
+          "choices": [
+            "くちへに",
+            "こうべに",
+            "こうへに",
+            "くちべに"
+          ],
+          "answerIndex": 3,
+          "explanation": "口紅 is くちべに: 口 is kun くち, and 紅 (べに) stays べに."
+        },
+        {
+          "id": "q15",
+          "wordId": "n2-c1-極楽",
+          "prompt": "仏教では、よい行いをした人は【極楽】に行けると言われる。",
+          "choices": [
+            "きょくらく",
+            "ごくらく",
+            "ごくがく",
+            "きょくがく"
+          ],
+          "answerIndex": 1,
+          "explanation": "極楽 is ごくらく: 極 reads ゴク here, not キョク, and 楽 is ラク, not ガク."
+        },
+        {
+          "id": "q16",
+          "wordId": "n2-c1-超音波",
+          "prompt": "病院で、おなかの【超音波】検査を受けた。",
+          "choices": [
+            "ちょうおんは",
+            "ちょおんぱ",
+            "ちょうおんぱ",
+            "ちょおんは"
+          ],
+          "answerIndex": 2,
+          "explanation": "超音波 is ちょうおんぱ: a long チョウ, and 波 becomes パ after ん."
+        },
+        {
+          "id": "q17",
+          "wordId": "n2-c1-帰省",
+          "prompt": "夏休みに、三年ぶりに【帰省】した。",
+          "choices": [
+            "きっせい",
+            "きしょう",
+            "きせい",
+            "きっしょう"
+          ],
+          "answerIndex": 2,
+          "explanation": "帰省 is きせい: 省 is セイ here, not ショウ, with no small っ. きしょう is 起床, a different word."
+        },
+        {
+          "id": "q18",
+          "wordId": "n2-c1-弾力性",
+          "prompt": "このゴムは【弾力性】があって、よく伸びる。",
+          "choices": [
+            "たんりょくせい",
+            "だんりきせい",
+            "だんりょくせい",
+            "たんりきせい"
+          ],
+          "answerIndex": 2,
+          "explanation": "弾力性 is だんりょくせい: 弾 is voiced ダン, and 力 is リョク here, not リキ."
+        },
+        {
+          "id": "q19",
+          "wordId": "n2-c1-高崎市",
+          "prompt": "【高崎市】は、だるまの産地として有名だ。",
+          "choices": [
+            "たかざきし",
+            "こうさきし",
+            "たかさきし",
+            "こうざきし"
+          ],
+          "answerIndex": 2,
+          "explanation": "高崎 is たかさき: 高 is kun たか, and 崎 stays unvoiced さき here."
+        },
+        {
+          "id": "q20",
+          "wordId": "n2-c1-家賃",
+          "prompt": "この部屋は、駅から遠いので【家賃】が安い。",
+          "choices": [
+            "かちん",
+            "やじん",
+            "やちん",
+            "かじん"
+          ],
+          "answerIndex": 2,
+          "explanation": "家賃 is やちん: 家 reads や here, not カ, and 賃 is unvoiced チン."
+        },
+        {
+          "id": "q21",
+          "wordId": "n2-c1-後戻り",
+          "prompt": "ここまで来たら、もう【後戻り】はできない。",
+          "choices": [
+            "ごもどり",
+            "うしろもどり",
+            "こうもどり",
+            "あともどり"
+          ],
+          "answerIndex": 3,
+          "explanation": "後戻り is あともどり: 後 takes its kun あと here. ゴ and コウ are on readings; うしろ is another kun."
+        },
+        {
+          "id": "q22",
+          "wordId": "n2-c1-劇場",
+          "prompt": "週末、駅前の【劇場】でミュージカルを見た。",
+          "choices": [
+            "げきしょう",
+            "げきじょう",
+            "げきじょ",
+            "げきしょ"
+          ],
+          "answerIndex": 1,
+          "explanation": "劇場 is げきじょう: 場 is a voiced, long ジョウ. A voicing × long-vowel grid."
+        }
+      ]
+    },
+    {
+      "type": "kanji-writing",
+      "questions": [
+        {
+          "id": "q23",
+          "wordId": "n2-c1-届ける",
+          "prompt": "忘れ物を、友人の家まで【とどけた】。",
+          "choices": [
+            "屈けた",
+            "居けた",
+            "届けた",
+            "局けた"
+          ],
+          "answerIndex": 2,
+          "explanation": "届ける is written with 届. 屈, 居 and 局 share its 尸 frame but are other kanji."
+        },
+        {
+          "id": "q24",
+          "wordId": "n2-c1-手帳",
+          "prompt": "新しい【てちょう】に、家族の誕生日を書き込んだ。",
+          "choices": [
+            "手張",
+            "手帳",
+            "手長",
+            "手頂"
+          ],
+          "answerIndex": 1,
+          "explanation": "手帳 is a planner, with 帳 (巾). 張, 長 and 頂 also read チョウ but aren't used here."
+        },
+        {
+          "id": "q25",
+          "wordId": "n2-c1-展示",
+          "prompt": "駅の通路に、地元の小学生がかいた絵が【てんじ】されている。",
+          "choices": [
+            "点示",
+            "展宗",
+            "展示",
+            "点宗"
+          ],
+          "answerIndex": 2,
+          "explanation": "展示 is display. 点 is a same-sound テン; 宗 (religion) has 示 under a roof."
+        },
+        {
+          "id": "q26",
+          "wordId": "n2-c1-筋肉",
+          "prompt": "運動を続けたら、少しずつ【きんにく】がついてきた。",
+          "choices": [
+            "筋肉",
+            "近肉",
+            "筋内",
+            "近内"
+          ],
+          "answerIndex": 0,
+          "explanation": "筋肉 is muscle. 近 is a same-sound キン; 内 (inside) looks like 肉."
+        },
+        {
+          "id": "q27",
+          "wordId": "n2-c1-比較",
+          "prompt": "二つの国の文化を【ひかく】するレポートを書いた。",
+          "choices": [
+            "比較",
+            "比絞",
+            "批較",
+            "批絞"
+          ],
+          "answerIndex": 0,
+          "explanation": "比較 is comparison, with 較 (車). 絞 (糸) shares its right part; 批 is a same-sound ヒ look-alike."
+        },
+        {
+          "id": "q28",
+          "wordId": "n2-c1-除去",
+          "prompt": "顔のしみを、レーザーで【じょきょ】した。",
+          "choices": [
+            "除拠",
+            "徐去",
+            "徐拠",
+            "除去"
+          ],
+          "answerIndex": 3,
+          "explanation": "除去 is removal, with 除 (阝). 徐 (彳) is a same-sound ジョ look-alike; 拠 is a same-sound キョ."
+        },
+        {
+          "id": "q29",
+          "wordId": "n2-c1-中毒",
+          "prompt": "スマホ【ちゅうどく】で、一日中画面を見ている。",
+          "choices": [
+            "中毎",
+            "中毒",
+            "仲毒",
+            "仲毎"
+          ],
+          "answerIndex": 1,
+          "explanation": "中毒 is addiction or poisoning, with 毒. 毎 looks like 毒; 仲 is a same-sound チュウ."
+        },
+        {
+          "id": "q30",
+          "wordId": "n2-c1-一致",
+          "prompt": "二人の意見が、ようやく【いっち】した。",
+          "choices": [
+            "一到",
+            "一置",
+            "一値",
+            "一致"
+          ],
+          "answerIndex": 3,
+          "explanation": "一致 is agreement, with 致. 到 shares its left part; 置 and 値 are same-sound チ."
+        },
+        {
+          "id": "q31",
+          "wordId": "n2-c1-全壊",
+          "prompt": "地震で、古い家が【ぜんかい】した。",
+          "choices": [
+            "全壊",
+            "全懐",
+            "前壊",
+            "前懐"
+          ],
+          "answerIndex": 0,
+          "explanation": "全壊 is total collapse, with 壊 (土). 懐 (忄) is a same-sound カイ look-alike; 前 is a same-sound ゼン."
+        },
+        {
+          "id": "q32",
+          "wordId": "n2-c1-警備",
+          "prompt": "空港では、【けいび】が強化されている。",
+          "choices": [
+            "警美",
+            "警備",
+            "敬備",
+            "敬美"
+          ],
+          "answerIndex": 1,
+          "explanation": "警備 is security, with 警 (言). 敬 is 警 without 言; 美 is a same-sound ビ."
+        },
+        {
+          "id": "q33",
+          "wordId": "n2-c1-寮",
+          "prompt": "大学の【りょう】は、駅から歩いて五分だ。",
+          "choices": [
+            "僚",
+            "寮",
+            "療",
+            "瞭"
+          ],
+          "answerIndex": 1,
+          "explanation": "寮 (dormitory) has 宀 on top. 僚, 療 and 瞭 also read リョウ and share its lower part."
+        },
+        {
+          "id": "q34",
+          "wordId": "n2-c1-傘",
+          "prompt": "急に雨が降ってきたので、【かさ】を買った。",
+          "choices": [
+            "傘",
+            "笠",
+            "嵩",
+            "暈"
+          ],
+          "answerIndex": 0,
+          "explanation": "傘 (umbrella) is the only one for rain. 笠 (straw hat), 嵩 (bulk) and 暈 (halo) also read かさ."
+        },
+        {
+          "id": "q35",
+          "wordId": "n2-c1-視線",
+          "prompt": "先生と【しせん】が合って、思わず下を向いた。",
+          "choices": [
+            "示線",
+            "視綿",
+            "視線",
+            "示綿"
+          ],
+          "answerIndex": 2,
+          "explanation": "視線 is one's gaze: look (視) + line (線). 示 is a same-sound シ inside 視; 綿 (cotton) looks like 線."
+        },
+        {
+          "id": "q36",
+          "wordId": "n2-c1-飾る",
+          "prompt": "玄関に、ひな人形を【かざった】。",
+          "choices": [
+            "飼った",
+            "飾った",
+            "飲った",
+            "鋳った"
+          ],
+          "answerIndex": 1,
+          "explanation": "飾る is written 飾 (食 + 布 side). 飼 and 飲 also have 食; 鋳 is a look-alike."
+        },
+        {
+          "id": "q37",
+          "wordId": "n2-c1-凍結",
+          "prompt": "寒さで、朝の道路が【とうけつ】している。",
+          "choices": [
+            "東結",
+            "凍給",
+            "凍結",
+            "東給"
+          ],
+          "answerIndex": 2,
+          "explanation": "凍結 is freezing: freeze (凍, with 冫 ice) + tie (結). 東 is 凍 without 冫; 給 looks like 結."
+        },
+        {
+          "id": "q38",
+          "wordId": "n2-c1-更新",
+          "prompt": "パスポートの【こうしん】を忘れていた。",
+          "choices": [
+            "更親",
+            "硬新",
+            "更新",
+            "硬親"
+          ],
+          "answerIndex": 2,
+          "explanation": "更新 is renewal, with 新 (new). 親 shares its left part; 硬 is a same-sound コウ."
+        },
+        {
+          "id": "q39",
+          "wordId": "n2-c1-似顔絵",
+          "prompt": "公園で、画家に【にがおえ】をかいてもらった。",
+          "choices": [
+            "似顔会",
+            "似顔絵",
+            "以顔絵",
+            "似頭絵"
+          ],
+          "answerIndex": 1,
+          "explanation": "似顔絵 is a portrait sketch, with 似 (亻 + 以). 以 is its right part; 会 also reads エ; 頭 looks like 顔."
+        },
+        {
+          "id": "q40",
+          "wordId": "n2-c1-領土",
+          "prompt": "二つの国が、小さな島の【りょうど】を争っている。",
+          "choices": [
+            "領土",
+            "領士",
+            "量土",
+            "量士"
+          ],
+          "answerIndex": 0,
+          "explanation": "領土 is territory, with 土 (bottom line longer). 士 has the top line longer; 量 is a same-sound リョウ."
+        },
+        {
+          "id": "q41",
+          "wordId": "n2-c1-丁目",
+          "prompt": "私の家は、本町三【ちょうめ】にある。",
+          "choices": [
+            "丁目",
+            "町目",
+            "丁日",
+            "町日"
+          ],
+          "answerIndex": 0,
+          "explanation": "丁目 is a block in an address, with 丁. 町 contains 丁; 日 looks like 目."
+        },
+        {
+          "id": "q42",
+          "wordId": "n2-c1-免許証",
+          "prompt": "運転するときは、【めんきょしょう】を持っていなければならない。",
+          "choices": [
+            "免許症",
+            "免許証",
+            "免評証",
+            "免評症"
+          ],
+          "answerIndex": 1,
+          "explanation": "免許証 is a licence card, with 証 (言, proof). 症 (疒) is a same-sound ショウ; 評 looks like 許."
+        },
+        {
+          "id": "q43",
+          "wordId": "n2-c1-到着",
+          "prompt": "電車は予定通り、十時に東京駅に【とうちゃく】した。",
+          "choices": [
+            "倒着",
+            "到差",
+            "倒差",
+            "到着"
+          ],
+          "answerIndex": 3,
+          "explanation": "到着 is arrival: reach (到) + arrive (着). 倒 (fall) is a same-sound トウ that looks like 到; 差 looks like 着."
+        },
+        {
+          "id": "q44",
+          "wordId": "n2-c1-城下町",
+          "prompt": "彦根には、古い【じょうかまち】の雰囲気が残っている。",
+          "choices": [
+            "域下町",
+            "城下街",
+            "城下町",
+            "状下町"
+          ],
+          "answerIndex": 2,
+          "explanation": "城下町 is a castle town, with 城 (土 + 成). 域 looks like it; 街 also reads まち; 状 also reads ジョウ."
+        },
+        {
+          "id": "q45",
+          "wordId": "n2-c1-胃腸薬",
+          "prompt": "食べすぎたので、【いちょうやく】を飲んだ。",
+          "choices": [
+            "胃陽薬",
+            "異腸薬",
+            "胃腸薬",
+            "異陽薬"
+          ],
+          "answerIndex": 2,
+          "explanation": "胃腸薬 is stomach medicine, with 腸 (月, gut). 陽 (阝) looks like 腸; 異 is a same-sound イ."
+        }
+      ]
+    }
+  ]
+}

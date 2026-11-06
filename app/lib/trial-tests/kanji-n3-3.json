@@ -1,0 +1,831 @@
+{
+  "version": 1,
+  "kind": "kanji",
+  "title": "総合 3",
+  "level": "N3",
+  "chapter": 1,
+  "words": [
+    {
+      "id": "n3-c1-追突",
+      "word": "追突",
+      "reading": "ついとつ"
+    },
+    {
+      "id": "n3-c1-面識",
+      "word": "面識",
+      "reading": "めんしき"
+    },
+    {
+      "id": "n3-c1-評判",
+      "word": "評判",
+      "reading": "ひょうばん"
+    },
+    {
+      "id": "n3-c1-現行",
+      "word": "現行",
+      "reading": "げんこう"
+    },
+    {
+      "id": "n3-c1-産声",
+      "word": "産声",
+      "reading": "うぶごえ"
+    },
+    {
+      "id": "n3-c1-変則的",
+      "word": "変則的",
+      "reading": "へんそくてき"
+    },
+    {
+      "id": "n3-c1-洗剤",
+      "word": "洗剤",
+      "reading": "せんざい"
+    },
+    {
+      "id": "n3-c1-段階",
+      "word": "段階",
+      "reading": "だんかい"
+    },
+    {
+      "id": "n3-c1-塩分",
+      "word": "塩分",
+      "reading": "えんぶん"
+    },
+    {
+      "id": "n3-c1-激痛",
+      "word": "激痛",
+      "reading": "げきつう"
+    },
+    {
+      "id": "n3-c1-投書",
+      "word": "投書",
+      "reading": "とうしょ"
+    },
+    {
+      "id": "n3-c1-残雪",
+      "word": "残雪",
+      "reading": "ざんせつ"
+    },
+    {
+      "id": "n3-c1-仲介料",
+      "word": "仲介料",
+      "reading": "ちゅうかいりょう"
+    },
+    {
+      "id": "n3-c1-婦人",
+      "word": "婦人",
+      "reading": "ふじん"
+    },
+    {
+      "id": "n3-c1-単独",
+      "word": "単独",
+      "reading": "たんどく"
+    },
+    {
+      "id": "n3-c1-幼稚園",
+      "word": "幼稚園",
+      "reading": "ようちえん"
+    },
+    {
+      "id": "n3-c1-順調",
+      "word": "順調",
+      "reading": "じゅんちょう"
+    },
+    {
+      "id": "n3-c1-効き目",
+      "word": "効き目",
+      "reading": "ききめ"
+    },
+    {
+      "id": "n3-c1-岸辺",
+      "word": "岸辺",
+      "reading": "きしべ"
+    },
+    {
+      "id": "n3-c1-祭日",
+      "word": "祭日",
+      "reading": "さいじつ"
+    },
+    {
+      "id": "n3-c1-注目",
+      "word": "注目",
+      "reading": "ちゅうもく"
+    },
+    {
+      "id": "n3-c1-局地的",
+      "word": "局地的",
+      "reading": "きょくちてき"
+    },
+    {
+      "id": "n3-c1-注意",
+      "word": "注意",
+      "reading": "ちゅうい"
+    },
+    {
+      "id": "n3-c1-職業",
+      "word": "職業",
+      "reading": "しょくぎょう"
+    },
+    {
+      "id": "n3-c1-反省",
+      "word": "反省",
+      "reading": "はんせい"
+    },
+    {
+      "id": "n3-c1-昔",
+      "word": "昔",
+      "reading": "むかし"
+    },
+    {
+      "id": "n3-c1-産業",
+      "word": "産業",
+      "reading": "さんぎょう"
+    },
+    {
+      "id": "n3-c1-方法",
+      "word": "方法",
+      "reading": "ほうほう"
+    },
+    {
+      "id": "n3-c1-昨年",
+      "word": "昨年",
+      "reading": "さくねん"
+    },
+    {
+      "id": "n3-c1-築く",
+      "word": "築く",
+      "reading": "きずく"
+    },
+    {
+      "id": "n3-c1-分量",
+      "word": "分量",
+      "reading": "ぶんりょう"
+    },
+    {
+      "id": "n3-c1-包む",
+      "word": "包む",
+      "reading": "つつむ"
+    },
+    {
+      "id": "n3-c1-第一回",
+      "word": "第一回",
+      "reading": "だいいっかい"
+    },
+    {
+      "id": "n3-c1-友情",
+      "word": "友情",
+      "reading": "ゆうじょう"
+    },
+    {
+      "id": "n3-c1-正式",
+      "word": "正式",
+      "reading": "せいしき"
+    },
+    {
+      "id": "n3-c1-仲良し",
+      "word": "仲良し",
+      "reading": "なかよし"
+    },
+    {
+      "id": "n3-c1-以内",
+      "word": "以内",
+      "reading": "いない"
+    },
+    {
+      "id": "n3-c1-貸す",
+      "word": "貸す",
+      "reading": "かす"
+    },
+    {
+      "id": "n3-c1-希望",
+      "word": "希望",
+      "reading": "きぼう"
+    },
+    {
+      "id": "n3-c1-補う",
+      "word": "補う",
+      "reading": "おぎなう"
+    },
+    {
+      "id": "n3-c1-形",
+      "word": "形",
+      "reading": "かたち"
+    },
+    {
+      "id": "n3-c1-芸術",
+      "word": "芸術",
+      "reading": "げいじゅつ"
+    },
+    {
+      "id": "n3-c1-直す",
+      "word": "直す",
+      "reading": "なおす"
+    },
+    {
+      "id": "n3-c1-収入",
+      "word": "収入",
+      "reading": "しゅうにゅう"
+    },
+    {
+      "id": "n3-c1-反対",
+      "word": "反対",
+      "reading": "はんたい"
+    }
+  ],
+  "sections": [
+    {
+      "type": "kanji-reading",
+      "questions": [
+        {
+          "id": "q1",
+          "wordId": "n3-c1-追突",
+          "prompt": "雨の日は、【追突】事故が多い。",
+          "choices": [
+            "ついどつ",
+            "おいとつ",
+            "ついとっ",
+            "ついとつ"
+          ],
+          "answerIndex": 3,
+          "explanation": "追突 is ついとつ: both unvoiced, ツイ and トツ."
+        },
+        {
+          "id": "q2",
+          "wordId": "n3-c1-面識",
+          "prompt": "その作家とは、【面識】がある。",
+          "choices": [
+            "めんしき",
+            "めんしょく",
+            "めんしっき",
+            "おもしき"
+          ],
+          "answerIndex": 0,
+          "explanation": "面識 is めんしき: 識 is シキ, not ショク."
+        },
+        {
+          "id": "q3",
+          "wordId": "n3-c1-評判",
+          "prompt": "この店のラーメンは、とても【評判】がいい。",
+          "choices": [
+            "ひょうはん",
+            "へいばん",
+            "へいはん",
+            "ひょうばん"
+          ],
+          "answerIndex": 3,
+          "explanation": "評判 is ひょうばん: 評 is ヒョウ, and 判 is voiced バン here."
+        },
+        {
+          "id": "q4",
+          "wordId": "n3-c1-現行",
+          "prompt": "【現行】のルールでは、それはできない。",
+          "choices": [
+            "げんごう",
+            "げんこう",
+            "げんぎょう",
+            "げんいき"
+          ],
+          "answerIndex": 1,
+          "explanation": "現行 is げんこう: 行 is unvoiced コウ here."
+        },
+        {
+          "id": "q5",
+          "wordId": "n3-c1-産声",
+          "prompt": "元気な【産声】が、病院にひびいた。",
+          "choices": [
+            "うぶこえ",
+            "うまごえ",
+            "さんせい",
+            "うぶごえ"
+          ],
+          "answerIndex": 3,
+          "explanation": "産声 is うぶごえ: 産 reads うぶ here, and 声 becomes voiced ごえ."
+        },
+        {
+          "id": "q6",
+          "wordId": "n3-c1-変則的",
+          "prompt": "今月は休みが多く、【変則的】な時間割になっている。",
+          "choices": [
+            "へんそくてき",
+            "へんぞくてき",
+            "へんそくでき",
+            "へんぞくでき"
+          ],
+          "answerIndex": 0,
+          "explanation": "変則的 is へんそくてき: 則 stays unvoiced ソク, and 的 is テキ."
+        },
+        {
+          "id": "q7",
+          "wordId": "n3-c1-洗剤",
+          "prompt": "台所用の【洗剤】がなくなった。",
+          "choices": [
+            "せんざい",
+            "せんさい",
+            "ぜんざい",
+            "ぜんさい"
+          ],
+          "answerIndex": 0,
+          "explanation": "洗剤 is せんざい: 洗 is unvoiced セン and 剤 is voiced ザイ. A voicing × voicing grid."
+        },
+        {
+          "id": "q8",
+          "wordId": "n3-c1-段階",
+          "prompt": "まだ計画の【段階】なので、何も決まっていない。",
+          "choices": [
+            "たんかい",
+            "だんかい",
+            "だんがい",
+            "たんがい"
+          ],
+          "answerIndex": 1,
+          "explanation": "段階 is だんかい: 段 is voiced ダン, and 階 is unvoiced カイ."
+        },
+        {
+          "id": "q9",
+          "wordId": "n3-c1-塩分",
+          "prompt": "しょうゆは、【塩分】が多い。",
+          "choices": [
+            "えんぶん",
+            "えんふん",
+            "しおぶん",
+            "しおふん"
+          ],
+          "answerIndex": 0,
+          "explanation": "塩分 is えんぶん: 塩 is on エン, and 分 is voiced ブン."
+        },
+        {
+          "id": "q10",
+          "wordId": "n3-c1-激痛",
+          "prompt": "足に【激痛】を感じて、歩けなくなった。",
+          "choices": [
+            "げきつ",
+            "げきつう",
+            "げっつう",
+            "げきいた"
+          ],
+          "answerIndex": 1,
+          "explanation": "激痛 is げきつう: 痛 is a long ツウ."
+        },
+        {
+          "id": "q11",
+          "wordId": "n3-c1-投書",
+          "prompt": "市役所に、道路について【投書】した。",
+          "choices": [
+            "とうしょう",
+            "とうじょ",
+            "とうしょ",
+            "なげしょ"
+          ],
+          "answerIndex": 2,
+          "explanation": "投書 is とうしょ: 書 is a short, unvoiced ショ."
+        },
+        {
+          "id": "q12",
+          "wordId": "n3-c1-残雪",
+          "prompt": "四月なのに、山にはまだ【残雪】がある。",
+          "choices": [
+            "さんせつ",
+            "ざんせち",
+            "ざんゆき",
+            "ざんせつ"
+          ],
+          "answerIndex": 3,
+          "explanation": "残雪 is ざんせつ: 残 is voiced ザン, and 雪 is セツ."
+        },
+        {
+          "id": "q13",
+          "wordId": "n3-c1-仲介料",
+          "prompt": "部屋を借りるときに、【仲介料】がかかった。",
+          "choices": [
+            "ちゅうがいりょう",
+            "ちゅかいりょう",
+            "ちゅがいりょう",
+            "ちゅうかいりょう"
+          ],
+          "answerIndex": 3,
+          "explanation": "仲介料 is ちゅうかいりょう: a long チュウ, and 介 stays unvoiced カイ."
+        },
+        {
+          "id": "q14",
+          "wordId": "n3-c1-婦人",
+          "prompt": "【婦人】用のくつ売り場は、二階です。",
+          "choices": [
+            "ふにん",
+            "ふじん",
+            "ふうじん",
+            "ふうにん"
+          ],
+          "answerIndex": 1,
+          "explanation": "婦人 is ふじん: a short フ, and 人 is ジン."
+        },
+        {
+          "id": "q15",
+          "wordId": "n3-c1-単独",
+          "prompt": "その選手は、【単独】で世界を一周した。",
+          "choices": [
+            "たんとく",
+            "だんどく",
+            "だんとく",
+            "たんどく"
+          ],
+          "answerIndex": 3,
+          "explanation": "単独 is たんどく: 単 is unvoiced タン, and 独 is voiced ドク."
+        },
+        {
+          "id": "q16",
+          "wordId": "n3-c1-幼稚園",
+          "prompt": "【幼稚園】のバスが、家の前に止まった。",
+          "choices": [
+            "ようちえん",
+            "ようちいん",
+            "ようじえん",
+            "よちえん"
+          ],
+          "answerIndex": 0,
+          "explanation": "幼稚園 is ようちえん: a long ヨウ, an unvoiced チ, and 園 is エン."
+        },
+        {
+          "id": "q17",
+          "wordId": "n3-c1-順調",
+          "prompt": "けがは、【順調】に治っている。",
+          "choices": [
+            "じゅんちょ",
+            "じゅんじょう",
+            "しゅんちょう",
+            "じゅんちょう"
+          ],
+          "answerIndex": 3,
+          "explanation": "順調 is じゅんちょう: 調 is unvoiced, with a long チョウ."
+        },
+        {
+          "id": "q18",
+          "wordId": "n3-c1-効き目",
+          "prompt": "このかぜ薬は、【効き目】が強い。",
+          "choices": [
+            "きいめ",
+            "こうめ",
+            "ききめ",
+            "ききま"
+          ],
+          "answerIndex": 2,
+          "explanation": "効き目 is ききめ: 効き is きき, and 目 is め."
+        },
+        {
+          "id": "q19",
+          "wordId": "n3-c1-岸辺",
+          "prompt": "【岸辺】に、白い鳥がたくさんいる。",
+          "choices": [
+            "きしべ",
+            "きしへ",
+            "がんべ",
+            "がんぺん"
+          ],
+          "answerIndex": 0,
+          "explanation": "岸辺 is きしべ: both kun, and 辺 becomes voiced べ."
+        },
+        {
+          "id": "q20",
+          "wordId": "n3-c1-祭日",
+          "prompt": "【祭日】でも、この店は開いている。",
+          "choices": [
+            "さいにち",
+            "さいじつ",
+            "さいび",
+            "まつりび"
+          ],
+          "answerIndex": 1,
+          "explanation": "祭日 is さいじつ: 日 reads ジツ here."
+        },
+        {
+          "id": "q21",
+          "wordId": "n3-c1-注目",
+          "prompt": "新しい選手に、みんなが【注目】している。",
+          "choices": [
+            "ちゅもく",
+            "ちゅうぼく",
+            "ちゅうもく",
+            "ちゅうめ"
+          ],
+          "answerIndex": 2,
+          "explanation": "注目 is ちゅうもく: a long チュウ, and 目 is モク."
+        },
+        {
+          "id": "q22",
+          "wordId": "n3-c1-局地的",
+          "prompt": "午後は、【局地的】に強い雨が降るでしょう。",
+          "choices": [
+            "きょっちてき",
+            "きょくじてき",
+            "きょくちでき",
+            "きょくちてき"
+          ],
+          "answerIndex": 3,
+          "explanation": "局地的 is きょくちてき: キョク keeps its く, and 地 is unvoiced チ."
+        }
+      ]
+    },
+    {
+      "type": "kanji-writing",
+      "questions": [
+        {
+          "id": "q23",
+          "wordId": "n3-c1-注意",
+          "prompt": "先生に、字が小さいと【ちゅうい】された。",
+          "choices": [
+            "注位",
+            "柱意",
+            "注衣",
+            "注意"
+          ],
+          "answerIndex": 3,
+          "explanation": "注意: 注 (pour, attention) + 意 (mind). 柱 looks alike; 位 and 衣 sound like い."
+        },
+        {
+          "id": "q24",
+          "wordId": "n3-c1-職業",
+          "prompt": "父の【しょくぎょう】は、大工だ。",
+          "choices": [
+            "職行",
+            "職業",
+            "織業",
+            "識業"
+          ],
+          "answerIndex": 1,
+          "explanation": "職業: 職 (job) has 耳. 織 has 糸; 識 has 言."
+        },
+        {
+          "id": "q25",
+          "wordId": "n3-c1-反省",
+          "prompt": "遅刻したことを、【はんせい】している。",
+          "choices": [
+            "反生",
+            "反省",
+            "半省",
+            "半生"
+          ],
+          "answerIndex": 1,
+          "explanation": "反省: 反 (against) + 省 (reflect). 半 and 生 only sound the same."
+        },
+        {
+          "id": "q26",
+          "wordId": "n3-c1-昔",
+          "prompt": "この町は、【むかし】と全然変わらない。",
+          "choices": [
+            "普",
+            "昔",
+            "借",
+            "皆"
+          ],
+          "answerIndex": 1,
+          "explanation": "昔 is 艹-like top over 日. 普 and 皆 have 日 below; 借 contains 昔."
+        },
+        {
+          "id": "q27",
+          "wordId": "n3-c1-産業",
+          "prompt": "この町では、自動車【さんぎょう】がさかんだ。",
+          "choices": [
+            "産業",
+            "算業",
+            "産行",
+            "算行"
+          ],
+          "answerIndex": 0,
+          "explanation": "産業: 産 (produce) + 業 (business). 算 and 行 only sound alike."
+        },
+        {
+          "id": "q28",
+          "wordId": "n3-c1-方法",
+          "prompt": "ほかに、いい【ほうほう】はありませんか。",
+          "choices": [
+            "方抱",
+            "放法",
+            "放抱",
+            "方法"
+          ],
+          "answerIndex": 3,
+          "explanation": "方法: 方 (way) + 法 (method). 放 and 抱 sound alike."
+        },
+        {
+          "id": "q29",
+          "wordId": "n3-c1-昨年",
+          "prompt": "【さくねん】より、売り上げが増えた。",
+          "choices": [
+            "作年",
+            "昨年",
+            "昨念",
+            "作念"
+          ],
+          "answerIndex": 1,
+          "explanation": "昨年: 昨 (previous) has 日. 作 (make) sounds the same; 念 sounds like 年."
+        },
+        {
+          "id": "q30",
+          "wordId": "n3-c1-築く",
+          "prompt": "彼は、一代で大きな会社を【きずいた】。",
+          "choices": [
+            "築いた",
+            "策いた",
+            "傷いた",
+            "筑いた"
+          ],
+          "answerIndex": 0,
+          "explanation": "築く: 築 has ⺮, 工, 凡 and 木. 策 and 筑 share ⺮; 傷 sounds like きず."
+        },
+        {
+          "id": "q31",
+          "wordId": "n3-c1-分量",
+          "prompt": "薬の【ぶんりょう】は、必ず守ってください。",
+          "choices": [
+            "分料",
+            "分量",
+            "文量",
+            "文料"
+          ],
+          "answerIndex": 1,
+          "explanation": "分量: 分 (part) + 量 (amount). 料 and 文 only sound the same."
+        },
+        {
+          "id": "q32",
+          "wordId": "n3-c1-包む",
+          "prompt": "お弁当を、ハンカチで【つつんだ】。",
+          "choices": [
+            "抱んだ",
+            "泡んだ",
+            "胞んだ",
+            "包んだ"
+          ],
+          "answerIndex": 3,
+          "explanation": "包む: 包 alone. 抱, 泡 and 胞 contain 包."
+        },
+        {
+          "id": "q33",
+          "wordId": "n3-c1-第一回",
+          "prompt": "【だいいっかい】の大会は、十年前に開かれた。",
+          "choices": [
+            "題一回",
+            "第一会",
+            "題一会",
+            "第一回"
+          ],
+          "answerIndex": 3,
+          "explanation": "第一回: 第 (number) + 回 (time). 題 sounds like だい; 会 sounds like かい."
+        },
+        {
+          "id": "q34",
+          "wordId": "n3-c1-友情",
+          "prompt": "この映画は、男の子たちの【ゆうじょう】の話だ。",
+          "choices": [
+            "友情",
+            "友清",
+            "有情",
+            "有清"
+          ],
+          "answerIndex": 0,
+          "explanation": "友情: 情 has 忄 (heart). 清 has 氵; 有 sounds like ゆう."
+        },
+        {
+          "id": "q35",
+          "wordId": "n3-c1-正式",
+          "prompt": "彼が新しい社長になることが、【せいしき】に決まった。",
+          "choices": [
+            "正式",
+            "正織",
+            "生式",
+            "生織"
+          ],
+          "answerIndex": 0,
+          "explanation": "正式: 正 (correct) + 式 (form). 生 and 織 only sound the same."
+        },
+        {
+          "id": "q36",
+          "wordId": "n3-c1-仲良し",
+          "prompt": "二人は、近所でも有名な【なかよし】だ。",
+          "choices": [
+            "仲良し",
+            "中良し",
+            "仲食し",
+            "中食し"
+          ],
+          "answerIndex": 0,
+          "explanation": "仲良し: 仲 has 亻. 中 sounds the same; 食 looks like 良."
+        },
+        {
+          "id": "q37",
+          "wordId": "n3-c1-以内",
+          "prompt": "三十分【いない】に戻ってきてください。",
+          "choices": [
+            "以肉",
+            "位内",
+            "位肉",
+            "以内"
+          ],
+          "answerIndex": 3,
+          "explanation": "以内: 以 + 内 (inside). 肉 looks like 内; 位 sounds like い."
+        },
+        {
+          "id": "q38",
+          "wordId": "n3-c1-貸す",
+          "prompt": "友だちに、ゲームを【かした】。",
+          "choices": [
+            "貨した",
+            "賃した",
+            "借した",
+            "貸した"
+          ],
+          "answerIndex": 3,
+          "explanation": "貸す: 貸 is 代 over 貝. 貨 and 賃 look alike; 借 means borrow."
+        },
+        {
+          "id": "q39",
+          "wordId": "n3-c1-希望",
+          "prompt": "【きぼう】を持って、毎日がんばっている。",
+          "choices": [
+            "希忘",
+            "希望",
+            "気望",
+            "気忘"
+          ],
+          "answerIndex": 1,
+          "explanation": "希望: 希 (hope) + 望 (wish). 気 sounds like き; 忘 looks like 望's top."
+        },
+        {
+          "id": "q40",
+          "wordId": "n3-c1-補う",
+          "prompt": "足りない栄養を、サプリメントで【おぎなって】いる。",
+          "choices": [
+            "捕って",
+            "浦って",
+            "補って",
+            "哺って"
+          ],
+          "answerIndex": 2,
+          "explanation": "補う: 補 has 衤 (cloth to patch). 捕, 浦 and 哺 share 甫."
+        },
+        {
+          "id": "q41",
+          "wordId": "n3-c1-形",
+          "prompt": "雲の【かたち】が、ねこに見える。",
+          "choices": [
+            "型",
+            "刑",
+            "開",
+            "形"
+          ],
+          "answerIndex": 3,
+          "explanation": "形 means shape. 型 (mould, type) is かた, another word."
+        },
+        {
+          "id": "q42",
+          "wordId": "n3-c1-芸術",
+          "prompt": "【げいじゅつ】の秋に、美術館へ行った。",
+          "choices": [
+            "芸述",
+            "芸街",
+            "迎術",
+            "芸術"
+          ],
+          "answerIndex": 3,
+          "explanation": "芸術: 術 (art) is 行 with 朮 inside. 述 shares 朮; 街 shares 行."
+        },
+        {
+          "id": "q43",
+          "wordId": "n3-c1-直す",
+          "prompt": "こわれた自転車を【なおした】。",
+          "choices": [
+            "治した",
+            "真した",
+            "植した",
+            "直した"
+          ],
+          "answerIndex": 3,
+          "explanation": "直す means to fix. 治す is also なおす but means to cure an illness."
+        },
+        {
+          "id": "q44",
+          "wordId": "n3-c1-収入",
+          "prompt": "アルバイトで、少し【しゅうにゅう】がある。",
+          "choices": [
+            "集入",
+            "収人",
+            "収入",
+            "集人"
+          ],
+          "answerIndex": 2,
+          "explanation": "収入: 収 (obtain) + 入 (enter). 集 sounds like しゅう; 人 looks like 入."
+        },
+        {
+          "id": "q45",
+          "wordId": "n3-c1-反対",
+          "prompt": "多くの住民が、工場の建設に【はんたい】した。",
+          "choices": [
+            "反対",
+            "反体",
+            "半対",
+            "判対"
+          ],
+          "answerIndex": 0,
+          "explanation": "反対: 反 (against) + 対 (opposite). 半 and 判 sound the same; 体 sounds like たい."
+        }
+      ]
+    }
+  ]
+}

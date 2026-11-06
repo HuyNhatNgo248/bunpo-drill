@@ -1,69 +1,115 @@
-import { Plural, Trans } from "@lingui/react/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { ArrowRight, Check, ChevronDown } from "lucide-react";
+import { Tabs } from "radix-ui";
+import { useState } from "react";
 import { Link } from "react-router";
-import { buttonVariants } from "~/components/ui/button";
+import { Button } from "~/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
 import { LEVELS } from "~/lib/levels";
+import { cn } from "~/lib/utils";
 import type { TrialSummary } from "~/lib/views";
+import { AutoHeight } from "./AutoHeight";
+import { SUBJECTS, SubjectList } from "./SubjectList";
 
-/** The full mock tests a visitor can take without an account: a list per level, side by side. */
+/**
+ * The practice sets a visitor can take without an account: a level menu and a tab per subject, as on the signed-in home,
+ * then that level's tests as cards. The level picked stays when the subject changes, where that subject has it.
+ */
 export function TrialTests({ tests }: { tests: TrialSummary[] }) {
+  const subjects = SUBJECTS.filter((kind) => tests.some((test) => test.kind === kind));
+  const [subject, setSubject] = useState<string>(subjects[0] ?? "grammar");
+  const [level, setLevel] = useState<string>("N2");
+  if (subjects.length === 0) return null;
+  const levelsOf = (kind: string) => LEVELS.filter((l) => tests.some((test) => test.kind === kind && test.level === l));
+  const levels = levelsOf(subject);
+  // A level this subject has no tests for shows its first one.
+  const shown = levels.find((l) => l === level) ?? levels[0];
   return (
     <section aria-labelledby="trial-tests" className="flex flex-col gap-6 border-t pt-12">
       <div className="flex flex-col gap-2">
         <h2 id="trial-tests" className="text-xl font-bold text-balance">
-          <Trans>Try a full mock test, no account needed</Trans>
+          <Trans>Try a practice set, no account needed</Trans>
         </h2>
         <p className="max-w-160 leading-sentence text-subtle-foreground">
-          <Trans>All three parts, graded as soon as you submit. Your answers aren't saved, so you can take each test as often as you like.</Trans>
+          <Trans>Each set mixes questions from the whole level, in the real exam's format. Graded as soon as you submit. Your answers aren't saved, so you can take each set as often as you like.</Trans>
         </p>
       </div>
-      <div className="grid gap-8 md:grid-cols-2 md:gap-6">
-        {LEVELS.map((level) => {
-          const own = tests.filter((test) => test.level === level);
-          if (own.length === 0) return null;
-          // No point is in two of a level's tests, so their counts add up to the points they cover; shown to the nearest 10.
-          const points = Math.round(own.reduce((sum, test) => sum + test.patternCount, 0) / 10) * 10;
-          return (
-            <div key={level} className="flex flex-col gap-3">
-              <div className="flex items-center gap-3">
-                <h3 className="rounded-full border border-indigo/25 bg-indigo/10 px-3 py-0.5 text-sm font-semibold text-indigo">{level}</h3>
-                <p className="text-caption text-muted-foreground">
-                  <Trans>About {points} grammar points</Trans>
-                </p>
-              </div>
-              <ul className="divide-y overflow-hidden rounded-xl border bg-card">
-                {own.map((test) => (
-                  <TestItem key={test.id} test={test} />
-                ))}
+      <Tabs.Root value={subject} onValueChange={setSubject} className="flex flex-col gap-4">
+        {/* The level on the left of the subjects, as on the signed-in home. */}
+        <div className="flex flex-wrap items-center gap-3">
+          <LevelMenu levels={levels} shown={shown} onPick={setLevel} />
+          <SubjectList subjects={subjects} value={subject} onPick={setSubject} />
+        </div>
+        <AutoHeight>
+          {subjects.map((kind) => (
+            <Tabs.Content key={kind} value={kind} className="outline-none">
+              <ul className="grid gap-3 sm:grid-cols-3 md:gap-4">
+                {tests
+                  .filter((test) => test.kind === kind && test.level === shown)
+                  .map((test) => (
+                    <TestCard key={test.id} test={test} />
+                  ))}
               </ul>
-            </div>
-          );
-        })}
-      </div>
+            </Tabs.Content>
+          ))}
+        </AutoHeight>
+      </Tabs.Root>
     </section>
   );
 }
 
-/** One test in its level's list: its title and size, and the way in. The whole row opens it. */
-function TestItem({ test }: { test: TrialSummary }) {
+/**
+ * The level, as the signed-in home's LevelSwitch looks. That one links to ?level=, which would scroll this page to the
+ * top, so this one only sets the level shown. Only the subject's levels are offered.
+ */
+function LevelMenu({ levels, shown, onPick }: { levels: readonly string[]; shown: string; onPick: (level: string) => void }) {
+  const { t } = useLingui();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" aria-label={t`Level: ${shown}`} className="h-11 gap-2 px-3.5 text-base font-semibold">
+          {shown}
+          <ChevronDown aria-hidden="true" className="text-muted-foreground" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="min-w-40">
+        {levels.map((level) => (
+          <DropdownMenuItem
+            key={level}
+            onSelect={() => onPick(level)}
+            className={cn("font-semibold", level === shown && "bg-primary-soft text-primary-soft-foreground")}
+          >
+            {level}
+            {level === shown && <Check aria-hidden="true" className="ml-auto text-primary" />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+/** One test as a card: its title and size, and the way in. The whole card opens it. */
+function TestCard({ test }: { test: TrialSummary }) {
   const total = test.questionCount;
   return (
-    <li className="relative flex items-center justify-between gap-3 px-4 py-3.5 transition-colors hover:bg-muted/60 has-focus-visible:bg-muted/60 md:px-5">
-      <div className="flex min-w-0 flex-col gap-0.5">
-        {/* Its ::after covers the row, so a tap anywhere on it opens the test. */}
-        <Link to={`/try/${test.id}`} className="text-foreground no-underline outline-none after:absolute after:inset-0">
-          <span className="sr-only">{test.level} </span>
-          <span lang="ja" className="font-jp text-base font-semibold">
-            {test.title}
-          </span>
-        </Link>
+    <li className="group relative flex flex-col gap-5 rounded-xl border bg-card p-4.5 transition-all hover:-translate-y-0.5 hover:border-primary-border hover:shadow-md has-focus-visible:border-primary-border motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:p-5">
+      {/* Its ::after covers the card, so a tap anywhere on it opens the test. */}
+      <Link to={`/try/${test.id}`} className="text-foreground no-underline outline-none after:absolute after:inset-0">
+        <span className="sr-only">{test.level} </span>
+        <span lang="ja" className="font-jp text-lg font-semibold">
+          {test.title}
+        </span>
+      </Link>
+      <div className="flex items-center justify-between gap-3">
         <span className="text-caption text-muted-foreground">
           <Plural value={total} one="# question" other="# questions" />
         </span>
+        {/* The link is the whole card; this only looks like its way in. */}
+        <span aria-hidden="true" className="flex items-center gap-1 text-sm font-semibold text-primary">
+          <Trans>Start</Trans>
+          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+        </span>
       </div>
-      {/* The link is the whole row; this only looks like its button. */}
-      <span aria-hidden="true" className={buttonVariants({ size: "sm" })}>
-        <Trans>Start</Trans>
-      </span>
     </li>
   );
 }

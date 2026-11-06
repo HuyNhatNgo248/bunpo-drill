@@ -3,12 +3,11 @@ import { type RefObject, useEffect, useState } from "react";
 import type { SectionType } from "~/lib/payload";
 import { cn } from "~/lib/utils";
 
-/** How many steps each demo plays: fill the blank; sort the pieces, then mark ★; fill blank 1, then blank 2. */
-/** The grammar 問題, which the welcome page shows. */
-export type GrammarSection = Extract<SectionType, "fill-blank" | "sentence-order" | "passage">;
+/** The 問題 the welcome page shows: N2's, so no 長文 (an N3 and N1 one). */
+export type DemoSection = Exclude<SectionType, "reading-long">;
 
-export const DEMO_STEPS: Record<GrammarSection, number> = {
-  "fill-blank": 1,
+/** The demos of more than 1 step: sort the pieces, then mark ★; fill blank 1, then blank 2. */
+export const DEMO_STEPS: Partial<Record<DemoSection, number>> = {
   "sentence-order": 2,
   passage: 2,
 };
@@ -35,7 +34,7 @@ export function useDemoSteps(ref: RefObject<HTMLElement | null>, steps: number) 
 }
 
 /** A tiny example of a format solving itself, step by step. Examples stay Japanese. */
-export function FormatDemo({ type, step }: { type: SectionType; step: number }) {
+export function FormatDemo({ type, step }: { type: DemoSection; step: number }) {
   return (
     <div lang="ja" className="mt-auto rounded-lg bg-muted px-2.5 py-2 font-jp text-caption leading-sentence text-secondary-foreground">
       {type === "fill-blank" && (
@@ -53,7 +52,103 @@ export function FormatDemo({ type, step }: { type: SectionType; step: number }) 
           、本番もあまり緊張しなかった。
         </p>
       )}
+      {type === "kanji-reading" && (
+        <p>
+          会議の日程を
+          <ruby>
+            <u className="decoration-faint underline-offset-4">調整</u>
+            <Reading text="ちょうせい" shown={step >= 1} />
+          </ruby>
+          した。
+        </p>
+      )}
+      {type === "kanji-writing" && (
+        <p>
+          パスポートを
+          <Swap from="しんせい" to="申請" done={step >= 1} />
+          した。
+        </p>
+      )}
+      {type === "reading-short" && (
+        <p>
+          来週から図書館の開館時間が変わります。<Proof shown={step >= 1}>平日は夜8時まで開いています。</Proof>
+        </p>
+      )}
+      {type === "reading-mid" && (
+        <p>
+          失敗は悪いことだと思われがちだ。<Proof shown={step >= 1}>しかし、失敗から学ぶことのほうが多い。</Proof>
+        </p>
+      )}
+      {type === "reading-integrated" && (
+        <p className="flex flex-col gap-0.5">
+          <span>
+            A：<Proof shown={step >= 1}>在宅勤務なら、通勤の時間を使える。</Proof>
+          </span>
+          <span>
+            B：<Proof shown={step >= 1}>同僚と話す機会が減ってしまう。</Proof>
+          </span>
+        </p>
+      )}
+      {type === "reading-claim" && (
+        <p>
+          便利さを求めるあまり、<Proof shown={step >= 1}>私たちは待つ力を失ってしまったのではないか。</Proof>
+        </p>
+      )}
+      {type === "reading-info" && (
+        <p className="flex flex-wrap gap-x-3">
+          <span>【料金】大人 800円</span>
+          <Proof shown={step >= 1}>学生 500円</Proof>
+          <span>【受付】9:00〜17:00</span>
+        </p>
+      )}
     </div>
+  );
+}
+
+/** A word's reading over it, dropping in. It is laid out from the start, so it moves nothing. */
+function Reading({ text, shown }: { text: string; shown: boolean }) {
+  return (
+    <m.rt
+      initial={false}
+      animate={shown ? { opacity: 1, y: 0 } : { opacity: 0, y: -4 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="font-medium text-primary"
+    >
+      {text}
+    </m.rt>
+  );
+}
+
+/** A word in kana that turns into its kanji, both stacked in one cell, so the swap moves nothing. */
+function Swap({ from, to, done }: { from: string; to: string; done: boolean }) {
+  return (
+    <span className="inline-grid border-b border-faint px-0.5 text-center">
+      <m.span initial={false} animate={{ opacity: done ? 0 : 1 }} className="[grid-area:1/1]">
+        {from}
+      </m.span>
+      <m.span
+        initial={false}
+        animate={done ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="font-medium text-primary [grid-area:1/1]"
+      >
+        {to}
+      </m.span>
+    </span>
+  );
+}
+
+/** The sentence that proves the answer, marked once the demo plays, as the results mark it. */
+function Proof({ shown, children }: { shown: boolean; children: string }) {
+  return (
+    <span
+      className={cn(
+        "rounded-sm underline decoration-transparent underline-offset-4 transition-colors duration-500",
+        shown && "bg-primary-soft text-primary-soft-foreground decoration-primary",
+      )}
+    >
+      {children}
+    </span>
   );
 }
 

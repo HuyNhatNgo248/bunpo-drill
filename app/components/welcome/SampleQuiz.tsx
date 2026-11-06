@@ -223,7 +223,7 @@ function Score({ score, onRestart }: { score: number; onRestart: () => void }) {
         </Trans>
       </p>
       <p className="text-body-sm leading-sentence text-subtle-foreground">
-        <Trans>With an account, you can take full 45-question mock tests.</Trans>
+        <Trans>Full practice sets are below, no account needed.</Trans>
       </p>
       <div className="flex flex-wrap gap-2.5">
         <Button asChild>

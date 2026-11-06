@@ -8,7 +8,7 @@ import { localeFromMatches, translate } from "~/lib/i18n";
 import { trialSummaries } from "~/lib/trials.server";
 
 export function meta({ matches }: Route.MetaArgs) {
-  return [{ title: `文法ドリル · ${translate(localeFromMatches(matches), msg`JLPT grammar practice in the real test's format`)}` }];
+  return [{ title: `文法ドリル · ${translate(localeFromMatches(matches), msg`JLPT practice in the real test's format`)}` }];
 }
 
 /**

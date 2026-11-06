@@ -72,10 +72,12 @@ export function Quiz({
   const send = () =>
     submit(passages.length ? { answers, times: timer.ref.current } : { answers }, { method: "post", encType: "application/json" });
   const { t } = useLingui();
+  // A trial test leads back to the welcome page at /, as a grammar test does.
+  const kind = trial ? "grammar" : quiz.kind;
   const back =
-    quiz.kind === "kanji"
+    kind === "kanji"
       ? { to: homeOf(quiz), label: t`Back to kanji` }
-      : quiz.kind === "reading"
+      : kind === "reading"
         ? { to: homeOf(quiz), label: t`Back to reading` }
         : undefined;
   const total = quiz.questionCount;
@@ -101,8 +103,8 @@ export function Quiz({
             level={quiz.level}
             meta={<Plural value={total} one="# question" other="# questions" />}
             back={{
-              to: homeOf(quiz),
-              label: quiz.kind === "kanji" ? <Trans>← Kanji</Trans> : quiz.kind === "reading" ? <Trans>← Reading</Trans> : <Trans>← Mock tests</Trans>,
+              to: homeOf({ ...quiz, kind }),
+              label: kind === "kanji" ? <Trans>← Kanji</Trans> : kind === "reading" ? <Trans>← Reading</Trans> : <Trans>← Mock tests</Trans>,
             }}
           >
             {quiz.title}

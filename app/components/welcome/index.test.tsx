@@ -9,9 +9,11 @@ import { SAMPLES } from "./helpers/samples";
 const EXAM = { date: "2026-12-06", daysLeft: 39 };
 
 const TRIALS: TrialSummary[] = [
-  { id: "n3-1", title: "総合テスト 1", level: "N3", questionCount: 45, patternCount: 44 },
-  { id: "n3-2", title: "総合テスト 2", level: "N3", questionCount: 45, patternCount: 44 },
-  { id: "n2-1", title: "総合テスト 1", level: "N2", questionCount: 45, patternCount: 24 },
+  { id: "n3-1", kind: "grammar", title: "総合テスト 1", level: "N3", questionCount: 45 },
+  { id: "n3-2", kind: "grammar", title: "総合テスト 2", level: "N3", questionCount: 45 },
+  { id: "n2-1", kind: "grammar", title: "総合テスト 1", level: "N2", questionCount: 45 },
+  { id: "kanji-n2-1", kind: "kanji", title: "総合 1", level: "N2", questionCount: 45 },
+  { id: "reading-n2-1", kind: "reading", title: "総合 1", level: "N2", questionCount: 12 },
 ];
 
 /** Picks the choice named `choice` of the sample question on screen. */
@@ -44,22 +46,41 @@ describe("Welcome", () => {
     expect(within(section).getByRole("link", { name: "Start practicing today" })).toHaveAttribute("href", "/signup");
   });
 
-  it("lists the trial tests by level, each opening its quiz", async () => {
+  it("lists a subject's trial tests at the level picked, N2 first, each opening its quiz", async () => {
     renderRoute(<Welcome exam={EXAM} trials={TRIALS} />, { url: "/welcome" });
 
-    const section = await screen.findByRole("region", { name: "Try a full mock test, no account needed" });
+    const section = await screen.findByRole("region", { name: "Try a practice set, no account needed" });
+    expect(within(section).getByRole("tab", { name: "Grammar" })).toHaveAttribute("aria-selected", "true");
+    expect(within(section).getByRole("link", { name: "N2 総合テスト 1" })).toHaveAttribute("href", "/try/n2-1");
+
+    await userEvent.click(within(section).getByRole("button", { name: "Level: N2" }));
+    await userEvent.click(await screen.findByRole("menuitem", { name: "N3" }));
     expect(within(section).getByRole("link", { name: "N3 総合テスト 1" })).toHaveAttribute("href", "/try/n3-1");
     expect(within(section).getByRole("link", { name: "N3 総合テスト 2" })).toHaveAttribute("href", "/try/n3-2");
-    expect(within(section).getByRole("link", { name: "N2 総合テスト 1" })).toHaveAttribute("href", "/try/n2-1");
+    expect(within(within(section).getByRole("link", { name: "N3 総合テスト 1" }).closest("li")!).getByText("45 questions")).toBeInTheDocument();
   });
 
-  it("gives each level's grammar points, roughly, and the size of each trial test", async () => {
+  it("switches to the kanji and reading tests, keeping the level where the subject has it", async () => {
     renderRoute(<Welcome exam={EXAM} trials={TRIALS} />, { url: "/welcome" });
 
-    const section = await screen.findByRole("region", { name: "Try a full mock test, no account needed" });
-    expect(section).toHaveTextContent("About 90 grammar points");
-    expect(section).toHaveTextContent("About 20 grammar points");
-    expect(within(within(section).getByRole("link", { name: "N3 総合テスト 1" }).closest("li")!).getByText("45 questions")).toBeInTheDocument();
+    const section = await screen.findByRole("region", { name: "Try a practice set, no account needed" });
+    await userEvent.click(within(section).getByRole("tab", { name: "Kanji" }));
+    expect(within(section).getByRole("link", { name: "N2 総合 1" })).toHaveAttribute("href", "/try/kanji-n2-1");
+
+    await userEvent.click(within(section).getByRole("tab", { name: "Reading" }));
+    expect(within(section).getByRole("link", { name: "N2 総合 1" })).toHaveAttribute("href", "/try/reading-n2-1");
+  });
+
+  it("shows each subject's formats in its own tab", async () => {
+    renderRoute(<Welcome exam={EXAM} trials={TRIALS} />, { url: "/welcome" });
+
+    const section = await screen.findByRole("region", { name: "The same formats as the real exam" });
+    expect(section).toHaveTextContent("文法形式の判断");
+    await userEvent.click(within(section).getByRole("tab", { name: "Kanji" }));
+    expect(section).toHaveTextContent("漢字読み");
+    expect(section).toHaveTextContent("表記");
+    await userEvent.click(within(section).getByRole("tab", { name: "Reading" }));
+    for (const title of ["内容理解（短文）", "内容理解（中文）", "統合理解", "主張理解（長文）", "情報検索"]) expect(section).toHaveTextContent(title);
   });
 
   it("ends with a footer that says it is not the official JLPT, and links to it", async () => {
@@ -82,7 +103,7 @@ describe("Welcome", () => {
   it("pitches the app and links to sign-up and sign-in", async () => {
     renderRoute(<Welcome exam={EXAM} trials={TRIALS} />, { url: "/welcome" });
 
-    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("Practice JLPT grammar in the real test's format.");
+    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("Practice for the JLPT in the real test's format.");
     for (const link of screen.getAllByRole("link", { name: "Create account" })) {
       expect(link).toHaveAttribute("href", "/signup");
     }

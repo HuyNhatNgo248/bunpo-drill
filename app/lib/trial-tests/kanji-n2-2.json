@@ -1,0 +1,831 @@
+{
+  "version": 1,
+  "kind": "kanji",
+  "title": "総合 2",
+  "level": "N2",
+  "chapter": 1,
+  "words": [
+    {
+      "id": "n2-c1-皆無",
+      "word": "皆無",
+      "reading": "かいむ"
+    },
+    {
+      "id": "n2-c1-沈没",
+      "word": "沈没",
+      "reading": "ちんぼつ"
+    },
+    {
+      "id": "n2-c1-受講",
+      "word": "受講",
+      "reading": "じゅこう"
+    },
+    {
+      "id": "n2-c1-歳末",
+      "word": "歳末",
+      "reading": "さいまつ"
+    },
+    {
+      "id": "n2-c1-斜面",
+      "word": "斜面",
+      "reading": "しゃめん"
+    },
+    {
+      "id": "n2-c1-渇水",
+      "word": "渇水",
+      "reading": "かっすい"
+    },
+    {
+      "id": "n2-c1-松竹梅",
+      "word": "松竹梅",
+      "reading": "しょうちくばい"
+    },
+    {
+      "id": "n2-c1-天井",
+      "word": "天井",
+      "reading": "てんじょう"
+    },
+    {
+      "id": "n2-c1-誤診",
+      "word": "誤診",
+      "reading": "ごしん"
+    },
+    {
+      "id": "n2-c1-委ねる",
+      "word": "委ねる",
+      "reading": "ゆだねる"
+    },
+    {
+      "id": "n2-c1-匹敵",
+      "word": "匹敵",
+      "reading": "ひってき"
+    },
+    {
+      "id": "n2-c1-鹿児島県",
+      "word": "鹿児島県",
+      "reading": "かごしまけん"
+    },
+    {
+      "id": "n2-c1-渡り鳥",
+      "word": "渡り鳥",
+      "reading": "わたりどり"
+    },
+    {
+      "id": "n2-c1-漁船",
+      "word": "漁船",
+      "reading": "ぎょせん"
+    },
+    {
+      "id": "n2-c1-俳人",
+      "word": "俳人",
+      "reading": "はいじん"
+    },
+    {
+      "id": "n2-c1-圧倒的",
+      "word": "圧倒的",
+      "reading": "あっとうてき"
+    },
+    {
+      "id": "n2-c1-競馬",
+      "word": "競馬",
+      "reading": "けいば"
+    },
+    {
+      "id": "n2-c1-役割",
+      "word": "役割",
+      "reading": "やくわり"
+    },
+    {
+      "id": "n2-c1-叫ぶ",
+      "word": "叫ぶ",
+      "reading": "さけぶ"
+    },
+    {
+      "id": "n2-c1-介抱",
+      "word": "介抱",
+      "reading": "かいほう"
+    },
+    {
+      "id": "n2-c1-湿原",
+      "word": "湿原",
+      "reading": "しつげん"
+    },
+    {
+      "id": "n2-c1-特許",
+      "word": "特許",
+      "reading": "とっきょ"
+    },
+    {
+      "id": "n2-c1-山頂",
+      "word": "山頂",
+      "reading": "さんちょう"
+    },
+    {
+      "id": "n2-c1-涼しい",
+      "word": "涼しい",
+      "reading": "すずしい"
+    },
+    {
+      "id": "n2-c1-農業",
+      "word": "農業",
+      "reading": "のうぎょう"
+    },
+    {
+      "id": "n2-c1-隣接",
+      "word": "隣接",
+      "reading": "りんせつ"
+    },
+    {
+      "id": "n2-c1-堅実",
+      "word": "堅実",
+      "reading": "けんじつ"
+    },
+    {
+      "id": "n2-c1-年齢",
+      "word": "年齢",
+      "reading": "ねんれい"
+    },
+    {
+      "id": "n2-c1-装飾",
+      "word": "装飾",
+      "reading": "そうしょく"
+    },
+    {
+      "id": "n2-c1-環境",
+      "word": "環境",
+      "reading": "かんきょう"
+    },
+    {
+      "id": "n2-c1-超過料金",
+      "word": "超過料金",
+      "reading": "ちょうかりょうきん"
+    },
+    {
+      "id": "n2-c1-順序",
+      "word": "順序",
+      "reading": "じゅんじょ"
+    },
+    {
+      "id": "n2-c1-注射",
+      "word": "注射",
+      "reading": "ちゅうしゃ"
+    },
+    {
+      "id": "n2-c1-大阪府",
+      "word": "大阪府",
+      "reading": "おおさかふ"
+    },
+    {
+      "id": "n2-c1-同居",
+      "word": "同居",
+      "reading": "どうきょ"
+    },
+    {
+      "id": "n2-c1-支払い",
+      "word": "支払い",
+      "reading": "しはらい"
+    },
+    {
+      "id": "n2-c1-毛布",
+      "word": "毛布",
+      "reading": "もうふ"
+    },
+    {
+      "id": "n2-c1-異常気象",
+      "word": "異常気象",
+      "reading": "いじょうきしょう"
+    },
+    {
+      "id": "n2-c1-比べる",
+      "word": "比べる",
+      "reading": "くらべる"
+    },
+    {
+      "id": "n2-c1-出版",
+      "word": "出版",
+      "reading": "しゅっぱん"
+    },
+    {
+      "id": "n2-c1-恥",
+      "word": "恥",
+      "reading": "はじ"
+    },
+    {
+      "id": "n2-c1-申請",
+      "word": "申請",
+      "reading": "しんせい"
+    },
+    {
+      "id": "n2-c1-地震",
+      "word": "地震",
+      "reading": "じしん"
+    },
+    {
+      "id": "n2-c1-豊富",
+      "word": "豊富",
+      "reading": "ほうふ"
+    },
+    {
+      "id": "n2-c1-電灯",
+      "word": "電灯",
+      "reading": "でんとう"
+    }
+  ],
+  "sections": [
+    {
+      "type": "kanji-reading",
+      "questions": [
+        {
+          "id": "q1",
+          "wordId": "n2-c1-皆無",
+          "prompt": "この辺りでは、雪が降ることはほぼ【皆無】だ。",
+          "choices": [
+            "かいむ",
+            "かいぶ",
+            "みなむ",
+            "みなぶ"
+          ],
+          "answerIndex": 0,
+          "explanation": "皆無 is かいむ: 皆 is カイ here, not みな, and 無 is ム, not ブ."
+        },
+        {
+          "id": "q2",
+          "wordId": "n2-c1-沈没",
+          "prompt": "タイタニック号は、氷山にぶつかって【沈没】した。",
+          "choices": [
+            "ちんぼつ",
+            "ちんぽつ",
+            "しずぼつ",
+            "ちんもつ"
+          ],
+          "answerIndex": 0,
+          "explanation": "沈没 is ちんぼつ: 沈 is チン here, not しず, and 没 is voiced ボツ."
+        },
+        {
+          "id": "q3",
+          "wordId": "n2-c1-受講",
+          "prompt": "春から、料理教室を【受講】している。",
+          "choices": [
+            "じゅうこう",
+            "じゅごう",
+            "じゅうごう",
+            "じゅこう"
+          ],
+          "answerIndex": 3,
+          "explanation": "受講 is じゅこう: a short ジュ and an unvoiced コウ. A long-vowel × voicing grid."
+        },
+        {
+          "id": "q4",
+          "wordId": "n2-c1-歳末",
+          "prompt": "【歳末】の商店街は、買い物客でにぎわっている。",
+          "choices": [
+            "せいまつ",
+            "さいまつ",
+            "さいすえ",
+            "せいすえ"
+          ],
+          "answerIndex": 1,
+          "explanation": "歳末 is さいまつ: 歳 is サイ here (セイ is for お歳暮), and 末 is マツ."
+        },
+        {
+          "id": "q5",
+          "wordId": "n2-c1-斜面",
+          "prompt": "スキー場の急な【斜面】を、ゆっくり滑った。",
+          "choices": [
+            "しゃおもて",
+            "ななめん",
+            "しゃめん",
+            "じゃめん"
+          ],
+          "answerIndex": 2,
+          "explanation": "斜面 is しゃめん, both on readings. なな(め) and おもて are kun readings."
+        },
+        {
+          "id": "q6",
+          "wordId": "n2-c1-渇水",
+          "prompt": "【渇水】のため、町では水道の使用が制限された。",
+          "choices": [
+            "かつすい",
+            "かっすい",
+            "かっみず",
+            "かつみず"
+          ],
+          "answerIndex": 1,
+          "explanation": "渇水 is かっすい: カツ shrinks to かっ, and 水 is スイ, not みず."
+        },
+        {
+          "id": "q7",
+          "wordId": "n2-c1-松竹梅",
+          "prompt": "お寿司は、【松竹梅】の中から竹を選んだ。",
+          "choices": [
+            "まつたけうめ",
+            "しょうちくうめ",
+            "しょうちくばい",
+            "まつちくばい"
+          ],
+          "answerIndex": 2,
+          "explanation": "松竹梅 is しょうちくばい, all on readings: ショウ, チク, バイ."
+        },
+        {
+          "id": "q8",
+          "wordId": "n2-c1-天井",
+          "prompt": "この部屋は【天井】が低いので、背の高い人は頭をぶつける。",
+          "choices": [
+            "てんしょう",
+            "てんじょ",
+            "てんじょう",
+            "てんしょ"
+          ],
+          "answerIndex": 2,
+          "explanation": "天井 is てんじょう: 井 is a voiced, long ジョウ here. A voicing × long-vowel grid."
+        },
+        {
+          "id": "q9",
+          "wordId": "n2-c1-誤診",
+          "prompt": "医者の【誤診】で、治療が遅れてしまった。",
+          "choices": [
+            "ごしん",
+            "ごじん",
+            "ごうしん",
+            "ごうじん"
+          ],
+          "answerIndex": 0,
+          "explanation": "誤診 is ごしん: a short ゴ and an unvoiced シン. A long-vowel × voicing grid."
+        },
+        {
+          "id": "q10",
+          "wordId": "n2-c1-委ねる",
+          "prompt": "子どもの将来を、学校だけに【委ねる】のはよくない。",
+          "choices": [
+            "たずねる",
+            "かさねる",
+            "ゆだねる",
+            "おもねる"
+          ],
+          "answerIndex": 2,
+          "explanation": "委ねる is ゆだねる (to entrust). The others are other 〜ねる verbs: 尋ねる, 重ねる, 阿る."
+        },
+        {
+          "id": "q11",
+          "wordId": "n2-c1-匹敵",
+          "prompt": "この町の人口は、小さな国に【匹敵】する。",
+          "choices": [
+            "ひつてき",
+            "ひってき",
+            "ひってい",
+            "ひつてい"
+          ],
+          "answerIndex": 1,
+          "explanation": "匹敵 is ひってき: ヒツ shrinks to ひっ, and 敵 is テキ. A っ × てき/てい grid."
+        },
+        {
+          "id": "q12",
+          "wordId": "n2-c1-鹿児島県",
+          "prompt": "桜島は、【鹿児島県】のシンボルだ。",
+          "choices": [
+            "しかごしまけん",
+            "かごしまけん",
+            "かこしまけん",
+            "かごじまけん"
+          ],
+          "answerIndex": 1,
+          "explanation": "鹿児島 is かごしま: 鹿 reads か, 児 reads ご, and 島 stays しま."
+        },
+        {
+          "id": "q13",
+          "wordId": "n2-c1-渡り鳥",
+          "prompt": "【渡り鳥】は、何千キロも飛んで南の国へ行く。",
+          "choices": [
+            "わたりとり",
+            "わたどり",
+            "わたりどり",
+            "わたとり"
+          ],
+          "answerIndex": 2,
+          "explanation": "渡り鳥 is わたりどり: 渡り keeps its り, and 鳥 (とり) becomes voiced どり."
+        },
+        {
+          "id": "q14",
+          "wordId": "n2-c1-漁船",
+          "prompt": "港には、たくさんの【漁船】が並んでいる。",
+          "choices": [
+            "りょうせん",
+            "ぎょぜん",
+            "りょうぜん",
+            "ぎょせん"
+          ],
+          "answerIndex": 3,
+          "explanation": "漁船 is ぎょせん: 漁 is ギョ here, not リョウ, and 船 stays unvoiced セン."
+        },
+        {
+          "id": "q15",
+          "wordId": "n2-c1-俳人",
+          "prompt": "祖父は、地元では少し知られた【俳人】だった。",
+          "choices": [
+            "はいにん",
+            "ばいじん",
+            "ばいにん",
+            "はいじん"
+          ],
+          "answerIndex": 3,
+          "explanation": "俳人 is はいじん: 俳 is unvoiced ハイ and 人 is ジン here. A voicing × じん/にん grid."
+        },
+        {
+          "id": "q16",
+          "wordId": "n2-c1-圧倒的",
+          "prompt": "選挙は、現職の候補が【圧倒的】な差で勝った。",
+          "choices": [
+            "あつとうてき",
+            "あっとうてき",
+            "あっとてき",
+            "あつとてき"
+          ],
+          "answerIndex": 1,
+          "explanation": "圧倒的 is あっとうてき: アツ shrinks to あっ, and 倒 is a long トウ. A っ × long-vowel grid."
+        },
+        {
+          "id": "q17",
+          "wordId": "n2-c1-競馬",
+          "prompt": "父は、週末によく【競馬】を見に行く。",
+          "choices": [
+            "きょうば",
+            "けいば",
+            "けいま",
+            "きょうま"
+          ],
+          "answerIndex": 1,
+          "explanation": "競馬 is けいば: 競 reads ケイ in this word, not キョウ, and 馬 is バ."
+        },
+        {
+          "id": "q18",
+          "wordId": "n2-c1-役割",
+          "prompt": "会議では、一人一人に【役割】が決められている。",
+          "choices": [
+            "やくわり",
+            "やくかつ",
+            "えきわり",
+            "えきかつ"
+          ],
+          "answerIndex": 0,
+          "explanation": "役割 is やくわり: 役 is ヤク here, not エキ, and 割 takes its kun わり."
+        },
+        {
+          "id": "q19",
+          "wordId": "n2-c1-叫ぶ",
+          "prompt": "遠くにいる友達の名前を、大声で【叫んだ】。",
+          "choices": [
+            "よんだ",
+            "さけんだ",
+            "うらんだ",
+            "ころんだ"
+          ],
+          "answerIndex": 1,
+          "explanation": "叫ぶ is さけぶ (to shout). The others are other 〜ぶ/〜む verbs: 呼ぶ, 恨む, 転ぶ."
+        },
+        {
+          "id": "q20",
+          "wordId": "n2-c1-介抱",
+          "prompt": "酔って倒れた友人を、一晩中【介抱】した。",
+          "choices": [
+            "かいぼう",
+            "かいほう",
+            "かほう",
+            "かぼう"
+          ],
+          "answerIndex": 1,
+          "explanation": "介抱 is かいほう: 介 is カイ and 抱 stays unvoiced ホウ. かいぼう is 解剖, a different word."
+        },
+        {
+          "id": "q21",
+          "wordId": "n2-c1-湿原",
+          "prompt": "北海道の【湿原】で、珍しい鳥を見た。",
+          "choices": [
+            "しつげん",
+            "しっげん",
+            "しつけん",
+            "しっけん"
+          ],
+          "answerIndex": 0,
+          "explanation": "湿原 is しつげん: シツ keeps its つ, and 原 is voiced ゲン. A っ × voicing grid."
+        },
+        {
+          "id": "q22",
+          "wordId": "n2-c1-特許",
+          "prompt": "祖父は、新しい機械の【特許】を持っている。",
+          "choices": [
+            "とっきょ",
+            "とくきょ",
+            "とっきょう",
+            "とくきょう"
+          ],
+          "answerIndex": 0,
+          "explanation": "特許 is とっきょ: トク shrinks to とっ, and 許 is a short キョ. A っ × long-vowel grid."
+        }
+      ]
+    },
+    {
+      "type": "kanji-writing",
+      "questions": [
+        {
+          "id": "q23",
+          "wordId": "n2-c1-山頂",
+          "prompt": "【さんちょう】から見た景色は、すばらしかった。",
+          "choices": [
+            "山項",
+            "山町",
+            "山長",
+            "山頂"
+          ],
+          "answerIndex": 3,
+          "explanation": "山頂 is a summit, with 頂 (丁 + 頁). 項 looks like it; 町 and 長 also read チョウ."
+        },
+        {
+          "id": "q24",
+          "wordId": "n2-c1-涼しい",
+          "prompt": "山の上は、夏でも【すずしい】。",
+          "choices": [
+            "冷しい",
+            "寒しい",
+            "爽しい",
+            "涼しい"
+          ],
+          "answerIndex": 3,
+          "explanation": "涼しい (cool) is the only real spelling. 冷, 寒 and 爽 have related meanings but read differently."
+        },
+        {
+          "id": "q25",
+          "wordId": "n2-c1-農業",
+          "prompt": "この村の人の多くは、【のうぎょう】で生活している。",
+          "choices": [
+            "農業",
+            "濃業",
+            "能業",
+            "農叢"
+          ],
+          "answerIndex": 0,
+          "explanation": "農業 is farming. 濃 and 能 are same-sound ノウ; 叢 looks like 業."
+        },
+        {
+          "id": "q26",
+          "wordId": "n2-c1-隣接",
+          "prompt": "この公園は、市役所に【りんせつ】している。",
+          "choices": [
+            "燐接",
+            "隣接",
+            "燐設",
+            "隣設"
+          ],
+          "answerIndex": 1,
+          "explanation": "隣接 is being adjacent: next (隣) + touch (接). 燐 (火) is a same-sound リン look-alike; 設 is a same-sound セツ."
+        },
+        {
+          "id": "q27",
+          "wordId": "n2-c1-堅実",
+          "prompt": "彼は【けんじつ】な性格で、貯金をこつこつ続けている。",
+          "choices": [
+            "堅実",
+            "堅日",
+            "賢実",
+            "賢日"
+          ],
+          "answerIndex": 0,
+          "explanation": "堅実 is steady, reliable, with 堅 (土). 賢 (貝) is a same-sound ケン look-alike; 日 is a same-sound ジツ."
+        },
+        {
+          "id": "q28",
+          "wordId": "n2-c1-年齢",
+          "prompt": "この仕事には、【ねんれい】制限がない。",
+          "choices": [
+            "年歯",
+            "年例",
+            "年齢",
+            "年冷"
+          ],
+          "answerIndex": 2,
+          "explanation": "年齢 is age, with 齢 (歯 + 令). 歯 is its left part; 例 and 冷 are same-sound レイ."
+        },
+        {
+          "id": "q29",
+          "wordId": "n2-c1-装飾",
+          "prompt": "クリスマスの【そうしょく】で、街が明るくなった。",
+          "choices": [
+            "装飾",
+            "装飼",
+            "総飾",
+            "総飼"
+          ],
+          "answerIndex": 0,
+          "explanation": "装飾 is decoration, with 飾 (食). 飼 also has 食; 総 is a same-sound ソウ."
+        },
+        {
+          "id": "q30",
+          "wordId": "n2-c1-環境",
+          "prompt": "子どもたちが安心して暮らせる【かんきょう】を作りたい。",
+          "choices": [
+            "還鏡",
+            "環鏡",
+            "還境",
+            "環境"
+          ],
+          "answerIndex": 3,
+          "explanation": "環境 is environment: ring (環, 王) + border (境, 土). 還 is a same-sound カン look-alike; 鏡 (mirror) is a same-sound キョウ look-alike."
+        },
+        {
+          "id": "q31",
+          "wordId": "n2-c1-超過料金",
+          "prompt": "時間を過ぎたので、駐車場で【ちょうかりょうきん】を取られた。",
+          "choices": [
+            "超渦料金",
+            "長過料金",
+            "超過料金",
+            "長渦料金"
+          ],
+          "answerIndex": 2,
+          "explanation": "超過料金 is an excess charge, with 過 (辶, pass). 渦 (氵) is a same-sound カ look-alike; 長 is a same-sound チョウ."
+        },
+        {
+          "id": "q32",
+          "wordId": "n2-c1-順序",
+          "prompt": "説明書の【じゅんじょ】どおりに、組み立てた。",
+          "choices": [
+            "順徐",
+            "純序",
+            "純徐",
+            "順序"
+          ],
+          "answerIndex": 3,
+          "explanation": "順序 is sequence, with 序 (广). 徐 is a same-sound ジョ; 純 is a same-sound ジュン."
+        },
+        {
+          "id": "q33",
+          "wordId": "n2-c1-注射",
+          "prompt": "子どもは【ちゅうしゃ】を怖がって泣いた。",
+          "choices": [
+            "注射",
+            "注謝",
+            "柱射",
+            "柱謝"
+          ],
+          "answerIndex": 0,
+          "explanation": "注射 is an injection, with 射 (身 + 寸). 謝 contains 射; 柱 is a same-sound チュウ look-alike."
+        },
+        {
+          "id": "q34",
+          "wordId": "n2-c1-大阪府",
+          "prompt": "【おおさかふ】の人口は、八百万人を超える。",
+          "choices": [
+            "大阪付",
+            "大阪符",
+            "大阪府",
+            "大板府"
+          ],
+          "answerIndex": 2,
+          "explanation": "府 (prefecture) is 广 + 付. 付 and 符 also read フ; 板 looks like 阪."
+        },
+        {
+          "id": "q35",
+          "wordId": "n2-c1-同居",
+          "prompt": "結婚してから、夫の両親と【どうきょ】している。",
+          "choices": [
+            "同居",
+            "同屈",
+            "洞居",
+            "洞屈"
+          ],
+          "answerIndex": 0,
+          "explanation": "同居 is living together, with 居 (尸 + 古). 屈 also has 尸; 洞 is a same-sound ドウ."
+        },
+        {
+          "id": "q36",
+          "wordId": "n2-c1-支払い",
+          "prompt": "レストランの【しはらい】は、カードでした。",
+          "choices": [
+            "支仏い",
+            "技払い",
+            "支払い",
+            "技仏い"
+          ],
+          "answerIndex": 2,
+          "explanation": "支払い is payment, with 払 (扌). 仏 (亻) looks like 払; 技 contains 支."
+        },
+        {
+          "id": "q37",
+          "wordId": "n2-c1-毛布",
+          "prompt": "寒くなってきたので、押し入れから【もうふ】を出した。",
+          "choices": [
+            "毛布",
+            "猛布",
+            "毛希",
+            "猛希"
+          ],
+          "answerIndex": 0,
+          "explanation": "毛布 is a blanket: hair/wool (毛) + cloth (布). 猛 is a same-sound モウ; 希 looks like 布."
+        },
+        {
+          "id": "q38",
+          "wordId": "n2-c1-異常気象",
+          "prompt": "今年は【いじょうきしょう】で、春なのに雪が降った。",
+          "choices": [
+            "異状気象",
+            "異常汽象",
+            "異常気象",
+            "異状汽象"
+          ],
+          "answerIndex": 2,
+          "explanation": "異常気象 is abnormal weather, with 常 (usual). 異状 (something wrong) is a different word; 汽 is 気 with 氵."
+        },
+        {
+          "id": "q39",
+          "wordId": "n2-c1-比べる",
+          "prompt": "去年の写真と【くらべる】と、ずいぶん背が伸びた。",
+          "choices": [
+            "北べる",
+            "比べる",
+            "批べる",
+            "此べる"
+          ],
+          "answerIndex": 1,
+          "explanation": "比べる is written 比. 北, 批 and 此 are look-alikes."
+        },
+        {
+          "id": "q40",
+          "wordId": "n2-c1-出版",
+          "prompt": "この出版社は、子ども向けの本を多く【しゅっぱん】している。",
+          "choices": [
+            "出販",
+            "出版",
+            "出板",
+            "出飯"
+          ],
+          "answerIndex": 1,
+          "explanation": "出版 is publishing, with 版 (片, printing block). 販, 板 and 飯 all read ハン but aren't used here."
+        },
+        {
+          "id": "q41",
+          "wordId": "n2-c1-恥",
+          "prompt": "大勢の前で転んで、【はじ】をかいた。",
+          "choices": [
+            "取",
+            "職",
+            "聡",
+            "恥"
+          ],
+          "answerIndex": 3,
+          "explanation": "恥 (shame) is 耳 + 心. 取, 職 and 聡 also have 耳 but are other kanji."
+        },
+        {
+          "id": "q42",
+          "wordId": "n2-c1-申請",
+          "prompt": "育児休暇の【しんせい】を、会社に出した。",
+          "choices": [
+            "申請",
+            "申清",
+            "伸請",
+            "伸清"
+          ],
+          "answerIndex": 0,
+          "explanation": "申請 is an application, with 請 (言, ask). 清 (氵) is a same-sound セイ look-alike; 伸 is 申 with 亻."
+        },
+        {
+          "id": "q43",
+          "wordId": "n2-c1-地震",
+          "prompt": "昨夜、大きな【じしん】があった。",
+          "choices": [
+            "地振",
+            "自震",
+            "地震",
+            "自振"
+          ],
+          "answerIndex": 2,
+          "explanation": "地震 is an earthquake, with 震 (雨 + 辰). 振 (扌) is a same-sound シン; 自 is a same-sound ジ."
+        },
+        {
+          "id": "q44",
+          "wordId": "n2-c1-豊富",
+          "prompt": "この地方は、海でとれる魚が【ほうふ】だ。",
+          "choices": [
+            "包富",
+            "豊富",
+            "包副",
+            "豊副"
+          ],
+          "answerIndex": 1,
+          "explanation": "豊富 is abundant: rich (豊) + wealth (富). 包 is a same-sound ホウ; 副 shares 富's right part."
+        },
+        {
+          "id": "q45",
+          "wordId": "n2-c1-電灯",
+          "prompt": "停電で、部屋の【でんとう】が全部消えた。",
+          "choices": [
+            "電灯",
+            "電打",
+            "伝灯",
+            "伝打"
+          ],
+          "answerIndex": 0,
+          "explanation": "電灯 is an electric light, with 灯 (火). 打 (扌) shares 丁; 伝 is a same-sound デン."
+        }
+      ]
+    }
+  ]
+}

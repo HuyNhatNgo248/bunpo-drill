@@ -1,0 +1,360 @@
+{
+  "version": 1,
+  "kind": "reading",
+  "title": "総合 2",
+  "level": "N2",
+  "sections": [
+    {
+      "type": "reading-short",
+      "passages": [
+        {
+          "lead": "以下は、あるパン屋の店頭に貼られたお知らせである。",
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "お客様へ\nいつもご来店いただき、ありがとうございます。原材料の値上がりが続いているため、誠に勝手ながら、4月1日より一部の商品の価格を見直させていただきます。また、同日より、定休日を毎週月曜日から、毎週月曜日と火曜日に変更いたします。パン作りに十分な時間をかけ、これまでどおりの品質を守るためです。なお、ポイントカードは引き続きご利用いただけます。ご理解のほど、よろしくお願いいたします。"
+            }
+          ],
+          "notes": [],
+          "tip": "Check each choice for a changed word: 一部 vs すべて, 月曜日と火曜日 vs 火曜日だけ.",
+          "questions": [
+            {
+              "id": "q1",
+              "prompt": "このお知らせの内容と合うものはどれか。",
+              "choices": [
+                "4月から、すべての商品が値上がりする。",
+                "4月から、ポイントカードが使えなくなる。",
+                "4月から、毎週火曜日だけが休みになる。",
+                "4月から、店が休む日が週に1日増える。"
+              ],
+              "answerIndex": 3,
+              "kind": "詳細",
+              "traps": [
+                "over-general",
+                "opposite",
+                "changed-detail",
+                null
+              ],
+              "evidence": "また、同日より、定休日を毎週月曜日から、毎週月曜日と火曜日に変更いたします。",
+              "explanation": "Closed Mondays and Tuesdays instead of Mondays only: one more day off (4). Only some prices change (1), the card still works (2), and Monday stays closed (3)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-mid",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "子どもに家の手伝いをさせている家庭は多いだろう。我が家でも、小学生の息子に食器洗いを任せている。最初は、洗い残しが多く、かえって私の仕事が増えた。正直に言えば、<u>①自分でやったほうが早い</u>と何度も思った。\nしかし、ある日、息子が洗った皿を一枚一枚確かめながら「これで家族の役に立ってる？」と聞いてきた。その顔を見て、私ははっとした。息子にとって手伝いは、ただの作業ではなく、家族の一員として認められる大切な役割だったのだ。それ以来、多少の洗い残しは気にせず、「ありがとう、助かったよ」と声をかけるようにした。すると、息子は自分から洗い方を工夫するようになり、一か月もすると、ほとんど洗い残しがなくなった。\n子どもに手伝いをさせるのは、家事を減らすためではない。誰かの役に立っているという実感が、子どもの自信を育てるのだろう。大人が<u>②少しの手間</u>を我慢することで、子どもは大きく成長するのではないだろうか。"
+            }
+          ],
+          "notes": [],
+          "tip": "The reason for ① is the sentence before it; the claim is the last paragraph.",
+          "questions": [
+            {
+              "id": "q2",
+              "prompt": "筆者が<u>①自分でやったほうが早い</u>と思ったのはなぜか。",
+              "choices": [
+                "息子が、手伝いを嫌がったから",
+                "息子が洗った食器に汚れが残っていて、かえって手間が増えたから",
+                "食器洗いは、子どもには危ないから",
+                "息子が、皿を割ってしまったから"
+              ],
+              "answerIndex": 1,
+              "kind": "理由",
+              "traps": [
+                "not-in-text",
+                null,
+                "not-in-text",
+                "not-in-text"
+              ],
+              "evidence": "最初は、洗い残しが多く、かえって私の仕事が増えた。",
+              "explanation": "The son left dishes dirty, so the writer had more work: 2. 1, 3 and 4 aren't said."
+            },
+            {
+              "id": "q3",
+              "prompt": "筆者が「ありがとう、助かったよ」と声をかけるようにすると、どうなったか。",
+              "choices": [
+                "息子が自分で洗い方を工夫し、上手に洗えるようになった。",
+                "息子が、手伝いをやめてしまった。",
+                "洗い残しが、前より増えた。",
+                "筆者が、食器洗いを代わりにするようになった。"
+              ],
+              "answerIndex": 0,
+              "kind": "詳細",
+              "traps": [
+                null,
+                "opposite",
+                "opposite",
+                "not-in-text"
+              ],
+              "evidence": "すると、息子は自分から洗い方を工夫するようになり、一か月もすると、ほとんど洗い残しがなくなった。",
+              "explanation": "The son improved his own method and soon washed well: 1. 2 and 3 are the opposite, and 4 isn't said."
+            },
+            {
+              "id": "q4",
+              "prompt": "筆者の考えに合うものはどれか。",
+              "choices": [
+                "手伝いは、家事を減らすためにさせるべきだ。",
+                "子どもの手伝いは、完璧にできるまでさせないほうがいい。",
+                "子どもには、必ず食器洗いをさせるべきだ。",
+                "役に立っていると感じることが、子どもの自信につながる。"
+              ],
+              "answerIndex": 3,
+              "kind": "主張",
+              "traps": [
+                "opposite",
+                "opposite",
+                "over-general",
+                null
+              ],
+              "evidence": "誰かの役に立っているという実感が、子どもの自信を育てるのだろう。",
+              "explanation": "Feeling useful builds a child's confidence: 4. 1 is denied (家事を減らすためではない), 2 is the opposite, and 3 turns an example into a rule."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-integrated",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "label": "A",
+              "text": "図書館に、飲み物を飲みながら本を読めるカフェのような場所を作る例が増えている。長い時間本を読んでいると、のどがかわいたり、一息つきたくなったりするものだ。飲食ができれば、気軽に立ち寄れる場所になり、これまで図書館を利用しなかった人も足を運ぶようになるだろう。本に親しむ人を増やすためにも、よい取り組みだと思う。"
+            },
+            {
+              "kind": "text",
+              "label": "B",
+              "text": "図書館で飲食ができるようになることには、不安もある。本に飲み物をこぼしたり、食べ物の汚れが付いたりすれば、次に借りる人が困る。図書館の本は、多くの人で大切に使う共有の財産である。飲食をするのであれば、本を持ち込めない別の部屋を設けるなど、本を守るための工夫が欠かせないだろう。"
+            }
+          ],
+          "notes": [],
+          "tip": "Both discuss the same change; their last sentences show their stances.",
+          "questions": [
+            {
+              "id": "q5",
+              "prompt": "AとBのどちらの文章にも触れられている点は何か。",
+              "choices": [
+                "これまで図書館を利用しなかった人が、来るようになること",
+                "本に飲み物をこぼすこと",
+                "図書館で、飲食ができるようにすること",
+                "図書館の本は、共有の財産であること"
+              ],
+              "answerIndex": 2,
+              "kind": "比較",
+              "traps": [
+                "true-not-answer",
+                "true-not-answer",
+                null,
+                "true-not-answer"
+              ],
+              "evidence": "図書館で飲食ができるようになることには、不安もある。",
+              "explanation": "Both are about allowing food and drink in libraries: 3. 1 is only in A, and 2 and 4 only in B."
+            },
+            {
+              "id": "q6",
+              "prompt": "AとBの筆者は、図書館での飲食についてどのように考えているか。",
+              "choices": [
+                "Aはよい取り組みだと考え、Bは本を守るための工夫が必要だと考えている。",
+                "AもBも、図書館での飲食はやめるべきだと考えている。",
+                "Aは本を守る工夫が必要だと考え、Bはよい取り組みだと考えている。",
+                "AもBも、別の部屋を設けるべきだと考えている。"
+              ],
+              "answerIndex": 0,
+              "kind": "比較",
+              "traps": [
+                null,
+                "changed-detail",
+                "changed-detail",
+                "changed-detail"
+              ],
+              "evidence": "飲食をするのであれば、本を持ち込めない別の部屋を設けるなど、本を守るための工夫が欠かせないだろう。",
+              "explanation": "A welcomes it; B wants safeguards for the books: 1. 3 swaps them, and 2 and 4 fit neither."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-claim",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "料理を習い始めたころ、私は早く凝った料理を作れるようになりたかった。テレビで見た豪華な料理に挑戦しては、失敗を繰り返していた。そんな私に、料理教室の先生はまず、毎日みそ汁を作るように言った。\n<u>正直、物足りなかった</u>。毎日同じものを作って、何の意味があるのかと思った。しかし、言われたとおり続けるうちに、少しずつ変化が表れた。だしの取り方、具の切り方、火の強さ。毎日作るからこそ、その日の材料の違いや、ちょっとした加減の差が、味にどう影響するのかがわかってくる。三か月ほどたったころ、以前は失敗ばかりしていた料理も、驚くほどうまく作れるようになっていた。\n先生に理由を尋ねると、「基本の中に、料理のすべてが入っている」と言われた。みそ汁を作る中で身につけた、材料を見る目や火加減の感覚は、どんな料理にも通じるものだったのだ。\n何かを学ぶとき、私たちはつい、目立つことや難しいことに飛びつきたくなる。しかし、基本は地味で退屈に見えても、その後のすべての土台になる。遠回りに見える基本の積み重ねこそが、結局はいちばんの近道なのではないだろうか。"
+            }
+          ],
+          "notes": [
+            {
+              "word": "凝っ",
+              "gloss": "（凝る）細かいところまで工夫する"
+            },
+            {
+              "word": "加減",
+              "gloss": "ちょうどよい程度に調整すること"
+            }
+          ],
+          "tip": "The reason follows the underline; the teacher's words are explained in paragraph 3.",
+          "questions": [
+            {
+              "id": "q7",
+              "prompt": "筆者が<u>正直、物足りなかった</u>のはなぜか。",
+              "choices": [
+                "みそ汁の作り方を、もう知っていたから",
+                "先生の教え方が、厳しかったから",
+                "同じ料理を毎日作ることに、意味があると思えなかったから",
+                "豪華な料理を、うまく作れていたから"
+              ],
+              "answerIndex": 2,
+              "kind": "理由",
+              "traps": [
+                "not-in-text",
+                "not-in-text",
+                null,
+                "opposite"
+              ],
+              "evidence": "毎日同じものを作って、何の意味があるのかと思った。",
+              "explanation": "Making the same dish every day seemed pointless: 3. 4 contradicts 失敗を繰り返していた, and 1 and 2 aren't said."
+            },
+            {
+              "id": "q8",
+              "prompt": "先生の言う「基本の中に、料理のすべてが入っている」とは、どういうことか。",
+              "choices": [
+                "みそ汁さえ作れれば、ほかの料理は必要ないということ",
+                "基本の料理で身につけた感覚は、ほかの料理にも生かせるということ",
+                "基本の料理は、毎日同じ味にするべきだということ",
+                "豪華な料理には、基本は必要ないということ"
+              ],
+              "answerIndex": 1,
+              "kind": "指示語",
+              "traps": [
+                "over-general",
+                null,
+                "not-in-text",
+                "opposite"
+              ],
+              "evidence": "みそ汁を作る中で身につけた、材料を見る目や火加減の感覚は、どんな料理にも通じるものだったのだ。",
+              "explanation": "Skills from miso soup carry over to every dish: 2. 1 goes too far, 4 is the opposite, and 3 isn't said."
+            },
+            {
+              "id": "q9",
+              "prompt": "この文章で筆者が最も言いたいことは何か。",
+              "choices": [
+                "地味な基本を積み重ねることが、結局は上達のいちばんの近道だ。",
+                "学ぶときは、難しいことから挑戦するべきだ。",
+                "基本は退屈なので、早く終わらせたほうがいい。",
+                "料理を習うなら、みそ汁から始めるべきだ。"
+              ],
+              "answerIndex": 0,
+              "kind": "主張",
+              "traps": [
+                null,
+                "opposite",
+                "opposite",
+                "over-general"
+              ],
+              "evidence": "遠回りに見える基本の積み重ねこそが、結局はいちばんの近道なのではないだろうか。",
+              "explanation": "Building plain basics is the real shortcut: 1. 2 and 3 contradict the claim, and 4 turns an example into a rule."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-info",
+      "passages": [
+        {
+          "lead": "以下は、ある美容院の料金表である。",
+          "blocks": [
+            {
+              "kind": "table",
+              "head": [
+                "メニュー",
+                "料金",
+                "所要時間の目安"
+              ],
+              "rows": [
+                [
+                  "カット",
+                  "4,400円",
+                  "45分"
+                ],
+                [
+                  "カラー",
+                  "6,600円",
+                  "90分"
+                ],
+                [
+                  "カット＋カラー",
+                  "9,900円",
+                  "120分"
+                ],
+                [
+                  "シャンプー・ブロー",
+                  "2,200円",
+                  "30分"
+                ]
+              ]
+            },
+            {
+              "kind": "text",
+              "text": "※初めてご来店の方は、すべてのメニューが20％引きになります。\n※学生の方は、カットが3,300円になります（初めての方の割引と一緒には使えません）。\n※予約時間に15分以上遅れた場合、メニューを変更していただくことがあります。\n※平日の午前中にご来店の方には、ヘアケア用品のサンプルを差し上げます。"
+            }
+          ],
+          "notes": [],
+          "tip": "When two discounts can't combine, compare them and take the cheaper.",
+          "questions": [
+            {
+              "id": "q10",
+              "prompt": "初めてこの店に来る会社員が、カットとカラーをしてもらう場合、料金はいくらか。",
+              "choices": [
+                "9,900円",
+                "7,920円",
+                "8,800円",
+                "11,000円"
+              ],
+              "answerIndex": 1,
+              "kind": "条件",
+              "traps": [
+                "missed-condition",
+                null,
+                "changed-detail",
+                "missed-condition"
+              ],
+              "evidence": "※初めてご来店の方は、すべてのメニューが20％引きになります。",
+              "explanation": "The set price 9,900 minus 20% = 7,920 yen (2). 1 misses the discount, 3 discounts the two separate prices, and 4 adds them undiscounted."
+            },
+            {
+              "id": "q11",
+              "prompt": "初めてこの店に来る大学生が、カットだけをしてもらう場合、最も安い料金はいくらか。",
+              "choices": [
+                "3,520円",
+                "3,300円",
+                "2,640円",
+                "4,400円"
+              ],
+              "answerIndex": 1,
+              "kind": "条件",
+              "traps": [
+                "missed-condition",
+                null,
+                "missed-condition",
+                "missed-condition"
+              ],
+              "evidence": "※学生の方は、カットが3,300円になります（初めての方の割引と一緒には使えません）。",
+              "explanation": "First-visit price is 3,520 and the student price is 3,300; they can't combine, so 3,300 (2). 3 combines both, 1 is the worse option, and 4 has no discount."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

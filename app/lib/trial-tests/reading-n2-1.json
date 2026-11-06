@@ -1,0 +1,372 @@
+{
+  "version": 1,
+  "kind": "reading",
+  "title": "総合 1",
+  "level": "N2",
+  "sections": [
+    {
+      "type": "reading-short",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "職場の机の引き出しに、折りたたみの傘を一本入れておくようにしている。いわゆる「置き傘」だ。天気予報が外れて急に雨が降っても、慌てずに済む。ところが先日、傘を持たずに困っていた同僚に貸したところ、その傘は二度と戻ってこなかった。腹が立たなかったと言えばうそになる。それでも、困っている人に手を差し伸べられたのは、ほかでもない、余分な一本を用意していたからだ。備えとは、自分のためだけでなく、誰かのためのものでもあるのかもしれない。"
+            }
+          ],
+          "notes": [],
+          "tip": "The writer's view is the hedged last sentence.",
+          "questions": [
+            {
+              "id": "q1",
+              "prompt": "筆者の考えに合うものはどれか。",
+              "choices": [
+                "傘を人に貸すと、返ってこないことが多い。",
+                "天気予報は、よく外れる。",
+                "前もって用意しておくことは、他人を助けることにもつながる。",
+                "人に物を貸すべきではない。"
+              ],
+              "answerIndex": 2,
+              "kind": "主張",
+              "traps": [
+                "over-general",
+                "true-not-answer",
+                null,
+                "opposite"
+              ],
+              "evidence": "備えとは、自分のためだけでなく、誰かのためのものでもあるのかもしれない。",
+              "explanation": "Being prepared can also help others: 3. 1 goes too far from one case, 2 is a detail, and 4 contradicts the writer's attitude."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-mid",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "都会のマンションでは、隣に誰が住んでいるのか知らないという人も珍しくない。私もかつてはそうだった。あいさつをしても返事がないことがあり、<u>①面倒になってしまった</u>のだ。\n考えが変わったのは、数年前の大雪の日だった。エレベーターが止まり、上の階に住む高齢の女性が買い物に出られずに困っていた。その女性は一人暮らしで、家族は遠くに住んでいるという。たまたま同じ階の住人たちが顔見知りだったため、すぐに声をかけ合い、交代で食料を届けることができた。ふだんからあいさつを交わしていたことで、誰が助けを必要としているのかが<u>②わかっていた</u>のである。\n近所付き合いは、わずらわしく感じられることもある。しかし、いざというときに頼りになるのは、遠くの親戚より近くの他人だ。特別なことをする必要はない。顔を合わせたら会釈をし、ときどき天気の話をする。毎日の短いあいさつが、そのつながりの最初の一歩になるのではないだろうか。"
+            }
+          ],
+          "notes": [
+            {
+              "word": "会釈",
+              "gloss": "軽く頭を下げてあいさつすること"
+            }
+          ],
+          "tip": "① is explained in its own sentence; ② refers back to the woman's situation.",
+          "questions": [
+            {
+              "id": "q2",
+              "prompt": "筆者が<u>①面倒になってしまった</u>のはなぜか。",
+              "choices": [
+                "声をかけても、相手が答えてくれないことがあったから",
+                "隣に誰が住んでいるか、知らなかったから",
+                "マンションの住人が、少なかったから",
+                "高齢の女性に、手伝いを頼まれたから"
+              ],
+              "answerIndex": 0,
+              "kind": "理由",
+              "traps": [
+                null,
+                "true-not-answer",
+                "not-in-text",
+                "not-in-text"
+              ],
+              "evidence": "あいさつをしても返事がないことがあり、①面倒になってしまったのだ。",
+              "explanation": "Greetings sometimes got no reply: 1. 2 is the result, not the cause, and 3 and 4 aren't said."
+            },
+            {
+              "id": "q3",
+              "prompt": "<u>②わかっていた</u>とあるが、何がわかっていたのか。",
+              "choices": [
+                "エレベーターが止まった理由",
+                "食料を売っている店の場所",
+                "どの住人が、手助けを必要としているかということ",
+                "大雪がいつまで続くかということ"
+              ],
+              "answerIndex": 2,
+              "kind": "指示語",
+              "traps": [
+                "not-in-text",
+                "not-in-text",
+                null,
+                "not-in-text"
+              ],
+              "evidence": "ふだんからあいさつを交わしていたことで、誰が助けを必要としているのかが②わかっていたのである。",
+              "explanation": "They knew who needed help: 3. 1, 2 and 4 aren't what was known."
+            },
+            {
+              "id": "q4",
+              "prompt": "筆者の考えに合うものはどれか。",
+              "choices": [
+                "近所付き合いは、わずらわしいのでしないほうがいい。",
+                "困ったときは、遠くの親戚を頼るべきだ。",
+                "マンションでは、住人同士が毎日長く話すべきだ。",
+                "ふだんのあいさつが、困ったときに助け合える関係のもとになる。"
+              ],
+              "answerIndex": 3,
+              "kind": "主張",
+              "traps": [
+                "opposite",
+                "opposite",
+                "over-general",
+                null
+              ],
+              "evidence": "毎日の短いあいさつが、そのつながりの最初の一歩になるのではないだろうか。",
+              "explanation": "Everyday greetings build ties that help in a crisis: 4. 1 and 2 contradict the text, and 3 goes too far (特別なことをする必要はない)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-integrated",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "label": "A",
+              "text": "中学生や高校生の始業時間を、今より一時間遅くするべきだという意見がある。思春期の子どもは、体の仕組みとして夜型になりやすく、早起きが苦手だという研究がある。無理に早く起きて授業を受けても、頭が働かず、学習の効果が上がらない。睡眠時間を確保することは、成績だけでなく心の健康を守ることにもつながるだろう。"
+            },
+            {
+              "kind": "text",
+              "label": "B",
+              "text": "始業時間を遅くすれば、確かに生徒は長く眠れるかもしれない。しかし、その分、下校や部活動の終わりも遅くなる。共働きの家庭では、朝に子どもを送り出してから出勤する親も多く、生活のリズムが崩れてしまう。始業時間を変える前に、夜にスマートフォンを使う時間を見直すなど、家庭でできる工夫から始めるべきではないか。"
+            }
+          ],
+          "notes": [
+            {
+              "word": "思春期",
+              "gloss": "子どもから大人へ、体や心が大きく変わる時期"
+            }
+          ],
+          "tip": "B grants A's main benefit (確かに…かもしれない) before objecting.",
+          "questions": [
+            {
+              "id": "q5",
+              "prompt": "AとBのどちらの文章にも触れられている点は何か。",
+              "choices": [
+                "思春期の子どもは、夜型になりやすいこと",
+                "始業時間を遅くすれば、生徒がより長く眠れること",
+                "共働きの家庭の生活のリズムのこと",
+                "夜にスマートフォンを使う時間のこと"
+              ],
+              "answerIndex": 1,
+              "kind": "比較",
+              "traps": [
+                "true-not-answer",
+                null,
+                "true-not-answer",
+                "true-not-answer"
+              ],
+              "evidence": "始業時間を遅くすれば、確かに生徒は長く眠れるかもしれない。",
+              "explanation": "Both agree a later start means more sleep: 2. 1 is only in A, and 3 and 4 only in B."
+            },
+            {
+              "id": "q6",
+              "prompt": "AとBの筆者は、始業時間を遅くすることについてどのように考えているか。",
+              "choices": [
+                "AもBも、遅くするべきだと考えている。",
+                "Aは家庭でできる工夫から始めるべきだと考え、Bは遅くするべきだと考えている。",
+                "Aは遅くするべきだと考え、Bは先に家庭でできることを見直すべきだと考えている。",
+                "AもBも、部活動をなくすべきだと考えている。"
+              ],
+              "answerIndex": 2,
+              "kind": "比較",
+              "traps": [
+                "changed-detail",
+                "changed-detail",
+                null,
+                "not-in-text"
+              ],
+              "evidence": "始業時間を変える前に、夜にスマートフォンを使う時間を見直すなど、家庭でできる工夫から始めるべきではないか。",
+              "explanation": "A supports a later start; B wants home changes first: 3. 2 swaps them, and 1 and 4 fit neither."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-claim",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "何事も完璧にこなさなければ気が済まない人がいる。私もその一人だった。資料を作れば、細かな文字の大きさまで何度も直し、締め切りぎりぎりまで手放さない。周りからは「丁寧な仕事だ」とほめられたが、私自身はいつも疲れていた。\nあるとき、急ぎの仕事で、八割ほどの出来で資料を提出せざるをえなかった。叱られるのを覚悟していたが、上司の反応は意外なものだった。「早く出してくれたおかげで、みんなで意見を出し合えた」。実際、他の人の指摘によって、私一人では気づかなかった改善点がいくつも見つかり、最終的な資料は、私が一人で完璧を目指して作ったものより、ずっとよいものになった。\n完璧を目指すこと自体は悪いことではない。しかし、一人で抱え込んで完璧を求めると、<u>かえって質が下がる</u>こともある。時間をかけすぎて周りの意見を聞く機会を失ったり、疲れから大事な点を見落としたりするからだ。\n仕事の多くは、一人で完成させるものではなく、多くの人の手を経てよくなっていくものだ。まずは八割の出来で人に見せ、意見をもらって直していく。そのほうが、結果的によいものができるのではないだろうか。完璧を手放すことは、手を抜くことではなく、人と協力するための一つの方法なのだと思う。"
+            }
+          ],
+          "notes": [
+            {
+              "word": "気が済まない",
+              "gloss": "満足できず、落ち着かない"
+            },
+            {
+              "word": "抱え込ん",
+              "gloss": "（抱え込む）自分だけで持っていて、人にまかせない"
+            }
+          ],
+          "tip": "The reason follows the underline (〜からだ); the claim is the last paragraph.",
+          "questions": [
+            {
+              "id": "q7",
+              "prompt": "八割ほどの出来で資料を提出したとき、上司はどう言ったか。",
+              "choices": [
+                "不完全な資料を出したことを、叱った。",
+                "早く出したことで、皆で意見を出し合えたと評価した。",
+                "もっと時間をかけて、丁寧に作るよう言った。",
+                "文字の大きさを、直すよう指摘した。"
+              ],
+              "answerIndex": 1,
+              "kind": "詳細",
+              "traps": [
+                "opposite",
+                null,
+                "opposite",
+                "not-in-text"
+              ],
+              "evidence": "「早く出してくれたおかげで、みんなで意見を出し合えた」。",
+              "explanation": "The boss was glad it came early so the team could discuss it: 2. 1 and 3 contradict this, and 4 isn't said."
+            },
+            {
+              "id": "q8",
+              "prompt": "一人で完璧を求めると<u>かえって質が下がる</u>のはなぜか。",
+              "choices": [
+                "八割の出来では、上司に叱られるから",
+                "丁寧な仕事は、周りにほめられないから",
+                "他の人の意見を聞く時間がなくなったり、疲れて大切なことを見逃したりするから",
+                "完璧を目指すこと自体が、悪いことだから"
+              ],
+              "answerIndex": 2,
+              "kind": "理由",
+              "traps": [
+                "opposite",
+                "opposite",
+                null,
+                "opposite"
+              ],
+              "evidence": "時間をかけすぎて周りの意見を聞く機会を失ったり、疲れから大事な点を見落としたりするからだ。",
+              "explanation": "You miss others' input and overlook things when tired: 3. 4 is denied (悪いことではない), and 1 and 2 contradict the passage."
+            },
+            {
+              "id": "q9",
+              "prompt": "この文章で筆者が最も言いたいことは何か。",
+              "choices": [
+                "仕事は、八割の出来で終わらせてよい。",
+                "完璧を目指すのは、悪いことだ。",
+                "仕事は、一人で完成させるべきだ。",
+                "完璧を求めすぎず、早めに人に見せて協力して仕上げるほうがよい。"
+              ],
+              "answerIndex": 3,
+              "kind": "主張",
+              "traps": [
+                "changed-detail",
+                "opposite",
+                "opposite",
+                null
+              ],
+              "evidence": "完璧を手放すことは、手を抜くことではなく、人と協力するための一つの方法なのだと思う。",
+              "explanation": "Show work early and finish it together: 4. 1 drops the \"then improve it\" part, 2 is denied, and 3 is the opposite."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-info",
+      "passages": [
+        {
+          "lead": "以下は、ある市民ホールの施設利用料の案内である。",
+          "blocks": [
+            {
+              "kind": "table",
+              "head": [
+                "部屋",
+                "定員",
+                "午前（9:00〜12:00）",
+                "午後（13:00〜17:00）",
+                "夜間（18:00〜21:00）"
+              ],
+              "rows": [
+                [
+                  "大ホール",
+                  "500人",
+                  "30,000円",
+                  "40,000円",
+                  "45,000円"
+                ],
+                [
+                  "小ホール",
+                  "150人",
+                  "10,000円",
+                  "14,000円",
+                  "16,000円"
+                ],
+                [
+                  "練習室",
+                  "20人",
+                  "2,000円",
+                  "2,500円",
+                  "3,000円"
+                ]
+              ]
+            },
+            {
+              "kind": "text",
+              "text": "※市内の団体が利用する場合、利用料が半額になります。\n※入場料を取る催しの場合は、利用料が1.5倍になります（市内の団体の割引と一緒に使えます）。\n※予約は、利用日の6か月前から受け付けます。"
+            }
+          ],
+          "notes": [],
+          "tip": "Pick the room by size, the column by time, then apply each ※ in turn.",
+          "questions": [
+            {
+              "id": "q10",
+              "prompt": "市内の合唱団（30人）が、午後に練習をしたい。全員が入れる部屋のうち、最も安い利用料はいくらか。",
+              "choices": [
+                "1,250円",
+                "7,000円",
+                "14,000円",
+                "2,500円"
+              ],
+              "answerIndex": 1,
+              "kind": "条件",
+              "traps": [
+                "missed-condition",
+                null,
+                "missed-condition",
+                "missed-condition"
+              ],
+              "evidence": "※市内の団体が利用する場合、利用料が半額になります。",
+              "explanation": "Thirty people don't fit the practice room, so the small hall: 14,000, halved = 7,000 yen (2). 1 and 4 use the practice room, and 3 misses the discount."
+            },
+            {
+              "id": "q11",
+              "prompt": "市内の団体が、夜に大ホールで入場料を取るコンサートを開く場合、利用料はいくらか。",
+              "choices": [
+                "22,500円",
+                "67,500円",
+                "33,750円",
+                "45,000円"
+              ],
+              "answerIndex": 2,
+              "kind": "条件",
+              "traps": [
+                "missed-condition",
+                "missed-condition",
+                null,
+                "missed-condition"
+              ],
+              "evidence": "※入場料を取る催しの場合は、利用料が1.5倍になります（市内の団体の割引と一緒に使えます）。",
+              "explanation": "45,000 × 0.5 × 1.5 = 33,750 yen (3). 1 only halves, 2 only multiplies, and 4 applies neither."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

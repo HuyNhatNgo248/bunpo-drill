@@ -13,7 +13,7 @@ import { TrialTests } from "./TrialTests";
 const loadMotionFeatures = () => import("./motionFeatures").then((mod) => mod.default);
 
 /**
- * The page a signed-out visitor sees at /: what the app does, a sample question to answer, full tests to try, sign-up,
+ * The page a signed-out visitor sees at /: what the app does, a sample question to answer, full grammar, kanji and reading tests to try, sign-up,
  * and the days to the next exam.
  */
 export function Welcome({ exam, trials }: { exam: { date: string; daysLeft: number }; trials: TrialSummary[] }) {
@@ -29,12 +29,12 @@ export function Welcome({ exam, trials }: { exam: { date: string; daysLeft: numb
             <div className="flex min-w-0 flex-col gap-5">
               <p className="flex items-center gap-2 text-caption font-medium text-indigo">
                 <span className="rounded-full border border-indigo/25 bg-indigo/10 px-2.5 py-px font-semibold">JLPT N3・N2</span>
-                <Trans>Grammar mock tests</Trans>
+                <Trans>Grammar, kanji and reading practice</Trans>
               </p>
               {/* Japanese has no spaces to break at, so each phrase stays whole and lines break between them. */}
               <h1 className="text-3xl leading-snug font-bold tracking-tight md:text-hero">
                 <Trans>
-                  <span className="inline-block">Practice JLPT grammar</span>{" "}
+                  <span className="inline-block">Practice for the JLPT</span>{" "}
                   <span className="inline-block">
                     in <span className="text-primary">the real test's format</span>.
                   </span>
@@ -42,8 +42,8 @@ export function Welcome({ exam, trials }: { exam: { date: string; daysLeft: numb
               </h1>
               <p className="max-w-136 text-base leading-sentence text-subtle-foreground">
                 <Trans>
-                  Full mock tests in the same three formats as the real exam, graded as soon as you submit. The patterns you get
-                  wrong go straight to a review list.
+                  Practice sets for grammar, kanji and reading, in the same question formats as the real exam. Graded as soon as
+                  you submit, and what you get wrong goes straight to a review list.
                 </Trans>
               </p>
               <div className="flex flex-wrap gap-2.5 pt-1">

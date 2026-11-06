@@ -238,8 +238,8 @@ export type TestSummary = {
   patterns: string[];
 };
 
-/** A trial test as the welcome page shows it: no questions, and how many grammar points it tests. */
-export type TrialSummary = { id: string; title: string; level: Level; questionCount: number; patternCount: number };
+/** A trial test as the welcome page shows it: no questions. */
+export type TrialSummary = { id: string; kind: TestKind; title: string; level: Level; questionCount: number };
 
 /** A reading set as the reading page lists it. */
 export type ReadingSetSummary = {

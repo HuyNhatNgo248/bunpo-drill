@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
+import type { TestPayload } from "~/lib/payload";
 import { getTrialTest } from "~/lib/trials.server";
 import { action } from "../try-check";
 
 const ID = "n2-1";
 
-const PAYLOAD = getTrialTest(ID)!.payload;
+// n3-1 is a grammar test.
+const PAYLOAD = getTrialTest(ID)!.payload as TestPayload;
 
 /** The quiz's check of one part with no cookie: the part and the answers as JSON, the way its fetcher sends them. */
 function check(id: string, body: unknown) {

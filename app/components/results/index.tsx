@@ -27,6 +27,8 @@ export function Results({ results, notes = [], trial = false }: { results: Resul
   const { score, total } = results;
   const wrong = total - score;
   const markOf = gradedMarks(results.sections);
+  // A trial test leads back to the welcome page at /, as a grammar test does.
+  const kind = trial ? "grammar" : results.kind;
 
   return (
     <NotesProvider notes={notes}>
@@ -35,9 +37,9 @@ export function Results({ results, notes = [], trial = false }: { results: Resul
           guest={trial}
           mobileTitle={`${results.title} · ${t`Results`}`}
           back={
-            results.kind === "kanji"
+            kind === "kanji"
               ? { to: homeOf(results), label: t`Back to kanji` }
-              : results.kind === "reading"
+              : kind === "reading"
                 ? { to: homeOf(results), label: t`Back to reading` }
                 : undefined
           }
@@ -48,8 +50,8 @@ export function Results({ results, notes = [], trial = false }: { results: Resul
             level={results.level}
             meta={results.title}
             back={{
-              to: homeOf(results),
-              label: results.kind === "kanji" ? <Trans>← Kanji</Trans> : results.kind === "reading" ? <Trans>← Reading</Trans> : <Trans>← Mock tests</Trans>,
+              to: homeOf({ ...results, kind }),
+              label: kind === "kanji" ? <Trans>← Kanji</Trans> : kind === "reading" ? <Trans>← Reading</Trans> : <Trans>← Mock tests</Trans>,
             }}
           >
             <Trans>Results</Trans>

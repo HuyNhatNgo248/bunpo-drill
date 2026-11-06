@@ -1,0 +1,831 @@
+{
+  "version": 1,
+  "kind": "kanji",
+  "title": "総合 2",
+  "level": "N3",
+  "chapter": 1,
+  "words": [
+    {
+      "id": "n3-c1-書き初め",
+      "word": "書き初め",
+      "reading": "かきぞめ"
+    },
+    {
+      "id": "n3-c1-全て",
+      "word": "全て",
+      "reading": "すべて"
+    },
+    {
+      "id": "n3-c1-借地",
+      "word": "借地",
+      "reading": "しゃくち"
+    },
+    {
+      "id": "n3-c1-接近",
+      "word": "接近",
+      "reading": "せっきん"
+    },
+    {
+      "id": "n3-c1-要約",
+      "word": "要約",
+      "reading": "ようやく"
+    },
+    {
+      "id": "n3-c1-急坂",
+      "word": "急坂",
+      "reading": "きゅうはん"
+    },
+    {
+      "id": "n3-c1-油絵",
+      "word": "油絵",
+      "reading": "あぶらえ"
+    },
+    {
+      "id": "n3-c1-逆子",
+      "word": "逆子",
+      "reading": "さかご"
+    },
+    {
+      "id": "n3-c1-辞退",
+      "word": "辞退",
+      "reading": "じたい"
+    },
+    {
+      "id": "n3-c1-賛同",
+      "word": "賛同",
+      "reading": "さんどう"
+    },
+    {
+      "id": "n3-c1-有力者",
+      "word": "有力者",
+      "reading": "ゆうりょくしゃ"
+    },
+    {
+      "id": "n3-c1-商う",
+      "word": "商う",
+      "reading": "あきなう"
+    },
+    {
+      "id": "n3-c1-物件",
+      "word": "物件",
+      "reading": "ぶっけん"
+    },
+    {
+      "id": "n3-c1-習い事",
+      "word": "習い事",
+      "reading": "ならいごと"
+    },
+    {
+      "id": "n3-c1-新築",
+      "word": "新築",
+      "reading": "しんちく"
+    },
+    {
+      "id": "n3-c1-缶詰",
+      "word": "缶詰",
+      "reading": "かんづめ"
+    },
+    {
+      "id": "n3-c1-亡命",
+      "word": "亡命",
+      "reading": "ぼうめい"
+    },
+    {
+      "id": "n3-c1-身の代金",
+      "word": "身の代金",
+      "reading": "みのしろきん"
+    },
+    {
+      "id": "n3-c1-同情",
+      "word": "同情",
+      "reading": "どうじょう"
+    },
+    {
+      "id": "n3-c1-金婚式",
+      "word": "金婚式",
+      "reading": "きんこんしき"
+    },
+    {
+      "id": "n3-c1-老後",
+      "word": "老後",
+      "reading": "ろうご"
+    },
+    {
+      "id": "n3-c1-満たす",
+      "word": "満たす",
+      "reading": "みたす"
+    },
+    {
+      "id": "n3-c1-最初",
+      "word": "最初",
+      "reading": "さいしょ"
+    },
+    {
+      "id": "n3-c1-全部",
+      "word": "全部",
+      "reading": "ぜんぶ"
+    },
+    {
+      "id": "n3-c1-鉛筆",
+      "word": "鉛筆",
+      "reading": "えんぴつ"
+    },
+    {
+      "id": "n3-c1-調子",
+      "word": "調子",
+      "reading": "ちょうし"
+    },
+    {
+      "id": "n3-c1-復習",
+      "word": "復習",
+      "reading": "ふくしゅう"
+    },
+    {
+      "id": "n3-c1-保存",
+      "word": "保存",
+      "reading": "ほぞん"
+    },
+    {
+      "id": "n3-c1-本州",
+      "word": "本州",
+      "reading": "ほんしゅう"
+    },
+    {
+      "id": "n3-c1-側",
+      "word": "側",
+      "reading": "がわ"
+    },
+    {
+      "id": "n3-c1-厚い",
+      "word": "厚い",
+      "reading": "あつい"
+    },
+    {
+      "id": "n3-c1-情報",
+      "word": "情報",
+      "reading": "じょうほう"
+    },
+    {
+      "id": "n3-c1-供える",
+      "word": "供える",
+      "reading": "そなえる"
+    },
+    {
+      "id": "n3-c1-機会",
+      "word": "機会",
+      "reading": "きかい"
+    },
+    {
+      "id": "n3-c1-役割",
+      "word": "役割",
+      "reading": "やくわり"
+    },
+    {
+      "id": "n3-c1-寝室",
+      "word": "寝室",
+      "reading": "しんしつ"
+    },
+    {
+      "id": "n3-c1-植える",
+      "word": "植える",
+      "reading": "うえる"
+    },
+    {
+      "id": "n3-c1-模型",
+      "word": "模型",
+      "reading": "もけい"
+    },
+    {
+      "id": "n3-c1-救う",
+      "word": "救う",
+      "reading": "すくう"
+    },
+    {
+      "id": "n3-c1-秒",
+      "word": "秒",
+      "reading": "びょう"
+    },
+    {
+      "id": "n3-c1-恋人",
+      "word": "恋人",
+      "reading": "こいびと"
+    },
+    {
+      "id": "n3-c1-永遠",
+      "word": "永遠",
+      "reading": "えいえん"
+    },
+    {
+      "id": "n3-c1-体格",
+      "word": "体格",
+      "reading": "たいかく"
+    },
+    {
+      "id": "n3-c1-複雑",
+      "word": "複雑",
+      "reading": "ふくざつ"
+    },
+    {
+      "id": "n3-c1-箱",
+      "word": "箱",
+      "reading": "はこ"
+    }
+  ],
+  "sections": [
+    {
+      "type": "kanji-reading",
+      "questions": [
+        {
+          "id": "q1",
+          "wordId": "n3-c1-書き初め",
+          "prompt": "お正月に、【書き初め】をした。",
+          "choices": [
+            "かきそめ",
+            "かきはじめ",
+            "かきうい",
+            "かきぞめ"
+          ],
+          "answerIndex": 3,
+          "explanation": "書き初め is かきぞめ: 初め reads そめ here and becomes voiced ぞめ."
+        },
+        {
+          "id": "q2",
+          "wordId": "n3-c1-全て",
+          "prompt": "言いたいことは、【全て】言った。",
+          "choices": [
+            "すべて",
+            "まったて",
+            "ぜんて",
+            "そべて"
+          ],
+          "answerIndex": 0,
+          "explanation": "全て is すべて, everything."
+        },
+        {
+          "id": "q3",
+          "wordId": "n3-c1-借地",
+          "prompt": "祖父の家は、【借地】に建てられている。",
+          "choices": [
+            "しゃくち",
+            "しゃくじ",
+            "しゃっち",
+            "かりち"
+          ],
+          "answerIndex": 0,
+          "explanation": "借地 is しゃくち: シャク keeps its く, and 地 is unvoiced チ."
+        },
+        {
+          "id": "q4",
+          "wordId": "n3-c1-接近",
+          "prompt": "大きな台風が、東京に【接近】している。",
+          "choices": [
+            "せつきん",
+            "せっこん",
+            "せっきん",
+            "せつこん"
+          ],
+          "answerIndex": 2,
+          "explanation": "接近 is せっきん: セツ becomes せっ, and 近 is キン."
+        },
+        {
+          "id": "q5",
+          "wordId": "n3-c1-要約",
+          "prompt": "この文章を、百字で【要約】しなさい。",
+          "choices": [
+            "ようやく",
+            "よやく",
+            "いやく",
+            "ようかく"
+          ],
+          "answerIndex": 0,
+          "explanation": "要約 is ようやく: 要 is a long ヨウ. よやく is 予約."
+        },
+        {
+          "id": "q6",
+          "wordId": "n3-c1-急坂",
+          "prompt": "この先は【急坂】なので、車に注意してください。",
+          "choices": [
+            "きゅうばん",
+            "きゅうざか",
+            "きゅうさか",
+            "きゅうはん"
+          ],
+          "answerIndex": 3,
+          "explanation": "急坂 is きゅうはん: 坂 is on ハン here, unvoiced."
+        },
+        {
+          "id": "q7",
+          "wordId": "n3-c1-油絵",
+          "prompt": "美術の授業で、【油絵】をかいた。",
+          "choices": [
+            "あぶらかい",
+            "ゆえ",
+            "あぶらえ",
+            "ゆかい"
+          ],
+          "answerIndex": 2,
+          "explanation": "油絵 is あぶらえ: 油 is kun あぶら, and 絵 is エ."
+        },
+        {
+          "id": "q8",
+          "wordId": "n3-c1-逆子",
+          "prompt": "おなかの赤ちゃんは、【逆子】だった。",
+          "choices": [
+            "さかこ",
+            "さかご",
+            "ぎゃくし",
+            "ぎゃっこ"
+          ],
+          "answerIndex": 1,
+          "explanation": "逆子 is さかご: 逆 is kun さか, and 子 becomes voiced ご."
+        },
+        {
+          "id": "q9",
+          "wordId": "n3-c1-辞退",
+          "prompt": "せっかくですが、今回は【辞退】します。",
+          "choices": [
+            "じだい",
+            "したい",
+            "じたい",
+            "しだい"
+          ],
+          "answerIndex": 2,
+          "explanation": "辞退 is じたい: 辞 is voiced ジ, and 退 stays unvoiced タイ."
+        },
+        {
+          "id": "q10",
+          "wordId": "n3-c1-賛同",
+          "prompt": "多くの店が、この計画に【賛同】した。",
+          "choices": [
+            "さんどう",
+            "さんとう",
+            "ざんどう",
+            "さんどお"
+          ],
+          "answerIndex": 0,
+          "explanation": "賛同 is さんどう: 同 is voiced ドウ, written with う."
+        },
+        {
+          "id": "q11",
+          "wordId": "n3-c1-有力者",
+          "prompt": "町の【有力者】が、市長選挙に出る。",
+          "choices": [
+            "ゆりょくしゃ",
+            "ゆうりょくもの",
+            "ゆうりょくしゃ",
+            "ゆうりきしゃ"
+          ],
+          "answerIndex": 2,
+          "explanation": "有力者 is ゆうりょくしゃ: a long ユウ, and 者 is シャ here."
+        },
+        {
+          "id": "q12",
+          "wordId": "n3-c1-商う",
+          "prompt": "祖父は、この町で米を【商って】いた。",
+          "choices": [
+            "おこなって",
+            "あきなって",
+            "うしなって",
+            "やしなって"
+          ],
+          "answerIndex": 1,
+          "explanation": "商う is あきなう, to deal in. The others are other verbs ending in 〜なって."
+        },
+        {
+          "id": "q13",
+          "wordId": "n3-c1-物件",
+          "prompt": "駅の近くで、いい【物件】が見つかった。",
+          "choices": [
+            "ぶつけん",
+            "もっけん",
+            "ぶっけん",
+            "ものけん"
+          ],
+          "answerIndex": 2,
+          "explanation": "物件 is ぶっけん: ブツ becomes ぶっ before け."
+        },
+        {
+          "id": "q14",
+          "wordId": "n3-c1-習い事",
+          "prompt": "娘は、週に三回【習い事】に通っている。",
+          "choices": [
+            "ならいごと",
+            "ならいこと",
+            "しゅうじ",
+            "ならいじ"
+          ],
+          "answerIndex": 0,
+          "explanation": "習い事 is ならいごと: 事 is kun こと, voiced to ごと after 習い."
+        },
+        {
+          "id": "q15",
+          "wordId": "n3-c1-新築",
+          "prompt": "【新築】のマンションに引っこした。",
+          "choices": [
+            "しんぢく",
+            "しんちく",
+            "しんきく",
+            "しんじく"
+          ],
+          "answerIndex": 1,
+          "explanation": "新築 is しんちく: 築 is チク, unvoiced."
+        },
+        {
+          "id": "q16",
+          "wordId": "n3-c1-缶詰",
+          "prompt": "ももの【缶詰】を開けた。",
+          "choices": [
+            "かんづめ",
+            "かんずめ",
+            "かんつめ",
+            "かんずみ"
+          ],
+          "answerIndex": 0,
+          "explanation": "缶詰 is かんづめ: 詰める becomes づめ, written with づ."
+        },
+        {
+          "id": "q17",
+          "wordId": "n3-c1-亡命",
+          "prompt": "その選手は、外国に【亡命】した。",
+          "choices": [
+            "ぼうめい",
+            "もうめい",
+            "ぼうみょう",
+            "もうみょう"
+          ],
+          "answerIndex": 0,
+          "explanation": "亡命 is ぼうめい: 亡 is ボウ here, and 命 is メイ."
+        },
+        {
+          "id": "q18",
+          "wordId": "n3-c1-身の代金",
+          "prompt": "犯人は、【身の代金】を要求してきた。",
+          "choices": [
+            "みのだいきん",
+            "みのかわりきん",
+            "みのしろきん",
+            "しんのだいきん"
+          ],
+          "answerIndex": 2,
+          "explanation": "身の代金 is みのしろきん: 代 uses the special kun reading しろ."
+        },
+        {
+          "id": "q19",
+          "wordId": "n3-c1-同情",
+          "prompt": "友だちの話を聞いて、【同情】した。",
+          "choices": [
+            "どうせい",
+            "とうじょう",
+            "どうじょう",
+            "とうせい"
+          ],
+          "answerIndex": 2,
+          "explanation": "同情 is どうじょう: 同 is voiced ドウ, and 情 is ジョウ here, not セイ."
+        },
+        {
+          "id": "q20",
+          "wordId": "n3-c1-金婚式",
+          "prompt": "祖父母は、今年【金婚式】をむかえた。",
+          "choices": [
+            "きんごんしき",
+            "きんこんじき",
+            "きんこんしき",
+            "きんごんじき"
+          ],
+          "answerIndex": 2,
+          "explanation": "金婚式 is きんこんしき: 婚 stays unvoiced コン, and 式 stays シキ."
+        },
+        {
+          "id": "q21",
+          "wordId": "n3-c1-老後",
+          "prompt": "【老後】は、田舎でのんびり暮らしたい。",
+          "choices": [
+            "ろうこ",
+            "ろご",
+            "ろうご",
+            "ろこ"
+          ],
+          "answerIndex": 2,
+          "explanation": "老後 is ろうご: a long ロウ, and 後 is voiced ゴ."
+        },
+        {
+          "id": "q22",
+          "wordId": "n3-c1-満たす",
+          "prompt": "コップを水で【満たした】。",
+          "choices": [
+            "みたした",
+            "はたした",
+            "わたした",
+            "ためした"
+          ],
+          "answerIndex": 0,
+          "explanation": "満たす is みたす, to fill. The others are other verbs ending in 〜した."
+        }
+      ]
+    },
+    {
+      "type": "kanji-writing",
+      "questions": [
+        {
+          "id": "q23",
+          "wordId": "n3-c1-最初",
+          "prompt": "【さいしょ】の問題は、とても簡単だった。",
+          "choices": [
+            "最初",
+            "最所",
+            "再初",
+            "再所"
+          ],
+          "answerIndex": 0,
+          "explanation": "最初: 最 (most) + 初 (first). 再 and 所 only sound the same."
+        },
+        {
+          "id": "q24",
+          "wordId": "n3-c1-全部",
+          "prompt": "おかしを【ぜんぶ】食べてしまった。",
+          "choices": [
+            "前部",
+            "全分",
+            "全部",
+            "前分"
+          ],
+          "answerIndex": 2,
+          "explanation": "全部: 全 (all) + 部 (part). 前部 means the front part."
+        },
+        {
+          "id": "q25",
+          "wordId": "n3-c1-鉛筆",
+          "prompt": "【えんぴつ】をけずってから、テストを受けた。",
+          "choices": [
+            "沿筆",
+            "鉛必",
+            "鉛筆",
+            "沿必"
+          ],
+          "answerIndex": 2,
+          "explanation": "鉛筆: 鉛 (lead) has 金. 沿 shares the right side; 必 sounds like ひつ."
+        },
+        {
+          "id": "q26",
+          "wordId": "n3-c1-調子",
+          "prompt": "今日は、体の【ちょうし】がいい。",
+          "choices": [
+            "調子",
+            "長子",
+            "調仔",
+            "兆子"
+          ],
+          "answerIndex": 0,
+          "explanation": "調子: 調 (tune) + 子. 長 and 兆 only sound like ちょう."
+        },
+        {
+          "id": "q27",
+          "wordId": "n3-c1-復習",
+          "prompt": "テストの前に、しっかり【ふくしゅう】した。",
+          "choices": [
+            "復習",
+            "複習",
+            "腹習",
+            "復週"
+          ],
+          "answerIndex": 0,
+          "explanation": "復習: 復 has 彳. 複 and 腹 look alike; 週 sounds like しゅう."
+        },
+        {
+          "id": "q28",
+          "wordId": "n3-c1-保存",
+          "prompt": "このお菓子は、長く【ほぞん】できる。",
+          "choices": [
+            "保在",
+            "補存",
+            "保存",
+            "補在"
+          ],
+          "answerIndex": 2,
+          "explanation": "保存: 存 (exist) has 子. 在 has 土; 補 sounds like ほ."
+        },
+        {
+          "id": "q29",
+          "wordId": "n3-c1-本州",
+          "prompt": "新幹線で、【ほんしゅう】の北まで行った。",
+          "choices": [
+            "本州",
+            "本周",
+            "本舟",
+            "本酬"
+          ],
+          "answerIndex": 0,
+          "explanation": "本州: 州 (state) has three dots between lines. 周, 舟 and 酬 sound like しゅう."
+        },
+        {
+          "id": "q30",
+          "wordId": "n3-c1-側",
+          "prompt": "道の反対【がわ】に、コンビニがある。",
+          "choices": [
+            "側",
+            "則",
+            "測",
+            "領"
+          ],
+          "answerIndex": 0,
+          "explanation": "側 is 亻 + 則. 則 lacks 亻; 測 has 氵."
+        },
+        {
+          "id": "q31",
+          "wordId": "n3-c1-厚い",
+          "prompt": "この本は、とても【あつい】。",
+          "choices": [
+            "熱い",
+            "暑い",
+            "厚い",
+            "原い"
+          ],
+          "answerIndex": 2,
+          "explanation": "厚い means thick. 熱い (hot to the touch) and 暑い (hot weather) are also あつい."
+        },
+        {
+          "id": "q32",
+          "wordId": "n3-c1-情報",
+          "prompt": "ネットで、新しい店の【じょうほう】を調べた。",
+          "choices": [
+            "情報",
+            "情法",
+            "状報",
+            "状法"
+          ],
+          "answerIndex": 0,
+          "explanation": "情報: 情 (feeling) + 報 (report). 状 and 法 only sound alike."
+        },
+        {
+          "id": "q33",
+          "wordId": "n3-c1-供える",
+          "prompt": "お墓に、花を【そなえた】。",
+          "choices": [
+            "備えた",
+            "共えた",
+            "洪えた",
+            "供えた"
+          ],
+          "answerIndex": 3,
+          "explanation": "供える means to offer to the dead or gods. 備える (to prepare for) is also そなえる."
+        },
+        {
+          "id": "q34",
+          "wordId": "n3-c1-機会",
+          "prompt": "また【きかい】があったら、ぜひ来てください。",
+          "choices": [
+            "機会",
+            "機械",
+            "期会",
+            "期械"
+          ],
+          "answerIndex": 0,
+          "explanation": "機会 means a chance. 機械 (a machine) is also きかい."
+        },
+        {
+          "id": "q35",
+          "wordId": "n3-c1-役割",
+          "prompt": "チームでの自分の【やくわり】を考える。",
+          "choices": [
+            "役害",
+            "約割",
+            "投割",
+            "役割"
+          ],
+          "answerIndex": 3,
+          "explanation": "役割: 割 (divide) has 刂. 害 lacks it; 投 looks like 役."
+        },
+        {
+          "id": "q36",
+          "wordId": "n3-c1-寝室",
+          "prompt": "【しんしつ】のエアコンがこわれた。",
+          "choices": [
+            "寝質",
+            "侵室",
+            "寝室",
+            "侵質"
+          ],
+          "answerIndex": 2,
+          "explanation": "寝室: 寝 (sleep) + 室 (room). 侵 looks like 寝; 質 sounds like 室."
+        },
+        {
+          "id": "q37",
+          "wordId": "n3-c1-植える",
+          "prompt": "公園に、さくらの木を【うえた】。",
+          "choices": [
+            "値えた",
+            "置えた",
+            "植えた",
+            "直えた"
+          ],
+          "answerIndex": 2,
+          "explanation": "植える: 植 is 木 + 直. 値 and 置 also have 直."
+        },
+        {
+          "id": "q38",
+          "wordId": "n3-c1-模型",
+          "prompt": "兄は、船の【もけい】を作るのが趣味だ。",
+          "choices": [
+            "模形",
+            "漠型",
+            "模型",
+            "漠形"
+          ],
+          "answerIndex": 2,
+          "explanation": "模型: 型 (mould) has 土. 形 sounds the same; 漠 looks like 模."
+        },
+        {
+          "id": "q39",
+          "wordId": "n3-c1-救う",
+          "prompt": "ボランティアが、多くの動物を【すくった】。",
+          "choices": [
+            "救った",
+            "球った",
+            "求った",
+            "助った"
+          ],
+          "answerIndex": 0,
+          "explanation": "救う: 救 is 求 + 攵. 球 and 求 share 求."
+        },
+        {
+          "id": "q40",
+          "wordId": "n3-c1-秒",
+          "prompt": "あと五【びょう】で、新しい年になる。",
+          "choices": [
+            "砂",
+            "抄",
+            "妙",
+            "秒"
+          ],
+          "answerIndex": 3,
+          "explanation": "秒 is 禾 + 少. 砂, 抄 and 妙 also have 少."
+        },
+        {
+          "id": "q41",
+          "wordId": "n3-c1-恋人",
+          "prompt": "【こいびと】と、海へ行った。",
+          "choices": [
+            "恋人",
+            "変人",
+            "恋入",
+            "変入"
+          ],
+          "answerIndex": 0,
+          "explanation": "恋人: 恋 (love) has 心. 変人 is a strange person; 入 looks like 人."
+        },
+        {
+          "id": "q42",
+          "wordId": "n3-c1-永遠",
+          "prompt": "二人は、【えいえん】の愛をちかった。",
+          "choices": [
+            "永園",
+            "永遠",
+            "氷遠",
+            "氷園"
+          ],
+          "answerIndex": 1,
+          "explanation": "永遠: 永 (forever) + 遠 (far). 氷 looks like 永; 園 sounds like えん."
+        },
+        {
+          "id": "q43",
+          "wordId": "n3-c1-体格",
+          "prompt": "兄は、【たいかく】がいいので力が強い。",
+          "choices": [
+            "体各",
+            "休格",
+            "休各",
+            "体格"
+          ],
+          "answerIndex": 3,
+          "explanation": "体格: 格 has 木. 各 lacks it; 休 looks like 体."
+        },
+        {
+          "id": "q44",
+          "wordId": "n3-c1-複雑",
+          "prompt": "この町は、道が【ふくざつ】でまよいやすい。",
+          "choices": [
+            "復雑",
+            "複雑",
+            "腹雑",
+            "複離"
+          ],
+          "answerIndex": 1,
+          "explanation": "複雑: 複 has 衤 (clothes, layers). 復 has 彳; 腹 has 月."
+        },
+        {
+          "id": "q45",
+          "wordId": "n3-c1-箱",
+          "prompt": "引っこしの荷物を、【はこ】に入れた。",
+          "choices": [
+            "箸",
+            "節",
+            "範",
+            "箱"
+          ],
+          "answerIndex": 3,
+          "explanation": "箱 is ⺮ over 相. 箸, 節 and 範 also have ⺮."
+        }
+      ]
+    }
+  ]
+}

@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { routeArgs } from "#tests/helpers/route";
 import { thrownBy } from "#tests/helpers/thrown";
+import type { TestPayload } from "~/lib/payload";
 import { getTrialTest } from "~/lib/trials.server";
 import { action, loader } from "../try";
 
 const ID = "n3-1";
 
-const PAYLOAD = getTrialTest(ID)!.payload;
+// n3-1 is a grammar test.
+const PAYLOAD = getTrialTest(ID)!.payload as TestPayload;
 
 const url = (id: string) => `https://bunpo.test/try/${id}`;
 
@@ -21,6 +23,13 @@ describe("try loader", () => {
     expect(quiz).toMatchObject({ id: ID, title: PAYLOAD.title, level: "N3", questionCount: 45 });
     expect(JSON.stringify(quiz)).not.toContain("answerIndex");
     expect(draft).toEqual({ answers: {}, checks: {}, kept: [] });
+  });
+
+  it("gives the kanji and reading trial tests too", async () => {
+    for (const [id, kind] of [["kanji-n2-1", "kanji"], ["reading-n2-1", "reading"]]) {
+      const { quiz } = await loader(routeArgs<Parameters<typeof loader>[0]>(new Request(url(id)), { id }));
+      expect(quiz).toMatchObject({ id, kind, level: "N2" });
+    }
   });
 
   it("throws a 404 for a test that is not a trial test", async () => {

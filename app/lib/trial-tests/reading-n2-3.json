@@ -1,0 +1,373 @@
+{
+  "version": 1,
+  "kind": "reading",
+  "title": "総合 3",
+  "level": "N2",
+  "sections": [
+    {
+      "type": "reading-short",
+      "passages": [
+        {
+          "lead": "以下は、ある会社の社員に届いたメールの内容である。",
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "社員各位\n総務部です。来月から、会議室の予約方法を変更します。これまでは総務部に電話で申し込んでいただいていましたが、来月1日からは社内のシステムで各自予約してください。予約できるのは、使用日の2週間前からです。また、30分以上連絡なく使われなかった予約は、自動的に取り消されますのでご注意ください。\n不明な点は、総務部までお問い合わせください。"
+            }
+          ],
+          "notes": [],
+          "tip": "The main change is in the これまでは…が sentence.",
+          "questions": [
+            {
+              "id": "q1",
+              "prompt": "このメールの内容と合うものはどれか。",
+              "choices": [
+                "来月からも、総務部に電話で申し込む。",
+                "来月からは、社員が自分でシステムを使って会議室を予約する。",
+                "予約は、使用日の1か月前からできる。",
+                "予約は、使用日の前日まで受け付けない。"
+              ],
+              "answerIndex": 1,
+              "kind": "詳細",
+              "traps": [
+                "opposite",
+                null,
+                "changed-detail",
+                "not-in-text"
+              ],
+              "evidence": "これまでは総務部に電話で申し込んでいただいていましたが、来月1日からは社内のシステムで各自予約してください。",
+              "explanation": "From next month staff book rooms themselves in the system (2). 1 is the old way, 3 changes 2 weeks to a month, and 4 isn't said."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-mid",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "会議の準備、コピー用紙の補充、共有の冷蔵庫の掃除。職場には、誰の担当とも決まっていない<u>①小さな仕事</u>がたくさんある。こうした仕事は、評価されることもほとんどない。\n私の職場にも、そうした仕事を黙々と引き受けている先輩がいる。ある日、なぜそこまでするのかと尋ねると、先輩は「誰かがやらないと、みんなが困るから」と答えた。そして、「こういう仕事をしていると、職場のいろいろなことが見えてくるんだよ」と付け加えた。実際、先輩は、どの部署で何が足りないのか、誰が忙しそうにしているのかを、いつも誰よりも早く把握している。<u>②その情報</u>をもとに、困っている人にさりげなく声をかけ、職場全体がうまく回るように気を配っているのだ。\n目立たない仕事は、やっても認められにくい。しかし、それを引き受けることで、職場全体を見渡す目が養われることもあるのだろう。小さな仕事を軽く見ないことが、周りから信頼される人になるための第一歩なのかもしれない。"
+            }
+          ],
+          "notes": [
+            {
+              "word": "黙々と",
+              "gloss": "だまって、一生懸命に"
+            },
+            {
+              "word": "把握",
+              "gloss": "しっかり理解すること"
+            }
+          ],
+          "tip": "① is defined in the same sentence; ② points to the sentence before it.",
+          "questions": [
+            {
+              "id": "q2",
+              "prompt": "<u>①小さな仕事</u>とは、どのような仕事か。",
+              "choices": [
+                "担当が決まっていない、職場の細かな作業",
+                "部署ごとに決められた、重要な仕事",
+                "評価が高く、みんながやりたがる仕事",
+                "先輩から頼まれた、特別な仕事"
+              ],
+              "answerIndex": 0,
+              "kind": "指示語",
+              "traps": [
+                null,
+                "opposite",
+                "opposite",
+                "not-in-text"
+              ],
+              "evidence": "職場には、誰の担当とも決まっていない①小さな仕事がたくさんある。",
+              "explanation": "Small tasks nobody is assigned to: 1. 2 and 3 contradict the text, and 4 isn't said."
+            },
+            {
+              "id": "q3",
+              "prompt": "<u>②その情報</u>とは何か。",
+              "choices": [
+                "冷蔵庫の中に何が入っているかということ",
+                "会議でどんな話が出たかということ",
+                "どこで何が不足し、誰が忙しいかということ",
+                "誰が雑用を引き受けていないかということ"
+              ],
+              "answerIndex": 2,
+              "kind": "指示語",
+              "traps": [
+                "not-in-text",
+                "not-in-text",
+                null,
+                "not-in-text"
+              ],
+              "evidence": "実際、先輩は、どの部署で何が足りないのか、誰が忙しそうにしているのかを、いつも誰よりも早く把握している。",
+              "explanation": "Which departments lack something and who is busy: 3. 1, 2 and 4 aren't what the senior tracks."
+            },
+            {
+              "id": "q4",
+              "prompt": "筆者の考えに合うものはどれか。",
+              "choices": [
+                "雑用は、担当を決めて交代でするべきだ。",
+                "目立たない仕事は、評価されないのでしなくてよい。",
+                "雑用をする人は、もっと高く評価されるべきだ。",
+                "目立たない仕事を大切にすることで、周りから信頼されるようになる。"
+              ],
+              "answerIndex": 3,
+              "kind": "主張",
+              "traps": [
+                "not-in-text",
+                "opposite",
+                "not-in-text",
+                null
+              ],
+              "evidence": "小さな仕事を軽く見ないことが、周りから信頼される人になるための第一歩なのかもしれない。",
+              "explanation": "Valuing small jobs earns trust: 4. 2 is the opposite, and 1 and 3 aren't said."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-integrated",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "label": "A",
+              "text": "学校へのスマートフォンの持ち込みを認める中学校が出てきた。登下校中に事件や災害にあったとき、すぐに家族と連絡が取れる。授業中は電源を切ってかばんにしまうなど、ルールを決めておけば、学習の妨げにもならないはずだ。生徒の安全を考えれば、持ち込みを認めるのは当然の流れだと思う。"
+            },
+            {
+              "kind": "text",
+              "label": "B",
+              "text": "安全のために持ち込みを認めたいという気持ちはわかる。しかし、学校に持ってくれば、休み時間にゲームをしたり、写真を撮って勝手にインターネットに載せたりする生徒も出てくるだろう。そうしたトラブルへの対応は、教員の大きな負担になる。持ち込みを認めるなら、学校で預かる仕組みを作るなど、教員の負担を増やさない工夫が先に必要ではないか。"
+            }
+          ],
+          "notes": [],
+          "tip": "B's first sentence grants A's reason; its own point is in the last sentence.",
+          "questions": [
+            {
+              "id": "q5",
+              "prompt": "AとBのどちらの文章にも触れられている点は何か。",
+              "choices": [
+                "授業中は、電源を切るルール",
+                "写真をインターネットに載せる生徒",
+                "生徒の安全のために、スマートフォンを持たせたいという考え",
+                "教員の負担が増えること"
+              ],
+              "answerIndex": 2,
+              "kind": "比較",
+              "traps": [
+                "true-not-answer",
+                "true-not-answer",
+                null,
+                "true-not-answer"
+              ],
+              "evidence": "安全のために持ち込みを認めたいという気持ちはわかる。",
+              "explanation": "Both mention safety as the reason: 3. 1 is only in A, and 2 and 4 only in B."
+            },
+            {
+              "id": "q6",
+              "prompt": "AとBの筆者は、スマートフォンの持ち込みについてどのように考えているか。",
+              "choices": [
+                "AもBも、持ち込みは認めるべきではないと考えている。",
+                "Aは認めるのは当然だと考え、Bは教員の負担を増やさない工夫が先だと考えている。",
+                "Aは教員の負担を心配し、Bは認めるのは当然だと考えている。",
+                "AもBも、学校で預かるべきだと考えている。"
+              ],
+              "answerIndex": 1,
+              "kind": "比較",
+              "traps": [
+                "changed-detail",
+                null,
+                "changed-detail",
+                "changed-detail"
+              ],
+              "evidence": "生徒の安全を考えれば、持ち込みを認めるのは当然の流れだと思う。",
+              "explanation": "A says allowing it is natural; B wants teacher-friendly safeguards first: 2. 3 swaps them, and 1 and 4 fit neither."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-claim",
+      "passages": [
+        {
+          "blocks": [
+            {
+              "kind": "text",
+              "text": "一年中同じ野菜が店に並び、エアコンのおかげで部屋の温度もいつも一定に保たれている。便利な暮らしの中で、私たちは季節を感じる機会をずいぶん失ってしまったのではないか。\n数年前、田舎の古い家に引っ越した。冬は寒く、夏は暑い。最初は不便に感じたが、暮らしているうちに、季節の小さな変化に敏感になっていった。春になると庭の土のにおいが変わり、梅雨の前には虫の声が増える。近所の農家から分けてもらう野菜も、季節ごとに変わる。夏はきゅうりやトマト、冬は大根や白菜。旬の野菜は味が濃く、同じ料理でも季節によって違うおいしさがある。\nある研究によると、季節の変化を意識して暮らす人は、時間の流れを豊かに感じやすいという。毎日が同じように過ぎていくのではなく、季節ごとに区切りがあることで、一年が長く、色鮮やかに感じられるのだそうだ。\nもちろん、便利な暮らしを捨てる必要はない。ただ、旬の食べ物を選んでみる、窓を開けて外の空気を感じてみる。そんな小さなことからでも、季節を取り戻すことはできる。季節を感じることは、毎日の暮らしに<u>彩り</u>を加えることなのではないだろうか。"
+            }
+          ],
+          "notes": [
+            {
+              "word": "旬",
+              "gloss": "野菜や魚などが、いちばんおいしく、たくさんとれる時期"
+            },
+            {
+              "word": "彩り",
+              "gloss": "変化や楽しさ"
+            }
+          ],
+          "tip": "The details are in paragraphs 2 and 3; the claim follows ただ in the last paragraph.",
+          "questions": [
+            {
+              "id": "q7",
+              "prompt": "旬の野菜について、筆者はどう述べているか。",
+              "choices": [
+                "一年中、同じ野菜が手に入る。",
+                "近所の農家で、高く売られている。",
+                "冬は、きゅうりやトマトがおいしい。",
+                "季節ごとに、同じ料理でも違ったおいしさを楽しめる。"
+              ],
+              "answerIndex": 3,
+              "kind": "詳細",
+              "traps": [
+                "opposite",
+                "not-in-text",
+                "changed-detail",
+                null
+              ],
+              "evidence": "旬の野菜は味が濃く、同じ料理でも季節によって違うおいしさがある。",
+              "explanation": "Seasonal vegetables make the same dish taste different each season: 4. 1 is about shops, 3 swaps the seasons, and 2 isn't said."
+            },
+            {
+              "id": "q8",
+              "prompt": "研究によると、季節の変化を意識して暮らす人は、どうなるか。",
+              "choices": [
+                "毎日を、変化に富んだものとして感じやすくなる。",
+                "一年が、短く感じられるようになる。",
+                "便利な暮らしを、やめたくなる。",
+                "季節ごとに、引っ越したくなる。"
+              ],
+              "answerIndex": 0,
+              "kind": "詳細",
+              "traps": [
+                null,
+                "opposite",
+                "not-in-text",
+                "not-in-text"
+              ],
+              "evidence": "ある研究によると、季節の変化を意識して暮らす人は、時間の流れを豊かに感じやすいという。",
+              "explanation": "They feel time as richer and more varied: 1. 2 is the opposite (一年が長く), and 3 and 4 aren't said."
+            },
+            {
+              "id": "q9",
+              "prompt": "この文章で筆者が最も言いたいことは何か。",
+              "choices": [
+                "便利な暮らしをやめて、田舎に住むべきだ。",
+                "エアコンは、使わないほうがいい。",
+                "小さな工夫で季節を感じることが、生活を豊かにする。",
+                "旬の野菜だけを、食べるべきだ。"
+              ],
+              "answerIndex": 2,
+              "kind": "主張",
+              "traps": [
+                "opposite",
+                "over-general",
+                null,
+                "over-general"
+              ],
+              "evidence": "そんな小さなことからでも、季節を取り戻すことはできる。",
+              "explanation": "Small habits can bring the seasons back into life: 3. 1 is denied (捨てる必要はない), and 2 and 4 go too far."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reading-info",
+      "passages": [
+        {
+          "lead": "以下は、ある市の花火大会の有料観覧席の案内である。",
+          "blocks": [
+            {
+              "kind": "table",
+              "head": [
+                "席の種類",
+                "料金",
+                "定員",
+                "特典"
+              ],
+              "rows": [
+                [
+                  "いす席",
+                  "1人 4,000円",
+                  "1,000人",
+                  "うちわ"
+                ],
+                [
+                  "テーブル席（4人用）",
+                  "1卓 20,000円",
+                  "100卓",
+                  "うちわ・飲み物4本"
+                ],
+                [
+                  "ござ席（6人まで）",
+                  "1区画 12,000円",
+                  "200区画",
+                  "―"
+                ]
+              ]
+            },
+            {
+              "kind": "text",
+              "text": "※小学生以下の子どもは、大人のひざの上に座る場合に限り、いす席は無料です。\n※雨天の場合、翌日に順延します。翌日も中止の場合は、料金を全額返金します。\n※席の販売は、7月1日10時から、インターネットのみで行います。\n※会場への車での来場はできません。"
+            }
+          ],
+          "notes": [
+            {
+              "word": "順延",
+              "gloss": "予定の日を、次の日に延ばすこと"
+            }
+          ],
+          "tip": "Price each seat type for the group size, then compare.",
+          "questions": [
+            {
+              "id": "q10",
+              "prompt": "大人5人で、まとまって座れる席に、できるだけ安く座りたい。いくらかかるか。",
+              "choices": [
+                "20,000円",
+                "12,000円",
+                "40,000円",
+                "24,000円"
+              ],
+              "answerIndex": 1,
+              "kind": "条件",
+              "traps": [
+                "missed-condition",
+                null,
+                "missed-condition",
+                "changed-detail"
+              ],
+              "evidence": "1区画 12,000円",
+              "explanation": "A ござ area seats up to 6 for 12,000 yen (2). Five chairs cost 20,000, and five people need two tables (40,000)."
+            },
+            {
+              "id": "q11",
+              "prompt": "大雨で、花火大会が当日も翌日も中止になった場合、どうなるか。",
+              "choices": [
+                "料金の半分が、返金される。",
+                "次の年の席に、変更される。",
+                "返金は、されない。",
+                "料金の全額が、返金される。"
+              ],
+              "answerIndex": 3,
+              "kind": "条件",
+              "traps": [
+                "changed-detail",
+                "not-in-text",
+                "opposite",
+                null
+              ],
+              "evidence": "※雨天の場合、翌日に順延します。翌日も中止の場合は、料金を全額返金します。",
+              "explanation": "If both days are cancelled, the full price is refunded (4). 1 changes the amount, 3 is the opposite, and 2 isn't said."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

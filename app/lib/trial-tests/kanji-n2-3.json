@@ -1,0 +1,831 @@
+{
+  "version": 1,
+  "kind": "kanji",
+  "title": "総合 3",
+  "level": "N2",
+  "chapter": 1,
+  "words": [
+    {
+      "id": "n2-c1-炭火",
+      "word": "炭火",
+      "reading": "すみび"
+    },
+    {
+      "id": "n2-c1-延滞料金",
+      "word": "延滞料金",
+      "reading": "えんたいりょうきん"
+    },
+    {
+      "id": "n2-c1-節制",
+      "word": "節制",
+      "reading": "せっせい"
+    },
+    {
+      "id": "n2-c1-入隊",
+      "word": "入隊",
+      "reading": "にゅうたい"
+    },
+    {
+      "id": "n2-c1-茨城県",
+      "word": "茨城県",
+      "reading": "いばらきけん"
+    },
+    {
+      "id": "n2-c1-盛大",
+      "word": "盛大",
+      "reading": "せいだい"
+    },
+    {
+      "id": "n2-c1-定刻",
+      "word": "定刻",
+      "reading": "ていこく"
+    },
+    {
+      "id": "n2-c1-城壁",
+      "word": "城壁",
+      "reading": "じょうへき"
+    },
+    {
+      "id": "n2-c1-命日",
+      "word": "命日",
+      "reading": "めいにち"
+    },
+    {
+      "id": "n2-c1-教養",
+      "word": "教養",
+      "reading": "きょうよう"
+    },
+    {
+      "id": "n2-c1-株主総会",
+      "word": "株主総会",
+      "reading": "かぶぬしそうかい"
+    },
+    {
+      "id": "n2-c1-暴風雨",
+      "word": "暴風雨",
+      "reading": "ぼうふうう"
+    },
+    {
+      "id": "n2-c1-互換性",
+      "word": "互換性",
+      "reading": "ごかんせい"
+    },
+    {
+      "id": "n2-c1-嵐",
+      "word": "嵐",
+      "reading": "あらし"
+    },
+    {
+      "id": "n2-c1-一時限目",
+      "word": "一時限目",
+      "reading": "いちじげんめ"
+    },
+    {
+      "id": "n2-c1-隣室",
+      "word": "隣室",
+      "reading": "りんしつ"
+    },
+    {
+      "id": "n2-c1-鈍感",
+      "word": "鈍感",
+      "reading": "どんかん"
+    },
+    {
+      "id": "n2-c1-三拍子",
+      "word": "三拍子",
+      "reading": "さんびょうし"
+    },
+    {
+      "id": "n2-c1-古巣",
+      "word": "古巣",
+      "reading": "ふるす"
+    },
+    {
+      "id": "n2-c1-穴場",
+      "word": "穴場",
+      "reading": "あなば"
+    },
+    {
+      "id": "n2-c1-寄港",
+      "word": "寄港",
+      "reading": "きこう"
+    },
+    {
+      "id": "n2-c1-民話",
+      "word": "民話",
+      "reading": "みんわ"
+    },
+    {
+      "id": "n2-c1-水源",
+      "word": "水源",
+      "reading": "すいげん"
+    },
+    {
+      "id": "n2-c1-宴会",
+      "word": "宴会",
+      "reading": "えんかい"
+    },
+    {
+      "id": "n2-c1-批判",
+      "word": "批判",
+      "reading": "ひはん"
+    },
+    {
+      "id": "n2-c1-同盟",
+      "word": "同盟",
+      "reading": "どうめい"
+    },
+    {
+      "id": "n2-c1-丁字路",
+      "word": "丁字路",
+      "reading": "ていじろ"
+    },
+    {
+      "id": "n2-c1-招待",
+      "word": "招待",
+      "reading": "しょうたい"
+    },
+    {
+      "id": "n2-c1-切符",
+      "word": "切符",
+      "reading": "きっぷ"
+    },
+    {
+      "id": "n2-c1-宝石",
+      "word": "宝石",
+      "reading": "ほうせき"
+    },
+    {
+      "id": "n2-c1-処分",
+      "word": "処分",
+      "reading": "しょぶん"
+    },
+    {
+      "id": "n2-c1-訪問",
+      "word": "訪問",
+      "reading": "ほうもん"
+    },
+    {
+      "id": "n2-c1-編む",
+      "word": "編む",
+      "reading": "あむ"
+    },
+    {
+      "id": "n2-c1-破壊",
+      "word": "破壊",
+      "reading": "はかい"
+    },
+    {
+      "id": "n2-c1-励ます",
+      "word": "励ます",
+      "reading": "はげます"
+    },
+    {
+      "id": "n2-c1-防止",
+      "word": "防止",
+      "reading": "ぼうし"
+    },
+    {
+      "id": "n2-c1-塾",
+      "word": "塾",
+      "reading": "じゅく"
+    },
+    {
+      "id": "n2-c1-お菓子",
+      "word": "お菓子",
+      "reading": "おかし"
+    },
+    {
+      "id": "n2-c1-頑固",
+      "word": "頑固",
+      "reading": "がんこ"
+    },
+    {
+      "id": "n2-c1-人脈",
+      "word": "人脈",
+      "reading": "じんみゃく"
+    },
+    {
+      "id": "n2-c1-綿密",
+      "word": "綿密",
+      "reading": "めんみつ"
+    },
+    {
+      "id": "n2-c1-砂",
+      "word": "砂",
+      "reading": "すな"
+    },
+    {
+      "id": "n2-c1-追跡",
+      "word": "追跡",
+      "reading": "ついせき"
+    },
+    {
+      "id": "n2-c1-国籍",
+      "word": "国籍",
+      "reading": "こくせき"
+    },
+    {
+      "id": "n2-c1-裁判",
+      "word": "裁判",
+      "reading": "さいばん"
+    }
+  ],
+  "sections": [
+    {
+      "type": "kanji-reading",
+      "questions": [
+        {
+          "id": "q1",
+          "wordId": "n2-c1-炭火",
+          "prompt": "【炭火】で焼いた焼き鳥は、香りがいい。",
+          "choices": [
+            "すみひ",
+            "たんか",
+            "たんび",
+            "すみび"
+          ],
+          "answerIndex": 3,
+          "explanation": "炭火 is すみび: both kun readings, and 火 (ひ) becomes voiced び."
+        },
+        {
+          "id": "q2",
+          "wordId": "n2-c1-延滞料金",
+          "prompt": "本を返すのが遅れて、【延滞料金】を払った。",
+          "choices": [
+            "えんだいりょうきん",
+            "のびたいりょうきん",
+            "えんたいりょうきん",
+            "えんたいりょきん"
+          ],
+          "answerIndex": 2,
+          "explanation": "延滞料金 is えんたいりょうきん: 延 is エン, 滞 is unvoiced タイ, and 料 is long."
+        },
+        {
+          "id": "q3",
+          "wordId": "n2-c1-節制",
+          "prompt": "健康のために、お酒を【節制】している。",
+          "choices": [
+            "せつせい",
+            "せっせい",
+            "せつしょう",
+            "せっしょう"
+          ],
+          "answerIndex": 1,
+          "explanation": "節制 is せっせい: セツ shrinks to せっ, and 制 is セイ. せっしょう is 殺生, a different word."
+        },
+        {
+          "id": "q4",
+          "wordId": "n2-c1-入隊",
+          "prompt": "兄は、十八歳で自衛隊に【入隊】した。",
+          "choices": [
+            "にゅうだい",
+            "にゅたい",
+            "にゅうたい",
+            "にゅだい"
+          ],
+          "answerIndex": 2,
+          "explanation": "入隊 is にゅうたい: a long ニュウ and an unvoiced タイ. A long-vowel × voicing grid."
+        },
+        {
+          "id": "q5",
+          "wordId": "n2-c1-茨城県",
+          "prompt": "【茨城県】は、東京の北東にある。",
+          "choices": [
+            "いばらぎけん",
+            "いばらきけん",
+            "いばらじょうけん",
+            "いばらしろけん"
+          ],
+          "answerIndex": 1,
+          "explanation": "茨城県 is いばらきけん, with an unvoiced き. いばらぎ is a very common mistake."
+        },
+        {
+          "id": "q6",
+          "wordId": "n2-c1-盛大",
+          "prompt": "新しい市長の就任を祝って、【盛大】なパーティーが開かれた。",
+          "choices": [
+            "せいだい",
+            "もりだい",
+            "せいたい",
+            "じょうだい"
+          ],
+          "answerIndex": 0,
+          "explanation": "盛大 is せいだい: 盛 is セイ here, and 大 is voiced ダイ. もり is the kun reading; ジョウ is the 盛 of はん盛."
+        },
+        {
+          "id": "q7",
+          "wordId": "n2-c1-定刻",
+          "prompt": "電車は、【定刻】どおりに駅を出発した。",
+          "choices": [
+            "ていごく",
+            "じょうこく",
+            "ていこく",
+            "じょうごく"
+          ],
+          "answerIndex": 2,
+          "explanation": "定刻 is ていこく: 定 is テイ here, not ジョウ, and 刻 stays unvoiced コク."
+        },
+        {
+          "id": "q8",
+          "wordId": "n2-c1-城壁",
+          "prompt": "町の周りには、今も古い【城壁】が残っている。",
+          "choices": [
+            "じょへき",
+            "じょうべき",
+            "じょべき",
+            "じょうへき"
+          ],
+          "answerIndex": 3,
+          "explanation": "城壁 is じょうへき: 城 is a long ジョウ and 壁 stays unvoiced へき. A long-vowel × voicing grid."
+        },
+        {
+          "id": "q9",
+          "wordId": "n2-c1-命日",
+          "prompt": "祖父の【命日】に、家族でお墓参りをした。",
+          "choices": [
+            "みょうにち",
+            "めいび",
+            "めいにち",
+            "みょうび"
+          ],
+          "answerIndex": 2,
+          "explanation": "命日 is めいにち: 命 is メイ here, not ミョウ, and 日 is ニチ. みょうにち is 明日, a different word."
+        },
+        {
+          "id": "q10",
+          "wordId": "n2-c1-教養",
+          "prompt": "旅行は、【教養】を身につけるよい機会だ。",
+          "choices": [
+            "きょうよう",
+            "きょよう",
+            "きょうよ",
+            "きょよ"
+          ],
+          "answerIndex": 0,
+          "explanation": "教養 is きょうよう: both 教 (キョウ) and 養 (ヨウ) are long. きょよう is 許容, a different word."
+        },
+        {
+          "id": "q11",
+          "wordId": "n2-c1-株主総会",
+          "prompt": "【株主総会】で、社長が来年の計画を説明した。",
+          "choices": [
+            "かぶしゅそうかい",
+            "かぶぬしそうえ",
+            "かぶしゅそうえ",
+            "かぶぬしそうかい"
+          ],
+          "answerIndex": 3,
+          "explanation": "株主総会 is かぶぬしそうかい: 主 takes its kun ぬし, and 会 is カイ here, not エ."
+        },
+        {
+          "id": "q12",
+          "wordId": "n2-c1-暴風雨",
+          "prompt": "台風が近づき、【暴風雨】警報が出された。",
+          "choices": [
+            "ばくふうう",
+            "ぼうふうう",
+            "ぼうふうあめ",
+            "ばくふうあめ"
+          ],
+          "answerIndex": 1,
+          "explanation": "暴風雨 is ぼうふうう: 暴 is ボウ here, not バク, and 雨 is the on reading ウ."
+        },
+        {
+          "id": "q13",
+          "wordId": "n2-c1-互換性",
+          "prompt": "このソフトは、古いパソコンとの【互換性】がない。",
+          "choices": [
+            "ごがんせい",
+            "ごかんしょう",
+            "ごがんしょう",
+            "ごかんせい"
+          ],
+          "answerIndex": 3,
+          "explanation": "互換性 is ごかんせい: 換 stays unvoiced カン, and 性 is セイ here, not ショウ."
+        },
+        {
+          "id": "q14",
+          "wordId": "n2-c1-嵐",
+          "prompt": "【嵐】が過ぎて、空がすっかり晴れた。",
+          "choices": [
+            "あられ",
+            "ふぶき",
+            "たつまき",
+            "あらし"
+          ],
+          "answerIndex": 3,
+          "explanation": "嵐 is あらし (storm). あられ (hail), ふぶき (blizzard) and たつまき (tornado) are other weather words."
+        },
+        {
+          "id": "q15",
+          "wordId": "n2-c1-一時限目",
+          "prompt": "月曜日の【一時限目】は、数学だ。",
+          "choices": [
+            "いちじかんめ",
+            "いちじげんめ",
+            "いちじけんめ",
+            "いちじかぎめ"
+          ],
+          "answerIndex": 1,
+          "explanation": "一時限目 is いちじげんめ: 限 is the voiced on reading ゲン. いちじかんめ is 一時間目."
+        },
+        {
+          "id": "q16",
+          "wordId": "n2-c1-隣室",
+          "prompt": "【隣室】から、話し声が聞こえてくる。",
+          "choices": [
+            "りんじつ",
+            "りんしつ",
+            "となりしつ",
+            "りんむろ"
+          ],
+          "answerIndex": 1,
+          "explanation": "隣室 is りんしつ: 隣 is リン here, not となり, and 室 stays unvoiced シツ."
+        },
+        {
+          "id": "q17",
+          "wordId": "n2-c1-鈍感",
+          "prompt": "痛みに【鈍感】な人は、けがに気づかないことがある。",
+          "choices": [
+            "とんがん",
+            "どんがん",
+            "どんかん",
+            "とんかん"
+          ],
+          "answerIndex": 2,
+          "explanation": "鈍感 is どんかん: 鈍 is voiced ドン and 感 stays unvoiced カン. A voicing × voicing grid."
+        },
+        {
+          "id": "q18",
+          "wordId": "n2-c1-三拍子",
+          "prompt": "彼は、走る・打つ・守るの【三拍子】そろった選手だ。",
+          "choices": [
+            "さんぴょうし",
+            "さんはくし",
+            "さんぱくし",
+            "さんびょうし"
+          ],
+          "answerIndex": 3,
+          "explanation": "三拍子 is さんびょうし: 拍 reads ヒョウ here and becomes voiced びょう after さん."
+        },
+        {
+          "id": "q19",
+          "wordId": "n2-c1-古巣",
+          "prompt": "退職した先輩が、久しぶりに【古巣】の会社を訪ねてきた。",
+          "choices": [
+            "ふるそう",
+            "こす",
+            "こそう",
+            "ふるす"
+          ],
+          "answerIndex": 3,
+          "explanation": "古巣 is ふるす, both kun readings. コ and ソウ are the on readings."
+        },
+        {
+          "id": "q20",
+          "wordId": "n2-c1-穴場",
+          "prompt": "平日の朝は、この温泉が【穴場】だ。",
+          "choices": [
+            "あなじょう",
+            "けつば",
+            "あなば",
+            "けつじょう"
+          ],
+          "answerIndex": 2,
+          "explanation": "穴場 is あなば, both kun readings. ケツ and ジョウ are the on readings."
+        },
+        {
+          "id": "q21",
+          "wordId": "n2-c1-寄港",
+          "prompt": "客船が、横浜に【寄港】した。",
+          "choices": [
+            "きこう",
+            "よりこう",
+            "きみなと",
+            "きっこう"
+          ],
+          "answerIndex": 0,
+          "explanation": "寄港 is きこう: 寄 is キ here, not より, and 港 is コウ with no small っ."
+        },
+        {
+          "id": "q22",
+          "wordId": "n2-c1-民話",
+          "prompt": "この地方には、たくさんの【民話】が伝わっている。",
+          "choices": [
+            "たみわ",
+            "みんか",
+            "たみか",
+            "みんわ"
+          ],
+          "answerIndex": 3,
+          "explanation": "民話 is みんわ: 民 is ミン here, not たみ, and 話 is ワ."
+        }
+      ]
+    },
+    {
+      "type": "kanji-writing",
+      "questions": [
+        {
+          "id": "q23",
+          "wordId": "n2-c1-水源",
+          "prompt": "この川の【すいげん】は、北の山にある。",
+          "choices": [
+            "水原",
+            "氷源",
+            "氷原",
+            "水源"
+          ],
+          "answerIndex": 3,
+          "explanation": "水源 is a water source, with 源 (氵). 原 is 源 without 氵; 氷 looks like 水. 氷原 is a different word."
+        },
+        {
+          "id": "q24",
+          "wordId": "n2-c1-宴会",
+          "prompt": "金曜日の夜、会社の【えんかい】に参加した。",
+          "choices": [
+            "演会",
+            "宴回",
+            "宴会",
+            "演回"
+          ],
+          "answerIndex": 2,
+          "explanation": "宴会 is a banquet or party, with 宴 (宀). 演 is a same-sound エン; 回 is a same-sound カイ."
+        },
+        {
+          "id": "q25",
+          "wordId": "n2-c1-批判",
+          "prompt": "新しい法律に、多くの【ひはん】が集まった。",
+          "choices": [
+            "批半",
+            "比判",
+            "批判",
+            "比半"
+          ],
+          "answerIndex": 2,
+          "explanation": "批判 is criticism. 比 is 批 without 扌; 半 is 判 without 刂."
+        },
+        {
+          "id": "q26",
+          "wordId": "n2-c1-同盟",
+          "prompt": "両国は、経済の分野で【どうめい】を結んだ。",
+          "choices": [
+            "洞明",
+            "同明",
+            "同盟",
+            "洞盟"
+          ],
+          "answerIndex": 2,
+          "explanation": "同盟 is an alliance, with 盟 (皿 under 明). 洞 is a same-sound ドウ look-alike; 明 is 盟 without 皿."
+        },
+        {
+          "id": "q27",
+          "wordId": "n2-c1-丁字路",
+          "prompt": "この先の【ていじろ】を、右に曲がってください。",
+          "choices": [
+            "丁字露",
+            "丁事路",
+            "丁字路",
+            "丁事露"
+          ],
+          "answerIndex": 2,
+          "explanation": "丁字路 is a T-junction, with 路 (road). 露 (dew) contains 路; 事 is a same-sound ジ."
+        },
+        {
+          "id": "q28",
+          "wordId": "n2-c1-招待",
+          "prompt": "大学時代の友人の結婚式に【しょうたい】された。",
+          "choices": [
+            "紹待",
+            "招待",
+            "招持",
+            "紹持"
+          ],
+          "answerIndex": 1,
+          "explanation": "招 (with 扌, to beckon) is invite; 紹 (with 糸) is the 紹 of 紹介. 待 (wait) has 彳; 持 (hold) has 扌. Look-alike traps."
+        },
+        {
+          "id": "q29",
+          "wordId": "n2-c1-切符",
+          "prompt": "駅で、大阪までの【きっぷ】を買った。",
+          "choices": [
+            "切府",
+            "切付",
+            "切符",
+            "切布"
+          ],
+          "answerIndex": 2,
+          "explanation": "切符 is a ticket, with 符 (⺮ + 付). 府, 付 and 布 also read フ but aren't used here."
+        },
+        {
+          "id": "q30",
+          "wordId": "n2-c1-宝石",
+          "prompt": "母の指輪には、小さな青い【ほうせき】がついている。",
+          "choices": [
+            "豊石",
+            "宝右",
+            "宝石",
+            "豊右"
+          ],
+          "answerIndex": 2,
+          "explanation": "宝石 is a jewel: treasure (宝) + stone (石). 豊 is a same-sound ホウ; 右 (right) looks like 石."
+        },
+        {
+          "id": "q31",
+          "wordId": "n2-c1-処分",
+          "prompt": "使わなくなった家具を、【しょぶん】した。",
+          "choices": [
+            "処粉",
+            "所分",
+            "処分",
+            "所粉"
+          ],
+          "answerIndex": 2,
+          "explanation": "処分 is getting rid of. 所 is a same-sound ショ; 粉 (flour) is 分 with 米."
+        },
+        {
+          "id": "q32",
+          "wordId": "n2-c1-訪問",
+          "prompt": "来週、取引先の会社を【ほうもん】する予定だ。",
+          "choices": [
+            "放問",
+            "訪門",
+            "訪問",
+            "放門"
+          ],
+          "answerIndex": 2,
+          "explanation": "訪問 is a visit, with 問 (口 inside 門). 放 is a same-sound ホウ; 門 (gate) is 問 without 口."
+        },
+        {
+          "id": "q33",
+          "wordId": "n2-c1-編む",
+          "prompt": "祖母が、セーターを【あんで】くれた。",
+          "choices": [
+            "偏んで",
+            "遍んで",
+            "編んで",
+            "篇んで"
+          ],
+          "answerIndex": 2,
+          "explanation": "編む is written 編 (糸). 偏, 遍 and 篇 share its right part but are other kanji."
+        },
+        {
+          "id": "q34",
+          "wordId": "n2-c1-破壊",
+          "prompt": "森林の【はかい】が、世界中で問題になっている。",
+          "choices": [
+            "破懐",
+            "波壊",
+            "破壊",
+            "波懐"
+          ],
+          "answerIndex": 2,
+          "explanation": "破壊 is destruction, with 壊 (土). 懐 (忄) is a same-sound カイ look-alike; 波 is a same-sound ハ."
+        },
+        {
+          "id": "q35",
+          "wordId": "n2-c1-励ます",
+          "prompt": "落ち込んでいる友人を、手紙で【はげました】。",
+          "choices": [
+            "激ました",
+            "劇ました",
+            "励ました",
+            "勧ました"
+          ],
+          "answerIndex": 2,
+          "explanation": "励ます is written 励 (厂 + 万 + 力). 激 reads はげ in 激しい but not here; 劇 and 勧 are look-alikes."
+        },
+        {
+          "id": "q36",
+          "wordId": "n2-c1-防止",
+          "prompt": "事故を【ぼうし】するために、信号が増やされた。",
+          "choices": [
+            "防正",
+            "防止",
+            "坊止",
+            "坊正"
+          ],
+          "answerIndex": 1,
+          "explanation": "防止 is prevention, with 防 (阝). 坊 (土) is a same-sound ボウ look-alike; 正 looks like 止."
+        },
+        {
+          "id": "q37",
+          "wordId": "n2-c1-塾",
+          "prompt": "駅前の【じゅく】で、英語を教えるアルバイトをしている。",
+          "choices": [
+            "熟",
+            "孰",
+            "勢",
+            "塾"
+          ],
+          "answerIndex": 3,
+          "explanation": "塾 (cram school) has 土 at the bottom. 熟 (ripe) has 灬 and also reads ジュク; 孰 and 勢 are look-alikes."
+        },
+        {
+          "id": "q38",
+          "wordId": "n2-c1-お菓子",
+          "prompt": "旅行のおみやげに、地元の【おかし】を買った。",
+          "choices": [
+            "お果子",
+            "お菓子",
+            "お課子",
+            "お歌子"
+          ],
+          "answerIndex": 1,
+          "explanation": "お菓子 is sweets, with 菓 (艹 over 果). 果, 課 and 歌 also read カ but aren't used here."
+        },
+        {
+          "id": "q39",
+          "wordId": "n2-c1-頑固",
+          "prompt": "【がんこ】な汚れも、この洗剤ならすぐ落ちる。",
+          "choices": [
+            "頑個",
+            "頑固",
+            "顔固",
+            "顔個"
+          ],
+          "answerIndex": 1,
+          "explanation": "頑固 is stubborn. 顔 is a same-sound ガン with 頁; 個 is a same-sound コ with 固 inside."
+        },
+        {
+          "id": "q40",
+          "wordId": "n2-c1-人脈",
+          "prompt": "起業するには、幅広い【じんみゃく】が必要だ。",
+          "choices": [
+            "人派",
+            "人脈",
+            "仁脈",
+            "仁派"
+          ],
+          "answerIndex": 1,
+          "explanation": "人脈 is connections, with 脈 (月). 派 (氵) shares its right part; 仁 is a same-sound ジン."
+        },
+        {
+          "id": "q41",
+          "wordId": "n2-c1-綿密",
+          "prompt": "工事の前に、【めんみつ】な計画を立てる必要がある。",
+          "choices": [
+            "面蜜",
+            "面密",
+            "綿密",
+            "綿蜜"
+          ],
+          "answerIndex": 2,
+          "explanation": "綿密 is meticulous: cotton (綿) + dense (密). 面 is a same-sound メン; 蜜 (honey) is a same-sound ミツ look-alike."
+        },
+        {
+          "id": "q42",
+          "wordId": "n2-c1-砂",
+          "prompt": "海で遊んだら、靴の中に【すな】が入った。",
+          "choices": [
+            "秒",
+            "砂",
+            "妙",
+            "炒"
+          ],
+          "answerIndex": 1,
+          "explanation": "砂 (sand) is 石 + 少. 秒, 妙 and 炒 also have 少 but are other kanji."
+        },
+        {
+          "id": "q43",
+          "wordId": "n2-c1-追跡",
+          "prompt": "警察は、逃げた車を【ついせき】した。",
+          "choices": [
+            "追跡",
+            "追積",
+            "退跡",
+            "退積"
+          ],
+          "answerIndex": 0,
+          "explanation": "追跡 is pursuit, with 跡 (足, track). 積 is a same-sound セキ; 退 looks like 追."
+        },
+        {
+          "id": "q44",
+          "wordId": "n2-c1-国籍",
+          "prompt": "このクラスには、十か国の【こくせき】の学生がいる。",
+          "choices": [
+            "国積",
+            "国績",
+            "国籍",
+            "国席"
+          ],
+          "answerIndex": 2,
+          "explanation": "国籍 is nationality, with 籍 (⺮, register). 積, 績 and 席 also read セキ but aren't used here."
+        },
+        {
+          "id": "q45",
+          "wordId": "n2-c1-裁判",
+          "prompt": "その事件の【さいばん】は、一年以上続いた。",
+          "choices": [
+            "栽判",
+            "裁伴",
+            "栽伴",
+            "裁判"
+          ],
+          "answerIndex": 3,
+          "explanation": "裁判 is a trial, with 裁 (衣). 栽 (木) is a same-sound サイ look-alike; 伴 looks like 判."
+        }
+      ]
+    }
+  ]
+}
