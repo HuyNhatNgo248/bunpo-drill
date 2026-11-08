@@ -31,15 +31,29 @@ export function SectionReview({ section }: { section: ResultSection }) {
   );
 }
 
-/** A graded part's passages and questions. Each question card is its question's anchor; `questionClassName` goes on it. */
-export function ReviewGroups({ section, questionClassName }: { section: ResultSection; questionClassName?: string }) {
-  return section.groups.map((group, g) => (
-    <Fragment key={g}>
-      {group.segments && <PassageReview segments={group.segments} />}
-      {group.reading && <ReadingPassageReview passage={group.reading} />}
-      {group.questions.map((question) => (
-        <QuestionReview key={question.id} question={question} className={questionClassName} />
-      ))}
-    </Fragment>
-  ));
+/**
+ * A graded part's passages and questions. Each passage pins at the top while its own questions scroll by: below the
+ * quiz's pinned header or progress bar when `inQuiz`. Each question card is its question's anchor and lands below both.
+ */
+export function ReviewGroups({ section, inQuiz = false }: { section: ResultSection; inQuiz?: boolean }) {
+  const pin = inQuiz ? "top-16 md:top-24" : "top-4 md:top-6";
+  const landBelowPassage = inQuiz
+    ? "scroll-mt-passage md:scroll-mt-passage-desktop"
+    : "scroll-mt-passage-results md:scroll-mt-passage-results-desktop";
+  const land = inQuiz ? "scroll-mt-20 md:scroll-mt-24" : undefined;
+  return section.groups.map((group, g) => {
+    const passage = group.segments || group.reading;
+    const cards = group.questions.map((question) => (
+      <QuestionReview key={question.id} question={question} className={passage ? landBelowPassage : land} />
+    ));
+    if (!passage) return <Fragment key={g}>{cards}</Fragment>;
+    // Its own box, so the passage only stays pinned while its own questions scroll by.
+    return (
+      <div key={g} className="flex flex-col gap-2.5 md:gap-3">
+        {group.segments && <PassageReview segments={group.segments} className={pin} />}
+        {group.reading && <ReadingPassageReview passage={group.reading} className={pin} />}
+        {cards}
+      </div>
+    );
+  });
 }

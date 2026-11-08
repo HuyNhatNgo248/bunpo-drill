@@ -58,8 +58,7 @@ export function Section({
         </p>
       </div>
 
-      {/* Lands below the quiz's pinned header (phone) or progress bar (desktop), as its question cards do. */}
-      {checked && <ReviewGroups section={checked} questionClassName="scroll-mt-20 md:scroll-mt-24" />}
+      {checked && <ReviewGroups section={checked} inQuiz />}
 
       {!checked && section.groups.map((group, g) => {
         const cards = group.questions.map((question) => (

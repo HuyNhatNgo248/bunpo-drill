@@ -35,7 +35,7 @@ msgstr "{again, plural, one {Study it again} other {Study the # again}}"
 msgid "{again} needed again"
 msgstr "{again} needed again"
 
-#: app/components/home/test-list/TestRow.tsx:40
+#: app/components/home/test-list/TestRow.tsx:43
 #: app/components/reading/SetRow.tsx:40
 msgid "{answered} / {total} answered"
 msgstr "{answered} / {total} answered"
@@ -68,6 +68,10 @@ msgstr "{learned} learned"
 #: app/components/quiz/SubmitBar.tsx:59
 msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
+
+#: app/components/home/test-list/WeekReview.tsx:20
+msgid "{left} / {total} left"
+msgstr "{left} / {total} left"
 
 #: app/components/flashcards/index.tsx:78
 msgid "{left} of {words} words in this chapter still to learn · {togo}"
@@ -113,7 +117,7 @@ msgstr "{strokes, plural, one {# stroke} other {# strokes}}"
 msgid "{taken} / {total} done"
 msgstr "{taken} / {total} done"
 
-#: app/components/home/test-list/index.tsx:63
+#: app/components/home/test-list/index.tsx:65
 msgid "{taken} / {total} taken"
 msgstr "{taken} / {total} taken"
 
@@ -133,8 +137,7 @@ msgstr "{time} on it · target {goal}"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
-#: app/components/home/test-list/TestRow.tsx:48
-#: app/components/home/test-list/TestRow.tsx:68
+#: app/components/home/test-list/TestRow.tsx:50
 #: app/components/quiz/index.tsx:104
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
@@ -489,7 +492,7 @@ msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:63
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/reading/SetRow.tsx:71
 msgid "Continue"
 msgstr "Continue"
@@ -675,7 +678,7 @@ msgstr "Grammar form"
 msgid "Grammar in a passage"
 msgstr "Grammar in a passage"
 
-#: app/components/home/test-list/WeekReview.tsx:17
+#: app/components/home/test-list/WeekReview.tsx:20
 msgid "Grammar to review"
 msgstr "Grammar to review"
 
@@ -1173,7 +1176,7 @@ msgstr "Reset progress?"
 msgid "Reset your password"
 msgstr "Reset your password"
 
-#: app/components/home/test-list/TestRow.tsx:58
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:30
 #: app/components/reading/SetRow.tsx:66
 #: app/components/results/index.tsx:38
@@ -1307,7 +1310,7 @@ msgstr "Slot {n}"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: app/components/home/test-list/TestRow.tsx:70
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
 #: app/components/reading/SetRow.tsx:78
 #: app/components/welcome/TrialTests.tsx:109
@@ -1583,17 +1586,17 @@ msgstr "We send a reset link here when you forget your password."
 msgid "Week"
 msgstr "Week"
 
-#: app/components/home/test-list/index.tsx:52
-#: app/components/home/test-list/index.tsx:60
+#: app/components/home/test-list/index.tsx:54
+#: app/components/home/test-list/index.tsx:62
 #: app/lib/sections.ts:103
 msgid "Week {week}"
 msgstr "Week {week}"
 
-#: app/components/home/test-list/index.tsx:47
+#: app/components/home/test-list/index.tsx:49
 msgid "Weeks"
 msgstr "Weeks"
 
-#: app/components/results/section-review/ReadingPassageReview.tsx:21
+#: app/components/results/section-review/ReadingPassageReview.tsx:22
 msgid "Where the answer is"
 msgstr "Where the answer is"
 

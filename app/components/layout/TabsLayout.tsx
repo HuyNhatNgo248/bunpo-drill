@@ -31,13 +31,31 @@ export function TabsLayout() {
     // On a phone the tab bar is fixed to the foot of the screen, so the page leaves room for it.
     <div className="flex min-h-screen flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
       <AppHeader account />
-      <main className="mx-auto flex w-full max-w-260 flex-1 flex-col gap-4 px-4 pt-3 pb-10 md:gap-6 md:px-6 md:pt-6 md:pb-16">
+      <main className="mx-auto flex w-full max-w-260 flex-1 flex-col gap-4 px-4 pt-3 pb-10 md:gap-6 md:px-6 md:pt-8 md:pb-16">
         {/* The same on every tab, so nothing moves: the level (greyed on the notes, which aren't split by level), the
-            subjects, and the notes, quiet, at the end. On a phone only the level; the tabs are at the foot. */}
-        <div className="flex items-center gap-3">
-          {level && <LevelSwitch levels={JLPT_LEVELS} current={level} disabled={!levels} className="md:h-11" />}
-          <SubjectTabs level={level} className="hidden md:block" />
-          <NotesLink className="ml-auto hidden md:flex" />
+            subjects, and the notes, quiet, at the end. On a phone only the level; the tabs are at the foot.
+            On a computer the two ends take equal room, so the level and the subjects sit in the middle of the page.
+            A little more room under it than between the page's own parts, so it reads as the frame's, not the page's. */}
+        <div className="flex items-center gap-3 md:mb-2">
+          <div className="hidden flex-1 md:block" />
+          {/* On a computer one sunken box: the level, quiet, a line, then the subjects. */}
+          <div className="flex items-center gap-1 md:rounded-xl md:border md:bg-muted md:p-1">
+            {level && (
+              <>
+                <LevelSwitch
+                  levels={JLPT_LEVELS}
+                  current={level}
+                  disabled={!levels}
+                  className="md:h-8.5 md:border-transparent md:bg-transparent md:hover:bg-card"
+                />
+                <span aria-hidden="true" className="hidden h-5 w-px bg-input md:block" />
+              </>
+            )}
+            <SubjectTabs level={level} className="hidden md:block" />
+          </div>
+          <div className="hidden flex-1 justify-end md:flex">
+            <NotesLink />
+          </div>
         </div>
         <Outlet />
       </main>

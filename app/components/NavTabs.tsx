@@ -3,9 +3,12 @@ import { TabHighlight } from "~/components/TabHighlight";
 import { cn } from "~/lib/utils";
 
 const VARIANTS = {
-  /** A segmented control: the tabs in a sunken box, the one shown raised on a paper card. The subjects. */
+  /**
+   * A segmented control: the one shown raised on a paper card. The subjects. The sunken box is the caller's, as it holds
+   * the level too.
+   */
   segment: {
-    box: "rounded-xl border bg-muted p-1",
+    box: "",
     highlight: "rounded-lg bg-card shadow-piece",
     tab: "h-8.5 rounded-lg px-6 text-base",
   },

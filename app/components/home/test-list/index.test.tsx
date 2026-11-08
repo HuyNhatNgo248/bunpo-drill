@@ -93,7 +93,8 @@ describe("TestList", () => {
 
   describe("the grammar to review", () => {
     const BAKARIKA = buildReviewChip({ grammarId: "n2-w1-d2-g4", pattern: "〜ばかりか", week: 1, day: 2, number: 4 });
-    const MONONO = buildReviewChip({ grammarId: "n2-w1-d5-g1", pattern: "〜ものの", week: 1, day: 5, number: 1, reviewed: true });
+    // Before 〜ばかりか in the note, but reviewed, so after it.
+    const MONONO = buildReviewChip({ grammarId: "n2-w1-d1-g1", pattern: "〜ものの", week: 1, day: 1, number: 1, reviewed: true });
     const TESTS = [
       { ...TAKEN, review: [BAKARIKA, MONONO] },
       // A test of weeks 1 and 2, under week 1: its week-2 grammar goes to week 2.
@@ -115,12 +116,12 @@ describe("TestList", () => {
 
     const reviewSection = async () => within(await screen.findByRole("region", { name: /Grammar to review/ }));
 
-    it("shows the week's grammar that a test got wrong above its tests, once each, with how many are left", async () => {
+    it("shows the week's grammar that a test got wrong, once each, the ones left first, with how many are left", async () => {
       renderWithReview();
 
       const section = await reviewSection();
       expect(section.getAllByRole("button").map((chip) => chip.textContent)).toEqual(["〜ばかりか", "〜ものの(reviewed)"]);
-      expect(screen.getByRole("heading", { name: /Grammar to review/ })).toHaveTextContent("Grammar to review 1");
+      expect(screen.getByRole("heading", { name: /Grammar to review/ })).toHaveTextContent("Grammar to review 1 / 2 left");
     });
 
     it("shows another week's grammar under that week, whichever test got it wrong", async () => {

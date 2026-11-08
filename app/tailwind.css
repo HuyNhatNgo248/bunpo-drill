@@ -164,6 +164,9 @@
   /* A jump lands a passage question 12px below its pinned passage (top-16, or md:top-24). */
   --scroll-margin-passage: calc(var(--passage-h) + 4.75rem);
   --scroll-margin-passage-desktop: calc(var(--passage-h) + 6.75rem);
+  /* On the results page, 12px below the passage pinned at top-4, or md:top-6. */
+  --scroll-margin-passage-results: calc(var(--passage-h) + 1.75rem);
+  --scroll-margin-passage-results-desktop: calc(var(--passage-h) + 2.25rem);
 
   /*
    * A card a link arrives at (a note from its word, a question or passage from its note): a blush a shade deeper than

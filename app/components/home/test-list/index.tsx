@@ -19,9 +19,9 @@ function byWeek(tests: TestSummary[]) {
 }
 
 /**
- * A level's `tests` (at least one), one week at a time: the weeks to pick from, then the week picked: the grammar of
- * its part of the 文法ノート that any test got wrong, then its tests split into the ones in progress, the ones not taken
- * and the taken ones. The week is in the address (`week`); without one, or
+ * A level's `tests` (at least one), one week at a time: the weeks to pick from, then the week picked: its tests split
+ * into the ones in progress, the ones not taken and the taken ones, then the grammar of its part of the 文法ノート that
+ * any test got wrong. The week is in the address (`week`); without one, or
  * one with no tests, it is the first with a test left to take. The server sends the tests in order.
  */
 export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isAdmin?: boolean }) {
@@ -39,6 +39,8 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
     { key: "taken", title: t`Taken`, tests: shown.tests.filter((test) => test.result) },
   ];
   const taken = groups[2].tests.length;
+  // The one to do next: the first in progress, else the first not taken.
+  const next = groups[0].tests[0] ?? groups[1].tests[0];
   const review = reviewList(tests).filter((item) => item.chip.week === week);
 
   return (
@@ -65,7 +67,6 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
             </Trans>
           </span>
         </div>
-        {review.length > 0 && <WeekReview items={review} />}
         {groups.map(
           (group) =>
             group.tests.length > 0 && (
@@ -75,12 +76,13 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
                 </h3>
                 <ul className="divide-y overflow-hidden rounded-xl border bg-card">
                   {group.tests.map((test) => (
-                    <TestRow key={test.id} test={test} isAdmin={isAdmin} />
+                    <TestRow key={test.id} test={test} primary={test === next} isAdmin={isAdmin} />
                   ))}
                 </ul>
               </section>
             ),
         )}
+        {review.length > 0 && <WeekReview items={review} />}
       </section>
     </div>
   );
