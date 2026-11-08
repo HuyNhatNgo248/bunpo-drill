@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useSearchParams } from "react-router";
+import { InfoLink } from "~/components/info/InfoLink";
 import { Rail } from "~/components/Rail";
 import { Badge } from "~/components/ui/badge";
 import type { TestSummary } from "~/lib/views";
@@ -59,11 +60,15 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
           <h2 id="tests-week" className="text-xl font-bold md:text-2xl">
             <Trans>Week {week}</Trans>
           </h2>
-          <span className="text-caption text-muted-foreground tabular-nums">
-            <Trans>
-              {taken} / {total} taken
-            </Trans>
-          </span>
+          <div className="flex items-center gap-4">
+            <span className="text-caption text-muted-foreground tabular-nums">
+              <Trans>
+                {taken} / {total} taken
+              </Trans>
+            </span>
+            <span aria-hidden="true" className="h-4 w-px bg-input" />
+            <InfoLink subject="grammar" />
+          </div>
         </div>
         {groups.map(
           (group) =>
@@ -80,7 +85,7 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
               </section>
             ),
         )}
-        {review.length > 0 && <WeekReview items={review} />}
+        {review.length > 0 && <WeekReview key={week} items={review} />}
       </section>
     </div>
   );

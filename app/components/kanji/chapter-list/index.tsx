@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useSearchParams } from "react-router";
+import { InfoLink } from "~/components/info/InfoLink";
 import { Rail } from "~/components/Rail";
 import { Badge } from "~/components/ui/badge";
 import type { Level } from "~/lib/payload";
@@ -45,17 +46,21 @@ export function ChapterList({ level, chapters }: { level: Level; chapters: Chapt
           <h2 id="kanji-chapter" lang="ja" className="font-jp text-xl font-bold md:text-2xl">
             {chapterTitle(title)}
           </h2>
-          <span className="shrink-0 text-caption text-muted-foreground tabular-nums">
-            <Trans>
-              {learned} / {words} learned
-            </Trans>
-            {!quiz && (
-              <>
-                {" · "}
-                <Trans>no quiz yet</Trans>
-              </>
-            )}
-          </span>
+          <div className="flex shrink-0 items-center gap-4">
+            <span className="text-caption text-muted-foreground tabular-nums">
+              <Trans>
+                {learned} / {words} learned
+              </Trans>
+              {!quiz && (
+                <>
+                  {" · "}
+                  <Trans>no quiz yet</Trans>
+                </>
+              )}
+            </span>
+            <span aria-hidden="true" className="h-4 w-px bg-input" />
+            <InfoLink subject="kanji" />
+          </div>
         </div>
         <section aria-labelledby="kanji-lessons" className="flex flex-col gap-2.5">
           <h3 id="kanji-lessons" className="flex items-center gap-2 text-caption font-semibold text-subtle-foreground">

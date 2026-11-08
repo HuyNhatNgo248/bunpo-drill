@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useSearchParams } from "react-router";
 import { EmptyState } from "~/components/EmptyState";
+import { InfoLink } from "~/components/info/InfoLink";
 import { Rail } from "~/components/Rail";
 import { Badge } from "~/components/ui/badge";
 import { READING_GROUP_TITLES } from "~/lib/sections";
@@ -52,12 +53,16 @@ export function GroupList({ groups, isAdmin = false }: { groups: ReadingGroup[];
           <h2 id="reading-group" lang="ja" className="font-jp text-xl font-bold md:text-2xl">
             {title}
           </h2>
-          <span className="text-caption text-muted-foreground tabular-nums">
-            <Trans>
-              {taken} / {total} done
-            </Trans>
-            {shown.pace && <Pace {...shown.pace} />}
-          </span>
+          <div className="flex items-center gap-4">
+            <span className="text-caption text-muted-foreground tabular-nums">
+              <Trans>
+                {taken} / {total} done
+              </Trans>
+              {shown.pace && <Pace {...shown.pace} />}
+            </span>
+            <span aria-hidden="true" className="h-4 w-px bg-input" />
+            <InfoLink subject="reading" />
+          </div>
         </div>
 
         {shown.missed.length > 0 && (

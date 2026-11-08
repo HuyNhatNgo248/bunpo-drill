@@ -44,7 +44,7 @@ msgstr "{answered} / {total} answered"
 msgid "{count, plural, one {Study this word as a flashcard} other {Study these # as flashcards}}"
 msgstr "{count, plural, one {Study this word as a flashcard} other {Study these # as flashcards}}"
 
-#: app/components/reading/GroupList.tsx:75
+#: app/components/reading/GroupList.tsx:80
 #: app/components/results/ReviewCard.tsx:85
 msgid "{count} missed"
 msgstr "{count} missed"
@@ -57,7 +57,7 @@ msgstr "{daysLeft, plural, one {With one mock test a day, you can take # test be
 msgid "{gotIt} got it first time"
 msgstr "{gotIt} got it first time"
 
-#: app/components/kanji/chapter-list/index.tsx:49
+#: app/components/kanji/chapter-list/index.tsx:51
 msgid "{learned} / {words} learned"
 msgstr "{learned} / {words} learned"
 
@@ -69,7 +69,7 @@ msgstr "{learned} learned"
 msgid "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 msgstr "{left, plural, one {# question is unanswered. Submit anyway?} other {# questions are unanswered. Submit anyway?}}"
 
-#: app/components/home/test-list/WeekReview.tsx:20
+#: app/components/home/test-list/WeekReview.tsx:24
 msgid "{left} / {total} left"
 msgstr "{left} / {total} left"
 
@@ -113,11 +113,11 @@ msgstr "{slotName}: {text} (tap to remove)"
 msgid "{strokes, plural, one {# stroke} other {# strokes}}"
 msgstr "{strokes, plural, one {# stroke} other {# strokes}}"
 
-#: app/components/reading/GroupList.tsx:56
+#: app/components/reading/GroupList.tsx:58
 msgid "{taken} / {total} done"
 msgstr "{taken} / {total} done"
 
-#: app/components/home/test-list/index.tsx:63
+#: app/components/home/test-list/index.tsx:65
 msgid "{taken} / {total} taken"
 msgstr "{taken} / {total} taken"
 
@@ -125,7 +125,7 @@ msgstr "{taken} / {total} taken"
 msgid "{text} (placed)"
 msgstr "{text} (placed)"
 
-#: app/components/reading/GroupList.tsx:104
+#: app/components/reading/GroupList.tsx:109
 msgid "{time} a passage"
 msgstr "{time} a passage"
 
@@ -161,6 +161,10 @@ msgstr "{wrong} wrong"
 #: app/components/results/ScoreCard.tsx:37
 msgid "{wrong} wrong · pass line {pass}%"
 msgstr "{wrong} wrong · pass line {pass}%"
+
+#: app/components/info/GrammarInfo.tsx:30
+msgid "「にもかかわらず」 joins two things that clash: busy, yet goes to the gym. The others give a reason, not a contrast."
+msgstr "「にもかかわらず」 joins two things that clash: busy, yet goes to the gym. The others give a reason, not a contrast."
 
 #: app/components/quiz/index.tsx:107
 #: app/components/results/index.tsx:54
@@ -201,44 +205,48 @@ msgstr "<0>in</0> <1/> <2>{daysLeft, plural, one {day} other {days}}</2>"
 msgid "<0>Practice for the JLPT</0> <1>in <2>the real test's format</2>.</1>"
 msgstr "<0>Practice for the JLPT</0> <1>in <2>the real test's format</2>.</1>"
 
+#: app/components/info/ReadingInfo.tsx:67
+msgid "~{chars} chars"
+msgstr "~{chars} chars"
+
 #: app/components/quiz/sentence-order/SlotButton.tsx:25
 msgid "★ slot"
 msgstr "★ slot"
 
-#: app/components/welcome/ExamSections.tsx:43
+#: app/components/welcome/helpers/subjectSections.ts:35
 msgid "1 flyer × 2 questions"
 msgstr "1 flyer × 2 questions"
 
-#: app/components/welcome/ExamSections.tsx:42
+#: app/components/welcome/helpers/subjectSections.ts:34
 msgid "1 text × 3 questions"
 msgstr "1 text × 3 questions"
 
-#: app/components/welcome/ExamSections.tsx:24
-#: app/components/welcome/ExamSections.tsx:25
+#: app/components/welcome/helpers/subjectSections.ts:16
+#: app/components/welcome/helpers/subjectSections.ts:17
 msgid "15 questions"
 msgstr "15 questions"
 
-#: app/components/welcome/ExamSections.tsx:41
+#: app/components/welcome/helpers/subjectSections.ts:33
 msgid "2 texts × 2 questions"
 msgstr "2 texts × 2 questions"
 
-#: app/components/welcome/ExamSections.tsx:32
+#: app/components/welcome/helpers/subjectSections.ts:24
 msgid "22 questions"
 msgstr "22 questions"
 
-#: app/components/welcome/ExamSections.tsx:33
+#: app/components/welcome/helpers/subjectSections.ts:25
 msgid "23 questions"
 msgstr "23 questions"
 
-#: app/components/welcome/ExamSections.tsx:26
+#: app/components/welcome/helpers/subjectSections.ts:18
 msgid "3 passages × 5 questions"
 msgstr "3 passages × 5 questions"
 
-#: app/components/welcome/ExamSections.tsx:40
+#: app/components/welcome/helpers/subjectSections.ts:32
 msgid "3 texts × 3 questions"
 msgstr "3 texts × 3 questions"
 
-#: app/components/welcome/ExamSections.tsx:39
+#: app/components/welcome/helpers/subjectSections.ts:31
 msgid "5 texts × 1 question"
 msgstr "5 texts × 1 question"
 
@@ -250,7 +258,7 @@ msgstr "A chapter shows up here once Claude sends its words, with /jlpt-kanji-qu
 msgid "A set shows up here once Claude sends one, with /jlpt-reading-quiz {level} 短文."
 msgstr "A set shows up here once Claude sends one, with /jlpt-reading-quiz {level} 短文."
 
-#: app/components/reading/GroupList.tsx:85
+#: app/components/reading/GroupList.tsx:90
 msgid "A set shows up here once Claude sends one, with /jlpt-reading-quiz {title}."
 msgstr "A set shows up here once Claude sends one, with /jlpt-reading-quiz {title}."
 
@@ -303,6 +311,10 @@ msgstr "All correct"
 #: app/components/flashcards/SessionDone.tsx:88
 msgid "All words learned"
 msgstr "All words learned"
+
+#: app/components/info/ReadingInfo.tsx:25
+msgid "Almost the passage, with a time, number or name swapped."
+msgstr "Almost the passage, with a time, number or name swapped."
 
 #: app/components/add-note/index.tsx:101
 msgid "Already in your notes."
@@ -380,9 +392,17 @@ msgstr "Back to sign in"
 msgid "Back to the mock tests"
 msgstr "Back to the mock tests"
 
+#: app/components/info/index.tsx:26
+msgid "Back to the tests"
+msgstr "Back to the tests"
+
 #: app/components/quiz/QuestionCard.tsx:46
 msgid "Blank （{num}） in the passage"
 msgstr "Blank （{num}） in the passage"
+
+#: app/components/info/GrammarInfo.tsx:37
+msgid "Build a sentence that is grammatically correct and makes sense, then pick the piece for the ★ slot."
+msgstr "Build a sentence that is grammatically correct and makes sense, then pick the piece for the ★ slot."
 
 #: app/components/add-note/index.tsx:88
 #: app/components/ConfirmDialog.tsx:44
@@ -440,6 +460,10 @@ msgstr "Check Part {no}"
 msgid "Check Part {no}?"
 msgstr "Check Part {no}?"
 
+#: app/components/info/GrammarInfo.tsx:20
+msgid "Check what comes before the blank (a noun, the plain form, the て-form) and the tone of the sentence, not only the meaning."
+msgstr "Check what comes before the blank (a noun, the plain form, the て-form) and the tone of the sentence, not only the meaning."
+
 #: app/components/results/index.tsx:64
 msgid "Check your answers"
 msgstr "Check your answers"
@@ -460,11 +484,11 @@ msgstr "Choose a new password. Changing it signs you in."
 msgid "Choose a username, an email address and a password."
 msgstr "Choose a username, an email address and a password."
 
-#: app/components/welcome/ExamSections.tsx:32
+#: app/components/welcome/helpers/subjectSections.ts:24
 msgid "Choose how the underlined word is read, out of 4 readings that differ by a sound or two."
 msgstr "Choose how the underlined word is read, out of 4 readings that differ by a sound or two."
 
-#: app/components/welcome/ExamSections.tsx:33
+#: app/components/welcome/helpers/subjectSections.ts:25
 msgid "Choose how the underlined word is written, out of 4 look-alike or sound-alike kanji."
 msgstr "Choose how the underlined word is written, out of 4 look-alike or sound-alike kanji."
 
@@ -484,7 +508,7 @@ msgstr "Choose the best reading for the underlined word from 1, 2, 3 and 4."
 msgid "Choose the best way to write the underlined word in kanji from 1, 2, 3 and 4."
 msgstr "Choose the best way to write the underlined word in kanji from 1, 2, 3 and 4."
 
-#: app/components/welcome/ExamSections.tsx:24
+#: app/components/welcome/helpers/subjectSections.ts:16
 msgid "Choose the most natural form for the （　） in a sentence, out of 4."
 msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 
@@ -497,6 +521,7 @@ msgstr "Close"
 msgid "Continue"
 msgstr "Continue"
 
+#: app/components/info/SampleQuestion.tsx:60
 #: app/components/quiz/question-nav/Legend.tsx:15
 #: app/components/results/section-review/QuestionReview.tsx:140
 msgid "Correct"
@@ -579,7 +604,7 @@ msgid "Did you review your weak grammar?"
 msgstr "Did you review your weak grammar?"
 
 #: app/components/notes/Memo.tsx:54
-#: app/components/reading/GroupList.tsx:90
+#: app/components/reading/GroupList.tsx:95
 msgid "Done"
 msgstr "Done"
 
@@ -587,6 +612,10 @@ msgstr "Done"
 #: app/components/quiz/sentence-order/SlotButton.tsx:31
 msgid "draggable"
 msgstr "draggable"
+
+#: app/components/info/ReadingInfo.tsx:30
+msgid "Drops an “only if” or an “except” that the passage attaches."
+msgstr "Drops an “only if” or an “except” that the passage attaches."
 
 #: app/components/welcome/TrialTests.tsx:34
 msgid "Each set mixes questions from the whole level, in the real exam's format. Graded as soon as you submit. Your answers aren't saved, so you can take each set as often as you like."
@@ -627,7 +656,15 @@ msgstr "Every word of {chapter} becomes not learned again, in every lesson."
 msgid "Every word of {chapter} becomes not learned again."
 msgstr "Every word of {chapter} becomes not learned again."
 
-#: app/components/welcome/ExamSections.tsx:43
+#: app/components/info/ReadingInfo.tsx:21
+msgid "Find the information you need in an ad, notice, brochure or business document."
+msgstr "Find the information you need in an ad, notice, brochure or business document."
+
+#: app/components/info/GrammarInfo.tsx:38
+msgid "Find the pair that must stay together first, then build outward."
+msgstr "Find the pair that must stay together first, then build outward."
+
+#: app/components/welcome/helpers/subjectSections.ts:35
 msgid "Find what you need in a notice, flyer or table."
 msgstr "Find what you need in a notice, flyer or table."
 
@@ -678,7 +715,7 @@ msgstr "Grammar form"
 msgid "Grammar in a passage"
 msgstr "Grammar in a passage"
 
-#: app/components/home/test-list/WeekReview.tsx:20
+#: app/components/home/test-list/WeekReview.tsx:24
 msgid "Grammar to review"
 msgstr "Grammar to review"
 
@@ -706,6 +743,10 @@ msgstr "Hi {name},"
 msgid "Hide {label}"
 msgstr "Hide {label}"
 
+#: app/components/info/ReadingInfo.tsx:113
+msgid "How wrong answers are built"
+msgstr "How wrong answers are built"
+
 #: app/components/forgot-password/index.tsx:20
 msgid "If there's an account for {sent}, we sent the link. It works for one hour. If it doesn't arrive, check your spam folder too."
 msgstr "If there's an account for {sent}, we sent the link. It works for one hour. If it doesn't arrive, check your spam folder too."
@@ -714,12 +755,16 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/index.tsx:37
-#: app/components/reading/GroupList.tsx:88
+#: app/components/home/test-list/index.tsx:38
+#: app/components/reading/GroupList.tsx:93
 msgid "In progress"
 msgstr "In progress"
 
-#: app/components/welcome/ExamSections.tsx:22
+#: app/components/info/ReadingInfo.tsx:86
+msgid "In the app each passage is timed. After you answer, the sentences that prove the answer are marked."
+msgstr "In the app each passage is timed. After you answer, the sentences that prove the answer are marked."
+
+#: app/components/welcome/helpers/subjectSections.ts:14
 msgid "In the same order and format as the grammar part of the JLPT. A full test has 15 questions per part, 45 in all."
 msgstr "In the same order and format as the grammar part of the JLPT. A full test has 15 questions per part, 45 in all."
 
@@ -730,6 +775,14 @@ msgstr "It's exam day today. Good luck!"
 #: app/routes/welcome.tsx:11
 msgid "JLPT practice in the real test's format"
 msgstr "JLPT practice in the real test's format"
+
+#: app/components/info/GrammarInfo.tsx:19
+msgid "Judge which grammar form fits the content of a sentence with a blank."
+msgstr "Judge which grammar form fits the content of a sentence with a blank."
+
+#: app/components/info/GrammarInfo.tsx:58
+msgid "Judge which sentence or expression fits the flow of a passage with numbered blanks."
+msgstr "Judge which sentence or expression fits the flow of a passage with numbered blanks."
 
 #: app/components/kanji/index.tsx:21
 #: app/components/results/Actions.tsx:42
@@ -785,7 +838,15 @@ msgstr "Last time {lastScore}"
 msgid "Learned in {chapter}"
 msgstr "Learned in {chapter}"
 
-#: app/components/kanji/chapter-list/index.tsx:62
+#: app/components/info/ReadingInfo.tsx:101
+msgid "Lending comes only after opening at 午後一時, so 3 is the answer. The marked sentences are the proof."
+msgstr "Lending comes only after opening at 午後一時, so 3 is the answer. The marked sentences are the proof."
+
+#: app/components/info/ReadingInfo.tsx:77
+msgid "Lengths are in characters, as the JLPT states them. For two texts compared, it is the total."
+msgstr "Lengths are in characters, as the JLPT states them. For two texts compared, it is the total."
+
+#: app/components/kanji/chapter-list/index.tsx:67
 msgid "Lessons"
 msgstr "Lessons"
 
@@ -802,9 +863,17 @@ msgstr "Level: {shown}"
 msgid "Like 「〜のに」, a result that goes against what you would expect follows. It was raining, yet the match went ahead."
 msgstr "Like 「〜のに」, a result that goes against what you would expect follows. It was raining, yet the match went ahead."
 
+#: app/components/info/KanjiInfo.tsx:25
+msgid "Long and short vowels, small っ and voiced sounds (ち or じ) are what the wrong choices change."
+msgstr "Long and short vowels, small っ and voiced sounds (ち or じ) are what the wrong choices change."
+
 #: app/lib/sections.ts:53
 msgid "Long passages"
 msgstr "Long passages"
+
+#: app/components/info/GrammarInfo.tsx:59
+msgid "Look at the sentences before and after. A connector must match whether the next idea agrees, contrasts or adds."
+msgstr "Look at the sentences before and after. A connector must match whether the next idea agrees, contrasts or adds."
 
 #: app/components/RetakeButton.tsx:22
 msgid "Make sure you study the grammar you got wrong first."
@@ -821,6 +890,10 @@ msgstr "Mark as reviewed"
 #: app/components/card-session/CardControls.tsx:40
 msgid "Marked learned"
 msgstr "Marked learned"
+
+#: app/components/info/ReadingInfo.tsx:28
+msgid "Matches the passage, but does not answer this question."
+msgstr "Matches the passage, but does not answer this question."
 
 #: app/components/notes/Memo.tsx:32
 msgid "Memo"
@@ -848,6 +921,10 @@ msgstr "Mock tests"
 #: app/components/flashcards/CardFace.tsx:156
 msgid "More words with <0>{0}</0>"
 msgstr "More words with <0>{0}</0>"
+
+#: app/components/info/KanjiInfo.tsx:49
+msgid "N1 has no writing part. On N5 the word may be written in kanji or katakana."
+msgstr "N1 has no writing part. On N5 the word may be written in kanji or katakana."
 
 #: app/components/login/index.tsx:43
 msgid "New here? <0>Create account</0>"
@@ -897,7 +974,7 @@ msgstr "No {level} chapters yet"
 msgid "No {level} reading sets yet"
 msgstr "No {level} reading sets yet"
 
-#: app/components/reading/GroupList.tsx:84
+#: app/components/reading/GroupList.tsx:89
 msgid "No {title} sets yet"
 msgstr "No {title} sets yet"
 
@@ -917,7 +994,7 @@ msgstr "No notes with a memo yet"
 msgid "No notes yet"
 msgstr "No notes yet"
 
-#: app/components/kanji/chapter-list/index.tsx:55
+#: app/components/kanji/chapter-list/index.tsx:57
 msgid "no quiz yet"
 msgstr "no quiz yet"
 
@@ -933,7 +1010,7 @@ msgstr "Not an official JLPT service. For exam dates and registration, see <0>jl
 msgid "Not learned yet. Study them again now, or they come back after the new cards."
 msgstr "Not learned yet. Study them again now, or they come back after the new cards."
 
-#: app/components/home/test-list/index.tsx:38
+#: app/components/home/test-list/index.tsx:39
 msgid "Not taken"
 msgstr "Not taken"
 
@@ -965,6 +1042,10 @@ msgstr "Number"
 msgid "on"
 msgstr "on"
 
+#: app/components/info/KanjiInfo.tsx:71
+msgid "On these levels"
+msgstr "On these levels"
+
 #: app/components/card-session/CardControls.tsx:43
 msgid "Once more"
 msgstr "Once more"
@@ -984,7 +1065,7 @@ msgstr "Page not found"
 #: app/components/quiz/question-nav/QuestionGrid.tsx:58
 #: app/components/quiz/Section.tsx:44
 #: app/components/results/section-review/index.tsx:18
-#: app/components/welcome/ExamSections.tsx:93
+#: app/components/welcome/ExamSections.tsx:57
 #: app/components/welcome/SampleQuiz.tsx:62
 msgid "Part {no}"
 msgstr "Part {no}"
@@ -1006,6 +1087,10 @@ msgstr "Password"
 #: app/routes/account.tsx:64
 msgid "Password changed."
 msgstr "Password changed."
+
+#: app/components/info/SampleQuestion.tsx:56
+msgid "Pick an answer to see why."
+msgstr "Pick an answer to see why."
 
 #: app/components/quiz/sentence-order/helpers/announcements.ts:19
 msgid "Picked up “{piece}”."
@@ -1039,7 +1124,7 @@ msgstr "Put “{piece}” back."
 msgid "Put “{piece}” in {zone}."
 msgstr "Put “{piece}” in {zone}."
 
-#: app/components/welcome/ExamSections.tsx:25
+#: app/components/welcome/helpers/subjectSections.ts:17
 msgid "Put 4 pieces in order, and choose the one that goes in ★."
 msgstr "Put 4 pieces in order, and choose the one that goes in ★."
 
@@ -1059,7 +1144,7 @@ msgstr "Question {num} (unanswered)"
 msgid "Question {num} (wrong)"
 msgstr "Question {num} (wrong)"
 
-#: app/components/reading/GroupList.tsx:66
+#: app/components/reading/GroupList.tsx:71
 #: app/components/results/ReviewCard.tsx:23
 msgid "Question kinds to work on"
 msgstr "Question kinds to work on"
@@ -1078,25 +1163,53 @@ msgstr "Quiz"
 msgid "Quiz results"
 msgstr "Quiz results"
 
-#: app/components/welcome/ExamSections.tsx:42
+#: app/components/info/ReadingInfo.tsx:20
+msgid "Read a logical text and grasp the claim or opinion it makes as a whole."
+msgstr "Read a logical text and grasp the claim or opinion it makes as a whole."
+
+#: app/components/welcome/helpers/subjectSections.ts:34
 msgid "Read a long essay, and find what the writer is arguing."
 msgstr "Read a long essay, and find what the writer is arguing."
 
-#: app/components/welcome/ExamSections.tsx:26
+#: app/components/info/ReadingInfo.tsx:18
+msgid "Read a longer text and grasp its outline and the writer’s thinking."
+msgstr "Read a longer text and grasp its outline and the writer’s thinking."
+
+#: app/components/welcome/helpers/subjectSections.ts:18
 msgid "Read a passage, and fill each blank with the words that fit its flow."
 msgstr "Read a passage, and fill each blank with the words that fit its flow."
 
-#: app/components/welcome/ExamSections.tsx:39
+#: app/components/welcome/helpers/subjectSections.ts:31
 msgid "Read a text of about 200 characters, and answer a question on it."
 msgstr "Read a text of about 200 characters, and answer a question on it."
 
-#: app/components/welcome/ExamSections.tsx:40
+#: app/components/welcome/helpers/subjectSections.ts:32
 msgid "Read a text of about 500 characters: its reasons, what a phrase points to, and its conclusion."
 msgstr "Read a text of about 500 characters: its reasons, what a phrase points to, and its conclusion."
+
+#: app/components/info/KanjiInfo.tsx:45
+msgid "Read a word in hiragana and choose how it is written."
+msgstr "Read a word in hiragana and choose how it is written."
+
+#: app/components/info/KanjiInfo.tsx:24
+msgid "Read a word written in kanji and choose how it is read."
+msgstr "Read a word written in kanji and choose how it is read."
+
+#: app/components/info/ReadingInfo.tsx:17
+msgid "Read an essay or explanation and understand key words, causes and reasons."
+msgstr "Read an essay or explanation and understand key words, causes and reasons."
 
 #: app/lib/sections.ts:91
 msgid "Read each passage, then choose the best answer to each question from 1, 2, 3 and 4."
 msgstr "Read each passage, then choose the best answer to each question from 1, 2, 3 and 4."
+
+#: app/components/info/ReadingInfo.tsx:16
+msgid "Read explanations or instructions and understand what they say."
+msgstr "Read explanations or instructions and understand what they say."
+
+#: app/components/info/ReadingInfo.tsx:19
+msgid "Read several texts side by side and compare and combine what they say."
+msgstr "Read several texts side by side and compare and combine what they say."
 
 #: app/lib/sections.ts:93
 msgid "Read texts A and B, then choose the best answer to each question from 1, 2, 3 and 4."
@@ -1118,7 +1231,7 @@ msgstr "Read the passage, think about what it says as a whole, and choose the be
 msgid "Read the passage, think about what it says as a whole, and choose the best answer for each of （{first}） to （{last}） from 1, 2, 3 and 4."
 msgstr "Read the passage, think about what it says as a whole, and choose the best answer for each of （{first}） to （{last}） from 1, 2, 3 and 4."
 
-#: app/components/welcome/ExamSections.tsx:41
+#: app/components/welcome/helpers/subjectSections.ts:33
 msgid "Read two texts on one topic, and compare what each one says."
 msgstr "Read two texts on one topic, and compare what each one says."
 
@@ -1134,12 +1247,16 @@ msgstr "Reading"
 msgid "Reading → word"
 msgstr "Reading → word"
 
+#: app/components/info/index.tsx:23
+msgid "Reading is a set of passages. Each kind has its own length and its own job, and which kinds you get depends on the level."
+msgstr "Reading is a set of passages. Each kind has its own length and its own job, and which kinds you get depends on the level."
+
 #: app/components/add-note/index.tsx:81
 #: app/components/notes/Memo.tsx:37
 msgid "Reading or meaning"
 msgstr "Reading or meaning"
 
-#: app/components/reading/GroupList.tsx:35
+#: app/components/reading/GroupList.tsx:36
 msgid "Reading types"
 msgstr "Reading types"
 
@@ -1197,6 +1314,10 @@ msgstr "Review again"
 msgid "Reviewed · Undo"
 msgstr "Reviewed · Undo"
 
+#: app/components/info/SampleQuestion.tsx:40
+msgid "Sample"
+msgstr "Sample"
+
 #: app/components/welcome/SampleQuiz.tsx:91
 msgid "Sample question"
 msgstr "Sample question"
@@ -1216,6 +1337,10 @@ msgstr "Saving…"
 #: app/components/flashcards/CardFace.tsx:69
 msgid "Say the reading, then flip the card."
 msgstr "Say the reading, then flip the card."
+
+#: app/components/info/ReadingInfo.tsx:26
+msgid "Says the reverse of what the passage says."
+msgstr "Says the reverse of what the passage says."
 
 #: app/components/results/ScoreCard.tsx:19
 #: app/components/results/ScoreCard.tsx:34
@@ -1310,6 +1435,10 @@ msgstr "Slot {n}"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
+#: app/components/info/ReadingInfo.tsx:27
+msgid "Sounds sensible, but the passage never says it."
+msgstr "Sounds sensible, but the passage never says it."
+
 #: app/components/home/test-list/TestRow.tsx:64
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
 #: app/components/reading/SetRow.tsx:78
@@ -1324,6 +1453,10 @@ msgstr "Start practicing today"
 #: app/components/flashcards/SessionDone.tsx:128
 msgid "Still learning ({again})"
 msgstr "Still learning ({again})"
+
+#: app/components/info/ReadingInfo.tsx:29
+msgid "Stretches a specific point into a general claim."
+msgstr "Stretches a specific point into a general claim."
 
 #: app/components/notes/index.tsx:24
 msgid "Study as flashcards"
@@ -1352,11 +1485,11 @@ msgstr "Take it again"
 msgid "Take the quiz"
 msgstr "Take the quiz"
 
-#: app/components/home/test-list/index.tsx:39
+#: app/components/home/test-list/index.tsx:40
 msgid "Taken"
 msgstr "Taken"
 
-#: app/components/reading/GroupList.tsx:107
+#: app/components/reading/GroupList.tsx:112
 #: app/components/reading/SetRow.tsx:54
 msgid "target {goal}"
 msgstr "target {goal}"
@@ -1399,17 +1532,41 @@ msgstr "the ★ slot"
 msgid "The answer is {n} “{choice}”"
 msgstr "The answer is {n} “{choice}”"
 
+#: app/components/info/SampleQuestion.tsx:60
+msgid "The answer is {no}"
+msgstr "The answer is {no}"
+
 #: app/components/quiz/sentence-order/helpers/announcements.ts:12
 msgid "the choices"
 msgstr "the choices"
 
-#: app/components/welcome/ExamSections.tsx:37
+#: app/components/info/InfoSection.tsx:52
+msgid "The exam prints"
+msgstr "The exam prints"
+
+#: app/components/info/GrammarInfo.tsx:70
+msgid "The first sentence says e-books are growing; the second brings an opposing view. 「しかし」 marks that turn."
+msgstr "The first sentence says e-books are growing; the second brings an opposing view. 「しかし」 marks that turn."
+
+#: app/components/welcome/helpers/subjectSections.ts:29
 msgid "The five reading parts of the N2 exam, in its order. The answers show the sentence that proves each one."
 msgstr "The five reading parts of the N2 exam, in its order. The answers show the sentence that proves each one."
+
+#: app/components/info/index.tsx:21
+msgid "The grammar part of the JLPT has three kinds of question, always in this order. Here is what each one checks, with a question to try."
+msgstr "The grammar part of the JLPT has three kinds of question, always in this order. Here is what each one checks, with a question to try."
+
+#: app/components/info/index.tsx:22
+msgid "The kanji part of the JLPT asks two things: how a kanji word is read, and how a word in hiragana is written. Study a chapter as flashcards, then take its quiz."
+msgstr "The kanji part of the JLPT asks two things: how a kanji word is read, and how a word in hiragana is written. Study a chapter as flashcards, then take its quiz."
 
 #: app/components/welcome/ExamCountdown.tsx:22
 msgid "The next JLPT"
 msgstr "The next JLPT"
+
+#: app/components/info/GrammarInfo.tsx:51
+msgid "The order is どんな時も → 努力を → 怠る → ことなく, so 怠る sits in ★: 「怠ることなく続けている」."
+msgstr "The order is どんな時も → 努力を → 怠る → ことなく, so 怠る sits in ★: 「怠ることなく続けている」."
 
 #: app/lib/errors.ts:53
 msgid "The page couldn't load. Please try again in a moment."
@@ -1431,7 +1588,7 @@ msgstr "The reading page sums them up over every set of this type."
 msgid "The request couldn't be handled."
 msgstr "The request couldn't be handled."
 
-#: app/components/welcome/ExamSections.tsx:55
+#: app/components/welcome/ExamSections.tsx:19
 msgid "The same formats as the real exam"
 msgstr "The same formats as the real exam"
 
@@ -1439,13 +1596,21 @@ msgstr "The same formats as the real exam"
 msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
 msgstr "The test and every user's results and notes on it will be deleted. This can't be undone."
 
-#: app/components/welcome/ExamSections.tsx:30
+#: app/components/info/index.tsx:31
+msgid "The test's format"
+msgstr "The test's format"
+
+#: app/components/welcome/helpers/subjectSections.ts:22
 msgid "The two kanji parts of the JLPT, in their format. A test has about 45 questions, from every chapter of the level."
 msgstr "The two kanji parts of the JLPT, in their format. A test has about 45 questions, from every chapter of the level."
 
 #: app/lib/sections.ts:55
 msgid "The writer's argument"
 msgstr "The writer's argument"
+
+#: app/components/info/KanjiInfo.tsx:46
+msgid "The wrong choices look like the right one. Compare the parts of each kanji, not the whole shape."
+msgstr "The wrong choices look like the right one. Compare the parts of each kanji, not the whole shape."
 
 #: app/components/results/ReviewCard.tsx:60
 msgid "They're marked as not learned, so they also come first in this chapter's flashcards."
@@ -1482,11 +1647,11 @@ msgstr "Time"
 msgid "Time {time}, target {goal}"
 msgstr "Time {time}, target {goal}"
 
-#: app/components/reading/GroupList.tsx:89
+#: app/components/reading/GroupList.tsx:94
 msgid "To do"
 msgstr "To do"
 
-#: app/components/kanji/chapter-list/index.tsx:27
+#: app/components/kanji/chapter-list/index.tsx:28
 msgid "Topics"
 msgstr "Topics"
 
@@ -1517,6 +1682,10 @@ msgstr "Trap: true, but not the answer"
 #: app/components/welcome/TrialTests.tsx:31
 msgid "Try a practice set, no account needed"
 msgstr "Try a practice set, no account needed"
+
+#: app/components/info/ReadingInfo.tsx:83
+msgid "Try a short passage"
+msgstr "Try a short passage"
 
 #: app/components/welcome/SampleQuiz.tsx:235
 msgid "Try again"
@@ -1577,6 +1746,10 @@ msgstr "Username changed."
 msgid "Username or email address"
 msgstr "Username or email address"
 
+#: app/components/info/InfoSection.tsx:58
+msgid "Watch for"
+msgstr "Watch for"
+
 #: app/components/account/EmailForm.tsx:20
 #: app/components/login/LoginForm.tsx:53
 msgid "We send a reset link here when you forget your password."
@@ -1586,15 +1759,36 @@ msgstr "We send a reset link here when you forget your password."
 msgid "Week"
 msgstr "Week"
 
-#: app/components/home/test-list/index.tsx:52
-#: app/components/home/test-list/index.tsx:60
+#: app/components/home/test-list/index.tsx:53
+#: app/components/home/test-list/index.tsx:61
 #: app/lib/sections.ts:103
 msgid "Week {week}"
 msgstr "Week {week}"
 
-#: app/components/home/test-list/index.tsx:47
+#: app/components/home/test-list/index.tsx:48
 msgid "Weeks"
 msgstr "Weeks"
+
+#: app/components/info/InfoSection.tsx:49
+msgid "What it checks"
+msgstr "What it checks"
+
+#: app/components/info/index.tsx:19
+msgid "What's on the grammar test"
+msgstr "What's on the grammar test"
+
+#: app/components/info/index.tsx:19
+msgid "What's on the kanji test"
+msgstr "What's on the kanji test"
+
+#: app/components/info/index.tsx:19
+msgid "What's on the reading test"
+msgstr "What's on the reading test"
+
+#: app/components/info/InfoLink.tsx:12
+#: app/routes/info.tsx:9
+msgid "What's on the test"
+msgstr "What's on the test"
 
 #: app/components/results/section-review/ReadingPassageReview.tsx:22
 msgid "Where the answer is"
@@ -1616,6 +1810,10 @@ msgstr "Writing in kanji"
 #: app/components/results/section-review/QuestionReview.tsx:140
 msgid "Wrong"
 msgstr "Wrong"
+
+#: app/components/info/ReadingInfo.tsx:116
+msgid "Wrong choices are not random. Each one copies the passage and breaks it in one way. The results name the trap you fell into."
+msgstr "Wrong choices are not random. Each one copies the passage and breaks it in one way. The results name the trap you fell into."
 
 #: app/routes/signin.tsx:25
 msgid "Wrong username (or email) or password."
@@ -1651,6 +1849,14 @@ msgstr "Your current password is wrong."
 #: app/components/account/DeleteAccountForm.tsx:17
 msgid "Your results, drafts, review marks, learned words and notes are deleted with it. This can't be undone."
 msgstr "Your results, drafts, review marks, learned words and notes are deleted with it. This can't be undone."
+
+#: app/components/info/KanjiInfo.tsx:58
+msgid "原因 (cause). 源 is the “source” of a river, and 困 and 囚 only look like 因."
+msgstr "原因 (cause). 源 is the “source” of a river, and 困 and 囚 only look like 因."
+
+#: app/components/info/KanjiInfo.tsx:37
+msgid "慎重 is read しんちょう. The other three keep the sound pattern but change one syllable."
+msgstr "慎重 is read しんちょう. The other three keep the sound pattern but change one syllable."
 
 #: app/lib/password-reset.server.ts:90
 msgid "文法ドリル: reset your password"

@@ -18,6 +18,7 @@ export default [
   route("forgot-password", "routes/forgot-password.tsx"),
   route("reset-password", "routes/reset-password.tsx"),
   route("account", "routes/account.tsx"),
+  route("info/:subject", "routes/info.tsx"),
   route("kanji/:level/:chapter/cards", "routes/flashcards.tsx"),
   route("notes/cards", "routes/note-cards.tsx"),
   route("tests/:id", "routes/quiz.tsx"),
