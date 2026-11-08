@@ -12,16 +12,15 @@ import { TestMenu } from "./TestMenu";
 /**
  * One test, a row of its week: its title (without the week), a line under it, and what is next for it. In progress: how
  * far it got, and Continue. Not taken: its size, and Start. Taken: its size, its score (green from the pass line), and
- * its results (where it can be retaken and its grammar reviewed). The week's next test (`primary`) has the one filled
- * button. The whole row opens it. The admin renames or deletes it from the menu of a right click on it.
+ * its results (where it can be retaken and its grammar reviewed). Start is the one filled button, as in the kanji and reading tabs. The whole row opens it. The admin renames or deletes it from the menu of a right click on it.
  */
-export function TestRow({ test, primary = false, isAdmin = false }: { test: TestSummary; primary?: boolean; isAdmin?: boolean }) {
+export function TestRow({ test, isAdmin = false }: { test: TestSummary; isAdmin?: boolean }) {
   const { t } = useLingui();
   const { answered, result } = test;
   const total = test.questionCount;
   const inProgress = !result && answered !== null;
   // One width, so the buttons of a week line up.
-  const button = cn(buttonVariants({ variant: primary ? "default" : "outline" }), "min-w-24");
+  const button = cn(buttonVariants({ variant: result || inProgress ? "outline" : "default" }), "min-w-24");
 
   const row = (
     <li className="relative flex min-h-16 items-center gap-4 px-5 py-3 transition-colors hover:bg-muted/60">

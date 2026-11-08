@@ -35,7 +35,7 @@ msgstr "{again, plural, other {#枚をもう一度}}"
 msgid "{again} needed again"
 msgstr "もう一度 {again}枚"
 
-#: app/components/home/test-list/TestRow.tsx:43
+#: app/components/home/test-list/TestRow.tsx:42
 #: app/components/reading/SetRow.tsx:40
 msgid "{answered} / {total} answered"
 msgstr "{answered} / {total} 問"
@@ -117,7 +117,7 @@ msgstr "{strokes, plural, other {#画}}"
 msgid "{taken} / {total} done"
 msgstr "{taken} / {total} 完了"
 
-#: app/components/home/test-list/index.tsx:65
+#: app/components/home/test-list/index.tsx:63
 msgid "{taken} / {total} taken"
 msgstr "{taken} / {total} 受験済み"
 
@@ -137,7 +137,7 @@ msgstr "{time} 経過 · 目標 {goal}"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
-#: app/components/home/test-list/TestRow.tsx:50
+#: app/components/home/test-list/TestRow.tsx:49
 #: app/components/quiz/index.tsx:104
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
@@ -492,7 +492,7 @@ msgstr "文の（　）に入る、いちばん自然な形を4つから選び�
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:65
+#: app/components/home/test-list/TestRow.tsx:64
 #: app/components/reading/SetRow.tsx:71
 msgid "Continue"
 msgstr "続きから"
@@ -1176,7 +1176,7 @@ msgstr "進捗をリセットしますか？"
 msgid "Reset your password"
 msgstr "パスワードの再設定"
 
-#: app/components/home/test-list/TestRow.tsx:65
+#: app/components/home/test-list/TestRow.tsx:64
 #: app/components/kanji/chapter-list/QuizRow.tsx:30
 #: app/components/reading/SetRow.tsx:66
 #: app/components/results/index.tsx:38
@@ -1310,7 +1310,7 @@ msgstr "空欄{n}"
 msgid "Something went wrong"
 msgstr "システム障害が発生しました"
 
-#: app/components/home/test-list/TestRow.tsx:65
+#: app/components/home/test-list/TestRow.tsx:64
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
 #: app/components/reading/SetRow.tsx:78
 #: app/components/welcome/TrialTests.tsx:109
@@ -1586,13 +1586,13 @@ msgstr "パスワードを忘れたときに、再設定のリンクを送りま
 msgid "Week"
 msgstr "週"
 
-#: app/components/home/test-list/index.tsx:54
-#: app/components/home/test-list/index.tsx:62
+#: app/components/home/test-list/index.tsx:52
+#: app/components/home/test-list/index.tsx:60
 #: app/lib/sections.ts:103
 msgid "Week {week}"
 msgstr "第{week}週"
 
-#: app/components/home/test-list/index.tsx:49
+#: app/components/home/test-list/index.tsx:47
 msgid "Weeks"
 msgstr "週"
 

@@ -39,8 +39,6 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
     { key: "taken", title: t`Taken`, tests: shown.tests.filter((test) => test.result) },
   ];
   const taken = groups[2].tests.length;
-  // The one to do next: the first in progress, else the first not taken.
-  const next = groups[0].tests[0] ?? groups[1].tests[0];
   const review = reviewList(tests).filter((item) => item.chip.week === week);
 
   return (
@@ -76,7 +74,7 @@ export function TestList({ tests, isAdmin = false }: { tests: TestSummary[]; isA
                 </h3>
                 <ul className="divide-y overflow-hidden rounded-xl border bg-card">
                   {group.tests.map((test) => (
-                    <TestRow key={test.id} test={test} primary={test === next} isAdmin={isAdmin} />
+                    <TestRow key={test.id} test={test} isAdmin={isAdmin} />
                   ))}
                 </ul>
               </section>
