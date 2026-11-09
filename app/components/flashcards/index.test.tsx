@@ -240,7 +240,7 @@ describe("Flashcards", () => {
         "href",
         `/kanji/N2/1/cards?seen=${encodeURIComponent(`${VIEW.cards[0]?.wordId},${INVITE_ID}`)}`,
       );
-      // The phone header's back link and the end screen's.
+      // The phone header's back link.
       for (const link of screen.getAllByRole("link", { name: "Back to lessons" })) expect(link).toHaveAttribute("href", "/kanji?level=N2&chapter=1");
       expect(screen.queryByRole("heading", { name: /Still learning/ })).toBeNull();
     });

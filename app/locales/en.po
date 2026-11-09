@@ -367,7 +367,6 @@ msgid "Back to kanji"
 msgstr "Back to kanji"
 
 #: app/components/flashcards/index.tsx:52
-#: app/components/flashcards/SessionDone.tsx:147
 msgid "Back to lessons"
 msgstr "Back to lessons"
 

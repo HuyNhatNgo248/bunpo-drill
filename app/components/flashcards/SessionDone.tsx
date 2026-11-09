@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { ChevronLeft, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { Link, useSubmit } from "react-router";
 import { SessionSummary } from "~/components/card-session/SessionSummary";
 import { ConfirmDialog } from "~/components/ConfirmDialog";
@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
 import { WordChips } from "~/components/WordChips";
-import { cardsOf, homeOf } from "~/lib/links";
+import { cardsOf } from "~/lib/links";
 import { chapterTitle } from "~/lib/sections";
 import type { FlashCard, FlashcardsView } from "~/lib/views";
 
@@ -138,15 +138,9 @@ export function SessionDone({
         </Card>
       )}
 
-      {/* A dialog's footer: back at the left, the ways on at the right, the one in colour last. On a phone they stack,
-          the one in colour on top, back at the bottom. */}
-      <div className="flex flex-col-reverse gap-2 md:flex-row md:items-center">
-        <Button asChild variant="ghost" className="md:mr-auto md:-ml-3">
-          <Link to={homeOf({ kind: "kanji", ...view })}>
-            <ChevronLeft aria-hidden="true" />
-            <Trans>Back to lessons</Trans>
-          </Link>
-        </Button>
+      {/* The ways on at the right, the one in colour last; on a phone they stack, the one in colour on top.
+          Back to the lessons is the page title's link. */}
+      <div className="flex flex-col-reverse gap-2 md:flex-row md:items-center md:justify-end">
         {rest.map((way) => button(way, "outline"))}
         {main && button(main, "default")}
       </div>
