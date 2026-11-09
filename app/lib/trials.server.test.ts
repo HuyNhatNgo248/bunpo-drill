@@ -24,7 +24,7 @@ describe("TRIAL_TESTS", () => {
     }
   });
 
-  it("has 3 総合 kanji tests of 45 per level, no question in two, and 3 N2 reading sets", () => {
+  it("has 3 総合 kanji tests of 45 per level, no question in two, and 3 reading sets", () => {
     for (const level of TRIAL_LEVELS) {
       const kanji = TRIAL_TESTS.flatMap(({ payload }) => (isKanji(payload) && payload.level === level ? [payload] : []));
       expect(kanji.map((payload) => payload.title)).toEqual(["総合 1", "総合 2", "総合 3"]);
@@ -32,7 +32,10 @@ describe("TRIAL_TESTS", () => {
       const prompts = kanji.flatMap((payload) => payload.sections.flatMap((section) => section.questions.map((question) => question.prompt)));
       expect(new Set(prompts).size).toBe(prompts.length);
     }
-    expect(TRIAL_TESTS.filter(({ id, payload }) => isReading(payload) && payload.level === "N2" && id.startsWith("reading-n2-"))).toHaveLength(3);
+    for (const level of TRIAL_LEVELS) {
+      const reading = TRIAL_TESTS.filter(({ id, payload }) => isReading(payload) && payload.level === level && id.startsWith(`reading-${level.toLowerCase()}-`));
+      expect(reading.map(({ payload }) => payload.title).sort()).toEqual(["総合 1", "総合 2", "総合 3"]);
+    }
   });
 });
 

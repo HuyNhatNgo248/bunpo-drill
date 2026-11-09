@@ -157,7 +157,25 @@ Then:
   only kanji at the level or below. Spread the questions over the
   chapter's lessons, and test each word once per test.
 - Each wrong choice must be wrong for anyone who knows the word; skip words with two
-  accepted readings. Spread the answers over 1–4.
+  accepted readings. Spread the answers over 1–4, with at most 3 of the same number in a row.
+
+An audit against the official N2V/N3V samples (https://www.jlpt.jp/samples/sample2012/pdf/N2V.pdf)
+found traps that give the answer away. These rules fix that:
+
+- **Believable readings only.** Every wrong reading is one a learner could really say: a real
+  reading of that kanji, or a long vowel / っ / voicing change of one. Never a made-up string
+  (`むずきょく` for 難局, `こまなん` for 困難, `はいぬの` for 配布).
+- **Cross two traps, like the exam.** Build the 4 choices as a 2×2 grid of two traps
+  (`しっきゅう / ちっきゅう / しきゅう / ちきゅう`: し/ち × っ/no っ). Don't change one different
+  part in each wrong choice (`郵便曲 / 郵便極 / 郵便局 / 郵使局`): then the answer is just the
+  choice that shares the most with the others.
+- **No second right answer.** A wrong spelling must not be a real way to write the same sound
+  that fits the sentence (`熱い/厚い`, `止めた/辞めた`, `踊った/躍った`). Use one only when the
+  sentence clearly rules it out (`厚くて重い本`), or pick another trap.
+- **Level.** Wrong-choice kanji are at the test's level or below (no `嵩`, `暈` at N2). Never test
+  place names or proper nouns.
+- **Natural sentences.** Read each sentence as a native speaker would say it (not
+  `ご連絡して恐縮です`).
 - Give every question an `explanation`: one or two English sentences on why the answer is
   right and which trap the others set (`渡航 is とこう: 渡 is a short ト. A long-vowel trap.`).
 

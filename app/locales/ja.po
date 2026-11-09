@@ -141,7 +141,7 @@ msgstr "{total, plural, other {#枚}}"
 #: app/components/quiz/index.tsx:104
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
-#: app/components/welcome/TrialTests.tsx:105
+#: app/components/welcome/TrialTests.tsx:104
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, other {#問}}"
 
@@ -702,7 +702,7 @@ msgid "Got it"
 msgstr "覚えた"
 
 #: app/components/SubjectTabs.tsx:25
-#: app/components/welcome/SubjectList.tsx:18
+#: app/components/welcome/SubjectList.tsx:14
 msgid "Grammar"
 msgstr "文法"
 
@@ -786,7 +786,7 @@ msgstr "番号つきの空欄に、文章の流れに合う文や表現を判断
 #: app/components/kanji/index.tsx:21
 #: app/components/results/Actions.tsx:42
 #: app/components/SubjectTabs.tsx:26
-#: app/components/welcome/SubjectList.tsx:18
+#: app/components/welcome/SubjectList.tsx:14
 #: app/routes/kanji.tsx:14
 msgid "Kanji"
 msgstr "漢字"
@@ -1237,7 +1237,7 @@ msgstr "同じテーマの2つの文章を読み、それぞれの意見を比�
 #: app/components/reading/index.tsx:21
 #: app/components/results/Actions.tsx:51
 #: app/components/SubjectTabs.tsx:27
-#: app/components/welcome/SubjectList.tsx:18
+#: app/components/welcome/SubjectList.tsx:14
 #: app/routes/reading.tsx:13
 msgid "Reading"
 msgstr "読解"
@@ -1441,7 +1441,7 @@ msgstr "もっともらしいですが、本文には書かれていません。
 #: app/components/home/test-list/TestRow.tsx:64
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
 #: app/components/reading/SetRow.tsx:78
-#: app/components/welcome/TrialTests.tsx:109
+#: app/components/welcome/TrialTests.tsx:119
 msgid "Start"
 msgstr "始める"
 
@@ -1462,7 +1462,7 @@ msgid "Study as flashcards"
 msgstr "カードで復習"
 
 #: app/components/SubjectTabs.tsx:45
-#: app/components/welcome/SubjectList.tsx:20
+#: app/components/welcome/SubjectList.tsx:23
 msgid "Subject"
 msgstr "科目"
 

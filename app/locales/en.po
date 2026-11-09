@@ -141,7 +141,7 @@ msgstr "{total, plural, one {# card} other {# cards}}"
 #: app/components/quiz/index.tsx:104
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
-#: app/components/welcome/TrialTests.tsx:105
+#: app/components/welcome/TrialTests.tsx:104
 msgid "{total, plural, one {# question} other {# questions}}"
 msgstr "{total, plural, one {# question} other {# questions}}"
 
@@ -702,7 +702,7 @@ msgid "Got it"
 msgstr "Got it"
 
 #: app/components/SubjectTabs.tsx:25
-#: app/components/welcome/SubjectList.tsx:18
+#: app/components/welcome/SubjectList.tsx:14
 msgid "Grammar"
 msgstr "Grammar"
 
@@ -786,7 +786,7 @@ msgstr "Judge which sentence or expression fits the flow of a passage with numbe
 #: app/components/kanji/index.tsx:21
 #: app/components/results/Actions.tsx:42
 #: app/components/SubjectTabs.tsx:26
-#: app/components/welcome/SubjectList.tsx:18
+#: app/components/welcome/SubjectList.tsx:14
 #: app/routes/kanji.tsx:14
 msgid "Kanji"
 msgstr "Kanji"
@@ -1237,7 +1237,7 @@ msgstr "Read two texts on one topic, and compare what each one says."
 #: app/components/reading/index.tsx:21
 #: app/components/results/Actions.tsx:51
 #: app/components/SubjectTabs.tsx:27
-#: app/components/welcome/SubjectList.tsx:18
+#: app/components/welcome/SubjectList.tsx:14
 #: app/routes/reading.tsx:13
 msgid "Reading"
 msgstr "Reading"
@@ -1441,7 +1441,7 @@ msgstr "Sounds sensible, but the passage never says it."
 #: app/components/home/test-list/TestRow.tsx:64
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
 #: app/components/reading/SetRow.tsx:78
-#: app/components/welcome/TrialTests.tsx:109
+#: app/components/welcome/TrialTests.tsx:119
 msgid "Start"
 msgstr "Start"
 
@@ -1462,7 +1462,7 @@ msgid "Study as flashcards"
 msgstr "Study as flashcards"
 
 #: app/components/SubjectTabs.tsx:45
-#: app/components/welcome/SubjectList.tsx:20
+#: app/components/welcome/SubjectList.tsx:23
 msgid "Subject"
 msgstr "Subject"
 

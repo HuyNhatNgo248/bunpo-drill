@@ -77,12 +77,19 @@ Write every sentence and passage new. Never reuse the notes' or the book's 例�
 word or two swapped: new situation, new subject, new wording. The notes tell you what to test
 (rules, traps), not the text.
 
+The test drills the week's points, but each part must work like the real exam, so it can't be
+won by spotting the week's pattern. The real N2 sample is https://www.jlpt.jp/samples/sample2012/pdf/N2G.pdf.
+
 **fill-blank (文法形式の判断)**
 - One sentence whose blank is exactly `（　　）` (full-width parentheses around two full-width spaces).
-- 4 choices with the same shape (all particles+verbs, all conjugated forms…). Take them from the
-  point's Nuance table and the same week. Exactly one is correct. Each wrong choice fails for a
-  reason the notes teach: wrong connection (〜はもちろん after a verb without の), wrong
-  meaning, or wrong direction.
+- 4 choices with the same shape (all particles+verbs, all conjugated forms…). Exactly one is correct.
+- In at least half the questions, the 4 choices are **one pattern in 4 forms**: the connection or
+  voice changes, the pattern stays (`答えさせた / 答えさせられる / 答えさせる / 答えさせられた` + あげく,
+  `いないわけじゃない / いるわけない / いたわけじゃない / いなかったわけじゃない`). The rest may take
+  look-alikes from the point's Nuance table, but never 4 patterns that are ruled out by meaning alone.
+- Every wrong choice must be real Japanese that is right in some other sentence. Never invent a
+  form (`のだらけ`, `てっぱなし`).
+- About half the questions are short dialogues (`A「…」B「…（　　）」`), as in the real exam.
 
 **sentence-order (文の組み立て)**
 - `before` + 4 slots + `after` make one sentence. Use 4 short chunks, like the real exam (`冷めない` `うちに` `早く` `食べて`).
@@ -90,10 +97,19 @@ word or two swapped: new situation, new subject, new wording. The notes tell you
 - `pieces` are scrambled. `correctOrder` lists piece indices (0-based) in slot order.
   `starSlot` is the 1-based slot holding ★ (vary it, often 3). Only the ★ piece is graded,
   so it must be fixed by the grammar, not by taste.
+- **★ is not the pattern word** in at least two thirds of the questions. Put ★ on a noun, verb or
+  particle piece whose place you only know once the whole sentence is built. Otherwise "put this
+  week's pattern in ★" wins without reading.
+- No two pieces may obviously join on their own (`立ち` + `っぱなしだった`). Each piece is a chunk
+  that could sit in more than one slot until the meaning settles it.
 
 **passage (文章の文法)**
-- Each passage is 4–7 sentences (about 150–300 characters) of essay or diary style, on its own
-  topic. The blanks test the grammar points or a connective that depends on the flow (だから vs ところが).
+- Each passage is a column or essay of about 350–500 characters, on its own topic. The real exam's
+  is one column of about 550 characters.
+- Each blank tests a week point, but the 4 choices must need the passage to decide: the point vs
+  a look-alike whose meaning only the sentences before or after rule out, or the point in 4 forms
+  where the flow decides (ending `〜わけだ / 〜わけではない / 〜わけがない / 〜わけにはいかない`,
+  tense, voice). A blank that the sentence alone settles is a fill-blank question, not a passage one.
 - Write each blank as `[n]` where n is the question number (q31 → `[31]`), and set `blank` to the same n.
 
 **For all types**

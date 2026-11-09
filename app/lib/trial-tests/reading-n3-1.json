@@ -1,0 +1,342 @@
+{
+ "version": 1,
+ "kind": "reading",
+ "title": "総合 1",
+ "level": "N3",
+ "sections": [
+  {
+   "type": "reading-short",
+   "passages": [
+    {
+     "blocks": [
+      {
+       "kind": "text",
+       "text": "住民の皆様へ\nいつもごみの分別にご協力いただき、ありがとうございます。最近、決められた日以外にごみ置き場へ出された段ボールが、雨にぬれて散らかっていることがあります。段ボールなど紙類の回収は、毎週水曜日の朝です。前の日の夜に出すと、カラスや雨の被害にあうことがありますので、当日の朝8時までにお出しください。皆様のご協力をお願いいたします。\n管理組合"
+      }
+     ],
+     "notes": [
+      {
+       "word": "分別",
+       "gloss": "ごみを種類ごとに分けること"
+      }
+     ],
+     "questions": [
+      {
+       "id": "q1",
+       "prompt": "このお知らせで、住民に一番伝えたいことは何か。",
+       "choices": [
+        "紙類は、回収日の前の晩に出しておいてほしい。",
+        "紙類は、決められた日の朝、時間までに出してほしい。",
+        "段ボールは、ぬれないようにビニールに入れて出してほしい。",
+        "ごみ置き場を、住民で順番に掃除してほしい。"
+       ],
+       "answerIndex": 1,
+       "kind": "詳細",
+       "traps": [
+        "opposite",
+        null,
+        "not-in-text",
+        "not-in-text"
+       ],
+       "evidence": "当日の朝8時までにお出しください。",
+       "explanation": "The notice asks for paper on the collection morning by 8: 2. 1 is the opposite (the night before causes the mess), and 3 and 4 are never asked."
+      }
+     ],
+     "lead": "以下は、あるマンションの掲示板に貼られたお知らせである。",
+     "tip": "The request is the ください sentence near the end; the rest is background."
+    }
+   ]
+  },
+  {
+   "type": "reading-mid",
+   "passages": [
+    {
+     "blocks": [
+      {
+       "kind": "text",
+       "text": "先日、引っ越しの片付けをしていたら、古い箱の中から祖母の手紙が何通も出てきた。私が大学に入って一人暮らしを始めたころ、毎月のように届いていたものだ。当時の私は、電話をすればすぐ済むのにと思い、<u>①返事をほとんど書かなかった</u>。\n読み返してみると、どの手紙にも天気のことや庭の花のことなど、何でもない話ばかりが書かれていた。しかし、字はていねいで、ところどころに書き直したあとがある。目が悪くなっていた祖母にとって、便せん一枚を書くのは簡単なことではなかったはずだ。<u>②それ</u>に気づいて、私はしばらく手紙を置くことができなかった。\nメールなら、一分もかからずに気持ちを伝えられる。便利なのは確かだ。ただ、手で書かれた文字には、書いた人がその時間を自分のために使ってくれたということまで残るのではないだろうか。今度は私が、誰かに手紙を書いてみようと思う。"
+      }
+     ],
+     "notes": [
+      {
+       "word": "便せん",
+       "gloss": "手紙を書くための紙"
+      }
+     ],
+     "questions": [
+      {
+       "id": "q2",
+       "prompt": "筆者が<u>①返事をほとんど書かなかった</u>のはなぜか。",
+       "choices": [
+        "祖母の手紙には、何でもない話しか書かれていなかったから",
+        "大学の勉強が忙しくて、時間がなかったから",
+        "話を伝えるなら、電話のほうが早くて楽だと思っていたから",
+        "祖母の字が、読みにくかったから"
+       ],
+       "answerIndex": 2,
+       "kind": "理由",
+       "traps": [
+        "true-not-answer",
+        "not-in-text",
+        null,
+        "opposite"
+       ],
+       "evidence": "当時の私は、電話をすればすぐ済むのにと思い、①返事をほとんど書かなかった。",
+       "explanation": "The writer thought a phone call was quicker: 3. 1 is true but comes later and isn't the reason, 2 is never said, and 4 is the opposite (字はていねい)."
+      },
+      {
+       "id": "q3",
+       "prompt": "<u>②それ</u>とは何か。",
+       "choices": [
+        "祖母の手紙に、天気や花の話が多かったこと",
+        "祖母が苦労しながら、一枚一枚手紙を書いていたこと",
+        "祖母が、筆者からの返事をずっと待っていたこと",
+        "祖母の目が悪くて、手紙が書けなくなっていたこと"
+       ],
+       "answerIndex": 1,
+       "kind": "指示語",
+       "traps": [
+        "true-not-answer",
+        null,
+        "not-in-text",
+        "over-general"
+       ],
+       "evidence": "目が悪くなっていた祖母にとって、便せん一枚を書くのは簡単なことではなかったはずだ。",
+       "explanation": "それ is the sentence just before: writing was hard for her, yet she did it: 2. 1 is true but not what それ points to, 3 isn't in the text, and 4 goes too far (she still wrote)."
+      },
+      {
+       "id": "q4",
+       "prompt": "筆者の考えに合うものはどれか。",
+       "choices": [
+        "手紙の文字からは、相手が自分のことを思って手間をかけてくれたことが感じられる。",
+        "メールは不便なので、気持ちを伝えるのには使わないほうがいい。",
+        "手紙には、何でもない話ではなく、大切なことを書くべきだ。",
+        "目が悪い人には、手紙ではなくメールを送るほうがいい。"
+       ],
+       "answerIndex": 0,
+       "kind": "主張",
+       "traps": [
+        null,
+        "opposite",
+        "not-in-text",
+        "not-in-text"
+       ],
+       "evidence": "ただ、手で書かれた文字には、書いた人がその時間を自分のために使ってくれたということまで残るのではないだろうか。",
+       "explanation": "After ただ, the writer says handwriting carries the time the sender spent on you: 1. 2 is the opposite (便利なのは確かだ), and 3 and 4 are never said."
+      }
+     ],
+     "tip": "① is explained in its own sentence, ② points back one sentence, and the view follows ただ at the end."
+    }
+   ]
+  },
+  {
+   "type": "reading-long",
+   "passages": [
+    {
+     "blocks": [
+      {
+       "kind": "text",
+       "text": "社会人になって最初の一年、私は人に質問するのがとても苦手だった。わからないことがあっても、「こんなことも知らないのか」と思われるのがこわくて、自分で調べて何とかしようとしていた。インターネットで調べれば、たいていのことは答えが見つかる。だから、<u>①それで十分だ</u>と思っていたのだ。\nところが、ある日、大きな失敗をした。取引先に送る書類を、ネットで見つけた一般的な書き方で作ってしまったのである。しかし、私の会社には決まった書き方があり、それは数か月前に変わったばかりだった。先輩に一言聞けば、すぐにわかったことだった。\n落ち込んでいる私に、先輩はこう言った。「わからないことを聞くのは、恥ずかしいことじゃないよ。聞かないで間違えるほうが、みんなの時間を使うことになるんだから」。<u>②その言葉</u>を聞いて、私は自分が守っていたのは、仕事ではなく自分のプライドだったのだと気づいた。\nそれからは、迷ったらすぐに聞くようにしている。もちろん、何でも人に頼ればいいというわけではない。自分で調べられることは調べ、そのうえで「ここまではわかったのですが」と聞くと、相手も答えやすいようだ。質問は、相手の時間をもらうことでもある。だからこそ、上手に聞く力は、調べる力と同じくらい大切なのではないかと思う。"
+      }
+     ],
+     "notes": [
+      {
+       "word": "取引先",
+       "gloss": "仕事でお金や品物のやりとりをする相手の会社"
+      },
+      {
+       "word": "プライド",
+       "gloss": "人に下に見られたくないという気持ち"
+      }
+     ],
+     "questions": [
+      {
+       "id": "q5",
+       "prompt": "<u>①それで十分だ</u>とあるが、何が十分だと思っていたのか。",
+       "choices": [
+        "人に頼らず、自分の力で答えを見つけること",
+        "先輩に、一言だけ質問すること",
+        "会社で決まっている書き方を、覚えること",
+        "知らないことがあっても、気にしないこと"
+       ],
+       "answerIndex": 0,
+       "kind": "指示語",
+       "traps": [
+        null,
+        "opposite",
+        "not-in-text",
+        "not-in-text"
+       ],
+       "evidence": "わからないことがあっても、「こんなことも知らないのか」と思われるのがこわくて、自分で調べて何とかしようとしていた。",
+       "explanation": "それ is finding answers alone, as the writer did instead of asking: 1. 2 is the opposite, 3 isn't what was enough, and 4 is never said."
+      },
+      {
+       "id": "q6",
+       "prompt": "筆者がした失敗とはどのようなものか。",
+       "choices": [
+        "取引先に、書類を送るのを忘れてしまった。",
+        "先輩に教わった方法が、間違っていた。",
+        "社内で今使われているものとは違う形で、書類を作った。",
+        "会社の古い書き方を、ネットで調べてしまった。"
+       ],
+       "answerIndex": 2,
+       "kind": "詳細",
+       "traps": [
+        "changed-detail",
+        "opposite",
+        null,
+        "changed-detail"
+       ],
+       "evidence": "取引先に送る書類を、ネットで見つけた一般的な書き方で作ってしまったのである。",
+       "explanation": "The writer used a general format from the web, not the company's current one: 3. 1 changes what went wrong, 2 is the opposite (the writer never asked), and 4 mixes up the details."
+      },
+      {
+       "id": "q7",
+       "prompt": "<u>②その言葉</u>を聞いて、筆者はどのようなことに気づいたか。",
+       "choices": [
+        "先輩も、昔は質問するのが苦手だったこと",
+        "人に質問すると、みんなの時間を使ってしまうこと",
+        "仕事を守るためには、自分で調べるべきだということ",
+        "聞かなかったのは、恥をかきたくないという自分の気持ちのためだったこと"
+       ],
+       "answerIndex": 3,
+       "kind": "詳細",
+       "traps": [
+        "not-in-text",
+        "opposite",
+        "opposite",
+        null
+       ],
+       "evidence": "②その言葉を聞いて、私は自分が守っていたのは、仕事ではなく自分のプライドだったのだと気づいた。",
+       "explanation": "The writer saw they had been protecting their pride: 4. 2 reverses the senior's point (not asking wastes time), 3 is the opposite, and 1 is never said."
+      },
+      {
+       "id": "q8",
+       "prompt": "筆者の考えに合うものはどれか。",
+       "choices": [
+        "わからないことは、自分で調べずにすぐ人に聞くほうがいい。",
+        "自分で調べたうえで人にうまくたずねることも、調べることと同じように大事だ。",
+        "調べる力は、人に聞く力よりも大切だ。",
+        "質問は相手の時間を使うので、なるべくしないほうがいい。"
+       ],
+       "answerIndex": 1,
+       "kind": "主張",
+       "traps": [
+        "opposite",
+        null,
+        "changed-detail",
+        "opposite"
+       ],
+       "evidence": "だからこそ、上手に聞く力は、調べる力と同じくらい大切なのではないかと思う。",
+       "explanation": "Asking well matters as much as looking things up: 2. 1 drops \"look it up first\", 3 changes 同じくらい to \"more\", and 4 is the opposite."
+      }
+     ],
+     "tip": "① points back two sentences; the claim is the last sentence, after もちろん…わけではない."
+    }
+   ]
+  },
+  {
+   "type": "reading-info",
+   "passages": [
+    {
+     "blocks": [
+      {
+       "kind": "text",
+       "text": "春の教室　受講生募集\n4月から6月まで、次の教室を開きます。どの教室も、初めての方を歓迎します。"
+      },
+      {
+       "kind": "table",
+       "head": [
+        "教室",
+        "曜日・時間",
+        "対象",
+        "料金（1か月）"
+       ],
+       "rows": [
+        [
+         "水泳（初級）",
+         "火・木　10:00〜11:00",
+         "18歳以上",
+         "4,000円"
+        ],
+        [
+         "水泳（子ども）",
+         "土　9:00〜10:00",
+         "小学生",
+         "3,000円"
+        ],
+        [
+         "ヨガ",
+         "月・水　19:00〜20:00",
+         "18歳以上",
+         "3,500円"
+        ],
+        [
+         "卓球",
+         "土　14:00〜16:00",
+         "中学生以上",
+         "2,000円"
+        ],
+        [
+         "テニス",
+         "日　9:00〜11:00",
+         "中学生以上",
+         "5,000円"
+        ]
+       ]
+      },
+      {
+       "kind": "text",
+       "text": "※市内に住んでいる方、または市内の会社や学校に通っている方は、料金が500円安くなります。\n※65歳以上の方は、表の料金の半額になります（市内の方の割引と一緒には使えません）。\n※テニスは、ラケットを自分で用意してください（1回300円で借りることもできます）。\n※申し込みは、前の月の20日までに、センターの受付でお願いします。\n※水着やタオルなど、ラケット以外の道具は各自でご用意ください。\n※どの教室も、見学は無料です。見学したい方は、当日、受付でお申し出ください。"
+      }
+     ],
+     "notes": [],
+     "questions": [
+      {
+       "id": "q9",
+       "prompt": "市外に住み、市内の会社に勤めている田中さん（30歳）は、平日の夜しか時間がない。田中さんが参加できる教室の料金は、1か月いくらか。",
+       "choices": [
+        "4,000円",
+        "1,750円",
+        "3,500円",
+        "3,000円"
+       ],
+       "answerIndex": 3,
+       "kind": "条件",
+       "traps": [
+        "missed-condition",
+        "missed-condition",
+        "missed-condition",
+        null
+       ],
+       "evidence": "※市内に住んでいる方、または市内の会社や学校に通っている方は、料金が500円安くなります。",
+       "explanation": "Only yoga is on weekday evenings: 3,500 yen, minus 500 because Tanaka works in the city = 3,000 (4). 3 misses the discount, 2 uses the over-65 rate, and 1 is a morning class."
+      },
+      {
+       "id": "q10",
+       "prompt": "市内に住む山本さん（70歳）は、テニスを習いたい。ラケットは持っていないので、毎回借りるつもりだ。日曜日が4回ある月に、山本さんが払うお金は全部でいくらか。",
+       "choices": [
+        "2,500円",
+        "3,200円",
+        "3,700円",
+        "5,700円"
+       ],
+       "answerIndex": 2,
+       "kind": "条件",
+       "traps": [
+        "missed-condition",
+        "missed-condition",
+        null,
+        "missed-condition"
+       ],
+       "evidence": "※65歳以上の方は、表の料金の半額になります（市内の方の割引と一緒には使えません）。",
+       "explanation": "Half of 5,000 is 2,500, plus 4 rackets at 300 = 3,700 yen (3). 1 forgets the rackets, 2 also takes the city discount, which can't be combined, and 4 uses the smaller city discount instead of the half price."
+      }
+     ],
+     "lead": "以下は、ある市のスポーツセンターの教室の案内である。",
+     "tip": "Pick the class by day and time first, then go down the ※ notes one by one."
+    }
+   ]
+  }
+ ]
+}

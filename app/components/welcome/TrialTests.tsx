@@ -9,7 +9,7 @@ import { LEVELS } from "~/lib/levels";
 import { cn } from "~/lib/utils";
 import type { TrialSummary } from "~/lib/views";
 import { AutoHeight } from "./AutoHeight";
-import { SUBJECTS, SubjectList } from "./SubjectList";
+import { SUBJECT_ICONS, SUBJECT_LABELS, SUBJECTS, SubjectList } from "./SubjectList";
 
 /**
  * The practice sets a visitor can take without an account: a level menu and a tab per subject, as on the signed-in home,
@@ -88,28 +88,37 @@ function LevelMenu({ levels, shown, onPick }: { levels: readonly string[]; shown
   );
 }
 
-/** One test as a card: its title and size, and the way in. The whole card opens it. */
+/** One test as a card: its subject, title and size, and the way in. The whole card opens it. */
 function TestCard({ test }: { test: TrialSummary }) {
+  const { i18n } = useLingui();
   const total = test.questionCount;
+  const Icon = SUBJECT_ICONS[test.kind];
   return (
-    <li className="group relative flex flex-col gap-5 rounded-xl border bg-card p-4.5 transition-all hover:-translate-y-0.5 hover:border-primary-border hover:shadow-md has-focus-visible:border-primary-border motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:p-5">
-      {/* Its ::after covers the card, so a tap anywhere on it opens the test. */}
-      <Link to={`/try/${test.id}`} className="text-foreground no-underline outline-none after:absolute after:inset-0">
-        <span className="sr-only">{test.level} </span>
-        <span lang="ja" className="font-jp text-lg font-semibold">
-          {test.title}
+    <li className="group relative flex items-center justify-between gap-3 rounded-xl border bg-card p-4.5 transition-all hover:-translate-y-0.5 hover:border-primary-border hover:shadow-md has-focus-visible:border-primary-border motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:p-5">
+      <div className="flex flex-col gap-1">
+        {/* The titles are alike across subjects, so the card says which one it is. */}
+        <span className="flex items-center gap-1.5 text-caption text-muted-foreground">
+          <Icon aria-hidden="true" className="size-3.5" />
+          <span className="font-semibold">{i18n._(SUBJECT_LABELS[test.kind])}</span>·
+          <span>
+            <Plural value={total} one="# question" other="# questions" />
+          </span>
         </span>
-      </Link>
-      <div className="flex items-center justify-between gap-3">
-        <span className="text-caption text-muted-foreground">
-          <Plural value={total} one="# question" other="# questions" />
-        </span>
-        {/* The link is the whole card; this only looks like its way in. */}
-        <span aria-hidden="true" className="flex items-center gap-1 text-sm font-semibold text-primary">
-          <Trans>Start</Trans>
-          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-        </span>
+        {/* Its ::after covers the card, so a tap anywhere on it opens the test. */}
+        <Link to={`/try/${test.id}`} className="text-foreground no-underline outline-none after:absolute after:inset-0">
+          <span className="sr-only">
+            {test.level} {i18n._(SUBJECT_LABELS[test.kind])}{" "}
+          </span>
+          <span lang="ja" className="font-jp text-lg font-semibold">
+            {test.title}
+          </span>
+        </Link>
       </div>
+      {/* The link is the whole card; this only looks like its way in. */}
+      <span aria-hidden="true" className="flex shrink-0 items-center gap-1 text-sm font-semibold text-primary">
+        <Trans>Start</Trans>
+        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+      </span>
     </li>
   );
 }

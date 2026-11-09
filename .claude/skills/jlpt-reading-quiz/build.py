@@ -135,6 +135,11 @@ def build(s):
                 num += 1
                 question["id"] = f"q{num}"
     answers = [q["answerIndex"] for sec in ordered for p in sec["passages"] for q in p["questions"]]
+    # The real exam's choices are about the same length, so "pick the longest" must not win.
+    longest = [q["id"] for sec in ordered for p in sec["passages"] for q in p["questions"]
+               if q["answerIndex"] is not None and all(len(q["choices"][q["answerIndex"]]) > len(c) for j, c in enumerate(q["choices"]) if j != q["answerIndex"])]
+    if len(longest) > len(answers) * 0.3:
+        problems.append(f"{s['title']}: the answer is the longest choice in {len(longest)} of {len(answers)} questions ({' '.join(longest)}); at most 30%. Even out the choice lengths.")
     return {"version": 1, "kind": "reading", "title": s["title"], "level": s["level"], "sections": ordered}, problems, answers
 
 

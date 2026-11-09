@@ -75,6 +75,25 @@ traps. Also:
   more sentences from its cue. Right answers paraphrase the text, and wrong ones reuse its
   words.
 
+An audit against the official N2R/N3R samples (https://www.jlpt.jp/samples/sample2012/pdf/N2R.pdf)
+found sets answerable without reading. These rules fix that:
+
+- **Same-length choices.** The 4 choices are about the same length (within ~20%). The answer
+  must not be the longest: it was in 77% of earlier N2 questions. `build.py` fails a set when the
+  answer is the longest choice in more than 30% of its questions.
+- **Believable wrong choices.** Each wrong choice is something a careless reader could take from
+  the text: its own ideas, slightly twisted (a detail changed, a condition dropped, true but not
+  what is asked). At most one `not-in-text` per question. No moral extremes or sweeping claims
+  that no writer would make (`人に物を貸すべきではない`, `完璧を目指すのは、悪いことだ`).
+- **Full lengths.** Meet the table's lengths, especially at N2: 中文 ~500字, 統合理解 ~270字 per
+  text, 主張理解 ~850字. Shorter passages make the set easier than the exam.
+- **Glosses.** N2 中文 and 主張理解 passages carry 3–5 （注）, as the exam's do.
+- **統合理解** is not always "A for, B against". Often both writers agree on the main point and
+  differ in a detail, reason or condition, as in the sample.
+- **N2 情報検索** uses more than one source or plan (two companies, a table plus rules), and the
+  answers combine options or turn on a ※ footnote, not one lookup and a sum.
+- **指示語** questions ask what a reference word (この, それ, そう) points to.
+
 ## 4. Build the set's JSON
 
 The contract is `test.schema.json` next to this file. It's generated from the app's
@@ -188,7 +207,8 @@ python3 .claude/skills/jlpt-reading-quiz/build.py sets.txt         # check and s
 ```
 
 The script reports any evidence that isn't found exactly once, any underline that isn't in
-the passage, and any question missing its answer or traps. Fix those and run it again.
+the passage, any question missing its answer or traps, and a set whose answers are too often
+the longest choice. Fix those and run it again.
 
 ## 5. Send it
 

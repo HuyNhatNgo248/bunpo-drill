@@ -1,3 +1,5 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { BookOpenText, ClipboardCheck, PenLine } from "lucide-react";
 import { Tabs } from "radix-ui";
@@ -7,21 +9,22 @@ import type { TestKind } from "~/lib/views";
 
 export const SUBJECTS: TestKind[] = ["grammar", "kanji", "reading"];
 
-const ICONS = { grammar: ClipboardCheck, kanji: PenLine, reading: BookOpenText };
+export const SUBJECT_ICONS = { grammar: ClipboardCheck, kanji: PenLine, reading: BookOpenText };
+
+export const SUBJECT_LABELS: Record<TestKind, MessageDescriptor> = { grammar: msg`Grammar`, kanji: msg`Kanji`, reading: msg`Reading` };
 
 /**
  * The subject tabs of a welcome section, styled as the signed-in home's segmented control, the highlight sliding to the
  * one picked. Goes inside a Tabs.Root whose values are the subjects; `onPick` is its onValueChange.
  */
 export function SubjectList({ subjects, value, onPick }: { subjects: TestKind[]; value: string; onPick: (kind: string) => void }) {
-  const { t } = useLingui();
-  const labels = { grammar: t`Grammar`, kanji: t`Kanji`, reading: t`Reading` };
+  const { t, i18n } = useLingui();
   return (
     <Tabs.List aria-label={t`Subject`} className="self-start rounded-xl border bg-muted p-1">
       <div className="relative grid auto-cols-fr grid-flow-col">
         <TabHighlight index={subjects.indexOf(value as TestKind)} count={subjects.length} className="rounded-lg bg-card shadow-piece" />
         {subjects.map((kind) => {
-          const Icon = ICONS[kind];
+          const Icon = SUBJECT_ICONS[kind];
           return (
             <Tabs.Trigger
               key={kind}
@@ -38,7 +41,7 @@ export function SubjectList({ subjects, value, onPick }: { subjects: TestKind[];
               {/* Over the sliding highlight. */}
               <span className="relative flex items-center gap-2">
                 <Icon aria-hidden="true" className="size-4" />
-                {labels[kind]}
+                {i18n._(SUBJECT_LABELS[kind])}
               </span>
             </Tabs.Trigger>
           );

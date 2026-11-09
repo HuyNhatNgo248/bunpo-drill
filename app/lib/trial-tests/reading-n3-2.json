@@ -1,0 +1,325 @@
+{
+ "version": 1,
+ "kind": "reading",
+ "title": "総合 2",
+ "level": "N3",
+ "sections": [
+  {
+   "type": "reading-short",
+   "passages": [
+    {
+     "blocks": [
+      {
+       "kind": "text",
+       "text": "林さん\n来週の木曜日の会話クラスについてお知らせします。担当の先生の都合により、木曜日の授業はお休みになりました。その代わりに、次の土曜日の午前10時から、同じ教室で授業を行います。土曜日に来られない人は、別の日に個人レッスンを受けることもできます。その場合は、今週の金曜日までに受付に電話で申し込んでください。メールでの申し込みは受け付けていませんので、ご注意ください。\nさくら日本語学校　事務室"
+      }
+     ],
+     "notes": [],
+     "questions": [
+      {
+       "id": "q1",
+       "prompt": "土曜日の授業に出られない林さんは、どうしなければならないか。",
+       "choices": [
+        "来週の木曜日に、いつもの教室に行く。",
+        "金曜日までに、このメールに返信して申し込む。",
+        "土曜日の午前10時に、受付に電話する。",
+        "金曜日までに学校に電話をかけて、別の日に一人で受ける授業を申し込む。"
+       ],
+       "answerIndex": 3,
+       "kind": "詳細",
+       "traps": [
+        "opposite",
+        "opposite",
+        "changed-detail",
+        null
+       ],
+       "evidence": "その場合は、今週の金曜日までに受付に電話で申し込んでください。",
+       "explanation": "Someone who can't come on Saturday phones by Friday for a private lesson: 4. 1 is the cancelled class, 2 is ruled out (メールでの申し込みは受け付けていません), and 3 changes the time."
+      }
+     ],
+     "lead": "以下は、ある日本語学校から学生に届いたメールの内容である。",
+     "tip": "The answer is in the その場合は sentence, with the warning after it."
+    }
+   ]
+  },
+  {
+   "type": "reading-mid",
+   "passages": [
+    {
+     "blocks": [
+      {
+       "kind": "text",
+       "text": "去年の春、ベランダで小さなトマトを育て始めた。店で苗を一つ買い、毎朝水をやるだけの簡単なものだ。ところが、夏の初めに実がなり始めたころ、<u>①思いがけないこと</u>が起きた。強い雨と風が続いた日の翌朝、枝が何本も折れてしまったのだ。\nがっかりしたが、残った枝には少しずつ赤い実がついた。最初の一つを食べたとき、その味は店で買うトマトとそれほど変わらなかった。それでも、私にはとても特別な味に感じられた。\n自分で育ててみて、わかったことがある。トマト一つが食卓に並ぶまでに、どれだけの時間と手間がかかっているかということだ。<u>②それ</u>を知ってから、スーパーで野菜を選ぶときの気持ちが少し変わった。安いか高いかだけでなく、作った人のことを考えるようになったのである。野菜を育てることは、食べ物とのつき合い方を見直すきっかけになるのかもしれない。"
+      }
+     ],
+     "notes": [
+      {
+       "word": "苗",
+       "gloss": "植物の、まだ小さく若いもの"
+      },
+      {
+       "word": "食卓",
+       "gloss": "食事をするときに使うテーブル"
+      }
+     ],
+     "questions": [
+      {
+       "id": "q2",
+       "prompt": "<u>①思いがけないこと</u>とは何か。",
+       "choices": [
+        "夏の初めに、トマトの実がなり始めたこと",
+        "枝に、赤い実がたくさんついたこと",
+        "天気が悪かったせいで、トマトの枝が傷んだこと",
+        "毎朝水をやるのを、忘れてしまったこと"
+       ],
+       "answerIndex": 2,
+       "kind": "指示語",
+       "traps": [
+        "true-not-answer",
+        "changed-detail",
+        null,
+        "not-in-text"
+       ],
+       "evidence": "強い雨と風が続いた日の翌朝、枝が何本も折れてしまったのだ。",
+       "explanation": "The surprise was the branches breaking after the storm: 3. 1 is when it happened, not what, 2 changes 少しずつ, and 4 is never said."
+      },
+      {
+       "id": "q3",
+       "prompt": "<u>②それ</u>とは何か。",
+       "choices": [
+        "野菜が育って口に入るまでには、多くの日数と労力がいるということ",
+        "店のトマトと自分で育てたトマトの味が、あまり変わらないということ",
+        "安い野菜のほうが、作るのに手間がかからないということ",
+        "作った人の名前が、野菜に書かれているということ"
+       ],
+       "answerIndex": 0,
+       "kind": "指示語",
+       "traps": [
+        null,
+        "true-not-answer",
+        "not-in-text",
+        "not-in-text"
+       ],
+       "evidence": "トマト一つが食卓に並ぶまでに、どれだけの時間と手間がかかっているかということだ。",
+       "explanation": "それ is how much time and work one tomato takes: 1. 2 is true but said earlier and is not what それ points to, and 3 and 4 aren't in the text."
+      },
+      {
+       "id": "q4",
+       "prompt": "筆者の考えに合うものはどれか。",
+       "choices": [
+        "野菜は、高くても自分で育てたほうがいい。",
+        "スーパーでは、安い野菜を選ぶべきだ。",
+        "ベランダで野菜を育てるのは、思ったより簡単だ。",
+        "野菜を作ってみると、食べ物に対する見方が変わることがある。"
+       ],
+       "answerIndex": 3,
+       "kind": "主張",
+       "traps": [
+        "not-in-text",
+        "opposite",
+        "not-in-text",
+        null
+       ],
+       "evidence": "野菜を育てることは、食べ物とのつき合い方を見直すきっかけになるのかもしれない。",
+       "explanation": "Growing vegetables can change how you see food: 4. 2 is the opposite (安いか高いかだけでなく), and 1 and 3 are never said."
+      }
+     ],
+     "tip": "① is explained in the next sentence, ② two sentences back, and the view is the last sentence."
+    }
+   ]
+  },
+  {
+   "type": "reading-long",
+   "passages": [
+    {
+     "blocks": [
+      {
+       "kind": "text",
+       "text": "旅行に行くと、私はいつもたくさんの写真を撮っていた。有名な建物も、レストランの料理も、きれいな夕日も、とりあえずスマートフォンを向ける。帰ってから見返すと、一回の旅行で数百枚になっていることもあった。\nある年、家族で海の近くの町を旅行したとき、到着してすぐにスマートフォンが壊れてしまった。写真が撮れないとわかったとき、私は<u>①旅行がだいなしになった</u>ような気がした。しかし、その三日間は、思っていたのとはまったく違うものになった。\n写真を撮らないので、景色をただじっと見る時間が増えた。波の音や、市場で聞いた店の人の声、焼いた魚のにおいまで、今でもはっきり思い出せる。一方で、それまでの旅行は、たくさん写真があるのに、どこで何をしたのかあまり覚えていないのである。写真を撮ることに夢中で、<u>②目の前のもの</u>をきちんと見ていなかったのかもしれない。\nもちろん、写真には写真のよさがある。何年もたってから家族と見返して、話がはずむこともある。だから、写真を撮るのをやめようとは思わない。ただ、今は旅先で、最初の数分だけはスマートフォンをかばんに入れたまま、景色を眺めるようにしている。思い出を残すのは写真だけではない。自分の目や耳で感じたことこそ、長く心に残るのではないだろうか。"
+      }
+     ],
+     "notes": [
+      {
+       "word": "だいなし",
+       "gloss": "すっかりだめになること"
+      },
+      {
+       "word": "眺める",
+       "gloss": "遠くのほうをゆっくり見る"
+      }
+     ],
+     "questions": [
+      {
+       "id": "q5",
+       "prompt": "<u>①旅行がだいなしになった</u>ような気がしたのはなぜか。",
+       "choices": [
+        "家族と一緒に、旅行ができなくなったから",
+        "旅の思い出を、形にして残せなくなったと思ったから",
+        "海の近くの町には、見るものがないと思ったから",
+        "新しいスマートフォンを買うお金がなかったから"
+       ],
+       "answerIndex": 1,
+       "kind": "理由",
+       "traps": [
+        "not-in-text",
+        null,
+        "not-in-text",
+        "not-in-text"
+       ],
+       "evidence": "写真が撮れないとわかったとき、私は①旅行がだいなしになったような気がした。",
+       "explanation": "The writer felt the trip was ruined because no photos could be taken: 2. 1, 3 and 4 are never said."
+      },
+      {
+       "id": "q6",
+       "prompt": "<u>②目の前のもの</u>をきちんと見ていなかったとあるが、筆者はなぜそう思ったのか。",
+       "choices": [
+        "スマートフォンが壊れた旅行のことを、あまり覚えていないから",
+        "写真を見返すと、きれいに撮れていないものが多かったから",
+        "写真を数百枚も撮るのは、時間がかかるから",
+        "多く撮影した旅のほうが、かえって中身を思い出せないから"
+       ],
+       "answerIndex": 3,
+       "kind": "理由",
+       "traps": [
+        "opposite",
+        "not-in-text",
+        "not-in-text",
+        null
+       ],
+       "evidence": "一方で、それまでの旅行は、たくさん写真があるのに、どこで何をしたのかあまり覚えていないのである。",
+       "explanation": "The trips full of photos are the ones the writer can't recall: 4. 1 is the opposite (the phoneless trip is remembered clearly), and 2 and 3 aren't in the text."
+      },
+      {
+       "id": "q7",
+       "prompt": "写真について、筆者はどのように考えているか。",
+       "choices": [
+        "写真は思い出を残すのに役に立たないので、撮らなくてよい。",
+        "旅行では、写真をできるだけ多く撮ったほうがよい。",
+        "時間がたってから家族との会話のきっかけになるなど、よいところもある。",
+        "景色の写真より、人の写真を撮るほうがよい。"
+       ],
+       "answerIndex": 2,
+       "kind": "詳細",
+       "traps": [
+        "opposite",
+        "opposite",
+        null,
+        "not-in-text"
+       ],
+       "evidence": "何年もたってから家族と見返して、話がはずむこともある。",
+       "explanation": "Photos can get the family talking years later: 3. 1 is denied (写真を撮るのをやめようとは思わない), 2 is the habit the writer moved away from, and 4 is never said."
+      },
+      {
+       "id": "q8",
+       "prompt": "この文章で筆者が一番言いたいことは何か。",
+       "choices": [
+        "実際に見たり聞いたりして感じたことのほうが、記憶に深く残る。",
+        "写真を撮るのをやめて、景色を見ることに集中するべきだ。",
+        "写真があれば、旅行のことをいつまでも覚えていられる。",
+        "旅行に行くときは、スマートフォンを持っていかないほうがいい。"
+       ],
+       "answerIndex": 0,
+       "kind": "主張",
+       "traps": [
+        null,
+        "opposite",
+        "opposite",
+        "over-general"
+       ],
+       "evidence": "自分の目や耳で感じたことこそ、長く心に残るのではないだろうか。",
+       "explanation": "What you sense yourself stays with you longest: 1. 2 is denied (やめようとは思わない), 3 is the opposite, and 4 goes too far (the phone is only put away for the first few minutes)."
+      }
+     ],
+     "tip": "The reason for ② is the 一方で sentence just before it; the claim is the last sentence, after ただ."
+    }
+   ]
+  },
+  {
+   "type": "reading-info",
+   "passages": [
+    {
+     "blocks": [
+      {
+       "kind": "text",
+       "text": "駅前レンタサイクル　ご利用案内\n町の観光には、自転車が便利です。駅前の受付で、どなたでも借りることができます。"
+      },
+      {
+       "kind": "table",
+       "head": [
+        "自転車の種類",
+        "2時間まで",
+        "1日（9:00〜18:00）"
+       ],
+       "rows": [
+        [
+         "ふつうの自転車",
+         "500円",
+         "1,000円"
+        ],
+        [
+         "電動自転車",
+         "800円",
+         "1,500円"
+        ],
+        [
+         "子ども用自転車（小学生まで）",
+         "300円",
+         "600円"
+        ]
+       ]
+      },
+      {
+       "kind": "text",
+       "text": "※2時間を過ぎると、1時間ごとに200円が追加されます。\n※駅前ホテルに泊まっている方は、ホテルのカードを見せると、1日料金が半額になります（2時間までの料金には使えません）。\n※電動自転車は台数が少ないため、前の日までに電話でご予約ください。\n※自転車は、18:00までに受付にお返しください。\n※ヘルメットは無料でお貸しします。雨の日に、かさを差して乗ることはできません。\n※自転車をなくしたり壊したりした場合は、修理代をいただくことがあります。"
+      }
+     ],
+     "notes": [],
+     "questions": [
+      {
+       "id": "q9",
+       "prompt": "駅前ホテルに泊まっている大人2人が、ふつうの自転車を朝9時から夕方5時まで借りたい。2人分の料金はいくらか。",
+       "choices": [
+        "2,000円",
+        "1,000円",
+        "500円",
+        "3,400円"
+       ],
+       "answerIndex": 1,
+       "kind": "条件",
+       "traps": [
+        "missed-condition",
+        null,
+        "missed-condition",
+        "missed-condition"
+       ],
+       "evidence": "※駅前ホテルに泊まっている方は、ホテルのカードを見せると、1日料金が半額になります（2時間までの料金には使えません）。",
+       "explanation": "Eight hours needs the 1-day rate, halved for hotel guests: 500 yen each, 1,000 for two (2). 1 misses the discount, 3 counts one person, and 4 adds hourly charges to the 2-hour rate."
+      },
+      {
+       "id": "q10",
+       "prompt": "田中さん（大人）は、明日の昼から3時間、電動自転車を借りたい。田中さんがしなければならないことと、料金はどれか。",
+       "choices": [
+        "明日、受付で申し込んで、1,000円払う。",
+        "今日中に電話で予約して、1,500円払う。",
+        "今日中に電話で予約して、1,000円払う。",
+        "今日中に電話で予約して、800円払う。"
+       ],
+       "answerIndex": 2,
+       "kind": "条件",
+       "traps": [
+        "missed-condition",
+        "missed-condition",
+        null,
+        "missed-condition"
+       ],
+       "evidence": "※電動自転車は台数が少ないため、前の日までに電話でご予約ください。",
+       "explanation": "E-bikes must be booked by phone the day before, and 3 hours is 800 + 200 = 1,000 yen (3). 1 skips the booking, 2 uses the 1-day rate, and 4 forgets the extra hour."
+      }
+     ],
+     "lead": "以下は、ある町のレンタサイクルの案内である。",
+     "tip": "Choose the 2-hour or 1-day column first, then check each ※ note for who and when."
+    }
+   ]
+  }
+ ]
+}
