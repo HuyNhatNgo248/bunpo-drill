@@ -23,7 +23,7 @@ Arguments: $ARGUMENTS
 - **Scope**: weeks, days or patterns. Read the notes and map patterns to ids exactly as
   `/Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz/SKILL.md` step 2 says. "Weak ones" = the unreviewed chips from
   `bash /Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz/tests.sh` from the repo root (needs the app running). If no scope is
-  given, ask once. Don't guess.
+  given, ask once. Don't guess. "Review test" / 総復習: see "Review test" in `jlpt-format.md`.
 - **Count**: default is double the real exam: N3 26 / 10 / 10 (問題1–3), N2 24 / 10 / 10
   (問題7–9). Use what the user asks for ("10 questions", "only 問題2", "no passage"). Split
   a total in the same ratio as the real exam.

@@ -77,3 +77,25 @@ N2 uses 次の and 選びなさい in kanji.
 - In 文章の文法, about 2 of 5 blanks test the studied patterns; the rest test connectives,
   こそあど, aspect and sentence endings, as the real test does.
 - Answers are spread across 1–4 with no pattern, and the right one isn't the longest.
+
+## Make it as hard as the real exam
+
+Our tests scored 87–93% because they were easier than the real paper. These rules fix that:
+
+- **Out-of-scope choices.** Every question has at least one wrong choice from outside the test's
+  scope (other weeks, N3 basics, common N2 patterns). Knowing this week's list must not be enough.
+- **No form giveaways.** At least 2 of the 3 wrong choices fit the sentence's grammar (connection,
+  tense, voice). Only meaning or context rules them out. At most one choice may be wrong by form alone.
+- **Keigo, giving/receiving, voice.** About 1 in 4 fill-blank questions puts keigo (いらっしゃる /
+  伺う / いただく), 〜てもらう / くれる / あげる, passive or causative into the 4 choices.
+- **Clue away from the blank.** Sentences are 30–60 characters with N2 vocabulary. The clue that decides
+  sits in another clause or the other speaker's line. At most 1 in 4 questions is settled by a set
+  phrase (経験の有無を問わず, 人目もかまわず).
+- **Self-check.** Before using a question, ask: could someone who only knows this week's list, reading
+  only the words next to the blank, get it right? If yes, rewrite it.
+
+## Review test (総復習)
+
+When the user asks for a review test (総復習, "review test", "mixed test"), cover every studied week
+of the level, not one week, at the real exam's counts: N2 12 / 5 / 5 (one passage), N3 13 / 5 / 5.
+Pick points evenly across the weeks, favouring ones missed before. Title: `総復習 第1〜8週`.

@@ -21,6 +21,8 @@ Settle three things from the arguments and the conversation:
   `bash ~/.claude/skills/jlpt-grammar-quiz/tests.sh` (it sends the app's API token) and collect `review[]` entries with
   `"reviewed": false`. Their `grammarId` (`n3-w5-d1-g2`) gives week, day and number.
   If no scope is given, ask once ("Which week or days?"). Don't guess.
+  "Review test" / 総復習 means every studied week at the real counts: see "Review test" in
+  `/Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz-terminal/jlpt-format.md` (N2 12 / 5 / 5).
 - **Question count**, per section as fill-blank / sentence-order / passage blanks:
 
   | The user says | Counts |
@@ -79,6 +81,10 @@ word or two swapped: new situation, new subject, new wording. The notes tell you
 
 The test drills the week's points, but each part must work like the real exam, so it can't be
 won by spotting the week's pattern. The real N2 sample is https://www.jlpt.jp/samples/sample2012/pdf/N2G.pdf.
+
+Read `/Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz-terminal/jlpt-format.md` first and follow its "Make it as hard as the
+real exam" rules. They win over the looser rules below where the two differ. A wrong choice from
+outside the scope is only a choice, so it needs no entry in `grammarPoints`.
 
 **fill-blank (文法形式の判断)**
 - One sentence whose blank is exactly `（　　）` (full-width parentheses around two full-width spaces).
