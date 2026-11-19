@@ -78,6 +78,30 @@ N2 uses 次の and 選びなさい in kanji.
   こそあど, aspect and sentence endings, as the real test does.
 - Answers are spread across 1–4 with no pattern, and the right one isn't the longest.
 
+## Topics: as wide as the real exam
+
+The real N2 draws its sentences and passages from all of life, not a few stock scenes. Our
+tests kept falling back on restaurants, cafés and remote work. Spread topics the way the exam does:
+
+- **Daily life and family:** moving house, neighbours, chores, shopping, child-raising, grandparents, pets.
+- **School and study:** classes, exams, club activities, teachers, studying abroad, libraries.
+- **Work, but varied:** factories, shops, hospitals, farms, offices, job hunting, retiring. Not always an IT team.
+- **Community and public life:** town notices, festivals, volunteering, local government, elections, disaster drills.
+- **Health and the body:** doctors, illness, sleep, exercise, ageing.
+- **Nature, science, environment:** weather and typhoons, animals and plants, space, recycling, energy.
+- **Culture and leisure:** books, films, music, art, sport, travel, crafts, traditional arts, hobbies.
+- **Society and ideas:** technology and its effects, language and dialects, manners, money, generations, media.
+
+Rules:
+
+- In one test, use each area at least once, and no single setting (restaurant, café, office,
+  remote work) more than twice across all questions.
+- Every passage has its own area, and the passages differ in kind: an essay, a column, a notice,
+  a student's 作文, a letter.
+- Pick the situation before writing the sentence. Vary who speaks (family, teacher and student,
+  neighbours, doctor and patient, shop clerk and customer, not only colleagues) and the scene tag
+  (`（病院で）`, `（駅で）`, `（市役所で）`, `（家で）`).
+
 ## Make it as hard as the real exam
 
 Our tests scored 87–93% because they were easier than the real paper. These rules fix that:

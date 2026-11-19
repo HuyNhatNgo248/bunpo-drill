@@ -48,6 +48,7 @@ Follow `jlpt-format.md`, plus:
 - Write every sentence and passage new. Never reuse the notes' or the book's 例文, not even
   with a word or two swapped: new situation, new subject, new wording. The notes tell you
   what to test (rules, traps), not the text.
+- Spread topics as widely as the real exam does: follow "Topics" in `jlpt-format.md`.
 - Every grammar point in scope is tested at least once.
 - Read each question with all 4 choices. If two work, or none does, rewrite it.
 - 文の組み立て: check every plausible order; only one may be grammatical, and the ★ chunk

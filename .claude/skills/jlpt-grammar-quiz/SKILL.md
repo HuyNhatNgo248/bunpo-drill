@@ -78,6 +78,7 @@ No two questions in a test may share a sentence or a passage.
 Write every sentence and passage new. Never reuse the notes' or the book's 例文, not even with a
 word or two swapped: new situation, new subject, new wording. The notes tell you what to test
 (rules, traps), not the text.
+Spread topics as widely as the real exam does: follow "Topics" in `jlpt-format.md`.
 
 The test drills the week's points, but each part must work like the real exam, so it can't be
 won by spotting the week's pattern. The real N2 sample is https://www.jlpt.jp/samples/sample2012/pdf/N2G.pdf.
