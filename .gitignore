@@ -8,3 +8,4 @@
 
 # Local database and old file storage
 /data/
+__pycache__/
