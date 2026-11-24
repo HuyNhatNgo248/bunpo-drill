@@ -1,17 +1,31 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRightIcon } from "lucide-react";
-import { animate, m, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react";
+import {
+  animate,
+  m,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "motion/react";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 
 /** The days left until the next JLPT, with its date, how many daily tests fit before it, and a sign-up button. */
-export function ExamCountdown({ exam }: { exam: { date: string; daysLeft: number } }) {
+export function ExamCountdown({
+  exam,
+}: {
+  exam: { date: string; daysLeft: number };
+}) {
   const { i18n } = useLingui();
   const [year, month, day] = exam.date.split("-").map(Number);
   // UTC on both sides, so the server and the browser print the same day.
-  const date = new Intl.DateTimeFormat(i18n.locale, { dateStyle: "full", timeZone: "UTC" }).format(Date.UTC(year, month - 1, day));
+  const date = new Intl.DateTimeFormat(i18n.locale, {
+    dateStyle: "full",
+    timeZone: "UTC",
+  }).format(Date.UTC(year, month - 1, day));
   const daysLeft = exam.daysLeft;
   return (
     <section aria-labelledby="exam-countdown">
@@ -21,13 +35,20 @@ export function ExamCountdown({ exam }: { exam: { date: string; daysLeft: number
           <h2 id="exam-countdown" className="text-xl font-bold text-balance">
             <Trans>The next JLPT</Trans>
           </h2>
-          <p className="text-body-sm text-secondary-foreground tabular-nums md:text-base">{date}</p>
+          <p className="text-body-sm text-secondary-foreground tabular-nums md:text-base">
+            {date}
+          </p>
         </div>
         {daysLeft > 0 && (
           <p className="flex items-baseline gap-1.5 justify-self-end">
             <Trans>
-              <span className="text-sm text-subtle-foreground max-sm:sr-only">in</span>{" "}
-              <CountUp to={daysLeft} className="text-title leading-none font-bold text-primary tabular-nums md:text-score" />{" "}
+              <span className="text-sm text-subtle-foreground max-sm:sr-only">
+                in
+              </span>{" "}
+              <CountUp
+                to={daysLeft}
+                className="text-title leading-none font-bold text-primary tabular-nums md:text-score"
+              />{" "}
               <span className="text-base font-bold">
                 <Plural value={daysLeft} one="day" other="days" />
               </span>
@@ -45,7 +66,12 @@ export function ExamCountdown({ exam }: { exam: { date: string; daysLeft: number
             />
           )}
         </p>
-        <Button asChild size="lg" variant="outline" className="col-span-2 md:col-span-1 md:justify-self-end">
+        <Button
+          asChild
+          size="lg"
+          variant="outline"
+          className="col-span-2 md:col-span-1 md:justify-self-end"
+        >
           <Link to="/signup">
             <Trans>Start practicing today</Trans>
             <ArrowRightIcon aria-hidden />
@@ -66,7 +92,11 @@ function CountUp({ to, className }: { to: number; className: string }) {
 
   useEffect(() => {
     if (!inView || reduce) return;
-    const controls = animate(count, to, { from: 0, duration: 1.2, ease: "easeOut" });
+    const controls = animate(count, to, {
+      from: 0,
+      duration: 1.2,
+      ease: "easeOut",
+    });
     return () => controls.stop();
   }, [inView, reduce, to, count]);
 
