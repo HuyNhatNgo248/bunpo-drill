@@ -39,22 +39,22 @@ traps. Also:
 - Original texts only. No author attributions, no real people or companies.
 - Topics the log hasn't used recently: work, technology, society, education, health,
   culture, environment, language, science. Vary practical texts (emails, notices) and essays.
-- 主張理解 and at least half of 中文 are 評論: an abstract claim argued with reasons. At most
-  1 first-person story per set. Follow checklist items 8–10 (hard words, kanji, grammar,
-  wrong choices).
+- Genres as in `reading-format.md`: 主張理解 is a 評論; 中文 mixes 評論, 解説 and エッセイ.
+  Follow checklist items 8–10 (words, kanji, grammar, wrong
+  choices): match the exam, not easier and not stiffer.
 - 情報検索: lay the flyer or table out with a markdown table, plus notes and footnotes.
 - Write every passage and question set before showing anything. Keep the answers to
   yourself.
 - **Run the checklist in `reading-format.md` on every passage** and rewrite until it
-  passes. In particular: hedged claim in the second half, at least one answer two or more
-  sentences from its cue, right answers paraphrased, wrong ones reusing the text's words.
+  passes. In particular: the writer's view placed and hedged as checklist item 2 says, at
+  least one answer two or more sentences from its cue, right answers keeping an anchor word
+  and rewording the rest.
 
-**Calibration.** Write at the top of N2 by default: the user found earlier sets easier
-than the exam. The user may log official practice results too (rows with 種類 `公式…`).
+**Calibration.** Match the official sample by default. The user may log official practice results too (rows with 種類 `公式…`).
 If the log has both, compare accuracy on the same types. When generated sets score 10+
 points higher than official ones, make the next sets harder still: answers further from
-their cues, more paraphrase distance, closer wrong answers, more N1-level glossed words.
-Ease off only when generated sets score clearly lower than official ones. Say which way
+their cues, more paraphrase distance, closer wrong answers. Never make them harder by
+adding stiff 漢語. If they score clearly lower, ease off the same levers. Say which way
 you adjusted and why.
 
 Target times (rough, chosen so a full section fits the exam block):

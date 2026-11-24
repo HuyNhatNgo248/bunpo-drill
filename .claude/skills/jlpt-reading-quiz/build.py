@@ -14,15 +14,10 @@ LEVELS = {"N5", "N4", "N3", "N2", "N1"}
 ORDER = list(TYPES.values())
 TRAPS = {"cd": "changed-detail", "op": "opposite", "ni": "not-in-text", "tn": "true-not-answer", "og": "over-general", "mc": "missed-condition"}
 KINDS = {"理由", "指示語", "主張", "詳細", "比較", "条件"}
-# N2 lengths in characters, from the official sample (reading-format.md). 統合理解 is per text.
-N2_LENGTH = {"reading-short": (200, 250), "reading-mid": (470, 620), "reading-integrated": (260, 320), "reading-claim": (800, 900)}
-N2_KANJI = 0.35  # floor for essays; the sample is about 40%
+# N2 lengths in characters, measured on the official sample (reading-format.md). 統合理解 is per text.
+N2_LENGTH = {"reading-short": (180, 240), "reading-mid": (430, 600), "reading-integrated": (250, 290), "reading-claim": (780, 900)}
+N2_KANJI = (0.22, 0.40)  # the sample's 中文/統合/主張 run 24–39%, plus a margin; 短文 goes lower, so it isn't checked
 EASY_TRAPS = {"opposite", "not-in-text"}
-
-
-def kanji_share(text):
-    chars = re.sub(r"\s", "", text)
-    return len(re.findall(r"[一-鿿々]", chars)) / max(len(chars), 1)
 
 
 def parse(text):
@@ -41,7 +36,7 @@ def parse(text):
             kind = line[1:].strip()
             if kind not in TYPES:
                 sys.exit(f"{where}: unknown type @{kind}")
-            p = {"type": TYPES[kind], "P": [], "A": [], "B": [], "TH": None, "TR": [], "F": [], "notes": [], "questions": [], "lead": None, "tip": None}
+            p = {"type": TYPES[kind], "P": [], "A": [], "B": [], "info": [], "notes": [], "questions": [], "lead": None, "tip": None}
             s["passages"].append(p)
             q = None
             continue
@@ -54,7 +49,7 @@ def parse(text):
             continue
         if p is None:
             sys.exit(f"{where}: write @type before the passage")
-        if key in ("P", "A", "B", "F"):
+        if key in ("P", "A", "B"):
             p[key].append(value)
         elif key == "L":
             p["lead"] = value
@@ -63,10 +58,18 @@ def parse(text):
         elif key == "N":
             word, _, gloss = value.partition("=")
             p["notes"].append({"word": word.strip(), "gloss": gloss.strip()})
+        # A new TH starts another table; F lines go under the block above them.
         elif key == "TH":
-            p["TH"] = [c.strip() for c in value.split("|")]
+            p["info"].append({"kind": "table", "head": [c.strip() for c in value.split("|")], "rows": []})
         elif key == "TR":
-            p["TR"].append([c.strip() for c in value.split("|")])
+            if not p["info"] or p["info"][-1]["kind"] != "table":
+                sys.exit(f"{where}: TR must follow its TH")
+            p["info"][-1]["rows"].append([c.strip() for c in value.split("|")])
+        elif key == "F":
+            if p["info"] and p["info"][-1]["kind"] == "text":
+                p["info"][-1]["text"] += "\n" + value
+            else:
+                p["info"].append({"kind": "text", "text": value})
         elif key == "Q":
             q = {"prompt": value, "choices": [], "traps": [], "answer": None, "kind": None, "evidence": None, "explanation": None}
             p["questions"].append(q)
@@ -98,10 +101,7 @@ def blocks_of(p):
     blocks = []
     if p["P"]:
         blocks.append({"kind": "text", "text": "\n".join(p["P"])})
-    if p["TH"]:
-        blocks.append({"kind": "table", "head": p["TH"], "rows": p["TR"]})
-    if p["F"]:
-        blocks.append({"kind": "text", "text": "\n".join(p["F"])})
+    blocks.extend(p["info"])
     return blocks
 
 
@@ -119,10 +119,11 @@ def build(s):
             for t in prose if p["type"] == "reading-integrated" else ["".join(prose)]:
                 if not lo <= len(t) <= hi:
                     problems.append(f"{s['title']} passage {i}: {len(t)} characters; N2 needs {lo}–{hi}")
-            # Emails and notices (they have a lead line) run lower in kanji, so only essays are checked.
-            share = kanji_share("".join(prose))
-            if not p["lead"] and share < N2_KANJI:
-                problems.append(f"{s['title']} passage {i}: kanji {share:.0%}; N2 essays need at least {N2_KANJI:.0%}. Use 漢語, not easy wago.")
+            if p["type"] != "reading-short":
+                body = "".join(prose)
+                share = len(re.findall(r"[一-鿿々]", body)) / max(len(body), 1)
+                if not N2_KANJI[0] <= share <= N2_KANJI[1]:
+                    problems.append(f"{s['title']} passage {i}: kanji {share:.1%}; the N2 sample runs 24–39%")
         questions = []
         for q in p["questions"]:
             num += 1
@@ -137,8 +138,10 @@ def build(s):
             for word in re.findall(r"<u>(.*?)</u>", q["prompt"]):
                 if not any(word in t for t in texts):
                     problems.append(f"{where}: underlined 「{word}」 is not in the passage")
-            if s["level"] in ("N2", "N1") and sum(t in EASY_TRAPS for t in q["traps"]) > 1:
-                problems.append(f"{where}: at most 1 wrong choice may be op or ni; use cd, tn, mc or og")
+            if s["level"] in ("N2", "N1") and sum(t in EASY_TRAPS for t in q["traps"]) > 2:
+                problems.append(f"{where}: at most 2 wrong choices may be op or ni; make at least one cd, tn or mc")
+            if s["level"] in ("N2", "N1") and q["traps"].count("over-general") > 1:
+                problems.append(f"{where}: at most 1 og wrong choice; sweeping words give the answer away")
             questions.append({"id": f"q{num}", "prompt": q["prompt"], "choices": q["choices"], "answerIndex": q["answer"], "kind": q["kind"],
                               "traps": q["traps"], "evidence": q["evidence"], "explanation": q["explanation"] or "See the evidence."})
         passage = {"blocks": blocks, "notes": p["notes"], "questions": questions}

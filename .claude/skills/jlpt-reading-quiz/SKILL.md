@@ -25,7 +25,7 @@ the official samples on jlpt.jp (N1R.pdf … N5R.pdf) if anything looks off:
 | N5 | 短文 3 × 1 (~80字) · 中文 1 × 2 (~250字) · 情報検索 1 × 1 (~250字) | です・ます, everyday topics, simple kanji |
 | N4 | 短文 4 × 1 (100–200字) · 中文 1 × 3–4 (~450字) · 情報検索 1 × 2 (~400字) | everyday topics, plain or polite |
 | N3 | 短文 4 × 1 (150–200字) · 中文 2 × 3 (~350字) · 長文 1 × 4 (~550字) · 情報検索 1 × 2 (~600字) | short essays, letters, notices |
-| N2 | 短文 5 × 1 (200–250字) · 中文 3 × 3 (470–620字) · 統合理解 1 pair × 2 (260–320字 per text) · 主張理解 1 × 3 (800–900字) · 情報検索 1 × 2 | dense abstract 漢語, 評論 essays; see reading-format.md |
+| N2 | 短文 5 × 1 (180–240字) · 中文 3 × 3 (430–600字) · 統合理解 1 pair × 2 (250–290字 per text) · 主張理解 1 × 3 (780–900字) · 情報検索 1 × 2 | 評論 essays in natural column style; see reading-format.md |
 | N1 | 短文 4 × 1 (~200字) · 中文 3 × 3 (~500字) · 長文 1 × 4 (~1000字) · 統合理解 1 pair × 2–3 · 主張理解 1 × 4 (~1000字) · 情報検索 1 × 2 | abstract essays, reviews, more N1 words |
 
 - **N5 and N4:** gloss fewer words, and put the writer's view near the end without heavy
@@ -70,33 +70,37 @@ traps. Also:
 - Original texts only. No author names, and no real people or companies.
 - Vary the topics (work, technology, society, education, health, culture, environment,
   language, science), and mix practical texts (emails, notices) with essays.
-- At N2 and N1, 主張理解 and at least half of 中文 are 評論: an abstract claim argued with
-  reasons. At most 1 first-person story per set. Follow the hard-word, kanji and grammar
-  rules in the checklist (items 8–9).
+- At N2 and N1, follow the genres in `reading-format.md`: 主張理解 is a 評論, and 中文 mixes
+  評論, 解説 and エッセイ. Follow the word, kanji and grammar rules in the checklist
+  (items 8–10): match the exam, not easier and not stiffer.
 - **Run the checklist in `reading-format.md` on every passage**, and rewrite it until it
-  passes. The writer's view is hedged and in the second half. At least one answer is two or
-  more sentences from its cue. Right answers paraphrase the text, and wrong ones reuse its
-  words.
+  passes. Place and hedge the writer's view as checklist item 2 says. At least one answer is
+  two or more sentences from its cue. Right answers keep an anchor word and reword the rest
+  (checklist item 4).
 
 An audit against the official N2R/N3R samples (https://www.jlpt.jp/samples/sample2012/pdf/N2R.pdf)
 found sets answerable without reading. These rules fix that:
 
 - **Same-length choices.** The 4 choices are about the same length (within ~20%). The answer
-  must not be the longest: it was in 77% of earlier N2 questions. `build.py` fails a set when the
+  is the longest choice in about 1 question in 5, as in the sample (4 of 21), never as a habit;
+  it was in 77% of earlier N2 questions. `build.py` fails a set when the
   answer is the longest choice in more than 30% of its questions.
 - **Believable wrong choices.** Each wrong choice is something a careless reader could take from
   the text: its own ideas, slightly twisted (a detail changed, a condition dropped, true but not
-  what is asked). At most one `opposite` or `not-in-text` per question; the others are
-  `cd`, `tn`, `mc` or `og`. No moral extremes or sweeping claims that no writer would make
+  what is asked). At most two `opposite` or `not-in-text` and at most one `og` per question;
+  at least one is `cd`, `tn` or `mc`. An op or ni choice still uses the text's words or topic. No すべて, 一切, 決して or 必ず in a wrong choice unless the
+  text invites it. No moral extremes or sweeping claims that no writer would make
   (`人に物を貸すべきではない`, `完璧を目指すのは、悪いことだ`).
-- **Full lengths.** Meet the table's lengths. Shorter passages make the set easier than the
-  exam. `build.py` fails an N2 passage outside the range, and an N2 essay under 35% kanji.
-- **Glosses.** N2 中文 and 主張理解 passages carry 3–5 （注）, each an N1-level word. Never gloss
+- **Lengths.** Meet the table's lengths. `build.py` fails an N2 passage outside the range,
+  an N2 中文/統合/主張 outside 22–40% kanji, and a question with more than two `op`/`ni` or
+  more than one `og`.
+- **Glosses.** N2 短文 carry 1–3 （注）, 中文 and 主張理解 4–5 (the sample has 5 in each), each an N1-level word. Never gloss
   an N2 word.
 - **統合理解** is not always "A for, B against". Often both writers agree on the main point and
   differ in a detail, reason or condition, as in the sample.
 - **N2 情報検索** uses more than one source or plan (two companies, a table plus rules), and the
-  answers combine options or turn on a ※ footnote, not one lookup and a sum.
+  answers combine options or turn on a ※ footnote, not one lookup and a sum. At most one
+  question per passage needs a price calculation; the other picks a plan from conditions.
 - **指示語** questions ask what a reference word (この, それ, そう) points to.
 
 ## 4. Build the set's JSON
@@ -124,12 +128,12 @@ The contract is `test.schema.json` next to this file. It's generated from the ap
             {
               "id": "q1",
               "prompt": "<u>しかし、私はときどき、あえてアプリを閉じて歩くことにしている</u>とあるが、なぜか。",
-              "choices": ["…悪いことだから", "…まったくないと思うから", "…道がはっきりしないときにあると思うから", "…必ず…出会えるから"],
+              "choices": ["…悪いことだから", "…アプリの案内では足りないと思うから", "…道がはっきりしないときにあると思うから", "…どこを歩いても…出会えるから"],
               "answerIndex": 2,
               "kind": "理由",
-              "traps": ["opposite", "over-general", null, "over-general"],
+              "traps": ["opposite", "changed-detail", null, "over-general"],
               "evidence": "ただ、知らない角を曲がって思いがけない店や景色に出会うといった経験は、迷う余地があってこそ生まれるものではないだろうか。",
-              "explanation": "The ただ sentence says unplanned finds need room to get lost; 3 says it in other words. 1 is the opposite (それ自体は悪いことではない); 2 and 4 go too far (まったく, 必ず)."
+              "explanation": "The ただ sentence says unplanned finds need room to get lost; 3 says it in other words. 1 is the opposite (それ自体は悪いことではない); 2 changes what the writer says about the app; 4 goes too far (どこを歩いても)."
             }
           ]
         }
@@ -199,8 +203,9 @@ X: One or two English sentences: why 2 is right, what is wrong with the others.
 - **Text lines:**
   - **`P:`** one paragraph.
   - **`A:` / `B:`** the two texts of 統合理解.
-  - **`TH:` / `TR:`** a table's heading and rows, cells split by `|`.
-  - **`F:`** a line of notes or ※ footnotes, shown under the table.
+  - **`TH:` / `TR:`** a table's heading and rows, cells split by `|`. A new `TH:` starts
+    another table.
+  - **`F:`** a line of notes or ※ footnotes, shown under the table above it.
 - `*` marks the answer. Each wrong choice ends with `~` and its trap: `cd` changed detail,
   `op` opposite, `ni` not in the text, `tn` true but not the answer, `og` over-general,
   `mc` missed condition.
