@@ -76,8 +76,10 @@ you can't read it, mark the word `⚠要確認` and never quiz it.
 
 Read `vocab-format.md` again for the trap patterns, then write the set:
 
-- **文脈規定**: a sentence with （　　）; 4 same-shape choices from the notes and
-  neighbouring words; the collocation decides.
+- **文脈規定**: a sentence with （　　）; 4 choices of the same shape (shared kanji, same
+  suffix or ending, same onomatopoeia pattern). At most one wrong choice is close in
+  meaning, ruled out only by collocation or context; the others are wrong by meaning.
+  Wrong choices may be any N2 words, not only the notes.
 - **言い換え類義**: a sentence with the target in 【 】; 4 paraphrases that all fit the
   sentence, one with the same meaning.
 - **用法**: the target word, then 4 natural sentences; 3 put it where a near-synonym

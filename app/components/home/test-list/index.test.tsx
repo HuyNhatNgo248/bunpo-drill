@@ -55,12 +55,19 @@ describe("TestList", () => {
     expect(within(screen.getByRole("region", { name: "Taken 1" })).getByRole("link")).toHaveAccessibleName(/^第1週 3日目/);
   });
 
-  it("puts a test of several weeks under its first", async () => {
-    renderList([ofWeek(4), ofWeek(5), buildTestSummary({ id: "20261027-ffffff", title: "第5週・第6週", weeks: [5, 6] })], "/?week=5");
+  it("puts the tests of several weeks under 総合, after the weeks", async () => {
+    const mixed = buildTestSummary({ id: "20261027-ffffff", title: "第5週・第6週", weeks: [5, 6] });
+    renderList([ofWeek(4), mixed, ofWeek(5)], "/?week=5");
 
-    expect(await screen.findByRole("link", { name: /^第5週・第6週/ })).toBeInTheDocument();
+    const weeks = within(await screen.findByRole("navigation", { name: "Weeks" })).getAllByRole("link");
+    expect(weeks.map((week) => week.textContent)).toEqual(["Week 40 / 1", "Week 50 / 1", "総合0 / 1"]);
     expect(screen.getByRole("link", { name: /^第5週 1日目/ })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /^第4週 1日目/ })).toBeNull();
+    expect(screen.queryByRole("link", { name: /^第5週・第6週/ })).toBeNull();
+
+    await userEvent.click(weeks[2]!);
+    expect(weekShown()).toBe("総合");
+    expect(screen.getByRole("link", { name: /^第5週・第6週/ })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /^第5週 1日目/ })).toBeNull();
   });
 
   it("shows the days as a test's title, and links a test not taken to the quiz, with its size", async () => {

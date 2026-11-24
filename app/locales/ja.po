@@ -117,7 +117,7 @@ msgstr "{strokes, plural, other {#画}}"
 msgid "{taken} / {total} done"
 msgstr "{taken} / {total} 完了"
 
-#: app/components/home/test-list/index.tsx:65
+#: app/components/home/test-list/index.tsx:75
 msgid "{taken} / {total} taken"
 msgstr "{taken} / {total} 受験済み"
 
@@ -754,7 +754,7 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/index.tsx:38
+#: app/components/home/test-list/index.tsx:48
 #: app/components/reading/GroupList.tsx:93
 msgid "In progress"
 msgstr "解答中"
@@ -1009,7 +1009,7 @@ msgstr "日本語能力試験（JLPT）の公式サービスではありませ�
 msgid "Not learned yet. Study them again now, or they come back after the new cards."
 msgstr "まだ覚えていません。今すぐもう一度学ぶか、新しいカードのあとにまた出ます。"
 
-#: app/components/home/test-list/index.tsx:39
+#: app/components/home/test-list/index.tsx:49
 msgid "Not taken"
 msgstr "未受験"
 
@@ -1493,7 +1493,7 @@ msgstr "もう一度受ける"
 msgid "Take the quiz"
 msgstr "クイズを受ける"
 
-#: app/components/home/test-list/index.tsx:40
+#: app/components/home/test-list/index.tsx:50
 msgid "Taken"
 msgstr "受験済み"
 
@@ -1767,13 +1767,12 @@ msgstr "パスワードを忘れたときに、再設定のリンクを送りま
 msgid "Week"
 msgstr "週"
 
-#: app/components/home/test-list/index.tsx:53
-#: app/components/home/test-list/index.tsx:61
+#: app/components/home/test-list/index.tsx:30
 #: app/lib/sections.ts:103
 msgid "Week {week}"
 msgstr "第{week}週"
 
-#: app/components/home/test-list/index.tsx:48
+#: app/components/home/test-list/index.tsx:58
 msgid "Weeks"
 msgstr "週"
 

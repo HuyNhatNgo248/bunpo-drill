@@ -117,7 +117,7 @@ msgstr "{strokes, plural, one {# stroke} other {# strokes}}"
 msgid "{taken} / {total} done"
 msgstr "{taken} / {total} done"
 
-#: app/components/home/test-list/index.tsx:65
+#: app/components/home/test-list/index.tsx:75
 msgid "{taken} / {total} taken"
 msgstr "{taken} / {total} taken"
 
@@ -754,7 +754,7 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/index.tsx:38
+#: app/components/home/test-list/index.tsx:48
 #: app/components/reading/GroupList.tsx:93
 msgid "In progress"
 msgstr "In progress"
@@ -1009,7 +1009,7 @@ msgstr "Not an official JLPT service. For exam dates and registration, see <0>jl
 msgid "Not learned yet. Study them again now, or they come back after the new cards."
 msgstr "Not learned yet. Study them again now, or they come back after the new cards."
 
-#: app/components/home/test-list/index.tsx:39
+#: app/components/home/test-list/index.tsx:49
 msgid "Not taken"
 msgstr "Not taken"
 
@@ -1493,7 +1493,7 @@ msgstr "Take it again"
 msgid "Take the quiz"
 msgstr "Take the quiz"
 
-#: app/components/home/test-list/index.tsx:40
+#: app/components/home/test-list/index.tsx:50
 msgid "Taken"
 msgstr "Taken"
 
@@ -1767,13 +1767,12 @@ msgstr "We send a reset link here when you forget your password."
 msgid "Week"
 msgstr "Week"
 
-#: app/components/home/test-list/index.tsx:53
-#: app/components/home/test-list/index.tsx:61
+#: app/components/home/test-list/index.tsx:30
 #: app/lib/sections.ts:103
 msgid "Week {week}"
 msgstr "Week {week}"
 
-#: app/components/home/test-list/index.tsx:48
+#: app/components/home/test-list/index.tsx:58
 msgid "Weeks"
 msgstr "Weeks"
 
