@@ -23,7 +23,7 @@ N2 uses 次の and 選びなさい in kanji.
 
 ## 文法形式の判断: what the real questions look like
 
-- **Over half are short dialogues**, not lone sentences: `A「…」B「…（　　）…」`, often with a
+- **Dialogues:** 10 of 13 in the N3 sample, but only 3 of 12 in the N2 sample: `A「…」B「…（　　）…」`, often with a
   scene tag in parentheses: `（会社で）`, `（スーパーで）`, `（デパートでシャツを選びながら）`.
   Speakers are A/B, family (兄・弟・妹・母親・子ども), 学生/先生, or names (山田・田中).
 - The blank can sit anywhere: mid-sentence, before a verb, at the very end of a line.
@@ -50,7 +50,7 @@ N2 uses 次の and 選びなさい in kanji.
   the graded chunk):
   `あの美術館は曜日 によって／閉まる時間／★が／違うから 窓口で確認したほうがいいよ。`,
   `おいしい野菜を育てる ことが／どんなに／★大変な／ことか わかりました。`,
-  `わたしは、子どもが やりたい／と思うことは／★やらせて／したい と思っている。`
+  `わたしは、子どもが したい／と思うことは／★やらせて／やりたい と思っている。`
 - Choices are listed as the 4 chunks in scrambled order; the answer is the number of the
   chunk that lands on ★.
 
@@ -70,10 +70,10 @@ N2 uses 次の and 選びなさい in kanji.
 
 ## What this means when writing questions
 
-- Use dialogues and scene tags for about half of 文法形式の判断.
+- Use dialogues and scene tags for about 3 in 4 of 文法形式の判断 at N3, about 1 in 4 at N2.
 - Build distractors from the same stem or the same family, as above, and make the context
   the thing that decides.
-- In 文の組み立て, mix particle chunks with phrase chunks; ★ is usually slot 3.
+- In 文の組み立て, mix particle chunks with phrase chunks at N3 (rarely at N2; its sample has none); ★ is usually slot 3.
 - In 文章の文法, every blank tests a studied pattern (the user limits scope on purpose), decided
   by flow as the real test is: connectives, こそあど, aspect and sentence endings.
 - Answers are spread across 1–4 with no pattern, and the right one isn't the longest.
@@ -96,17 +96,17 @@ Rules:
 
 - In one test, use each area at least once, and no single setting (restaurant, café, office,
   remote work) more than twice across all questions.
-- Every passage has its own area, and the passages differ in kind: an essay, a column, a notice,
-  a student's 作文, a letter.
+- Every passage has its own area and topic. N2 passages are columns or essays in だ/である style,
+  as in the sample. At N3, vary the kind: an essay, a column, a notice, a student's 作文, a letter.
 - Pick the situation before writing the sentence. Vary who speaks (family, teacher and student,
   neighbours, doctor and patient, shop clerk and customer, not only colleagues) and the scene tag
   (`（病院で）`, `（駅で）`, `（市役所で）`, `（家で）`).
 
 ## Make it as hard as the real exam
 
-Our tests scored 87–100% (still 92–94% on 2026-11-23) because they were easier than the real paper. These rules fix that:
+These rules keep the tests at real-exam level:
 
-- **Out-of-scope choices.** Every question has at least one choice from outside the test's
+- **Out-of-scope choices.** Every fill-blank question whose choices are different patterns has at least one choice from outside the test's
   scope (other weeks, N3 basics, common N2 patterns). Knowing this week's list must not be enough.
 - **Answers stay in scope, with a couple of exceptions.** The user limits scope on purpose, so almost
   every right answer is a point in scope. Crossing off the outsider must not be enough: at least 2 wrong
@@ -116,23 +116,26 @@ Our tests scored 87–100% (still 92–94% on 2026-11-23) because they were easi
   with that trap point's `grammarId`. Never say which questions these are.
 - **No form giveaways.** At least 2 of the 3 wrong choices fit the sentence's grammar (connection,
   tense, voice). Only meaning or context rules them out. At most one choice may be wrong by form alone.
+  Exception: one stem in 4 forms (`買い / 買え / 買う / 買える`, real item 35's 答えさせた… + あげく),
+  where the form is the point being tested.
 - **Keigo, giving/receiving, voice.** About 1 in 4 fill-blank questions puts keigo (いらっしゃる /
   伺う / いただく), 〜てもらう / くれる / あげる, passive or causative into the 4 choices.
   Put them in the forms of an in-scope pattern (`待っていただく / お待ちになる / 待たせていただく /
   待ってさしあげる` + よりほかない). Count them before sending.
-- **Connective choices from one family.** A 接続詞 question's 4 choices do the same job (all adding:
-  もっとも / ただし / なお / ちなみに), and each fits the sentence type (no それとも to start a statement).
-- **Clue away from the blank.** Sentences are 30–60 characters with N2 vocabulary. The clue that decides
-  sits in another clause or the other speaker's line. At most 1 in 4 questions is settled by a set
+- **Connective choices fit the sentence.** Each of a 接続詞 question's 4 choices fits the sentence
+  type (no それとも to start a statement), so only the flow decides.
+- **Clue away from the blank.** Sentences are 15–70 characters with N2 vocabulary. The clue that decides
+  sits in another clause or the other speaker's line. At most 1 in 3 questions is settled by a set
   phrase (経験の有無を問わず, 人目もかまわず). A fixed partner of the answer in the stem counts as
   a set phrase too (とは限らない → からといって, 右に出る者はいない → にかけては, せめて, ものか).
 - **Passage blanks test flow.** Every answer is an in-scope point, but vary what decides it. At most
   2 blanks per passage are bare connectives. The rest put the point in forms where the writer's stance
   (のだ / のではないだろうか / てしまう), てくる・ていく, voice or a こそあど reference decides.
-- **Big 並べ替え chunks.** At most one chunk is a lone particle. At least two chunks are 2+ words.
-  `before` must not end on the word the pattern attaches to.
+- **Big 並べ替え chunks.** At N2, at most one chunk is a lone particle. At least two chunks are 2+ words.
+  `before` usually doesn't end on the word the pattern attaches to.
 - **Self-check.** Before using a question, ask: could someone who only knows this week's list, reading
-  only the words next to the blank, get it right? If yes, rewrite it.
+  only the words next to the blank, get it right? If yes, rewrite it, unless it is one of the
+  set-phrase questions allowed above (at most 1 in 3).
 
 ## Review test (総復習)
 

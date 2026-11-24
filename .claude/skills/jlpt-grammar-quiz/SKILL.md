@@ -16,7 +16,7 @@ Arguments: $ARGUMENTS
 
 Settle three things from the arguments and the conversation:
 
-- **Level**: N3 or N2. Default N3 (the N2 notes have no lessons written yet).
+- **Level**: N3 or N2. Default N2 (the user is preparing for N2).
 - **Scope**: weeks, days or specific patterns. "Weak ones" means the unreviewed chips:
   `bash ~/.claude/skills/jlpt-grammar-quiz/tests.sh` (it sends the app's API token) and collect `review[]` entries with
   `"reviewed": false`. Their `grammarId` (`n3-w5-d1-g2`) gives week, day and number.
@@ -68,7 +68,8 @@ lesson block (they've been studied), unless the user asks for points from 文型
 - Every grammar point in `grammarPoints` is tested at least once, and `grammarPoints` lists
   only the points the test uses. Spread the questions evenly over the points, and test each
   point in more than one section where you can. If there are more points than questions,
-  ask whether to raise the count or narrow the scope.
+  ask whether to raise the count or narrow the scope. Review tests are the exception: they sample
+  points evenly (see "Review test" in `jlpt-format.md`).
 - **Title**: `第5週 1日目`, `第5週 2〜3日目`, `第3週・第5週`, or `苦手な文法` for weak ones (max 60 characters).
 
 ## 4. Write the questions
@@ -93,13 +94,13 @@ outside the scope is only a choice, so it needs no entry in `grammarPoints`.
 - In at least half the questions, the 4 choices are **one pattern in 4 forms**: the connection or
   voice changes, the pattern stays (`答えさせた / 答えさせられる / 答えさせる / 答えさせられた` + あげく,
   `いないわけじゃない / いるわけない / いたわけじゃない / いなかったわけじゃない`). The rest may take
-  look-alikes from the point's Nuance table, but never 4 patterns that are ruled out by meaning alone.
+  look-alikes from the point's Nuance table.
 - Every wrong choice must be real Japanese that is right in some other sentence. Never invent a
   form (`のだらけ`, `てっぱなし`).
-- About half the questions are short dialogues (`A「…」B「…（　　）」`), as in the real exam.
+- Short dialogues (`A「…」B「…（　　）」`): about 3 in 4 at N3, about 1 in 4 at N2, as in the real exam.
 
 **sentence-order (文の組み立て)**
-- `before` + 4 slots + `after` make one sentence. Mix phrase chunks with at most one lone particle, like the real exam (`閉まる時間` `が` `違うから` `によって`).
+- `before` + 4 slots + `after` make one sentence. Mix phrase chunks with lone particles (at N2 rarely, at most one), like the real exam (`閉まる時間` `が` `違うから` `によって`).
 - Only one order may be grammatical. Check every order that could plausibly work.
 - `pieces` are scrambled. `correctOrder` lists piece indices (0-based) in slot order.
   `starSlot` is the 1-based slot holding ★ (vary it, often 3). Only the ★ piece is graded,
@@ -111,8 +112,8 @@ outside the scope is only a choice, so it needs no entry in `grammarPoints`.
   that could sit in more than one slot until the meaning settles it.
 
 **passage (文章の文法)**
-- Each passage is a column or essay of about 350–500 characters, on its own topic. The real exam's
-  is one column of about 550 characters.
+- Each passage is about 350–500 characters, on its own topic, in the kind `jlpt-format.md` gives
+  for the level. The real N2 exam's is one column of about 600 characters.
 - Each blank tests a week point, but the 4 choices must need the passage to decide: the point vs
   a look-alike whose meaning only the sentences before or after rule out, or the point in 4 forms
   where the flow decides (ending `〜わけだ / 〜わけではない / 〜わけがない / 〜わけにはいかない`,

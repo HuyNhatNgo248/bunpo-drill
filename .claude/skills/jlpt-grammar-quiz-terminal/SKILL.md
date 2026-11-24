@@ -19,7 +19,7 @@ built. Every question must look like one from that paper.
 
 Arguments: $ARGUMENTS
 
-- **Level**: N3 or N2. Default N3.
+- **Level**: N3 or N2. Default N2 (the user is preparing for N2).
 - **Scope**: weeks, days or patterns. Read the notes and map patterns to ids exactly as
   `/Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz/SKILL.md` step 2 says. "Weak ones" = the unreviewed chips from
   `bash /Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz/tests.sh` from the repo root (needs the app running). If no scope is
@@ -31,8 +31,7 @@ Arguments: $ARGUMENTS
 Read the lesson block of every point you test: its connection rules, ⚠ traps and Nuance
 table give you the distractors.
 
-Some studied points have no lesson block: the user has studied **all of N2 (第1–8週)** in
-the book, but the notes only have lessons for 第1–3週. For those, use the point's row in
+If a studied point has no lesson block, use its row in
 `文型リスト.md` (pattern, meaning, the book's example, PDF pages). If you need the
 connection rules to build distractors, read those pages of `N2 文法.pdf` with the Read
 tool's `pages` parameter. Don't write lesson blocks for them; that's the japanese-grammar skill's job.
@@ -49,12 +48,12 @@ Follow `jlpt-format.md`, plus:
   with a word or two swapped: new situation, new subject, new wording. The notes tell you
   what to test (rules, traps), not the text.
 - Spread topics as widely as the real exam does: follow "Topics" in `jlpt-format.md`.
-- Every grammar point in scope is tested at least once.
+- Every grammar point in scope is tested at least once, except in review tests, which sample points evenly.
 - Read each question with all 4 choices. If two work, or none does, rewrite it.
 - 文の組み立て: check every plausible order; only one may be grammatical, and the ★ chunk
   must be fixed by grammar.
-- 文章の文法: one passage per 5 blanks, written as the real one is (intro line, title,
-  writer, です/ます, 3 paragraphs).
+- 文章の文法: one passage per 5 blanks. N3: intro line, title, writer, です/ます, 3 paragraphs.
+  N2: a column or essay in だ/である style, as in the sample. Vary the kind per "Topics" in `jlpt-format.md`.
 
 ## 4. Ask
 
@@ -66,8 +65,8 @@ Ask with AskUserQuestion, up to 4 questions per call, in order:
 - `question`: the question text. Dialogue lines go on separate lines.
   - 文法形式の判断: the sentence with `（　　）`.
   - 文の組み立て: `before ＿＿ ＿＿ ★ ＿＿ after` (★ in the right slot).
-  - 文章の文法: `[19] に入る最もよいものは？`. Print the full passage as normal text
-    **before** the call so it stays on screen.
+  - 文章の文法: the full passage, a blank line, then `[19] に入る最もよいものは？`. Put the
+    whole passage in every passage question, uncut. The picker hides earlier chat output.
 - `options`: the 4 choices in exam order, `label` = `1　ために` (number, full-width space,
   choice), `description` = `選択肢1`. For 文の組み立て the options are the 4 chunks.
 - `multiSelect`: false.
