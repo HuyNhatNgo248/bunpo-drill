@@ -36,13 +36,14 @@ hard to learn: the nerve circuits are already fixed). Underlined parts are numbe
 Typical question set: 1 × why ① (理由), 1 × what ② refers to (この場合とは
 どんな場合か: 指示語), 1 × the writer's conclusion (筆者によると、〜にはどうすればよいか).
 
-**統合理解 (two texts of about 300 characters each).** A and B on the same topic (the
+**統合理解 (two texts of 260–320 characters each, so 520–640 for the pair).** A and B on the same topic (the
 future of cars), both reasonable, partly overlapping. Questions: AとBのどちらの文章にも
 触れられている点は何か / AとBの筆者は、〜についてどのように考えているか. Choices for
 the second are built as AもBも… / AもBも… / Aは…、Bは… / Aは…、Bは….
 
-**主張理解 (about 850 characters).** A personal essay with an argument (why likes
-and dislikes shouldn't drive research; the writer's own path into science). Questions:
+**主張理解 (800–900 characters).** A researcher's essay that argues an abstract claim
+(why likes and dislikes shouldn't drive research). The writer's own experience is only
+supporting evidence, not the body of the text. Questions:
 why the writer holds the underlined view / a fact about the writer's experience /
 筆者は、〜とはどのようなものだと考えているか (the main claim).
 
@@ -100,9 +101,15 @@ The **wrong** choices are the ones that reuse the text's words.
   The reader has to tell the writer's view from the views the writer reports.
 - Rhetorical questions carry the argument (なぜ安いのか。本来の価値は損なわれていないか。).
 - Newspaper style uses short noun-ending sentences (不ぞろいな野菜は、むしろ手作り品を思わせる長所。).
-- Vocabulary is N2 with a few N1-level words, all glossed: 肥えている, ぬくもり, 感性, 規格,
-  粗悪品, 矯正, 糸口, 狭める, 得手不得手, 元来, 正当化, 普遍的, 理屈.
+- Vocabulary is dense with abstract 漢語. The 主張理解 sample has about 10 in 850 characters
+  (視点, 同様, 偶然, 選択, 後悔, 納得, 無意識, 元来, 正当化). Earlier generated sets had about 1
+  per 1000, far too easy.
+- N1-level words are glossed: 肥えている, ぬくもり, 感性, 規格, 粗悪品, 矯正, 糸口, 狭める,
+  得手不得手, 元来, 正当化, 普遍的, 理屈. N2 words (揺らぐ, 言い切る) are never glossed.
+- Essays are about 40% kanji.
 - Sentences run about 30–50 characters, with some long ones built on 〜が、〜し、〜ため.
+- The text itself uses N2 grammar, not only hedges: 〜ざるを得ない, 〜にほかならない, 〜に伴い,
+  〜をめぐって, 〜にもかかわらず, 〜どころか, 〜とは限らない, 〜に過ぎない.
 
 ## Checklist before showing a passage
 
@@ -117,13 +124,26 @@ Every passage must pass all of these, or be rewritten:
    (paraphrase), while at least one wrong answer reuses the text's words.
 5. Every wrong answer has a named trap (changed detail, opposite, not in text, true but
    not the answer, over-general, missed condition), and none is defensible.
-6. At least 2 glossed words above N2, and none of the gloss words appear in a choice.
+6. 中文 and 主張理解 have 3–5 （注）, each an N1-level word. No gloss word appears in a
+   choice.
 7. 情報検索: each question needs 2+ conditions and at least one footnote or exception.
+8. Hard words: each 中文/主張理解 uses at least 8 abstract 漢語 at N2–N1 level (傾向, 前提,
+   懸念, 要因, 観点, 側面, 一概に, 本質, 根拠, 実態…). Each 短文 uses at least 3. Never swap a
+   漢語 for an easy wago word. Essays are at least 38% kanji.
+9. Grammar: each 中文/主張理解 uses at least 3 N2 patterns from the list above, beyond
+   hedges. At least 1 sentence runs over 60 characters with a nested clause.
+10. Wrong choices: per question, at least 2 are changed detail, true but not the answer,
+    missed condition or over-general. At most 1 is opposite or not in text. No choice can
+    be ruled out without reading the text.
 
 ## What this means when writing passages
 
-- Natural written Japanese at N2: である style for essays, full keigo for business
-  emails and notices.
+- Written Japanese as a newspaper column or a book by a specialist: である style, dense
+  漢語, abstract argument. Full keigo for business emails and notices. Aim for the top of
+  N2, not the middle: the user found earlier sets easier than the exam.
+- Topics: 主張理解 and at least half of 中文 are 評論, an abstract claim argued with reasons
+  (society, science, language, work, education). At most 1 first-person story per set, and
+  only as a lead-in to the argument.
 - Gloss words above N2 with （注）, as the real test does.
 - Each question has exactly one choice that the text supports; for every wrong choice,
   know which trap above it uses (needed for the explanation).

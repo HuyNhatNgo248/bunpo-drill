@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { Timer } from "lucide-react";
+import { Pause, Play, Timer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useSubmit } from "react-router";
 import { AddNote } from "~/components/add-note";
@@ -7,6 +7,7 @@ import { NotesProvider } from "~/components/noted-text";
 import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
+import { Button } from "~/components/ui/button";
 import { homeOf } from "~/lib/links";
 import { clock, cn } from "~/lib/utils";
 import type { Answers, NoteMark, QuizDraft, QuizView, ResultSection } from "~/lib/views";
@@ -121,6 +122,10 @@ export function Quiz({
                       {time} <span className="text-caption font-normal text-muted-foreground">/ {goal}</span>
                     </span>
                   </span>
+                  <Button type="button" variant="outline" size="sm" onClick={timer.toggle} aria-pressed={timer.running}>
+                    {timer.running ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
+                    {timer.running ? <Trans>Pause</Trans> : spent ? <Trans>Resume</Trans> : <Trans>Start</Trans>}
+                  </Button>
                 </span>
               )
             }

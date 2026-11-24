@@ -14,6 +14,15 @@ LEVELS = {"N5", "N4", "N3", "N2", "N1"}
 ORDER = list(TYPES.values())
 TRAPS = {"cd": "changed-detail", "op": "opposite", "ni": "not-in-text", "tn": "true-not-answer", "og": "over-general", "mc": "missed-condition"}
 KINDS = {"理由", "指示語", "主張", "詳細", "比較", "条件"}
+# N2 lengths in characters, from the official sample (reading-format.md). 統合理解 is per text.
+N2_LENGTH = {"reading-short": (200, 250), "reading-mid": (470, 620), "reading-integrated": (260, 320), "reading-claim": (800, 900)}
+N2_KANJI = 0.35  # floor for essays; the sample is about 40%
+EASY_TRAPS = {"opposite", "not-in-text"}
+
+
+def kanji_share(text):
+    chars = re.sub(r"\s", "", text)
+    return len(re.findall(r"[一-鿿々]", chars)) / max(len(chars), 1)
 
 
 def parse(text):
@@ -104,6 +113,16 @@ def build(s):
         for note in p["notes"]:
             if not any(note["word"] in t for t in texts):
                 problems.append(f"{s['title']} passage {i}: （注）「{note['word']}」 is not in the passage")
+        if s["level"] == "N2" and p["type"] in N2_LENGTH:
+            lo, hi = N2_LENGTH[p["type"]]
+            prose = [re.sub(r"\s", "", t) for t in texts]
+            for t in prose if p["type"] == "reading-integrated" else ["".join(prose)]:
+                if not lo <= len(t) <= hi:
+                    problems.append(f"{s['title']} passage {i}: {len(t)} characters; N2 needs {lo}–{hi}")
+            # Emails and notices (they have a lead line) run lower in kanji, so only essays are checked.
+            share = kanji_share("".join(prose))
+            if not p["lead"] and share < N2_KANJI:
+                problems.append(f"{s['title']} passage {i}: kanji {share:.0%}; N2 essays need at least {N2_KANJI:.0%}. Use 漢語, not easy wago.")
         questions = []
         for q in p["questions"]:
             num += 1
@@ -118,6 +137,8 @@ def build(s):
             for word in re.findall(r"<u>(.*?)</u>", q["prompt"]):
                 if not any(word in t for t in texts):
                     problems.append(f"{where}: underlined 「{word}」 is not in the passage")
+            if s["level"] in ("N2", "N1") and sum(t in EASY_TRAPS for t in q["traps"]) > 1:
+                problems.append(f"{where}: at most 1 wrong choice may be op or ni; use cd, tn, mc or og")
             questions.append({"id": f"q{num}", "prompt": q["prompt"], "choices": q["choices"], "answerIndex": q["answer"], "kind": q["kind"],
                               "traps": q["traps"], "evidence": q["evidence"], "explanation": q["explanation"] or "See the evidence."})
         passage = {"blocks": blocks, "notes": p["notes"], "questions": questions}

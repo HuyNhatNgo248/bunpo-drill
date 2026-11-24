@@ -74,8 +74,8 @@ N2 uses 次の and 選びなさい in kanji.
 - Build distractors from the same stem or the same family, as above, and make the context
   the thing that decides.
 - In 文の組み立て, mix particle chunks with phrase chunks; ★ is usually slot 3.
-- In 文章の文法, about 2 of 5 blanks test the studied patterns; the rest test connectives,
-  こそあど, aspect and sentence endings, as the real test does.
+- In 文章の文法, every blank tests a studied pattern (the user limits scope on purpose), decided
+  by flow as the real test is: connectives, こそあど, aspect and sentence endings.
 - Answers are spread across 1–4 with no pattern, and the right one isn't the longest.
 
 ## Topics: as wide as the real exam
@@ -104,17 +104,33 @@ Rules:
 
 ## Make it as hard as the real exam
 
-Our tests scored 87–93% because they were easier than the real paper. These rules fix that:
+Our tests scored 87–100% (still 92–94% on 2026-11-23) because they were easier than the real paper. These rules fix that:
 
-- **Out-of-scope choices.** Every question has at least one wrong choice from outside the test's
+- **Out-of-scope choices.** Every question has at least one choice from outside the test's
   scope (other weeks, N3 basics, common N2 patterns). Knowing this week's list must not be enough.
+- **Answers stay in scope, with a couple of exceptions.** The user limits scope on purpose, so almost
+  every right answer is a point in scope. Crossing off the outsider must not be enough: at least 2 wrong
+  choices are other in-scope points or other forms of the answer's pattern.
+- **A couple of outsider answers.** In 2 fill-blank questions per test (1 if the section has fewer
+  than 8), the right answer is the outside choice and an in-scope point is the trap. Tag the question
+  with that trap point's `grammarId`. Never say which questions these are.
 - **No form giveaways.** At least 2 of the 3 wrong choices fit the sentence's grammar (connection,
   tense, voice). Only meaning or context rules them out. At most one choice may be wrong by form alone.
 - **Keigo, giving/receiving, voice.** About 1 in 4 fill-blank questions puts keigo (いらっしゃる /
   伺う / いただく), 〜てもらう / くれる / あげる, passive or causative into the 4 choices.
+  Put them in the forms of an in-scope pattern (`待っていただく / お待ちになる / 待たせていただく /
+  待ってさしあげる` + よりほかない). Count them before sending.
+- **Connective choices from one family.** A 接続詞 question's 4 choices do the same job (all adding:
+  もっとも / ただし / なお / ちなみに), and each fits the sentence type (no それとも to start a statement).
 - **Clue away from the blank.** Sentences are 30–60 characters with N2 vocabulary. The clue that decides
   sits in another clause or the other speaker's line. At most 1 in 4 questions is settled by a set
-  phrase (経験の有無を問わず, 人目もかまわず).
+  phrase (経験の有無を問わず, 人目もかまわず). A fixed partner of the answer in the stem counts as
+  a set phrase too (とは限らない → からといって, 右に出る者はいない → にかけては, せめて, ものか).
+- **Passage blanks test flow.** Every answer is an in-scope point, but vary what decides it. At most
+  2 blanks per passage are bare connectives. The rest put the point in forms where the writer's stance
+  (のだ / のではないだろうか / てしまう), てくる・ていく, voice or a こそあど reference decides.
+- **Big 並べ替え chunks.** At most one chunk is a lone particle. At least two chunks are 2+ words.
+  `before` must not end on the word the pattern attaches to.
 - **Self-check.** Before using a question, ask: could someone who only knows this week's list, reading
   only the words next to the blank, get it right? If yes, rewrite it.
 

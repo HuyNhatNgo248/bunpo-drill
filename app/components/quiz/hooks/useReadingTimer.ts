@@ -13,16 +13,17 @@ const ACTIVITY = ["scroll", "wheel", "pointerdown", "keydown", "touchstart"] as 
  * Times a reading set's passages: each second the page is in view adds one to the passage being read, the one whose
  * box (data-passage-index, its card and its questions) crosses the reading line, else the last one above it. Starts
  * from the `initial` times of a draft, and stops while the reader is away (IDLE_MS with nothing done). Off (`count` 0)
- * for a test with no passages to time.
- * Returns the times, and a ref to them for the saves, which read them without waiting for a render.
+ * for a test with no passages to time. Paused until the reader starts it, and on every visit after.
+ * Returns the times, a ref to them for the saves, which read them without waiting for a render, and the pause switch.
  */
 export function useReadingTimer(count: number, initial: number[] = []) {
   const [times, setTimes] = useState(() => Array.from({ length: count }, (_, i) => initial[i] ?? 0));
+  const [running, setRunning] = useState(false);
   const ref = useRef(times);
   ref.current = times;
 
   useEffect(() => {
-    if (!count) return;
+    if (!count || !running) return;
     let active = Date.now();
     const onActivity = () => {
       active = Date.now();
@@ -38,9 +39,9 @@ export function useReadingTimer(count: number, initial: number[] = []) {
       clearInterval(tick);
       for (const event of ACTIVITY) window.removeEventListener(event, onActivity, { capture: true });
     };
-  }, [count]);
+  }, [count, running]);
 
-  return { times, ref };
+  return { times, ref, running, toggle: () => setRunning((on) => !on) };
 }
 
 /** The index of the passage being read, or null when no passage is on the page. */

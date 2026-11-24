@@ -49,7 +49,7 @@ msgstr "{count, plural, one {Study this word as a flashcard} other {Study these 
 msgid "{count} missed"
 msgstr "{count} missed"
 
-#: app/components/welcome/ExamCountdown.tsx:41
+#: app/components/welcome/ExamCountdown.tsx:62
 msgid "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
 msgstr "{daysLeft, plural, one {With one mock test a day, you can take # test before the exam.} other {With one mock test a day, you can take # tests before the exam.}}"
 
@@ -138,7 +138,7 @@ msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
 #: app/components/home/test-list/TestRow.tsx:49
-#: app/components/quiz/index.tsx:104
+#: app/components/quiz/index.tsx:105
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
 #: app/components/welcome/TrialTests.tsx:104
@@ -166,7 +166,7 @@ msgstr "{wrong} wrong · pass line {pass}%"
 msgid "「にもかかわらず」 joins two things that clash: busy, yet goes to the gym. The others give a reason, not a contrast."
 msgstr "「にもかかわらず」 joins two things that clash: busy, yet goes to the gym. The others give a reason, not a contrast."
 
-#: app/components/quiz/index.tsx:107
+#: app/components/quiz/index.tsx:108
 #: app/components/results/index.tsx:54
 msgid "← Kanji"
 msgstr "← Kanji"
@@ -175,7 +175,7 @@ msgstr "← Kanji"
 msgid "← Lessons"
 msgstr "← Lessons"
 
-#: app/components/quiz/index.tsx:107
+#: app/components/quiz/index.tsx:108
 #: app/components/results/index.tsx:54
 msgid "← Mock tests"
 msgstr "← Mock tests"
@@ -184,7 +184,7 @@ msgstr "← Mock tests"
 msgid "← Notes"
 msgstr "← Notes"
 
-#: app/components/quiz/index.tsx:107
+#: app/components/quiz/index.tsx:108
 #: app/components/results/index.tsx:54
 msgid "← Reading"
 msgstr "← Reading"
@@ -197,7 +197,7 @@ msgstr "<0>{pattern}</0>: {why}"
 msgid "<0>{score}</0> of {total} right."
 msgstr "<0>{score}</0> of {total} right."
 
-#: app/components/welcome/ExamCountdown.tsx:28
+#: app/components/welcome/ExamCountdown.tsx:44
 msgid "<0>in</0> <1/> <2>{daysLeft, plural, one {day} other {days}}</2>"
 msgstr "<0>in</0> <1/> <2>{daysLeft, plural, one {day} other {days}}</2>"
 
@@ -328,13 +328,13 @@ msgstr "Answer"
 msgid "Answer: {answer}"
 msgstr "Answer: {answer}"
 
-#: app/components/quiz/index.tsx:97
-#: app/components/quiz/index.tsx:114
+#: app/components/quiz/index.tsx:98
+#: app/components/quiz/index.tsx:115
 #: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Answered"
 msgstr "Answered"
 
-#: app/components/quiz/index.tsx:128
+#: app/components/quiz/index.tsx:133
 msgid "Answered {answered} / {total}"
 msgstr "Answered {answered} / {total}"
 
@@ -360,7 +360,7 @@ msgstr "Back on your list to learn"
 msgid "Back on your list to learn. Study them again now, or they come with your next set."
 msgstr "Back on your list to learn. Study them again now, or they come with your next set."
 
-#: app/components/quiz/index.tsx:79
+#: app/components/quiz/index.tsx:80
 #: app/components/results/Actions.tsx:45
 #: app/components/results/index.tsx:41
 msgid "Back to kanji"
@@ -375,7 +375,7 @@ msgstr "Back to lessons"
 msgid "Back to notes"
 msgstr "Back to notes"
 
-#: app/components/quiz/index.tsx:81
+#: app/components/quiz/index.tsx:82
 #: app/components/results/Actions.tsx:54
 #: app/components/results/index.tsx:43
 msgid "Back to reading"
@@ -767,7 +767,7 @@ msgstr "In the app each passage is timed. After you answer, the sentences that p
 msgid "In the same order and format as the grammar part of the JLPT. A full test has 15 questions per part, 45 in all."
 msgstr "In the same order and format as the grammar part of the JLPT. A full test has 15 questions per part, 45 in all."
 
-#: app/components/welcome/ExamCountdown.tsx:39
+#: app/components/welcome/ExamCountdown.tsx:60
 msgid "It's exam day today. Good luck!"
 msgstr "It's exam day today. Good luck!"
 
@@ -1087,6 +1087,10 @@ msgstr "Password"
 msgid "Password changed."
 msgstr "Password changed."
 
+#: app/components/quiz/index.tsx:127
+msgid "Pause"
+msgstr "Pause"
+
 #: app/components/info/SampleQuestion.tsx:56
 msgid "Pick an answer to see why."
 msgstr "Pick an answer to see why."
@@ -1301,6 +1305,10 @@ msgstr "Reset your password"
 msgid "Results"
 msgstr "Results"
 
+#: app/components/quiz/index.tsx:127
+msgid "Resume"
+msgstr "Resume"
+
 #: app/components/results/Actions.tsx:72
 msgid "Retake wrong ones"
 msgstr "Retake wrong ones"
@@ -1440,12 +1448,13 @@ msgstr "Sounds sensible, but the passage never says it."
 
 #: app/components/home/test-list/TestRow.tsx:64
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
+#: app/components/quiz/index.tsx:127
 #: app/components/reading/SetRow.tsx:78
 #: app/components/welcome/TrialTests.tsx:119
 msgid "Start"
 msgstr "Start"
 
-#: app/components/welcome/ExamCountdown.tsx:50
+#: app/components/welcome/ExamCountdown.tsx:76
 msgid "Start practicing today"
 msgstr "Start practicing today"
 
@@ -1559,7 +1568,7 @@ msgstr "The grammar part of the JLPT has three kinds of question, always in this
 msgid "The kanji part of the JLPT asks two things: how a kanji word is read, and how a word in hiragana is written. Study a chapter as flashcards, then take its quiz."
 msgstr "The kanji part of the JLPT asks two things: how a kanji word is read, and how a word in hiragana is written. Study a chapter as flashcards, then take its quiz."
 
-#: app/components/welcome/ExamCountdown.tsx:22
+#: app/components/welcome/ExamCountdown.tsx:36
 msgid "The next JLPT"
 msgstr "The next JLPT"
 
@@ -1642,7 +1651,7 @@ msgstr "This test doesn't exist, or it may have been deleted."
 msgid "Time"
 msgstr "Time"
 
-#: app/components/quiz/index.tsx:88
+#: app/components/quiz/index.tsx:89
 msgid "Time {time}, target {goal}"
 msgstr "Time {time}, target {goal}"
 

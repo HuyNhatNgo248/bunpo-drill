@@ -25,7 +25,7 @@ the official samples on jlpt.jp (N1R.pdf … N5R.pdf) if anything looks off:
 | N5 | 短文 3 × 1 (~80字) · 中文 1 × 2 (~250字) · 情報検索 1 × 1 (~250字) | です・ます, everyday topics, simple kanji |
 | N4 | 短文 4 × 1 (100–200字) · 中文 1 × 3–4 (~450字) · 情報検索 1 × 2 (~400字) | everyday topics, plain or polite |
 | N3 | 短文 4 × 1 (150–200字) · 中文 2 × 3 (~350字) · 長文 1 × 4 (~550字) · 情報検索 1 × 2 (~600字) | short essays, letters, notices |
-| N2 | 短文 5 × 1 (~220字) · 中文 3 × 3 (~550字) · 統合理解 1 pair × 2 (~300字 each) · 主張理解 1 × 3 (~850字) · 情報検索 1 × 2 | see reading-format.md |
+| N2 | 短文 5 × 1 (200–250字) · 中文 3 × 3 (470–620字) · 統合理解 1 pair × 2 (260–320字 per text) · 主張理解 1 × 3 (800–900字) · 情報検索 1 × 2 | dense abstract 漢語, 評論 essays; see reading-format.md |
 | N1 | 短文 4 × 1 (~200字) · 中文 3 × 3 (~500字) · 長文 1 × 4 (~1000字) · 統合理解 1 pair × 2–3 · 主張理解 1 × 4 (~1000字) · 情報検索 1 × 2 | abstract essays, reviews, more N1 words |
 
 - **N5 and N4:** gloss fewer words, and put the writer's view near the end without heavy
@@ -69,7 +69,10 @@ traps. Also:
 
 - Original texts only. No author names, and no real people or companies.
 - Vary the topics (work, technology, society, education, health, culture, environment,
-  daily life), and mix practical texts (emails, notices) with essays.
+  language, science), and mix practical texts (emails, notices) with essays.
+- At N2 and N1, 主張理解 and at least half of 中文 are 評論: an abstract claim argued with
+  reasons. At most 1 first-person story per set. Follow the hard-word, kanji and grammar
+  rules in the checklist (items 8–9).
 - **Run the checklist in `reading-format.md` on every passage**, and rewrite it until it
   passes. The writer's view is hedged and in the second half. At least one answer is two or
   more sentences from its cue. Right answers paraphrase the text, and wrong ones reuse its
@@ -83,11 +86,13 @@ found sets answerable without reading. These rules fix that:
   answer is the longest choice in more than 30% of its questions.
 - **Believable wrong choices.** Each wrong choice is something a careless reader could take from
   the text: its own ideas, slightly twisted (a detail changed, a condition dropped, true but not
-  what is asked). At most one `not-in-text` per question. No moral extremes or sweeping claims
-  that no writer would make (`人に物を貸すべきではない`, `完璧を目指すのは、悪いことだ`).
-- **Full lengths.** Meet the table's lengths, especially at N2: 中文 ~500字, 統合理解 ~270字 per
-  text, 主張理解 ~850字. Shorter passages make the set easier than the exam.
-- **Glosses.** N2 中文 and 主張理解 passages carry 3–5 （注）, as the exam's do.
+  what is asked). At most one `opposite` or `not-in-text` per question; the others are
+  `cd`, `tn`, `mc` or `og`. No moral extremes or sweeping claims that no writer would make
+  (`人に物を貸すべきではない`, `完璧を目指すのは、悪いことだ`).
+- **Full lengths.** Meet the table's lengths. Shorter passages make the set easier than the
+  exam. `build.py` fails an N2 passage outside the range, and an N2 essay under 35% kanji.
+- **Glosses.** N2 中文 and 主張理解 passages carry 3–5 （注）, each an N1-level word. Never gloss
+  an N2 word.
 - **統合理解** is not always "A for, B against". Often both writers agree on the main point and
   differ in a detail, reason or condition, as in the sample.
 - **N2 情報検索** uses more than one source or plan (two companies, a table plus rules), and the

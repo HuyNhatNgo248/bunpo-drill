@@ -27,6 +27,7 @@ describe("useReadingTimer", () => {
     passageAt(1, 100);
     passageAt(2, 2000);
     const { result } = renderHook(() => useReadingTimer(3, [10]));
+    act(() => result.current.toggle());
 
     act(() => vi.advanceTimersByTime(3000));
 
@@ -37,6 +38,7 @@ describe("useReadingTimer", () => {
   it("stops after a while with nothing done, and goes on once the reader scrolls", () => {
     passageAt(0, 0);
     const { result } = renderHook(() => useReadingTimer(1));
+    act(() => result.current.toggle());
 
     act(() => vi.advanceTimersByTime(IDLE_MS + 60_000));
     const away = result.current.times[0]!;
@@ -54,9 +56,26 @@ describe("useReadingTimer", () => {
     passageAt(0, 0);
     vi.spyOn(document, "visibilityState", "get").mockReturnValue("hidden");
     const { result } = renderHook(() => useReadingTimer(1));
+    act(() => result.current.toggle());
 
     act(() => vi.advanceTimersByTime(3000));
 
     expect(result.current.times).toEqual([0]);
+  });
+
+  it("counts nothing until started, and stops while paused", () => {
+    passageAt(0, 0);
+    const { result } = renderHook(() => useReadingTimer(1, [7]));
+
+    act(() => vi.advanceTimersByTime(3000));
+    expect(result.current.times).toEqual([7]);
+
+    act(() => result.current.toggle());
+    act(() => vi.advanceTimersByTime(2000));
+    act(() => result.current.toggle());
+    act(() => vi.advanceTimersByTime(3000));
+
+    expect(result.current.running).toBe(false);
+    expect(result.current.times).toEqual([9]);
   });
 });

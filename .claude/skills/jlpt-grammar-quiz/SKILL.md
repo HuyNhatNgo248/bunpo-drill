@@ -99,7 +99,7 @@ outside the scope is only a choice, so it needs no entry in `grammarPoints`.
 - About half the questions are short dialogues (`A「…」B「…（　　）」`), as in the real exam.
 
 **sentence-order (文の組み立て)**
-- `before` + 4 slots + `after` make one sentence. Use 4 short chunks, like the real exam (`冷めない` `うちに` `早く` `食べて`).
+- `before` + 4 slots + `after` make one sentence. Mix phrase chunks with at most one lone particle, like the real exam (`閉まる時間` `が` `違うから` `によって`).
 - Only one order may be grammatical. Check every order that could plausibly work.
 - `pieces` are scrambled. `correctOrder` lists piece indices (0-based) in slot order.
   `starSlot` is the 1-based slot holding ★ (vary it, often 3). Only the ★ piece is graded,
