@@ -45,16 +45,21 @@ Arguments: $ARGUMENTS
   → 10 + 10; "20 questions" → 10 + 10. At most 30 per part. A small chapter (a few kanji, as
   in the N5 book) gets fewer: every word it has, once. One test per chapter, never one test over
   several chapters: the app shows each chapter's newest test on its row.
+- **Several chapters**: do them one after another yourself. **Never fork** for them: a fork
+  starts with a copy of this whole conversation, so each one pays again for everything already
+  read.
 
 ## 2. The chapter's notes
 
 Notes live in the level's notes folder (table above) as `第N章.md` (`第N課.md` for N5 and
-N4). Follow step 3 of `../jlpt-kanji-quiz-terminal/SKILL.md` (next to this skill) for the
-notes format and the rules for reading the scan, with the level in place of N2: example
-sentences at the level, using only kanji of the level or below. This skill needs the full
-format: stroke counts, a meaning per word, three `例：` sentences per kanji and a 他の漢字
-section. If the file is missing, or is in the older format without them, read the
-chapter's pages and write or complete it.
+N4). This skill needs the full format: stroke counts, a meaning per word, three `例：`
+sentences per kanji and a 他の漢字 section. **If the file exists and has `例：` lines, don't
+open it yet**: step 3 converts it with a script, and step 4 reads only its word lines.
+
+Only if the file is missing, or is in the older format without them, follow step 3 of
+`../jlpt-kanji-quiz-terminal/SKILL.md` (next to this skill) for the notes format and the
+rules for reading the scan, with the level in place of N2: example sentences at the level,
+using only kanji of the level or below. Read the chapter's pages and write or complete it.
 
 The book is a scan, read with the Read tool's `pages` parameter. If Read says `pdftoppm is
 not installed`, ask the user to run `! brew install poppler` and wait.
@@ -63,72 +68,30 @@ Never send a word marked `⚠要確認`.
 
 ## 3. Send the chapter's words
 
-Build the chapter JSON from the notes. The contract is `chapter.schema.json` (generated from
-the app's `app/lib/kanji-payload.ts` by `pnpm schema`):
-
-```json
-{
-  "version": 1,
-  "level": "N2",
-  "chapter": 1,
-  "title": "生活-1",
-  "lessons": [
-    {
-      "title": "ギフト",
-      "page": 20,
-      "kanji": [
-        {
-          "char": "贈",
-          "strokes": 18,
-          "kun": ["おく-る"],
-          "on": ["ゾウ", "ソウ"],
-          "words": [
-            { "word": "贈る", "reading": "おくる", "meaning": "to give as a gift" },
-            { "word": "贈答品", "reading": "ぞうとうひん", "meaning": "gifts, given and received" },
-            { "word": "寄贈", "reading": "きぞう", "meaning": "donation", "rare": true }
-          ],
-          "examples": [
-            { "sentence": "友人の結婚祝いに、ペアのグラスを【贈った】。", "meaning": "I gave my friend a pair of glasses as a wedding present." },
-            { "sentence": "母の日の【贈り物】に、カーネーションの花束を選んだ。", "meaning": "For Mother's Day, I chose a bouquet of carnations as a present." },
-            { "sentence": "お中元の【贈答品】には、毎年同じお菓子を選んでいる。", "meaning": "Every year I choose the same sweets as our summer gift." }
-          ]
-        }
-      ]
-    }
-  ],
-  "otherKanji": [
-    { "char": "答", "kun": ["こた-える", "こた-え"], "on": ["トウ"] },
-    { "char": "品", "kun": ["しな"], "on": ["ヒン"] },
-    { "char": "寄", "kun": ["よ-る", "よ-せる"], "on": ["キ"] }
-  ]
-}
-```
-
-- `level` is the chapter's level; `title` is the chapter's title in the book (`生活-1`; for a
-  課 with no title, `第3課`).
-- One lesson per page, in the book's order; one entry per kanji with its words in the
-  book's order. `rare: true` for a △ word. A word with two readings in the book (きぞう／きそう)
-  takes the first.
-- `examples` are the kanji's three `例：` lines from the notes: the sentence with its
-  【 】, and its English. The flashcards of the kanji's words show them.
-- `otherKanji` lists every kanji in the words that is not a headword of the chapter.
-- The server checks that each word contains its headword, that no word is in the chapter
-  twice, that every kanji has its readings, and that every example has one 【…】 around a
-  word with its kanji.
-
-Write it to a temp file (`$TMPDIR/kanji-chapter-<level>-<N>.json`) and run, from the app's folder
+**Never write the chapter JSON by hand.** `chapter.py` (next to this file) converts the notes
+into it (the contract is `chapter.schema.json`, generated from `app/lib/kanji-payload.ts`).
+It keeps the book's order, sets `rare` for △ words, takes the first of two readings, copies
+the `例：` lines as `examples` and drops words marked `⚠要確認`. From the app's folder
 (`~/Downloads/bunpo-drill`):
 
 ```sh
-bash .claude/skills/jlpt-kanji-quiz/post.sh chapter "$TMPDIR/kanji-chapter-<level>-<N>.json"
+python3 .claude/skills/jlpt-kanji-quiz/chapter.py <level> "<notes folder>/第N章.md" > "$TMPDIR/kanji-chapter-<level>-<N>.json" \
+  && bash .claude/skills/jlpt-kanji-quiz/post.sh chapter "$TMPDIR/kanji-chapter-<level>-<N>.json"
 ```
+
+If `chapter.py` names a line it can't read, or the server rejects the chapter (a word without
+its headword, a word twice, a kanji without readings, an example without one 【…】 around a
+word with its kanji), fix that line in the notes and run it again.
 
 Sending a chapter again replaces its words and keeps their learned marks, so resend it
 whenever the notes change.
 
 ## 4. Write the questions
 
-Read the level's format file first. `../jlpt-kanji-quiz-terminal/kanji-format.md` is N2's,
+Read the chapter's words without the `例：` lines, which are half the file and may not be
+reused: `grep -v '例：' "<notes folder>/第N章.md"`.
+
+Read the level's format file once per request, not once per chapter. `../jlpt-kanji-quiz-terminal/kanji-format.md` is N2's,
 from the official sample. For another level, read `kanji-format-<level>.md` next to it; if
 it is missing, write it the same way from that level's official sample test
 (`https://www.jlpt.jp/samples/forlearners.html`, the 言語知識 PDF and its answers): the

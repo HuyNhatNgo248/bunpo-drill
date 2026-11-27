@@ -12,7 +12,7 @@ each set to the app. The app times the user on each passage and shows the review
 
 ## 1. Learn the format first
 
-Read `~/.claude/skills/jlpt-reading-quiz-terminal/reading-format.md`. It records the
+Read `.claude/skills/jlpt-reading-quiz-terminal/reading-format.md` once per request (not again per set). It records the
 official N2 sample in detail: the writing style, the question kinds, the wrong-choice traps
 and the checklist. Those apply at every level. Every passage must pass its checklist, with
 the exceptions per level below.
@@ -50,7 +50,9 @@ The level is the one named (N5–N1). If none is named, use N2. A set holds **5 
 Fewer passages only when the user asks ("2 passages"). Targets per passage are set by the
 app: 短文 2 min, 中文 6, 長文 10, 統合理解 6, 主張理解 10, 情報検索 6.
 
-A count ("3 sets") makes that many sets, each with new topics. Without one, make 1.
+A count ("3 sets") makes that many sets, each with new topics. Without one, make 1. Write
+them all yourself, in one `build.py` file. **Never fork** for them: a fork starts with a copy of
+this whole conversation, so each one pays again for everything already read.
 
 **Lean on the user's weak spots.** Read the log
 `~/Documents/JLPT 🇯🇵/N2/N2 読解 ノート/記録.md` if it exists. Use it to pick topics not
@@ -105,8 +107,10 @@ found sets answerable without reading. These rules fix that:
 
 ## 4. Build the set's JSON
 
-The contract is `test.schema.json` next to this file. It's generated from the app's
-`app/lib/reading-payload.ts` by `pnpm schema`. Shape, cut down to one passage:
+**Never write the JSON by hand**: write the short format below and let `build.py` make it.
+The JSON is shown only so you know what each field means. The contract is `test.schema.json`
+next to this file. It's generated from the app's `app/lib/reading-payload.ts` by `pnpm schema`.
+Shape, cut down to one passage:
 
 ```json
 {
@@ -222,8 +226,9 @@ the longest choice. Fix those and run it again.
 
 ## 5. Send it
 
-Write each set to `$TMPDIR/reading-<title>.json`, then run this from the app's folder
-(`~/Downloads/bunpo-drill`):
+`build.py` (without `--dry`) already writes each set to `$TMPDIR/reading-<title>.json` and
+sends it with `post.sh`. Run `post.sh` yourself only to resend one of those files, from the
+app's folder (`~/Downloads/bunpo-drill`):
 
 ```sh
 bash .claude/skills/jlpt-reading-quiz/post.sh "$TMPDIR/reading-短文-1.json"

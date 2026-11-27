@@ -74,7 +74,7 @@ you can't read it, mark the word `⚠要確認` and never quiz it.
 
 ## 4. Write the questions
 
-Read `vocab-format.md` again for the trap patterns, then write the set:
+Use the trap patterns from `vocab-format.md` (read in step 1; don't read it again), then write the set:
 
 - **文脈規定**: a sentence with （　　）; 4 choices of the same shape (shared kanji, same
   suffix or ending, same onomatopoeia pattern). At most one wrong choice is close in

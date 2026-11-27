@@ -29,7 +29,10 @@ Arguments: $ARGUMENTS
 
 Notes live in `~/Documents/JLPT 🇯🇵/N2/N2 漢字 ノート/` as `第N章.md`, one per chapter.
 
-**If the chapter's notes file exists, read it and skip to step 4.**
+**If the chapter's notes file exists, read it without its `例：` lines and skip to step 4.**
+Those lines are half the file and the quiz may not reuse them:
+`grep -v '例：' "$HOME/Documents/JLPT 🇯🇵/N2/N2 漢字 ノート/第N章.md"` (one `grep` for all the
+chapters asked for).
 
 Otherwise build it from the book (`~/Documents/JLPT 🇯🇵/N2/N2 漢字マスター.pdf`, a scan
 with no text layer; PDF page = book page). Read the chapter's lesson pages with the Read
@@ -89,7 +92,7 @@ knowledge disagree, or you can't read it, mark the word `⚠要確認` and never
 
 ## 4. Write the questions
 
-Read `kanji-format.md` again for the trap patterns, then for each chapter:
+Use the trap patterns from `kanji-format.md` (read in step 1; don't read it again), then for each chapter:
 
 - **漢字読み**: a natural sentence with one word from the notes in 【 】. 4 readings in
   hiragana: the right one plus traps built as the format file describes (2×2 grids of
