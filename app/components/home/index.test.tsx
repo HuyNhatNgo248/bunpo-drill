@@ -58,7 +58,7 @@ describe("Home", () => {
     it("opens no menu for a user who is not the admin", async () => {
       renderHome([NOT_TAKEN]);
 
-      await userEvent.pointer({ keys: "[MouseRight]", target: await screen.findByRole("link", { name: /第2週 1日目/ }) });
+      await userEvent.pointer({ keys: "[MouseRight]", target: within(await screen.findByRole("listitem")).getByRole("link", { name: /第2週 1日目/ }) });
 
       expect(screen.queryByRole("menuitem", { name: "Delete" })).toBeNull();
     });
@@ -66,7 +66,7 @@ describe("Home", () => {
     it("lets the admin rename a test from its right-click menu", async () => {
       const requests = renderHome([NOT_TAKEN], { isAdmin: true });
 
-      await userEvent.pointer({ keys: "[MouseRight]", target: await screen.findByRole("link", { name: /第2週 1日目/ }) });
+      await userEvent.pointer({ keys: "[MouseRight]", target: within(await screen.findByRole("listitem")).getByRole("link", { name: /第2週 1日目/ }) });
       await userEvent.click(await screen.findByRole("menuitem", { name: "Rename" }));
       const name = within(screen.getByRole("dialog", { name: "Rename the test" })).getByRole("textbox", { name: "Test name" });
       expect(name).toHaveValue("第2週 1日目");
@@ -80,7 +80,7 @@ describe("Home", () => {
     it("lets the admin delete a test from its right-click menu, after asking", async () => {
       const requests = renderHome([NOT_TAKEN], { isAdmin: true });
 
-      await userEvent.pointer({ keys: "[MouseRight]", target: await screen.findByRole("link", { name: /第2週 1日目/ }) });
+      await userEvent.pointer({ keys: "[MouseRight]", target: within(await screen.findByRole("listitem")).getByRole("link", { name: /第2週 1日目/ }) });
       await userEvent.click(await screen.findByRole("menuitem", { name: "Delete" }));
       expect(requests).toEqual([]);
       await userEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Delete" }));

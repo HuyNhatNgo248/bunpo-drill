@@ -14,7 +14,7 @@ type HomeProps = {
 };
 
 /**
- * The home page for one level: the figures over its tests, then its tests one week at a time. Once there is a test, a
+ * The home page for one level: the figures over its tests, then its tests under 総合. Once there is a test, a
  * tab picks any JLPT level; one the app has no tests for yet says it is not available.
  */
 export function Home({ tests, level, isAdmin = false }: HomeProps) {

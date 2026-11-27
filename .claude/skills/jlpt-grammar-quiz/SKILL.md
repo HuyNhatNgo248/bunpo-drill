@@ -18,7 +18,7 @@ Settle three things from the arguments and the conversation:
 
 - **Level**: N3 or N2. Default N2 (the user is preparing for N2).
 - **Scope**: weeks, days or specific patterns. "Weak ones" means the unreviewed chips:
-  `bash ~/.claude/skills/jlpt-grammar-quiz/tests.sh` (it sends the app's API token) and collect `review[]` entries with
+  `bash .claude/skills/jlpt-grammar-quiz/tests.sh` (it sends the app's API token) and collect `review[]` entries with
   `"reviewed": false`. Their `grammarId` (`n3-w5-d1-g2`) gives week, day and number.
   If no scope is given, ask once ("Which week or days?"). Don't guess.
   "Review test" / 総復習 means every studied week at the real counts: see "Review test" in
@@ -70,7 +70,12 @@ lesson block (they've been studied), unless the user asks for points from 文型
   point in more than one section where you can. If there are more points than questions,
   ask whether to raise the count or narrow the scope. Review tests are the exception: they sample
   points evenly (see "Review test" in `jlpt-format.md`).
-- **Title**: `第5週 1日目`, `第5週 2〜3日目`, `第3週・第5週`, or `苦手な文法` for weak ones (max 60 characters).
+- **Title** (max 60 characters):
+  - A test of one week: `第5週 1日目`, `第5週 2〜3日目`.
+  - A test of several weeks (総合, まとめ, 総復習, any review): `総合 N`, with no weeks in it. N is one more
+    than the highest `総合 N` among that level's tests (`bash .claude/skills/jlpt-grammar-quiz/tests.sh`;
+    none yet → 1). Several in one go take N, N+1, …. The app shows these as one numbered series.
+  - Weak ones: `苦手な文法`.
 
 ## 4. Write the questions
 

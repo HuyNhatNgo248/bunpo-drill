@@ -35,7 +35,9 @@ msgstr "{again, plural, other {#枚をもう一度}}"
 msgid "{again} needed again"
 msgstr "もう一度 {again}枚"
 
-#: app/components/home/test-list/TestRow.tsx:42
+#: app/components/home/test-list/NextTest.tsx:32
+#: app/components/home/test-list/TestRow.tsx:43
+#: app/components/home/test-list/TestTile.tsx:19
 #: app/components/reading/SetRow.tsx:40
 msgid "{answered} / {total} answered"
 msgstr "{answered} / {total} 問"
@@ -117,10 +119,6 @@ msgstr "{strokes, plural, other {#画}}"
 msgid "{taken} / {total} done"
 msgstr "{taken} / {total} 完了"
 
-#: app/components/home/test-list/index.tsx:75
-msgid "{taken} / {total} taken"
-msgstr "{taken} / {total} 受験済み"
-
 #: app/components/quiz/sentence-order/BankPiece.tsx:37
 msgid "{text} (placed)"
 msgstr "{text}（配置済み）"
@@ -137,7 +135,8 @@ msgstr "{time} 経過 · 目標 {goal}"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, other {#枚}}"
 
-#: app/components/home/test-list/TestRow.tsx:49
+#: app/components/home/test-list/NextTest.tsx:26
+#: app/components/home/test-list/TestRow.tsx:50
 #: app/components/quiz/index.tsx:105
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
@@ -348,6 +347,10 @@ msgstr "回答済み {done} / {total}"
 msgid "At least 8 characters"
 msgstr "8文字以上"
 
+#: app/components/home/test-list/Figures.tsx:14
+msgid "Average"
+msgstr "平均"
+
 #: app/components/card-session/CardControls.tsx:42
 msgid "Back in a few cards"
 msgstr "数枚あとに戻ります"
@@ -394,6 +397,14 @@ msgstr "テスト一覧に戻る"
 #: app/components/info/index.tsx:26
 msgid "Back to the tests"
 msgstr "テストに戻る"
+
+#: app/components/home/test-list/index.tsx:29
+msgid "Below the pass line"
+msgstr "不合格"
+
+#: app/components/home/test-list/Figures.tsx:15
+msgid "Best"
+msgstr "最高"
 
 #: app/components/quiz/QuestionCard.tsx:46
 msgid "Blank （{num}） in the passage"
@@ -515,7 +526,8 @@ msgstr "文の（　）に入る、いちばん自然な形を4つから選び�
 msgid "Close"
 msgstr "閉じる"
 
-#: app/components/home/test-list/TestRow.tsx:64
+#: app/components/home/test-list/NextTest.tsx:39
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/reading/SetRow.tsx:71
 msgid "Continue"
 msgstr "続きから"
@@ -754,7 +766,8 @@ msgstr "{sent} のアカウントがあれば、リンクを送りました。�
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "心当たりがない場合は、このメールを無視してください。パスワードは変わりません。"
 
-#: app/components/home/test-list/index.tsx:48
+#: app/components/home/test-list/index.tsx:27
+#: app/components/home/test-list/NextTest.tsx:19
 #: app/components/reading/GroupList.tsx:93
 msgid "In progress"
 msgstr "解答中"
@@ -912,7 +925,7 @@ msgstr "前回まちがえた"
 
 #: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:60
-#: app/routes/home.tsx:14
+#: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "模擬試験"
 
@@ -960,6 +973,10 @@ msgstr "次の問題"
 #: app/components/flashcards/SessionDone.tsx:51
 msgid "Next set"
 msgstr "次のセット"
+
+#: app/components/home/test-list/NextTest.tsx:19
+msgid "Next test"
+msgstr "次のテスト"
 
 #: app/components/welcome/SampleQuiz.tsx:71
 msgid "Nice work"
@@ -1009,7 +1026,8 @@ msgstr "日本語能力試験（JLPT）の公式サービスではありませ�
 msgid "Not learned yet. Study them again now, or they come back after the new cards."
 msgstr "まだ覚えていません。今すぐもう一度学ぶか、新しいカードのあとにまた出ます。"
 
-#: app/components/home/test-list/index.tsx:49
+#: app/components/home/test-list/index.tsx:26
+#: app/components/home/test-list/TestTile.tsx:19
 msgid "Not taken"
 msgstr "未受験"
 
@@ -1057,6 +1075,10 @@ msgstr "ノートで開く"
 msgid "Open the link below and choose a new password. The link works for one hour, and only once."
 msgstr "下のリンクを開いて、新しいパスワードを決めてください。リンクは1時間有効で、一度だけ使えます。"
 
+#: app/components/home/test-list/index.tsx:67
+msgid "Other tests"
+msgstr "その他"
+
 #: app/lib/errors.ts:45
 msgid "Page not found"
 msgstr "ページが見つかりません"
@@ -1076,6 +1098,10 @@ msgstr "問題{no}の採点結果"
 #: app/components/quiz/QuestionCard.tsx:95
 msgid "Passage （{num}）"
 msgstr "文章（{num}）"
+
+#: app/components/home/test-list/index.tsx:28
+msgid "Passed"
+msgstr "合格"
 
 #: app/components/account/DeleteAccountForm.tsx:23
 #: app/components/account/PasswordForm.tsx:22
@@ -1296,7 +1322,7 @@ msgstr "進捗をリセットしますか？"
 msgid "Reset your password"
 msgstr "パスワードの再設定"
 
-#: app/components/home/test-list/TestRow.tsx:64
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:30
 #: app/components/reading/SetRow.tsx:66
 #: app/components/results/index.tsx:38
@@ -1446,7 +1472,8 @@ msgstr "システム障害が発生しました"
 msgid "Sounds sensible, but the passage never says it."
 msgstr "もっともらしいですが、本文には書かれていません。"
 
-#: app/components/home/test-list/TestRow.tsx:64
+#: app/components/home/test-list/NextTest.tsx:39
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
 #: app/components/quiz/index.tsx:127
 #: app/components/reading/SetRow.tsx:78
@@ -1493,7 +1520,7 @@ msgstr "もう一度受ける"
 msgid "Take the quiz"
 msgstr "クイズを受ける"
 
-#: app/components/home/test-list/index.tsx:50
+#: app/components/home/test-list/Figures.tsx:13
 msgid "Taken"
 msgstr "受験済み"
 
@@ -1513,6 +1540,10 @@ msgstr "テスト名"
 #: app/lib/errors.ts:31
 msgid "Test not found"
 msgstr "テストが見つかりません"
+
+#: app/components/home/test-list/index.tsx:67
+msgid "Tests"
+msgstr "テスト"
 
 #: app/lib/users.ts:14
 msgid "That email address doesn't look right."
@@ -1767,14 +1798,9 @@ msgstr "パスワードを忘れたときに、再設定のリンクを送りま
 msgid "Week"
 msgstr "週"
 
-#: app/components/home/test-list/index.tsx:30
 #: app/lib/sections.ts:103
 msgid "Week {week}"
 msgstr "第{week}週"
-
-#: app/components/home/test-list/index.tsx:58
-msgid "Weeks"
-msgstr "週"
 
 #: app/components/info/InfoSection.tsx:49
 msgid "What it checks"

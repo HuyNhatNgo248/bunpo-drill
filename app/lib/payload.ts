@@ -23,7 +23,7 @@ export const READING_TYPES = ["reading-short", "reading-mid", "reading-long", "r
 export const SECTION_TYPES = ["fill-blank", "sentence-order", "passage", "kanji-reading", "kanji-writing", ...READING_TYPES] as const;
 export type SectionType = (typeof SECTION_TYPES)[number];
 
-const GRAMMAR_ID = /^n[1-5]-w[1-9]-d[1-6]-g[1-4]$/;
+const GRAMMAR_ID = /^n[1-5]-w[1-9]-d[1-6]-g[1-8]$/;
 const QUESTION_ID = /^q[1-9][0-9]*$/;
 const PASSAGE_MARKER = /\[(\d+)\]/g;
 
@@ -66,7 +66,7 @@ export const grammarPointSchema = z
       .describe('"<level>-w<week>-d<day>-g<number>", lower case, e.g. "n3-w5-d1-g2". Must match level, week, day and number.'),
     week: z.number().int().min(1).max(9).describe("Week in the 文法ノート (第5週 → 5)."),
     day: z.number().int().min(1).max(6).describe("Day within the week (3日目 → 3). Day 7 is 実戦問題 and has no patterns."),
-    number: z.number().int().min(1).max(4).describe("Position within the day, ① → 1 … ④ → 4."),
+    number: z.number().int().min(1).max(8).describe("Position within the day, ① → 1 … ⑧ → 8 (N4 days have up to 8)."),
     pattern: z.string().min(1).describe('The pattern exactly as the note heading writes it, e.g. "〜ばかりか".'),
     meaning: z.string().min(1).describe('Short English meaning, e.g. "not only … but also".'),
   })

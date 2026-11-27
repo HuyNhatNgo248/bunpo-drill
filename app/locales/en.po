@@ -35,7 +35,9 @@ msgstr "{again, plural, one {Study it again} other {Study the # again}}"
 msgid "{again} needed again"
 msgstr "{again} needed again"
 
-#: app/components/home/test-list/TestRow.tsx:42
+#: app/components/home/test-list/NextTest.tsx:32
+#: app/components/home/test-list/TestRow.tsx:43
+#: app/components/home/test-list/TestTile.tsx:19
 #: app/components/reading/SetRow.tsx:40
 msgid "{answered} / {total} answered"
 msgstr "{answered} / {total} answered"
@@ -117,10 +119,6 @@ msgstr "{strokes, plural, one {# stroke} other {# strokes}}"
 msgid "{taken} / {total} done"
 msgstr "{taken} / {total} done"
 
-#: app/components/home/test-list/index.tsx:75
-msgid "{taken} / {total} taken"
-msgstr "{taken} / {total} taken"
-
 #: app/components/quiz/sentence-order/BankPiece.tsx:37
 msgid "{text} (placed)"
 msgstr "{text} (placed)"
@@ -137,7 +135,8 @@ msgstr "{time} on it · target {goal}"
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
-#: app/components/home/test-list/TestRow.tsx:49
+#: app/components/home/test-list/NextTest.tsx:26
+#: app/components/home/test-list/TestRow.tsx:50
 #: app/components/quiz/index.tsx:105
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
@@ -348,6 +347,10 @@ msgstr "Answered {done} / {total}"
 msgid "At least 8 characters"
 msgstr "At least 8 characters"
 
+#: app/components/home/test-list/Figures.tsx:14
+msgid "Average"
+msgstr "Average"
+
 #: app/components/card-session/CardControls.tsx:42
 msgid "Back in a few cards"
 msgstr "Back in a few cards"
@@ -394,6 +397,14 @@ msgstr "Back to the mock tests"
 #: app/components/info/index.tsx:26
 msgid "Back to the tests"
 msgstr "Back to the tests"
+
+#: app/components/home/test-list/index.tsx:29
+msgid "Below the pass line"
+msgstr "Below the pass line"
+
+#: app/components/home/test-list/Figures.tsx:15
+msgid "Best"
+msgstr "Best"
 
 #: app/components/quiz/QuestionCard.tsx:46
 msgid "Blank （{num}） in the passage"
@@ -515,7 +526,8 @@ msgstr "Choose the most natural form for the （　） in a sentence, out of 4."
 msgid "Close"
 msgstr "Close"
 
-#: app/components/home/test-list/TestRow.tsx:64
+#: app/components/home/test-list/NextTest.tsx:39
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/reading/SetRow.tsx:71
 msgid "Continue"
 msgstr "Continue"
@@ -754,7 +766,8 @@ msgstr "If there's an account for {sent}, we sent the link. It works for one hou
 msgid "If you didn't ask for this, ignore this email. Your password won't change."
 msgstr "If you didn't ask for this, ignore this email. Your password won't change."
 
-#: app/components/home/test-list/index.tsx:48
+#: app/components/home/test-list/index.tsx:27
+#: app/components/home/test-list/NextTest.tsx:19
 #: app/components/reading/GroupList.tsx:93
 msgid "In progress"
 msgstr "In progress"
@@ -912,7 +925,7 @@ msgstr "Missed last time"
 
 #: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:60
-#: app/routes/home.tsx:14
+#: app/routes/home.tsx:13
 msgid "Mock tests"
 msgstr "Mock tests"
 
@@ -960,6 +973,10 @@ msgstr "Next question"
 #: app/components/flashcards/SessionDone.tsx:51
 msgid "Next set"
 msgstr "Next set"
+
+#: app/components/home/test-list/NextTest.tsx:19
+msgid "Next test"
+msgstr "Next test"
 
 #: app/components/welcome/SampleQuiz.tsx:71
 msgid "Nice work"
@@ -1009,7 +1026,8 @@ msgstr "Not an official JLPT service. For exam dates and registration, see <0>jl
 msgid "Not learned yet. Study them again now, or they come back after the new cards."
 msgstr "Not learned yet. Study them again now, or they come back after the new cards."
 
-#: app/components/home/test-list/index.tsx:49
+#: app/components/home/test-list/index.tsx:26
+#: app/components/home/test-list/TestTile.tsx:19
 msgid "Not taken"
 msgstr "Not taken"
 
@@ -1057,6 +1075,10 @@ msgstr "Open in notes"
 msgid "Open the link below and choose a new password. The link works for one hour, and only once."
 msgstr "Open the link below and choose a new password. The link works for one hour, and only once."
 
+#: app/components/home/test-list/index.tsx:67
+msgid "Other tests"
+msgstr "Other tests"
+
 #: app/lib/errors.ts:45
 msgid "Page not found"
 msgstr "Page not found"
@@ -1076,6 +1098,10 @@ msgstr "Part {no} checked"
 #: app/components/quiz/QuestionCard.tsx:95
 msgid "Passage （{num}）"
 msgstr "Passage （{num}）"
+
+#: app/components/home/test-list/index.tsx:28
+msgid "Passed"
+msgstr "Passed"
 
 #: app/components/account/DeleteAccountForm.tsx:23
 #: app/components/account/PasswordForm.tsx:22
@@ -1296,7 +1322,7 @@ msgstr "Reset progress?"
 msgid "Reset your password"
 msgstr "Reset your password"
 
-#: app/components/home/test-list/TestRow.tsx:64
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:30
 #: app/components/reading/SetRow.tsx:66
 #: app/components/results/index.tsx:38
@@ -1446,7 +1472,8 @@ msgstr "Something went wrong"
 msgid "Sounds sensible, but the passage never says it."
 msgstr "Sounds sensible, but the passage never says it."
 
-#: app/components/home/test-list/TestRow.tsx:64
+#: app/components/home/test-list/NextTest.tsx:39
+#: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
 #: app/components/quiz/index.tsx:127
 #: app/components/reading/SetRow.tsx:78
@@ -1493,7 +1520,7 @@ msgstr "Take it again"
 msgid "Take the quiz"
 msgstr "Take the quiz"
 
-#: app/components/home/test-list/index.tsx:50
+#: app/components/home/test-list/Figures.tsx:13
 msgid "Taken"
 msgstr "Taken"
 
@@ -1513,6 +1540,10 @@ msgstr "Test name"
 #: app/lib/errors.ts:31
 msgid "Test not found"
 msgstr "Test not found"
+
+#: app/components/home/test-list/index.tsx:67
+msgid "Tests"
+msgstr "Tests"
 
 #: app/lib/users.ts:14
 msgid "That email address doesn't look right."
@@ -1767,14 +1798,9 @@ msgstr "We send a reset link here when you forget your password."
 msgid "Week"
 msgstr "Week"
 
-#: app/components/home/test-list/index.tsx:30
 #: app/lib/sections.ts:103
 msgid "Week {week}"
 msgstr "Week {week}"
-
-#: app/components/home/test-list/index.tsx:58
-msgid "Weeks"
-msgstr "Weeks"
 
 #: app/components/info/InfoSection.tsx:49
 msgid "What it checks"

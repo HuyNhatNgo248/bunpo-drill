@@ -141,4 +141,4 @@ These rules keep the tests at real-exam level:
 
 When the user asks for a review test (総復習, "review test", "mixed test"), cover every studied week
 of the level, not one week, at the real exam's counts: N2 12 / 5 / 5 (one passage), N3 13 / 5 / 5.
-Pick points evenly across the weeks, favouring ones missed before. Title: `総復習 第1〜8週`.
+Pick points evenly across the weeks, favouring ones missed before. Title: `総復習 第1〜8週` here; a test sent to the app is titled `総合 N` (see jlpt-grammar-quiz).

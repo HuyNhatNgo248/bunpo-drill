@@ -10,7 +10,7 @@ import { rowHeading } from "./helpers/rowHeading";
 import { TestMenu } from "./TestMenu";
 
 /**
- * One test, a row of its week: its title (without the week), a line under it, and what is next for it. In progress: how
+ * One test, a cell of the two-column list: its title (without the week), a line under it, and what is next for it. In progress: how
  * far it got, and Continue. Not taken: its size, and Start. Taken: its size, its score (green from the pass line), and
  * its results (where it can be retaken and its grammar reviewed). Start is the one filled button, as in the kanji and reading tabs. The whole row opens it. The admin renames or deletes it from the menu of a right click on it.
  */
@@ -19,11 +19,12 @@ export function TestRow({ test, isAdmin = false }: { test: TestSummary; isAdmin?
   const { answered, result } = test;
   const total = test.questionCount;
   const inProgress = !result && answered !== null;
-  // One width, so the buttons of a week line up.
+  // One width, so the buttons of a section line up.
   const button = cn(buttonVariants({ variant: result || inProgress ? "outline" : "default" }), "min-w-24");
 
   const row = (
-    <li className="relative flex min-h-16 items-center gap-4 px-5 py-3 transition-colors hover:bg-muted/60">
+    // The lines between cells: each draws its bottom (the last row's is under the list's border) and the left column its right.
+    <li className="relative -mb-px flex min-h-16 items-center gap-4 border-b px-5 py-3 transition-colors hover:bg-muted/60 md:odd:border-r">
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         {/* Its ::after covers the row, so the whole row opens the test; the buttons are only its look, under it. */}
         <Link

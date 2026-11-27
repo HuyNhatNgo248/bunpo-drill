@@ -9,7 +9,6 @@ import { isTestLevel, JLPT_LEVELS } from "~/lib/payload";
 import { listTests, newestLevel } from "~/lib/tests.server";
 import { lastTabOf, ownerId } from "~/lib/users.server";
 import { titleMeta } from "~/lib/i18n";
-import { revalidateUnlessPicked } from "~/lib/utils";
 
 export const meta = titleMeta(msg`Mock tests`);
 
@@ -34,9 +33,6 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 /** Switching from another tab shows its last data at once (tabCache.ts). */
 export const clientLoader = (args: Route.ClientLoaderArgs) => tabClientLoader(args);
-
-/** A week picked (`week`) the page shows by itself, so the tests aren't loaded again for it. */
-export const shouldRevalidate = revalidateUnlessPicked("week");
 
 export default function HomeRoute({ loaderData }: Route.ComponentProps) {
   useRefreshStale(loaderData);
