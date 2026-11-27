@@ -27,7 +27,6 @@ msgid "{0} to repeat"
 msgstr "{0} to repeat"
 
 #: app/components/flashcards/SessionDone.tsx:50
-#: app/components/note-cards/index.tsx:70
 msgid "{again, plural, one {Study it again} other {Study the # again}}"
 msgstr "{again, plural, one {Study it again} other {Study the # again}}"
 
@@ -137,7 +136,7 @@ msgstr "{total, plural, one {# card} other {# cards}}"
 
 #: app/components/home/test-list/NextTest.tsx:26
 #: app/components/home/test-list/TestRow.tsx:50
-#: app/components/quiz/index.tsx:105
+#: app/components/quiz/index.tsx:99
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
 #: app/components/welcome/TrialTests.tsx:104
@@ -152,7 +151,7 @@ msgstr "{unanswered, plural, one {# question in this part is unanswered. Check a
 msgid "{words, plural, one {# word} other {# words}}"
 msgstr "{words, plural, one {# word} other {# words}}"
 
-#: app/components/results/index.tsx:88
+#: app/components/results/index.tsx:84
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "{wrong} wrong"
@@ -165,8 +164,8 @@ msgstr "{wrong} wrong · pass line {pass}%"
 msgid "「にもかかわらず」 joins two things that clash: busy, yet goes to the gym. The others give a reason, not a contrast."
 msgstr "「にもかかわらず」 joins two things that clash: busy, yet goes to the gym. The others give a reason, not a contrast."
 
-#: app/components/quiz/index.tsx:108
-#: app/components/results/index.tsx:54
+#: app/components/quiz/index.tsx:102
+#: app/components/results/index.tsx:50
 msgid "← Kanji"
 msgstr "← Kanji"
 
@@ -174,17 +173,13 @@ msgstr "← Kanji"
 msgid "← Lessons"
 msgstr "← Lessons"
 
-#: app/components/quiz/index.tsx:108
-#: app/components/results/index.tsx:54
+#: app/components/quiz/index.tsx:102
+#: app/components/results/index.tsx:50
 msgid "← Mock tests"
 msgstr "← Mock tests"
 
-#: app/components/note-cards/index.tsx:42
-msgid "← Notes"
-msgstr "← Notes"
-
-#: app/components/quiz/index.tsx:108
-#: app/components/results/index.tsx:54
+#: app/components/quiz/index.tsx:102
+#: app/components/results/index.tsx:50
 msgid "← Reading"
 msgstr "← Reading"
 
@@ -274,26 +269,6 @@ msgstr "A username can't contain “@”."
 msgid "Account"
 msgstr "Account"
 
-#: app/components/notes/Memo.tsx:70
-msgid "Add a memo"
-msgstr "Add a memo"
-
-#: app/components/notes/Memo.tsx:66
-msgid "Add a memo to {text}"
-msgstr "Add a memo to {text}"
-
-#: app/components/note-cards/index.tsx:55
-msgid "Add a memo to a note, and it shows up here as a card."
-msgstr "Add a memo to a note, and it shows up here as a card."
-
-#: app/components/add-note/index.tsx:68
-msgid "Add to notes"
-msgstr "Add to notes"
-
-#: app/components/add-note/index.tsx:99
-msgid "Adding…"
-msgstr "Adding…"
-
 #: app/components/card-session/CardControls.tsx:54
 #: app/components/card-session/CardControls.tsx:97
 msgid "Again"
@@ -303,7 +278,7 @@ msgstr "Again"
 msgid "All answered"
 msgstr "All answered"
 
-#: app/components/results/index.tsx:88
+#: app/components/results/index.tsx:84
 msgid "All correct"
 msgstr "All correct"
 
@@ -315,25 +290,21 @@ msgstr "All words learned"
 msgid "Almost the passage, with a time, number or name swapped."
 msgstr "Almost the passage, with a time, number or name swapped."
 
-#: app/components/add-note/index.tsx:101
-msgid "Already in your notes."
-msgstr "Already in your notes."
-
 #: app/components/card-session/FlipCard.tsx:52
 msgid "Answer"
 msgstr "Answer"
 
-#: app/components/results/section-review/QuestionReview.tsx:110
+#: app/components/results/section-review/QuestionReview.tsx:109
 msgid "Answer: {answer}"
 msgstr "Answer: {answer}"
 
-#: app/components/quiz/index.tsx:98
-#: app/components/quiz/index.tsx:115
+#: app/components/quiz/index.tsx:92
+#: app/components/quiz/index.tsx:109
 #: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Answered"
 msgstr "Answered"
 
-#: app/components/quiz/index.tsx:133
+#: app/components/quiz/index.tsx:127
 msgid "Answered {answered} / {total}"
 msgstr "Answered {answered} / {total}"
 
@@ -363,9 +334,9 @@ msgstr "Back on your list to learn"
 msgid "Back on your list to learn. Study them again now, or they come with your next set."
 msgstr "Back on your list to learn. Study them again now, or they come with your next set."
 
-#: app/components/quiz/index.tsx:80
+#: app/components/quiz/index.tsx:75
 #: app/components/results/Actions.tsx:45
-#: app/components/results/index.tsx:41
+#: app/components/results/index.tsx:37
 msgid "Back to kanji"
 msgstr "Back to kanji"
 
@@ -373,14 +344,9 @@ msgstr "Back to kanji"
 msgid "Back to lessons"
 msgstr "Back to lessons"
 
-#: app/components/note-cards/index.tsx:38
-#: app/components/note-cards/index.tsx:75
-msgid "Back to notes"
-msgstr "Back to notes"
-
-#: app/components/quiz/index.tsx:82
+#: app/components/quiz/index.tsx:77
 #: app/components/results/Actions.tsx:54
-#: app/components/results/index.tsx:43
+#: app/components/results/index.tsx:39
 msgid "Back to reading"
 msgstr "Back to reading"
 
@@ -406,7 +372,7 @@ msgstr "Below the pass line"
 msgid "Best"
 msgstr "Best"
 
-#: app/components/quiz/QuestionCard.tsx:46
+#: app/components/quiz/QuestionCard.tsx:45
 msgid "Blank （{num}） in the passage"
 msgstr "Blank （{num}） in the passage"
 
@@ -414,7 +380,6 @@ msgstr "Blank （{num}） in the passage"
 msgid "Build a sentence that is grammatically correct and makes sense, then pick the piece for the ★ slot."
 msgstr "Build a sentence that is grammatically correct and makes sense, then pick the piece for the ★ slot."
 
-#: app/components/add-note/index.tsx:88
 #: app/components/ConfirmDialog.tsx:44
 #: app/components/home/test-list/TestMenu.tsx:61
 msgid "Cancel"
@@ -434,13 +399,10 @@ msgstr "Cards"
 
 #: app/components/flashcards/index.tsx:51
 #: app/components/flashcards/index.tsx:63
-#: app/components/note-cards/index.tsx:37
-#: app/components/note-cards/index.tsx:46
 msgid "Cards done"
 msgstr "Cards done"
 
 #: app/components/flashcards/index.tsx:64
-#: app/components/note-cards/index.tsx:47
 msgid "Cards done {done} / {total}"
 msgstr "Cards done {done} / {total}"
 
@@ -474,7 +436,7 @@ msgstr "Check Part {no}?"
 msgid "Check what comes before the blank (a noun, the plain form, the て-form) and the tone of the sentence, not only the meaning."
 msgstr "Check what comes before the blank (a noun, the plain form, the て-form) and the tone of the sentence, not only the meaning."
 
-#: app/components/results/index.tsx:64
+#: app/components/results/index.tsx:60
 msgid "Check your answers"
 msgstr "Check your answers"
 
@@ -534,11 +496,11 @@ msgstr "Continue"
 
 #: app/components/info/SampleQuestion.tsx:60
 #: app/components/quiz/question-nav/Legend.tsx:15
-#: app/components/results/section-review/QuestionReview.tsx:140
+#: app/components/results/section-review/QuestionReview.tsx:139
 msgid "Correct"
 msgstr "Correct"
 
-#: app/components/results/index.tsx:89
+#: app/components/results/index.tsx:85
 msgid "Correct {score} / {total}"
 msgstr "Correct {score} / {total}"
 
@@ -546,17 +508,9 @@ msgstr "Correct {score} / {total}"
 msgid "Correct!"
 msgstr "Correct!"
 
-#: app/components/add-note/index.tsx:103
-msgid "Couldn't add it. Please try again."
-msgstr "Couldn't add it. Please try again."
-
 #: app/components/card-session/CardControls.tsx:89
 msgid "Couldn't save a word as learned. Check your connection."
 msgstr "Couldn't save a word as learned. Check your connection."
-
-#: app/components/notes/NoteCard.tsx:68
-msgid "Couldn't save. Please try again."
-msgstr "Couldn't save. Please try again."
 
 #: app/components/layout/header/index.tsx:74
 #: app/components/login/LoginForm.tsx:69
@@ -592,10 +546,6 @@ msgstr "Delete"
 msgid "Delete “{title}”?"
 msgstr "Delete “{title}”?"
 
-#: app/components/notes/NoteCard.tsx:52
-msgid "Delete {text}"
-msgstr "Delete {text}"
-
 #: app/components/account/DeleteAccountForm.tsx:20
 #: app/components/account/DeleteAccountForm.tsx:29
 #: app/components/account/DeleteAccountForm.tsx:33
@@ -614,7 +564,6 @@ msgstr "Deleting…"
 msgid "Did you review your weak grammar?"
 msgstr "Did you review your weak grammar?"
 
-#: app/components/notes/Memo.tsx:54
 #: app/components/reading/GroupList.tsx:95
 msgid "Done"
 msgstr "Done"
@@ -631,10 +580,6 @@ msgstr "Drops an “only if” or an “except” that the passage attaches."
 #: app/components/welcome/TrialTests.tsx:34
 msgid "Each set mixes questions from the whole level, in the real exam's format. Graded as soon as you submit. Your answers aren't saved, so you can take each set as often as you like."
 msgstr "Each set mixes questions from the whole level, in the real exam's format. Graded as soon as you submit. Your answers aren't saved, so you can take each set as often as you like."
-
-#: app/components/notes/NoteCard.tsx:48
-msgid "Edit the memo of {text}"
-msgstr "Edit the memo of {text}"
 
 #: app/components/account/EmailForm.tsx:17
 #: app/components/account/EmailForm.tsx:30
@@ -697,11 +642,6 @@ msgstr "flip"
 #: app/components/login/index.tsx:31
 msgid "Forgot your password?"
 msgstr "Forgot your password?"
-
-#: app/components/note-cards/index.tsx:125
-#: app/components/notes/NoteCard.tsx:80
-msgid "From {testTitle}"
-msgstr "From {testTitle}"
 
 #: app/components/welcome/SampleQuiz.tsx:226
 msgid "Full practice sets are below, no account needed."
@@ -800,7 +740,7 @@ msgstr "Judge which sentence or expression fits the flow of a passage with numbe
 #: app/components/results/Actions.tsx:42
 #: app/components/SubjectTabs.tsx:26
 #: app/components/welcome/SubjectList.tsx:14
-#: app/routes/kanji.tsx:14
+#: app/routes/kanji.tsx:13
 msgid "Kanji"
 msgstr "Kanji"
 
@@ -866,7 +806,7 @@ msgstr "Lessons"
 msgid "Level"
 msgstr "Level"
 
-#: app/components/LevelSwitch.tsx:31
+#: app/components/LevelSwitch.tsx:28
 #: app/components/welcome/TrialTests.tsx:70
 msgid "Level: {shown}"
 msgstr "Level: {shown}"
@@ -907,14 +847,6 @@ msgstr "Marked learned"
 msgid "Matches the passage, but does not answer this question."
 msgstr "Matches the passage, but does not answer this question."
 
-#: app/components/notes/Memo.tsx:32
-msgid "Memo"
-msgstr "Memo"
-
-#: app/components/add-note/index.tsx:77
-msgid "Memo (optional)"
-msgstr "Memo (optional)"
-
 #: app/lib/sections.ts:52
 msgid "Mid-length passages"
 msgstr "Mid-length passages"
@@ -925,7 +857,7 @@ msgstr "Missed last time"
 
 #: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:60
-#: app/routes/home.tsx:13
+#: app/routes/home.tsx:12
 msgid "Mock tests"
 msgstr "Mock tests"
 
@@ -994,21 +926,9 @@ msgstr "No {level} reading sets yet"
 msgid "No {title} sets yet"
 msgstr "No {title} sets yet"
 
-#: app/components/noted-text/NotedWord.tsx:23
-msgid "No memo yet."
-msgstr "No memo yet."
-
 #: app/components/home/index.tsx:34
 msgid "No mock tests yet"
 msgstr "No mock tests yet"
-
-#: app/components/note-cards/index.tsx:54
-msgid "No notes with a memo yet"
-msgstr "No notes with a memo yet"
-
-#: app/components/notes/index.tsx:39
-msgid "No notes yet"
-msgstr "No notes yet"
 
 #: app/components/kanji/chapter-list/index.tsx:57
 msgid "no quiz yet"
@@ -1035,18 +955,6 @@ msgstr "Not taken"
 msgid "Not yet"
 msgstr "Not yet"
 
-#: app/components/note-cards/index.tsx:34
-#: app/components/note-cards/index.tsx:43
-#: app/routes/note-cards.tsx:9
-msgid "Note cards"
-msgstr "Note cards"
-
-#: app/components/notes/index.tsx:18
-#: app/components/SubjectTabs.tsx:28
-#: app/routes/notes.tsx:13
-msgid "Notes"
-msgstr "Notes"
-
 #: app/components/results/ReviewCard.tsx:41
 msgid "Nothing to review. You got every question right."
 msgstr "Nothing to review. You got every question right."
@@ -1066,10 +974,6 @@ msgstr "On these levels"
 #: app/components/card-session/CardControls.tsx:43
 msgid "Once more"
 msgstr "Once more"
-
-#: app/components/noted-text/NotedWord.tsx:28
-msgid "Open in notes"
-msgstr "Open in notes"
 
 #: app/lib/password-reset.server.ts:94
 msgid "Open the link below and choose a new password. The link works for one hour, and only once."
@@ -1095,7 +999,7 @@ msgstr "Part {no}"
 msgid "Part {no} checked"
 msgstr "Part {no} checked"
 
-#: app/components/quiz/QuestionCard.tsx:95
+#: app/components/quiz/QuestionCard.tsx:94
 msgid "Passage （{num}）"
 msgstr "Passage （{num}）"
 
@@ -1113,7 +1017,7 @@ msgstr "Password"
 msgid "Password changed."
 msgstr "Password changed."
 
-#: app/components/quiz/index.tsx:127
+#: app/components/quiz/index.tsx:121
 msgid "Pause"
 msgstr "Pause"
 
@@ -1133,7 +1037,7 @@ msgstr "Picture the kanji, then flip the card."
 msgid "Practice sets for grammar, kanji and reading, in the same question formats as the real exam. Graded as soon as you submit, and what you get wrong goes straight to a review list."
 msgstr "Practice sets for grammar, kanji and reading, in the same question formats as the real exam. Graded as soon as you submit, and what you get wrong goes straight to a review list."
 
-#: app/components/quiz/sentence-order/index.tsx:71
+#: app/components/quiz/sentence-order/index.tsx:70
 msgid "Press a choice to put it in the next empty slot. Press a filled slot to send it back to the choices."
 msgstr "Press a choice to put it in the next empty slot. Press a filled slot to send it back to the choices."
 
@@ -1268,7 +1172,7 @@ msgstr "Read two texts on one topic, and compare what each one says."
 #: app/components/results/Actions.tsx:51
 #: app/components/SubjectTabs.tsx:27
 #: app/components/welcome/SubjectList.tsx:14
-#: app/routes/reading.tsx:13
+#: app/routes/reading.tsx:12
 msgid "Reading"
 msgstr "Reading"
 
@@ -1280,18 +1184,9 @@ msgstr "Reading → word"
 msgid "Reading is a set of passages. Each kind has its own length and its own job, and which kinds you get depends on the level."
 msgstr "Reading is a set of passages. Each kind has its own length and its own job, and which kinds you get depends on the level."
 
-#: app/components/add-note/index.tsx:81
-#: app/components/notes/Memo.tsx:37
-msgid "Reading or meaning"
-msgstr "Reading or meaning"
-
 #: app/components/reading/GroupList.tsx:36
 msgid "Reading types"
 msgstr "Reading types"
-
-#: app/components/note-cards/index.tsx:111
-msgid "Recall your memo, then flip the card."
-msgstr "Recall your memo, then flip the card."
 
 #: app/components/error-pages/ErrorPage.tsx:40
 msgid "Reload"
@@ -1325,13 +1220,13 @@ msgstr "Reset your password"
 #: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:30
 #: app/components/reading/SetRow.tsx:66
-#: app/components/results/index.tsx:38
-#: app/components/results/index.tsx:57
-#: app/routes/results.tsx:13
+#: app/components/results/index.tsx:34
+#: app/components/results/index.tsx:53
+#: app/routes/results.tsx:12
 msgid "Results"
 msgstr "Results"
 
-#: app/components/quiz/index.tsx:127
+#: app/components/quiz/index.tsx:121
 msgid "Resume"
 msgstr "Resume"
 
@@ -1357,7 +1252,6 @@ msgstr "Sample question"
 
 #: app/components/account/EmailForm.tsx:41
 #: app/components/account/NameForm.tsx:31
-#: app/components/add-note/index.tsx:91
 #: app/components/home/test-list/TestMenu.tsx:65
 msgid "Save"
 msgstr "Save"
@@ -1380,17 +1274,13 @@ msgstr "Says the reverse of what the passage says."
 msgid "Score"
 msgstr "Score"
 
-#: app/components/SubjectTabs.tsx:76
+#: app/components/SubjectTabs.tsx:52
 msgid "Sections"
 msgstr "Sections"
 
 #: app/components/welcome/SampleQuiz.tsx:201
 msgid "See your score"
 msgstr "See your score"
-
-#: app/components/notes/index.tsx:40
-msgid "Select a word or phrase in a test or its results, then choose Add to notes. It shows up here with its sentence."
-msgstr "Select a word or phrase in a test or its results, then choose Add to notes. It shows up here with its sentence."
 
 #: app/components/reset-password/index.tsx:15
 #: app/components/reset-password/index.tsx:24
@@ -1475,7 +1365,7 @@ msgstr "Sounds sensible, but the passage never says it."
 #: app/components/home/test-list/NextTest.tsx:39
 #: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
-#: app/components/quiz/index.tsx:127
+#: app/components/quiz/index.tsx:121
 #: app/components/reading/SetRow.tsx:78
 #: app/components/welcome/TrialTests.tsx:119
 msgid "Start"
@@ -1493,11 +1383,7 @@ msgstr "Still learning ({again})"
 msgid "Stretches a specific point into a general claim."
 msgstr "Stretches a specific point into a general claim."
 
-#: app/components/notes/index.tsx:24
-msgid "Study as flashcards"
-msgstr "Study as flashcards"
-
-#: app/components/SubjectTabs.tsx:45
+#: app/components/SubjectTabs.tsx:43
 #: app/components/welcome/SubjectList.tsx:23
 msgid "Subject"
 msgstr "Subject"
@@ -1632,8 +1518,8 @@ msgid "The same formats as the real exam"
 msgstr "The same formats as the real exam"
 
 #: app/components/home/test-list/TestMenu.tsx:74
-msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
-msgstr "The test and every user's results and notes on it will be deleted. This can't be undone."
+msgid "The test and every user's results on it will be deleted. This can't be undone."
+msgstr "The test and every user's results on it will be deleted. This can't be undone."
 
 #: app/components/info/index.tsx:31
 msgid "The test's format"
@@ -1682,7 +1568,7 @@ msgstr "This test doesn't exist, or it may have been deleted."
 msgid "Time"
 msgstr "Time"
 
-#: app/components/quiz/index.tsx:89
+#: app/components/quiz/index.tsx:84
 msgid "Time {time}, target {goal}"
 msgstr "Time {time}, target {goal}"
 
@@ -1735,7 +1621,7 @@ msgid "Two texts compared"
 msgstr "Two texts compared"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
-#: app/components/results/section-review/QuestionReview.tsx:105
+#: app/components/results/section-review/QuestionReview.tsx:104
 msgid "Unanswered"
 msgstr "Unanswered"
 
@@ -1840,7 +1726,7 @@ msgid "Writing in kanji"
 msgstr "Writing in kanji"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
-#: app/components/results/section-review/QuestionReview.tsx:140
+#: app/components/results/section-review/QuestionReview.tsx:139
 msgid "Wrong"
 msgstr "Wrong"
 
@@ -1864,11 +1750,11 @@ msgstr "You sign in with it."
 msgid "You'll see the right answers, and this part's answers can't be changed after."
 msgstr "You'll see the right answers, and this part's answers can't be changed after."
 
-#: app/components/results/section-review/QuestionReview.tsx:102
+#: app/components/results/section-review/QuestionReview.tsx:101
 msgid "Your answer: {yours}"
 msgstr "Your answer: {yours}"
 
-#: app/routes/quiz.tsx:36
+#: app/routes/quiz.tsx:35
 #: app/routes/try.tsx:29
 msgid "Your answers couldn't be read. Please try again."
 msgstr "Your answers couldn't be read. Please try again."
@@ -1880,8 +1766,8 @@ msgid "Your current password is wrong."
 msgstr "Your current password is wrong."
 
 #: app/components/account/DeleteAccountForm.tsx:17
-msgid "Your results, drafts, review marks, learned words and notes are deleted with it. This can't be undone."
-msgstr "Your results, drafts, review marks, learned words and notes are deleted with it. This can't be undone."
+msgid "Your results, drafts, review marks and learned words are deleted with it. This can't be undone."
+msgstr "Your results, drafts, review marks and learned words are deleted with it. This can't be undone."
 
 #: app/components/info/KanjiInfo.tsx:58
 msgid "原因 (cause). 源 is the “source” of a river, and 困 and 囚 only look like 因."

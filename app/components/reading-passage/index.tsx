@@ -1,4 +1,3 @@
-import { NotedText } from "~/components/noted-text";
 import { cn } from "~/lib/utils";
 import type { ReadingPassageView, ReadingRun } from "~/lib/views";
 
@@ -12,7 +11,7 @@ export function ReadingRuns({ runs }: { runs: ReadingRun[] }) {
         run.evidence && "rounded-sm bg-success-soft shadow-[inset_0_-2px_0_var(--success)]",
       )}
     >
-      <NotedText text={run.text} />
+      {run.text}
     </span>
   ));
 }

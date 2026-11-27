@@ -18,11 +18,12 @@ Settle three things from the arguments and the conversation:
 
 - **Level**: N3 or N2. Default N2 (the user is preparing for N2).
 - **Scope**: weeks, days or specific patterns. "Weak ones" means the unreviewed chips:
-  `bash .claude/skills/jlpt-grammar-quiz/tests.sh` (it sends the app's API token) and collect `review[]` entries with
-  `"reviewed": false`. Their `grammarId` (`n3-w5-d1-g2`) gives week, day and number.
+  `bash .claude/skills/jlpt-grammar-quiz/tests.sh | jq -r '[.tests[].review[] | select(.reviewed==false) | .grammarId] | unique | .[]'`
+  (it sends the app's API token). Each `grammarId` (`n3-w5-d1-g2`) gives week, day and number.
+  Never run `tests.sh` without a `jq` filter: the raw output is ~90 KB.
   If no scope is given, ask once ("Which week or days?"). Don't guess.
   "Review test" / 総復習 means every studied week at the real counts: see "Review test" in
-  `/Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz-terminal/jlpt-format.md` (N2 12 / 5 / 5).
+  `.claude/skills/jlpt-grammar-quiz-terminal/jlpt-format.md` (N2 12 / 5 / 5).
 - **Question count**, per section as fill-blank / sentence-order / passage blanks:
 
   | The user says | Counts |
@@ -49,9 +50,25 @@ Map each heading to a grammar point: `## 1日目 ② 「〜ばかりか」` in `
 week 5, day 1, number 2 → id `n3-w5-d1-g2`, pattern `〜ばかりか`. Take `meaning` from the
 italic gloss under the heading (`*not only does it taste bad, but…*` → `not only … but also`).
 
-Read the lesson block of every point you test. Use its connection rules and ⚠ traps for
-distractors, and its Nuance table for look-alike choices. Only test points that have a
-lesson block (they've been studied), unless the user asks for points from 文型リスト.md.
+**Read lessons only through `digest.sh`, never by opening `第N週.md`.** A week file is ~200 KB,
+and three quarters of it is 例文, 語彙 and 読み物, which the test may not reuse anyway. The digest
+keeps the heading, gloss, Structure, Traps and Similar patterns (~45 KB a week):
+
+```bash
+bash .claude/skills/jlpt-grammar-quiz/digest.sh N2 w5-d1 w5-d2   # weeks (w5), days (w5-d1), points (w5-d1-g2), or all
+```
+
+Run it once for everything the request covers, before writing any question. Use the connection
+rules and traps for distractors, and Similar patterns for look-alike choices. Only test points
+that have a lesson block (they've been studied), unless the user asks for points from
+文型リスト.md (`grep` it for the pattern; don't read it whole).
+
+**Several tests in one request**: run `digest.sh` once for all of them, then write and post the
+tests one after another yourself. **Never fork** for them: a fork starts with a copy of this whole
+conversation, so 3 forks pay for everything already read 3 more times. If the user wants them
+in parallel, start fresh `general-purpose` agents instead, each told only its title, level,
+point ids and counts, to read this SKILL.md and `jlpt-format.md` and to run `digest.sh` for its
+own points.
 
 ## 3. Lay out the test
 
@@ -73,8 +90,9 @@ lesson block (they've been studied), unless the user asks for points from 文型
 - **Title** (max 60 characters):
   - A test of one week: `第5週 1日目`, `第5週 2〜3日目`.
   - A test of several weeks (総合, まとめ, 総復習, any review): `総合 N`, with no weeks in it. N is one more
-    than the highest `総合 N` among that level's tests (`bash .claude/skills/jlpt-grammar-quiz/tests.sh`;
-    none yet → 1). Several in one go take N, N+1, …. The app shows these as one numbered series.
+    than the highest `総合 N` among that level's tests, which this prints (0 when there are none):
+    `bash .claude/skills/jlpt-grammar-quiz/tests.sh | jq '[.tests[] | select(.level=="N2") | .title | capture("^総合 (?<n>[0-9]+)$").n | tonumber] | max // 0'`.
+    Several in one go take N, N+1, …. The app shows these as one numbered series.
   - Weak ones: `苦手な文法`.
 
 ## 4. Write the questions
@@ -89,7 +107,7 @@ Spread topics as widely as the real exam does: follow "Topics" in `jlpt-format.m
 The test drills the week's points, but each part must work like the real exam, so it can't be
 won by spotting the week's pattern. The real N2 sample is https://www.jlpt.jp/samples/sample2012/pdf/N2G.pdf.
 
-Read `/Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz-terminal/jlpt-format.md` first and follow its "Make it as hard as the
+Read `.claude/skills/jlpt-grammar-quiz-terminal/jlpt-format.md` once (not again per test) and follow its "Make it as hard as the
 real exam" rules. They win over the looser rules below where the two differ. A wrong choice from
 outside the scope is only a choice, so it needs no entry in `grammarPoints`.
 
@@ -193,7 +211,7 @@ a prompt; a question's 4 options are all different; `correctOrder` is a permutat
 ## 6. Send it
 
 1. Write the JSON to a temp file (for example `$TMPDIR/bunpo-<timestamp>.json`).
-2. Run `bash ~/.claude/skills/jlpt-grammar-quiz/post.sh <file>` (works from any directory).
+2. Run `bash .claude/skills/jlpt-grammar-quiz/post.sh <file>` from the repo root.
    - `schema.json check failed` or `POST /api/tests failed (400)`: fix each listed path and run it again.
    - A `Note: … not the standard 15 / 15 / 15` line is only a reminder. Ignore it if the user asked for other counts.
    - Exit 2 (app not running): ask the user to start it with `pnpm dev` in `~/Downloads/bunpo-drill` (or start it yourself if they agree), then retry.

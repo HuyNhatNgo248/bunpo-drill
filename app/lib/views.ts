@@ -101,21 +101,6 @@ export type ResultQuestion = {
   explanation: string | null;
 };
 
-/** Words the user highlighted in a test, as the notes page lists them. */
-export type NoteView = {
-  id: number;
-  text: string;
-  sentence: string;
-  memo: string;
-  testId: string;
-  /** The question or passage on the test's page that the words came from, or null for an older note. */
-  anchor: string | null;
-  testTitle: string;
-};
-
-/** A note as a test highlights it: its words and memo. */
-export type NoteMark = Pick<NoteView, "id" | "text" | "memo">;
-
 /** A word a kanji test got wrong, to study as a flashcard. */
 export type WordChip = { wordId: string; word: string; reading: string };
 

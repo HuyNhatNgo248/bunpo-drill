@@ -30,7 +30,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-4]$",
+            "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-8]$",
             "description": "\"<level>-w<week>-d<day>-g<number>\", lower case, e.g. \"n3-w5-d1-g2\". Must match level, week, day and number."
           },
           "week": {
@@ -48,8 +48,8 @@
           "number": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 4,
-            "description": "Position within the day, ① → 1 … ④ → 4."
+            "maximum": 8,
+            "description": "Position within the day, ① → 1 … ⑧ → 8 (N4 days have up to 8)."
           },
           "pattern": {
             "type": "string",
@@ -98,7 +98,7 @@
                   },
                   "grammarId": {
                     "type": "string",
-                    "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-4]$",
+                    "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-8]$",
                     "description": "The id of the grammar point (from grammarPoints) this question tests."
                   },
                   "prompt": {
@@ -167,7 +167,7 @@
                   },
                   "grammarId": {
                     "type": "string",
-                    "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-4]$",
+                    "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-8]$",
                     "description": "The id of the grammar point (from grammarPoints) this question tests."
                   },
                   "before": {
@@ -272,7 +272,7 @@
                         },
                         "grammarId": {
                           "type": "string",
-                          "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-4]$",
+                          "pattern": "^n[1-5]-w[1-9]-d[1-6]-g[1-8]$",
                           "description": "The id of the grammar point (from grammarPoints) this question tests."
                         },
                         "choices": {

@@ -9,17 +9,14 @@ import { cn } from "~/lib/utils";
 /**
  * Switches a page (the mock tests, kanji, reading) between the JLPT levels: a button with the level, which opens a menu of
  * every level. The level is in the URL, so a reload keeps it. The button shows the level picked before its page loads.
- * `disabled` on a page that isn't split by level (the notes): the button stays, greyed, so the tabs beside it don't move.
  */
 export function LevelSwitch({
   levels,
   current,
-  disabled = false,
   className,
 }: {
   levels: readonly JlptLevel[];
   current: JlptLevel;
-  disabled?: boolean;
   className?: string;
 }) {
   const { t } = useLingui();
@@ -27,7 +24,7 @@ export function LevelSwitch({
   const shown = levels.find((level) => level === next) ?? current;
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild disabled={disabled}>
+      <DropdownMenuTrigger asChild>
         <Button variant="outline" aria-label={t`Level: ${shown}`} className={cn("gap-2 px-3.5 text-base font-semibold", className)}>
           {shown}
           <ChevronDown aria-hidden="true" className="text-muted-foreground" />

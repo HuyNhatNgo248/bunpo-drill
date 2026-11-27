@@ -14,7 +14,7 @@ export function DeleteAccountForm({ result }: { result?: AccountResult }) {
   const deleting = useSubmitting("delete");
   const { t } = useLingui();
   const form = useRef<HTMLFormElement>(null);
-  const warning = t`Your results, drafts, review marks, learned words and notes are deleted with it. This can't be undone.`;
+  const warning = t`Your results, drafts, review marks and learned words are deleted with it. This can't be undone.`;
 
   return (
     <FormCard title={t`Delete account`} description={<span className="leading-sentence">{warning}</span>}>

@@ -27,7 +27,6 @@ msgid "{0} to repeat"
 msgstr "{0} 枚が復習待ち"
 
 #: app/components/flashcards/SessionDone.tsx:50
-#: app/components/note-cards/index.tsx:70
 msgid "{again, plural, one {Study it again} other {Study the # again}}"
 msgstr "{again, plural, other {#枚をもう一度}}"
 
@@ -137,7 +136,7 @@ msgstr "{total, plural, other {#枚}}"
 
 #: app/components/home/test-list/NextTest.tsx:26
 #: app/components/home/test-list/TestRow.tsx:50
-#: app/components/quiz/index.tsx:105
+#: app/components/quiz/index.tsx:99
 #: app/components/reading/SetRow.tsx:48
 #: app/components/reading/SetRow.tsx:76
 #: app/components/welcome/TrialTests.tsx:104
@@ -152,7 +151,7 @@ msgstr "{unanswered, plural, other {この問題には未回答が#問ありま�
 msgid "{words, plural, one {# word} other {# words}}"
 msgstr "{words, plural, other {#語}}"
 
-#: app/components/results/index.tsx:88
+#: app/components/results/index.tsx:84
 #: app/components/results/ScoreCard.tsx:31
 msgid "{wrong} wrong"
 msgstr "不正解 {wrong}問"
@@ -165,8 +164,8 @@ msgstr "不正解 {wrong}問 · 合格ライン {pass}%"
 msgid "「にもかかわらず」 joins two things that clash: busy, yet goes to the gym. The others give a reason, not a contrast."
 msgstr "「にもかかわらず」は食い違う二つをつなぎます。忙しいのに、ジムに通っている。ほかは理由を表し、逆接ではありません。"
 
-#: app/components/quiz/index.tsx:108
-#: app/components/results/index.tsx:54
+#: app/components/quiz/index.tsx:102
+#: app/components/results/index.tsx:50
 msgid "← Kanji"
 msgstr "← 漢字"
 
@@ -174,17 +173,13 @@ msgstr "← 漢字"
 msgid "← Lessons"
 msgstr "← レッスン"
 
-#: app/components/quiz/index.tsx:108
-#: app/components/results/index.tsx:54
+#: app/components/quiz/index.tsx:102
+#: app/components/results/index.tsx:50
 msgid "← Mock tests"
 msgstr "← テスト一覧"
 
-#: app/components/note-cards/index.tsx:42
-msgid "← Notes"
-msgstr "← ノート"
-
-#: app/components/quiz/index.tsx:108
-#: app/components/results/index.tsx:54
+#: app/components/quiz/index.tsx:102
+#: app/components/results/index.tsx:50
 msgid "← Reading"
 msgstr "← 読解"
 
@@ -274,26 +269,6 @@ msgstr "ユーザー名に「@」は使えません。"
 msgid "Account"
 msgstr "アカウント"
 
-#: app/components/notes/Memo.tsx:70
-msgid "Add a memo"
-msgstr "メモを追加"
-
-#: app/components/notes/Memo.tsx:66
-msgid "Add a memo to {text}"
-msgstr "{text}にメモを追加"
-
-#: app/components/note-cards/index.tsx:55
-msgid "Add a memo to a note, and it shows up here as a card."
-msgstr "ノートにメモを追加すると、ここにカードとして表示されます。"
-
-#: app/components/add-note/index.tsx:68
-msgid "Add to notes"
-msgstr "ノートに追加"
-
-#: app/components/add-note/index.tsx:99
-msgid "Adding…"
-msgstr "追加しています…"
-
 #: app/components/card-session/CardControls.tsx:54
 #: app/components/card-session/CardControls.tsx:97
 msgid "Again"
@@ -303,7 +278,7 @@ msgstr "もう一度"
 msgid "All answered"
 msgstr "すべて回答済み"
 
-#: app/components/results/index.tsx:88
+#: app/components/results/index.tsx:84
 msgid "All correct"
 msgstr "全問正解"
 
@@ -315,25 +290,21 @@ msgstr "すべての単語を覚えました"
 msgid "Almost the passage, with a time, number or name swapped."
 msgstr "本文とほぼ同じで、時刻・数・名前の一つだけが変えてあります。"
 
-#: app/components/add-note/index.tsx:101
-msgid "Already in your notes."
-msgstr "すでにノートにあります。"
-
 #: app/components/card-session/FlipCard.tsx:52
 msgid "Answer"
 msgstr "答え"
 
-#: app/components/results/section-review/QuestionReview.tsx:110
+#: app/components/results/section-review/QuestionReview.tsx:109
 msgid "Answer: {answer}"
 msgstr "正解：{answer}"
 
-#: app/components/quiz/index.tsx:98
-#: app/components/quiz/index.tsx:115
+#: app/components/quiz/index.tsx:92
+#: app/components/quiz/index.tsx:109
 #: app/components/quiz/question-nav/Legend.tsx:15
 msgid "Answered"
 msgstr "回答済み"
 
-#: app/components/quiz/index.tsx:133
+#: app/components/quiz/index.tsx:127
 msgid "Answered {answered} / {total}"
 msgstr "回答済み {answered} / {total}"
 
@@ -363,9 +334,9 @@ msgstr "未習得に戻しました"
 msgid "Back on your list to learn. Study them again now, or they come with your next set."
 msgstr "未習得に戻しました。今すぐもう一度学ぶか、次のセットでまた出ます。"
 
-#: app/components/quiz/index.tsx:80
+#: app/components/quiz/index.tsx:75
 #: app/components/results/Actions.tsx:45
-#: app/components/results/index.tsx:41
+#: app/components/results/index.tsx:37
 msgid "Back to kanji"
 msgstr "漢字に戻る"
 
@@ -373,14 +344,9 @@ msgstr "漢字に戻る"
 msgid "Back to lessons"
 msgstr "レッスンに戻る"
 
-#: app/components/note-cards/index.tsx:38
-#: app/components/note-cards/index.tsx:75
-msgid "Back to notes"
-msgstr "ノートに戻る"
-
-#: app/components/quiz/index.tsx:82
+#: app/components/quiz/index.tsx:77
 #: app/components/results/Actions.tsx:54
-#: app/components/results/index.tsx:43
+#: app/components/results/index.tsx:39
 msgid "Back to reading"
 msgstr "読解に戻る"
 
@@ -406,7 +372,7 @@ msgstr "不合格"
 msgid "Best"
 msgstr "最高"
 
-#: app/components/quiz/QuestionCard.tsx:46
+#: app/components/quiz/QuestionCard.tsx:45
 msgid "Blank （{num}） in the passage"
 msgstr "文章中の（{num}）に入るもの"
 
@@ -414,7 +380,6 @@ msgstr "文章中の（{num}）に入るもの"
 msgid "Build a sentence that is grammatically correct and makes sense, then pick the piece for the ★ slot."
 msgstr "文法的に正しく、意味の通る文を組み立て、★に入るものを選びます。"
 
-#: app/components/add-note/index.tsx:88
 #: app/components/ConfirmDialog.tsx:44
 #: app/components/home/test-list/TestMenu.tsx:61
 msgid "Cancel"
@@ -434,13 +399,10 @@ msgstr "カード"
 
 #: app/components/flashcards/index.tsx:51
 #: app/components/flashcards/index.tsx:63
-#: app/components/note-cards/index.tsx:37
-#: app/components/note-cards/index.tsx:46
 msgid "Cards done"
 msgstr "終わったカード"
 
 #: app/components/flashcards/index.tsx:64
-#: app/components/note-cards/index.tsx:47
 msgid "Cards done {done} / {total}"
 msgstr "終わったカード {done} / {total}"
 
@@ -474,7 +436,7 @@ msgstr "問題{no}を採点しますか？"
 msgid "Check what comes before the blank (a noun, the plain form, the て-form) and the tone of the sentence, not only the meaning."
 msgstr "意味だけでなく、空欄の前（名詞・普通形・て形）と文のトーンも確かめましょう。"
 
-#: app/components/results/index.tsx:64
+#: app/components/results/index.tsx:60
 msgid "Check your answers"
 msgstr "解答の確認"
 
@@ -534,11 +496,11 @@ msgstr "続きから"
 
 #: app/components/info/SampleQuestion.tsx:60
 #: app/components/quiz/question-nav/Legend.tsx:15
-#: app/components/results/section-review/QuestionReview.tsx:140
+#: app/components/results/section-review/QuestionReview.tsx:139
 msgid "Correct"
 msgstr "正解"
 
-#: app/components/results/index.tsx:89
+#: app/components/results/index.tsx:85
 msgid "Correct {score} / {total}"
 msgstr "正解 {score} / {total}"
 
@@ -546,17 +508,9 @@ msgstr "正解 {score} / {total}"
 msgid "Correct!"
 msgstr "正解！"
 
-#: app/components/add-note/index.tsx:103
-msgid "Couldn't add it. Please try again."
-msgstr "追加できませんでした。もう一度お試しください。"
-
 #: app/components/card-session/CardControls.tsx:89
 msgid "Couldn't save a word as learned. Check your connection."
 msgstr "「覚えた」を保存できませんでした。接続を確認してください。"
-
-#: app/components/notes/NoteCard.tsx:68
-msgid "Couldn't save. Please try again."
-msgstr "保存できませんでした。もう一度お試しください。"
 
 #: app/components/layout/header/index.tsx:74
 #: app/components/login/LoginForm.tsx:69
@@ -592,10 +546,6 @@ msgstr "削除"
 msgid "Delete “{title}”?"
 msgstr "「{title}」を削除しますか？"
 
-#: app/components/notes/NoteCard.tsx:52
-msgid "Delete {text}"
-msgstr "{text}を削除"
-
 #: app/components/account/DeleteAccountForm.tsx:20
 #: app/components/account/DeleteAccountForm.tsx:29
 #: app/components/account/DeleteAccountForm.tsx:33
@@ -614,7 +564,6 @@ msgstr "削除中…"
 msgid "Did you review your weak grammar?"
 msgstr "苦手な文法を復習しましたか？"
 
-#: app/components/notes/Memo.tsx:54
 #: app/components/reading/GroupList.tsx:95
 msgid "Done"
 msgstr "完了"
@@ -631,10 +580,6 @@ msgstr "本文がつけている「〜だけ」「〜を除く」などの条件
 #: app/components/welcome/TrialTests.tsx:34
 msgid "Each set mixes questions from the whole level, in the real exam's format. Graded as soon as you submit. Your answers aren't saved, so you can take each set as often as you like."
 msgstr "どのセットもレベル全体から本番形式で出題。提出するとすぐに採点します。解答は保存されないので、何度でも解けます。"
-
-#: app/components/notes/NoteCard.tsx:48
-msgid "Edit the memo of {text}"
-msgstr "{text}のメモを編集"
 
 #: app/components/account/EmailForm.tsx:17
 #: app/components/account/EmailForm.tsx:30
@@ -697,11 +642,6 @@ msgstr "めくる"
 #: app/components/login/index.tsx:31
 msgid "Forgot your password?"
 msgstr "パスワードを忘れた場合"
-
-#: app/components/note-cards/index.tsx:125
-#: app/components/notes/NoteCard.tsx:80
-msgid "From {testTitle}"
-msgstr "出典：{testTitle}"
 
 #: app/components/welcome/SampleQuiz.tsx:226
 msgid "Full practice sets are below, no account needed."
@@ -800,7 +740,7 @@ msgstr "番号つきの空欄に、文章の流れに合う文や表現を判断
 #: app/components/results/Actions.tsx:42
 #: app/components/SubjectTabs.tsx:26
 #: app/components/welcome/SubjectList.tsx:14
-#: app/routes/kanji.tsx:14
+#: app/routes/kanji.tsx:13
 msgid "Kanji"
 msgstr "漢字"
 
@@ -866,7 +806,7 @@ msgstr "レッスン"
 msgid "Level"
 msgstr "レベル"
 
-#: app/components/LevelSwitch.tsx:31
+#: app/components/LevelSwitch.tsx:28
 #: app/components/welcome/TrialTests.tsx:70
 msgid "Level: {shown}"
 msgstr "レベル：{shown}"
@@ -907,14 +847,6 @@ msgstr "覚えた語に追加しました"
 msgid "Matches the passage, but does not answer this question."
 msgstr "本文には合っていますが、この問いの答えではありません。"
 
-#: app/components/notes/Memo.tsx:32
-msgid "Memo"
-msgstr "メモ"
-
-#: app/components/add-note/index.tsx:77
-msgid "Memo (optional)"
-msgstr "メモ（任意）"
-
 #: app/lib/sections.ts:52
 msgid "Mid-length passages"
 msgstr "内容理解（中文）"
@@ -925,7 +857,7 @@ msgstr "前回まちがえた"
 
 #: app/components/home/index.tsx:27
 #: app/components/results/Actions.tsx:60
-#: app/routes/home.tsx:13
+#: app/routes/home.tsx:12
 msgid "Mock tests"
 msgstr "模擬試験"
 
@@ -994,21 +926,9 @@ msgstr "{level}の読解セットはまだありません"
 msgid "No {title} sets yet"
 msgstr "{title}のセットはまだありません"
 
-#: app/components/noted-text/NotedWord.tsx:23
-msgid "No memo yet."
-msgstr "メモはまだありません。"
-
 #: app/components/home/index.tsx:34
 msgid "No mock tests yet"
 msgstr "模擬試験はまだありません"
-
-#: app/components/note-cards/index.tsx:54
-msgid "No notes with a memo yet"
-msgstr "メモ付きのノートはまだありません"
-
-#: app/components/notes/index.tsx:39
-msgid "No notes yet"
-msgstr "ノートはまだありません"
 
 #: app/components/kanji/chapter-list/index.tsx:57
 msgid "no quiz yet"
@@ -1035,18 +955,6 @@ msgstr "未受験"
 msgid "Not yet"
 msgstr "まだ"
 
-#: app/components/note-cards/index.tsx:34
-#: app/components/note-cards/index.tsx:43
-#: app/routes/note-cards.tsx:9
-msgid "Note cards"
-msgstr "ノートカード"
-
-#: app/components/notes/index.tsx:18
-#: app/components/SubjectTabs.tsx:28
-#: app/routes/notes.tsx:13
-msgid "Notes"
-msgstr "ノート"
-
 #: app/components/results/ReviewCard.tsx:41
 msgid "Nothing to review. You got every question right."
 msgstr "復習する文法はありません。全問正解でした。"
@@ -1066,10 +974,6 @@ msgstr "出るレベル"
 #: app/components/card-session/CardControls.tsx:43
 msgid "Once more"
 msgstr "もう一度"
-
-#: app/components/noted-text/NotedWord.tsx:28
-msgid "Open in notes"
-msgstr "ノートで開く"
 
 #: app/lib/password-reset.server.ts:94
 msgid "Open the link below and choose a new password. The link works for one hour, and only once."
@@ -1095,7 +999,7 @@ msgstr "問題{no}"
 msgid "Part {no} checked"
 msgstr "問題{no}の採点結果"
 
-#: app/components/quiz/QuestionCard.tsx:95
+#: app/components/quiz/QuestionCard.tsx:94
 msgid "Passage （{num}）"
 msgstr "文章（{num}）"
 
@@ -1113,7 +1017,7 @@ msgstr "パスワード"
 msgid "Password changed."
 msgstr "パスワードを変更しました。"
 
-#: app/components/quiz/index.tsx:127
+#: app/components/quiz/index.tsx:121
 msgid "Pause"
 msgstr "一時停止"
 
@@ -1133,7 +1037,7 @@ msgstr "漢字を思い浮かべてから、カードをめくりましょう。
 msgid "Practice sets for grammar, kanji and reading, in the same question formats as the real exam. Graded as soon as you submit, and what you get wrong goes straight to a review list."
 msgstr "文法・漢字・読解の問題を、本番と同じ出題形式で。提出するとすぐに採点され、間違えたところはそのまま復習リストに。"
 
-#: app/components/quiz/sentence-order/index.tsx:71
+#: app/components/quiz/sentence-order/index.tsx:70
 msgid "Press a choice to put it in the next empty slot. Press a filled slot to send it back to the choices."
 msgstr "選択肢を押すと次の空欄に入り、埋まった空欄を押すと選択肢に戻ります。"
 
@@ -1268,7 +1172,7 @@ msgstr "同じテーマの2つの文章を読み、それぞれの意見を比�
 #: app/components/results/Actions.tsx:51
 #: app/components/SubjectTabs.tsx:27
 #: app/components/welcome/SubjectList.tsx:14
-#: app/routes/reading.tsx:13
+#: app/routes/reading.tsx:12
 msgid "Reading"
 msgstr "読解"
 
@@ -1280,18 +1184,9 @@ msgstr "読み → 単語"
 msgid "Reading is a set of passages. Each kind has its own length and its own job, and which kinds you get depends on the level."
 msgstr "読解は文章のまとまりです。種類ごとに長さとねらいがあり、出る種類はレベルによって変わります。"
 
-#: app/components/add-note/index.tsx:81
-#: app/components/notes/Memo.tsx:37
-msgid "Reading or meaning"
-msgstr "読み方や意味"
-
 #: app/components/reading/GroupList.tsx:36
 msgid "Reading types"
 msgstr "問題の種類"
-
-#: app/components/note-cards/index.tsx:111
-msgid "Recall your memo, then flip the card."
-msgstr "メモを思い出してから、カードをめくりましょう。"
 
 #: app/components/error-pages/ErrorPage.tsx:40
 msgid "Reload"
@@ -1325,13 +1220,13 @@ msgstr "パスワードの再設定"
 #: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:30
 #: app/components/reading/SetRow.tsx:66
-#: app/components/results/index.tsx:38
-#: app/components/results/index.tsx:57
-#: app/routes/results.tsx:13
+#: app/components/results/index.tsx:34
+#: app/components/results/index.tsx:53
+#: app/routes/results.tsx:12
 msgid "Results"
 msgstr "結果"
 
-#: app/components/quiz/index.tsx:127
+#: app/components/quiz/index.tsx:121
 msgid "Resume"
 msgstr "再開"
 
@@ -1357,7 +1252,6 @@ msgstr "例題"
 
 #: app/components/account/EmailForm.tsx:41
 #: app/components/account/NameForm.tsx:31
-#: app/components/add-note/index.tsx:91
 #: app/components/home/test-list/TestMenu.tsx:65
 msgid "Save"
 msgstr "保存"
@@ -1380,17 +1274,13 @@ msgstr "本文と反対のことを言っています。"
 msgid "Score"
 msgstr "得点"
 
-#: app/components/SubjectTabs.tsx:76
+#: app/components/SubjectTabs.tsx:52
 msgid "Sections"
 msgstr "セクション"
 
 #: app/components/welcome/SampleQuiz.tsx:201
 msgid "See your score"
 msgstr "結果を見る"
-
-#: app/components/notes/index.tsx:40
-msgid "Select a word or phrase in a test or its results, then choose Add to notes. It shows up here with its sentence."
-msgstr "テストや結果の中で単語やフレーズを選び、「ノートに追加」を押してください。例文と一緒にここに表示されます。"
 
 #: app/components/reset-password/index.tsx:15
 #: app/components/reset-password/index.tsx:24
@@ -1475,7 +1365,7 @@ msgstr "もっともらしいですが、本文には書かれていません。
 #: app/components/home/test-list/NextTest.tsx:39
 #: app/components/home/test-list/TestRow.tsx:65
 #: app/components/kanji/chapter-list/QuizRow.tsx:34
-#: app/components/quiz/index.tsx:127
+#: app/components/quiz/index.tsx:121
 #: app/components/reading/SetRow.tsx:78
 #: app/components/welcome/TrialTests.tsx:119
 msgid "Start"
@@ -1493,11 +1383,7 @@ msgstr "まだ覚えていない語（{again}）"
 msgid "Stretches a specific point into a general claim."
 msgstr "個別の内容を、一般的な主張にまで広げています。"
 
-#: app/components/notes/index.tsx:24
-msgid "Study as flashcards"
-msgstr "カードで復習"
-
-#: app/components/SubjectTabs.tsx:45
+#: app/components/SubjectTabs.tsx:43
 #: app/components/welcome/SubjectList.tsx:23
 msgid "Subject"
 msgstr "科目"
@@ -1632,8 +1518,8 @@ msgid "The same formats as the real exam"
 msgstr "本番と同じ問題形式"
 
 #: app/components/home/test-list/TestMenu.tsx:74
-msgid "The test and every user's results and notes on it will be deleted. This can't be undone."
-msgstr "テストと、全ユーザーの結果とメモが削除されます。この操作は取り消せません。"
+msgid "The test and every user's results on it will be deleted. This can't be undone."
+msgstr "テストと、全ユーザーの結果が削除されます。この操作は取り消せません。"
 
 #: app/components/info/index.tsx:31
 msgid "The test's format"
@@ -1682,7 +1568,7 @@ msgstr "このテストは存在しないか、削除された可能性があり
 msgid "Time"
 msgstr "時間"
 
-#: app/components/quiz/index.tsx:89
+#: app/components/quiz/index.tsx:84
 msgid "Time {time}, target {goal}"
 msgstr "時間 {time}、目標 {goal}"
 
@@ -1735,7 +1621,7 @@ msgid "Two texts compared"
 msgstr "統合理解"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
-#: app/components/results/section-review/QuestionReview.tsx:105
+#: app/components/results/section-review/QuestionReview.tsx:104
 msgid "Unanswered"
 msgstr "未回答"
 
@@ -1840,7 +1726,7 @@ msgid "Writing in kanji"
 msgstr "表記"
 
 #: app/components/quiz/question-nav/Legend.tsx:15
-#: app/components/results/section-review/QuestionReview.tsx:140
+#: app/components/results/section-review/QuestionReview.tsx:139
 msgid "Wrong"
 msgstr "不正解"
 
@@ -1864,11 +1750,11 @@ msgstr "ログインに使います。"
 msgid "You'll see the right answers, and this part's answers can't be changed after."
 msgstr "正解が表示され、この問題の解答はあとから変更できなくなります。"
 
-#: app/components/results/section-review/QuestionReview.tsx:102
+#: app/components/results/section-review/QuestionReview.tsx:101
 msgid "Your answer: {yours}"
 msgstr "あなたの解答：{yours}"
 
-#: app/routes/quiz.tsx:36
+#: app/routes/quiz.tsx:35
 #: app/routes/try.tsx:29
 msgid "Your answers couldn't be read. Please try again."
 msgstr "回答を読み取れませんでした。もう一度お試しください。"
@@ -1880,8 +1766,8 @@ msgid "Your current password is wrong."
 msgstr "現在のパスワードが違います。"
 
 #: app/components/account/DeleteAccountForm.tsx:17
-msgid "Your results, drafts, review marks, learned words and notes are deleted with it. This can't be undone."
-msgstr "結果、途中の解答、復習済みの印、覚えた単語、ノートもすべて削除されます。元に戻すことはできません。"
+msgid "Your results, drafts, review marks and learned words are deleted with it. This can't be undone."
+msgstr "結果、途中の解答、復習済みの印、覚えた単語もすべて削除されます。元に戻すことはできません。"
 
 #: app/components/info/KanjiInfo.tsx:58
 msgid "原因 (cause). 源 is the “source” of a river, and 困 and 囚 only look like 因."

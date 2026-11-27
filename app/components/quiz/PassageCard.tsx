@@ -1,6 +1,5 @@
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
-import { NotedText } from "~/components/noted-text";
 import { passageAnchor } from "~/lib/sections";
 import type { Answers, QuizQuestion, QuizSegment } from "~/lib/views";
 import { trackPassageHeight } from "./helpers/passageHeight";
@@ -34,7 +33,7 @@ export function PassageCard({
           if (segment.kind === "text") {
             return (
               <span key={i}>
-                <NotedText text={segment.text} />
+                {segment.text}
               </span>
             );
           }

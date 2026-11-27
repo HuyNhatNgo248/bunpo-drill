@@ -3,7 +3,6 @@ import { useLocation } from "react-router";
 import { cn } from "~/lib/utils";
 import { Badge } from "~/components/ui/badge";
 import { Card } from "~/components/ui/card";
-import { NotedText } from "~/components/noted-text";
 import { ReadingRuns } from "~/components/reading-passage";
 import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { questionAnchor, TRAP_LABELS } from "~/lib/sections";
@@ -66,8 +65,8 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
           data-note-sentence={`${question.prompt.before}（${question.prompt.fill}）${question.prompt.after}`}
           className="font-jp text-prompt leading-sentence md:text-lg"
         >
-          <NotedText text={question.prompt.before} />（<NotedText text={question.prompt.fill} />）
-          <NotedText text={question.prompt.after} />
+          {question.prompt.before}（{question.prompt.fill}）
+          {question.prompt.after}
         </p>
       )}
 
@@ -113,7 +112,7 @@ export function QuestionReview({ question, className }: { question: ResultQuesti
 
       {question.explanation && (
         <p lang="en" data-note-sentence={question.explanation} className="text-caption leading-relaxed text-secondary-foreground md:text-sm">
-          <NotedText text={question.explanation} />
+          {question.explanation}
         </p>
       )}
     </Card>
@@ -141,7 +140,7 @@ function OrderedSentence({
         </span>
       )}
       <span>
-        <NotedText text={sentence.before} />
+        {sentence.before}
       </span>
       {pieces.map((piece, i) => (
         <span
@@ -156,11 +155,11 @@ function OrderedSentence({
           )}
         >
           {piece.star && "★ "}
-          <NotedText text={piece.text} />
+          {piece.text}
         </span>
       ))}
       <span>
-        <NotedText text={sentence.after} />
+        {sentence.after}
       </span>
     </div>
   );

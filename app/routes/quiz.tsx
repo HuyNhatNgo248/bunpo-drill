@@ -6,7 +6,6 @@ import { Quiz } from "~/components/quiz";
 import { requireUserId } from "~/lib/auth.server";
 import { testNotFound } from "~/lib/errors";
 import { submittedAnswersSchema, toDraftView, toQuizView, toSubmission } from "~/lib/grading.server";
-import { listNoteMarks } from "~/lib/notes.server";
 import { isKanji } from "~/lib/test-kinds";
 import { getTest, saveSubmission } from "~/lib/tests.server";
 import { requestLocale, translate } from "~/lib/i18n";
@@ -17,10 +16,10 @@ export function meta({ loaderData }: Route.MetaArgs) {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const userId = await requireUserId(request);
-  const [test, notes] = await Promise.all([getTest(params.id, userId), listNoteMarks(userId)]);
+  const test = await getTest(params.id, userId);
   if (!test) throw testNotFound();
   if (test.submission) throw redirect(`/tests/${test.id}/results`);
-  return { quiz: toQuizView(test), draft: toDraftView(test), notes };
+  return { quiz: toQuizView(test), draft: toDraftView(test) };
 }
 
 export async function action({ request, params }: Route.ActionArgs) {
@@ -47,5 +46,5 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({ formAction, default
 
 export default function QuizRoute({ loaderData, actionData }: Route.ComponentProps) {
   // A new test id starts with a clean answer sheet.
-  return <Quiz key={loaderData.quiz.id} quiz={loaderData.quiz} draft={loaderData.draft} notes={loaderData.notes} error={actionData?.error} />;
+  return <Quiz key={loaderData.quiz.id} quiz={loaderData.quiz} draft={loaderData.draft} error={actionData?.error} />;
 }

@@ -2,7 +2,6 @@ import { Trans } from "@lingui/react/macro";
 import { memo } from "react";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
-import { NotedText } from "~/components/noted-text";
 import { ReadingRuns } from "~/components/reading-passage";
 import { UnderlinedSentence } from "~/components/UnderlinedSentence";
 import { questionAnchor } from "~/lib/sections";
@@ -57,7 +56,7 @@ export const QuestionCard = memo(function QuestionCard({
 
       {question.type === "fill-blank" && (
         <p lang="ja" data-note-sentence={question.prompt} className="font-jp text-lg leading-sentence md:text-xl">
-          <NotedText text={question.prompt} />
+          {question.prompt}
         </p>
       )}
 

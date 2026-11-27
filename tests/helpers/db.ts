@@ -11,7 +11,6 @@ import { forgetSessionVersions } from "~/lib/users.server";
 export async function resetDatabase(): Promise<void> {
   await (await db()).batch(
     [
-      "DELETE FROM notes",
       "DELETE FROM progress",
       "DELETE FROM reviewed",
       "DELETE FROM attempts",

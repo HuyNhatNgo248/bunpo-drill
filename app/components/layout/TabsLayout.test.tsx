@@ -9,11 +9,10 @@ import { PATHS } from "./tabCache";
 import { TabsLayout } from "./TabsLayout";
 
 /**
- * The layout at `path`, over a page whose loader gives `level`, as the grammar, kanji and notes loaders do; `levels` as
- * the grammar and kanji pages say they have levels.
+ * The layout at `path`, over a page whose loader gives `level`, as the grammar, kanji and reading loaders do.
  */
-function renderLayout(path: string, level: JlptLevel | null, levels = false) {
-  const page = { path, Component: () => <p>The page</p>, loader: () => ({ level }), handle: { levels } };
+function renderLayout(path: string, level: JlptLevel | null) {
+  const page = { path, Component: () => <p>The page</p>, loader: () => ({ level }) };
   // The other tabs, which the layout loads in the background.
   const others = Object.values(PATHS)
     .filter((other) => other !== path)
@@ -31,16 +30,16 @@ const tabs = () => within(screen.getByRole("navigation", { name: "Subject" }));
 
 describe("TabsLayout", () => {
   it("draws the header and the tabs over the page, the page's tab current, its level kept in the others", async () => {
-    renderLayout("/notes", "N2");
+    renderLayout("/reading", "N2");
 
     expect(await screen.findByText("The page")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Sign out" })).toBeInTheDocument();
-    // The notes are a link of their own, beside the subjects; on a phone they are in the tab bar with them.
-    expect(screen.getAllByRole("link", { name: /Notes/ }).map((link) => link.getAttribute("aria-current"))).toEqual(["page", "page"]);
+    expect(tabs().getByRole("link", { name: /Reading/ })).toHaveAttribute("aria-current", "page");
     expect(tabs().getByRole("link", { name: /Grammar/ })).toHaveAttribute("href", "/?level=N2");
     expect(tabs().getByRole("link", { name: /Kanji/ })).toHaveAttribute("href", "/kanji?level=N2");
+    // On a phone the subjects are a tab bar at the foot of the screen.
     const bar = within(screen.getByRole("navigation", { name: "Sections" }));
-    expect(bar.getAllByRole("link").map((link) => link.textContent)).toEqual(["Grammar", "Kanji", "Reading", "Notes"]);
+    expect(bar.getAllByRole("link").map((link) => link.textContent)).toEqual(["Grammar", "Kanji", "Reading"]);
     expect(bar.getByRole("link", { name: /Reading/ })).toHaveAttribute("href", "/reading?level=N2");
   });
 
@@ -61,7 +60,7 @@ describe("TabsLayout", () => {
   });
 
   it("shows the level on a page of levels, and a menu of every JLPT level, easiest first, the one shown marked", async () => {
-    renderLayout("/kanji", "N2", true);
+    renderLayout("/kanji", "N2");
 
     await userEvent.click(await screen.findByRole("button", { name: "Level: N2" }));
 
@@ -71,13 +70,8 @@ describe("TabsLayout", () => {
     expect(menu.getByRole("menuitem", { name: "N2" })).toHaveAttribute("aria-current", "page");
   });
 
-  it("keeps the level switch on the notes, greyed, so the tabs don't move", async () => {
-    renderLayout("/notes", "N2");
-    expect(await screen.findByRole("button", { name: "Level: N2" })).toBeDisabled();
-  });
-
   it("has no level links before the grammar page has a level", async () => {
-    renderLayout("/", null, true);
+    renderLayout("/", null);
 
     expect(await screen.findByText("The page")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /^Level/ })).toBeNull();

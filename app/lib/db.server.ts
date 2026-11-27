@@ -13,13 +13,13 @@ import "./env.server.ts";
 
 // Keyed by table, so an upgrade can make a table again from its current definition.
 const SCHEMA = {
-  // Tests and kanji chapters are everyone's; progress, reviewed, attempts, learned_words and notes are each user's own.
+  // Tests and kanji chapters are everyone's; progress, reviewed, attempts and learned_words are each user's own.
   tests: `CREATE TABLE IF NOT EXISTS tests (
     id TEXT PRIMARY KEY,
     created_at TEXT NOT NULL,
     position INTEGER, -- unused: the home list's drag order, before it sorted by title
     payload TEXT NOT NULL, -- TestPayload JSON
-    title TEXT NOT NULL DEFAULT '', -- the payload's title, so the notes page needn't read each payload
+    title TEXT NOT NULL DEFAULT '', -- the payload's title, so a list needn't read each payload
     submission TEXT, -- unused: moved to progress when progress became each user's
     draft TEXT -- unused: as submission
   )`,
@@ -73,17 +73,6 @@ const SCHEMA = {
     learned_at TEXT NOT NULL,
     PRIMARY KEY (user_id, word_id)
   )`,
-  notes: `CREATE TABLE IF NOT EXISTS notes (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER NOT NULL REFERENCES users (id),
-    text TEXT NOT NULL, -- the words highlighted
-    sentence TEXT NOT NULL, -- the sentence they were highlighted in
-    memo TEXT NOT NULL DEFAULT '', -- the user's reading or meaning
-    test_id TEXT NOT NULL REFERENCES tests (id), -- the test they were highlighted in
-    anchor TEXT, -- where in it: "question-14" or "passage-41"; NULL for notes from before it was kept
-    created_at TEXT NOT NULL,
-    UNIQUE (user_id, text)
-  )`,
 };
 
 /** Progress from before it was each user's goes to the oldest account, the app's owner. */
@@ -106,8 +95,6 @@ async function migrate(client: Client) {
       ],
       "write",
     );
-  const noteColumns = (await client.execute("PRAGMA table_info(notes)")).rows;
-  if (!noteColumns.some((column) => column.name === "anchor")) await client.execute("ALTER TABLE notes ADD COLUMN anchor TEXT");
   const chapterColumns = (await client.execute("PRAGMA table_info(kanji_chapters)")).rows;
   if (!chapterColumns.some((column) => column.name === "position")) await client.execute("ALTER TABLE kanji_chapters ADD COLUMN position INTEGER");
   // Unique, but many users may have none: SQLite lets NULLs repeat in a unique index.

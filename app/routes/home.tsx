@@ -1,7 +1,6 @@
 import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/home";
 import { Home } from "~/components/home";
-import type { TabsHandle } from "~/components/layout/TabsLayout";
 import { tabClientLoader, useRefreshStale } from "~/components/layout/tabCache";
 import { requireUserId } from "~/lib/auth.server";
 import { toSummary } from "~/lib/grading.server";
@@ -11,8 +10,6 @@ import { lastTabOf, ownerId } from "~/lib/users.server";
 import { titleMeta } from "~/lib/i18n";
 
 export const meta = titleMeta(msg`Mock tests`);
-
-export const handle: TabsHandle = { levels: true };
 
 export async function loader({ request }: Route.LoaderArgs) {
   const params = new URL(request.url).searchParams;

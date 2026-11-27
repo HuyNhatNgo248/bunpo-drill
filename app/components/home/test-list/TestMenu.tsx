@@ -71,7 +71,7 @@ export function TestMenu({ test, children }: { test: Pick<TestSummary, "id" | "t
 
       <ConfirmDialog
         title={t`Delete “${title}”?`}
-        description={t`The test and every user's results and notes on it will be deleted. This can't be undone.`}
+        description={t`The test and every user's results on it will be deleted. This can't be undone.`}
         confirmLabel={t`Delete`}
         onConfirm={() => fetcher.submit(null, { method: "delete", action })}
         open={open === "delete"}

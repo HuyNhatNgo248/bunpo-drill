@@ -1,12 +1,11 @@
 import { type RouteConfig, index, layout, route } from "@react-router/dev/routes";
 
 export default [
-  // The grammar, kanji and notes pages share their header and tabs.
+  // The grammar, kanji and reading pages share their header and tabs.
   layout("routes/tabs.tsx", [
     index("routes/home.tsx"),
     route("kanji", "routes/kanji.tsx"),
     route("reading", "routes/reading.tsx"),
-    route("notes", "routes/notes.tsx"),
   ]),
   route("welcome", "routes/welcome.tsx"),
   route("signin", "routes/signin.tsx"),
@@ -20,7 +19,6 @@ export default [
   route("account", "routes/account.tsx"),
   route("info/:subject", "routes/info.tsx"),
   route("kanji/:level/:chapter/cards", "routes/flashcards.tsx"),
-  route("notes/cards", "routes/note-cards.tsx"),
   route("tests/:id", "routes/quiz.tsx"),
   route("tests/:id/results", "routes/results.tsx"),
   route("tests/:id/retake", "routes/helpers/retake.ts"),

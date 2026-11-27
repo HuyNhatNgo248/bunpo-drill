@@ -3,10 +3,10 @@ import { useFetcher, useRevalidator } from "react-router";
 import type { JlptLevel } from "~/lib/levels";
 
 /** The pages the tabs switch between. */
-export const PATHS = { grammar: "/", kanji: "/kanji", reading: "/reading", notes: "/notes" } as const;
+export const PATHS = { grammar: "/", kanji: "/kanji", reading: "/reading" } as const;
 
-/** A tab's address at `level`. The notes have no level. */
-export const tabHref = (path: string, level: JlptLevel | null) => (level && path !== PATHS.notes ? `${path}?level=${level}` : path);
+/** A tab's address at `level`. */
+export const tabHref = (path: string, level: JlptLevel | null) => (level ? `${path}?level=${level}` : path);
 
 type Entry = { data: unknown; at: number };
 

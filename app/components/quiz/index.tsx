@@ -2,15 +2,13 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { Pause, Play, Timer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useSubmit } from "react-router";
-import { AddNote } from "~/components/add-note";
-import { NotesProvider } from "~/components/noted-text";
 import { PageTitle } from "~/components/PageTitle";
 import { ProgressCard } from "~/components/ProgressCard";
 import { ProgressHeader } from "~/components/ProgressHeader";
 import { Button } from "~/components/ui/button";
 import { homeOf } from "~/lib/links";
 import { clock, cn } from "~/lib/utils";
-import type { Answers, NoteMark, QuizDraft, QuizView, ResultSection } from "~/lib/views";
+import type { Answers, QuizDraft, QuizView, ResultSection } from "~/lib/views";
 import { CheckSummary } from "./CheckSummary";
 import { quizProgress } from "./helpers/answers";
 import { takeLocalDraft } from "./helpers/localDraft";
@@ -24,19 +22,16 @@ import { SubmitBar } from "./SubmitBar";
 /**
  * The quiz page. The answer sheet lives here, from the `draft` it was left at, and is saved on the server as it
  * changes until it is submitted. Each part can be checked on the way; the final submit still grades the whole test.
- * Words of the user's `notes` are highlighted. A `trial` test (/try/:id) is for visitors without an account, so its
- * sheet is not saved, and it has no notes.
+ * A `trial` test (/try/:id) is for visitors without an account, so its sheet is not saved.
  */
 export function Quiz({
   quiz,
   draft,
-  notes = [],
   error,
   trial = false,
 }: {
   quiz: QuizView;
   draft: QuizDraft;
-  notes?: NoteMark[];
   error?: string;
   trial?: boolean;
 }) {
@@ -89,89 +84,86 @@ export function Quiz({
   const timeLabel = t`Time ${time}, target ${goal}`;
 
   return (
-    <NotesProvider notes={notes}>
-      <div className="min-h-screen">
-        <ProgressHeader
-          title={quiz.title}
-          count={passages.length ? `${answered} / ${total} · ${time}` : `${answered} / ${total}`}
+    <div className="min-h-screen">
+      <ProgressHeader
+        title={quiz.title}
+        count={passages.length ? `${answered} / ${total} · ${time}` : `${answered} / ${total}`}
+        percent={percent}
+        label={t`Answered`}
+        back={back}
+      />
+
+      <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 md:gap-5 md:px-6 md:pt-8 md:pb-12 lg:max-w-260">
+        <PageTitle
+          level={quiz.level}
+          meta={<Plural value={total} one="# question" other="# questions" />}
+          back={{
+            to: homeOf({ ...quiz, kind }),
+            label: kind === "kanji" ? <Trans>← Kanji</Trans> : kind === "reading" ? <Trans>← Reading</Trans> : <Trans>← Mock tests</Trans>,
+          }}
+        >
+          {quiz.title}
+        </PageTitle>
+        <ProgressCard
           percent={percent}
           label={t`Answered`}
-          back={back}
-        />
-
-        <main className="mx-auto flex max-w-205 flex-col gap-3.5 px-4 pt-4 md:gap-5 md:px-6 md:pt-8 md:pb-12 lg:max-w-260">
-          <PageTitle
-            level={quiz.level}
-            meta={<Plural value={total} one="# question" other="# questions" />}
-            back={{
-              to: homeOf({ ...quiz, kind }),
-              label: kind === "kanji" ? <Trans>← Kanji</Trans> : kind === "reading" ? <Trans>← Reading</Trans> : <Trans>← Mock tests</Trans>,
-            }}
-          >
-            {quiz.title}
-          </PageTitle>
-          <ProgressCard
-            percent={percent}
-            label={t`Answered`}
-            aside={
-              passages.length > 0 && (
-                <span role="timer" aria-label={timeLabel} className="flex items-center gap-2.5 border-l pl-5">
-                  <Timer aria-hidden="true" className="size-4.5 text-subtle-foreground" />
-                  <span className="flex flex-col leading-tight">
-                    <span className={cn("text-prompt font-semibold tabular-nums", spent > target && "text-warning")}>
-                      {time} <span className="text-caption font-normal text-muted-foreground">/ {goal}</span>
-                    </span>
+          aside={
+            passages.length > 0 && (
+              <span role="timer" aria-label={timeLabel} className="flex items-center gap-2.5 border-l pl-5">
+                <Timer aria-hidden="true" className="size-4.5 text-subtle-foreground" />
+                <span className="flex flex-col leading-tight">
+                  <span className={cn("text-prompt font-semibold tabular-nums", spent > target && "text-warning")}>
+                    {time} <span className="text-caption font-normal text-muted-foreground">/ {goal}</span>
                   </span>
-                  <Button type="button" variant="outline" size="sm" onClick={timer.toggle} aria-pressed={timer.running}>
-                    {timer.running ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
-                    {timer.running ? <Trans>Pause</Trans> : spent ? <Trans>Resume</Trans> : <Trans>Start</Trans>}
-                  </Button>
                 </span>
-              )
-            }
-          >
-            <Trans>
-              Answered {answered} / {total}
-            </Trans>
-          </ProgressCard>
+                <Button type="button" variant="outline" size="sm" onClick={timer.toggle} aria-pressed={timer.running}>
+                  {timer.running ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
+                  {timer.running ? <Trans>Pause</Trans> : spent ? <Trans>Resume</Trans> : <Trans>Start</Trans>}
+                </Button>
+              </span>
+            )
+          }
+        >
+          <Trans>
+            Answered {answered} / {total}
+          </Trans>
+        </ProgressCard>
 
-          <div className="flex flex-col gap-3.5 md:gap-5 lg:grid lg:grid-cols-quiz lg:items-start lg:gap-6">
-            <QuestionNav
-              sections={quiz.sections}
-              markOf={answeredMarks(answeredIds)}
-              marks={ANSWER_MARKS}
-              className="hidden lg:sticky lg:top-24 lg:flex"
-            />
+        <div className="flex flex-col gap-3.5 md:gap-5 lg:grid lg:grid-cols-quiz lg:items-start lg:gap-6">
+          <QuestionNav
+            sections={quiz.sections}
+            markOf={answeredMarks(answeredIds)}
+            marks={ANSWER_MARKS}
+            className="hidden lg:sticky lg:top-24 lg:flex"
+          />
 
-            <div className="flex min-w-0 flex-col gap-3.5 md:gap-5">
-              {quiz.sections.map((section) => (
-                <Section
-                  key={section.no}
-                  checkAction={`${trial ? "/try" : "/tests"}/${quiz.id}/check`}
-                  section={section}
-                  answers={answers}
-                  onAnswer={setAnswer}
-                  checked={checks[section.no]}
-                  onChecked={onChecked}
-                  times={timer.times}
-                />
-              ))}
-
-              <SubmitBar
-                sections={quiz.sections}
-                answered={answeredIds}
-                left={left}
-                error={error}
-                onSubmit={send}
+          <div className="flex min-w-0 flex-col gap-3.5 md:gap-5">
+            {quiz.sections.map((section) => (
+              <Section
+                key={section.no}
+                checkAction={`${trial ? "/try" : "/tests"}/${quiz.id}/check`}
+                section={section}
+                answers={answers}
+                onAnswer={setAnswer}
+                checked={checks[section.no]}
+                onChecked={onChecked}
+                times={timer.times}
               />
-            </div>
-          </div>
-        </main>
+            ))}
 
-        {/* A part is checked once, so its number keys a fresh, open dialog. */}
-        {summary && <CheckSummary key={summary.no} section={summary} />}
-        {!trial && <AddNote testId={quiz.id} />}
-      </div>
-    </NotesProvider>
+            <SubmitBar
+              sections={quiz.sections}
+              answered={answeredIds}
+              left={left}
+              error={error}
+              onSubmit={send}
+            />
+          </div>
+        </div>
+      </main>
+
+      {/* A part is checked once, so its number keys a fresh, open dialog. */}
+      {summary && <CheckSummary key={summary.no} section={summary} />}
+    </div>
   );
 }

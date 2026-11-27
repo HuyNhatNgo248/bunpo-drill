@@ -1,7 +1,6 @@
 import { useLocation } from "react-router";
 import { cn } from "~/lib/utils";
 import { Card } from "~/components/ui/card";
-import { NotedText } from "~/components/noted-text";
 import { passageAnchor } from "~/lib/sections";
 import { trackPassageHeight } from "~/components/quiz/helpers/passageHeight";
 import type { ResultSegment } from "~/lib/views";
@@ -21,7 +20,7 @@ export function PassageReview({ segments, className }: { segments: ResultSegment
         {segments.map((segment, i) =>
           segment.kind === "text" ? (
             <span key={i}>
-              <NotedText text={segment.text} />
+              {segment.text}
             </span>
           ) : (
             <span

@@ -11,10 +11,9 @@ type Changes = Record<string, boolean>;
 /**
  * A session over `cards`: the card on the table, ‹ and ›, Again and Got it (and undoing either), and the counts. Got it on
  * a card not missed this round marks it learned on the server at once, so leaving mid-session keeps it; Again on a learned
- * card (a review) marks it not learned. Each mark has its own fetcher, so quick taps don't cancel one another. With
- * `learn` false (notes), nothing is sent.
+ * card (a review) marks it not learned. Each mark has its own fetcher, so quick taps don't cancel one another.
  */
-export function useSession<C extends { wordId: string; learned?: boolean }>(cards: C[], learn = true) {
+export function useSession<C extends { wordId: string; learned?: boolean }>(cards: C[]) {
   const [session, dispatch] = useReducer(sessionReducer, cards, (all) => startSession(all.map((card) => card.wordId)));
   const [changes, setChanges] = useState<Changes>({});
   /** Each rating, with the session and the changes before it, newest last, for undo. */
@@ -45,8 +44,8 @@ export function useSession<C extends { wordId: string; learned?: boolean }>(card
   const rate = (type: "again" | "gotIt") => {
     if (!current) return;
     const { wordId } = current;
-    const marking = learn && type === "gotIt" && !session.missed.includes(wordId) && !isLearned(wordId);
-    const unmarking = learn && type === "again" && isLearned(wordId);
+    const marking = type === "gotIt" && !session.missed.includes(wordId) && !isLearned(wordId);
+    const unmarking = type === "again" && isLearned(wordId);
     if (marking || unmarking) setLearned(wordId, marking);
     setHistory((all) => [...all, { before: session, changes }]);
     // Again on the only card left brings it straight back.

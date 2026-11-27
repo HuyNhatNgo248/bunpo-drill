@@ -1,6 +1,5 @@
 import { msg } from "@lingui/core/macro";
 import type { Route } from "./+types/reading";
-import type { TabsHandle } from "~/components/layout/TabsLayout";
 import { tabClientLoader, useRefreshStale } from "~/components/layout/tabCache";
 import { ReadingHome } from "~/components/reading";
 import { requireUserId } from "~/lib/auth.server";
@@ -11,8 +10,6 @@ import { lastTabOf, ownerId } from "~/lib/users.server";
 import { revalidateUnlessPicked } from "~/lib/utils";
 
 export const meta = titleMeta(msg`Reading`);
-
-export const handle: TabsHandle = { levels: true };
 
 export async function loader({ request }: Route.LoaderArgs) {
   const param = new URL(request.url).searchParams.get("level");

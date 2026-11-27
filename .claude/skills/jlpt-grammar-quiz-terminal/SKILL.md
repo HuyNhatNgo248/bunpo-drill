@@ -21,14 +21,14 @@ Arguments: $ARGUMENTS
 
 - **Level**: N3 or N2. Default N2 (the user is preparing for N2).
 - **Scope**: weeks, days or patterns. Read the notes and map patterns to ids exactly as
-  `/Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz/SKILL.md` step 2 says. "Weak ones" = the unreviewed chips from
-  `bash /Users/huyngo/Downloads/bunpo-drill/.claude/skills/jlpt-grammar-quiz/tests.sh` from the repo root (needs the app running). If no scope is
+  `.claude/skills/jlpt-grammar-quiz/SKILL.md` step 2 says (lessons via `digest.sh` only, never whole `第N週.md` files). "Weak ones" = the unreviewed chips from
+  `bash .claude/skills/jlpt-grammar-quiz/tests.sh | jq -r '[.tests[].review[] | select(.reviewed==false) | .grammarId] | unique | .[]'` from the repo root (needs the app running). If no scope is
   given, ask once. Don't guess. "Review test" / 総復習: see "Review test" in `jlpt-format.md`.
 - **Count**: default is double the real exam: N3 26 / 10 / 10 (問題1–3), N2 24 / 10 / 10
   (問題7–9). Use what the user asks for ("10 questions", "only 問題2", "no passage"). Split
   a total in the same ratio as the real exam.
 
-Read the lesson block of every point you test: its connection rules, ⚠ traps and Nuance
+Read the digest of every point you test: its connection rules, ⚠ traps and Nuance
 table give you the distractors.
 
 If a studied point has no lesson block, use its row in
